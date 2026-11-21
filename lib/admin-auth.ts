@@ -36,18 +36,13 @@ export async function requireAdmin(request: Request): Promise<AdminAccess> {
     return { supabase: null, user: null, error: { message: "Session invalide ou expirée.", status: 401 } };
   }
 
-  const { data: admin, error: adminError } = await supabase
-    .from("admin_users")
-    .select("user_id")
-    .eq("user_id", user.id)
-    .maybeSingle();
-
-  if (adminError) {
-    console.error("Échec de la vérification du rôle administrateur :", adminError);
+  const { data: authorized, error: authorizationError } = await supabase.rpc("is_namesia_admin");
+  if (authorizationError) {
+    console.error("Échec de la vérification du rôle administrateur :", authorizationError);
     return { supabase: null, user: null, error: { message: "Vérification des droits impossible.", status: 503 } };
   }
 
-  if (!admin) {
+  if (authorized !== true) {
     return { supabase: null, user: null, error: { message: "Ce compte n'est pas autorisé à administrer Namesia.", status: 403 } };
   }
 
