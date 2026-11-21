@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { parseFichePrenom } from "@/lib/fiche-prenom";
+import { parseFichePrenom, type FichePrenomImport } from "@/lib/fiche-prenom";
 import { requireAdmin } from "@/lib/admin-auth";
 
 export const runtime = "nodejs";
@@ -33,7 +33,7 @@ export async function GET(request: Request) {
   }
 
   const names = data ?? [];
-  const nextOffset = count !== null && offset + names.length < count
+  const nextOffset = count !== null && names.length > 0 && offset + names.length < count
     ? offset + names.length
     : null;
 
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Le corps de la requête doit être un JSON valide." }, { status: 400 });
   }
 
-  let fiche;
+  let fiche: FichePrenomImport;
   try {
     fiche = parseFichePrenom(payload);
   } catch (error) {
