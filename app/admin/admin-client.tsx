@@ -89,7 +89,6 @@ export function AdminClient() {
     const accessToken = session.access_token;
     let active = true;
     const offset = catalogOffset;
-    const accessToken = session.access_token;
 
     async function chargerCatalogue() {
       setCatalogLoading(true);
@@ -153,6 +152,7 @@ export function AdminClient() {
 
   async function previsualiserVersion(profile: ProfileRow) {
     if (!session) return;
+    const accessToken = session.access_token;
     setBusy(true);
     setMessage("");
     try {
