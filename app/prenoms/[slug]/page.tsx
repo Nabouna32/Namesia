@@ -1,51 +1,34 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { prenoms, trouverPrenom } from "@/lib/prenoms";
-
+import { getPrenom, getPrenoms } from "@/lib/prenoms";
 type Props = { params: Promise<{ slug: string }> };
-
-export function generateStaticParams() {
-  return prenoms.map(({ slug }) => ({ slug }));
+export const revalidate = 3600;
+export async function generateStaticParams() {
+  return (await getPrenoms()).map(({ slug }) => ({ slug }));
 }
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const prenom = trouverPrenom(slug);
-  return prenom ? { title: prenom.nom, description: `Découvrez la future fiche documentée du prénom ${prenom.nom} sur Namesia.` } : {};
+  const prenom = await getPrenom(slug);
+  return prenom ? { title: prenom.nom, description: prenom.introduction } : {};
 }
-
 export default async function FichePrenom({ params }: Props) {
   const { slug } = await params;
-  const prenom = trouverPrenom(slug);
+  const prenom = await getPrenom(slug);
   if (!prenom) notFound();
-
-  return (
-    <main className="page-main profile-main">
-      <div className="container profile">
-        <Link href="/prenoms" className="back-link">← Retour au catalogue</Link>
-        <div className="profile-heading">
-          <span className="eyebrow">Fiche prénom · Démonstration</span>
-          <h1>{prenom.nom}<span>.</span></h1>
-          <p>{prenom.accroche}</p>
-        </div>
-        <div className="demo-notice"><span>ⓘ</span><p><strong>Fiche de démonstration</strong><br />Cette page illustre la structure éditoriale. Aucune origine, signification ou association symbolique n'est affirmée sans documentation vérifiée.</p></div>
-        <div className="profile-grid">
-          <section className="profile-panel">
-            <span className="panel-index">01 / DOCUMENTATION</span>
-            <h2>Origine & histoire</h2>
-            <p className="pending">Les informations étymologiques et historiques seront ajoutées après vérification de sources fiables.</p>
-            <span className="source-placeholder">Sources : en cours de constitution</span>
-          </section>
-          <section className="profile-panel">
-            <span className="panel-index">02 / CULTURE</span>
-            <h2>Symbolique & traditions</h2>
-            <p className="pending">Les traditions et associations culturelles seront présentées avec leur contexte, sans portée scientifique ou prédictive.</p>
-            <span className="source-placeholder">Contexte culturel : à documenter</span>
-          </section>
-        </div>
-        <p className="profile-disclaimer">Namesia distingue les faits documentés des interprétations symboliques. Cette fiche n'est pas encore une publication éditoriale.</p>
-      </div>
-    </main>
-  );
+  const sources = Array.from(new Map(prenom.claims.flatMap((claim) => claim.claim_sources.map((item) => item.sources).filter((source): source is NonNullable<typeof source> => Boolean(source))).map((source) => [source.url, source])).values());
+  return <main className="page-main profile-main"><div className="container profile">
+    <Link href="/prenoms" className="back-link">← Tous les prénoms</Link>
+    <div className="profile-heading"><span className="eyebrow">Prénom · {prenom.genre}</span><h1>{prenom.nom}<span>.</span></h1><p>{prenom.introduction}</p></div>
+    <div className="profile-grid">
+      {prenom.origine && <section className="profile-panel"><span className="panel-index">01 / ÉTYMOLOGIE</span><h2>Origine & signification</h2><p className="profile-copy">{prenom.origine}</p></section>}
+      {prenom.histoire && <section className="profile-panel"><span className="panel-index">02 / REPÈRES HISTORIQUES</span><h2>Histoire du prénom</h2><p className="profile-copy">{prenom.histoire}</p></section>}
+      {prenom.usage && <section className="profile-panel"><span className="panel-index">03 / AUJOURD'HUI</span><h2>Variantes & usages</h2><p className="profile-copy">{prenom.usage}</p></section>}
+      <section className="profile-panel"><span className="panel-index">04 / POUR ALLER PLUS LOIN</span><h2>Repères documentaires</h2>
+        {prenom.claims.length ? <ul className="claim-list">{prenom.claims.map((claim) => <li key={claim.id}><p>{claim.content}</p><span className={claim.claim_status === "etabli" ? "claim-status" : "claim-status claim-discussed"}>{claim.claim_status === "etabli" ? "Repère établi" : "Piste à nuancer"}</span></li>)}</ul> : <p className="profile-copy">Les références de cette fiche seront enrichies au fil des recherches.</p>}
+      </section>
+    </div>
+    {sources.length > 0 && <section className="sources-section"><span className="eyebrow">Références</span><h2>Pour approfondir</h2><ol>{sources.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.title} ↗</a>{source.publisher && <span>{source.publisher}</span>}</li>)}</ol></section>}
+    <p className="profile-disclaimer">Les étymologies peuvent comporter plusieurs hypothèses. Les interprétations culturelles ou symboliques, lorsqu'elles sont présentées, ne décrivent pas la personnalité des personnes qui portent un prénom.</p>
+  </div></main>;
 }
