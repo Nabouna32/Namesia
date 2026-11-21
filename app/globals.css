@@ -9,8 +9,8 @@ button,input{font:inherit}
 .header-inner{width:min(1240px,calc(100% - 48px));height:100%;margin:auto;display:flex;align-items:center;justify-content:space-between}
 .brand{display:inline-flex;align-items:center;gap:10px;font-size:21px;font-weight:700;letter-spacing:-1.1px}
 .brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;font-family:var(--serif);font-size:20px;font-weight:500}
-nav{display:flex;gap:36px;font-size:15px;color:#525b53}
-nav a:hover,.text-link:hover{color:var(--green)}
+.site-nav{display:flex;gap:2.25rem;font-size:clamp(.875rem,.84rem + .12vw,.9375rem);color:#66566e}
+.site-nav a:hover,.text-link:hover{color:var(--green)}
 .hero{min-height:640px;background:#e9eee3;position:relative;overflow:hidden;display:flex;align-items:center}
 .hero-content{position:relative;z-index:2;padding-block:88px 105px}
 .hero-glow{position:absolute;width:620px;height:620px;border-radius:50%;right:-40px;top:5px;background:radial-gradient(circle,#d8e4cc 0%,rgba(216,228,204,0) 68%)}
@@ -146,7 +146,7 @@ body{background:var(--paper);color:var(--ink)}
 .site-header{height:68px;background:rgba(255,250,253,.96);border-bottom:1px solid #f0e3f0}
 .brand-mark{background:var(--rainbow);color:#fff}
 .site-nav{gap:1.5rem;color:#66566e}
-nav a:hover,.text-link:hover{color:#a13eaa}
+.site-nav a:hover,.text-link:hover{color:#a13eaa}
 .hero{min-height:0;background:linear-gradient(115deg,#fff0f5 0%,#fff8e9 24%,#f0fff5 49%,#eef8ff 73%,#f8efff 100%)}
 .hero-content{padding-block:56px 54px}
 .hero-glow{width:460px;height:460px;right:0;top:-55px;background:radial-gradient(circle,rgba(224,178,245,.45),rgba(224,178,245,0) 70%)}
