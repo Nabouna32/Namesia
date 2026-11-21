@@ -48,7 +48,7 @@ h1 em,h2 em{color:#66816a;font-weight:500}
 .hero-decoration span:nth-child(2){right:18px;top:54px}
 .hero-decoration span:nth-child(3){left:22px;bottom:48px}
 .section{padding:100px 0}
-.section-heading{display:flex;justify-content:space-between;align-items:end;margin-bottom:35px}
+.section-heading{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:35px}
 .section-heading h2,.approach-inner h2{font:500 43px/1.15 var(--serif);letter-spacing:-1px;margin:13px 0 0}
 .text-link{font-size:12px;font-weight:600;padding-bottom:8px}
 .text-link span{margin-left:8px}
@@ -58,7 +58,7 @@ h1 em,h2 em{color:#66816a;font-weight:500}
 .featured-1{background:#dce6d4}.featured-2{background:#e9e4d8}.featured-3{background:#e2e9e7}
 .featured-number{font-size:10px;letter-spacing:1px;color:#718071}
 .featured-letter{position:absolute;inset:25px 0 0;text-align:center;font:170px/.95 var(--serif);color:rgba(54,83,59,.14)}
-.featured-bottom{display:flex;justify-content:space-between;align-items:end;position:relative}
+.featured-bottom{display:flex;justify-content:space-between;align-items:flex-end;position:relative}
 .featured-bottom strong{font:31px var(--serif)}
 .featured-bottom span{font-size:10px;color:#637465}
 .featured-bottom b{margin-left:7px}
