@@ -5,11 +5,6 @@ import { requireAdmin } from "@/lib/admin-auth";
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  const contentLength = Number(request.headers.get("content-length") ?? 0);
-  if (contentLength > 64 * 1024) {
-    return NextResponse.json({ error: "Le fichier JSON dépasse la limite de 64 Ko." }, { status: 413 });
-  }
-
   const access = await requireAdmin(request);
   if (access.error) {
     return NextResponse.json({ error: access.error.message }, { status: access.error.status });
@@ -17,8 +12,15 @@ export async function POST(request: Request) {
 
   let payload: unknown;
   try {
-    payload = await request.json();
-  } catch {
+    const raw = await request.text();
+    if (Buffer.byteLength(raw, "utf8") > 64 * 1024) {
+      return NextResponse.json({ error: "Le fichier JSON dépasse la limite de 64 Ko." }, { status: 413 });
+    }
+    payload = JSON.parse(raw);
+  } catch (error) {
+    if (error instanceof Error && error.message.includes("64 Ko")) {
+      return NextResponse.json({ error: error.message }, { status: 413 });
+    }
     return NextResponse.json({ error: "Le corps de la requête doit être un JSON valide." }, { status: 400 });
   }
 
