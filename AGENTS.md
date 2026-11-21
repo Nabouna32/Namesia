@@ -143,12 +143,13 @@ Challenger également les issues existantes : détecter les doublons, besoins ma
 
 ## 9. Exigences propres à Namesia
 
-- Séparer strictement les faits documentés des interprétations symboliques ou culturelles.
-- Sourcer les affirmations factuelles de manière traçable et au niveau le plus fin raisonnable.
-- Ne jamais présenter une symbolique, une numérologie ou un portrait de personnalité comme une vérité scientifique ou prédictive.
-- Une sortie d'IA est un candidat à contrôler, jamais une publication autonome.
-- Le modèle ne décide ni de la validité d'une preuve ni de l'approbation éditoriale ni de la publication.
-- Respecter les limites, périodes, seuils, licences et biais des sources statistiques et historiques.
+- Les fiches sont générées en amont par IA (API ou conversation), puis importées dans Namesia au format JSON.
+- La génération, la validation du schéma, la prévisualisation et la publication sont quatre opérations distinctes. Aucune ne prouve l'exactitude factuelle du contenu.
+- Ne jamais inventer de sources, références, citations, statistiques ou statuts de vérification.
+- Ne pas présenter une origine, une étymologie ou une tradition incertaine comme une certitude.
+- Ne pas présenter une symbolique, une numérologie ou un portrait de personnalité comme une vérité scientifique ou prédictive.
+- La publication est une action explicite de l'administrateur ; le modèle ne décide jamais du statut.
+- Toute évolution vers un véritable processus de recherche, de référencement ou de vérification doit être conçue comme une capacité nouvelle, avec ses données, son contrôle et sa documentation. Ne pas réintroduire implicitement les anciennes tables de sources et d'affirmations.
 - Ne pas créer de pages SEO pauvres, trompeuses, artificiellement démultipliées ou sans valeur ajoutée.
 - Challenger les choix de stack et d'hébergement : ils restent des moyens au service des besoins, pas des objectifs en soi.
 
