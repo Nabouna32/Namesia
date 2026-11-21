@@ -8,7 +8,7 @@ Le site utilise Next.js App Router, React, TypeScript et Supabase (PostgreSQL).
 
 ### Démarrage local
 
-Prérequis : Node.js 20.9 ou supérieur.
+Prérequis : Node.js 26 LTS (26.x).
 
 ```bash
 cp .env.example .env.local
@@ -35,6 +35,10 @@ La clé publishable est conçue pour être exposée au client ; la sécurité de
 - `npm run typecheck` : vérification TypeScript ;
 - `npm run build` : build de production ;
 - `npm run start` : serveur de production après build.
+
+## Déploiement et quota Vercel
+
+Aucun déploiement Preview n'est autorisé. Vercel ne construit et ne déploie que `main`, après la fusion d'une PR. Les validations des PR, y compris le build de contrôle, sont exécutées par GitHub Actions. Cette règle protège le quota Vercel de 100 builds/déploiements par jour ; voir la politique détaillée dans [AGENTS.md](AGENTS.md).
 
 ## Règles éditoriales
 
