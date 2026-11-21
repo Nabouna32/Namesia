@@ -20,8 +20,8 @@ export async function GET(request: Request) {
   const { data, error, count } = await access.supabase
     .from("names")
     .select(`
-      id, slug, display_name, gender,
-      name_profiles ( id, version, schema_version, status, created_at, published_at )
+      id, slug, display_name,
+      name_profiles ( id, version, status, created_at )
     `, { count: "exact" })
     .order("display_name", { ascending: true })
     .order("slug", { ascending: true })
