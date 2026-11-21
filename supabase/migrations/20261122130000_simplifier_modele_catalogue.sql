@@ -126,7 +126,7 @@ returns table(profile_id uuid, version integer)
 language plpgsql
 security invoker
 set search_path = ''
-as $
+as $$
 declare
   v_name_id uuid;
   v_profile_id uuid;
@@ -139,7 +139,7 @@ begin
     raise exception 'Accès administrateur requis' using errcode = '42501';
   end if;
 
-  if p_schema_version <> '2.0.0' or jsonb_typeof(p_content) <> 'object' then
+  if p_schema_version is distinct from '2.0.0' or jsonb_typeof(p_content) is distinct from 'object' then
     raise exception 'Contrat JSON Namesia invalide ou non pris en charge' using errcode = '22023';
   end if;
 
@@ -185,7 +185,7 @@ begin
 
   return query select v_profile_id, v_version;
 end;
-$;
+$$;
 
 revoke all on function public.import_name_profile(text, text, text, jsonb, text) from public, anon;
 grant execute on function public.import_name_profile(text, text, text, jsonb, text) to authenticated;
