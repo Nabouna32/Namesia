@@ -27,7 +27,7 @@ Le premier site comprend l'accueil, un catalogue avec recherche côté client, d
 
 - Les routes publiques sont préparées pour le rendu serveur et les métadonnées.
 - Le catalogue est volontairement petit et en mémoire ; ce n'est pas une solution de recherche à grande échelle.
-- Les polices distantes sont un choix de présentation provisoire ; une stratégie d'hébergement local devra être étudiée avant mise en production.
+- Les polices système évitent une requête tierce et réduisent les dépendances réseau ; l'identité typographique pourra être affinée avec des fichiers de polices hébergés localement si nécessaire.
 - Aucune authentification, administration, persistance, analytics ou génération IA n'est incluse.
 - Les versions de dépendances devront être réévaluées au moment de l'installation et du déploiement.
 
