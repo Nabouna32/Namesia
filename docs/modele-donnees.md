@@ -105,7 +105,7 @@ L'audit de la base au 22 novembre 2026 constate six prénoms, six anciennes vers
 
 Les sources et affirmations historiques ne sont pas reprises dans le nouveau modèle, car Namesia ne garantit plus de vérification documentaire. Leur suppression est préparée dans la migration 20261122130000_simplifier_modele_catalogue.sql. Cette migration vérifie la reprise des champs et associations avant de supprimer les anciennes tables et colonnes.
 
-Les migrations déjà appliquées dans Supabase sont versionnées dans le dépôt avec leurs versions exactes : 20261121234038, 20261121234130, 20261121234347 et 20261121234359. La migration de simplification finale reste en attente de validation applicative avant application.
+Les migrations déjà appliquées dans Supabase sont versionnées dans le dépôt avec leurs versions exactes : 20261121234038, 20261121234130, 20261121234347 et 20261121234359. La migration de simplification finale reste en attente de validation applicative. Elle ne doit être appliquée qu'après fusion et déploiement de la nouvelle application, afin que le code en production n'utilise plus les anciennes tables. Une sauvegarde Supabase et une autorisation explicite sont obligatoires avant son application.
 
 ## 7. Administration
 
