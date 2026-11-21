@@ -39,6 +39,7 @@ Les tables historiques de sources, claims, relations claims-sources, association
 - Administration privée obligatoire pour importer et publier.
 - Historique des versions conservé.
 - Une migration destructive doit vérifier la reprise du contenu JSONB et révoquer les accès des anciennes tables avant leur retrait.
+- La migration de nettoyage ne peut être appliquée qu'après déploiement en production du code qui n'utilise plus l'ancien modèle ; une sauvegarde et une autorisation explicite sont nécessaires.
 - La création du premier administrateur est une opération explicite après création de son compte Supabase Auth.
 
 ## Sécurité et exploitation
