@@ -11,21 +11,36 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: access.error.message }, { status: access.error.status });
   }
 
-  const { data, error } = await access.supabase
+  const offset = Number(new URL(request.url).searchParams.get("offset") ?? "0");
+  if (!Number.isSafeInteger(offset) || offset < 0 || offset > 1_000_000) {
+    return NextResponse.json({ error: "Décalage de pagination invalide." }, { status: 400 });
+  }
+
+  const pageSize = 100;
+  const { data, error, count } = await access.supabase
     .from("names")
     .select(`
       id, slug, display_name, gender,
-      name_profiles ( id, version, schema_version, status, created_at, published_at, content )
-    `)
+      name_profiles ( id, version, schema_version, status, created_at, published_at )
+    `, { count: "exact" })
     .order("display_name", { ascending: true })
-    .limit(500);
+    .order("slug", { ascending: true })
+    .range(offset, offset + pageSize - 1);
 
   if (error) {
     console.error("Échec du chargement de l'administration Namesia :", error);
     return NextResponse.json({ error: "Le catalogue administrateur est momentanément indisponible." }, { status: 503 });
   }
 
-  return NextResponse.json({ names: data ?? [] }, { headers: { "Cache-Control": "private, no-store" } });
+  const names = data ?? [];
+  const nextOffset = count !== null && offset + names.length < count
+    ? offset + names.length
+    : null;
+
+  return NextResponse.json(
+    { names, total: count ?? 0, nextOffset },
+    { headers: { "Cache-Control": "private, no-store" } }
+  );
 }
 
 export async function POST(request: Request) {
