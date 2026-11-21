@@ -43,6 +43,8 @@ Extraire un composant lorsqu'au moins un bénéfice concret existe : réutilisat
 
 ## 3. CSS et système de design
 
+- Éviter les numérotations décoratives (01, 02, 03…) lorsqu'elles n'expriment ni ordre fonctionnel ni étape utile. La hiérarchie doit venir des titres, de la sémantique et de la mise en page ; ne pas ajouter de repères visuels qui ne transmettent aucune information.
+
 ### 3.1 Source de vérité
 
 - Maintenir un système de design centralisé : couleurs, typographie, espacements, rayons, ombres, largeurs de contenu et niveaux d'élévation sont définis sous forme de variables/tokens CSS.
