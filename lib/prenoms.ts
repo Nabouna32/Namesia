@@ -29,7 +29,8 @@ const selection = `
     claims (
       id, section, content, claim_status, evidence_note,
       claim_sources ( sources ( title, publisher, url ) )
-    )
+    ),
+    symbolic_associations ( id, category, value, context_note, disclaimer )
   )
 `;
 function convertir(row: JoinedName): Prenom {
