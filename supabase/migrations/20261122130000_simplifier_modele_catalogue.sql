@@ -115,6 +115,81 @@ revoke all on table public.names, public.name_profiles from anon, authenticated;
 grant select on table public.names, public.name_profiles to anon;
 grant select, insert, update on table public.names, public.name_profiles to authenticated;
 
+create or replace function public.import_name_profile(
+  p_slug text,
+  p_display_name text,
+  p_gender text,
+  p_content jsonb,
+  p_schema_version text
+)
+returns table(profile_id uuid, version integer)
+language plpgsql
+security invoker
+set search_path = ''
+as $
+declare
+  v_name_id uuid;
+  v_profile_id uuid;
+  v_version integer;
+begin
+  if not exists (
+    select 1 from private.admin_users a
+    where a.user_id = (select auth.uid())
+  ) then
+    raise exception 'Accès administrateur requis' using errcode = '42501';
+  end if;
+
+  if p_schema_version <> '2.0.0' or jsonb_typeof(p_content) <> 'object' then
+    raise exception 'Contrat JSON Namesia invalide ou non pris en charge' using errcode = '22023';
+  end if;
+
+  insert into public.names (slug, display_name, gender)
+  values (p_slug, p_display_name, p_gender)
+  on conflict (slug) do nothing;
+
+  select n.id
+  into v_name_id
+  from public.names n
+  where n.slug = p_slug
+  for update;
+
+  if exists (
+    select 1
+    from public.name_profiles p
+    where p.name_id = v_name_id and p.status = 'publie'
+  ) then
+    if exists (
+      select 1
+      from public.names n
+      where n.id = v_name_id
+        and (n.display_name is distinct from p_display_name
+          or n.gender is distinct from p_gender)
+    ) then
+      raise exception 'L''identité d''un prénom déjà publié ne peut pas être modifiée par un simple import.' using errcode = '22023';
+    end if;
+  else
+    update public.names
+    set display_name = p_display_name,
+        gender = p_gender
+    where id = v_name_id;
+  end if;
+
+  select coalesce(max(p.version), 0) + 1
+  into v_version
+  from public.name_profiles p
+  where p.name_id = v_name_id;
+
+  insert into public.name_profiles (name_id, version, schema_version, content, status)
+  values (v_name_id, v_version, p_schema_version, p_content, 'brouillon')
+  returning id into v_profile_id;
+
+  return query select v_profile_id, v_version;
+end;
+$;
+
+revoke all on function public.import_name_profile(text, text, text, jsonb, text) from public, anon;
+grant execute on function public.import_name_profile(text, text, text, jsonb, text) to authenticated;
+
 create or replace function public.publish_name_profile(p_profile_id uuid)
 returns void
 language plpgsql
