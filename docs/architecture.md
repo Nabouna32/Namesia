@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 2.0
+- **Version :** 2.1
 - **Mis à jour :** 2026-11-22
 
 ## 1. Besoin réel
@@ -31,22 +31,24 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 
 ### Production du contenu
 - Génération réalisée à l'extérieur de Namesia, par API ou conversation.
-- La sortie attendue est un JSON strict conforme à `schemas/fiche-prenom.schema.json`.
+- La sortie attendue est un JSON strict conforme à schemas/fiche-prenom.schema.json.
 - Le modèle ne choisit jamais le statut de publication.
 - Les références, statuts de preuve et métadonnées de vérification ne doivent pas être inventés.
 
 ### Administration
-- Connexion via Supabase Auth.
-- Autorisation fondée sur la présence de l'identifiant Auth dans `admin_users`.
+- Connexion via Supabase Auth par lien e-mail.
+- Autorisation fondée sur la présence de l'identifiant Auth dans private.admin_users.
 - Import d'un fichier JSON ou d'un contenu collé.
 - Validation du contrat avant envoi.
 - Prévisualisation du contenu avant publication.
 - Import enregistré comme brouillon ; publication par une action distincte.
+- Auto-inscription désactivée ; le premier compte Auth est créé/invité depuis Supabase puis autorisé manuellement.
 
 ### API et base de données
 - Routes Next.js côté serveur pour les opérations administratives.
-- Vérification du jeton Supabase et du rôle administrateur sur chaque requête.
+- Vérification du jeton Supabase et de l'autorisation par RPC sur chaque requête.
 - Fonctions SQL transactionnelles pour créer une version et publier une version.
+- Les fonctions sont SECURITY INVOKER ; elles ne contournent pas RLS.
 - Aucune clé privilégiée Supabase dans le navigateur.
 - Les visiteurs disposent uniquement de la lecture des identités ayant une version publiée et de ces versions publiées.
 
@@ -60,32 +62,32 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 ## 4. Modèle de données
 
 Le modèle cible comporte deux tables métier :
+- names : identité stable du prénom (id, slug, display_name, gender, created_at).
+- name_profiles : versions du contenu (id, name_id, version, schema_version, content JSONB, status, created_at, published_at).
 
-- `names` : identité stable du prénom (`id`, `slug`, `display_name`, `gender`, `created_at`).
-- `name_profiles` : versions du contenu (`id`, `name_id`, `version`, `schema_version`, `content` JSONB, `status`, `created_at`, `published_at`).
+L'autorisation administrateur est stockée dans private.admin_users, un schéma PostgreSQL non exposé par la Data API. Les détails et contraintes sont décrits dans [Modèle de données](modele-donnees.md).
 
-Le détail et les contraintes sont décrits dans [Modèle de données](modele-donnees.md).
-
-Les tables documentaires historiques (`sources`, `claims`, `claim_sources`), l'ancienne table de versions et la table symbolique dédiée ne font plus partie de la cible. Les contenus symboliques sont des rubriques du JSON de fiche.
+Les tables documentaires historiques (sources, claims, claim_sources), l'ancienne table de versions et la table symbolique dédiée ne font plus partie de la cible. Les contenus symboliques sont des rubriques du JSON de fiche.
 
 ## 5. Publication et historique
 
-- Une nouvelle importation crée une nouvelle version en `brouillon`.
+- Une nouvelle importation crée une nouvelle version en brouillon.
 - Une version publiée n'est jamais modifiée en place.
 - La publication est explicite et transactionnelle.
 - Une seule version est publiée par prénom à un instant donné.
-- La version publiée précédente passe à `archive`.
+- La version publiée précédente passe à archive.
 - Le statut de publication est une donnée Namesia, jamais un champ contrôlé par le JSON entrant.
 
 ## 6. Sécurité
 
 - Supabase Auth authentifie l'administrateur.
-- `admin_users` autorise explicitement les comptes administrateurs ; les métadonnées utilisateur modifiables ne servent jamais à décider des droits.
+- private.admin_users autorise explicitement les comptes administrateurs ; les métadonnées utilisateur modifiables ne servent jamais à décider des droits.
+- Le schéma private n'est pas exposé à la Data API ; les droits de lecture de la liste sont limités au rôle authenticated et à sa propre ligne.
 - Les routes API vérifient le jeton et l'autorisation côté serveur.
 - RLS est activé sur toutes les tables exposées.
 - Les privilèges SQL sont accordés au strict nécessaire, indépendamment des politiques RLS.
-- Les fonctions SQL restent `SECURITY INVOKER` et vérifient elles-mêmes le rôle administrateur.
-- Aucun secret ou clé `service_role` / secret key dans le code client.
+- Les fonctions SQL restent SECURITY INVOKER et vérifient elles-mêmes le rôle administrateur.
+- Aucun secret ou clé service_role / secret key dans le code client.
 - L'administration n'est pas protégée par le simple masquage d'une page : chaque opération d'écriture vérifie l'autorisation.
 
 ## 7. Choix écartés pour la V1
@@ -106,12 +108,11 @@ Le dépôt et le projet Supabase possèdent déjà une première implémentation
 
 La migration de simplification doit :
 1. vérifier que chaque ancienne fiche et chaque association symbolique utile ont été reprises dans JSONB ;
-2. réconcilier les versions de migrations du dépôt avec l'historique réellement appliqué dans Supabase ;
-3. retirer les tables et colonnes devenues inutiles ;
-4. corriger les contraintes, privilèges et fonctions de publication ;
-5. vérifier les politiques RLS et les accès Data API.
+2. retirer les tables et colonnes devenues inutiles ;
+3. corriger les contraintes, privilèges et fonctions de publication ;
+4. vérifier les politiques RLS et les accès Data API.
 
-La migration destructive est préparée dans le dépôt, mais ne doit pas être appliquée à la base de production avant vérification de son contenu, revue du SQL et autorisation explicite.
+Les migrations déjà appliquées sont synchronisées avec les versions Supabase. La migration destructive finale est préparée dans le dépôt et comporte des contrôles bloquants de reprise des données. Elle reste à appliquer après validation du build et revue du SQL ; aucun déploiement Vercel n'est déclenché par cette opération.
 
 ## 9. Stack
 
@@ -119,4 +120,4 @@ La migration destructive est préparée dans le dépôt, mais ne doit pas être 
 - Supabase Auth et PostgreSQL.
 - JSON Schema comme contrat d'échange ; validation TypeScript à la frontière de l'API.
 - GitHub Actions pour les contrôles des PR.
-- Vercel uniquement sur `main` après fusion ; aucun déploiement Preview.
+- Vercel uniquement sur main après fusion ; aucun déploiement Preview.
