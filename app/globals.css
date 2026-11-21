@@ -226,7 +226,7 @@ body>main{flex:1 0 auto}
 /* Lisibilité : les textes utiles restent confortables sur écran d'ordinateur. */
 .eyebrow{font-size:12px;letter-spacing:1.2px}
 .name-card small,.featured-bottom span,
-.footer-note,.source-placeholder,.profile-disclaimer,
+.footer-note,.profile-disclaimer,.symbolic-card>span,.symbolic-card small,
 .demo-notice p{font-size:14px;line-height:1.65}
 .demo-notice strong{font-size:14px}
 .profile-copy{font-size:15px;line-height:1.8}
