@@ -22,6 +22,12 @@ export async function POST(request: Request, { params }: Props) {
 
   if (error) {
     console.error("Échec de la publication d'une fiche Namesia :", error);
+    if (error.code === "42501") {
+      return NextResponse.json({ error: "Cette opération nécessite un compte administrateur." }, { status: 403 });
+    }
+    if (error.code === "22023" || error.code === "P0002") {
+      return NextResponse.json({ error: "Seule une version existante en brouillon peut être publiée." }, { status: 409 });
+    }
     return NextResponse.json({ error: "La fiche n'a pas pu être publiée." }, { status: 500 });
   }
 
