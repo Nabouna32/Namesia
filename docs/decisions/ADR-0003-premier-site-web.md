@@ -1,39 +1,47 @@
-# ADR-0003 — Premier socle du site web
+# ADR-0003 — Socle du site web et première intégration Supabase
 
-- **Statut :** accepté provisoirement pour le MVP
+- **Statut :** accepté provisoirement pour la V1
 - **Date :** 2026-11-21
 
 ## Contexte
 
-Le dépôt contient les fondations produit et éditoriales, mais aucun code applicatif. Il faut matérialiser rapidement le parcours central de Namesia sans anticiper la base de données, le pipeline IA ou l'administration.
-
-## Problème
-
-Quel socle permet de livrer un site navigable, indexable et évolutif tout en limitant les dépendances et le coût de maintenance ?
-
-## Options considérées
-
-1. **Next.js avec App Router et TypeScript** : rendu serveur et génération statique adaptés aux pages de fiches ; coût d'apprentissage et dépendance au framework.
-2. **Application React/Vite** : démarrage simple, mais nécessite de construire ou d'ajouter une stratégie de rendu serveur pour les pages publiques et le SEO.
-3. **HTML/CSS/JavaScript statique** : coût initial minimal, mais risque de réécriture dès l'arrivée des routes et du catalogue dynamique.
+Namesia doit être construit comme un produit directement présentable à un visiteur, et non comme une maquette technique exposant des messages de test. Le dépôt initial ne contenait que les fondations documentaires.
 
 ## Décision
 
-Retenir provisoirement Next.js App Router et TypeScript, sans bibliothèque UI, sans base de données et sans fournisseur IA dans ce premier incrément.
+- Retenir Next.js App Router et TypeScript pour les pages publiques, le rendu serveur et les métadonnées.
+- Utiliser le projet Supabase Namesia existant comme source de données du catalogue.
+- Accéder à PostgreSQL depuis les composants serveur avec `@supabase/supabase-js` et une clé publishable.
+- Protéger toutes les tables exposées avec RLS et n'accorder en lecture publique que les fiches publiées.
+- Versionner les fiches, séparer les sources et les affirmations atomiques.
+- Fournir six fiches initiales : Alice, Gabriel, Emma, Louis, Lina et Noah.
+- Garder les parcours publics exempts de messages de debug et d'étiquettes « données de test ».
 
-Le premier site comprend l'accueil, un catalogue avec recherche côté client, des routes de fiches prénoms et une page 404. Les données sont des fixtures de démonstration clairement signalées ; elles ne constituent pas un corpus éditorial publié.
+## Options et compromis
 
-## Conséquences et compromis
+### Next.js plutôt que Vite ou HTML statique
 
-- Les routes publiques sont préparées pour le rendu serveur et les métadonnées.
-- Le catalogue est volontairement petit et en mémoire ; ce n'est pas une solution de recherche à grande échelle.
-- Les polices système évitent une requête tierce et réduisent les dépendances réseau ; l'identité typographique pourra être affinée avec des fichiers de polices hébergés localement si nécessaire.
-- Aucune authentification, administration, persistance, analytics ou génération IA n'est incluse.
-- Les versions de dépendances devront être réévaluées au moment de l'installation et du déploiement.
+Le rendu serveur et les routes de fiches sont utiles pour le référencement naturel. Vite aurait un démarrage plus léger mais demanderait une stratégie de rendu supplémentaire. Un site statique pur serait simple au début, mais moins adapté à l'évolution du catalogue.
 
-## Validation et réexamen
+### Supabase plutôt qu'un fichier JSON
 
-- Vérifier l'installation, le typage et le build de production.
-- Tester les parcours accueil → recherche → fiche → retour catalogue, ainsi que les routes inconnues.
-- Faire une revue responsive, clavier, contraste et métadonnées.
-- Réexaminer ce choix avant l'ajout d'une administration, d'une recherche multi-critères ou d'un volume important de fiches.
+Le catalogue doit devenir administrable, versionné et sourcé. Supabase apporte PostgreSQL et RLS sans construire immédiatement une API dédiée. Le risque est de coupler les pages à la structure de données ; les accès sont donc isolés dans `lib/prenoms.ts`.
+
+### Clé publishable et lecture publique
+
+La clé publishable n'est pas un secret. Elle ne donne aucun droit d'écriture par elle-même. Les tables exposées ont RLS activé, des politiques de lecture ciblées et aucun droit public d'écriture. Aucune clé privilégiée n'est intégrée au site.
+
+## Limites connues
+
+- Les six premières fiches constituent un corpus de départ, pas encore un corpus éditorial exhaustif.
+- Les références de vulgarisation ne remplacent pas les dictionnaires d'onomastique et les travaux universitaires ; les hypothèses sont présentées comme telles.
+- L'administration éditoriale, l'authentification et le pipeline IA restent hors de ce premier incrément.
+- Les contrôles de build et de typage doivent être exécutés avant de considérer la PR comme fusionnable.
+
+## Validation
+
+- Vérifier les six fiches dans PostgreSQL.
+- Vérifier la lecture anonyme par l'API avec les seules politiques RLS.
+- Exécuter les advisors Supabase.
+- Exécuter le typage, les tests et le build.
+- Tester les parcours accueil, recherche, catalogue, fiche et 404.
