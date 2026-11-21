@@ -16,6 +16,8 @@ Namesia doit être construit comme un produit directement présentable à un vis
 - Versionner les fiches, séparer les sources et les affirmations atomiques.
 - Fournir six fiches initiales : Alice, Gabriel, Emma, Louis, Lina et Noah, chacune avec un repère symbolique ou culturel contextualisé.
 - Garder les parcours publics exempts de messages de debug et d'étiquettes « données de test ».
+- Mettre à niveau le socle vers Next.js 16.4.6, React 19.3.1, TypeScript 7.0.2 et Node.js 26 LTS (26.x), sous réserve de validation par CI.
+- Réserver les déploiements Vercel à `main` après fusion d'une PR ; interdire les previews et faire exécuter les builds de validation par GitHub Actions.
 
 ## Options et compromis
 
@@ -31,17 +33,22 @@ Le catalogue doit devenir administrable, versionné et sourcé. Supabase apporte
 
 La clé publishable n'est pas un secret. Elle ne donne aucun droit d'écriture par elle-même. Les tables exposées ont RLS activé, des politiques de lecture ciblées et aucun droit public d'écriture. Aucune clé privilégiée n'est intégrée au site.
 
+### Vercel uniquement sur main
+
+Les previews Vercel sont pratiques pour les revues visuelles, mais elles consomment le quota quotidien de builds/déploiements. L'alternative retenue est de faire tourner les contrôles et le build de validation dans GitHub Actions, puis de ne construire/déployer sur Vercel qu'après fusion sur `main`. Le compromis est la perte des URLs Preview ; le quota est protégé et la validation technique reste automatisée.
+
 ## Limites connues
 
 - Les six premières fiches constituent un corpus de départ, pas encore un corpus éditorial exhaustif.
 - Les références de vulgarisation ne remplacent pas les dictionnaires d'onomastique et les travaux universitaires ; les hypothèses sont présentées comme telles.
 - L'administration éditoriale, l'authentification et le pipeline IA restent hors de ce premier incrément.
-- Les contrôles de build et de typage doivent être exécutés avant de considérer la PR comme fusionnable.
+- Le build Next.js 16 et la compatibilité TypeScript 7 doivent être confirmés par GitHub Actions ; les versions sont déclarées mais pas encore validées localement.
 
 ## Validation
 
 - Vérifier les six fiches dans PostgreSQL.
 - Vérifier la lecture anonyme par l'API avec les seules politiques RLS.
 - Exécuter les advisors Supabase.
-- Exécuter le typage, les tests et le build.
+- Exécuter le typage, les tests et le build dans GitHub Actions sur PR.
+- Vérifier qu'un push de branche n'entraîne aucun build Vercel et qu'un push sur `main` après merge déclenche le déploiement de production.
 - Tester les parcours accueil, recherche, catalogue, fiche et 404.
