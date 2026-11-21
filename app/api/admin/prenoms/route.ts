@@ -3,6 +3,7 @@ import { parseFichePrenom } from "@/lib/fiche-prenom";
 import { requireAdmin } from "@/lib/admin-auth";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   const access = await requireAdmin(request);
@@ -24,7 +25,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Le catalogue administrateur est momentanément indisponible." }, { status: 503 });
   }
 
-  return NextResponse.json({ names: data ?? [] });
+  return NextResponse.json({ names: data ?? [] }, { headers: { "Cache-Control": "private, no-store" } });
 }
 
 export async function POST(request: Request) {
