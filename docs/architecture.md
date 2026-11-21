@@ -1,91 +1,122 @@
 # Architecture — Namesia
 
-- **Statut :** architecture cible de la V1
-- **Version :** 1.1
+- **Statut :** architecture cible retenue pour la V1
+- **Version :** 2.0
 - **Mis à jour :** 2026-11-22
 
-## 1. Décision directrice
+## 1. Besoin réel
 
-Namesia est un monolithe Next.js avec Supabase. Le contenu est généré en dehors du site, sous forme de JSON, puis importé dans une administration privée. L'application ne génère pas encore de contenu IA et ne réalise pas de recherche documentaire.
+Namesia publie un catalogue de fiches de prénoms. Le contenu est généré en dehors de l'application, soit par une API de modèle, soit dans une conversation avec un assistant. Il est ensuite fourni à Namesia sous la forme d'un JSON conforme au contrat du projet.
 
-Le JSON est le contrat d'échange et de validation. PostgreSQL conserve les identités et les versions de fiches ; le contenu éditorial d'une version est stocké dans un champ JSONB. Ce compromis évite une table par rubrique sans transformer l'identité du prénom et le cycle de publication en données non structurées.
+Namesia n'intègre pas actuellement de moteur de génération, de collecte documentaire ni de vérification factuelle. L'application importe, conserve, prévisualise et publie le contenu. La génération par IA ne constitue pas une validation de l'exactitude.
 
-## 2. Flux fonctionnel
+## 2. Architecture retenue
 
-1. Génération IA hors du site.
-2. Production d'un JSON conforme au contrat Namesia.
-3. Connexion à l'administration privée.
-4. Validation structurelle du JSON.
-5. Création d'une nouvelle version en brouillon.
-6. Prévisualisation et correction.
-7. Publication explicite par l'administrateur.
-8. Lecture publique de la version publiée.
+```mermaid
+flowchart TD
+  A["Conversation avec un assistant ou API IA externe"] --> B["JSON conforme au schéma Namesia"]
+  B --> C["Administration privée /admin"]
+  C --> D["Validation du contrat et prévisualisation"]
+  D --> E["API Next.js protégée"]
+  E --> F["Supabase Auth + contrôle admin"]
+  E --> G["Fonctions SQL transactionnelles"]
+  G --> H[("PostgreSQL / Supabase")]
+  H --> I["Lecture des fiches publiées"]
+  I --> J["Site public Next.js"]
+```
 
-La validation automatique porte sur le format, les types, les longueurs, les champs autorisés et quelques contraintes métier. Elle ne valide pas les faits ni les étymologies.
+Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe pas de raison actuelle d'ajouter un adaptateur multi-fournisseurs, un orchestrateur de génération ou une file de traitements.
 
-## 3. Composants
+## 3. Responsabilités
 
-### Site public
-- Pages serveur Next.js.
-- Catalogue et fiches chargés depuis les versions publiées.
-- Aucun appel au modèle IA lors de l'affichage.
-- Aucun droit d'écriture public.
+### Production du contenu
+- Génération réalisée à l'extérieur de Namesia, par API ou conversation.
+- La sortie attendue est un JSON strict conforme à `schemas/fiche-prenom.schema.json`.
+- Le modèle ne choisit jamais le statut de publication.
+- Les références, statuts de preuve et métadonnées de vérification ne doivent pas être inventés.
 
 ### Administration
-- Page privée /admin.
-- Connexion par lien e-mail via Supabase Auth.
-- Autorisation fondée sur une liste explicite d'identifiants dans la table admin_users.
-- Import d'un fichier ou texte JSON.
-- Validation stricte avant écriture.
-- Import toujours en brouillon.
-- Publication par une action séparée.
-- API serveur vérifiant le jeton Supabase et l'appartenance à admin_users.
-- Les opérations SQL sont exécutées avec le jeton de l'utilisateur ; aucune clé privilégiée n'est exposée à l'application.
+- Connexion via Supabase Auth.
+- Autorisation fondée sur la présence de l'identifiant Auth dans `admin_users`.
+- Import d'un fichier JSON ou d'un contenu collé.
+- Validation du contrat avant envoi.
+- Prévisualisation du contenu avant publication.
+- Import enregistré comme brouillon ; publication par une action distincte.
 
-### Données
-- names : identité, slug et genre.
-- name_profiles : versions, statut, dates et contenu JSONB.
-- admin_users : identifiants autorisés à administrer le catalogue.
-- Les tables documentaires historiques sont en cours de retrait après migration des contenus utiles.
+### API et base de données
+- Routes Next.js côté serveur pour les opérations administratives.
+- Vérification du jeton Supabase et du rôle administrateur sur chaque requête.
+- Fonctions SQL transactionnelles pour créer une version et publier une version.
+- Aucune clé privilégiée Supabase dans le navigateur.
+- Les visiteurs disposent uniquement de la lecture des identités ayant une version publiée et de ces versions publiées.
 
-## 4. Modèle de publication
+### Site public
+- Rendu serveur Next.js.
+- Lecture des fiches publiées uniquement.
+- Pas d'appel à un modèle IA lors de l'affichage.
+- Initiale calculée à partir du nom affiché ; elle n'est pas stockée.
+- Mention visible indiquant que le contenu est généré par IA et peut comporter des erreurs.
 
-- brouillon : importé, non visible publiquement.
-- publie : version visible.
-- archive : ancienne version remplacée ou retirée.
+## 4. Modèle de données
 
-Le backend attribue le numéro de version et le statut. Un import ne publie jamais. La publication archive l'ancienne version et active la nouvelle dans une transaction SQL.
+Le modèle cible comporte deux tables métier :
 
-Une version publiée n'est jamais écrasée. Une correction passe par une nouvelle version.
+- `names` : identité stable du prénom (`id`, `slug`, `display_name`, `gender`, `created_at`).
+- `name_profiles` : versions du contenu (`id`, `name_id`, `version`, `schema_version`, `content` JSONB, `status`, `created_at`, `published_at`).
 
-## 5. Sécurité
+Le détail et les contraintes sont décrits dans [Modèle de données](modele-donnees.md).
 
-- RLS activé sur toutes les tables du schéma public.
-- Lecture anonyme limitée aux versions publiées.
-- Administration réservée aux identifiants présents dans admin_users.
-- Aucun droit d'écriture au rôle anon.
-- Les fonctions RPC sont en SECURITY INVOKER, pas en SECURITY DEFINER.
-- Les clés privilégiées Supabase ne sont pas utilisées par le site.
-- Les droits SQL doivent être accordés explicitement : les nouvelles tables ne sont pas nécessairement exposées automatiquement par la Data API.
-- Le jeton de session Supabase est conservé par le client Auth dans le navigateur ; protéger l'administration contre les injections et ne jamais y rendre de HTML non fiable.
+Les tables documentaires historiques (`sources`, `claims`, `claim_sources`), l'ancienne table de versions et la table symbolique dédiée ne font plus partie de la cible. Les contenus symboliques sont des rubriques du JSON de fiche.
 
-## 6. Choix écartés
+## 5. Publication et historique
 
-- Une table par rubrique : trop de relations et de jointures pour un contenu essentiellement éditorial.
-- Tout stocker dans une seule table JSON : identité, unicité, versions et publication doivent rester relationnelles.
-- Un CMS tiers : coût et intégration disproportionnés pour un administrateur unique et un import JSON.
-- Génération IA dans le site : non nécessaire tant que la production se fait par conversation ou outil externe.
-- Sources, claims et workflow de preuve : ne reflètent pas le processus réellement appliqué.
+- Une nouvelle importation crée une nouvelle version en `brouillon`.
+- Une version publiée n'est jamais modifiée en place.
+- La publication est explicite et transactionnelle.
+- Une seule version est publiée par prénom à un instant donné.
+- La version publiée précédente passe à `archive`.
+- Le statut de publication est une donnée Namesia, jamais un champ contrôlé par le JSON entrant.
 
-## 7. Limites et évolutions conditionnelles
+## 6. Sécurité
 
-- Le contrat JSON est versionné ; toute évolution incompatible nécessite une nouvelle version et une migration explicite.
-- Les statistiques ne seront ajoutées que lorsqu'une source et une méthode de mise à jour seront réellement disponibles.
-- Le multilingue nécessitera une décision dédiée sur les identités, variantes et profils localisés.
-- Une génération automatisée pourra être ajoutée sans changer le flux de publication : elle devra produire le même JSON candidat.
+- Supabase Auth authentifie l'administrateur.
+- `admin_users` autorise explicitement les comptes administrateurs ; les métadonnées utilisateur modifiables ne servent jamais à décider des droits.
+- Les routes API vérifient le jeton et l'autorisation côté serveur.
+- RLS est activé sur toutes les tables exposées.
+- Les privilèges SQL sont accordés au strict nécessaire, indépendamment des politiques RLS.
+- Les fonctions SQL restent `SECURITY INVOKER` et vérifient elles-mêmes le rôle administrateur.
+- Aucun secret ou clé `service_role` / secret key dans le code client.
+- L'administration n'est pas protégée par le simple masquage d'une page : chaque opération d'écriture vérifie l'autorisation.
 
-## 8. État de l'implémentation
+## 7. Choix écartés pour la V1
 
-Le modèle JSON versionné, l'import administrateur et la publication explicite sont en cours d'intégration dans la PR #5. La migration initiale crée name_profiles et copie les six fiches existantes. Les anciennes tables sont conservées temporairement pour permettre une vérification avant suppression définitive.
+| Option | Décision | Motif |
+|---|---|---|
+| Génération IA intégrée au site | Écartée | La génération a lieu en amont ; l'import JSON suffit |
+| Une table par rubrique de texte | Écartée | Les rubriques ne sont pas exploitées indépendamment |
+| Sources et affirmations atomiques | Écartées actuellement | Aucun processus de vérification documentaire n'est assuré |
+| Table dédiée aux associations symboliques | Écartée | Elles font partie du document éditorial |
+| Historique de versions | Conservé | Permet de remplacer et restaurer un contenu sans écraser l'historique |
+| Microservices / orchestrateur | Écartés | Complexité sans besoin démontré |
+| Clé privilégiée dans le navigateur | Interdite | Risque de compromission des données |
 
-La connexion par e-mail nécessite de configurer les URL de redirection Supabase Auth et d'ajouter manuellement le premier utilisateur à admin_users. Cette étape est documentée dans le README.
+## 8. État et migration
+
+Le dépôt et le projet Supabase possèdent déjà une première implémentation JSONB et un écran d'administration. L'ancien modèle relationnel coexiste encore avec ce nouveau modèle.
+
+La migration de simplification doit :
+1. vérifier que chaque ancienne fiche et chaque association symbolique utile ont été reprises dans JSONB ;
+2. réconcilier les versions de migrations du dépôt avec l'historique réellement appliqué dans Supabase ;
+3. retirer les tables et colonnes devenues inutiles ;
+4. corriger les contraintes, privilèges et fonctions de publication ;
+5. vérifier les politiques RLS et les accès Data API.
+
+La migration destructive est préparée dans le dépôt, mais ne doit pas être appliquée à la base de production avant vérification de son contenu, revue du SQL et autorisation explicite.
+
+## 9. Stack
+
+- Next.js App Router, React et TypeScript.
+- Supabase Auth et PostgreSQL.
+- JSON Schema comme contrat d'échange ; validation TypeScript à la frontière de l'API.
+- GitHub Actions pour les contrôles des PR.
+- Vercel uniquement sur `main` après fusion ; aucun déploiement Preview.
