@@ -82,6 +82,25 @@ Challenger également les issues existantes : détecter les doublons, besoins ma
 - Vérifier les régressions, migrations, compatibilités, sécurité, performances, accessibilité et conséquences opérationnelles.
 - Documenter les limites connues plutôt que masquer les contrôles manquants.
 
+### Politique de déploiement Vercel et de maîtrise du quota
+
+- **Aucun déploiement Preview Vercel ne doit être créé**, ni automatiquement à l'ouverture/mise à jour d'une PR, ni manuellement, ni via la CLI ou l'API.
+- **Vercel ne doit construire et déployer que la branche `main`**, après la fusion d'une PR. Aucun push sur une branche de travail ne doit déclencher un build Vercel.
+- Le quota Vercel de 100 builds/déploiements par jour est une contrainte opérationnelle à préserver : ne pas le consommer avec des previews, des builds de branches ou des déploiements de convenance.
+- Les vérifications de PR (installation, typage, tests, build de validation) sont exécutées dans GitHub Actions, pas sur Vercel.
+- La configuration Vercel doit désactiver les déploiements Preview et ignorer explicitement tout build dont la référence Git n'est pas `main`. La seule cible autorisée est le déploiement de production déclenché par un push sur `main` après merge.
+- Ne pas contourner ces garde-fous avec un déploiement manuel. Toute exception exige une autorisation explicite préalable et une justification du coût en quota.
+- Après modification de la configuration Vercel, vérifier les paramètres effectifs ; ne pas se contenter de modifier la documentation.
+
+### Politique de sérialisation des pull requests
+
+- Par défaut, maintenir **une seule PR de travail ouverte à la fois** dans le dépôt.
+- Ne pas ouvrir une nouvelle PR tant que la précédente n'est pas fusionnée ou fermée : terminer, faire relire et intégrer le travail en cours avant d'entamer une autre PR.
+- Cette règle évite les modifications concurrentes des mêmes fichiers, les conflits de fusion, les bases obsolètes, les PR empilées difficiles à relire et les validations répétées.
+- Exception uniquement si le travail doit réellement avancer en parallèle et que les périmètres sont indépendants : expliquer pourquoi le parallélisme est nécessaire, vérifier l'absence de chevauchement et annoncer explicitement la stratégie de branches et de bases.
+- Ne jamais créer une PR empilée par simple commodité. Si une dépendance entre changements existe, privilégier une seule PR cohérente ou attendre la fusion de la PR parente.
+- Avant de créer une PR, vérifier les PR déjà ouvertes du dépôt et leur état. Si une PR existe, contribuer à celle-ci lorsque le périmètre est cohérent, ou attendre sa clôture/fusion.
+
 ### Checklist obligatoire de PR
 
 - [ ] Le besoin est clair et la solution ne traite pas seulement un symptôme.
@@ -93,15 +112,6 @@ Challenger également les issues existantes : détecter les doublons, besoins ma
 - [ ] Les migrations et changements de contrat sont documentés et compatibles.
 - [ ] La PR indique précisément ce qui a été vérifié et ce qui reste à faire.
 - [ ] Aucun secret, donnée personnelle inutile ou contenu non autorisé n'est introduit.
-
-### Politique de sérialisation des pull requests
-
-- Par défaut, maintenir **une seule PR de travail ouverte à la fois** dans le dépôt.
-- Ne pas ouvrir une nouvelle PR tant que la précédente n'est pas fusionnée ou fermée : terminer, faire relire et intégrer le travail en cours avant d'entamer une autre PR.
-- Cette règle évite les modifications concurrentes des mêmes fichiers, les conflits de fusion, les bases obsolètes, les PR empilées difficiles à relire et les validations répétées.
-- Exception uniquement si le travail doit réellement avancer en parallèle et que les périmètres sont indépendants : expliquer pourquoi le parallélisme est nécessaire, vérifier l'absence de chevauchement et annoncer explicitement la stratégie de branches et de bases.
-- Ne jamais créer une PR empilée par simple commodité. Si une dépendance entre changements existe, privilégier une seule PR cohérente ou attendre la fusion de la PR parente.
-- Avant de créer une PR, vérifier les PR déjà ouvertes du dépôt et leur état. Si une PR existe, contribuer à celle-ci lorsque le périmètre est cohérent, ou attendre sa clôture/fusion.
 
 ## 6. Documentation canonique
 
@@ -148,4 +158,4 @@ Challenger également les issues existantes : détecter les doublons, besoins ma
 
 ## 10. Principe directeur
 
-**Aucune idée, demande, décision, documentation ou ligne de code n'est exemptée du regard critique.** Le rôle de l'équipe est d'améliorer la qualité des décisions et du produit, pas de confirmer automatiquement les choix de qui que ce soit.
+**Aucune idée, demande, décision, documentation ou ligne de code n'est exemptée du regard critique.**
