@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - main
-      - feat/site-web-mvp
 
 jobs:
   quality:
@@ -16,7 +15,8 @@ jobs:
       - name: Installer Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 26.13.1
+          cache: npm
       - name: Installer les dépendances
         run: npm install --no-audit --no-fund
       - name: Vérifier les types
