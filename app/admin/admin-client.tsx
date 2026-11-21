@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { createClient, type Session } from "@supabase/supabase-js";
 import { parseFichePrenom, type FichePrenomImport } from "@/lib/fiche-prenom";
 import styles from "./admin.module.css";
@@ -55,16 +55,21 @@ export function AdminClient() {
     };
   }, []);
 
-  async function connecter(event: React.FormEvent<HTMLFormElement>) {
+  async function connecter(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setBusy(true);
     setMessage("");
-    const { error } = await supabase.auth.signInWithOtp({
-      email: email.trim(),
-      options: { emailRedirectTo: `${window.location.origin}/admin`, shouldCreateUser: false }
-    });
-    setMessage(error ? "Le lien de connexion n'a pas pu être envoyé." : "Un lien de connexion vient d'être envoyé si cette adresse est autorisée.");
-    setBusy(false);
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        email: email.trim(),
+        options: { emailRedirectTo: `${window.location.origin}/admin`, shouldCreateUser: false }
+      });
+      setMessage(error ? "Le lien de connexion n'a pas pu être envoyé." : "Un lien de connexion vient d'être envoyé si cette adresse existe et est autorisée.");
+    } catch {
+      setMessage("Le service de connexion est momentanément indisponible.");
+    } finally {
+      setBusy(false);
+    }
   }
 
   function previsualiser() {
@@ -78,7 +83,7 @@ export function AdminClient() {
     }
   }
 
-  async function importer(event: React.FormEvent<HTMLFormElement>) {
+  async function importer(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!session) return;
 
