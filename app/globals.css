@@ -69,7 +69,6 @@ h1 em,h2 em{color:#66816a;font-weight:500}
 .approach-copy>p{font-size:15px;line-height:1.9;color:#d0d9ce;margin-bottom:34px}
 .principles{border-top:1px solid rgba(255,255,255,.17)}
 .principles>div{display:flex;gap:20px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.17)}
-.principles>div>span{font-size:10px;color:#b8c8ad;padding-top:3px}
 .principles p{font-size:12px;line-height:1.7;color:#c4d0c3;margin:0}
 .principles strong{font-size:13px;color:#fff}
 .site-footer{background:#1e3027;color:#e9eee3;padding:35px 0}
@@ -179,7 +178,6 @@ h1 em,h2 em{background:var(--rainbow);background-clip:text;-webkit-background-cl
 .approach-inner h2 em{background:none;color:#ffe0a8}
 .approach-copy>p{font-size:14px;line-height:1.7;margin-bottom:20px;color:#fff0fa}
 .principles>div{gap:14px;padding:11px 0}
-.principles>div>span{color:#ffdf9f}
 .principles p{line-height:1.55;color:#f9e7f4}
 .site-footer{background:#30243b;padding:22px 0}
 .footer-brand .brand-mark{background:var(--rainbow);color:#fff}
@@ -241,7 +239,6 @@ body>main{flex:1 0 auto}
 .name-card small,.featured-bottom span,.hero-footnote,
 .footer-note,.source-placeholder,.profile-disclaimer,
 .symbolic-card>span,.symbolic-card small,.claim-status{font-size:12px}
-.principles>div>span{font-size:12px}
 .principles p{font-size:14px;line-height:1.65}
 .demo-notice p{font-size:14px;line-height:1.65}
 .demo-notice strong{font-size:14px}
