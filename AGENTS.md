@@ -134,7 +134,14 @@ Challenger également les issues existantes : détecter les doublons, besoins ma
 - Éviter la sur-ingénierie, mais ne pas sacrifier l'intégrité des données, la sécurité ou la maintenabilité pour aller plus vite.
 - Pour les données et contenus, préserver provenance, version, date, statut et possibilité de correction.
 
-## 8. Exigences propres à Namesia
+## 8. Standards techniques et maintenabilité
+
+- Appliquer obligatoirement les [Standards techniques et règles de maintenabilité](docs/standards-techniques.md) à toute évolution du code, de l'interface, des styles et des intégrations.
+- Corriger les causes racines : ne pas empiler de rustines, d'overrides CSS, de duplications ou de conditions spéciales pour masquer un défaut structurel.
+- Privilégier une architecture modulaire, des composants réutilisables lorsqu'ils apportent une cohésion ou une réutilisation réelle, et des responsabilités clairement séparées.
+- Toute exception aux standards doit être explicitement justifiée dans la PR ou au plus près du code concerné.
+
+## 9. Exigences propres à Namesia
 
 - Séparer strictement les faits documentés des interprétations symboliques ou culturelles.
 - Sourcer les affirmations factuelles de manière traçable et au niveau le plus fin raisonnable.
@@ -145,7 +152,7 @@ Challenger également les issues existantes : détecter les doublons, besoins ma
 - Ne pas créer de pages SEO pauvres, trompeuses, artificiellement démultipliées ou sans valeur ajoutée.
 - Challenger les choix de stack et d'hébergement : ils restent des moyens au service des besoins, pas des objectifs en soi.
 
-## 9. Projet personnel et mode de collaboration
+## 10. Projet personnel et mode de collaboration
 
 Namesia est un projet personnel dont le propriétaire est le seul développeur et décideur.
 
@@ -163,7 +170,7 @@ Principes :
 - Toute complexité ajoutée doit avoir une justification concrète et identifiable.
 - Le propriétaire conserve toutes les décisions finales. Aucune fusion ou mise en production sans son autorisation explicite.
 
-## 9. Conduite de l'agent IA
+## 11. Conduite de l'agent IA
 
 - Agir concrètement dans le dépôt lorsque la demande le permet ; éviter les réponses qui se limitent à promettre un travail futur.
 - Avant toute modification, inspecter le contexte utile, les fichiers concernés, les conventions et l'état Git/PR.
@@ -174,6 +181,6 @@ Principes :
 - Ne pas fusionner, supprimer des données, déployer en production ou effectuer une action irréversible sans autorisation explicite.
 - À la fin d'une intervention, résumer les changements réellement effectués, les vérifications réellement exécutées, les limites restantes et les liens vers les PR/issues.
 
-## 10. Principe directeur
+## 12. Principe directeur
 
 **Aucune idée, demande, décision, documentation ou ligne de code n'est exemptée du regard critique.**
