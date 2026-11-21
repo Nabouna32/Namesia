@@ -159,23 +159,12 @@ begin
 
   if exists (
     select 1
-    from public.name_profiles p
-    where p.name_id = v_name_id and p.status = 'publie'
+    from public.names n
+    where n.id = v_name_id
+      and (n.display_name is distinct from p_display_name
+        or n.gender is distinct from p_gender)
   ) then
-    if exists (
-      select 1
-      from public.names n
-      where n.id = v_name_id
-        and (n.display_name is distinct from p_display_name
-          or n.gender is distinct from p_gender)
-    ) then
-      raise exception 'L''identité d''un prénom déjà publié ne peut pas être modifiée par un simple import.' using errcode = '22023';
-    end if;
-  else
-    update public.names
-    set display_name = p_display_name,
-        gender = p_gender
-    where id = v_name_id;
+    raise exception 'L''identité d''un prénom existant ne peut pas être modifiée par un import.' using errcode = '22023';
   end if;
 
   select coalesce(max(p.version), 0) + 1
