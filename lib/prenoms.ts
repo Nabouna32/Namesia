@@ -33,9 +33,10 @@ const selection = `
 `;
 function convertir(row: JoinedName): Prenom {
   const profile = [...(row.name_profile_versions ?? [])].sort((a, b) => b.version - a.version)[0];
+  const genres: Record<string, string> = { feminin: "Féminin", masculin: "Masculin", mixte: "Mixte" };
   return {
     id: row.id, slug: row.slug, nom: row.display_name, lettre: row.first_letter,
-    genre: row.gender, introduction: profile?.introduction ?? "",
+    genre: genres[row.gender] ?? "Prénom", introduction: profile?.introduction ?? "",
     origine: profile?.origin_text ?? null, histoire: profile?.history_text ?? null,
     usage: profile?.usage_text ?? null, claims: profile?.claims ?? []
   };
@@ -52,6 +53,13 @@ export async function getPrenoms(): Promise<Prenom[]> {
   return (data as unknown as JoinedName[]).map(convertir);
 }
 export async function getPrenom(slug: string): Promise<Prenom | null> {
-  const prenoms = await getPrenoms();
-  return prenoms.find((prenom) => prenom.slug === slug) ?? null;
+  const supabase = createSupabaseServerClient();
+  if (!supabase) return null;
+  const { data, error } = await supabase.from("names").select(selection)
+    .eq("slug", slug).eq("is_published", true)
+    .eq("name_profile_versions.status", "publie")
+    .not("name_profile_versions.published_at", "is", null)
+    .maybeSingle();
+  if (error || !data) return null;
+  return convertir(data as unknown as JoinedName);
 }
