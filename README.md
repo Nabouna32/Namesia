@@ -51,6 +51,7 @@ La charte [AGENTS.md](AGENTS.md) s'applique à tout le dépôt, à chaque contri
 ## Documentation canonique
 
 - [Charte de contribution et de challenge](AGENTS.md)
+- [Standards techniques et règles de maintenabilité](docs/standards-techniques.md)
 - [Vision produit](docs/vision-produit.md)
 - [Architecture cible](docs/architecture.md)
 - [Modèle de données](docs/modele-donnees.md)
