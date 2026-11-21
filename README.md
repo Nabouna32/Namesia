@@ -33,15 +33,11 @@ La clé publishable peut être exposée au navigateur. La sécurité repose sur 
 
 L'administration est disponible sur /admin. La connexion se fait par lien e-mail via Supabase Auth.
 
-Pour activer le premier compte :
+Pour initialiser le premier compte (l'auto-inscription est désactivée) :
 
-1. Dans Supabase, ouvrir Authentication > URL Configuration.
-2. Ajouter l'URL locale http://localhost:3000/admin aux Redirect URLs.
-3. Ajouter également l'URL de production du site lorsqu'elle est connue.
-4. Ouvrir /admin et demander un lien de connexion avec l'adresse e-mail souhaitée.
-5. Ouvrir le lien reçu pour créer la session Supabase Auth.
-6. Dans Supabase, ouvrir Authentication > Users et retrouver l'identifiant UUID du compte.
-7. Dans SQL Editor, autoriser ce compte dans la liste privée :
+1. Dans Supabase, ouvrir Authentication > Users et créer ou inviter manuellement le compte administrateur.
+2. Dans Authentication > URL Configuration, ajouter l'URL locale http://localhost:3000/admin aux Redirect URLs, puis l'URL de production lorsqu'elle sera connue.
+3. Dans SQL Editor, autoriser le compte dans la liste privée :
 
 ```sql
 insert into private.admin_users (user_id)
@@ -51,7 +47,10 @@ where email = lower('adresse-administrateur@example.com')
 on conflict (user_id) do nothing;
 ```
 
-Remplacer l'adresse d'exemple par l'adresse réellement utilisée. La table privée n'est pas exposée à la Data API. L'autorisation est vérifiée côté serveur et par les politiques RLS.
+4. Remplacer l'adresse d'exemple par celle du compte créé.
+5. Ouvrir /admin, demander un lien de connexion et suivre le lien reçu.
+
+La table privée n'est pas exposée à la Data API. L'autorisation est vérifiée côté serveur et par les politiques RLS. Un compte Auth sans entrée dans cette liste n'a aucun droit d'administration.
 
 L'import crée toujours un brouillon. La publication est une action distincte. Une nouvelle publication archive la version précédente.
 
@@ -90,7 +89,7 @@ La charte AGENTS.md s'applique à tout le dépôt, à chaque contribution humain
 - Vision produit : docs/vision-produit.md
 - Architecture : docs/architecture.md
 - Modèle de données : docs/modele-donnees.md
-- Politique éditoriale et transparence IA : docs/politique-editoriale-et-sources.md
+- Principes éditoriaux et transparence IA : docs/politique-editoriale.md
 - Production et import des fiches : docs/pipeline-generation-ia.md
 - Contrat JSON des fiches : schemas/fiche-prenom.schema.json
 - Décisions d'architecture : docs/decisions/
