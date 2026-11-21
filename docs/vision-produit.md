@@ -75,7 +75,7 @@ La direction visuelle retenue pour le site est **arc-en-ciel, chaleureuse et com
 - Réduire les espaces verticaux excessifs : privilégier une densité confortable, des sections rapprochées et des cartes plus compactes, sans sacrifier la lisibilité ni les zones tactiles sur mobile.
 - Éviter les grandes zones décoratives vides qui repoussent le contenu utile sous la ligne de flottaison.
 - Les textes de lecture courante visent une taille de 14 à 16 px sur ordinateur, avec une interligne confortable ; les informations secondaires restent au moins à 12 px lorsqu'elles sont utiles.
-- Les liens de navigation du header restent immédiatement lisibles : 15 px sur ordinateur et au moins 13 px sur mobile, sans agrandir inutilement la hauteur du header.
+- La typographie de navigation utilise des unités relatives (`rem`) et une mise à l'échelle fluide (`clamp()`), afin de respecter les préférences de taille du navigateur tout en restant lisible sur les petits écrans.
 - Éviter les microtextes pour les sources, avertissements, statuts et explications : une information nécessaire à la compréhension ne doit jamais être reléguée dans une taille difficile à lire.
 - Cette direction est une décision de design initiale à réévaluer sur mobile et sur les pages de fiches, à partir du rendu réel et de retours d'usage.
 
