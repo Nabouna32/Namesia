@@ -88,8 +88,8 @@ create unique index name_profiles_one_published_per_name_idx
   where status = 'publie' and published_at is not null;
 
 -- Les privilèges SQL complètent RLS : aucune permission anonyme d'écriture ou d'administration.
-revoke all on table public.admin_users from anon, authenticated;
-grant select on table public.admin_users to authenticated;
+revoke all on table private.admin_users from anon, authenticated;
+grant select on table private.admin_users to authenticated;
 
 revoke all on table public.names, public.name_profiles from anon, authenticated;
 grant select on table public.names, public.name_profiles to anon;
@@ -106,7 +106,7 @@ declare
 begin
   if not exists (
     select 1
-    from public.admin_users a
+    from private.admin_users a
     where a.user_id = (select auth.uid())
   ) then
     raise exception 'Accès administrateur requis' using errcode = '42501';
