@@ -187,7 +187,7 @@ export function AdminClient() {
     setCatalogTotal(0);
     setCatalogOffset(0);
     setCatalogNextOffset(null);
-    rechargerCatalogue();
+    setRefreshKey((current) => current + 1);
   }
 
   async function importer(event: FormEvent<HTMLFormElement>) {
@@ -241,7 +241,7 @@ export function AdminClient() {
       if (!response.ok) throw new Error(result.error ?? "Publication impossible.");
       setMessage("La fiche est publiée. La version précédente, si elle existait, est archivée.");
       setImported(null);
-      setRefreshKey((current) => current + 1);
+      rechargerCatalogue();
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Publication impossible.");
     } finally {
