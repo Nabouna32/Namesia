@@ -77,6 +77,7 @@ La direction visuelle retenue pour le site est **arc-en-ciel, chaleureuse et com
 - Les textes de lecture courante visent une taille de 14 à 16 px sur ordinateur, avec une interligne confortable ; les informations secondaires restent au moins à 12 px lorsqu'elles sont utiles.
 - La typographie de navigation utilise des unités relatives (`rem`) et une mise à l'échelle fluide (`clamp()`), afin de respecter les préférences de taille du navigateur tout en restant lisible sur les petits écrans.
 - Éviter les microtextes pour les sources, avertissements, statuts et explications : une information nécessaire à la compréhension ne doit jamais être reléguée dans une taille difficile à lire.
+- Éviter les numérotations décoratives sans fonction (par exemple 01, 02, 03 devant des principes ou des rubriques) : les titres et la structure sémantique suffisent.
 - Cette direction est une décision de design initiale à réévaluer sur mobile et sur les pages de fiches, à partir du rendu réel et de retours d'usage.
 
 ## 7. Indicateurs à suivre
