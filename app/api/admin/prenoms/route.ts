@@ -81,9 +81,18 @@ export async function POST(request: Request) {
     p_schema_version: fiche.schema_version
   });
 
-  if (error || !data?.[0]) {
+  if (error) {
     console.error("Échec de l'import d'une fiche Namesia :", error);
+    if (error.code === "42501") {
+      return NextResponse.json({ error: "Cette opération nécessite un compte administrateur." }, { status: 403 });
+    }
+    if (error.code === "22023" || error.code === "23505") {
+      return NextResponse.json({ error: "Cette importation entre en conflit avec l'identité ou une version existante." }, { status: 409 });
+    }
     return NextResponse.json({ error: "La fiche n'a pas pu être enregistrée." }, { status: 500 });
+  }
+  if (!data?.[0]) {
+    return NextResponse.json({ error: "La base n'a pas retourné la version créée." }, { status: 500 });
   }
 
   return NextResponse.json({
