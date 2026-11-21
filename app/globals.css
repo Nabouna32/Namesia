@@ -230,3 +230,10 @@ a:focus-visible,button:focus-visible{outline-color:#a14eb2}
  .featured-card{height:160px}
  .section-heading h2{font-size:30px}
 }
+
+
+/* Le pied de page reste en bas même lorsque le contenu est court. */
+html,body{min-height:100%}
+body{min-height:100vh;min-height:100svh;display:flex;flex-direction:column}
+body>main{flex:1 0 auto}
+.site-footer{margin-top:auto}
