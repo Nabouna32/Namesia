@@ -2,29 +2,43 @@
 
 Namesia est une plateforme française de découverte des prénoms : fiches documentées, contenu symbolique clairement contextualisé et outils interactifs pour accompagner la recherche d'un prénom.
 
-## Site web — MVP en construction
+## Application web
 
-Le dépôt contient désormais un premier socle applicatif basé provisoirement sur Next.js, React et TypeScript.
+Le site utilise Next.js App Router, React, TypeScript et Supabase (PostgreSQL).
 
-### Démarrer en local
+### Démarrage local
 
 Prérequis : Node.js 20.9 ou supérieur.
 
 ```bash
+cp .env.example .env.local
 npm install
 npm run dev
 ```
 
 Ouvrir ensuite http://localhost:3000.
 
-Commandes disponibles :
+### Configuration Supabase
+
+Le projet Supabase Namesia est configuré dans la région Europe de l'Ouest. Le schéma et les six premières fiches sont versionnés dans `supabase/migrations/`.
+
+Les variables requises sont :
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+
+La clé publishable est conçue pour être exposée au client ; la sécurité des données repose sur les privilèges SQL et les politiques RLS. Ne jamais utiliser une clé `service_role` ou une clé secrète dans le frontend.
+
+### Commandes
 
 - `npm run dev` : serveur de développement ;
 - `npm run typecheck` : vérification TypeScript ;
 - `npm run build` : build de production ;
 - `npm run start` : serveur de production après build.
 
-Le catalogue contient uniquement quelques fiches de démonstration. Elles ne constituent pas des contenus éditoriaux vérifiés et sont signalées comme telles dans l'interface.
+## Règles éditoriales
+
+Les faits et interprétations symboliques sont séparés. Les affirmations importantes sont atomiques et reliées à des sources. Les hypothèses étymologiques restent identifiées comme telles. Une fiche publiée ne doit pas laisser croire qu'une interprétation symbolique décrit scientifiquement la personnalité d'une personne.
 
 ## Règles de contribution
 
@@ -40,13 +54,3 @@ La charte [AGENTS.md](AGENTS.md) s'applique à tout le dépôt, à chaque contri
 - [Pipeline de génération IA](docs/pipeline-generation-ia.md)
 - [Contrat JSON des fiches](schemas/fiche-prenom.schema.json)
 - [Décisions d'architecture](docs/decisions/)
-
-## Principes non négociables
-
-1. Distinguer les faits vérifiables des interprétations symboliques.
-2. Associer les affirmations factuelles à des sources traçables.
-3. Valider chaque contenu généré avant publication.
-4. Versionner les schémas et conserver l'historique éditorial.
-5. Ne pas créer de pages SEO pauvres, dupliquées ou sans valeur ajoutée.
-6. Faire évoluer la documentation canonique dans chaque PR qui modifie une décision ou un comportement du produit.
-7. Challenger en permanence les idées, hypothèses, décisions et éléments existants ; aucune proposition n'est acceptée par défaut.
