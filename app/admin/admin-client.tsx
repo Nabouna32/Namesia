@@ -86,6 +86,7 @@ export function AdminClient() {
 
   useEffect(() => {
     if (!session || !authorized) return;
+    const accessToken = session.access_token;
     let active = true;
     const offset = catalogOffset;
 
@@ -93,7 +94,7 @@ export function AdminClient() {
       setCatalogLoading(true);
       try {
         const response = await fetch(`/api/admin/prenoms?offset=${offset}`, {
-          headers: { Authorization: `Bearer ${session.access_token}` },
+          headers: { Authorization: `Bearer ${accessToken}` },
           cache: "no-store"
         });
         const result = await response.json() as {
