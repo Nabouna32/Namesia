@@ -26,7 +26,7 @@ Identité stable d'un prénom.
 | gender | feminin, masculin, mixte ou inconnu |
 | created_at | Date de création |
 
-L'initiale est calculée depuis display_name. Un booléen de publication n'est pas stocké ici : la publication appartient à une version de fiche. Après la première publication, slug, display_name et gender sont stables : un import de contenu ne peut pas les modifier silencieusement. Un renommage éventuel devra être une opération administrative dédiée.
+L'initiale est calculée depuis display_name. Un booléen de publication n'est pas stocké ici : la publication appartient à une version de fiche. Dès la création, slug, display_name et gender sont stables : un import de contenu ne peut pas les modifier. Un renommage éventuel devra être une opération administrative dédiée.
 
 ### name_profiles
 
