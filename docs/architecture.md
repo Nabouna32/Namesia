@@ -36,12 +36,16 @@ La génération ne doit pas écrire directement dans les tables publiées. Elle 
 
 | Couche | Cible | Motif |
 |---|---|---|
-| Application web | Next.js + TypeScript | Rendu serveur, routes SEO, composants interactifs |
+| Application web | Next.js 16 + React 19 + TypeScript | Rendu serveur, routes SEO, composants interactifs |
+| Runtime | Node.js 26 LTS | Runtime supporté à long terme et aligné sur Vercel |
 | Données | PostgreSQL via Supabase | Relationnel, contraintes, migrations, API et outillage |
-| Hébergement web | Vercel | Déploiement par branche et previews |
+| Hébergement web | Vercel, production depuis `main` uniquement | Déploiement après fusion ; pas de previews pour préserver le quota |
+| CI | GitHub Actions | Vérifications et build de contrôle sur PR et `main`, sans consommer le quota Vercel |
 | Validation | JSON Schema + validation TypeScript (ex. Zod) | Contrat interopérable et validation applicative |
 | Génération | Adaptateur vers une API de modèle IA | Indépendance vis-à-vis du fournisseur |
 | Tests | Tests unitaires, intégration et E2E | Sécuriser le pipeline et les parcours |
+
+Les versions exactes du socle applicatif sont épinglées dans `package.json` et le runtime local dans `.nvmrc`. Les versions stables sont mises à jour après vérification de leur compatibilité par la CI. Les versions alpha, beta, canary et expérimentales ne sont pas considérées comme des mises à jour de production.
 
 Ces choix sont des hypothèses de départ, pas des engagements irréversibles. Les ADR doivent consigner leur validation après vérification des coûts, limites, sécurité et besoins réels.
 
@@ -106,6 +110,7 @@ Les transitions doivent être explicites et historisées. Une modification d'une
 | Statistiques obsolètes | Séries datées séparées du texte éditorial |
 | Dépendance fournisseur IA | Adaptateur et prompts versionnés |
 | Complexité prématurée | Monolithe modulaire au MVP, pas de microservices |
+| Épuisement du quota de builds | Aucun build Vercel sur PR/branches ; CI GitHub Actions et production uniquement après merge sur `main` |
 
 ## 8. Découpage d'implémentation
 
@@ -120,17 +125,18 @@ Les transitions doivent être explicites et historisées. Une modification d'une
 
 Le socle web et l'intégration Supabase sont provisoirement arbitrés dans l'ADR-0003. La stratégie de recherche documentaire, les seuils éditoriaux, la gestion des statistiques et le workflow de validation restent à formaliser par ADR.
 
-
 ## 10. État réel de la première version
 
 L'ADR [ADR-0003](decisions/ADR-0003-premier-site-web.md) transforme les hypothèses web et données en choix provisoires pour la V1.
 
-- **Application :** Next.js App Router, React et TypeScript.
+- **Application :** Next.js 16.4.6, React 19.3.1, TypeScript 7.0.2.
+- **Runtime :** Node.js 26 LTS (26.x), fixé dans `package.json` et `.nvmrc`.
 - **Données :** projet Supabase Namesia existant, région `eu-west-1`.
 - **Accès public :** lecture depuis les composants serveur avec le SDK Supabase et une clé publishable.
 - **Sécurité :** RLS activé sur chaque table exposée ; politiques de lecture limitées aux prénoms et versions publiés ; aucun droit d'écriture accordé au rôle anonyme.
 - **Catalogue :** six prénoms initiaux ; le site ne contient pas de catalogue de repli codé en dur.
 - **Migrations :** SQL conservé dans `supabase/migrations/`.
+- **CI/CD :** GitHub Actions vérifie les PR et `main` ; Vercel est réservé à `main` après fusion et les previews sont désactivées.
 
 Cette implémentation est volontairement plus petite que l'architecture cible : les formes linguistiques, profils par marché/langue, observations statistiques, génération et administration restent à concevoir et à migrer. Ne pas considérer le schéma initial comme la cible complète.
 
