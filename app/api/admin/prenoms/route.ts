@@ -17,10 +17,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Le fichier JSON dépasse la limite de 64 Ko." }, { status: 413 });
     }
     payload = JSON.parse(raw);
-  } catch (error) {
-    if (error instanceof Error && error.message.includes("64 Ko")) {
-      return NextResponse.json({ error: error.message }, { status: 413 });
-    }
+  } catch {
     return NextResponse.json({ error: "Le corps de la requête doit être un JSON valide." }, { status: 400 });
   }
 
