@@ -121,7 +121,7 @@ Les transitions doivent être explicites et historisées. Une modification d'une
 Les choix de stack, de stratégie de recherche documentaire, de seuil éditorial, de gestion des statistiques et de workflow de validation devront faire l'objet d'ADR lorsqu'ils seront arbitrés.
 
 
-## 8. État réel de la première version
+## 10. État réel de la première version
 
 L'ADR [ADR-0003](decisions/ADR-0003-premier-site-web.md) transforme les hypothèses web et données en choix provisoires pour la V1.
 
