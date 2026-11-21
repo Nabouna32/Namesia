@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="fr"><body>
+  return <html lang="fr" data-scroll-behavior="smooth"><body>
     <header className="site-header"><div className="header-inner">
       <Link className="brand" href="/" aria-label="Namesia, accueil"><span className="brand-mark">n.</span><span>namesia</span></Link>
       <nav aria-label="Navigation principale"><Link href="/prenoms">Explorer les prénoms</Link><a href="/#approche">Notre approche</a></nav>
