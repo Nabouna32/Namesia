@@ -111,7 +111,7 @@ Une fiche n'est publiable que si :
 Toute nouvelle famille de contenus (personnalités, astrologie, compatibilité, prénoms régionaux, etc.) doit être ajoutée ici avant d'être intégrée au prompt de génération ou au site.
 
 
-## 9. Corpus initial de la V1
+## 8. Corpus initial de la V1
 
 Le premier jeu de six fiches (Alice, Gabriel, Emma, Louis, Lina et Noah) sert à alimenter l'expérience publique et à valider le circuit de lecture Supabase.
 
