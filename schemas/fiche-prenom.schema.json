@@ -1,0 +1,429 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:namesia:schema:fiche-prenom:1.0.0",
+  "title": "Fiche prénom Namesia",
+  "description": "Contrat de contenu versionné. Les faits, leurs sources et les interprétations symboliques sont séparés.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "identity",
+    "locale",
+    "editorial"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "canonical_name",
+        "slug"
+      ],
+      "properties": {
+        "canonical_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "maxLength": 120
+        },
+        "usage_gender": {
+          "type": "string",
+          "enum": [
+            "masculin",
+            "feminin",
+            "mixte",
+            "inconnu"
+          ]
+        },
+        "forms": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "form",
+              "type"
+            ],
+            "properties": {
+              "form": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "variante",
+                  "diminutif",
+                  "forme_ancienne",
+                  "translitteration",
+                  "autre"
+                ]
+              },
+              "language": {
+                "type": "string",
+                "maxLength": 35
+              }
+            }
+          }
+        }
+      }
+    },
+    "locale": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "market",
+        "language"
+      ],
+      "properties": {
+        "market": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "language": {
+          "type": "string",
+          "pattern": "^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$"
+        }
+      }
+    },
+    "editorial": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "summary",
+        "facts",
+        "symbolism"
+      ],
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 600
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "etymology",
+            "history",
+            "celebration",
+            "variants"
+          ],
+          "properties": {
+            "etymology": {
+              "$ref": "#/$defs/factualSection"
+            },
+            "history": {
+              "$ref": "#/$defs/factualSection"
+            },
+            "celebration": {
+              "$ref": "#/$defs/factualSection"
+            },
+            "variants": {
+              "$ref": "#/$defs/factualSection"
+            },
+            "geographic_usage": {
+              "$ref": "#/$defs/factualSection"
+            }
+          }
+        },
+        "symbolism": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "intro",
+            "associations"
+          ],
+          "properties": {
+            "intro": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500
+            },
+            "associations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/symbolicAssociation"
+              }
+            }
+          }
+        }
+      }
+    },
+    "statistics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "metric",
+          "value",
+          "period",
+          "market",
+          "source_ids"
+        ],
+        "properties": {
+          "metric": {
+            "type": "string",
+            "enum": [
+              "births",
+              "rank",
+              "other"
+            ]
+          },
+          "value": {
+            "type": "number",
+            "minimum": 0
+          },
+          "unit": {
+            "type": "string",
+            "maxLength": 30
+          },
+          "period": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 20
+          },
+          "market": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$"
+          },
+          "source_ids": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "editorial_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_verified_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "prompt_version": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "model": {
+          "type": "string",
+          "maxLength": 100
+        }
+      }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "source_type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "publisher": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "author": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "source_type": {
+          "type": "string",
+          "enum": [
+            "institutionnelle",
+            "ouvrage",
+            "publication_scientifique",
+            "archive",
+            "base_statistique",
+            "autre"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "published_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "accessed_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
+    },
+    "factualSection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "claims"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "maxLength": 3000
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/factualClaim"
+          }
+        },
+        "editorial_note": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
+    },
+    "symbolicAssociation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "category",
+        "value",
+        "framework",
+        "disclaimer"
+      ],
+      "properties": {
+        "category": {
+          "type": "string",
+          "enum": [
+            "personnalite",
+            "qualite",
+            "couleur",
+            "pierre",
+            "animal",
+            "numerologie",
+            "autre"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "framework": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "explanation": {
+          "type": "string",
+          "maxLength": 1500
+        },
+        "disclaimer": {
+          "const": "Interprétation symbolique ou culturelle, sans valeur scientifique ou prédictive."
+        },
+        "source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "factualClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "claim_status",
+        "source_ids"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "claim_status": {
+          "type": "string",
+          "enum": [
+            "etabli",
+            "discute",
+            "incertain",
+            "non_documente"
+          ]
+        },
+        "source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "evidence_note": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "claim_status": {
+                "enum": [
+                  "etabli",
+                  "discute"
+                ]
+              }
+            },
+            "required": [
+              "claim_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "source_ids": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
