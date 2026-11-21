@@ -14,7 +14,7 @@ Namesia doit être construit comme un produit directement présentable à un vis
 - Accéder à PostgreSQL depuis les composants serveur avec `@supabase/supabase-js` et une clé publishable.
 - Protéger toutes les tables exposées avec RLS et n'accorder en lecture publique que les fiches publiées.
 - Versionner les fiches, séparer les sources et les affirmations atomiques.
-- Fournir six fiches initiales : Alice, Gabriel, Emma, Louis, Lina et Noah.
+- Fournir six fiches initiales : Alice, Gabriel, Emma, Louis, Lina et Noah, chacune avec un repère symbolique ou culturel contextualisé.
 - Garder les parcours publics exempts de messages de debug et d'étiquettes « données de test ».
 
 ## Options et compromis
