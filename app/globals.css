@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap');
-
-:root{--ink:#242a25;--muted:#69716a;--paper:#f7f7f2;--green:#294d3b;--lime:#d5e2b9;--line:#e2e5dc;--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",Arial,sans-serif}
+:root{--ink:#242a25;--muted:#69716a;--paper:#f7f7f2;--green:#294d3b;--lime:#d5e2b9;--line:#e2e5dc;--serif:Georgia,"Times New Roman",serif;--sans:Arial,Helvetica,sans-serif}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
