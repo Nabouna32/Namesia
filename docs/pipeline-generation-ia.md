@@ -38,7 +38,7 @@ Règles :
 6. La base crée une nouvelle version en brouillon.
 7. Après relecture de la prévisualisation, publier explicitement.
 
-L'import ne remplace jamais directement la version publiée. La page d'administration liste les fiches et leurs versions, ce qui permet de retrouver un brouillon après reconnexion, de le prévisualiser et de le publier. Après la première publication, l'identité du prénom (slug, graphie et genre) est stable ; un changement d'identité ne passe pas par un simple import de contenu.
+L'import ne remplace jamais directement la version publiée. La page d'administration liste les fiches et leurs versions, ce qui permet de retrouver un brouillon après reconnexion, de le prévisualiser et de le publier. Dès la création, l'identité du prénom (slug, graphie et genre) est stable ; un changement d'identité ne passe pas par un simple import de contenu.
 
 ## 4. Contrôles effectués par l'application
 
