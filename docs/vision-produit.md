@@ -2,7 +2,7 @@
 
 - **Statut :** document canonique initial
 - **Version :** 1.0
-- **Mis à jour :** 2026-11-21
+- **Mis à jour :** 2026-11-22
 
 ## 1. Positionnement
 
@@ -74,6 +74,8 @@ La direction visuelle retenue pour le site est **arc-en-ciel, chaleureuse et com
 - Garder un contraste suffisant pour les textes, les contrôles et les états interactifs ; l'arc-en-ciel est un langage visuel, pas un substitut aux couleurs fonctionnelles.
 - Réduire les espaces verticaux excessifs : privilégier une densité confortable, des sections rapprochées et des cartes plus compactes, sans sacrifier la lisibilité ni les zones tactiles sur mobile.
 - Éviter les grandes zones décoratives vides qui repoussent le contenu utile sous la ligne de flottaison.
+- Les textes de lecture courante visent une taille de 14 à 16 px sur ordinateur, avec une interligne confortable ; les informations secondaires restent au moins à 12 px lorsqu'elles sont utiles.
+- Éviter les microtextes pour les sources, avertissements, statuts et explications : une information nécessaire à la compréhension ne doit jamais être reléguée dans une taille difficile à lire.
 - Cette direction est une décision de design initiale à réévaluer sur mobile et sur les pages de fiches, à partir du rendu réel et de retours d'usage.
 
 ## 7. Indicateurs à suivre
