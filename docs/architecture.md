@@ -112,7 +112,7 @@ La migration de simplification doit :
 3. corriger les contraintes, privilèges et fonctions de publication ;
 4. vérifier les politiques RLS et les accès Data API.
 
-Les migrations déjà appliquées sont synchronisées avec les versions Supabase. La migration destructive finale est préparée dans le dépôt et comporte des contrôles bloquants de reprise des données. Elle reste à appliquer après validation du build et revue du SQL ; aucun déploiement Vercel n'est déclenché par cette opération.
+Les migrations déjà appliquées sont synchronisées avec les versions Supabase. La migration destructive finale est préparée dans le dépôt et comporte des contrôles bloquants de reprise des données. Elle ne doit être appliquée qu'après fusion et déploiement de la version applicative qui lit exclusivement le modèle JSONB : la production actuelle peut encore dépendre des anciennes tables. Avant son application, effectuer une sauvegarde Supabase et relire le SQL ; l'exécution exige une autorisation explicite. Aucun déploiement Vercel n'est déclenché par cette opération.
 
 ## 9. Stack
 
