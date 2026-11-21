@@ -119,3 +119,19 @@ Les transitions doivent être explicites et historisées. Une modification d'une
 ## 9. Décisions à formaliser
 
 Les choix de stack, de stratégie de recherche documentaire, de seuil éditorial, de gestion des statistiques et de workflow de validation devront faire l'objet d'ADR lorsqu'ils seront arbitrés.
+
+
+## 8. État réel de la première version
+
+L'ADR [ADR-0003](decisions/ADR-0003-premier-site-web.md) transforme les hypothèses web et données en choix provisoires pour la V1.
+
+- **Application :** Next.js App Router, React et TypeScript.
+- **Données :** projet Supabase Namesia existant, région `eu-west-1`.
+- **Accès public :** lecture depuis les composants serveur avec le SDK Supabase et une clé publishable.
+- **Sécurité :** RLS activé sur chaque table exposée ; politiques de lecture limitées aux prénoms et versions publiés ; aucun droit d'écriture accordé au rôle anonyme.
+- **Catalogue :** six prénoms initiaux ; le site ne contient pas de catalogue de repli codé en dur.
+- **Migrations :** SQL conservé dans `supabase/migrations/`.
+
+Cette implémentation est volontairement plus petite que l'architecture cible : les formes linguistiques, profils par marché/langue, observations statistiques, génération et administration restent à concevoir et à migrer. Ne pas considérer le schéma initial comme la cible complète.
+
+La première connexion Supabase est documentée dans le README et isolée dans `lib/supabase/server.ts` et `lib/prenoms.ts`. Les pages publiques ne doivent jamais utiliser de clé privilégiée.
