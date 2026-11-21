@@ -61,7 +61,7 @@ export function AdminClient() {
     setMessage("");
     const { error } = await supabase.auth.signInWithOtp({
       email: email.trim(),
-      options: { emailRedirectTo: `${window.location.origin}/admin` }
+      options: { emailRedirectTo: `${window.location.origin}/admin`, shouldCreateUser: false }
     });
     setMessage(error ? "Le lien de connexion n'a pas pu être envoyé." : "Un lien de connexion vient d'être envoyé si cette adresse est autorisée.");
     setBusy(false);
@@ -188,7 +188,7 @@ export function AdminClient() {
       }} placeholder={'{"schema_version":"2.0.0","identity":{...},"content":{...}}'} />
       <div className={styles.actions}>
         <button className={styles.secondary} type="button" disabled={busy || !json.trim()} onClick={previsualiser}>Prévisualiser</button>
-        <button className="button button-dark" type="submit" disabled={busy || !json.trim()}>{busy ? "Import…" : "Enregistrer en brouillon"}</button>
+        <button className="button button-dark" type="submit" disabled={busy || !preview}>{busy ? "Import…" : "Enregistrer en brouillon"}</button>
       </div>
     </form>
     {preview && <article className={styles.preview}>
