@@ -53,9 +53,11 @@ Références bibliographiques ou numériques vérifiées.
 ### `claims`
 Affirmations factuelles atomiques liées à une version.
 - `id`, `version_id`, `field_path`, `claim_text`.
-- `source_id`, `evidence_note`.
-- `confidence` facultatif et défini par une méthode documentée.
-- Une affirmation sans source vérifiée ne doit pas être promue comme fait établi.
+- Une affirmation atomique par enregistrement : `id`, `version_id`, `field_path`, `claim_text`.
+- `source_id` et `evidence_note` pour relier chaque affirmation à sa preuve.
+- `claim_status` : établi, discuté, incertain ou non documenté.
+- Une affirmation établie ou discutée doit avoir au moins une source ; le contrôle de pertinence reste humain.
+- Pas de score de confiance numérique sans méthode validée.
 
 ### `symbolic_associations`
 Interprétations symboliques distinctes des faits.
@@ -98,7 +100,11 @@ Traçabilité du pipeline.
 7. Les slugs sont stables ; une modification de slug nécessite une redirection permanente.
 8. Le statut de publication appartient à la version, pas à une sortie libre du modèle.
 
-## 5. À préciser avant migration SQL
+## 5. Sources statistiques et éditoriales
+
+La politique détaillée est maintenue dans [Politique éditoriale et sources](politique-editoriale-et-sources.md). Le fichier des prénoms de l'Insee est la référence pour les naissances en France ; il ne mesure pas les personnes vivantes portant un prénom. Les statistiques sont stockées comme observations datées et reliées à une source.
+
+## 6. À préciser avant migration SQL
 
 - Authentification et rôles de relecteurs.
 - Référentiel de fiabilité des sources.
