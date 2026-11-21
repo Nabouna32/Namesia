@@ -89,6 +89,7 @@ export function AdminClient() {
     const accessToken = session.access_token;
     let active = true;
     const offset = catalogOffset;
+    const accessToken = session.access_token;
 
     async function chargerCatalogue() {
       setCatalogLoading(true);
@@ -156,7 +157,7 @@ export function AdminClient() {
     setMessage("");
     try {
       const response = await fetch(`/api/admin/prenoms/${profile.id}`, {
-        headers: { Authorization: `Bearer ${session.access_token}` },
+        headers: { Authorization: `Bearer ${accessToken}` },
         cache: "no-store"
       });
       const result = await response.json() as {
