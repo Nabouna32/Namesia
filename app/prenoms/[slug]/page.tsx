@@ -22,10 +22,10 @@ export default async function FichePrenom({ params }: Props) {
     <Link href="/prenoms" className="back-link">← Tous les prénoms</Link>
     <div className="profile-heading"><span className="eyebrow">Prénom · {prenom.genre}</span><h1>{prenom.nom}<span>.</span></h1><p>{prenom.introduction}</p></div>
     <div className="profile-grid">
-      {prenom.origine && <section className="profile-panel"><span className="panel-index">01 / ÉTYMOLOGIE</span><h2>Origine & signification</h2><p className="profile-copy">{prenom.origine}</p></section>}
-      {prenom.histoire && <section className="profile-panel"><span className="panel-index">02 / REPÈRES HISTORIQUES</span><h2>Histoire du prénom</h2><p className="profile-copy">{prenom.histoire}</p></section>}
-      {prenom.usage && <section className="profile-panel"><span className="panel-index">03 / AUJOURD'HUI</span><h2>Variantes & usages</h2><p className="profile-copy">{prenom.usage}</p></section>}
-      <section className="profile-panel"><span className="panel-index">04 / POUR ALLER PLUS LOIN</span><h2>Repères documentaires</h2>
+      {prenom.origine && <section className="profile-panel"><h2>Origine & signification</h2><p className="profile-copy">{prenom.origine}</p></section>}
+      {prenom.histoire && <section className="profile-panel"><h2>Histoire du prénom</h2><p className="profile-copy">{prenom.histoire}</p></section>}
+      {prenom.usage && <section className="profile-panel"><h2>Variantes & usages</h2><p className="profile-copy">{prenom.usage}</p></section>}
+      <section className="profile-panel"><h2>Repères documentaires</h2>
         {prenom.claims.length ? <ul className="claim-list">{prenom.claims.map((claim) => <li key={claim.id}><p>{claim.content}</p><span className={claim.claim_status === "etabli" ? "claim-status" : "claim-status claim-discussed"}>{claim.claim_status === "etabli" ? "Repère établi" : "Piste à nuancer"}</span></li>)}</ul> : <p className="profile-copy">Les références de cette fiche seront enrichies au fil des recherches.</p>}
       </section>
     </div>
