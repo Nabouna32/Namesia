@@ -1,73 +1,81 @@
-# Production et import des fiches IA — Namesia
+# Génération et import des fiches — Namesia
 
-- **Statut :** procédure canonique de la V1
-- **Version :** 1.1
+- **Statut :** procédure cible de la V1
+- **Version :** 2.0
 - **Mis à jour :** 2026-11-22
 
-## 1. Objectif
+## 1. Périmètre réel
 
-Permettre de produire une fiche avec un assistant IA (conversation) ou un outil externe (API), puis de l'intégrer dans Namesia sans modifier le code.
+Namesia ne génère pas actuellement les fiches dans son application. Le contenu est produit en amont :
+- par une API de modèle IA ;
+- ou dans une conversation avec un assistant.
 
-Namesia ne génère pas encore les contenus et ne vérifie pas indépendamment leur exactitude.
+Le résultat est ensuite fourni à Namesia au format JSON. L'application assure la validation structurelle, la prévisualisation, l'enregistrement en brouillon et la publication explicite.
 
-## 2. Production du JSON
+La génération par IA n'est pas une vérification documentaire. La validation technique du JSON ne confirme pas l'exactitude des étymologies, dates, traditions ou usages.
 
-Le modèle reçoit le prénom et les consignes éditoriales utiles. Il retourne uniquement un objet conforme à schemas/fiche-prenom.schema.json, version 2.0.0.
+## 2. Contrat de sortie
 
-Le JSON contient :
-- l'identité du prénom : slug, graphie affichée et genre ;
-- une introduction ;
-- des textes facultatifs sur l'origine, l'histoire et les usages ;
-- zéro à douze associations symboliques contextualisées.
+Le fichier doit respecter exactement [schemas/fiche-prenom.schema.json](../schemas/fiche-prenom.schema.json).
 
-Le modèle ne fournit ni identifiant de base, ni numéro de version, ni statut, ni date de publication. Il ne décide jamais de publier.
+Règles :
+- JSON strict, sans commentaire ni texte avant/après ;
+- `schema_version` doit correspondre à une version prise en charge ;
+- `identity` contient le slug, le nom affiché et le genre ;
+- `content` contient l'introduction et les rubriques disponibles ;
+- aucune propriété inconnue ;
+- aucun statut de publication, date interne, identifiant de base ou rôle administrateur ;
+- ne pas inventer de contenu pour remplir les rubriques facultatives ;
+- ne pas inventer de sources, références ou statuts de preuve.
 
-## 3. Import dans l'administration
+## 3. Import dans Namesia
 
-1. Se connecter à /admin avec un compte autorisé.
-2. Charger le fichier JSON ou coller son contenu.
-3. L'administration vérifie que le JSON est valide et respecte le contrat.
-4. Le backend vérifie à nouveau les données et les limites de taille.
-5. Une fonction SQL atomique crée ou met à jour l'identité du prénom et ajoute une version en brouillon.
-6. L'administrateur peut prévisualiser la fiche sur le site et corriger le JSON en important une nouvelle version.
+1. Se connecter à `/admin` avec un compte autorisé.
+2. Sélectionner un fichier JSON ou coller son contenu.
+3. Prévisualiser le document et contrôler les textes et associations.
+4. Corriger le JSON en amont si nécessaire.
+5. Importer : l'API valide de nouveau le contrat côté serveur.
+6. La base crée une nouvelle version en `brouillon`.
+7. Après relecture de la prévisualisation, publier explicitement.
 
-Un import ne modifie jamais la version publique existante.
+L'import ne remplace jamais directement la version publiée.
 
-## 4. Validation : ce qui est contrôlé et ce qui ne l'est pas
+## 4. Contrôles effectués par l'application
 
-### Contrôles automatiques
-- JSON strictement parseable ;
-- version de schéma prise en charge ;
-- propriétés inconnues refusées ;
-- types, longueurs et formats contrôlés ;
-- slug et genre conformes ;
-- nombre et structure des associations symboliques contrôlés ;
-- statut et version attribués côté serveur ;
-- compte administrateur vérifié par Supabase Auth et RLS.
+Les contrôles automatiques portent sur :
+- la syntaxe JSON ;
+- la version du schéma ;
+- les propriétés autorisées ;
+- les types et longueurs des champs ;
+- le format du slug ;
+- les valeurs autorisées du genre ;
+- la taille maximale de l'import ;
+- l'autorisation administrateur ;
+- l'unicité et la numérotation des versions ;
+- les transitions de publication.
 
-### Hors contrôle automatique
-- exactitude de l'étymologie ;
-- exactitude historique ;
-- existence ou pertinence d'une tradition ;
-- absence d'hallucination ;
-- originalité éditoriale ;
-- qualité SEO ou valeur informative réelle.
-
-Un JSON valide n'est pas un contenu vérifié. La prévisualisation est une revue éditoriale personnelle, pas une validation scientifique.
+Ces contrôles sont des contrôles de structure et de cohérence applicative. Ils ne constituent pas un contrôle factuel.
 
 ## 5. Publication
 
-La publication est une action distincte réservée à un administrateur. Elle archive l'ancienne version et publie la version choisie dans une transaction SQL.
+- La publication est une action humaine explicite.
+- Le backend vérifie le compte administrateur.
+- La fonction SQL n'accepte qu'une version existante en brouillon.
+- L'ancienne version publiée est archivée dans la même transaction.
+- Une seule version est publique par prénom.
+- Les dates et statuts sont définis par Namesia, jamais par le JSON.
 
-Le contenu fourni par le modèle ne peut pas contourner cette étape. Les visiteurs ne peuvent lire que les versions publiées.
+## 6. Sécurité
 
-## 6. Évolutions non implémentées
+- La page d'administration n'est pas une frontière de sécurité.
+- Chaque route administrative vérifie le jeton Supabase et l'autorisation présente dans `admin_users`.
+- Les fonctions SQL vérifient également le rôle administrateur.
+- Aucune clé privilégiée Supabase n'est envoyée au navigateur.
+- L'auto-inscription publique n'est pas nécessaire : seuls les comptes Auth préalablement autorisés peuvent administrer le catalogue.
+- Les tables internes ne doivent pas être exposées à `anon`.
 
-- Génération directement depuis l'administration.
-- Historique des modèles, prompts, coûts et tokens.
-- Import par lots.
-- Contrôle anti-doublon sémantique.
-- Références et vérification documentaire.
-- Statistiques sourcées.
+## 7. Limites et évolutions
 
-Ne pas ajouter ces mécanismes avant d'avoir un usage concret et une méthode fiable.
+Ne pas ajouter de pipeline de génération, de journal de tokens, de coût fournisseur, de stockage de prompts ou de gestion de sources tant que Namesia n'exécute pas réellement ces opérations et qu'un besoin concret n'existe pas.
+
+Si une génération automatisée est intégrée plus tard, elle devra produire le même contrat JSON et rester séparée de l'import et de la publication.
