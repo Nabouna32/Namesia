@@ -15,22 +15,22 @@ type JoinedName = {
   display_name: string;
   gender: string;
   name_profiles: {
-    id: string;
-    version: number;
     content: unknown;
   }[];
 };
 
 const selection = `
   id, slug, display_name, gender,
-  name_profiles!inner ( id, version, content )
+  name_profiles!inner ( content )
 `;
 
 function convertir(row: JoinedName): Prenom {
-  const profile = [...(row.name_profiles ?? [])].sort((a, b) => b.version - a.version)[0];
-  if (!profile) {
-    throw new Error(`Aucune version publiée trouvée pour le prénom "${row.slug}".`);
+  const profiles = row.name_profiles ?? [];
+  if (profiles.length !== 1) {
+    throw new Error(`Le prénom "${row.slug}" doit avoir exactement une version publiée.`);
   }
+
+  const [profile] = profiles;
 
   const genres: Record<string, string> = {
     feminin: "Féminin",
