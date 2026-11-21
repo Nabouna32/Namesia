@@ -12,7 +12,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return <html lang="fr" data-scroll-behavior="smooth"><body>
     <header className="site-header"><div className="header-inner">
       <Link className="brand" href="/" aria-label="Namesia, accueil"><span className="brand-mark">n.</span><span>namesia</span></Link>
-      <nav aria-label="Navigation principale"><Link href="/prenoms">Explorer les prénoms</Link><a href="/#approche">Notre approche</a></nav>
+      <nav className="site-nav" aria-label="Navigation principale"><Link href="/prenoms">Explorer les prénoms</Link><a href="/#approche">Notre approche</a></nav>
     </div></header>
     {children}
     <footer className="site-footer"><div className="footer-inner">
