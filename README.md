@@ -41,7 +41,7 @@ Après fusion autorisée de la PR et déploiement de la nouvelle version :
 3. Vérifier le schéma, les privilèges, RLS et les six fiches publiées.
 4. Initialiser ensuite le premier administrateur selon la procédure ci-dessous.
 
-Cette migration est destructive pour les anciennes tables documentaires et colonnes redondantes. Elle contrôle la reprise des contenus éditoriaux et des associations symboliques avant leur suppression.
+Cette migration est destructive pour les anciennes tables documentaires et colonnes redondantes. Elle contrôle la reprise des contenus éditoriaux et des associations symboliques avant leur suppression. **Une sauvegarde ou un export SQL préalable de la base est obligatoire**, notamment des tables sources, claims, claim_sources, symbolic_associations et name_profile_versions. Ne pas appliquer la migration si cette sauvegarde n'est pas disponible.
 
 ### Premier accès à l'administration
 
