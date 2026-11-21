@@ -66,7 +66,17 @@ Chaque fiche publiée doit :
 
 Les pages de filtres, recherches internes et combinaisons sans contenu éditorial propre ne doivent pas créer de pièges à indexation.
 
-## 6. Indicateurs à suivre
+## 6. Direction visuelle et expérience
+
+La direction visuelle retenue pour le site est **arc-en-ciel, chaleureuse et compacte**.
+
+- Utiliser une palette multicolore visible (rose, orange, jaune, vert, bleu, violet), avec des dégradés et des aplats pastel pour éviter un rendu agressif.
+- Garder un contraste suffisant pour les textes, les contrôles et les états interactifs ; l'arc-en-ciel est un langage visuel, pas un substitut aux couleurs fonctionnelles.
+- Réduire les espaces verticaux excessifs : privilégier une densité confortable, des sections rapprochées et des cartes plus compactes, sans sacrifier la lisibilité ni les zones tactiles sur mobile.
+- Éviter les grandes zones décoratives vides qui repoussent le contenu utile sous la ligne de flottaison.
+- Cette direction est une décision de design initiale à réévaluer sur mobile et sur les pages de fiches, à partir du rendu réel et de retours d'usage.
+
+## 7. Indicateurs à suivre
 
 - Part des fiches publiées disposant de sources exploitables.
 - Taux de corrections après publication.
