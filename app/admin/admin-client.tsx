@@ -18,7 +18,6 @@ type ProfileRow = {
   status: "brouillon" | "publie" | "archive";
   created_at: string;
   published_at: string | null;
-  content: unknown;
 };
 type NameRow = {
   id: string;
@@ -45,6 +44,9 @@ export function AdminClient() {
   const [busy, setBusy] = useState(false);
   const [catalog, setCatalog] = useState<NameRow[]>([]);
   const [catalogLoading, setCatalogLoading] = useState(false);
+  const [catalogTotal, setCatalogTotal] = useState(0);
+  const [catalogOffset, setCatalogOffset] = useState(0);
+  const [catalogNextOffset, setCatalogNextOffset] = useState<number | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [imported, setImported] = useState<ImportResult | null>(null);
 
@@ -83,17 +85,27 @@ export function AdminClient() {
   useEffect(() => {
     if (!session || !authorized) return;
     let active = true;
+    const offset = catalogOffset;
 
     async function chargerCatalogue() {
       setCatalogLoading(true);
       try {
-        const response = await fetch("/api/admin/prenoms", {
-          headers: { Authorization: `Bearer ${session!.access_token}` },
+        const response = await fetch(`/api/admin/prenoms?offset=${offset}`, {
+          headers: { Authorization: `Bearer ${session.access_token}` },
           cache: "no-store"
         });
-        const result = await response.json() as { names?: NameRow[]; error?: string };
+        const result = await response.json() as {
+          names?: NameRow[];
+          total?: number;
+          nextOffset?: number | null;
+          error?: string;
+        };
         if (!response.ok) throw new Error(result.error ?? "Chargement du catalogue impossible.");
-        if (active) setCatalog(result.names ?? []);
+        if (active) {
+          setCatalog((current) => offset === 0 ? result.names ?? [] : [...current, ...(result.names ?? [])]);
+          setCatalogTotal(result.total ?? 0);
+          setCatalogNextOffset(result.nextOffset ?? null);
+        }
       } catch (error) {
         if (active) setMessage(error instanceof Error ? error.message : "Chargement du catalogue impossible.");
       } finally {
@@ -105,7 +117,7 @@ export function AdminClient() {
     return () => {
       active = false;
     };
-  }, [session?.access_token, authorized, refreshKey]);
+  }, [session?.access_token, authorized, refreshKey, catalogOffset]);
 
   async function connecter(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -135,30 +147,47 @@ export function AdminClient() {
     }
   }
 
-  function previsualiserVersion(name: NameRow, profile: ProfileRow) {
+  async function previsualiserVersion(profile: ProfileRow) {
+    if (!session) return;
+    setBusy(true);
+    setMessage("");
     try {
-      const fiche = parseFichePrenom({
-        schema_version: profile.schema_version,
-        identity: {
-          slug: name.slug,
-          display_name: name.display_name,
-          gender: name.gender
-        },
-        content: profile.content
+      const response = await fetch(`/api/admin/prenoms/${profile.id}`, {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+        cache: "no-store"
       });
+      const result = await response.json() as {
+        fiche?: FichePrenomImport;
+        status?: ProfileRow["status"];
+        version?: number;
+        error?: string;
+      };
+      if (!response.ok || !result.fiche) throw new Error(result.error ?? "Prévisualisation impossible.");
+
+      const fiche = parseFichePrenom(result.fiche);
       setJson(JSON.stringify(fiche, null, 2));
       setPreview(fiche);
-      setImported(profile.status === "brouillon"
-        ? { profileId: profile.id, version: profile.version }
+      setImported(result.status === "brouillon"
+        ? { profileId: profile.id, version: result.version ?? profile.version }
         : null);
-      setMessage(profile.status === "brouillon"
+      setMessage(result.status === "brouillon"
         ? "Brouillon chargé. Tu peux le corriger en important une nouvelle version ou le publier."
         : `Version ${profile.version} en lecture seule.`);
     } catch (error) {
       setPreview(null);
       setImported(null);
-      setMessage(error instanceof Error ? error.message : "Cette version ne respecte plus le contrat actuel.");
+      setMessage(error instanceof Error ? error.message : "Prévisualisation impossible.");
+    } finally {
+      setBusy(false);
     }
+  }
+
+  function rechargerCatalogue() {
+    setCatalog([]);
+    setCatalogTotal(0);
+    setCatalogOffset(0);
+    setCatalogNextOffset(null);
+    rechargerCatalogue();
   }
 
   async function importer(event: FormEvent<HTMLFormElement>) {
@@ -190,7 +219,7 @@ export function AdminClient() {
       const result = await response.json() as ImportResult & { error?: string };
       if (!response.ok) throw new Error(result.error ?? "Import impossible.");
       setImported({ profileId: result.profileId, version: result.version });
-      setRefreshKey((current) => current + 1);
+      rechargerCatalogue();
       setMessage(`La version ${result.version} est enregistrée en brouillon. Elle n'est pas publique.`);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Import impossible.");
@@ -225,6 +254,9 @@ export function AdminClient() {
     setImported(null);
     setPreview(null);
     setCatalog([]);
+    setCatalogTotal(0);
+    setCatalogOffset(0);
+    setCatalogNextOffset(null);
     setMessage("Déconnexion effectuée.");
   }
 
@@ -296,6 +328,7 @@ export function AdminClient() {
 
     <section className={styles.library}>
       <h3>Fiches et versions enregistrées</h3>
+      <p>{catalog.length} fiche{catalog.length > 1 ? "s" : ""} affichée{catalog.length > 1 ? "s" : ""} sur {catalogTotal}</p>
       {catalogLoading && <p className={styles.notice}>Chargement du catalogue…</p>}
       {!catalogLoading && catalog.length === 0 && <p className={styles.notice}>Aucune fiche enregistrée.</p>}
       {catalog.map((name) => <article className={styles.entry} key={name.id}>
@@ -305,9 +338,10 @@ export function AdminClient() {
         </div>
         {[...name.name_profiles].sort((a, b) => b.version - a.version).map((profile) => <div className={styles.versionRow} key={profile.id}>
           <span>Version {profile.version} · {statusLabels[profile.status]} · {new Date(profile.created_at).toLocaleDateString("fr-FR")}</span>
-          <button className={styles.secondary} type="button" disabled={busy} onClick={() => previsualiserVersion(name, profile)}>Prévisualiser</button>
+          <button className={styles.secondary} type="button" disabled={busy} onClick={() => void previsualiserVersion(profile)}>Prévisualiser</button>
         </div>)}
       </article>)}
+      {catalogNextOffset !== null && <button className={styles.secondary} type="button" disabled={catalogLoading} onClick={() => setCatalogOffset(catalogNextOffset)}>Charger les fiches suivantes</button>}
     </section>
     {message && <p className={styles.notice} role="status">{message}</p>}
   </section>;
