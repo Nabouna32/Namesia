@@ -7,6 +7,8 @@ Namesia est une plateforme française de découverte des prénoms : fiches docum
 - [Vision produit](docs/vision-produit.md)
 - [Architecture cible](docs/architecture.md)
 - [Modèle de données](docs/modele-donnees.md)
+- [Politique éditoriale et sources](docs/politique-editoriale-et-sources.md)
+- [Pipeline de génération IA](docs/pipeline-generation-ia.md)
 - [Contrat JSON des fiches](schemas/fiche-prenom.schema.json)
 - [Décisions d'architecture](docs/decisions/)
 
