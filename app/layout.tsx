@@ -7,8 +7,7 @@ export const metadata: Metadata = {
     default: "Namesia — Le sens derrière chaque prénom",
     template: "%s · Namesia"
   },
-  description: "Explorez les prénoms, leurs histoires et leurs symboliques avec Namesia.",
-  metadataBase: new URL("https://namesia.fr")
+  description: "Explorez les prénoms, leurs histoires et leurs symboliques avec Namesia."
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
