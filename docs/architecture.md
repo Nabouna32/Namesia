@@ -55,6 +55,8 @@ Ces choix sont des hypothèses de départ, pas des engagements irréversibles. L
 - Versions de contenu et état de publication.
 
 ### Pipeline IA
+
+La procédure détaillée est définie dans [Pipeline de génération IA](pipeline-generation-ia.md), et les exigences de preuve dans [Politique éditoriale et sources](politique-editoriale-et-sources.md).
 1. Sélectionner les champs à documenter.
 2. Constituer un dossier de sources autorisées.
 3. Générer un candidat respectant une version précise du schéma.
