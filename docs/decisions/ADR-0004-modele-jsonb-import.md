@@ -8,14 +8,13 @@
 
 Namesia publie des fiches générées en amont par IA, via API ou conversation, puis intégrées au catalogue. L'application n'effectue pas de recherche documentaire ni de vérification indépendante. Le modèle initial reposait pourtant sur des sources, des affirmations atomiques, des statuts de preuve et des associations symboliques stockées séparément.
 
-Une première évolution a déjà introduit `name_profiles` en JSONB, un schéma JSON versionné et une administration d'import. L'ancien modèle relationnel subsiste en parallèle, créant deux représentations du même contenu.
+Une première évolution a déjà introduit name_profiles en JSONB, un schéma JSON versionné et une administration d'import. L'ancien modèle relationnel subsiste en parallèle, créant deux représentations du même contenu.
 
 ## Décision
 
 Pour la V1, le modèle métier est limité à deux tables :
-
-- `names` pour l'identité stable d'un prénom ;
-- `name_profiles` pour ses versions éditoriales complètes, stockées en JSONB.
+- names pour l'identité stable d'un prénom ;
+- name_profiles pour ses versions éditoriales complètes, stockées en JSONB.
 
 Le JSON Schema versionné est le contrat unique d'import. La validation est effectuée côté client pour aider l'administrateur, puis obligatoirement côté serveur avant l'écriture.
 
@@ -44,7 +43,7 @@ Les tables historiques de sources, claims, relations claims-sources, association
 
 ## Sécurité et exploitation
 
-- Authentification Supabase et autorisation via `admin_users`.
+- Authentification Supabase et autorisation via private.admin_users, table placée dans un schéma PostgreSQL non exposé à la Data API.
 - Vérification serveur sur chaque route administrative et vérification SQL dans les fonctions d'écriture.
 - RLS et privilèges SQL minimaux sur les tables exposées.
 - Aucune clé privilégiée dans le navigateur.
