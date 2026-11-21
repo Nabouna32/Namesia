@@ -84,6 +84,8 @@ revoke all on table
 from anon, authenticated;
 
 drop index if exists public.names_published_idx;
+-- Redondant avec la contrainte unique (name_id, version), qui couvre aussi la recherche de version.
+drop index if exists public.name_profiles_name_version_idx;
 
 drop table public.claim_sources;
 drop table public.claims;
