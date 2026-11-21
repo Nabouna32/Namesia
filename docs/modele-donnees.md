@@ -1,75 +1,107 @@
 # Modèle de données — Namesia
 
-- **Statut :** modèle canonique de la V1
-- **Version :** 1.1
+- **Statut :** modèle cible retenu pour la V1
+- **Version :** 2.0
 - **Mis à jour :** 2026-11-22
 
 ## 1. Principes
 
-Le modèle relationnel conserve les données qui nécessitent unicité, relations, droits et cycle de vie. Le texte d'une fiche est stocké dans un JSONB versionné.
+Le besoin réel est de stocker un catalogue de prénoms et des versions de fiches éditoriales importées en JSON.
 
-Pas de table par rubrique, pas de relation source/affirmation sans processus de vérification réel et pas de colonnes pour des données qui ne sont pas exploitées.
+Le modèle doit rester relationnel pour les identités et les versions, et utiliser JSONB pour le document éditorial complet. Les rubriques ne sont pas des entités indépendantes et ne justifient pas une table chacune.
 
-## 2. Tables cibles
+Le JSON est le contrat d'import et le contenu canonique d'une version. Il est validé par le schéma versionné avant son enregistrement.
 
-### names
-Identité stable du prénom :
-- id : UUID ;
-- slug : identifiant URL unique ;
-- display_name : graphie affichée ;
-- gender : féminin, masculin, mixte ou inconnu ;
-- created_at.
+## 2. Tables métier
 
-L'initiale est calculée depuis display_name. L'état de publication n'est pas stocké ici : il appartient à la version de fiche.
+### `names`
 
-### name_profiles
-Une ligne par version de contenu :
-- id : UUID ;
-- name_id : référence à names ;
-- version : entier croissant par prénom ;
-- schema_version : version du contrat JSON ;
-- content : contenu éditorial JSONB ;
-- status : brouillon, publie ou archive ;
-- created_at, published_at.
+Identité stable d'un prénom.
 
-Contrainte unique sur (name_id, version). Une version publiée doit avoir une date de publication. Le JSON n'accepte pas de statut ni de numéro de version fourni par le modèle.
+| Colonne | Rôle |
+|---|---|
+| `id` | UUID, clé primaire |
+| `slug` | Identifiant URL unique et stable |
+| `display_name` | Graphie affichée |
+| `gender` | `feminin`, `masculin`, `mixte` ou `inconnu` |
+| `created_at` | Date de création |
 
-### admin_users
-Liste d'autorisation des comptes Supabase Auth :
-- user_id : clé primaire et référence à auth.users.id ;
-- created_at.
+L'initiale est calculée depuis `display_name`. Un booléen de publication n'est pas stocké ici : la publication appartient à une version de fiche.
 
-La table ne peut être modifiée que depuis un canal d'administration de confiance (SQL Editor Supabase). Un utilisateur authentifié peut uniquement lire sa propre autorisation.
+### `name_profiles`
 
-## 3. Contrat de contenu
+Une ligne représente une version complète d'une fiche.
 
-La structure complète est définie dans [schemas/fiche-prenom.schema.json](../schemas/fiche-prenom.schema.json).
+| Colonne | Rôle |
+|---|---|
+| `id` | UUID, clé primaire |
+| `name_id` | Référence à `names.id` |
+| `version` | Numéro croissant par prénom |
+| `schema_version` | Version du contrat JSON |
+| `content` | Document éditorial JSONB |
+| `status` | `brouillon`, `publie` ou `archive` |
+| `created_at` | Date d'import |
+| `published_at` | Date de publication, nulle tant que la version n'a jamais été publiée |
 
-- schema_version : version du contrat.
-- identity : slug, nom affiché et genre.
-- content : introduction, origine, histoire, usages et associations symboliques facultatives.
+Contraintes :
+- unicité de `(name_id, version)` ;
+- `version > 0` ;
+- `content` est un objet JSON ;
+- une version publiée possède une date de publication ;
+- au plus une version publiée par prénom ;
+- une version publiée n'est jamais écrasée.
 
-Les champs éditoriaux facultatifs peuvent être omis lorsqu'ils ne sont pas disponibles. Une association symbolique contient une catégorie, une valeur et un contexte. Elle ne constitue pas un fait scientifique.
+## 3. Contrat JSON
 
-## 4. Publication et intégrité
+Le contrat canonique est [fiche-prenom.schema.json](../schemas/fiche-prenom.schema.json).
 
-1. Toute importation crée une nouvelle version en brouillon.
-2. Le backend calcule le prochain numéro de version.
-3. La validation structurelle est exécutée avant l'écriture.
-4. La publication est une action distincte et authentifiée.
-5. La publication archive l'ancienne version et active la nouvelle dans une transaction.
-6. Une version publiée n'est jamais modifiée en place.
-7. Les visiteurs anonymes ne lisent que les versions publiées.
-8. Les statuts et identifiants de version ne proviennent jamais du JSON.
+Structure :
+- `schema_version` : version du schéma ;
+- `identity` : slug, graphie et genre ;
+- `content` : introduction, origine, histoire, usages et associations symboliques.
 
-## 5. Tables historiques à retirer
+Les rubriques facultatives peuvent être absentes lorsqu'une information n'est pas disponible. Une génération ne doit pas inventer de texte pour remplir artificiellement le document.
 
-Le schéma initial comportait sources, claims, claim_sources et symbolic_associations. Ce découpage supposait une traçabilité documentaire et une validation des affirmations qui ne sont pas assurées par le processus de génération retenu.
+Les associations symboliques restent explicitement présentées comme des interprétations culturelles ou éditoriales, sans valeur scientifique ou prédictive.
 
-Les données de contenu et les associations symboliques ont été transférées dans name_profiles.content. Les tables historiques sont conservées pendant la période de transition et seront supprimées après validation du nouveau lecteur et de l'import. Les références documentaires et statuts de preuve ne sont pas conservés comme garanties implicites.
+## 4. Publication
 
-## 6. État réel de la migration
+1. L'import valide le JSON et crée une nouvelle version `brouillon`.
+2. L'administration affiche une prévisualisation du contenu importé.
+3. Une action distincte demande la publication.
+4. La fonction SQL archive l'ancienne version publiée et publie la version brouillon dans une seule transaction.
+5. Le site public ne lit que les versions publiées.
 
-La migration create_jsonb_name_profiles a créé name_profiles et transféré les six versions existantes. Les six versions ont été retrouvées avec le statut publié. Les tables historiques et les colonnes redondantes de names restent temporairement présentes ; leur suppression doit faire l'objet de la migration de nettoyage finale après vérification applicative.
+Le JSON entrant ne contient aucun statut, date de publication ou identifiant interne contrôlé par le modèle.
 
-Les nouvelles tables sont protégées par RLS et leurs privilèges Data API sont explicites.
+## 5. Données volontairement absentes
+
+Les éléments suivants ne sont pas modélisés dans la V1 :
+- sources documentaires et liens de preuve ;
+- affirmations atomiques et statuts de preuve ;
+- statistiques structurées ;
+- tables séparées pour les associations symboliques ;
+- formes linguistiques et marchés multilingues ;
+- exécutions de génération et coûts par fournisseur.
+
+Ils ne seront ajoutés que lorsqu'un besoin produit concret et un processus réellement appliqué le justifieront. Ne pas créer de tables anticipant un workflow inexistant.
+
+## 6. Migration depuis le modèle historique
+
+Le projet Supabase contient actuellement les deux modèles :
+- ancien : `name_profile_versions`, `sources`, `claims`, `claim_sources`, `symbolic_associations` ;
+- cible JSONB : `names`, `name_profiles`, `admin_users`.
+
+L'audit de la base au 22 novembre 2026 constate six prénoms, six anciennes versions, six versions JSONB, six associations symboliques historiques et six associations reprises dans JSONB. Les six prénoms possèdent une version JSONB publiée.
+
+Les sources et affirmations historiques ne sont pas reprises dans le nouveau modèle, car Namesia ne garantit plus de vérification documentaire. Leur suppression doit néanmoins rester une migration explicite et contrôlée, pas une suppression manuelle improvisée.
+
+Les migrations du dépôt doivent utiliser exactement les versions présentes dans l'historique Supabase. Les deux migrations JSONB et administration ont été identifiées avec des noms de fichiers qui ne correspondent pas aux versions enregistrées ; cette dérive doit être corrigée avant toute nouvelle migration.
+
+## 7. Administration
+
+La table `admin_users` associe un compte Supabase Auth à l'autorisation d'administrer Namesia. Elle ne contient pas de profil utilisateur public ni de rôle générique.
+
+La table est privée : aucune lecture anonyme, aucun ajout public et aucune modification de l'autorisation depuis le navigateur.
+
+L'identifiant du premier administrateur est ajouté explicitement après création du compte Auth. Cette initialisation n'est pas ouverte à l'auto-inscription.
