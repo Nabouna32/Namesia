@@ -29,9 +29,23 @@ Variables requises :
 
 La clé publishable peut être exposée au navigateur. La sécurité repose sur les privilèges SQL, RLS et l'autorisation administrateur. Aucune clé service_role ou clé secrète ne doit être intégrée au site.
 
+### Ordre de bascule du modèle en production
+
+Le projet Supabase possède temporairement les deux modèles de données. Les migrations non destructives qui créent le modèle JSONB sont déjà appliquées. La migration de nettoyage supprime les anciennes tables et colonnes.
+
+**Ne pas appliquer la migration de nettoyage avant que la nouvelle version de l'application soit déployée en production.** Le code actuellement en production peut encore lire l'ancien modèle.
+
+Après fusion autorisée de la PR et déploiement de la nouvelle version :
+1. Vérifier que le site public lit correctement les six fiches depuis name_profiles.
+2. Relire puis appliquer la migration supabase/migrations/20261122130000_simplifier_modele_catalogue.sql.
+3. Vérifier le schéma, les privilèges, RLS et les six fiches publiées.
+4. Initialiser ensuite le premier administrateur selon la procédure ci-dessous.
+
+Cette migration est destructive pour les anciennes tables documentaires et colonnes redondantes. Elle contrôle la reprise des contenus éditoriaux et des associations symboliques avant leur suppression.
+
 ### Premier accès à l'administration
 
-L'administration est disponible sur /admin. La connexion se fait par lien e-mail via Supabase Auth.
+L'administration est disponible sur /admin. La connexion se fait par lien e-mail via Supabase Auth. Cette procédure est à effectuer après la bascule du schéma décrite ci-dessus.
 
 Pour initialiser le premier compte (l'auto-inscription est désactivée) :
 
