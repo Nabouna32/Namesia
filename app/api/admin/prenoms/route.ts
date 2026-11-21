@@ -1,0 +1,51 @@
+import { NextResponse } from "next/server";
+import { parseFichePrenom } from "@/lib/fiche-prenom";
+import { requireAdmin } from "@/lib/admin-auth";
+
+export const runtime = "nodejs";
+
+export async function POST(request: Request) {
+  const contentLength = Number(request.headers.get("content-length") ?? 0);
+  if (contentLength > 64 * 1024) {
+    return NextResponse.json({ error: "Le fichier JSON dépasse la limite de 64 Ko." }, { status: 413 });
+  }
+
+  const access = await requireAdmin(request);
+  if (access.error) {
+    return NextResponse.json({ error: access.error.message }, { status: access.error.status });
+  }
+
+  let payload: unknown;
+  try {
+    payload = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Le corps de la requête doit être un JSON valide." }, { status: 400 });
+  }
+
+  let fiche;
+  try {
+    fiche = parseFichePrenom(payload);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Le format de la fiche est invalide.";
+    return NextResponse.json({ error: message }, { status: 400 });
+  }
+
+  const { data, error } = await access.supabase.rpc("import_name_profile", {
+    p_slug: fiche.identity.slug,
+    p_display_name: fiche.identity.display_name,
+    p_gender: fiche.identity.gender,
+    p_content: fiche.content,
+    p_schema_version: fiche.schema_version
+  });
+
+  if (error || !data?.[0]) {
+    console.error("Échec de l'import d'une fiche Namesia :", error);
+    return NextResponse.json({ error: "La fiche n'a pas pu être enregistrée." }, { status: 500 });
+  }
+
+  return NextResponse.json({
+    profileId: data[0].profile_id,
+    version: data[0].version,
+    status: "brouillon"
+  }, { status: 201 });
+}
