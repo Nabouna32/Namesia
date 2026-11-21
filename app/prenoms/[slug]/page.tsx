@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPrenom, getPrenoms } from "@/lib/prenoms";
+import { getPrenom, getPrenoms, type Source } from "@/lib/prenoms";
 type Props = { params: Promise<{ slug: string }> };
 export const revalidate = 3600;
 export async function generateStaticParams() {
@@ -16,7 +16,8 @@ export default async function FichePrenom({ params }: Props) {
   const { slug } = await params;
   const prenom = await getPrenom(slug);
   if (!prenom) notFound();
-  const sources = Array.from(new Map(prenom.claims.flatMap((claim) => claim.claim_sources.map((item) => item.sources).filter((source): source is NonNullable<typeof source> => Boolean(source))).map((source) => [source.url, source])).values());
+  const sourceEntries = prenom.claims.flatMap((claim) => claim.claim_sources.map((item) => item.sources).filter((source): source is Source => source !== null));
+  const sources = Array.from(new Map<string, Source>(sourceEntries.map((source) => [source.url, source])).values());
   return <main className="page-main profile-main"><div className="container profile">
     <Link href="/prenoms" className="back-link">← Tous les prénoms</Link>
     <div className="profile-heading"><span className="eyebrow">Prénom · {prenom.genre}</span><h1>{prenom.nom}<span>.</span></h1><p>{prenom.introduction}</p></div>
