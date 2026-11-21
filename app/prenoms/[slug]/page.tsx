@@ -29,6 +29,7 @@ export default async function FichePrenom({ params }: Props) {
         {prenom.claims.length ? <ul className="claim-list">{prenom.claims.map((claim) => <li key={claim.id}><p>{claim.content}</p><span className={claim.claim_status === "etabli" ? "claim-status" : "claim-status claim-discussed"}>{claim.claim_status === "etabli" ? "Repère établi" : "Piste à nuancer"}</span></li>)}</ul> : <p className="profile-copy">Les références de cette fiche seront enrichies au fil des recherches.</p>}
       </section>
     </div>
+    {prenom.symboles.length > 0 && <section className="symbolic-section"><span className="eyebrow">Regards culturels</span><h2>Symbolique & traditions</h2><div className="symbolic-grid">{prenom.symboles.map((symbol) => <article className="symbolic-card" key={symbol.id}><span>{symbol.category}</span><h3>{symbol.value}</h3><p>{symbol.context_note}</p><small>{symbol.disclaimer}</small></article>)}</div></section>}
     {sources.length > 0 && <section className="sources-section"><span className="eyebrow">Références</span><h2>Pour approfondir</h2><ol>{sources.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.title} ↗</a>{source.publisher && <span>{source.publisher}</span>}</li>)}</ol></section>}
     <p className="profile-disclaimer">Les étymologies peuvent comporter plusieurs hypothèses. Les interprétations culturelles ou symboliques, lorsqu'elles sont présentées, ne décrivent pas la personnalité des personnes qui portent un prénom.</p>
   </div></main>;
