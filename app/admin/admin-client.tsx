@@ -11,6 +11,28 @@ const supabase = createClient(
 );
 
 type ImportResult = { profileId: string; version: number };
+type ProfileRow = {
+  id: string;
+  version: number;
+  schema_version: string;
+  status: "brouillon" | "publie" | "archive";
+  created_at: string;
+  published_at: string | null;
+  content: unknown;
+};
+type NameRow = {
+  id: string;
+  slug: string;
+  display_name: string;
+  gender: FichePrenomImport["identity"]["gender"];
+  name_profiles: ProfileRow[];
+};
+
+const statusLabels: Record<ProfileRow["status"], string> = {
+  brouillon: "Brouillon",
+  publie: "Publié",
+  archive: "Archivé"
+};
 
 export function AdminClient() {
   const [session, setSession] = useState<Session | null>(null);
@@ -21,6 +43,9 @@ export function AdminClient() {
   const [preview, setPreview] = useState<FichePrenomImport | null>(null);
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
+  const [catalog, setCatalog] = useState<NameRow[]>([]);
+  const [catalogLoading, setCatalogLoading] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [imported, setImported] = useState<ImportResult | null>(null);
 
   useEffect(() => {
@@ -55,6 +80,33 @@ export function AdminClient() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!session || !authorized) return;
+    let active = true;
+
+    async function chargerCatalogue() {
+      setCatalogLoading(true);
+      try {
+        const response = await fetch("/api/admin/prenoms", {
+          headers: { Authorization: `Bearer ${session!.access_token}` },
+          cache: "no-store"
+        });
+        const result = await response.json() as { names?: NameRow[]; error?: string };
+        if (!response.ok) throw new Error(result.error ?? "Chargement du catalogue impossible.");
+        if (active) setCatalog(result.names ?? []);
+      } catch (error) {
+        if (active) setMessage(error instanceof Error ? error.message : "Chargement du catalogue impossible.");
+      } finally {
+        if (active) setCatalogLoading(false);
+      }
+    }
+
+    void chargerCatalogue();
+    return () => {
+      active = false;
+    };
+  }, [session?.access_token, authorized, refreshKey]);
+
   async function connecter(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setBusy(true);
@@ -80,6 +132,32 @@ export function AdminClient() {
     } catch (error) {
       setPreview(null);
       setMessage(error instanceof Error ? error.message : "Le JSON ne respecte pas le contrat Namesia.");
+    }
+  }
+
+  function previsualiserVersion(name: NameRow, profile: ProfileRow) {
+    try {
+      const fiche = parseFichePrenom({
+        schema_version: profile.schema_version,
+        identity: {
+          slug: name.slug,
+          display_name: name.display_name,
+          gender: name.gender
+        },
+        content: profile.content
+      });
+      setJson(JSON.stringify(fiche, null, 2));
+      setPreview(fiche);
+      setImported(profile.status === "brouillon"
+        ? { profileId: profile.id, version: profile.version }
+        : null);
+      setMessage(profile.status === "brouillon"
+        ? "Brouillon chargé. Tu peux le corriger en important une nouvelle version ou le publier."
+        : `Version ${profile.version} en lecture seule.`);
+    } catch (error) {
+      setPreview(null);
+      setImported(null);
+      setMessage(error instanceof Error ? error.message : "Cette version ne respecte plus le contrat actuel.");
     }
   }
 
@@ -112,6 +190,7 @@ export function AdminClient() {
       const result = await response.json() as ImportResult & { error?: string };
       if (!response.ok) throw new Error(result.error ?? "Import impossible.");
       setImported({ profileId: result.profileId, version: result.version });
+      setRefreshKey((current) => current + 1);
       setMessage(`La version ${result.version} est enregistrée en brouillon. Elle n'est pas publique.`);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Import impossible.");
@@ -133,6 +212,7 @@ export function AdminClient() {
       if (!response.ok) throw new Error(result.error ?? "Publication impossible.");
       setMessage("La fiche est publiée. La version précédente, si elle existait, est archivée.");
       setImported(null);
+      setRefreshKey((current) => current + 1);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Publication impossible.");
     } finally {
@@ -144,6 +224,7 @@ export function AdminClient() {
     await supabase.auth.signOut();
     setImported(null);
     setPreview(null);
+    setCatalog([]);
     setMessage("Déconnexion effectuée.");
   }
 
@@ -178,7 +259,7 @@ export function AdminClient() {
     </div>
     <form className={styles.form} onSubmit={importer}>
       <label htmlFor="fiche-json">Fiche JSON (version 2.0.0)</label>
-      <input type="file" accept="application/json,.json" onChange={async (event) => {
+      <input type="file" accept="application/json,.json" disabled={busy} onChange={async (event) => {
         const file = event.target.files?.[0];
         if (file) {
           setJson(await file.text());
@@ -186,7 +267,7 @@ export function AdminClient() {
           setImported(null);
         }
       }} />
-      <textarea id="fiche-json" spellCheck={false} required rows={18} value={json} onChange={(event) => {
+      <textarea id="fiche-json" spellCheck={false} required rows={18} value={json} disabled={busy} onChange={(event) => {
         setJson(event.target.value);
         setPreview(null);
         setImported(null);
@@ -196,6 +277,7 @@ export function AdminClient() {
         <button className="button button-dark" type="submit" disabled={busy || !preview}>{busy ? "Import…" : "Enregistrer en brouillon"}</button>
       </div>
     </form>
+
     {preview && <article className={styles.preview}>
       <span className={styles.previewLabel}>Aperçu · {preview.identity.gender}</span>
       <h3>{preview.identity.display_name}</h3>
@@ -206,10 +288,27 @@ export function AdminClient() {
       {preview.content.symbolic_associations.map((symbol) => <section key={`${symbol.category}-${symbol.value}`}><h4>{symbol.category} · {symbol.value}</h4><p>{symbol.context_note}</p></section>)}
       <p className={styles.previewWarning}>La validation porte sur la structure du JSON, pas sur la véracité des contenus générés.</p>
     </article>}
+
     {imported && <div className={styles.publish}>
       <p>La version {imported.version} est enregistrée en brouillon. Après vérification de l'aperçu, tu peux la publier.</p>
       <button className="button button-dark" type="button" disabled={busy} onClick={publier}>Publier cette version</button>
     </div>}
+
+    <section className={styles.library}>
+      <h3>Fiches et versions enregistrées</h3>
+      {catalogLoading && <p className={styles.notice}>Chargement du catalogue…</p>}
+      {!catalogLoading && catalog.length === 0 && <p className={styles.notice}>Aucune fiche enregistrée.</p>}
+      {catalog.map((name) => <article className={styles.entry} key={name.id}>
+        <div className={styles.entryHeading}>
+          <strong>{name.display_name}</strong>
+          <span>{name.slug}</span>
+        </div>
+        {[...name.name_profiles].sort((a, b) => b.version - a.version).map((profile) => <div className={styles.versionRow} key={profile.id}>
+          <span>Version {profile.version} · {statusLabels[profile.status]} · {new Date(profile.created_at).toLocaleDateString("fr-FR")}</span>
+          <button className={styles.secondary} type="button" disabled={busy} onClick={() => previsualiserVersion(name, profile)}>Prévisualiser</button>
+        </div>)}
+      </article>)}
+    </section>
     {message && <p className={styles.notice} role="status">{message}</p>}
   </section>;
 }
