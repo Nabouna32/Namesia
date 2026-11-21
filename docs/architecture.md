@@ -118,7 +118,7 @@ Les transitions doivent être explicites et historisées. Une modification d'une
 
 ## 9. Décisions à formaliser
 
-Les choix de stack, de stratégie de recherche documentaire, de seuil éditorial, de gestion des statistiques et de workflow de validation devront faire l'objet d'ADR lorsqu'ils seront arbitrés.
+Le socle web et l'intégration Supabase sont provisoirement arbitrés dans l'ADR-0003. La stratégie de recherche documentaire, les seuils éditoriaux, la gestion des statistiques et le workflow de validation restent à formaliser par ADR.
 
 
 ## 10. État réel de la première version
