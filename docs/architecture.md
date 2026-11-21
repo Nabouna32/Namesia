@@ -1,143 +1,91 @@
-# Architecture cible — Namesia
+# Architecture — Namesia
 
-- **Statut :** proposition initiale à challenger
-- **Version :** 1.0
-- **Mis à jour :** 2026-11-21
+- **Statut :** architecture cible de la V1
+- **Version :** 1.1
+- **Mis à jour :** 2026-11-22
 
-## 1. Objectifs d'architecture
+## 1. Décision directrice
 
-- Séparer le contenu, sa génération, sa validation, son stockage et sa présentation.
-- Garder le fournisseur IA remplaçable.
-- Faire du JSON validé un contrat d'échange, pas la base de données elle-même.
-- Permettre une publication contrôlée et un historique auditable.
-- Optimiser le rendu des pages publiques pour le SEO et les performances.
-- Préparer plusieurs pays et langues sans complexifier prématurément le MVP.
+Namesia est un monolithe Next.js avec Supabase. Le contenu est généré en dehors du site, sous forme de JSON, puis importé dans une administration privée. L'application ne génère pas encore de contenu IA et ne réalise pas de recherche documentaire.
 
-## 2. Vue logique
+Le JSON est le contrat d'échange et de validation. PostgreSQL conserve les identités et les versions de fiches ; le contenu éditorial d'une version est stocké dans un champ JSONB. Ce compromis évite une table par rubrique sans transformer l'identité du prénom et le cycle de publication en données non structurées.
 
-```mermaid
-flowchart TD
-  A[Sources documentaires] --> B[Préparation du dossier de recherche]
-  B --> C[Générateur IA]
-  C --> D[JSON candidat]
-  D --> E[Validation de schéma]
-  E --> F[Contrôles qualité et cohérence]
-  F --> G[Revue éditoriale humaine]
-  G --> H[Version approuvée]
-  H --> I[(PostgreSQL)]
-  I --> J[API de lecture]
-  J --> K[Site public Next.js]
-  L[Outils de recherche et comparaison] --> J
-```
+## 2. Flux fonctionnel
 
-La génération ne doit pas écrire directement dans les tables publiées. Elle produit un candidat immuable ; les contrôles et la décision éditoriale déterminent son passage à l'état approuvé.
+1. Génération IA hors du site.
+2. Production d'un JSON conforme au contrat Namesia.
+3. Connexion à l'administration privée.
+4. Validation structurelle du JSON.
+5. Création d'une nouvelle version en brouillon.
+6. Prévisualisation et correction.
+7. Publication explicite par l'administrateur.
+8. Lecture publique de la version publiée.
 
-## 3. Stack envisagée
+La validation automatique porte sur le format, les types, les longueurs, les champs autorisés et quelques contraintes métier. Elle ne valide pas les faits ni les étymologies.
 
-| Couche | Cible | Motif |
-|---|---|---|
-| Application web | Next.js 16 + React 19 + TypeScript | Rendu serveur, routes SEO, composants interactifs |
-| Runtime | Node.js 26 LTS | Runtime supporté à long terme et aligné sur Vercel |
-| Données | PostgreSQL via Supabase | Relationnel, contraintes, migrations, API et outillage |
-| Hébergement web | Vercel, production depuis `main` uniquement | Déploiement après fusion ; pas de previews pour préserver le quota |
-| CI | GitHub Actions | Vérifications et build de contrôle sur PR et `main`, sans consommer le quota Vercel |
-| Validation | JSON Schema + validation TypeScript (ex. Zod) | Contrat interopérable et validation applicative |
-| Génération | Adaptateur vers une API de modèle IA | Indépendance vis-à-vis du fournisseur |
-| Tests | Tests unitaires, intégration et E2E | Sécuriser le pipeline et les parcours |
-
-Les versions exactes du socle applicatif sont épinglées dans `package.json` et le runtime local dans `.nvmrc`. Les versions stables sont mises à jour après vérification de leur compatibilité par la CI. Les versions alpha, beta, canary et expérimentales ne sont pas considérées comme des mises à jour de production.
-
-Ces choix sont des hypothèses de départ, pas des engagements irréversibles. Les ADR doivent consigner leur validation après vérification des coûts, limites, sécurité et besoins réels.
-
-## 4. Composants et responsabilités
-
-### Catalogue éditorial
-- Identité stable du prénom et slug.
-- Une ou plusieurs formes linguistiques et variantes.
-- Fiches localisées (langue et marché).
-- Sources, affirmations factuelles et contenus symboliques séparés.
-- Versions de contenu et état de publication.
-
-### Pipeline IA
-
-La procédure détaillée est définie dans [Pipeline de génération IA](pipeline-generation-ia.md), et les exigences de preuve dans [Politique éditoriale et sources](politique-editoriale-et-sources.md).
-1. Sélectionner les champs à documenter.
-2. Constituer un dossier de sources autorisées.
-3. Générer un candidat respectant une version précise du schéma.
-4. Valider le JSON et les contraintes métier.
-5. Détecter les champs non sourcés, contradictions, doublons et formulations déterministes abusives.
-6. Soumettre à une revue humaine.
-7. Enregistrer la version approuvée et publier explicitement.
-
-Le modèle ne doit pas fabriquer des références bibliographiques. Une URL ou une référence fournie par le modèle doit être vérifiée par le pipeline avant d'être considérée comme source.
+## 3. Composants
 
 ### Site public
-- Pages rendues côté serveur.
-- Données publiques issues exclusivement de versions publiées.
-- Recherche et filtres avec stratégie d'indexation maîtrisée.
-- Outils interactifs utilisant les mêmes données canoniques que les fiches.
-- Pas d'appel au modèle IA à chaque affichage d'une page.
+- Pages serveur Next.js.
+- Catalogue et fiches chargés depuis les versions publiées.
+- Aucun appel au modèle IA lors de l'affichage.
+- Aucun droit d'écriture public.
 
-## 5. Modèle de publication
+### Administration
+- Page privée /admin.
+- Connexion par lien e-mail via Supabase Auth.
+- Autorisation fondée sur une liste explicite d'identifiants dans la table admin_users.
+- Import d'un fichier ou texte JSON.
+- Validation stricte avant écriture.
+- Import toujours en brouillon.
+- Publication par une action séparée.
+- API serveur vérifiant le jeton Supabase et l'appartenance à admin_users.
+- Les opérations SQL sont exécutées avec le jeton de l'utilisateur ; aucune clé privilégiée n'est exposée à l'application.
 
-États recommandés :
-- `brouillon` : création ou import initial ;
-- `genere` : candidat produit par le pipeline ;
-- `a_revoir` : structure valide, contrôle éditorial requis ;
-- `approuve` : version validée, pas nécessairement publique ;
-- `publie` : version visible sur le site ;
-- `archive` : version retirée de la publication.
+### Données
+- names : identité, slug et genre.
+- name_profiles : versions, statut, dates et contenu JSONB.
+- admin_users : identifiants autorisés à administrer le catalogue.
+- Les tables documentaires historiques sont en cours de retrait après migration des contenus utiles.
 
-Les transitions doivent être explicites et historisées. Une modification d'une version publiée crée une nouvelle version candidate ; elle ne modifie pas silencieusement le contenu déjà publié.
+## 4. Modèle de publication
 
-## 6. Sécurité et exploitation
+- brouillon : importé, non visible publiquement.
+- publie : version visible.
+- archive : ancienne version remplacée ou retirée.
 
-- Clés IA et secrets uniquement côté serveur.
-- Accès base de données selon le moindre privilège.
-- RLS Supabase si accès direct depuis des clients ; privilégier une couche serveur pour les opérations éditoriales.
-- Aucun secret dans le dépôt.
-- Journaliser les identifiants de génération, modèle, version du prompt, version du schéma et résultat des validations.
-- Prévoir sauvegardes, migrations versionnées et procédure de restauration.
-- Limiter les coûts IA par quotas, taille des lots et reprises idempotentes.
+Le backend attribue le numéro de version et le statut. Un import ne publie jamais. La publication archive l'ancienne version et active la nouvelle dans une transaction SQL.
 
-## 7. Risques et points à challenger
+Une version publiée n'est jamais écrasée. Une correction passe par une nouvelle version.
 
-| Risque | Réponse |
-|---|---|
-| Hallucination d'étymologie ou de source | Corpus de sources, preuves par affirmation, revue humaine |
-| Contenu symbolique présenté comme vérité | Taxonomie et avertissement éditorial explicite |
-| Pages SEO minces ou dupliquées | Seuil de publication, canonical, noindex des pages utilitaires |
-| Statistiques obsolètes | Séries datées séparées du texte éditorial |
-| Dépendance fournisseur IA | Adaptateur et prompts versionnés |
-| Complexité prématurée | Monolithe modulaire au MVP, pas de microservices |
-| Épuisement du quota de builds | Aucun build Vercel sur PR/branches ; CI GitHub Actions et production uniquement après merge sur `main` |
+## 5. Sécurité
 
-## 8. Découpage d'implémentation
+- RLS activé sur toutes les tables du schéma public.
+- Lecture anonyme limitée aux versions publiées.
+- Administration réservée aux identifiants présents dans admin_users.
+- Aucun droit d'écriture au rôle anon.
+- Les fonctions RPC sont en SECURITY INVOKER, pas en SECURITY DEFINER.
+- Les clés privilégiées Supabase ne sont pas utilisées par le site.
+- Les droits SQL doivent être accordés explicitement : les nouvelles tables ne sont pas nécessairement exposées automatiquement par la Data API.
+- Le jeton de session Supabase est conservé par le client Auth dans le navigateur ; protéger l'administration contre les injections et ne jamais y rendre de HTML non fiable.
 
-1. Contrat de contenu et modèle relationnel.
-2. Validation JSON et exemples de fixtures.
-3. Pipeline candidat / revue / publication.
-4. API de lecture et pages de fiches.
-5. Recherche et outils interactifs.
-6. SEO technique, observabilité et durcissement.
+## 6. Choix écartés
 
-## 9. Décisions à formaliser
+- Une table par rubrique : trop de relations et de jointures pour un contenu essentiellement éditorial.
+- Tout stocker dans une seule table JSON : identité, unicité, versions et publication doivent rester relationnelles.
+- Un CMS tiers : coût et intégration disproportionnés pour un administrateur unique et un import JSON.
+- Génération IA dans le site : non nécessaire tant que la production se fait par conversation ou outil externe.
+- Sources, claims et workflow de preuve : ne reflètent pas le processus réellement appliqué.
 
-Le socle web et l'intégration Supabase sont provisoirement arbitrés dans l'ADR-0003. La stratégie de recherche documentaire, les seuils éditoriaux, la gestion des statistiques et le workflow de validation restent à formaliser par ADR.
+## 7. Limites et évolutions conditionnelles
 
-## 10. État réel de la première version
+- Le contrat JSON est versionné ; toute évolution incompatible nécessite une nouvelle version et une migration explicite.
+- Les statistiques ne seront ajoutées que lorsqu'une source et une méthode de mise à jour seront réellement disponibles.
+- Le multilingue nécessitera une décision dédiée sur les identités, variantes et profils localisés.
+- Une génération automatisée pourra être ajoutée sans changer le flux de publication : elle devra produire le même JSON candidat.
 
-L'ADR [ADR-0003](decisions/ADR-0003-premier-site-web.md) transforme les hypothèses web et données en choix provisoires pour la V1.
+## 8. État de l'implémentation
 
-- **Application :** Next.js 16.4.6, React 19.3.1, TypeScript 7.0.2.
-- **Runtime :** Node.js 26 LTS (26.x), fixé dans `package.json` et `.nvmrc`.
-- **Données :** projet Supabase Namesia existant, région `eu-west-1`.
-- **Accès public :** lecture depuis les composants serveur avec le SDK Supabase et une clé publishable.
-- **Sécurité :** RLS activé sur chaque table exposée ; politiques de lecture limitées aux prénoms et versions publiés ; aucun droit d'écriture accordé au rôle anonyme.
-- **Catalogue :** six prénoms initiaux ; le site ne contient pas de catalogue de repli codé en dur.
-- **Migrations :** SQL conservé dans `supabase/migrations/`.
-- **CI/CD :** GitHub Actions vérifie les PR et `main` ; Vercel est réservé à `main` après fusion et les previews sont désactivées.
+Le modèle JSON versionné, l'import administrateur et la publication explicite sont en cours d'intégration dans la PR #5. La migration initiale crée name_profiles et copie les six fiches existantes. Les anciennes tables sont conservées temporairement pour permettre une vérification avant suppression définitive.
 
-Cette implémentation est volontairement plus petite que l'architecture cible : les formes linguistiques, profils par marché/langue, observations statistiques, génération et administration restent à concevoir et à migrer. Ne pas considérer le schéma initial comme la cible complète.
-
-La première connexion Supabase est documentée dans le README et isolée dans `lib/supabase/server.ts` et `lib/prenoms.ts`. Les pages publiques ne doivent jamais utiliser de clé privilégiée.
+La connexion par e-mail nécessite de configurer les URL de redirection Supabase Auth et d'ajouter manuellement le premier utilisateur à admin_users. Cette étape est documentée dans le README.
