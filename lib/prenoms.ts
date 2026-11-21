@@ -9,16 +9,17 @@ export type Claim = {
   evidence_note: string | null;
   claim_sources: { sources: Source | null }[];
 };
+export type SymbolicAssociation = { id: string; category: string; value: string; context_note: string; disclaimer: string };
 export type Prenom = {
   id: string; slug: string; nom: string; lettre: string; genre: string;
   introduction: string; origine: string | null; histoire: string | null;
-  usage: string | null; claims: Claim[];
+  usage: string | null; claims: Claim[]; symboles: SymbolicAssociation[];
 };
 type JoinedName = {
   id: string; slug: string; display_name: string; first_letter: string; gender: string;
   name_profile_versions: {
     id: string; version: number; introduction: string; origin_text: string | null;
-    history_text: string | null; usage_text: string | null; claims: Claim[];
+    history_text: string | null; usage_text: string | null; claims: Claim[]; symbolic_associations: SymbolicAssociation[];
   }[];
 };
 const selection = `
@@ -38,7 +39,7 @@ function convertir(row: JoinedName): Prenom {
     id: row.id, slug: row.slug, nom: row.display_name, lettre: row.first_letter,
     genre: genres[row.gender] ?? "Prénom", introduction: profile?.introduction ?? "",
     origine: profile?.origin_text ?? null, histoire: profile?.history_text ?? null,
-    usage: profile?.usage_text ?? null, claims: profile?.claims ?? []
+    usage: profile?.usage_text ?? null, claims: profile?.claims ?? [], symboles: profile?.symbolic_associations ?? []
   };
 }
 export async function getPrenoms(): Promise<Prenom[]> {
