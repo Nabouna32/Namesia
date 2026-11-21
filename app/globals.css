@@ -127,20 +127,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #66816a;outline-offset:3p
 
 .profile-copy{font-size:13px;line-height:1.9;color:#657066}
 .profile-panel{display:flex;flex-direction:column}
-.claim-list{list-style:none;padding:0;margin:0}
-.claim-list li{border-top:1px solid var(--line);padding:16px 0}
-.claim-list li:first-child{border-top:0;padding-top:0}
-.claim-list p{font-size:12px;line-height:1.8;color:#59665b;margin:0 0 9px}
-.claim-status{display:inline-flex;padding:5px 8px;border-radius:20px;background:#e7eee2;color:#476346;font-size:9px;font-weight:700;letter-spacing:.3px}
-.claim-discussed{background:#f2eddf;color:#816d43}
-.sources-section{margin-top:58px;padding-top:35px;border-top:1px solid var(--line)}
-.sources-section h2{font:34px var(--serif);margin:12px 0 20px}
-.sources-section ol{padding-left:18px;margin:0}
-.sources-section li{padding:9px 0 9px 5px;color:#617061;font-size:12px}
-.sources-section li a{color:var(--green);font-weight:600}
-.sources-section li span{display:block;color:#929a90;font-size:10px;margin-top:4px}
 .profile-disclaimer{max-width:760px}
-@media(max-width:760px){.sources-section h2{font-size:29px}.profile-panel{min-height:0}}
 
 .symbolic-section{margin-top:58px;padding-top:35px;border-top:1px solid var(--line)}
 .symbolic-section>h2{font:34px var(--serif);margin:12px 0 20px}
@@ -200,9 +187,8 @@ h1 em,h2 em{background:var(--rainbow);background-clip:text;-webkit-background-cl
 .profile-grid{gap:12px}
 .profile-panel{padding:20px;min-height:190px;border-radius:11px}
 .profile-panel h2{margin:18px 0 9px}
-.claim-list li{padding:11px 0}
-.sources-section,.symbolic-section{margin-top:32px;padding-top:24px}
-.sources-section h2,.symbolic-section>h2{font-size:30px;margin:8px 0 14px}
+.symbolic-section{margin-top:32px;padding-top:24px}
+.symbolic-section>h2{font-size:30px;margin:8px 0 14px}
 .symbolic-grid{gap:10px}
 .symbolic-card{padding:15px;border-radius:11px;background:linear-gradient(145deg,#fff0f6,#f4edff);border-color:#eeddf1}
 .symbolic-card h3{margin:10px 0 7px;color:#763c89}
@@ -211,8 +197,6 @@ h1 em,h2 em{background:var(--rainbow);background-clip:text;-webkit-background-cl
 .name-grid{gap:9px}
 .name-card{min-height:66px;padding:10px 13px;border-radius:10px}
 .name-initial{background:linear-gradient(145deg,#ffe0ed,#e9dcff);color:#813c91}
-.claim-status{background:#e1f6e9;color:#28764a}
-.claim-discussed{background:#fff0d8;color:#8a5b16}
 .search-field:focus-within{outline-color:#bd66c7}
 a:focus-visible,button:focus-visible{outline-color:#a14eb2}
 @media(max-width:760px){
@@ -243,14 +227,10 @@ body>main{flex:1 0 auto}
 .eyebrow{font-size:12px;letter-spacing:1.2px}
 .name-card small,.featured-bottom span,
 .footer-note,.source-placeholder,.profile-disclaimer,
-.symbolic-card>span,.symbolic-card small,.claim-status{font-size:12px}
 .demo-notice p{font-size:14px;line-height:1.65}
 .demo-notice strong{font-size:14px}
 .profile-copy{font-size:15px;line-height:1.8}
 .pending{font-size:14px;line-height:1.75}
-.claim-list p{font-size:14px;line-height:1.75}
-.sources-section li{font-size:14px}
-.sources-section li span{font-size:12px}
 .symbolic-card p{font-size:14px;line-height:1.7}
 .page-intro{font-size:15px;line-height:1.7}
 .back-link,.text-link,.button{font-size:14px}
