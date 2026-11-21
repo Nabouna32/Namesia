@@ -56,7 +56,6 @@ h1 em,h2 em{color:#66816a;font-weight:500}
 .featured-card{height:275px;border-radius:9px;padding:23px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;transition:transform .2s}
 .featured-card:hover{transform:translateY(-4px)}
 .featured-1{background:#dce6d4}.featured-2{background:#e9e4d8}.featured-3{background:#e2e9e7}
-.featured-number{font-size:10px;letter-spacing:1px;color:#718071}
 .featured-letter{position:absolute;inset:25px 0 0;text-align:center;font:170px/.95 var(--serif);color:rgba(54,83,59,.14)}
 .featured-bottom{display:flex;justify-content:space-between;align-items:flex-end;position:relative}
 .featured-bottom strong{font:31px var(--serif)}
@@ -95,7 +94,6 @@ h1 em,h2 em{color:#66816a;font-weight:500}
 .profile .demo-notice{max-width:none;margin:22px 0 35px}
 .profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .profile-panel{background:#fff;border:1px solid var(--line);border-radius:8px;padding:28px;min-height:230px}
-.panel-index{font-size:9px;letter-spacing:1.5px;color:#82917f}
 .profile-panel h2{font:25px var(--serif);margin:28px 0 12px}
 .pending{font-size:12px;line-height:1.8;color:#727c72}
 .source-placeholder{font-size:10px;color:#89948a}
@@ -172,7 +170,6 @@ h1 em,h2 em{background:var(--rainbow);background-clip:text;-webkit-background-cl
 .featured-2{background:linear-gradient(140deg,#fff0c9,#ffdfb9)}
 .featured-3{background:linear-gradient(140deg,#d9f5e6,#cceafa)}
 .featured-letter{font-size:145px;color:rgba(94,49,111,.13)}
-.featured-number{color:#775b7d}
 .featured-bottom strong{font-size:27px}
 .featured-bottom span{color:#765a7b}
 .approach-section{background:linear-gradient(115deg,#713c91 0%,#a44591 34%,#b94f78 66%,#bd7548 100%);padding:54px 0}
@@ -241,8 +238,8 @@ body>main{flex:1 0 auto}
 
 /* Lisibilité : les textes utiles restent confortables sur écran d'ordinateur. */
 .eyebrow{font-size:12px;letter-spacing:1.2px}
-.name-card small,.featured-number,.featured-bottom span,.hero-footnote,
-.footer-note,.panel-index,.source-placeholder,.profile-disclaimer,
+.name-card small,.featured-bottom span,.hero-footnote,
+.footer-note,.source-placeholder,.profile-disclaimer,
 .symbolic-card>span,.symbolic-card small,.claim-status{font-size:12px}
 .principles>div>span{font-size:12px}
 .principles p{font-size:14px;line-height:1.65}
