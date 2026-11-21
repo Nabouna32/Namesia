@@ -120,4 +120,4 @@ Le premier jeu de six fiches (Alice, Gabriel, Emma, Louis, Lina et Noah) sert à
 - Les fiches et leur contenu doivent être enrichis par des dictionnaires spécialisés et des travaux d'onomastique avant d'être considérés comme un corpus éditorial de référence.
 - Les messages techniques de démonstration ne doivent pas être exposés au public. La nuance éditoriale appartient au contenu lui-même : formulation prudente, statut de preuve et référence consultable.
 
-Ce corpus initial est une base de travail éditoriale. Il ne justifie pas de généraliser ses hypothèses à d'autres prénoms.
+Les six fiches disposent aussi d'une association symbolique ou culturelle éditoriale, explicitement accompagnée du disclaimer constant. Ces associations (livre ouvert, messager, élan, couronne, tilleul, arche) sont des images de lecture, pas des traits de personnalité ni des faits étymologiques.\n\nCe corpus initial est une base de travail éditoriale. Il ne justifie pas de généraliser ses hypothèses à d'autres prénoms.
