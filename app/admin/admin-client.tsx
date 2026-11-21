@@ -14,16 +14,13 @@ type ImportResult = { profileId: string; version: number };
 type ProfileRow = {
   id: string;
   version: number;
-  schema_version: string;
   status: "brouillon" | "publie" | "archive";
   created_at: string;
-  published_at: string | null;
 };
 type NameRow = {
   id: string;
   slug: string;
   display_name: string;
-  gender: FichePrenomImport["identity"]["gender"];
   name_profiles: ProfileRow[];
 };
 
@@ -58,6 +55,11 @@ export function AdminClient() {
       if (!nextSession) {
         if (active) {
           setAuthorized(false);
+          setCatalog([]);
+          setCatalogTotal(0);
+          setCatalogOffset(0);
+          setCatalogNextOffset(null);
+          setCatalogLoading(false);
           setChecking(false);
         }
         return;
