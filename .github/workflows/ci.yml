@@ -1,0 +1,27 @@
+name: Vérifications
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26.13.1
+      - name: Installer les dépendances
+        run: npm install --no-audit --no-fund
+      - name: Vérifier les types
+        run: npm run typecheck
+      - name: Construire le site
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://ftiikxwjaduecvuexlkk.supabase.co
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_QMGPd9f06uaubb8QpCTF9A_jH4y0fwA

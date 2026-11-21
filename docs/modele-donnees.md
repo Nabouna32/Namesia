@@ -112,3 +112,29 @@ La politique détaillée est maintenue dans [Politique éditoriale et sources](p
 - Gestion des prénoms épicènes et des usages genrés selon les pays.
 - Stratégie de fusion des homonymes et des étymologies concurrentes.
 - Source statistique et granularité des séries françaises.
+
+
+## 7. Schéma effectivement créé pour la première version
+
+Le schéma conceptuel ci-dessus reste la cible à challenger. La première migration réellement appliquée au projet Supabase Namesia crée un sous-ensemble relationnel volontairement plus simple :
+
+| Table | Responsabilité actuelle |
+|---|---|
+| `names` | Identité, slug, nom affiché, initiale, genre éditorial et publication |
+| `name_profile_versions` | Versions numérotées d'une fiche et contenus éditoriaux |
+| `sources` | Références documentaires et notes de portée |
+| `claims` | Affirmations atomiques, section, statut et note de preuve |
+| `claim_sources` | Relation plusieurs-à-plusieurs entre affirmations et sources |
+| `symbolic_associations` | Emplacement réservé aux associations culturelles contextualisées |
+
+Les migrations sont conservées dans `supabase/migrations/`. Les six tables ont RLS activé. Les rôles `anon` et `authenticated` disposent uniquement de la lecture, et les politiques filtrent les versions publiées. Les opérations d'écriture restent réservées aux opérations de confiance qui seront conçues avec l'administration.
+
+### Écarts assumés avec la cible
+
+- Le modèle actuel ne possède pas encore `name_forms`, `name_profiles`, `statistics_observations` ni `generation_runs`.
+- Le profil est directement lié à `names` ; le découpage par langue et marché sera nécessaire avant une ouverture multilingue.
+- Les sources sont reliées aux affirmations par `claim_sources`, ce qui permet plusieurs références pour une affirmation et plusieurs affirmations pour une source.
+- Le statut d'une affirmation dans la première migration est limité à `etabli` ou `discute`. Les statuts `incertain` et `non_documente` restent à intégrer.
+- Les premières fiches n'ont qu'une version chacune. Les versions publiées ne doivent pas être modifiées en place.
+
+Ne pas étendre le schéma au fil de l'eau sans mettre à jour cette section, les migrations, les types applicatifs et les tests RLS.

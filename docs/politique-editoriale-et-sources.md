@@ -109,3 +109,15 @@ Une fiche n'est publiable que si :
 ## 7. Révision de cette politique
 
 Toute nouvelle famille de contenus (personnalités, astrologie, compatibilité, prénoms régionaux, etc.) doit être ajoutée ici avant d'être intégrée au prompt de génération ou au site.
+
+
+## 8. Corpus initial de la V1
+
+Le premier jeu de six fiches (Alice, Gabriel, Emma, Louis, Lina et Noah) sert à alimenter l'expérience publique et à valider le circuit de lecture Supabase.
+
+- Les cinq pistes étymologiques d'Alice, Gabriel, Emma, Louis et Lina sont reliées à un extrait de *L’Officiel des prénoms 2019* diffusé par Albin Michel ; elles sont enregistrées au statut `discute`, et non comme des certitudes académiques.
+- Le repère sur Noé/Noah est relié au texte de la Genèse pour attester le personnage biblique ; cette source ne prouve pas l'étymologie du prénom.
+- Les fiches et leur contenu doivent être enrichis par des dictionnaires spécialisés et des travaux d'onomastique avant d'être considérés comme un corpus éditorial de référence.
+- Les messages techniques de démonstration ne doivent pas être exposés au public. La nuance éditoriale appartient au contenu lui-même : formulation prudente, statut de preuve et référence consultable.
+
+Les six fiches disposent aussi d'une association symbolique ou culturelle éditoriale, explicitement accompagnée du disclaimer constant. Ces associations (livre ouvert, messager, élan, couronne, tilleul, arche) sont des images de lecture, pas des traits de personnalité ni des faits étymologiques.\n\nCe corpus initial est une base de travail éditoriale. Il ne justifie pas de généraliser ses hypothèses à d'autres prénoms.
