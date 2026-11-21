@@ -1,35 +1,22 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
-export type Source = { title: string; publisher: string | null; url: string };
-export type Claim = {
-  id: string;
-  section: "origine" | "histoire" | "usage" | "statistique";
-  content: string;
-  claim_status: "etabli" | "discute";
-  evidence_note: string | null;
-  claim_sources: { sources: Source | null }[];
-};
 export type SymbolicAssociation = { id: string; category: string; value: string; context_note: string; disclaimer: string };
 export type Prenom = {
   id: string; slug: string; nom: string; lettre: string; genre: string;
   introduction: string; origine: string | null; histoire: string | null;
-  usage: string | null; claims: Claim[]; symboles: SymbolicAssociation[];
+  usage: string | null; symboles: SymbolicAssociation[];
 };
 type JoinedName = {
   id: string; slug: string; display_name: string; first_letter: string; gender: string;
   name_profile_versions: {
     id: string; version: number; introduction: string; origin_text: string | null;
-    history_text: string | null; usage_text: string | null; claims: Claim[]; symbolic_associations: SymbolicAssociation[];
+    history_text: string | null; usage_text: string | null; symbolic_associations: SymbolicAssociation[];
   }[];
 };
 const selection = `
   id, slug, display_name, first_letter, gender,
   name_profile_versions!inner (
     id, version, introduction, origin_text, history_text, usage_text,
-    claims (
-      id, section, content, claim_status, evidence_note,
-      claim_sources ( sources ( title, publisher, url ) )
-    ),
     symbolic_associations ( id, category, value, context_note, disclaimer )
   )
 `;
@@ -40,7 +27,7 @@ function convertir(row: JoinedName): Prenom {
     id: row.id, slug: row.slug, nom: row.display_name, lettre: row.first_letter,
     genre: genres[row.gender] ?? "Prénom", introduction: profile?.introduction ?? "",
     origine: profile?.origin_text ?? null, histoire: profile?.history_text ?? null,
-    usage: profile?.usage_text ?? null, claims: profile?.claims ?? [], symboles: profile?.symbolic_associations ?? []
+    usage: profile?.usage_text ?? null, symboles: profile?.symbolic_associations ?? []
   };
 }
 export async function getPrenoms(): Promise<Prenom[]> {
