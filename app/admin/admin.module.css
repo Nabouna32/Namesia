@@ -53,6 +53,16 @@
 .preview h4 { margin: 1rem 0 .25rem; color: #62466e; font-size: 1rem; }
 .preview p { margin: .25rem 0; white-space: pre-wrap; overflow-wrap: anywhere; }
 .previewWarning { margin-top: 1.25rem !important; padding-top: .8rem; border-top: 1px solid #ead9ee; font-size: .8rem; }
+.library { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #eee1ef; }
+.library h3 { margin: 0 0 1rem; color: #30243b; font-size: 1.2rem; }
+.entry { padding: 1rem 0; border-top: 1px solid #f1e8f2; }
+.entryHeading { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1rem; margin-bottom: .5rem; }
+.entryHeading strong { color: #30243b; }
+.entryHeading span { color: #8a7e91; font-size: .8rem; }
+.versionRow { display: flex; justify-content: space-between; align-items: center; gap: .75rem; padding: .5rem 0 .5rem .75rem; }
+.versionRow span { color: #71677b; font-size: .85rem; }
+.versionRow .secondary { flex: 0 0 auto; padding: .4rem .65rem; }
 @media (max-width: 560px) {
   .heading { flex-direction: column; }
+  .versionRow { align-items: flex-start; flex-direction: column; padding-left: 0; }
 }
