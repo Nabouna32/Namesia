@@ -1,7 +1,7 @@
 # Modèle de données — Namesia
 
 - **Statut :** modèle cible retenu pour la V1
-- **Version :** 2.1
+- **Version :** 2.2
 - **Mis à jour :** 2026-11-22
 
 ## 1. Principes
@@ -68,6 +68,23 @@ Une ligne par association symbolique d'une version de fiche. Cette séparation p
 
 Les rubriques textuelles restent des colonnes de `name_profiles` : une table supplémentaire par paragraphe n'apporterait rien. Les associations ont leur table car elles sont répétables, structurées et potentiellement filtrables. Les index ne sont pas ajoutés par anticipation sur chaque colonne : ils seront choisis à partir des filtres réellement proposés et des volumes observés. La recherche plein texte pourra utiliser un index dédié lorsqu'elle fera partie du besoin produit.
 
+### name_profile_references
+
+Une ligne par ressource réellement consultée pour une rubrique d'une version de fiche. Cette table n'est pas un système de claims ou de preuve.
+
+| Colonne | Rôle |
+|---|---|
+| id | UUID, clé primaire |
+| profile_id | Référence à name_profiles.id |
+| position | Ordre d'affichage |
+| section | origine, histoire ou usages |
+| title | Titre de la ressource |
+| publisher | Éditeur ou organisme |
+| url | URL HTTP(S) |
+| consulted_at | Date de consultation |
+
+Les références sont versionnées avec la fiche et visibles publiquement uniquement lorsque la version est publiée. Elles ne certifient pas automatiquement les affirmations.
+
 ### private.admin_users
 
 Liste d'autorisation des comptes Supabase Auth. La table réside dans le schéma PostgreSQL privé, qui n'est pas exposé par la Data API.
@@ -81,10 +98,10 @@ RLS est activé. Un utilisateur authentifié peut uniquement lire sa propre auto
 
 Le contrat canonique d'entrée est [fiche-prenom.schema.json](../schemas/fiche-prenom.schema.json). L'API le valide avant d'appeler une fonction SQL transactionnelle qui répartit le contenu dans les colonnes `name_profiles` et les lignes `name_profile_associations`.
 
-Structure :
+Structure du contrat 3.0.0 :
 - schema_version : version du schéma ;
 - identity : slug, graphie et genre ;
-- content : introduction, origine, histoire, usages et associations symboliques.
+- content : introduction, origine, histoire, usages, associations symboliques et références consultées facultatives.
 
 Les rubriques facultatives peuvent être absentes lorsqu'une information n'est pas disponible. Une génération ne doit pas inventer de texte pour remplir artificiellement le document.
 
@@ -103,7 +120,6 @@ Le JSON entrant ne contient aucun statut, date de publication ou identifiant int
 ## 5. Données volontairement absentes
 
 Les éléments suivants ne sont pas modélisés dans la V1 :
-- sources documentaires et liens de preuve ;
 - affirmations atomiques et statuts de preuve ;
 - statistiques structurées ;
 - génération IA intégrée et métadonnées de fournisseur ;
