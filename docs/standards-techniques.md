@@ -140,6 +140,17 @@ Après le refactor :
 
 La dette technique est suivie avec honnêteté. Une dette acceptée doit être visible, contextualisée, priorisée selon son impact et réévaluée ; elle ne doit pas être présentée comme une convention moderne.
 
-## 8. Dérogations
+## 8. Fallbacks, sémantique et source de vérité
+
+- Concevoir le parcours nominal pour qu'il fonctionne sans chemins de secours artificiels. Une architecture correcte ne doit pas dépendre d'une cascade de fallbacks pour compenser des contrats flous ou des responsabilités mal placées.
+- Ne pas dupliquer une même valeur par défaut, une même transformation ou une même récupération à plusieurs niveaux. Définir la source de vérité à la frontière appropriée.
+- Ne pas masquer une erreur technique par `null`, une chaîne vide, un tableau vide, une donnée fictive, un contenu statique ou une valeur par défaut. Une absence métier prévue par le contrat est distincte d'une panne et doit être représentée explicitement.
+- Un fallback n'est autorisé que si un besoin réel le justifie : champ facultatif prévu par le modèle, dépendance externe avec comportement dégradé attendu, ou récupération d'erreur nécessaire à la sécurité et à l'expérience. Le documenter au point où il est décidé, le tester et le rendre observable.
+- Ne pas multiplier les `try/catch`, valeurs `??`, `||`, optional chaining, branches conditionnelles ou composants de secours sans raison propre à chaque frontière. Ces mécanismes ne sont pas mauvais en soi ; leur accumulation pour cacher une conception fragile l'est.
+- En HTML, choisir l'élément natif qui porte le sens et le comportement : `button`, `a`, `main`, `nav`, `header`, `footer`, `section`, `article`, `form`, listes, titres, etc. Éviter les `div`/`span` génériques quand une balise sémantique convient.
+- Ne pas recréer manuellement avec `role`, `tabIndex` et des gestionnaires clavier le comportement déjà fourni par un élément natif. Ne pas ajouter d'attributs ARIA redondants ; l'accessibilité doit découler d'abord de la structure et des contrôles natifs.
+- Les états vide, chargement et erreur sont des états produit explicites, pas des fallbacks passe-partout. N'en créer que lorsqu'ils correspondent à un état réellement possible.
+
+## 9. Dérogations
 
 Une dérogation est acceptable si elle est plus simple, plus sûre ou mieux adaptée au besoin réel. Elle doit être localisée et justifiée dans le code ou la PR : contrainte, alternative écartée, coût et condition de réexamen. Une dérogation temporaire doit avoir un critère de sortie. L'absence de temps ne transforme pas une rustine en solution durable.
