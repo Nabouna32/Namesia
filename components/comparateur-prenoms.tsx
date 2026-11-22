@@ -63,7 +63,7 @@ export function ComparateurPrenoms({ prenoms }: Props) {
               })}
             </div>
           ) : (
-            <p className="compare-status">Aucun prénom ne correspond à cette recherche.</p>
+            <p className="compare-status">{prenoms.length === 0 ? "Aucun prénom n’est encore publié." : "Aucun prénom ne correspond à cette recherche."}</p>
           )}
         </fieldset>
 
