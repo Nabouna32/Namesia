@@ -21,9 +21,14 @@ function comparerPertinence(a: PrenomIndex, b: PrenomIndex, terme: string): numb
   if (!terme) return a.nom.localeCompare(b.nom, "fr");
   const nomA = normaliserRecherche(a.nom);
   const nomB = normaliserRecherche(b.nom);
-  const rangA = nomA === terme ? 0 : nomA.startsWith(terme) ? 1 : 2;
-  const rangB = nomB === terme ? 0 : nomB.startsWith(terme) ? 1 : 2;
-  return rangA - rangB || a.nom.localeCompare(b.nom, "fr");
+  const positionA = nomA.indexOf(terme);
+  const positionB = nomB.indexOf(terme);
+  const rangA = nomA === terme ? 0 : positionA === 0 ? 1 : 2;
+  const rangB = nomB === terme ? 0 : positionB === 0 ? 1 : 2;
+
+  return rangA - rangB
+    || (rangA === 2 ? positionA - positionB : 0)
+    || a.nom.localeCompare(b.nom, "fr");
 }
 
 function distanceEdition(a: string, b: string, limite: number): number {
