@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPrenom, getPrenoms } from "@/lib/prenoms";
+import { getPrenom } from "@/lib/prenoms";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export const revalidate = 3600;
-
-export async function generateStaticParams() {
-  return (await getPrenoms()).map(({ slug }) => ({ slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
