@@ -31,7 +31,7 @@ La clé publishable peut être exposée au navigateur. La sécurité repose sur 
 
 ### Ordre de bascule du modèle en production
 
-Le projet Supabase possède temporairement les deux modèles de données. Les migrations non destructives qui créent le modèle JSONB sont déjà appliquées. La migration de nettoyage supprime les anciennes tables et colonnes.
+Le projet Supabase possède temporairement les deux modèles de données. Les migrations qui créent le contrat d'import et le modèle relationnel cible sont déjà appliquées. La migration finale décompose les données JSON transitoires en colonnes et associations relationnelles, puis supprime l'ancien modèle documentaire.
 
 **Ne pas appliquer la migration de nettoyage avant que la nouvelle version de l'application soit déployée en production.** Le code actuellement en production peut encore lire l'ancien modèle.
 
