@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BoutonFavori } from "@/components/bouton-favori";
 import { PartagerFiche } from "@/components/partager-fiche";
 import { getAutresPrenomsDuGenre, getPrenom } from "@/lib/prenoms";
 import { jsonLd } from "@/lib/json-ld";
@@ -67,7 +68,8 @@ export default async function FichePrenom({ params }: Props) {
   );
 
   return (
-    <main id="contenu" tabIndex={-1} className="page-main profile-main"><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ficheData) }} />
+    <main id="contenu" tabIndex={-1} className="page-main profile-main">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ficheData) }} />
       <div className="container profile">
         <nav className="breadcrumb" aria-label="Fil d’Ariane">
           <ol>
@@ -87,7 +89,10 @@ export default async function FichePrenom({ params }: Props) {
                 <span className="profile-tag">{prenom.genre}</span>
                 <span className="profile-tag">Lettre {prenom.lettre}</span>
               </div>
-              <PartagerFiche nom={prenom.nom} />
+              <div className="profile-actions">
+                <BoutonFavori slug={prenom.slug} />
+                <PartagerFiche nom={prenom.nom} />
+              </div>
             </div>
             <div className="profile-monogram" aria-hidden="true">{prenom.lettre}</div>
           </header>
