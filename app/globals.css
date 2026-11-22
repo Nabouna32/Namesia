@@ -982,6 +982,29 @@ h2 em {
   font-size: 12px;
   line-height: 1.6;
 }
+
+.compare-share {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  border: 1px solid #eadcf0;
+  border-radius: 14px;
+  background: #fff8fc;
+}
+
+.compare-share > p {
+  margin: 0;
+  color: #66566e;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.compare-share .profile-share {
+  margin-top: 0;
+}
 .profile-share {
   display: flex;
   flex-wrap: wrap;

@@ -2,27 +2,41 @@
 
 import { useMemo, useState } from "react";
 import type { Prenom } from "@/lib/prenoms";
+import { PartagerLien } from "@/components/partager-fiche";
 
-type Props = { prenoms: Prenom[] };
+type Props = { prenoms: Prenom[]; selectionInitiale: string[] };
 
 function normaliser(value: string): string {
   return value.trim().normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("fr");
 }
 
-export function ComparateurPrenoms({ prenoms }: Props) {
+export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
   const [recherche, setRecherche] = useState("");
-  const [selection, setSelection] = useState<string[]>([]);
+  const [selection, setSelection] = useState<string[]>(selectionInitiale);
   const resultats = useMemo(() => {
     const terme = normaliser(recherche);
     return prenoms.filter((prenom) => !terme || normaliser(prenom.nom).includes(terme));
   }, [prenoms, recherche]);
   const selectionnes = prenoms.filter((prenom) => selection.includes(prenom.slug));
 
+  function synchroniserUrl(slugs: string[]) {
+    const url = new URL(window.location.href);
+    if (slugs.length > 0) url.searchParams.set("prenoms", slugs.join(","));
+    else url.searchParams.delete("prenoms");
+    window.history.replaceState(null, "", url.toString());
+  }
+
   function changerSelection(slug: string, coche: boolean) {
-    setSelection((actuelle) => {
-      if (coche) return actuelle.length < 3 ? [...actuelle, slug] : actuelle;
-      return actuelle.filter((element) => element !== slug);
-    });
+    const suivante = coche
+      ? selection.length < 3 && !selection.includes(slug) ? [...selection, slug] : selection
+      : selection.filter((element) => element !== slug);
+    setSelection(suivante);
+    synchroniserUrl(suivante);
+  }
+
+  function effacerSelection() {
+    setSelection([]);
+    synchroniserUrl([]);
   }
 
   return (
@@ -69,7 +83,7 @@ export function ComparateurPrenoms({ prenoms }: Props) {
 
         <div className="compare-selection-footer">
           <span role="status" aria-live="polite">{selection.length} / 3 prénoms sélectionnés</span>
-          <button type="button" disabled={selection.length === 0} onClick={() => setSelection([])}>
+          <button type="button" disabled={selection.length === 0} onClick={effacerSelection}>
             Effacer la sélection
           </button>
         </div>
@@ -124,6 +138,18 @@ export function ComparateurPrenoms({ prenoms }: Props) {
           ))}
           <p className="compare-disclaimer">Les associations symboliques sont des représentations culturelles, pas des caractéristiques scientifiques ou prédictives.</p>
         </section>
+      )}
+
+      {selectionnes.length >= 2 && (
+        <div className="compare-share">
+          <p>Cette sélection est enregistrée dans l’adresse de la page : vous pouvez partager la comparaison.</p>
+          <PartagerLien
+            titre={`Comparaison de ${selectionnes.length} prénoms · Namesia`}
+            texte={`Comparez ${selectionnes.map((prenom) => prenom.nom).join(", ")} sur Namesia.`}
+            label="Partager cette comparaison"
+            avecParametres
+          />
+        </div>
       )}
     </div>
   );
