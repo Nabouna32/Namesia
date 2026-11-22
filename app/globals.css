@@ -363,6 +363,8 @@ h2 em {
 }
 
 .clear-search {
+  min-width: 44px;
+  min-height: 44px;
   border: 0;
   background: none;
   color: var(--color-accent);
@@ -418,8 +420,8 @@ h2 em {
 }
 
 .filter-chip {
-  min-height: 36px;
-  padding: 7px 14px;
+  min-height: 44px;
+  padding: 9px 14px;
   border: 1px solid var(--color-surface-muted);
   border-radius: 999px;
   background: var(--color-surface);
@@ -441,7 +443,8 @@ h2 em {
 }
 
 .filter-letter {
-  min-width: 36px;
+  min-width: 44px;
+  min-height: 44px;
   padding-inline: 10px;
   font-family: var(--font-sans);
   font-size: 16px;
@@ -449,8 +452,9 @@ h2 em {
 }
 
 .filter-reset {
+  min-height: 44px;
   justify-self: start;
-  padding: 0;
+  padding: 0 8px;
   border: 0;
   background: transparent;
   color: var(--color-accent);
