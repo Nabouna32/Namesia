@@ -314,6 +314,101 @@ h2 em {
   font-size: 14px;
 }
 
+.catalogue-filters {
+  display: grid;
+  gap: 18px;
+  margin: 24px 0 26px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fff8fb, #fffdf8 55%, #f8f5ff);
+}
+
+.filter-group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.filter-group legend {
+  margin-bottom: 10px;
+  color: #66566e;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-chip {
+  min-height: 36px;
+  padding: 7px 14px;
+  border: 1px solid #e8d9eb;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #685970;
+  cursor: pointer;
+  font-size: 13px;
+  transition: border-color 0.18s, background-color 0.18s, color 0.18s;
+}
+
+.filter-chip:hover {
+  border-color: #bf8bc8;
+  color: #7b398d;
+}
+
+.filter-chip[aria-pressed="true"] {
+  border-color: #87509a;
+  background: #87509a;
+  color: #ffffff;
+}
+
+.filter-letter {
+  min-width: 36px;
+  padding-inline: 10px;
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.filter-reset {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #82458f;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: #c9a4d0;
+  text-underline-offset: 4px;
+}
+
+.filter-reset:hover {
+  color: #592d68;
+}
+
+.empty-results {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  padding: 22px;
+  border: 1px dashed #dfcde4;
+  border-radius: 12px;
+  background: #fffaff;
+}
+
+.empty-results .empty-state {
+  margin: 0;
+}
+
 .name-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -999,6 +1094,19 @@ h2 em {
   .symbolic-grid,
   .name-grid {
     grid-template-columns: 1fr;
+  }
+
+  .catalogue-filters {
+    gap: 15px;
+    padding: 16px;
+  }
+
+  .filter-options {
+    gap: 7px;
+  }
+
+  .filter-chip {
+    min-height: 40px;
   }
 
   .eyebrow {
