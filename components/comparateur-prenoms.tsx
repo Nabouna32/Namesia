@@ -121,22 +121,22 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
               </p>
               <div className="compare-options-grid">
                 {resultats.slice(0, nombreVisible).map((prenom) => {
-                const coche = selection.includes(prenom.slug);
-                return (
-                  <label className="compare-option" key={prenom.slug}>
-                    <input
-                      type="checkbox"
-                      checked={coche}
-                      disabled={!coche && selection.length >= 3}
-                      onChange={(event) => changerSelection(prenom.slug, event.target.checked)}
-                    />
-                    <span className="compare-option-initial" aria-hidden="true">{prenom.lettre}</span>
-                    <span className="compare-option-name">
-                      <strong>{prenom.nom}</strong>
-                      <small>{prenom.genre}</small>
-                    </span>
-                  </label>
-                );
+                  const coche = selection.includes(prenom.slug);
+                  return (
+                    <label className="compare-option" key={prenom.slug}>
+                      <input
+                        type="checkbox"
+                        checked={coche}
+                        disabled={!coche && selection.length >= 3}
+                        onChange={(event) => changerSelection(prenom.slug, event.target.checked)}
+                      />
+                      <span className="compare-option-initial" aria-hidden="true">{prenom.lettre}</span>
+                      <span className="compare-option-name">
+                        <strong>{prenom.nom}</strong>
+                        <small>{prenom.genre}</small>
+                      </span>
+                    </label>
+                  );
                 })}
               </div>
               {resultats.length > nombreVisible && (
