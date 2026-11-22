@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import type { Prenom } from "@/lib/prenoms";
+import type { Prenom, PrenomIndex } from "@/lib/prenoms";
 import { PartagerLien } from "@/components/partager-fiche";
 
-type Props = { prenoms: Prenom[]; selectionInitiale: string[] };
+type Props = { prenoms: PrenomIndex[]; selectionInitiale: string[] };
 
 function normaliser(value: string): string {
   return value.trim().normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("fr");
@@ -13,16 +13,63 @@ function normaliser(value: string): string {
 export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
   const [recherche, setRecherche] = useState("");
   const [selection, setSelection] = useState<string[]>(selectionInitiale);
+  const [fiches, setFiches] = useState<Record<string, Prenom>>({});
+  const [chargement, setChargement] = useState(false);
+  const [erreur, setErreur] = useState(false);
+  const [tentative, setTentative] = useState(0);
   const selectionInitialeKey = selectionInitiale.join(",");
+  const selectionKey = selection.join(",");
 
   useEffect(() => {
     setSelection(selectionInitialeKey ? selectionInitialeKey.split(",") : []);
   }, [selectionInitialeKey]);
+
+  useEffect(() => {
+    const slugs = selectionKey ? selectionKey.split(",") : [];
+    if (slugs.length < 2) {
+      setFiches({});
+      setChargement(false);
+      setErreur(false);
+      return;
+    }
+
+    const controleur = new AbortController();
+    const parametres = new URLSearchParams();
+    slugs.forEach((slug) => parametres.append("slug", slug));
+
+    async function chargerFiches() {
+      setChargement(true);
+      setErreur(false);
+
+      try {
+        const response = await fetch(`/api/prenoms?${parametres.toString()}`, {
+          signal: controleur.signal,
+          cache: "no-store"
+        });
+        if (!response.ok) throw new Error("Chargement impossible.");
+
+        const resultat = await response.json() as { prenoms: Prenom[] };
+        if (!Array.isArray(resultat.prenoms)) throw new Error("Réponse invalide.");
+
+        setFiches(Object.fromEntries(resultat.prenoms.map((prenom) => [prenom.slug, prenom])));
+      } catch (cause) {
+        if (cause instanceof Error && cause.name === "AbortError") return;
+        setErreur(true);
+      } finally {
+        if (!controleur.signal.aborted) setChargement(false);
+      }
+    }
+
+    void chargerFiches();
+    return () => controleur.abort();
+  }, [selectionKey, tentative]);
+
   const resultats = useMemo(() => {
     const terme = normaliser(recherche);
     return prenoms.filter((prenom) => !terme || normaliser(prenom.nom).includes(terme));
   }, [prenoms, recherche]);
-  const selectionnes = prenoms.filter((prenom) => selection.includes(prenom.slug));
+  const selectionnes = selection.flatMap((slug) => fiches[slug] ? [fiches[slug]] : []);
+  const selectionComplete = selectionnes.length === selection.length;
 
   function synchroniserUrl(slugs: string[]) {
     const url = new URL(window.location.href);
@@ -36,6 +83,9 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
       ? selection.length < 3 && !selection.includes(slug) ? [...selection, slug] : selection
       : selection.filter((element) => element !== slug);
     setSelection(suivante);
+    setFiches({});
+    setChargement(suivante.length >= 2);
+    setErreur(false);
     synchroniserUrl(suivante);
   }
 
@@ -94,12 +144,23 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
         </div>
       </section>
 
-      {selectionnes.length < 2 ? (
+      {selection.length < 2 ? (
         <p className="compare-status">
-          {selectionnes.length === 0
+          {selection.length === 0
             ? "Sélectionnez au moins deux prénoms pour afficher leur comparaison."
             : "Choisissez encore un prénom pour lancer la comparaison."}
         </p>
+      ) : chargement ? (
+        <p className="compare-status" role="status">Chargement des fiches sélectionnées…</p>
+      ) : erreur ? (
+        <div className="compare-status" role="alert">
+          <p>Les fiches sélectionnées n’ont pas pu être chargées.</p>
+          <button className="button button-dark" type="button" onClick={() => setTentative((value) => value + 1)}>
+            Réessayer
+          </button>
+        </div>
+      ) : !selectionComplete ? (
+        <p className="compare-status" role="status">Une des fiches sélectionnées n’est plus publiée. Modifiez votre sélection pour continuer.</p>
       ) : (
         <section aria-label="Comparaison des prénoms" className="compare-grid">
           {selectionnes.map((prenom) => (
@@ -145,7 +206,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
         </section>
       )}
 
-      {selectionnes.length >= 2 && (
+      {selection.length >= 2 && selectionComplete && !chargement && !erreur && (
         <div className="compare-share">
           <p>Cette sélection est enregistrée dans l’adresse de la page : vous pouvez partager la comparaison.</p>
           <PartagerLien

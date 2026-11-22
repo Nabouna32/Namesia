@@ -121,6 +121,26 @@ export async function getPrenoms(): Promise<Prenom[]> {
   return (data as unknown as JoinedName[]).map(convertir);
 }
 
+export async function getPrenomsParSlugs(slugs: string[]): Promise<Prenom[]> {
+  if (slugs.length === 0) return [];
+
+  const supabase = createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("names")
+    .select(selection)
+    .in("slug", slugs)
+    .eq("name_profiles.status", "publie")
+    .not("name_profiles.published_at", "is", null)
+    .order("display_name", { ascending: true });
+
+  if (error) {
+    console.error("Échec du chargement des fiches du comparateur Namesia :", error);
+    throw new Error("Les fiches sélectionnées sont momentanément indisponibles.");
+  }
+
+  return (data as unknown as JoinedName[]).map(convertir);
+}
+
 export const getPrenom = cache(async (slug: string): Promise<Prenom | null> => {
   const supabase = createSupabaseServerClient();
   const { data, error } = await supabase
