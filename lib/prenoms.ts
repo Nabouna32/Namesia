@@ -17,7 +17,8 @@ type JoinedProfile = {
   origin_text: string | null;
   history_text: string | null;
   usage_text: string | null;
-  name_profile_associations: JoinedAssociation[];\n  name_profile_references: (ReferenceFiche & { position: number })[];
+  name_profile_associations: JoinedAssociation[];
+  name_profile_references: (ReferenceFiche & { position: number })[];
 };
 
 const libellesGenres: Record<string, string> = {
@@ -39,7 +40,8 @@ const selection = `
   id, slug, display_name, gender,
   name_profiles!inner (
     introduction, origin_text, history_text, usage_text,
-    name_profile_associations ( category, value, context_note, position ),\n    name_profile_references ( section, title, publisher, url, consulted_at, position )
+    name_profile_associations ( category, value, context_note, position ),
+    name_profile_references ( section, title, publisher, url, consulted_at, position )
   )
 `;
 
