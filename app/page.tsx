@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 export default async function Accueil() {
   const prenoms = await getPrenoms();
-  return <main>
+  return <main id="contenu" tabIndex={-1}>
     <section className="hero"><div className="hero-glow" aria-hidden="true" /><div className="container hero-content">
       <span className="eyebrow"><span className="eyebrow-dot" /> L'univers des prénoms, autrement</span>
       <h1>Chaque prénom<br />a <em>son histoire.</em></h1>
