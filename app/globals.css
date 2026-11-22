@@ -313,7 +313,7 @@ h2 em {
 }
 
 .search-field input::placeholder {
-  color: #a0a79e;
+  color: #6f766e;
 }
 
 .clear-search {
@@ -482,7 +482,7 @@ h2 em {
 
 .name-card small {
   margin-top: 3px;
-  color: #8a7b91;
+  color: #73647b;
   font-size: 12px;
 }
 
@@ -969,7 +969,7 @@ h2 em {
 }
 
 .compare-field .compare-missing {
-  color: #887d8c;
+  color: #73647b;
   font-style: italic;
 }
 
