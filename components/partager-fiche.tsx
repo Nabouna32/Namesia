@@ -13,13 +13,14 @@ export function PartagerLien({ titre, texte, label, avecParametres = false }: Pr
       const selection = new URL(window.location.href).searchParams.get("prenoms");
       if (selection) url.searchParams.set("prenoms", selection);
     }
+    const urlPartage = url.toString();
 
     if (typeof navigator.share === "function") {
       try {
         await navigator.share({
           title: titre,
           text: texte,
-          url
+          url: urlPartage
         });
         return;
       } catch (error) {
@@ -28,7 +29,7 @@ export function PartagerLien({ titre, texte, label, avecParametres = false }: Pr
     }
 
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(urlPartage);
       setMessage("Lien copié dans le presse-papiers.");
     } catch {
       setMessage("Le partage n’est pas disponible sur cet appareil.");
