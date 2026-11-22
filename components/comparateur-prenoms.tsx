@@ -88,6 +88,7 @@ export function ComparateurPrenoms({ prenoms }: Props) {
               <header>
                 <h2>{prenom.nom}</h2>
                 <span className="profile-tag">{prenom.genre}</span>
+                <span className="profile-tag">Lettre {prenom.lettre}</span>
               </header>
               <div className="compare-field">
                 <h3>Introduction</h3>
@@ -121,6 +122,7 @@ export function ComparateurPrenoms({ prenoms }: Props) {
               </div>
             </article>
           ))}
+          <p className="compare-disclaimer">Les associations symboliques sont des représentations culturelles, pas des caractéristiques scientifiques ou prédictives.</p>
         </section>
       )}
     </div>
