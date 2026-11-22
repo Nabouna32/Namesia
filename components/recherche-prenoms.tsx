@@ -10,6 +10,15 @@ function normaliserRecherche(value: string): string {
   return value.trim().normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("fr");
 }
 
+function comparerPertinence(a: Prenom, b: Prenom, terme: string): number {
+  if (!terme) return a.nom.localeCompare(b.nom, "fr");
+  const nomA = normaliserRecherche(a.nom);
+  const nomB = normaliserRecherche(b.nom);
+  const rangA = nomA === terme ? 0 : nomA.startsWith(terme) ? 1 : 2;
+  const rangB = nomB === terme ? 0 : nomB.startsWith(terme) ? 1 : 2;
+  return rangA - rangB || a.nom.localeCompare(b.nom, "fr");
+}
+
 export function RecherchePrenoms({ prenoms, compact = false }: Props) {
   const [recherche, setRecherche] = useState("");
   const [genreActif, setGenreActif] = useState<string | null>(null);
@@ -26,12 +35,14 @@ export function RecherchePrenoms({ prenoms, compact = false }: Props) {
 
   const resultats = useMemo(() => {
     const terme = normaliserRecherche(recherche);
-    return prenoms.filter((prenom) => {
-      const correspondAuNom = !terme || normaliserRecherche(prenom.nom).includes(terme);
-      const correspondAuGenre = !genreActif || prenom.genre === genreActif;
-      const correspondALaLettre = !lettreActive || normaliserRecherche(prenom.lettre) === lettreActive;
-      return correspondAuNom && correspondAuGenre && correspondALaLettre;
-    });
+    return prenoms
+      .filter((prenom) => {
+        const correspondAuNom = !terme || normaliserRecherche(prenom.nom).includes(terme);
+        const correspondAuGenre = !genreActif || prenom.genre === genreActif;
+        const correspondALaLettre = !lettreActive || normaliserRecherche(prenom.lettre) === lettreActive;
+        return correspondAuNom && correspondAuGenre && correspondALaLettre;
+      })
+      .sort((a, b) => comparerPertinence(a, b, terme));
   }, [genreActif, lettreActive, prenoms, recherche]);
 
   const filtresActifs = Boolean(recherche.trim() || genreActif || lettreActive);
