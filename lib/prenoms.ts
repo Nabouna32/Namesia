@@ -39,7 +39,7 @@ const selection = `
   id, slug, display_name, gender,
   name_profiles!inner (
     introduction, origin_text, history_text, usage_text,
-    name_profile_associations ( category, value, context_note, position ),
+    name_profile_associations ( category, value, context_note, position )
   )
 `;
 
@@ -57,8 +57,7 @@ function convertir(row: JoinedName): Prenom {
     ...(profile.usage_text ? { usage: profile.usage_text } : {}),
     symbolic_associations: [...(profile.name_profile_associations ?? [])]
       .sort((a, b) => a.position - b.position)
-      .map(({ category, value, context_note }) => ({ category, value, context_note })),
-
+      .map(({ category, value, context_note }) => ({ category, value, context_note }))
   };
 
   return {
