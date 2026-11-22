@@ -59,7 +59,7 @@ export default async function FichePrenom({ params }: Props) {
             </nav>
           )}
 
-          <div className="profile-layout">
+          <div className={aDesRubriques ? "profile-layout" : "profile-layout profile-layout-empty"}>
             <div className="profile-sections">
               {prenom.origin && (
                 <section className="profile-section" id="origine">
