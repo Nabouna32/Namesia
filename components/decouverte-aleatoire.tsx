@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import type { Prenom } from "@/lib/prenoms";
+import type { PrenomIndex } from "@/lib/prenoms";
 import styles from "./decouverte-aleatoire.module.css";
 
-type Props = { prenoms: Prenom[] };
+type Props = { prenoms: PrenomIndex[] };
 
 export function DecouverteAleatoire({ prenoms }: Props) {
-  const [selection, setSelection] = useState<Prenom | null>(null);
+  const [selection, setSelection] = useState<PrenomIndex | null>(null);
 
   function decouvrir() {
     const candidats = selection && prenoms.length > 1
