@@ -63,7 +63,8 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 
 Le modèle cible comporte deux tables métier :
 - names : identité stable du prénom (id, slug, display_name, gender, created_at).
-- name_profiles : versions du contenu (id, name_id, version, schema_version, content JSONB, status, created_at, published_at).
+- name_profiles : versions éditoriales (id, name_id, version, schema_version, introduction, origin_text, history_text, usage_text, status, created_at, published_at).
+- name_profile_associations : associations symboliques structurées, une ligne par association (profile_id, position, category, value, context_note).
 
 L'autorisation administrateur est stockée dans private.admin_users, un schéma PostgreSQL non exposé par la Data API. Les détails et contraintes sont décrits dans [Modèle de données](modele-donnees.md).
 
@@ -97,22 +98,22 @@ Les tables documentaires historiques (sources, claims, claim_sources), l'ancienn
 | Génération IA intégrée au site | Écartée | La génération a lieu en amont ; l'import JSON suffit |
 | Une table par rubrique de texte | Écartée | Les rubriques ne sont pas exploitées indépendamment |
 | Sources et affirmations atomiques | Écartées actuellement | Aucun processus de vérification documentaire n'est assuré |
-| Table dédiée aux associations symboliques | Écartée | Elles font partie du document éditorial |
+| Table dédiée aux associations symboliques | Retenue | Données répétables et filtrables, liées à une version |
 | Historique de versions | Conservé | Permet de remplacer et restaurer un contenu sans écraser l'historique |
 | Microservices / orchestrateur | Écartés | Complexité sans besoin démontré |
 | Clé privilégiée dans le navigateur | Interdite | Risque de compromission des données |
 
 ## 8. État et migration
 
-Le dépôt et le projet Supabase possèdent déjà une première implémentation JSONB et un écran d'administration. L'ancien modèle relationnel coexiste encore avec ce nouveau modèle.
+Le dépôt et le projet Supabase possèdent un contrat JSON d'import et un écran d'administration. Le JSON est validé puis décomposé atomiquement en colonnes et lignes relationnelles ; il n'est pas stocké comme document global.
 
 La migration de simplification doit :
-1. vérifier que chaque ancienne fiche et chaque association symbolique utile ont été reprises dans JSONB ;
+1. vérifier que chaque rubrique est reprise dans sa colonne et chaque association dans sa ligne relationnelle ;
 2. retirer les tables et colonnes devenues inutiles ;
 3. corriger les contraintes, privilèges et fonctions de publication ;
 4. vérifier les politiques RLS et les accès Data API.
 
-Les migrations déjà appliquées sont synchronisées avec les versions Supabase. La migration destructive finale est préparée dans le dépôt et comporte des contrôles bloquants de reprise des données. Elle ne doit être appliquée qu'après fusion et déploiement de la version applicative qui lit exclusivement le modèle JSONB : la production actuelle peut encore dépendre des anciennes tables. Avant son application, effectuer une sauvegarde Supabase et relire le SQL ; l'exécution exige une autorisation explicite. Aucun déploiement Vercel n'est déclenché par cette opération.
+Les migrations déjà appliquées sont synchronisées avec les versions Supabase. La migration destructive finale est préparée dans le dépôt et comporte des contrôles bloquants de reprise des données. Elle ne doit être appliquée qu'après fusion et déploiement de la version applicative qui lit exclusivement le modèle relationnel cible : la production actuelle peut encore dépendre des anciennes tables. Avant son application, effectuer une sauvegarde Supabase et relire le SQL ; l'exécution exige une autorisation explicite. Aucun déploiement Vercel n'est déclenché par cette opération.
 
 ## 9. Stack
 
