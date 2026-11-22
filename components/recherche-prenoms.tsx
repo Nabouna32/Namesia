@@ -20,7 +20,7 @@ export function RecherchePrenoms({ prenoms, compact = false }: Props) {
       {recherche && <button className="clear-search" type="button" onClick={() => setRecherche("")}>Effacer</button>}
     </div>
     {(!compact || recherche.trim()) && <div className="search-results">
-      <p className={compact ? "results-meta sr-only" : "results-meta"} role="status">{resultats.length} {resultats.length > 1 ? "prénoms" : "prénom"} {recherche.trim() ? (resultats.length > 1 ? "trouvés" : "trouvé") : "à découvrir"}</div>
+      <p className={compact ? "results-meta sr-only" : "results-meta"} role="status">{resultats.length} {resultats.length > 1 ? "prénoms" : "prénom"} {recherche.trim() ? (resultats.length > 1 ? "trouvés" : "trouvé") : "à découvrir"}</p>
       {resultats.length ? <div className="name-grid">{resultats.map((prenom) => <Link className="name-card" href={`/prenoms/${prenom.slug}`} key={prenom.slug}>
         <span className="name-initial">{prenom.lettre}</span><span><strong>{prenom.nom}</strong><small>Découvrir la fiche</small></span><span className="card-arrow" aria-hidden="true">↗</span>
       </Link>)}</div> : <p className="empty-state">{recherche.trim() ? "Aucun prénom ne correspond. Essayez une autre recherche." : "Aucun prénom n’est encore publié."}</p>}
