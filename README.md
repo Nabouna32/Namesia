@@ -22,11 +22,11 @@ Ouvrir ensuite http://localhost:3000.
 
 Le projet Supabase Namesia est configuré dans la région Europe de l'Ouest. Les migrations et les six fiches initiales sont versionnées dans supabase/migrations/.
 
-Variables requises :
+Variables d'environnement :
 
-- NEXT_PUBLIC_SUPABASE_URL
-- NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-- NEXT_PUBLIC_SITE_URL (optionnelle, origine canonique du site ; défaut : `https://namesia.vercel.app`)
+- `NEXT_PUBLIC_SUPABASE_URL` (requise)
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (requise)
+- `NEXT_PUBLIC_SITE_URL` (optionnelle) (optionnelle, origine canonique du site ; défaut : `https://namesia.vercel.app`)
 
 La clé publishable peut être exposée au navigateur. La sécurité repose sur les privilèges SQL, RLS et l'autorisation administrateur. Aucune clé service_role ou clé secrète ne doit être intégrée au site.
 
