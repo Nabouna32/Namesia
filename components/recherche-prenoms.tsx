@@ -191,12 +191,11 @@ export function RecherchePrenoms({
       {(!compact || recherche.trim()) && (
         <div className="search-results">
           <p className={compact ? "results-meta sr-only" : "results-meta"} role="status">
-            {resultats.length} {resultats.length > 1 ? "prénoms" : "prénom"}
-            {compact
-              ? recherche.trim()
-                ? (resultats.length > 1 ? " trouvés" : " trouvé")
-                : " à découvrir"
-              : ` affichés sur ${prenoms.length}`}
+            {resultats.length > 0
+              ? `${resultats.length} ${resultats.length > 1 ? "prénoms" : "prénom"}${compact ? (resultats.length > 1 ? " trouvés" : " trouvé") : ` affichés sur ${prenoms.length}`}`
+              : suggestions.length > 0
+                ? `${suggestions.length} suggestions proches`
+                : `0 résultat affiché sur ${prenoms.length}`}
           </p>
           {resultats.length > 0 ? (
             <div className="name-grid">
@@ -210,6 +209,21 @@ export function RecherchePrenoms({
                   <span className="card-arrow" aria-hidden="true">↗</span>
                 </Link>
               ))}
+            </div>
+          ) : suggestions.length > 0 ? (
+            <div className="empty-results">
+              <p className="empty-state">
+                Aucun résultat exact pour « {recherche.trim()} ». Voici les prénoms les plus proches :
+              </p>
+              <div className="name-grid">
+                {suggestions.map((prenom) => (
+                  <Link className="name-card" href={`/prenoms/${prenom.slug}`} key={prenom.slug}>
+                    <span className="name-initial">{prenom.lettre}</span>
+                    <span><strong>{prenom.nom}</strong><small>Suggestion proche</small></span>
+                    <span className="card-arrow" aria-hidden="true">↗</span>
+                  </Link>
+                ))}
+              </div>
             </div>
           ) : (
             <div className="empty-results">
