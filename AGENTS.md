@@ -160,6 +160,10 @@ Principes :
 - Ne pas demander d'autorisation pour fusionner, supprimer des données, migrer ou refondre la base, ni mettre en production dans le cadre de la politique Vercel définie au §4.
 - À la fin d'une intervention, résumer les changements réellement effectués, les vérifications confirmées par la CI, les limites restantes et les liens vers les PR/issues.
 
-## 10. Principe directeur
+## 10. Cadence des passes design
+
+Une passe sur trois est prioritairement consacrée au design, avant toute nouvelle fonctionnalité. Elle vérifie et améliore la cohérence avec [docs/design.md](docs/design.md), le rendu mobile, la lisibilité, les contrastes, le clavier et les états des composants. Cette passe ne doit pas introduire de fonctionnalité produit.
+
+## 11. Principe directeur
 
 **Aucune idée, demande, décision, documentation ou ligne de code n'est exemptée du regard critique.**
