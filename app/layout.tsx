@@ -22,6 +22,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="fr" data-scroll-behavior="smooth"><body>
+    <a className="skip-link" href="#contenu">Aller au contenu</a>
     <header className="site-header"><div className="header-inner">
       <Link className="brand" href="/" aria-label="Namesia, accueil"><span className="brand-mark">n.</span><span>namesia</span></Link>
       <nav className="site-nav" aria-label="Navigation principale"><Link href="/prenoms">Explorer</Link><Link href="/comparer">Comparer</Link></nav>
