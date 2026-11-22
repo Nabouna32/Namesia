@@ -9,6 +9,12 @@ export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default async function Accueil() {
   const prenoms = await getPrenoms();
+  const decalageDuJour = prenoms.length > 0
+    ? Math.floor(Date.now() / 86_400_000) % prenoms.length
+    : 0;
+  const prenomsMisEnAvant = prenoms.length > 0
+    ? [...prenoms.slice(decalageDuJour), ...prenoms.slice(0, decalageDuJour)].slice(0, 3)
+    : [];
 
   return (
     <main id="contenu" tabIndex={-1}>
@@ -31,7 +37,7 @@ export default async function Accueil() {
             <Link className="text-link" href="/prenoms">Tous les prénoms <span>↗</span></Link>
           </div>
           <div className="featured-grid">
-            {prenoms.slice(0, 3).map((prenom, index) => (
+            {prenomsMisEnAvant.map((prenom, index) => (
               <Link className={`featured-card featured-${index + 1}`} href={`/prenoms/${prenom.slug}`} key={prenom.slug}>
                 <span className="featured-letter">{prenom.lettre}</span>
                 <span className="featured-bottom"><strong>{prenom.nom}</strong><span>Découvrir <b>↗</b></span></span>
