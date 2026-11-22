@@ -47,7 +47,8 @@ Une ligne représente une version complète d'une fiche.
 Contraintes :
 - unicité de (name_id, version) ;
 - version strictement positive ;
-- content est un objet JSON ;
+- introduction est non vide ;
+- les longueurs maximales des rubriques sont contrôlées ;
 - une version publiée possède une date de publication ;
 - au plus une version publiée par prénom ;
 - une version publiée n'est jamais écrasée.
@@ -105,7 +106,7 @@ Les éléments suivants ne sont pas modélisés dans la V1 :
 - sources documentaires et liens de preuve ;
 - affirmations atomiques et statuts de preuve ;
 - statistiques structurées ;
-- table dédiée aux associations symboliques (elles sont structurées et filtrables) ;
+- génération IA intégrée et métadonnées de fournisseur ;
 - formes linguistiques et marchés multilingues ;
 - exécutions de génération et coûts par fournisseur.
 
@@ -117,7 +118,7 @@ Le projet Supabase contient encore l'ancien modèle en parallèle du nouveau :
 - ancien : name_profile_versions, sources, claims, claim_sources et symbolic_associations ;
 - cible : names, name_profiles et private.admin_users.
 
-L'audit de la base au 22 novembre 2026 constate six prénoms, six anciennes versions, six versions JSONB, six associations symboliques historiques et six associations reprises dans JSONB. Les six prénoms possèdent une version éditoriale importée au format JSON, puis stockée dans le modèle relationnel cible.
+L'audit de la base au 22 novembre 2026 constate six prénoms, six anciennes versions, six versions JSONB transitoires et six associations symboliques historiques reprises dans ces documents. La migration finale décompose ces documents en colonnes et lignes relationnelles. Les six prénoms possèdent une version éditoriale publiée.
 
 Les sources et affirmations historiques ne sont pas reprises dans le nouveau modèle, car Namesia ne garantit plus de vérification documentaire. L'audit constate actuellement 2 sources, 6 affirmations et 6 liaisons claim-source ; ces éléments seront supprimés volontairement, sans migration vers le JSON éditorial. Les 6 associations symboliques, elles, sont reprises dans la table relationnelle `name_profile_associations`. La migration 20261122130000_simplifier_modele_catalogue.sql vérifie la reprise des champs et associations avant de supprimer les anciennes tables et colonnes. Une sauvegarde préalable est obligatoire.
 
