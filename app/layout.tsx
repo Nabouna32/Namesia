@@ -14,7 +14,8 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     siteName: "Namesia",
     title: "Namesia — Le sens derrière chaque prénom",
-    description: "Explorez les origines, les histoires et les traditions des prénoms avec Namesia."
+    description: "Explorez les origines, les histoires et les traditions des prénoms avec Namesia.",
+    url: "/"
   }
 };
 
