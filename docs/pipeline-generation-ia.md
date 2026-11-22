@@ -10,7 +10,7 @@ Namesia ne génère pas actuellement les fiches dans son application. Le contenu
 - par une API de modèle IA ;
 - ou dans une conversation avec un assistant.
 
-Le résultat est ensuite fourni à Namesia au format JSON. L'application assure la validation structurelle, la prévisualisation, l'enregistrement en brouillon et la publication explicite.
+Le résultat est ensuite fourni à Namesia au format JSON. Ce JSON est un format d'échange, pas le format de stockage : l'API le valide puis une fonction SQL unique répartit les rubriques dans les colonnes relationnelles et les associations dans leurs lignes dédiées. La création du prénom, de sa version et de ses associations est atomique : tout est enregistré ou rien ne l'est. L'application assure ensuite la prévisualisation et la publication explicite.
 
 La génération par IA n'est pas une vérification documentaire. La validation technique du JSON ne confirme pas l'exactitude des étymologies, dates, traditions ou usages.
 
@@ -55,6 +55,8 @@ Les contrôles automatiques portent sur :
 - les transitions de publication.
 
 Ces contrôles sont des contrôles de structure et de cohérence applicative. Ils ne constituent pas un contrôle factuel.
+
+À l'import, les champs éditoriaux deviennent des colonnes SQL distinctes (`introduction`, `origin_text`, `history_text`, `usage_text`). Chaque association symbolique devient une ligne de `name_profile_associations`, liée à la version. Les filtres SQL peuvent ainsi cibler le genre, la graphie, les rubriques ou les catégories/valeurs symboliques sans extraire des propriétés d'un JSONB global.
 
 ## 5. Publication
 
