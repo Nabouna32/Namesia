@@ -110,6 +110,13 @@ with check (
   )
 );
 
+grant select on public.name_profile_associations to anon;
+grant select, insert on public.name_profile_associations to authenticated;
+
+create unique index name_profiles_one_published_per_name_idx
+  on public.name_profiles (name_id)
+  where status = 'publie' and published_at is not null;
+
 -- Les anciens documents restent lisibles par l'application actuellement déployée.
 -- Les nouvelles versions sont écrites dans les colonnes relationnelles uniquement.
 alter table public.name_profiles alter column content drop not null;
