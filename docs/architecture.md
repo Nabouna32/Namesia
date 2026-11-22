@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 3.7
+- **Version :** 3.8
 - **Mis à jour :** 2026-11-22
 
 ## 1. Besoin réel
@@ -60,7 +60,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Les pages d'accueil, de catalogue et le sitemap utilisent un index léger (identité, nom, initiale et genre) ; les rubriques éditoriales ne sont chargées que pour les fiches et outils qui les affichent. La recherche et la vitrine d'accueil ne transfèrent donc pas les textes complets au navigateur.
 - Vitrine de trois prénoms sur l'accueil, issue d'une rotation quotidienne déterministe en UTC du catalogue alphabétique ; la sélection change chaque jour sans modifier l'ordre du catalogue ni les résultats de recherche.
 - Découverte aléatoire déclenchée depuis un composant client de l'accueil, à partir de la liste de fiches déjà chargée côté serveur ; le choix reste en mémoire dans le composant et évite la sélection précédente si plusieurs prénoms sont disponibles.
-- Favoris gérés par un fournisseur client commun : seuls les slugs sont enregistrés dans localStorage ; aucune fiche, donnée personnelle ou information éditoriale n'est copiée dans le stockage du navigateur. La liste dédiée ne montre que les fiches encore publiées.
+- Favoris gérés par un fournisseur client commun : seuls les slugs sont enregistrés dans localStorage ; aucune fiche, donnée personnelle ou information éditoriale n'est copiée dans le stockage du navigateur. La page des favoris charge uniquement l'index léger (nom, slug, initiale et genre), jamais les rubriques éditoriales ; elle ne montre que les prénoms encore publiés.
 - Les favoris ne sont ni envoyés au serveur ni synchronisés entre appareils ; ils restent propres au navigateur utilisé.
 - Accès au comparateur depuis une fiche via le paramètre d'URL `prenoms`, qui préselectionne le slug et laisse l'utilisateur choisir les autres prénoms publiés.
 - Suggestions contextuelles limitées à trois autres prénoms publiés du même genre, sans présenter cette catégorie comme une similarité étymologique ou culturelle.

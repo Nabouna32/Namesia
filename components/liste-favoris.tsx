@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import type { Prenom } from "@/lib/prenoms";
+import type { PrenomIndex } from "@/lib/prenoms";
 import { BoutonFavori } from "./bouton-favori";
 import { useFavoris } from "./favoris-provider";
 import styles from "./liste-favoris.module.css";
 
-type Props = { prenoms: Prenom[] };
+type Props = { prenoms: PrenomIndex[] };
 
 export function ListeFavoris({ prenoms }: Props) {
   const { slugs, pret } = useFavoris();
