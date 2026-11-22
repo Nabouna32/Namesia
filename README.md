@@ -8,11 +8,11 @@ Le site utilise Next.js App Router, React, TypeScript et Supabase (PostgreSQL).
 
 ### Démarrage local
 
-Prérequis : Node.js 26 LTS (26.x).
+Prérequis : Node.js 26.13.1 exactement. La version de référence est définie dans `.nvmrc` ; npm refuse les versions de Node incompatibles grâce à `.npmrc`.
 
 ```bash
 cp .env.example .env.local
-npm install
+npm ci
 npm run dev
 ```
 
