@@ -14,7 +14,7 @@ Le lancement éditorial vise la France et les usages francophones. L'ouverture �
 
 Proposer des fiches agréables à lire et des outils simples pour rechercher, comparer et découvrir des prénoms.
 
-Les contenus sont générés à l'aide de modèles d'intelligence artificielle, depuis une API ou une conversation. Le résultat est un JSON conforme au contrat Namesia, importé dans l'administration puis enregistré en base.
+Les contenus sont générés à l'aide de modèles d'intelligence artificielle, depuis une API ou une conversation avec un assistant. Le résultat est un JSON conforme au contrat Namesia, importé dans l'administration puis enregistré en base.
 
 **La génération par IA n'est pas une vérification.** Un contenu enregistré ou publié n'est pas, de ce seul fait, confirmé par une source indépendante ou validé par un spécialiste. Il peut comporter des erreurs, des approximations ou des informations incomplètes.
 
