@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 2.6
+- **Version :** 2.7
 - **Mis à jour :** 2026-11-22
 
 ## 1. Besoin réel
@@ -54,7 +54,9 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 
 ### Site public
 - Rendu serveur Next.js, dynamique pour ne pas dépendre de la disponibilité ou du schéma Supabase pendant le build.
-- Lecture des fiches publiées uniquement.\n- Suggestions contextuelles limitées à trois autres prénoms publiés du même genre, sans présenter cette catégorie comme une similarité étymologique ou culturelle.\n- Partage d'une fiche par l'API native du navigateur, avec copie du lien lorsque cette API n'est pas disponible.
+- Lecture des fiches publiées uniquement.
+- Suggestions contextuelles limitées à trois autres prénoms publiés du même genre, sans présenter cette catégorie comme une similarité étymologique ou culturelle.
+- Partage d'une fiche par l'API native du navigateur, avec copie du lien lorsque cette API n'est pas disponible.
 - Comparateur client de deux à trois fiches, alimenté par les seules fiches publiées et non indexé par les moteurs.
 - Images Open Graph générées à la demande depuis les fiches publiées, dans le runtime Node.js pour conserver le client Supabase serveur ; aucune image ni donnée éditoriale supplémentaire n'est stockée.
 - Sitemap dynamique construit depuis les fiches publiées ; robots.txt excluant l'administration et les routes API.
@@ -124,4 +126,12 @@ Les anciennes tables documentaires, la colonne JSONB historique et les colonnes 
 - Supabase Auth et PostgreSQL.
 - JSON Schema comme contrat d'échange ; validation TypeScript à la frontière de l'API.
 - GitHub Actions pour les contrôles des PR.
-- Vercel uniquement sur main après fusion ; aucun déploiement Preview.
+- Vercel est réservé aux déploiements de production.
+
+## 10. Déploiement et quota
+
+- Le paramètre Vercel `previewDeploymentsDisabled` est activé.
+- `vercel.json` appelle `scripts/vercel-ignore-build.sh` avant un build.
+- Le script retourne `1` uniquement pour une production issue de `main` ; il retourne `0` dans tous les autres cas, ce qui ignore le build.
+- La politique est testée dans GitHub Actions pour les combinaisons production/preview et main/branche.
+- Aucune Preview, commande CLI ou création de déploiement par API n'est autorisée.
