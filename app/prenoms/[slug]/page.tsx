@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PartagerFiche } from "@/components/partager-fiche";
 import { getAutresPrenomsDuGenre, getPrenom } from "@/lib/prenoms";
+import { jsonLd } from "@/lib/json-ld";
+import { siteUrl } from "@/lib/site-url";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -42,12 +44,30 @@ export default async function FichePrenom({ params }: Props) {
     "Mixte": "mixtes"
   };
 
+  const ficheData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: `${prenom.nom} · Namesia`,
+    description: prenom.introduction,
+    url: new URL(`/prenoms/${prenom.slug}`, siteUrl).toString(),
+    inLanguage: "fr-FR",
+    about: { "@type": "Thing", name: prenom.nom },
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Accueil", item: new URL("/", siteUrl).toString() },
+        { "@type": "ListItem", position: 2, name: "Prénoms", item: new URL("/prenoms", siteUrl).toString() },
+        { "@type": "ListItem", position: 3, name: prenom.nom, item: new URL(`/prenoms/${prenom.slug}`, siteUrl).toString() }
+      ]
+    }
+  };
+
   const aDesRubriques = Boolean(
     prenom.origin || prenom.history || prenom.usage || prenom.symbolic_associations.length
   );
 
   return (
-    <main id="contenu" tabIndex={-1} className="page-main profile-main">
+    <main id="contenu" tabIndex={-1} className="page-main profile-main"><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ficheData) }} />
       <div className="container profile">
         <nav className="breadcrumb" aria-label="Fil d’Ariane">
           <ol>
