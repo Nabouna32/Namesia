@@ -1,7 +1,7 @@
 # Génération et import des fiches — Namesia
 
 - **Statut :** procédure cible de la V1
-- **Version :** 3.0
+- **Version :** 2.0
 - **Mis à jour :** 2026-11-22
 
 ## 1. Périmètre réel
@@ -10,7 +10,7 @@ Namesia ne génère pas actuellement les fiches dans son application. Le contenu
 - par une API de modèle IA ;
 - ou dans une conversation avec un assistant.
 
-Le résultat est ensuite fourni à Namesia au format JSON. Ce JSON est un format d'échange, pas le format de stockage : l'API le valide puis une fonction SQL unique répartit les rubriques dans les colonnes relationnelles et les associations dans leurs lignes dédiées. La création du prénom, de sa version et de ses associations est atomique : tout est enregistré ou rien ne l'est. L'application assure ensuite la prévisualisation et la publication explicite.
+Le résultat est ensuite fourni à Namesia au format JSON. Ce JSON est un format d'échange, pas le format de stockage : l'API le valide puis une fonction SQL unique répartit les rubriques dans les colonnes relationnelles et les associations symboliques dans leurs lignes dédiées. La création du prénom, de sa version et de ses associations est atomique : tout est enregistré ou rien ne l'est. L'application assure ensuite la prévisualisation et la publication explicite.
 
 La génération par IA n'est pas une vérification documentaire. La validation technique du JSON ne confirme pas l'exactitude des étymologies, dates, traditions ou usages.
 
@@ -26,9 +26,6 @@ Règles :
 - aucune propriété inconnue ;
 - aucun statut de publication, date interne, identifiant de base ou rôle administrateur ;
 - ne pas inventer de contenu pour remplir les rubriques facultatives ;
-- ne pas inventer de sources, références ou statuts de preuve ;
-- les références facultatives de content.references doivent avoir été réellement consultées et comporter section, title, publisher, url et consulted_at ;
-- une référence décrit une ressource consultée, elle ne garantit pas chaque affirmation de la rubrique.
 
 ## 3. Import dans Namesia
 

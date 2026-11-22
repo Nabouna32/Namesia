@@ -1,21 +1,17 @@
 {
   "$schema":"https://json-schema.org/draft/2020-12/schema",
-  "$id":"urn:namesia:schema:fiche-prenom:3.0.0",
+  "$id":"urn:namesia:schema:fiche-prenom:2.0.0",
   "title":"Fiche prénom Namesia",
-  "description":"Fiche générée puis importée comme brouillon. Les références sont des ressources consultées, pas une preuve automatique.",
+  "description":"Fiche générée par IA puis importée comme brouillon.",
   "type":"object","additionalProperties":false,"required":["schema_version","identity","content"],
-  "properties":{"schema_version":{"const":"3.0.0"},"identity":{"type":"object","additionalProperties":false,"required":["slug","display_name","gender"],"properties":{
+  "properties":{"schema_version":{"const":"2.0.0"},"identity":{"type":"object","additionalProperties":false,"required":["slug","display_name","gender"],"properties":{
     "slug":{"type":"string","pattern":"^[a-z0-9]+(?:-[a-z0-9]+)*$","minLength":1,"maxLength":120},
     "display_name":{"type":"string","minLength":1,"maxLength":100},"gender":{"type":"string","enum":["feminin","masculin","mixte","inconnu"]}}},
     "content":{"type":"object","additionalProperties":false,"required":["introduction"],"properties":{
       "introduction":{"type":"string","minLength":1,"maxLength":600},"origin":{"type":"string","maxLength":3000},
       "history":{"type":"string","maxLength":3000},"usage":{"type":"string","maxLength":3000},
       "symbolic_associations":{"type":"array","maxItems":12,"items":{"type":"object","additionalProperties":false,"required":["category","value","context_note"],"properties":{
-        "category":{"type":"string","minLength":1,"maxLength":80},"value":{"type":"string","minLength":1,"maxLength":120},"context_note":{"type":"string","minLength":1,"maxLength":1000}}}},
-      "references":{"type":"array","maxItems":20,"items":{"type":"object","additionalProperties":false,"required":["section","title","publisher","url","consulted_at"],"properties":{
-        "section":{"type":"string","enum":["origine","histoire","usages"]},"title":{"type":"string","minLength":1,"maxLength":240},
-        "publisher":{"type":"string","minLength":1,"maxLength":160},"url":{"type":"string","format":"uri","pattern":"^https?://","maxLength":2048},
-        "consulted_at":{"type":"string","format":"date"}}}}
+        "category":{"type":"string","minLength":1,"maxLength":80},"value":{"type":"string","minLength":1,"maxLength":120},"context_note":{"type":"string","minLength":1,"maxLength":1000}}}}
     }}
   }
 }

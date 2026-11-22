@@ -32,7 +32,7 @@ La clé publishable peut être exposée au navigateur. La sécurité repose sur 
 
 ### Schéma de production
 
-Le stockage est relationnel et repose sur trois tables métier : `names` pour l'identité stable, `name_profiles` pour les versions éditoriales et `name_profile_associations` pour les associations symboliques répétables. Le JSON n'est qu'un format d'import : ses champs sont validés puis répartis dans les colonnes et lignes relationnelles au cours d'une transaction SQL.
+Le stockage est relationnel : `names` porte l'identité stable, `name_profiles` les versions éditoriales et leurs rubriques en colonnes dédiées, et `name_profile_associations` les associations symboliques répétables. Le JSON n'est qu'un format d'import : ses champs sont validés puis répartis dans les colonnes et lignes relationnelles au cours d'une transaction SQL.
 
 Les anciennes tables documentaires, l'ancien stockage JSONB et les colonnes redondantes ont été supprimés. Les règles RLS et les privilèges SQL limitent la lecture publique aux fiches publiées et réservent les écritures aux administrateurs autorisés.
 ### Administration
@@ -43,12 +43,12 @@ Tout nouveau compte doit être invité dans Supabase Auth puis ajouté explicite
 
 ### Contrat JSON
 
-Le contrat courant est schemas/fiche-prenom.schema.json, version 3.0.0. Il est uniquement utilisé à l'import ; la base stocke les rubriques dans des colonnes SQL et les associations dans des lignes dédiées. Il comprend :
+Le contrat courant est schemas/fiche-prenom.schema.json, version 2.0.0. Il est uniquement utilisé à l'import ; la base stocke les rubriques dans des colonnes SQL et les associations dans des lignes dédiées. Il comprend :
 
 - identity : slug, nom affiché et genre ;
-- content : introduction, origine, histoire, usages, associations symboliques facultatives et références consultées par rubrique.
+- content : introduction, origine, histoire, usages et associations symboliques facultatives.
 
-Le JSON ne contient ni identifiant de base, ni numéro de version, ni statut de publication. Ces valeurs sont attribuées par le backend. La validation vérifie la structure, pas la véracité des contenus. Les références décrivent les ressources consultées ; elles ne valent pas validation indépendante.
+Le JSON ne contient ni identifiant de base, ni numéro de version, ni statut de publication. Ces valeurs sont attribuées par le backend. La validation vérifie la structure, pas la véracité des contenus.
 
 ### Commandes
 
