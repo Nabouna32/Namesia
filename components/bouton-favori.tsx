@@ -12,14 +12,14 @@ export function BoutonFavori({ slug, afficherErreur = true }: Props) {
   return (
     <div className={styles.container}>
       <button
-      className={styles.button}
-      type="button"
-      aria-pressed={actif}
-      disabled={!pret}
-      onClick={() => basculer(slug)}
-    >
-      <span aria-hidden="true">{actif ? "♥" : "♡"}</span>
-      {pret ? actif ? "Retirer des favoris" : "Ajouter aux favoris" : "Chargement…"}
+        className={styles.button}
+        type="button"
+        aria-pressed={actif}
+        disabled={!pret}
+        onClick={() => basculer(slug)}
+      >
+        <span aria-hidden="true">{actif ? "♥" : "♡"}</span>
+        {pret ? actif ? "Retirer des favoris" : "Ajouter aux favoris" : "Chargement…"}
       </button>
       {erreur && afficherErreur && (
         <p className={styles.error} role="alert">
