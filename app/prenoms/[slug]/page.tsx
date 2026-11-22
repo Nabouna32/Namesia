@@ -174,8 +174,6 @@ export default async function FichePrenom({ params }: Props) {
             </aside>
           </div>
 
-
-
           {autresPrenoms.length > 0 && (
             <section className="profile-discovery" aria-labelledby="profile-discovery-title">
               <div className="profile-section-heading">
