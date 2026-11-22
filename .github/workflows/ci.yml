@@ -19,6 +19,28 @@ jobs:
           cache: npm
       - name: Installer les dépendances
         run: npm ci --no-audit --no-fund
+      - name: Vérifier la politique de déploiement Vercel
+        shell: bash
+        run: |
+          set -euo pipefail
+          verifier_code() {
+            local attendu="$1"
+            shift
+            local obtenu=0
+            set +e
+            env "$@" bash scripts/vercel-ignore-build.sh >/dev/null
+            obtenu=$?
+            set -e
+            if [[ "$obtenu" -ne "$attendu" ]]; then
+              echo "Code attendu : $attendu ; code obtenu : $obtenu"
+              exit 1
+            fi
+          }
+          verifier_code 1 VERCEL_ENV=production VERCEL_GIT_COMMIT_REF=main
+          verifier_code 0 VERCEL_ENV=production VERCEL_GIT_COMMIT_REF=feature
+          verifier_code 0 VERCEL_ENV=preview VERCEL_GIT_COMMIT_REF=main
+          verifier_code 0 VERCEL_ENV=preview VERCEL_GIT_COMMIT_REF=feature
+          verifier_code 0 VERCEL_ENV=production
       - name: Vérifier les types
         run: npm run typecheck
       - name: Construire le site
