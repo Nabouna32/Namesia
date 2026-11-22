@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 2.9
+- **Version :** 3.0
 - **Mis à jour :** 2026-11-22
 
 ## 1. Besoin réel
@@ -67,6 +67,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Pas d'appel à un modèle IA lors de l'affichage.
 - Initiale calculée à partir du nom affiché ; elle n'est pas stockée.
 - Mention visible indiquant que le contenu est généré par IA et peut comporter des erreurs.
+- La recherche du catalogue normalise accents et casse, applique les filtres de genre et d'initiale, puis classe les résultats par pertinence : correspondance exacte, préfixe, puis occurrence ; chaque groupe conserve l'ordre alphabétique français.
 
 ## 4. Modèle de données
 
@@ -122,6 +123,7 @@ Le stockage métier est relationnel et repose sur trois tables :
 Le JSON est uniquement un contrat d'échange à l'import. L'API le valide, puis une fonction SQL crée atomiquement une version brouillon et ses associations. La publication reste une opération distincte et explicite.
 
 Les anciennes tables documentaires, la colonne JSONB historique et les colonnes redondantes ont été supprimées. Le schéma exposé conserve RLS et des privilèges SQL minimaux : lecture publique des seules fiches publiées, opérations d'écriture réservées aux administrateurs autorisés.
+
 ## 9. Stack
 
 - Next.js App Router, React et TypeScript.
