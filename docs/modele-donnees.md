@@ -66,7 +66,7 @@ Une ligne par association symbolique d'une version de fiche. Cette séparation p
 | value | Valeur ou association filtrable |
 | context_note | Explication éditoriale |
 
-Les rubriques textuelles restent des colonnes de `name_profiles` : une table supplémentaire par paragraphe n'apporterait rien. Les associations ont leur table car elles sont répétables, structurées et potentiellement filtrables.
+Les rubriques textuelles restent des colonnes de `name_profiles` : une table supplémentaire par paragraphe n'apporterait rien. Les associations ont leur table car elles sont répétables, structurées et potentiellement filtrables. Les index ne sont pas ajoutés par anticipation sur chaque colonne : ils seront choisis à partir des filtres réellement proposés et des volumes observés. La recherche plein texte pourra utiliser un index dédié lorsqu'elle fera partie du besoin produit.
 
 ### private.admin_users
 
