@@ -2,19 +2,19 @@
 
 import { useState } from "react";
 
-type Props = { nom: string };
+type Props = { titre: string; texte: string; label: string; avecParametres?: boolean };
 
-export function PartagerFiche({ nom }: Props) {
+export function PartagerLien({ titre, texte, label, avecParametres = false }: Props) {
   const [message, setMessage] = useState("");
 
   async function partager() {
-    const url = new URL(window.location.pathname, window.location.origin).toString();
+    const url = avecParametres ? window.location.href : new URL(window.location.pathname, window.location.origin).toString();
 
     if (typeof navigator.share === "function") {
       try {
         await navigator.share({
-          title: `${nom} · Namesia`,
-          text: `Découvrez le prénom ${nom} sur Namesia.`,
+          title: titre,
+          text: texte,
           url
         });
         return;
@@ -33,8 +33,18 @@ export function PartagerFiche({ nom }: Props) {
 
   return (
     <div className="profile-share">
-      <button className="share-button" type="button" onClick={partager}>Partager la fiche</button>
+      <button className="share-button" type="button" onClick={partager}>{label}</button>
       {message && <span className="share-feedback" role="status">{message}</span>}
     </div>
+  );
+}
+
+export function PartagerFiche({ nom }: { nom: string }) {
+  return (
+    <PartagerLien
+      titre={`${nom} · Namesia`}
+      texte={`Découvrez le prénom ${nom} sur Namesia.`}
+      label="Partager la fiche"
+    />
   );
 }
