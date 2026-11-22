@@ -74,11 +74,6 @@ begin
 end;
 $$;
 
-create index name_profile_associations_category_idx
-  on public.name_profile_associations (category);
-create index name_profile_associations_value_idx
-  on public.name_profile_associations (value);
-
 alter table public.name_profile_associations enable row level security;
 create policy "Lecture publique des associations des fiches publiées"
 on public.name_profile_associations
