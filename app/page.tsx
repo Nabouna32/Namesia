@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { RecherchePrenoms } from "@/components/recherche-prenoms";
 import { getPrenoms } from "@/lib/prenoms";
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 export default async function Accueil() {
   const prenoms = await getPrenoms();
   return <main>
