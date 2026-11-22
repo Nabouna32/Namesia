@@ -7,7 +7,16 @@
 
 Ce document définit le niveau de qualité attendu pour les évolutions techniques de Namesia. Il complète [AGENTS.md](../AGENTS.md), qui définit la méthode de travail et le challenge obligatoire.
 
-## 1. Principe directeur
+## 8. Environnement d'exécution et dépendances
+
+- La version de référence de Node.js est définie une seule fois dans `.nvmrc` (26.13.1).
+- `package.json` et `package-lock.json` expriment la contrainte compatible `>=26.13.1 <27` ; `.npmrc` active `engine-strict=true` pour refuser un runtime incompatible dès l'installation.
+- GitHub Actions lit directement `.nvmrc` avec `actions/setup-node` ; elle vérifie ensuite que la version réellement installée correspond exactement au fichier.
+- Les développeurs utilisent `npm ci` pour installer l'arbre verrouillé, pas `npm install` pour les installations reproductibles.
+- Toute montée de version Node doit modifier `.nvmrc` puis être validée par la CI ; ne pas dupliquer le numéro de version dans les workflows.
+- Les actions GitHub officielles sont maintenues sur leurs versions majeures stables actuelles ; leur mise à jour ne doit pas changer la politique de déploiement Vercel.
+
+## 7. Principe directeur
 
 Construire une base simple, cohérente, modulaire et durable. Corriger la cause d'un problème plutôt que masquer son symptôme.
 
