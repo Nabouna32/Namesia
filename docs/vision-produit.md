@@ -85,16 +85,8 @@ Les pages de filtres, recherches internes et combinaisons sans contenu éditoria
 
 ## 7. Direction visuelle
 
-La direction visuelle retenue est **arc-en-ciel, chaleureuse et compacte**.
+La direction visuelle et ses règles détaillées sont définies dans [docs/design.md](design.md). Toute évolution d'interface doit utiliser ses tokens sémantiques, ses deux thèmes et ses composants cohérents. La sobriété, la lisibilité et le mobile-first priment sur les effets décoratifs.
 
-- Palette multicolore visible (rose, orange, jaune, vert, bleu, violet), avec dégradés et surfaces pastel.
-- Contrastes suffisants ; la couleur ne remplace pas les états fonctionnels.
-- Espacements verticaux contenus sans sacrifier la lisibilité ni les zones tactiles.
-- Textes courants de 14 à 16 px sur ordinateur ; informations secondaires utiles d'au moins 12 px.
-- Navigation en unités relatives et mise à l'échelle fluide.
-- Pas de numérotation décorative sans fonction.
-- Donner aux fiches une hiérarchie éditoriale distincte de celle du catalogue : introduction mise en valeur, rubriques aérées, sommaire et repères de lecture ;
-- Réévaluer le rendu réel sur mobile et sur les pages de fiches.
 
 ## 8. Indicateurs
 
