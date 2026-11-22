@@ -620,7 +620,19 @@ h2 em {
   font-size: 27px;
 }
 
-.featured-bottom span {
+.featured-name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.featured-name small {
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.featured-action {
   color: var(--color-accent);
   font-size: 14px;
 }
@@ -1425,7 +1437,7 @@ h2 em {
   }
 
   .featured-bottom strong,
-  .featured-bottom span {
+  .featured-action {
     display: block;
   }
 
@@ -1433,7 +1445,7 @@ h2 em {
     font-size: 25px;
   }
 
-  .featured-bottom span {
+  .featured-action {
     margin-top: 6px;
   }
 
@@ -1626,7 +1638,8 @@ h1 em, h2 em { color: var(--color-accent); background: none; -webkit-text-fill-c
 .profile-note { border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-6); }
 .featured-1, .featured-2, .featured-3 { background: var(--color-surface-muted); border: 1px solid var(--color-border); }
 .featured-letter, .profile-monogram { color: color-mix(in srgb, var(--color-accent) 13%, transparent); }
-.featured-bottom span, .profile-note p, .symbolic-card p { color: var(--color-text-muted); }
+.featured-name small, .profile-note p, .symbolic-card p { color: var(--color-text-muted); }
+.featured-action { color: var(--color-accent); }
 .site-footer { background: var(--color-surface); color: var(--color-text); border-top: 1px solid var(--color-border); }
 .footer-inner p, .footer-note { color: var(--color-text-muted); }
 .site-footer .brand-mark { color: var(--color-accent-contrast); }

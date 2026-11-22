@@ -40,7 +40,13 @@ export default async function Accueil() {
             {prenomsMisEnAvant.map((prenom, index) => (
               <Link className={`featured-card featured-${index + 1}`} href={`/prenoms/${prenom.slug}`} key={prenom.slug}>
                 <span className="featured-letter">{prenom.lettre}</span>
-                <span className="featured-bottom"><strong>{prenom.nom}</strong><span>Découvrir <b>↗</b></span></span>
+                <span className="featured-bottom">
+                  <span className="featured-name">
+                    <strong>{prenom.nom}</strong>
+                    <small>{prenom.genre}</small>
+                  </span>
+                  <span className="featured-action">Découvrir <b>↗</b></span>
+                </span>
               </Link>
             ))}
           </div>
