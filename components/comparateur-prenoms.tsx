@@ -12,6 +12,7 @@ function normaliser(value: string): string {
 
 export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
   const [recherche, setRecherche] = useState("");
+  const [nombreVisible, setNombreVisible] = useState(24);
   const [selection, setSelection] = useState<string[]>(selectionInitiale);
   const [fiches, setFiches] = useState<Record<string, Prenom>>({});
   const [chargement, setChargement] = useState(false);
@@ -103,7 +104,10 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
             id="compare-search"
             type="search"
             value={recherche}
-            onChange={(event) => setRecherche(event.target.value)}
+            onChange={(event) => {
+              setNombreVisible(24);
+              setRecherche(event.target.value);
+            }}
             placeholder="Saisissez un prénom..."
           />
         </div>
@@ -111,26 +115,40 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
         <fieldset className="compare-options">
           <legend id="compare-selector-title">Choisissez jusqu’à trois prénoms</legend>
           {resultats.length > 0 ? (
-            <div className="compare-options-grid">
-              {resultats.map((prenom) => {
-                const coche = selection.includes(prenom.slug);
-                return (
-                  <label className="compare-option" key={prenom.slug}>
-                    <input
-                      type="checkbox"
-                      checked={coche}
-                      disabled={!coche && selection.length >= 3}
-                      onChange={(event) => changerSelection(prenom.slug, event.target.checked)}
-                    />
-                    <span className="compare-option-initial" aria-hidden="true">{prenom.lettre}</span>
-                    <span className="compare-option-name">
-                      <strong>{prenom.nom}</strong>
-                      <small>{prenom.genre}</small>
-                    </span>
-                  </label>
-                );
-              })}
-            </div>
+            <>
+              <p className="results-meta" role="status">
+                {resultats.length} {resultats.length > 1 ? "prénoms disponibles" : "prénom disponible"} · {Math.min(resultats.length, nombreVisible)} affichés
+              </p>
+              <div className="compare-options-grid">
+                {resultats.slice(0, nombreVisible).map((prenom) => {
+                  const coche = selection.includes(prenom.slug);
+                  return (
+                    <label className="compare-option" key={prenom.slug}>
+                      <input
+                        type="checkbox"
+                        checked={coche}
+                        disabled={!coche && selection.length >= 3}
+                        onChange={(event) => changerSelection(prenom.slug, event.target.checked)}
+                      />
+                      <span className="compare-option-initial" aria-hidden="true">{prenom.lettre}</span>
+                      <span className="compare-option-name">
+                        <strong>{prenom.nom}</strong>
+                        <small>{prenom.genre}</small>
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+              {resultats.length > nombreVisible && (
+                <button
+                  className="filter-reset"
+                  type="button"
+                  onClick={() => setNombreVisible((visible) => visible + 24)}
+                >
+                  Afficher les {Math.min(24, resultats.length - nombreVisible)} prénoms suivants
+                </button>
+              )}
+            </>
           ) : (
             <p className="compare-status">{prenoms.length === 0 ? "Aucun prénom n’est encore publié." : "Aucun prénom ne correspond à cette recherche."}</p>
           )}
