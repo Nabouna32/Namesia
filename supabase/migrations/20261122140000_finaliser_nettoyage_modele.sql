@@ -115,10 +115,6 @@ alter table public.names
   add constraint names_gender_check
     check (gender in ('feminin', 'masculin', 'mixte', 'inconnu'));
 
-create unique index name_profiles_one_published_per_name_idx
-  on public.name_profiles (name_id)
-  where status = 'publie' and published_at is not null;
-
 revoke all on table private.admin_users from anon, authenticated;
 grant select on table private.admin_users to authenticated;
 
