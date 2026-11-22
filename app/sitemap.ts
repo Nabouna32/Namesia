@@ -1,9 +1,8 @@
 import type { MetadataRoute } from "next";
 import { getPrenoms } from "@/lib/prenoms";
+import { siteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
-
-const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://namesia.vercel.app");
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const prenoms = await getPrenoms();
