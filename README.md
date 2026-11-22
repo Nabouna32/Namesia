@@ -34,6 +34,12 @@ La clé publishable peut être exposée au navigateur. La sécurité repose sur 
 Le schéma relationnel cible est préparé en production. La migration additive `20261122001208_preparer_modele_relationnel.sql` a repris les données éditoriales et les associations tout en conservant temporairement l'ancien modèle pour la compatibilité avec l'application actuellement déployée.
 
 La migration destructive `20261122140000_finaliser_nettoyage_modele.sql` sera appliquée après le déploiement et la vérification de l'application relationnelle. Elle supprime les anciennes tables documentaires, l'ancien stockage JSONB et les colonnes redondantes. Une sauvegarde reste la pratique recommandée avant toute suppression définitive de données.
+### Administration
+
+L'administration est disponible sur `/admin`. L'accès utilise Supabase Auth par lien e-mail et la liste privée `private.admin_users`. Le compte propriétaire initial est déjà autorisé en production. L'auto-inscription reste désactivée.
+
+Tout nouveau compte doit être invité dans Supabase Auth puis ajouté explicitement à la liste d'autorisation. Un compte Auth non autorisé ne dispose d'aucun droit d'administration.
+
 ### Contrat JSON
 
 Le contrat courant est schemas/fiche-prenom.schema.json, version 2.0.0. Il est uniquement utilisé à l'import ; la base stocke les rubriques dans des colonnes SQL et les associations dans des lignes dédiées. Il comprend :
