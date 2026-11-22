@@ -26,6 +26,31 @@ function comparerPertinence(a: Prenom, b: Prenom, terme: string): number {
   return rangA - rangB || a.nom.localeCompare(b.nom, "fr");
 }
 
+function distanceEdition(a: string, b: string, limite: number): number {
+  if (Math.abs(a.length - b.length) > limite) return limite + 1;
+  let precedent = Array.from({ length: b.length + 1 }, (_, index) => index);
+
+  for (let i = 1; i <= a.length; i += 1) {
+    const courant = [i];
+    let minimum = i;
+
+    for (let j = 1; j <= b.length; j += 1) {
+      const cout = a[i - 1] === b[j - 1] ? 0 : 1;
+      courant[j] = Math.min(
+        precedent[j] + 1,
+        courant[j - 1] + 1,
+        precedent[j - 1] + cout
+      );
+      minimum = Math.min(minimum, courant[j]);
+    }
+
+    if (minimum > limite) return limite + 1;
+    precedent = courant;
+  }
+
+  return precedent[b.length];
+}
+
 export function RecherchePrenoms({
   prenoms,
   compact = false,
@@ -58,6 +83,26 @@ export function RecherchePrenoms({
       })
       .sort((a, b) => comparerPertinence(a, b, terme));
   }, [genreActif, lettreActive, prenoms, recherche]);
+
+  const suggestions = useMemo(() => {
+    const terme = normaliserRecherche(recherche);
+    if (resultats.length > 0 || terme.length < 4) return [];
+
+    const limite = terme.length >= 8 ? 2 : 1;
+    return prenoms
+      .filter((prenom) => {
+        const nom = normaliserRecherche(prenom.nom);
+        return (!genreActif || prenom.genre === genreActif)
+          && (!lettreActive || normaliserRecherche(prenom.lettre) === lettreActive)
+          && distanceEdition(terme, nom, limite) <= limite;
+      })
+      .sort((a, b) => {
+        const distanceA = distanceEdition(terme, normaliserRecherche(a.nom), limite);
+        const distanceB = distanceEdition(terme, normaliserRecherche(b.nom), limite);
+        return distanceA - distanceB || a.nom.localeCompare(b.nom, "fr");
+      })
+      .slice(0, 5);
+  }, [genreActif, lettreActive, prenoms, recherche, resultats.length]);
 
   const filtresActifs = Boolean(recherche.trim() || genreActif || lettreActive);
 
