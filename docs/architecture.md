@@ -114,7 +114,7 @@ La bascule est séparée en deux migrations :
 
 Cet ordre évite de déployer du code qui lirait des colonnes encore inexistantes ou de supprimer des tables encore utilisées par la production.
 
-Les migrations déjà appliquées sont synchronisées avec les versions Supabase. La migration additive `20261122130000_preparer_modele_relationnel.sql` doit être appliquée avant la fusion et le déploiement de la nouvelle application. La migration destructive `20261122140000_finaliser_nettoyage_modele.sql` ne doit être appliquée qu'après vérification de la nouvelle version en production et sauvegarde Supabase. Aucune migration n'a été appliquée dans le cadre de cette PR ; chaque opération sur la base de production exige une autorisation explicite.
+La migration additive `20261122001208_preparer_modele_relationnel.sql` a été appliquée en production le 22 novembre 2026 et sa version est enregistrée dans l'historique Supabase. Elle conserve les anciennes tables et le JSONB transitoire pour assurer la compatibilité avec l'application actuellement déployée. La migration destructive `20261122140000_finaliser_nettoyage_modele.sql` attend le déploiement et la vérification de la nouvelle application. Une sauvegarde reste fortement recommandée avant cette seconde étape.
 
 ## 9. Stack
 
