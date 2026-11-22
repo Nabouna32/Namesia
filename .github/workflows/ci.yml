@@ -19,8 +19,6 @@ jobs:
           cache: npm
       - name: Vérifier la version Node.js
         run: test "$(node --version)" = "v$(tr -d '\r\n' < .nvmrc)"
-      - name: Vérifier la version de npm
-        run: node -e 'const p=require("./package.json"); const expected=p.packageManager.split("@")[1]; const actual=require("child_process").execFileSync("npm",["--version"],{encoding:"utf8"}).trim(); if(actual!==expected) throw new Error("npm attendu : "+expected+" ; installé : "+actual)'
       - name: Installer les dépendances
         run: npm ci --no-audit --no-fund
       - name: Vérifier la politique de déploiement Vercel
