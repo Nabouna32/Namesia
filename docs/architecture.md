@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 3.12
+- **Version :** 3.13
 - **Mis à jour :** 2026-11-22
 
 ## 1. Besoin réel
@@ -75,7 +75,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Pas d'appel à un modèle IA lors de l'affichage.
 - Initiale calculée à partir du nom affiché ; elle n'est pas stockée.
 - Mention visible indiquant que le contenu est généré par IA et peut comporter des erreurs.
-- La recherche du catalogue normalise accents et casse, applique les filtres de genre et d'initiale, puis classe les résultats par pertinence : correspondance exacte, préfixe, puis occurrence la plus proche du début du prénom ; les correspondances de même rang et de même position conservent l'ordre alphabétique français. Les cartes de résultats et les suggestions affichent le genre de chaque prénom pour donner un repère sans ouvrir la fiche. Si aucun résultat normal n'existe et que le terme compte au moins quatre caractères, le client calcule une distance de Levenshtein bornée et affiche au plus cinq suggestions proches, sans ignorer les filtres actifs.
+- La recherche du catalogue normalise accents et casse, applique les filtres de genre et d'initiale, puis classe les résultats par pertinence : correspondance exacte, préfixe, puis occurrence la plus proche du début du prénom ; les correspondances de même rang et de même position conservent l'ordre alphabétique français. Les cartes de résultats et les suggestions affichent le genre de chaque prénom pour donner un repère sans ouvrir la fiche. Si aucun résultat normal n'existe et que le terme compte au moins quatre caractères, le client calcule une distance de Levenshtein bornée et affiche au plus cinq suggestions proches, sans ignorer les filtres actifs. Le catalogue n'affiche initialement que 24 résultats et permet d'en révéler 24 supplémentaires à la demande ; les filtres et la recherche repartent du premier lot.
 
 ## 4. Modèle de données
 
