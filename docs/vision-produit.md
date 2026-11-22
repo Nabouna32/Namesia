@@ -14,11 +14,11 @@ Le lancement éditorial vise la France et les usages francophones. L'ouverture �
 
 Proposer des fiches agréables à lire et des outils simples pour rechercher, comparer et découvrir des prénoms.
 
-Les contenus sont générés à l'aide de modèles d'intelligence artificielle, depuis une API ou une conversation avec un assistant. Le résultat est un JSON conforme au contrat Namesia, importé dans l'administration puis enregistré en base.
+Les contenus sont générés en amont par une IA (API ou conversation). Le JSON reçu est importé depuis l'administration, validé structurellement puis réparti dans les colonnes relationnelles de Supabase.
 
-**La génération par IA n'est pas une vérification.** Un contenu enregistré ou publié n'est pas, de ce seul fait, confirmé par une source indépendante ou validé par un spécialiste. Il peut comporter des erreurs, des approximations ou des informations incomplètes.
+Les contenus sont générés par IA et peuvent comporter des erreurs, des approximations ou des informations incomplètes.
 
-Namesia ne promet actuellement ni référencement systématique, ni vérification documentaire, ni validation par un spécialiste, ni distinction épistémique garantie entre faits historiques, hypothèses et interprétations culturelles. Les statistiques structurées restent hors du modèle.
+Namesia ne met en place aucun système de sources ou de vérification documentaire.
 
 ## 3. Principes de contenu
 
@@ -78,7 +78,6 @@ Une page doit répondre à une intention réelle et apporter une information uti
 Chaque fiche publiée doit :
 - proposer un contenu lisible, suffisamment spécifique et organisé en rubriques clairement identifiables ;
 - offrir un sommaire permettant d'accéder directement aux rubriques présentes ;
-- éviter les affirmations catégoriques non justifiées ;
 - ne pas afficher de références fictives ni de statuts de vérification ;
 - afficher la mention relative à la génération par IA ;
 - avoir un titre, une description et une URL cohérents.
