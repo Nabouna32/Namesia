@@ -86,6 +86,13 @@ begin
 end;
 $$;
 
+-- Retirer les policies historiques avant les tables qu'elles référencent.
+drop policy if exists "Lecture des sources citées dans les fiches publiées" on public.sources;
+drop policy if exists "Lecture des liens de sources des fiches publiées" on public.claim_sources;
+drop policy if exists "Lecture des affirmations des fiches publiées" on public.claims;
+drop policy if exists "Lecture de la symbolique des fiches publiées" on public.symbolic_associations;
+drop policy if exists "Lecture publique des versions publiées" on public.name_profile_versions;
+
 revoke all on table
   public.sources,
   public.claims,
