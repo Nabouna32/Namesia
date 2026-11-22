@@ -8,7 +8,11 @@ export function PartagerLien({ titre, texte, label, avecParametres = false }: Pr
   const [message, setMessage] = useState("");
 
   async function partager() {
-    const url = avecParametres ? window.location.href : new URL(window.location.pathname, window.location.origin).toString();
+    const url = new URL(window.location.pathname, window.location.origin);
+    if (avecParametres) {
+      const selection = new URL(window.location.href).searchParams.get("prenoms");
+      if (selection) url.searchParams.set("prenoms", selection);
+    }
 
     if (typeof navigator.share === "function") {
       try {
