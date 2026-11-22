@@ -20,7 +20,7 @@ export async function GET(request: Request, { params }: Props) {
 
   const { data: profile, error: profileError } = await access.supabase
     .from("name_profiles")
-    .select("id, name_id, version, schema_version, status, introduction, origin_text, history_text, usage_text, name_profile_associations(category, value, context_note, position)")
+    .select("id, name_id, version, schema_version, status, introduction, origin_text, history_text, usage_text, name_profile_associations(category, value, context_note, position), name_profile_references(section, title, publisher, url, consulted_at, position)")
     .eq("id", profileId)
     .maybeSingle();
 
@@ -45,7 +45,7 @@ export async function GET(request: Request, { params }: Props) {
 
   try {
     const fiche = parseFichePrenom({
-      schema_version: profile.schema_version,
+      schema_version: "3.0.0",
       identity: {
         slug: name.slug,
         display_name: name.display_name,
