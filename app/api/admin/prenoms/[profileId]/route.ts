@@ -20,7 +20,7 @@ export async function GET(request: Request, { params }: Props) {
 
   const { data: profile, error: profileError } = await access.supabase
     .from("name_profiles")
-    .select("id, name_id, version, schema_version, status, content")
+    .select("id, name_id, version, schema_version, status, introduction, origin_text, history_text, usage_text, name_profile_associations(category, value, context_note, position)")
     .eq("id", profileId)
     .maybeSingle();
 
@@ -51,7 +51,15 @@ export async function GET(request: Request, { params }: Props) {
         display_name: name.display_name,
         gender: name.gender
       },
-      content: profile.content
+      content: {
+        introduction: profile.introduction,
+        ...(profile.origin_text ? { origin: profile.origin_text } : {}),
+        ...(profile.history_text ? { history: profile.history_text } : {}),
+        ...(profile.usage_text ? { usage: profile.usage_text } : {}),
+        symbolic_associations: [...(profile.name_profile_associations ?? [])]
+          .sort((a, b) => a.position - b.position)
+          .map(({ category, value, context_note }) => ({ category, value, context_note }))
+      }
     });
 
     return NextResponse.json(
