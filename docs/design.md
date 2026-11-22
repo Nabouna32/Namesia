@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 1.1
+- **Version :** 1.2
 - **Mis à jour :** 2026-11-22
 
 ## Intention
@@ -76,3 +76,4 @@ La stack utilise Next.js, React et des feuilles CSS natives / CSS Modules. Un fr
 - Les CSS Modules des composants ne redéfinissent pas la palette ; ils consomment les tokens.
 - Les pages accueil et fiche prénom partagent les mêmes surfaces, échelles et états.
 - Les autres pages utilisent les mêmes variables : aucun style de page ne doit introduire une couleur d'accent indépendante.
+- L'en-tête utilise une surface neutre et une bordure sémantique ; les liens de navigation sont en texte secondaire au repos et passent à l'accent au survol. Ne jamais placer un texte de navigation dans la même couleur que son fond.
