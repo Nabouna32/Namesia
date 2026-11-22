@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BoutonFavori } from "@/components/bouton-favori";
 import { PartagerFiche } from "@/components/partager-fiche";
+import styles from "@/components/actions-fiche.module.css";
 import { getAutresPrenomsDuGenre, getPrenom } from "@/lib/prenoms";
 import { jsonLd } from "@/lib/json-ld";
 import { siteUrl } from "@/lib/site-url";
@@ -89,7 +90,12 @@ export default async function FichePrenom({ params }: Props) {
                 <span className="profile-tag">{prenom.genre}</span>
                 <span className="profile-tag">Lettre {prenom.lettre}</span>
               </div>
-              <BoutonFavori slug={prenom.slug} />
+              <div className={styles.actions}>
+                <BoutonFavori slug={prenom.slug} />
+                <Link className="text-link" href={`/comparer?prenoms=${encodeURIComponent(prenom.slug)}`}>
+                  Comparer ce prénom <span aria-hidden="true">↗</span>
+                </Link>
+              </div>
               <PartagerFiche nom={prenom.nom} />
             </div>
             <div className="profile-monogram" aria-hidden="true">{prenom.lettre}</div>
