@@ -39,6 +39,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 - Page dédiée par prénom avec URL stable.
 - Recherche de prénoms avec prise en compte des accents et des variantes de casse ; classement des résultats par pertinence (correspondance exacte, puis préfixe, puis occurrence), avec filtres combinables par genre et initiale. En l'absence de résultat normal, proposer jusqu'à cinq suggestions proches pour les recherches d'au moins quatre caractères, avec une tolérance d'une ou deux modifications selon la longueur et en respectant les filtres actifs.
 - URL partageable du catalogue : la recherche et les filtres actifs sont conservés dans les paramètres q, genre et lettre, puis restaurés à l'ouverture du lien.
+- Vitrine d'accueil de trois prénoms qui tourne quotidiennement dans le catalogue, sans modifier l'ordre alphabétique du catalogue.
 - Découverte aléatoire d'un prénom publié depuis l'accueil, sans répétition immédiate tant qu'un autre choix est disponible.
 - Favoris locaux : enregistrer des prénoms depuis leur fiche et les retrouver dans une liste dédiée, sans compte ni synchronisation entre appareils.
 - Accès direct au comparateur depuis une fiche, avec le prénom déjà sélectionné et la possibilité d'en ajouter jusqu'à deux autres.
