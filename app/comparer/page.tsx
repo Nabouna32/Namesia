@@ -18,7 +18,7 @@ export default async function Comparer() {
       <div className="container catalogue">
         <span className="eyebrow">Le comparateur</span>
         <h1>Des prénoms,<br /><em>des repères pour choisir.</em></h1>
-        <p className="page-intro">Mettez deux ou trois fiches côte à côte pour parcourir leurs origines, leurs histoires et leurs usages. Seules les informations publiées sont comparées.</p>
+        <p className="page-intro">Mettez deux ou trois fiches côte à côte pour parcourir leurs origines, leurs histoires et leurs usages. Les contenus sont générés par IA et peuvent comporter des erreurs : ce comparateur organise les informations publiées, il ne les vérifie pas.</p>
         <ComparateurPrenoms prenoms={prenoms} />
       </div>
     </main>
