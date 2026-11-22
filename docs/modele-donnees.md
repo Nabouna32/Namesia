@@ -112,18 +112,11 @@ Les éléments suivants ne sont pas modélisés dans la V1 :
 
 Ils ne seront ajoutés que lorsqu'un besoin produit concret et un processus réellement appliqué le justifieront. Ne pas créer de tables anticipant un workflow inexistant.
 
-## 6. Migration depuis le modèle historique
+## 6. État du schéma en production
 
-Le projet Supabase contient encore l'ancien modèle en parallèle du nouveau :
-- ancien : name_profile_versions, sources, claims, claim_sources et symbolic_associations ;
-- cible : names, name_profiles et private.admin_users.
+Le schéma relationnel cible est préparé par la migration additive `20261122001208_preparer_modele_relationnel.sql`. Les six fiches publiées possèdent leurs rubriques relationnelles et les six associations symboliques ont été reprises sans écart.
 
-L'audit de la base au 22 novembre 2026 constate six prénoms, six anciennes versions, six versions JSONB transitoires et six associations symboliques historiques reprises dans ces documents. La migration finale décompose ces documents en colonnes et lignes relationnelles. Les six prénoms possèdent une version éditoriale publiée.
-
-Les sources et affirmations historiques ne sont pas reprises dans le nouveau modèle, car Namesia ne garantit plus de vérification documentaire. L'audit constate actuellement 2 sources, 6 affirmations et 6 liaisons claim-source ; ces éléments seront supprimés volontairement, sans migration vers le JSON éditorial. Les 6 associations symboliques, elles, sont reprises dans la table relationnelle `name_profile_associations`. La migration `20261122001208_preparer_modele_relationnel.sql`, appliquée en production le 22 novembre 2026, ajoute les colonnes et la table relationnelle en conservant les données transitoires. Après déploiement et vérification de l'application cible, `20261122140000_finaliser_nettoyage_modele.sql` vérifie les correspondances puis supprime l'ancien modèle. Une sauvegarde préalable à la seconde migration reste fortement recommandée.
-
-Les migrations déjà appliquées dans Supabase sont versionnées dans le dépôt avec leurs versions exactes : 20261121234038, 20261121234130, 20261121234347 et 20261121234359. La migration additive de préparation doit être appliquée avant le déploiement de la nouvelle application. La migration destructive de nettoyage doit être appliquée seulement après ce déploiement et une sauvegarde Supabase. Les deux opérations exigent une autorisation explicite.
-
+L'ancienne colonne JSONB et les tables historiques sont encore présentes uniquement pour maintenir la compatibilité avec l'application actuellement déployée. Elles ne font pas partie du modèle cible et seront supprimées par `20261122140000_finaliser_nettoyage_modele.sql` après le déploiement et la vérification de l'application relationnelle.
 ## 7. Administration
 
 La table privée private.admin_users associe un compte Supabase Auth à l'autorisation d'administrer Namesia. Elle ne contient pas de profil utilisateur public ni de rôle générique.
