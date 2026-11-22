@@ -1,4 +1,4 @@
-# ADR-0004 — Modèle JSONB et chaîne d'import éditoriale
+# ADR-0004 — Contrat JSON et stockage relationnel pour l'import éditorial
 
 - **Statut :** acceptée
 - **Date :** 2026-11-22
@@ -8,13 +8,14 @@
 
 Namesia publie des fiches générées en amont par IA, via API ou conversation, puis intégrées au catalogue. L'application n'effectue pas de recherche documentaire ni de vérification indépendante. Le modèle initial reposait pourtant sur des sources, des affirmations atomiques, des statuts de preuve et des associations symboliques stockées séparément.
 
-Une première évolution a déjà introduit name_profiles en JSONB, un schéma JSON versionné et une administration d'import. L'ancien modèle relationnel subsiste en parallèle, créant deux représentations du même contenu.
+Une première évolution a introduit un schéma JSON versionné et une administration d'import, mais le stockage JSONB global n'est pas retenu. Le JSON est le contrat d'échange ; le stockage final reste relationnel afin de filtrer, indexer et contraindre les données utiles.
 
 ## Décision
 
 Pour la V1, le modèle métier est limité à deux tables :
 - names pour l'identité stable d'un prénom ;
-- name_profiles pour ses versions éditoriales complètes, stockées en JSONB.
+- name_profiles pour les versions et les rubriques éditoriales en colonnes dédiées ;
+- name_profile_associations pour les associations symboliques répétables et filtrables.
 
 Le JSON Schema versionné est le contrat unique d'import. La validation est effectuée côté client pour aider l'administrateur, puis obligatoirement côté serveur avant l'écriture.
 
@@ -38,7 +39,7 @@ Les tables historiques de sources, claims, relations claims-sources, association
 - Pas de promesse de vérification factuelle.
 - Administration privée obligatoire pour importer et publier.
 - Historique des versions conservé.
-- Une migration destructive doit vérifier la reprise du contenu JSONB et révoquer les accès des anciennes tables avant leur retrait.
+- Une migration destructive doit vérifier la reprise de chaque colonne et association relationnelle, puis révoquer les accès des anciennes tables avant leur retrait.
 - La migration de nettoyage ne peut être appliquée qu'après déploiement en production du code qui n'utilise plus l'ancien modèle ; une sauvegarde et une autorisation explicite sont nécessaires.
 - La création du premier administrateur est une opération explicite après création de son compte Supabase Auth.
 
