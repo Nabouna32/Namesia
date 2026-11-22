@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Prenom } from "@/lib/prenoms";
 import { PartagerLien } from "@/components/partager-fiche";
 
@@ -13,6 +13,11 @@ function normaliser(value: string): string {
 export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
   const [recherche, setRecherche] = useState("");
   const [selection, setSelection] = useState<string[]>(selectionInitiale);
+  const selectionInitialeKey = selectionInitiale.join(",");
+
+  useEffect(() => {
+    setSelection(selectionInitiale);
+  }, [selectionInitialeKey]);
   const resultats = useMemo(() => {
     const terme = normaliser(recherche);
     return prenoms.filter((prenom) => !terme || normaliser(prenom.nom).includes(terme));
