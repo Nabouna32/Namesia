@@ -54,7 +54,9 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 
 ### Site public
 - Rendu serveur Next.js, dynamique pour ne pas dépendre de la disponibilité ou du schéma Supabase pendant le build.
-- Lecture des fiches publiées uniquement.\n- Suggestions contextuelles limitées à trois autres prénoms publiés du même genre, sans présenter cette catégorie comme une similarité étymologique ou culturelle.\n- Partage d'une fiche par l'API native du navigateur, avec copie du lien lorsque cette API n'est pas disponible.
+- Lecture des fiches publiées uniquement.
+- Suggestions contextuelles limitées à trois autres prénoms publiés du même genre, sans présenter cette catégorie comme une similarité étymologique ou culturelle.
+- Partage d'une fiche par l'API native du navigateur, avec copie du lien lorsque cette API n'est pas disponible.
 - Comparateur client de deux à trois fiches, alimenté par les seules fiches publiées et non indexé par les moteurs.
 - Images Open Graph générées à la demande depuis les fiches publiées, dans le runtime Node.js pour conserver le client Supabase serveur ; aucune image ni donnée éditoriale supplémentaire n'est stockée.
 - Sitemap dynamique construit depuis les fiches publiées ; robots.txt excluant l'administration et les routes API.
@@ -124,9 +126,7 @@ Les anciennes tables documentaires, la colonne JSONB historique et les colonnes 
 - Supabase Auth et PostgreSQL.
 - JSON Schema comme contrat d'échange ; validation TypeScript à la frontière de l'API.
 - GitHub Actions pour les contrôles des PR.
-- Vercel uniquement sur main après fusion ; les déploiements Preview sont désactivés au niveau du projet.
-- Le script `scripts/vercel-ignore-build.sh` autorise uniquement `VERCEL_ENV=production` et `VERCEL_GIT_COMMIT_REF=main` ; tous les autres contextes sont ignorés.
-- GitHub Actions reste l'unique environnement de validation des branches et PR.
+- Vercel est réservé aux déploiements de production.
 
 ## 10. Déploiement et quota
 
