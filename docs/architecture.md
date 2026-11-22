@@ -103,19 +103,11 @@ Les tables documentaires historiques (sources, claims, claim_sources) et l'ancie
 | Microservices / orchestrateur | Écartés | Complexité sans besoin démontré |
 | Clé privilégiée dans le navigateur | Interdite | Risque de compromission des données |
 
-## 8. État et migration
+## 8. État du schéma
 
-Le dépôt et le projet Supabase possèdent un contrat JSON d'import et un écran d'administration. Le JSON est validé puis décomposé atomiquement en colonnes et lignes relationnelles ; il n'est pas stocké comme document global.
+Le schéma relationnel cible est préparé en production par la migration additive `20261122001208_preparer_modele_relationnel.sql`. Les six fiches et leurs six associations sont reprises sans divergence lors du contrôle.
 
-La bascule est séparée en deux migrations :
-1. avant le déploiement, ajouter les colonnes relationnelles et la table d'associations, recopier les données JSONB, préparer l'import atomique et conserver l'ancien modèle ;
-2. déployer l'application qui lit le modèle relationnel ;
-3. après vérification et sauvegarde, supprimer le JSONB transitoire, les anciennes tables et les colonnes redondantes.
-
-Cet ordre évite de déployer du code qui lirait des colonnes encore inexistantes ou de supprimer des tables encore utilisées par la production.
-
-La migration additive `20261122001208_preparer_modele_relationnel.sql` a été appliquée en production le 22 novembre 2026 et sa version est enregistrée dans l'historique Supabase. Elle conserve les anciennes tables et le JSONB transitoire pour assurer la compatibilité avec l'application actuellement déployée. La migration destructive `20261122140000_finaliser_nettoyage_modele.sql` attend le déploiement et la vérification de la nouvelle application. Une sauvegarde reste fortement recommandée avant cette seconde étape.
-
+La production utilise encore l'ancienne application tant que la PR #5 n'est pas déployée. Les tables historiques et la colonne JSONB sont donc conservées temporairement pour sa compatibilité. La migration `20261122140000_finaliser_nettoyage_modele.sql` sera appliquée après le déploiement et la vérification de l'application relationnelle ; elle supprimera définitivement les structures transitoires.
 ## 9. Stack
 
 - Next.js App Router, React et TypeScript.
