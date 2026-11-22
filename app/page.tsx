@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { RecherchePrenoms } from "@/components/recherche-prenoms";
 import { getPrenoms } from "@/lib/prenoms";
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 export default async function Accueil() {
   const prenoms = await getPrenoms();
   return <main>
