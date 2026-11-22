@@ -10,7 +10,19 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const prenom = await getPrenom(slug);
-  return prenom ? { title: prenom.nom, description: prenom.introduction } : {};
+  return prenom ? {
+    title: prenom.nom,
+    description: prenom.introduction,
+    alternates: { canonical: `/prenoms/${prenom.slug}` },
+    openGraph: {
+      type: "article",
+      locale: "fr_FR",
+      siteName: "Namesia",
+      title: prenom.nom,
+      description: prenom.introduction,
+      url: `/prenoms/${prenom.slug}`
+    }
+  } : {};
 }
 
 export default async function FichePrenom({ params }: Props) {
