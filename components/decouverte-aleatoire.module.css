@@ -13,10 +13,10 @@
   justify-content: center;
   gap: 9px;
   padding: 9px 16px;
-  border: 1px solid rgba(126, 77, 143, 0.24);
+  border: 1px solid var(--line);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.76);
-  color: #684875;
+  color: var(--accent);
   cursor: pointer;
   font-size: 13px;
   font-weight: 700;
@@ -25,31 +25,31 @@
 
 .button:hover {
   transform: translateY(-1px);
-  border-color: #a66ab4;
+  border-color: var(--accent);
   background: #ffffff;
 }
 
 .button span {
-  color: #9253a1;
+  color: var(--accent);
 }
 
 .copy {
   margin: 0;
-  color: #65586c;
+  color: var(--muted);
   font-size: 13px;
   line-height: 1.6;
 }
 
 .result {
-  color: #753b87;
+  color: var(--accent);
   font-weight: 700;
   text-decoration: underline;
-  text-decoration-color: #c9a4d0;
+  text-decoration-color: var(--line);
   text-underline-offset: 3px;
 }
 
 .result:hover {
-  color: #512660;
+  color: var(--ink);
   text-decoration-color: currentColor;
 }
 
