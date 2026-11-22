@@ -59,7 +59,7 @@ Le JSON ne contient ni identifiant de base, ni numéro de version, ni statut de 
 
 ## Référencement public
 
-Le site publie un sitemap dynamique limité aux fiches effectivement publiées, ainsi qu'un fichier robots.txt qui exclut l'administration et les routes API. `NEXT_PUBLIC_SITE_URL` définit l'origine canonique ; renseigner le domaine public réellement utilisé avant l'ouverture à l'indexation. Les robots ne remplacent jamais l'authentification ni les règles RLS.
+Le site publie un sitemap dynamique limité aux fiches effectivement publiées, ainsi qu'un fichier robots.txt qui exclut l'administration et les routes API. `NEXT_PUBLIC_SITE_URL` définit l'origine canonique ; renseigner le domaine public réellement utilisé avant l'ouverture à l'indexation. Le domaine Vercel par défaut est actuellement protégé par SSO : ces routes ne rendent pas le site public et ne remplacent jamais l'authentification ni les règles RLS.
 
 ## Déploiement et quota Vercel
 
