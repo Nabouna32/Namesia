@@ -1,7 +1,7 @@
 # Standards techniques et règles de maintenabilité — Namesia
 
 - **Statut :** règle canonique
-- **Version :** 1.0
+- **Version :** 1.1
 - **Mis à jour :** 2026-11-22
 - **Portée :** application web, styles, composants, données et outillage
 
@@ -154,3 +154,15 @@ La dette technique est suivie avec honnêteté. Une dette acceptée doit être v
 ## 9. Dérogations
 
 Une dérogation est acceptable si elle est plus simple, plus sûre ou mieux adaptée au besoin réel. Elle doit être localisée et justifiée dans le code ou la PR : contrainte, alternative écartée, coût et condition de réexamen. Une dérogation temporaire doit avoir un critère de sortie. L'absence de temps ne transforme pas une rustine en solution durable.
+
+
+## 10. Environnement d'exécution et dépendances
+
+- La version de référence de Node.js est définie une seule fois dans `.nvmrc` (26.13.1), sur la branche majeure 26.x ; le paramètre de runtime Vercel doit être réglé sur 26.x.
+- `package.json` et `package-lock.json` expriment la contrainte compatible `26.x` ; `.npmrc` active `engine-strict=true` pour refuser un runtime incompatible dès l'installation.
+- Les types `@types/node` suivent la branche 26 et leur dépendance `undici-types`, afin de ne pas exposer des API de types d'une version Node plus récente que le runtime.
+- npm est celui fourni avec l'installation Node.js retenue ; aucune version npm indépendante n'est épinglée.
+- GitHub Actions lit directement `.nvmrc` avec `actions/setup-node` ; elle vérifie ensuite que la version réellement installée correspond exactement au fichier.
+- Les développeurs utilisent `npm ci` pour installer l'arbre verrouillé, pas `npm install` pour les installations reproductibles.
+- Toute montée de version Node doit modifier `.nvmrc`, la contrainte de compatibilité, les types Node et le runtime Vercel dans la même PR ; la CI doit valider l'ensemble.
+- Les actions GitHub officielles sont maintenues sur leurs versions majeures stables actuelles ; leur mise à jour ne doit pas changer la politique de déploiement Vercel.

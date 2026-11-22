@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 2.9
+- **Version :** 3.1
 - **Mis à jour :** 2026-11-22
 
 ## 1. Besoin réel
@@ -67,6 +67,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Pas d'appel à un modèle IA lors de l'affichage.
 - Initiale calculée à partir du nom affiché ; elle n'est pas stockée.
 - Mention visible indiquant que le contenu est généré par IA et peut comporter des erreurs.
+- La recherche du catalogue normalise accents et casse, applique les filtres de genre et d'initiale, puis classe les résultats par pertinence : correspondance exacte, préfixe, puis occurrence ; chaque groupe conserve l'ordre alphabétique français.
 
 ## 4. Modèle de données
 
@@ -125,6 +126,7 @@ Les anciennes tables documentaires, la colonne JSONB historique et les colonnes 
 ## 9. Stack
 
 - Next.js App Router, React et TypeScript.
+- Runtime Node.js 26.13.1, défini dans `.nvmrc`, appliqué par GitHub Actions et destiné à être aligné sur le runtime Vercel 26.x ; les types Node 26 suivent cette branche et npm refuse les runtimes incompatibles via `engine-strict`.
 - Supabase Auth et PostgreSQL.
 - JSON Schema comme contrat d'échange ; validation TypeScript à la frontière de l'API.
 - GitHub Actions pour les contrôles des PR.
