@@ -26,7 +26,7 @@ Variables d'environnement :
 
 - `NEXT_PUBLIC_SUPABASE_URL` (requise)
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (requise)
-- `NEXT_PUBLIC_SITE_URL` (optionnelle) (optionnelle, origine canonique du site ; défaut : `https://namesia.vercel.app`)
+- `NEXT_PUBLIC_SITE_URL` (optionnelle, origine canonique du site ; défaut : `https://namesia.vercel.app`)
 
 La clé publishable peut être exposée au navigateur. La sécurité repose sur les privilèges SQL, RLS et l'autorisation administrateur. Aucune clé service_role ou clé secrète ne doit être intégrée au site.
 
@@ -63,7 +63,7 @@ Le site publie un sitemap dynamique limité aux fiches effectivement publiées, 
 
 ## Déploiement et quota Vercel
 
-Aucun déploiement Preview n'est autorisé. Vercel ne construit et ne déploie que main, après la fusion d'une PR. Les validations des PR, y compris le build de contrôle, sont exécutées par GitHub Actions. Cette règle protège le quota Vercel de 100 builds/déploiements par jour ; voir la politique détaillée dans AGENTS.md.
+Les déploiements Preview sont désactivés dans les paramètres du projet Vercel. `vercel.json` appelle `scripts/vercel-ignore-build.sh`, qui autorise uniquement une production issue de `main`. Les validations des PR, y compris le build de contrôle et le test de cette politique, sont exécutées par GitHub Actions. Cette règle protège le quota Vercel de 100 builds/déploiements par jour ; voir la politique détaillée dans AGENTS.md.
 
 ## Règles éditoriales
 
