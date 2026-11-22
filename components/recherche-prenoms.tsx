@@ -62,7 +62,7 @@ export function RecherchePrenoms({ prenoms, compact = false }: Props) {
       </div>
 
       {!compact && (
-        <div className="catalogue-filters" aria-label="Filtres du catalogue">
+        <div className="catalogue-filters">
           {genres.length > 1 && (
             <fieldset className="filter-group">
               <legend>Explorer par genre</legend>
@@ -127,10 +127,13 @@ export function RecherchePrenoms({ prenoms, compact = false }: Props) {
 
       {(!compact || recherche.trim()) && (
         <div className="search-results">
-          <p className={compact ? "results-meta sr-only" : "results-meta"} role="status" aria-live="polite">
-            {resultats.length} {resultats.length > 1 ? "prénoms affichés" : "prénom affiché"}
-            {!compact && ` sur ${prenoms.length}`}
-            {recherche.trim() ? (resultats.length > 1 ? " · trouvés" : " · trouvé") : ""}
+          <p className={compact ? "results-meta sr-only" : "results-meta"} role="status">
+            {resultats.length} {resultats.length > 1 ? "prénoms" : "prénom"}
+            {compact
+              ? recherche.trim()
+                ? (resultats.length > 1 ? " trouvés" : " trouvé")
+                : " à découvrir"
+              : ` affichés sur ${prenoms.length}`}
           </p>
           {resultats.length > 0 ? (
             <div className="name-grid">
