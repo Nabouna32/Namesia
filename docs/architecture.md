@@ -53,7 +53,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Les visiteurs disposent uniquement de la lecture des identités ayant une version publiée et de ces versions publiées.
 
 ### Site public
-- Rendu serveur Next.js.
+- Rendu serveur Next.js, dynamique pour ne pas dépendre de la disponibilité ou du schéma Supabase pendant le build.
 - Lecture des fiches publiées uniquement.
 - Pas d'appel à un modèle IA lors de l'affichage.
 - Initiale calculée à partir du nom affiché ; elle n'est pas stockée.
