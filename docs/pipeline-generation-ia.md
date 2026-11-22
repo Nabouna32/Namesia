@@ -1,7 +1,7 @@
 # Génération et import des fiches — Namesia
 
 - **Statut :** procédure cible de la V1
-- **Version :** 2.1
+- **Version :** 3.0
 - **Mis à jour :** 2026-11-22
 
 ## 1. Périmètre réel
@@ -26,7 +26,9 @@ Règles :
 - aucune propriété inconnue ;
 - aucun statut de publication, date interne, identifiant de base ou rôle administrateur ;
 - ne pas inventer de contenu pour remplir les rubriques facultatives ;
-- ne pas inventer de sources, références ou statuts de preuve.
+- ne pas inventer de sources, références ou statuts de preuve ;
+- les références facultatives de content.references doivent avoir été réellement consultées et comporter section, title, publisher, url et consulted_at ;
+- une référence décrit une ressource consultée, elle ne garantit pas chaque affirmation de la rubrique.
 
 ## 3. Import dans Namesia
 
