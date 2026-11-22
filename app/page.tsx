@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { DecouverteAleatoire } from "@/components/decouverte-aleatoire";
 import { RecherchePrenoms } from "@/components/recherche-prenoms";
-import { getPrenoms } from "@/lib/prenoms";
+import { getPrenomsIndex } from "@/lib/prenoms";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default async function Accueil() {
-  const prenoms = await getPrenoms();
+  const prenoms = await getPrenomsIndex();
   const decalageDuJour = prenoms.length > 0
     ? Math.floor(Date.now() / 86_400_000) % prenoms.length
     : 0;

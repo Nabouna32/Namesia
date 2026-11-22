@@ -10,6 +10,8 @@ export type Prenom = {
   genre: string;
 } & ContenuFichePrenom;
 
+export type PrenomIndex = Pick<Prenom, "id" | "slug" | "nom" | "lettre" | "genre">;
+
 type JoinedAssociation = AssociationSymbolique & { position: number };
 
 type JoinedProfile = {
@@ -69,6 +71,38 @@ function convertir(row: JoinedName): Prenom {
     ...parseContenuFiche(content)
   };
 }
+
+
+type JoinedNameIndex = {
+  id: string;
+  slug: string;
+  display_name: string;
+  gender: string;
+  name_profiles: { status: string; published_at: string | null }[];
+};
+
+export const getPrenomsIndex = cache(async (): Promise<PrenomIndex[]> => {
+  const supabase = createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("names")
+    .select("id, slug, display_name, gender, name_profiles!inner(status, published_at)")
+    .eq("name_profiles.status", "publie")
+    .not("name_profiles.published_at", "is", null)
+    .order("display_name", { ascending: true });
+
+  if (error) {
+    console.error("Échec du chargement de l’index des prénoms Namesia :", error);
+    throw new Error("Le catalogue des prénoms est momentanément indisponible.");
+  }
+
+  return (data as unknown as JoinedNameIndex[]).map((row) => ({
+    id: row.id,
+    slug: row.slug,
+    nom: row.display_name,
+    lettre: Array.from(row.display_name.trim())[0]?.toLocaleUpperCase("fr") ?? "",
+    genre: libellesGenres[row.gender] ?? "Genre non renseigné"
+  }));
+});
 
 export async function getPrenoms(): Promise<Prenom[]> {
   const supabase = createSupabaseServerClient();

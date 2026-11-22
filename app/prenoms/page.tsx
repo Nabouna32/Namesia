@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { RecherchePrenoms } from "@/components/recherche-prenoms";
 import { jsonLd } from "@/lib/json-ld";
-import { getPrenoms } from "@/lib/prenoms";
+import { getPrenomsIndex } from "@/lib/prenoms";
 import { siteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
@@ -40,7 +40,7 @@ function normaliserFiltre(value: string): string {
 }
 
 export default async function Catalogue({ searchParams }: Props) {
-  const [parametres, prenoms] = await Promise.all([searchParams, getPrenoms()]);
+  const [parametres, prenoms] = await Promise.all([searchParams, getPrenomsIndex()]);
   const rechercheInitiale = premierParametre(parametres.q);
   const genreDemande = premierParametre(parametres.genre);
   const lettreDemandee = normaliserFiltre(premierParametre(parametres.lettre));
