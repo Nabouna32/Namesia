@@ -23,7 +23,7 @@ export function ListeFavoris({ prenoms }: Props) {
     return (
       <div className={styles.empty}>
         {erreur ? (
-          <p role="alert">Impossible de lire vos favoris dans le stockage de ce navigateur. Vérifiez ses paramètres puis rechargez la page.</p>
+          <p role="alert">Le stockage des favoris est indisponible ou contient des données illisibles. Vérifiez les paramètres de votre navigateur puis rechargez la page.</p>
         ) : (
           <p>{slugs.length === 0 ? "Vous n’avez pas encore enregistré de prénom." : "Aucun de vos favoris n’est actuellement publié."}</p>
         )}
@@ -36,7 +36,7 @@ export function ListeFavoris({ prenoms }: Props) {
     <div className="name-grid">
       {erreur && (
         <p className={styles.error} role="alert">
-          Impossible d’enregistrer vos modifications de favoris. Vérifiez les paramètres de stockage de votre navigateur.
+          Le stockage des favoris est indisponible ou contient des données illisibles. Vos modifications ne sont pas enregistrées.
         </p>
       )}
       {favoris.map((prenom) => (
