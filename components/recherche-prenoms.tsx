@@ -255,17 +255,17 @@ export function RecherchePrenoms({
           {resultats.length > 0 ? (
             <>
               <div className="name-grid">
-              {resultats.slice(0, nombreVisible).map((prenom) => (
-                <Link className="name-card" href={`/prenoms/${prenom.slug}`} key={prenom.slug}>
-                  <span className="name-initial">{prenom.lettre}</span>
-                  <span>
-                    <strong>{prenom.nom}</strong>
-                    <small>{prenom.genre} · Découvrir la fiche</small>
-                  </span>
-                  <span className="card-arrow" aria-hidden="true">↗</span>
-                </Link>
-              ))}
-            </div>
+                {resultats.slice(0, nombreVisible).map((prenom) => (
+                  <Link className="name-card" href={`/prenoms/${prenom.slug}`} key={prenom.slug}>
+                    <span className="name-initial">{prenom.lettre}</span>
+                    <span>
+                      <strong>{prenom.nom}</strong>
+                      <small>{prenom.genre} · Découvrir la fiche</small>
+                    </span>
+                    <span className="card-arrow" aria-hidden="true">↗</span>
+                  </Link>
+                ))}
+              </div>
             {resultats.length > nombreVisible && (
               <button
                 className="filter-reset"
