@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 1.7
+- **Version :** 1.8
 - **Mis à jour :** 2026-11-22
 
 ## 1. Positionnement
@@ -39,6 +39,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 - Page dédiée par prénom avec URL stable.
 - Recherche de prénoms avec prise en compte des accents et des variantes de casse ; filtres combinables par genre et initiale.
 - Fiches de découverte avec introduction, origine, histoire, usages et associations symboliques facultatives ; liens vers d'autres prénoms publiés de même genre et partage natif de la fiche.
+- Comparaison de deux ou trois fiches sur leurs informations éditoriales publiées.
 - Génération hors du site, par API ou conversation, puis import d'un JSON.
 - Administration privée : authentification, import, validation structurelle, création de brouillon, prévisualisation et publication explicite.
 - Historique des versions afin de remplacer une fiche sans écraser la version précédemment publiée.
