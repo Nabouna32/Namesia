@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ListeFavoris } from "@/components/liste-favoris";
-import { getPrenoms } from "@/lib/prenoms";
+import { getPrenomsIndex } from "@/lib/prenoms";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function FavorisPage() {
-  const prenoms = await getPrenoms();
+  const prenoms = await getPrenomsIndex();
 
   return (
     <main id="contenu" tabIndex={-1} className="page-main">
