@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.1
+- **Version :** 3.2
 - **Mis à jour :** 2026-11-22
 
 ## 1. Positionnement
@@ -44,7 +44,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 - Favoris locaux : enregistrer des prénoms depuis leur fiche et les retrouver dans une liste dédiée, sans compte ni synchronisation entre appareils. La liste utilise uniquement les informations d'index nécessaires à son affichage, pas les textes complets des fiches.
 - Accès direct au comparateur depuis une fiche, avec le prénom déjà sélectionné et la possibilité d'en ajouter jusqu'à deux autres.
 - Fiches de découverte avec introduction, origine, histoire, usages, associations symboliques facultatives ; liens vers d'autres prénoms publiés de même genre et partage natif de la fiche.
-- Comparaison partageable de deux ou trois fiches sur leurs informations éditoriales publiées, via l'URL de la sélection.
+- Comparaison partageable de deux ou trois fiches sur leurs informations éditoriales publiées, via l'URL de la sélection. Le catalogue de choix ne charge que l'index léger ; les contenus complets sont demandés uniquement pour les fiches sélectionnées.
 - Aperçus de partage visuels avec une carte dédiée à chaque fiche.
 - Génération hors du site, par API ou conversation, puis import d'un JSON.
 - Administration privée : authentification, import, validation structurelle, création de brouillon, prévisualisation et publication explicite.
