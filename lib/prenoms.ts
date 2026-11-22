@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { parseContenuFiche, type AssociationSymbolique, type ContenuFichePrenom } from "@/lib/fiche-prenom";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -86,7 +87,7 @@ export async function getPrenoms(): Promise<Prenom[]> {
   return (data as unknown as JoinedName[]).map(convertir);
 }
 
-export async function getPrenom(slug: string): Promise<Prenom | null> {
+export const getPrenom = cache(async (slug: string): Promise<Prenom | null> => {
   const supabase = createSupabaseServerClient();
   const { data, error } = await supabase
     .from("names")
@@ -102,4 +103,4 @@ export async function getPrenom(slug: string): Promise<Prenom | null> {
   }
 
   return data ? convertir(data as unknown as JoinedName) : null;
-}
+});
