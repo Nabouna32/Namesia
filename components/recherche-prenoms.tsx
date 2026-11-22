@@ -5,7 +5,7 @@ import type { Prenom } from "@/lib/prenoms";
 type Props = { prenoms: Prenom[]; compact?: boolean };
 
 function normaliserRecherche(value: string): string {
-  return value.trim().normalize("NFD").replace(/\\p{Diacritic}/gu, "").toLocaleLowerCase("fr");
+  return value.trim().normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("fr");
 }
 export function RecherchePrenoms({ prenoms, compact = false }: Props) {
   const [recherche, setRecherche] = useState("");
