@@ -1532,57 +1532,6 @@ h2 em {
   }
 }
 
-@media (max-width: 420px) {
-  .brand {
-    font-size: 19px;
-  }
-
-  .site-nav {
-    gap: 0;
-  }
-
-  .site-nav a {
-    font-size: 0.8125rem;
-  }
-
-  .hero h1 {
-    font-size: 53px;
-  }
-
-  .profile-hero {
-    min-height: 250px;
-    padding: 25px 20px;
-  }
-
-  .profile-hero h1 {
-    font-size: clamp(58px, 18vw, 76px);
-  }
-
-  .profile-lead {
-    font-size: 17px;
-  }
-
-  .profile-monogram {
-    right: -15%;
-    font-size: 220px;
-  }
-
-  .profile-toc ul {
-    gap: 8px 14px;
-  }
-
-  .featured-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .featured-card {
-    height: 190px;
-  }
-
-  .section-heading h2 {
-    font-size: 30px;
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -1689,4 +1638,56 @@ h1 em, h2 em { color: var(--color-accent); background: none; -webkit-text-fill-c
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+@media (max-width: 420px) {
+  .brand {
+    font-size: 19px;
+  }
+
+  .site-nav {
+    gap: 0;
+  }
+
+  .site-nav a {
+    font-size: 0.8125rem;
+  }
+
+  .hero h1 {
+    font-size: 53px;
+  }
+
+  .profile-hero {
+    min-height: 250px;
+    padding: 25px 20px;
+  }
+
+  .profile-hero h1 {
+    font-size: clamp(58px, 18vw, 76px);
+  }
+
+  .profile-lead {
+    font-size: 17px;
+  }
+
+  .profile-monogram {
+    right: -15%;
+    font-size: 220px;
+  }
+
+  .profile-toc ul {
+    gap: 8px 14px;
+  }
+
+  .featured-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-card {
+    height: 190px;
+  }
+
+  .section-heading h2 {
+    font-size: 30px;
+  }
 }
