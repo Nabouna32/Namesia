@@ -33,12 +33,12 @@ La clé publishable peut être exposée au navigateur. La sécurité repose sur 
 
 Le projet Supabase possède actuellement l'ancien modèle et une première couche JSONB transitoire. La bascule relationnelle est découpée en deux migrations pour éviter toute interruption :
 
-1. **Avant la fusion et le déploiement de la nouvelle application**, appliquer `supabase/migrations/20261122130000_preparer_modele_relationnel.sql`. Cette migration ajoute les colonnes et la table d'associations, reprend les données JSONB, prépare l'import atomique et conserve les anciennes tables ainsi que la colonne JSONB. L'application actuellement en production continue donc de fonctionner.
+1. **Migration additive appliquée le 22 novembre 2026** : `supabase/migrations/20261122001208_preparer_modele_relationnel.sql`. Elle ajoute les colonnes et la table d'associations, reprend les données JSONB, prépare l'import atomique et conserve les anciennes tables ainsi que la colonne JSONB. L'application actuellement en production continue donc de fonctionner.
 2. Fusionner la PR et laisser le déploiement de production se faire selon la politique Vercel du dépôt. La nouvelle application lit les colonnes et les lignes relationnelles.
 3. Après vérification de la production et sauvegarde/export SQL, appliquer `supabase/migrations/20261122140000_finaliser_nettoyage_modele.sql`. Cette migration est destructive : elle retire le JSONB transitoire, les anciennes tables documentaires et les colonnes redondantes.
 4. Vérifier le schéma, les privilèges, RLS et les six fiches publiées.
 
-**Ne pas inverser cet ordre.** La première migration doit précéder le déploiement ; la seconde doit le suivre. Aucune des deux n'a été appliquée dans le cadre de cette PR. Les opérations sur la base de production exigent une autorisation explicite.
+**Ne pas inverser cet ordre.** La migration additive est appliquée ; la migration destructive attend le déploiement et la vérification de la nouvelle application. Une sauvegarde reste fortement recommandée avant cette seconde étape.
 
 Cette migration est destructive pour les anciennes tables documentaires et colonnes redondantes. Elle contrôle la reprise des contenus éditoriaux et des associations symboliques avant leur suppression. **Une sauvegarde ou un export SQL préalable de la base est obligatoire**, notamment des tables sources, claims, claim_sources, symbolic_associations et name_profile_versions. Ne pas appliquer la migration si cette sauvegarde n'est pas disponible.
 
