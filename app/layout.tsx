@@ -4,18 +4,21 @@ import "./globals.css";
 import { jsonLd } from "@/lib/json-ld";
 import { siteUrl } from "@/lib/site-url";
 
+const siteTitle = "Namesia — Le sens derrière chaque prénom";
+const siteDescription = "Explorez les origines, les histoires et les traditions des prénoms avec Namesia.";
+
 const siteWebData = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Namesia",
   url: siteUrl.toString(),
   inLanguage: "fr-FR",
-  description: "Explorez les origines, les histoires et les traditions des prénoms avec Namesia."
+  description: siteDescription
 };
 
 export const metadata: Metadata = {
   metadataBase: siteUrl,
-  title: { default: "Namesia — Le sens derrière chaque prénom", template: "%s · Namesia" },
+  title: { default: siteTitle, template: "%s · Namesia" },
   description: "Explorez les origines, les histoires et les traditions des prénoms avec Namesia.",
   applicationName: "Namesia",
   twitter: { card: "summary_large_image", images: ["/opengraph-image"] },
@@ -23,7 +26,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "fr_FR",
     siteName: "Namesia",
-    title: "Namesia — Le sens derrière chaque prénom",
+    title: siteTitle,
     description: "Explorez les origines, les histoires et les traditions des prénoms avec Namesia.",
     url: "/"
   }
