@@ -67,6 +67,7 @@ export function RecherchePrenoms({
   const [recherche, setRecherche] = useState(initialRecherche);
   const [genreActif, setGenreActif] = useState(initialGenre);
   const [lettreActive, setLettreActive] = useState(initialLettre);
+  const [nombreVisible, setNombreVisible] = useState(24);
 
   const genres = useMemo(
     () => [...new Set(prenoms.map((prenom) => prenom.genre))].sort((a, b) => a.localeCompare(b, "fr")),
@@ -134,21 +135,25 @@ export function RecherchePrenoms({
   }
 
   function changerRecherche(value: string) {
+    setNombreVisible(24);
     setRecherche(value);
     mettreAJourUrl(value, genreActif, lettreActive);
   }
 
   function changerGenre(value: string | null) {
+    setNombreVisible(24);
     setGenreActif(value);
     mettreAJourUrl(recherche, value, lettreActive);
   }
 
   function changerLettre(value: string | null) {
+    setNombreVisible(24);
     setLettreActive(value);
     mettreAJourUrl(recherche, genreActif, value);
   }
 
   function effacerFiltres() {
+    setNombreVisible(24);
     setRecherche("");
     setGenreActif(null);
     setLettreActive(null);
@@ -242,24 +247,35 @@ export function RecherchePrenoms({
         <div className="search-results">
           <p className={compact ? "results-meta sr-only" : "results-meta"} role="status">
             {resultats.length > 0
-              ? `${resultats.length} ${resultats.length > 1 ? "prénoms" : "prénom"}${compact ? (resultats.length > 1 ? " trouvés" : " trouvé") : ` affichés sur ${prenoms.length}`}`
+              ? `${resultats.length} ${resultats.length > 1 ? "prénoms" : "prénom"}${compact ? (resultats.length > 1 ? " trouvés" : " trouvé") : ` trouvés · ${Math.min(resultats.length, nombreVisible)} affichés`}`
               : suggestions.length > 0
                 ? `${suggestions.length} suggestions proches`
                 : `0 résultat affiché sur ${prenoms.length}`}
           </p>
           {resultats.length > 0 ? (
-            <div className="name-grid">
-              {resultats.map((prenom) => (
-                <Link className="name-card" href={`/prenoms/${prenom.slug}`} key={prenom.slug}>
-                  <span className="name-initial">{prenom.lettre}</span>
-                  <span>
-                    <strong>{prenom.nom}</strong>
-                    <small>{prenom.genre} · Découvrir la fiche</small>
-                  </span>
-                  <span className="card-arrow" aria-hidden="true">↗</span>
-                </Link>
-              ))}
-            </div>
+            <>
+              <div className="name-grid">
+                {resultats.slice(0, nombreVisible).map((prenom) => (
+                  <Link className="name-card" href={`/prenoms/${prenom.slug}`} key={prenom.slug}>
+                    <span className="name-initial">{prenom.lettre}</span>
+                    <span>
+                      <strong>{prenom.nom}</strong>
+                      <small>{prenom.genre} · Découvrir la fiche</small>
+                    </span>
+                    <span className="card-arrow" aria-hidden="true">↗</span>
+                  </Link>
+                ))}
+              </div>
+            {resultats.length > nombreVisible && (
+              <button
+                className="filter-reset"
+                type="button"
+                onClick={() => setNombreVisible((visible) => visible + 24)}
+              >
+                Afficher les {Math.min(24, resultats.length - nombreVisible)} prénoms suivants
+              </button>
+            )}
+            </>
           ) : suggestions.length > 0 ? (
             <div className="empty-results">
               <p className="empty-state">
