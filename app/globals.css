@@ -735,6 +735,41 @@ h2 em {
   user-select: none;
 }
 
+.profile-share {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-top: 20px;
+}
+
+.share-button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 15px;
+  border: 1px solid rgba(126, 77, 143, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  color: #684875;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: border-color 0.18s, background-color 0.18s, transform 0.18s;
+}
+
+.share-button:hover {
+  transform: translateY(-1px);
+  border-color: #a66ab4;
+  background: #ffffff;
+}
+
+.share-feedback {
+  color: #6f5879;
+  font-size: 12px;
+}
+
 .profile-toc {
   display: flex;
   flex-wrap: wrap;
