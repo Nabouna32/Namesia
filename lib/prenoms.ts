@@ -9,12 +9,14 @@ export type Prenom = {
   genre: string;
 } & ContenuFichePrenom;
 
+type JoinedAssociation = AssociationSymbolique & { position: number };
+
 type JoinedProfile = {
   introduction: string;
   origin_text: string | null;
   history_text: string | null;
   usage_text: string | null;
-  name_profile_associations: AssociationSymbolique[];
+  name_profile_associations: JoinedAssociation[];
 };
 
 type JoinedName = {
