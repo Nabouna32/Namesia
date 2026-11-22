@@ -1,140 +1,124 @@
-# Modèle de données éditorial — Namesia
+# Modèle de données — Namesia
 
-- **Statut :** modèle conceptuel initial
-- **Version :** 1.0
-- **Mis à jour :** 2026-11-21
+- **Statut :** modèle cible retenu pour la V1
+- **Version :** 2.1
+- **Mis à jour :** 2026-11-22
 
 ## 1. Principes
 
-Le JSON de fiche est un contrat de transport et de validation. PostgreSQL reste le stockage canonique relationnel pour les entités, les sources, les versions et les statistiques.
+Le besoin réel est de stocker un catalogue de prénoms et des versions de fiches éditoriales importées en JSON.
 
-Ne pas stocker toutes les données dans un unique champ JSONB : cela compliquerait les contraintes, les recherches, les relations et les mises à jour ciblées. Un instantané JSONB validé peut néanmoins être conservé pour l'audit et l'export.
+Le modèle de stockage est relationnel. Le JSON est uniquement le contrat d'échange avec le générateur et l'API d'import : il est validé, puis décomposé en colonnes et lignes dans une transaction SQL unique. Aucune colonne ne conserve le document complet.
 
-## 2. Entités proposées
+## 2. Tables métier
 
-### `names`
-Identité du prénom indépendamment de sa présentation locale.
-- `id` : UUID.
-- `canonical_key` : clé normalisée unique.
-- `created_at`, `updated_at`.
+### names
 
-### `name_forms`
-Formes écrites et variantes.
-- `id`, `name_id`.
-- `form`, `normalized_form`.
-- `form_type` : forme principale, variante, diminutif, translittération.
-- `language_code` nullable.
-- Contrainte d'unicité adaptée au nom et à la langue.
+Identité stable d'un prénom.
 
-### `name_profiles`
-Contenu éditorial par marché et langue.
-- `id`, `name_id`.
-- `market_code` (ex. FR), `language_code` (ex. fr).
-- `slug` stable et unique dans son périmètre.
-- `current_published_version_id` nullable.
-- Contrainte unique sur nom + marché + langue.
-
-### `name_profile_versions`
-Versions immuables du contenu.
-- `id`, `profile_id`, `version_number`.
-- `schema_version`, `content_json`.
-- `status`, `generated_at`, `reviewed_at`, `published_at`.
-- `model_provider`, `model_name`, `prompt_version`.
-- `created_by`, `reviewed_by` selon le système d'identité retenu.
-- Contrainte unique sur profil + numéro de version.
-
-### `sources`
-Références bibliographiques ou numériques vérifiées.
-- `id`, `title`, `publisher`, `author`.
-- `source_type`, `url`, `accessed_at`, `published_at`.
-- `reliability_note`, `language_code`.
-- Une source est une référence, pas une preuve automatique de toutes les affirmations.
-
-### `claims`
-Affirmations factuelles atomiques liées à une version.
-- `id`, `version_id`, `field_path`, `claim_text`.
-- Une affirmation atomique par enregistrement : `id`, `version_id`, `field_path`, `claim_text`.
-- `source_id` et `evidence_note` pour relier chaque affirmation à sa preuve.
-- `claim_status` : établi, discuté, incertain ou non documenté.
-- Une affirmation établie ou discutée doit avoir au moins une source ; le contrôle de pertinence reste humain.
-- Pas de score de confiance numérique sans méthode validée.
-
-### `symbolic_associations`
-Interprétations symboliques distinctes des faits.
-- `id`, `version_id`, `category`, `value`.
-- `tradition_or_framework`, `explanation`, `caveat`.
-- Ne pas confondre association éditoriale, tradition culturelle et résultat scientifique.
-
-### `statistics_observations`
-Données quantitatives temporelles.
-- `id`, `name_id`, `market_code`, `period`.
-- `metric`, `value`, `unit`, `source_id`.
-- `retrieved_at`.
-- Les statistiques ne sont pas enfouies dans un paragraphe intemporel.
-
-### `generation_runs`
-Traçabilité du pipeline.
-- `id`, `profile_id`, `version_id`.
-- `provider`, `model`, `prompt_version`, `schema_version`.
-- `input_fingerprint`, `started_at`, `finished_at`.
-- `validation_report`, `token_usage`, `cost_estimate`, `run_status`.
-
-## 3. Relations principales
-
-- Un prénom possède plusieurs formes.
-- Un prénom possède un profil par marché et langue.
-- Un profil possède plusieurs versions immuables.
-- Une version possède plusieurs affirmations et associations symboliques.
-- Une affirmation peut référencer une source vérifiée.
-- Une observation statistique est datée et sourcée.
-- Une exécution de génération produit au plus une version candidate identifiable.
-
-## 4. Règles d'intégrité
-
-1. Une version publiée doit avoir passé la validation du schéma et les contrôles éditoriaux obligatoires.
-2. Une version publiée n'est jamais écrasée.
-3. Une fiche peut omettre une information inconnue ; ne pas inventer une valeur pour remplir le modèle.
-4. Les sources sont enregistrées indépendamment du texte généré.
-5. Les dates, pays, unités et périodes des statistiques sont obligatoires.
-6. Les codes de langue suivent BCP 47 ; les codes pays suivent ISO 3166-1 alpha-2.
-7. Les slugs sont stables ; une modification de slug nécessite une redirection permanente.
-8. Le statut de publication appartient à la version, pas à une sortie libre du modèle.
-
-## 5. Sources statistiques et éditoriales
-
-La politique détaillée est maintenue dans [Politique éditoriale et sources](politique-editoriale-et-sources.md). Le fichier des prénoms de l'Insee est la référence pour les naissances en France ; il ne mesure pas les personnes vivantes portant un prénom. Les statistiques sont stockées comme observations datées et reliées à une source.
-
-## 6. À préciser avant migration SQL
-
-- Authentification et rôles de relecteurs.
-- Référentiel de fiabilité des sources.
-- Taxonomie exacte des types de sources et des affirmations.
-- Gestion des prénoms épicènes et des usages genrés selon les pays.
-- Stratégie de fusion des homonymes et des étymologies concurrentes.
-- Source statistique et granularité des séries françaises.
-
-
-## 7. Schéma effectivement créé pour la première version
-
-Le schéma conceptuel ci-dessus reste la cible à challenger. La première migration réellement appliquée au projet Supabase Namesia crée un sous-ensemble relationnel volontairement plus simple :
-
-| Table | Responsabilité actuelle |
+| Colonne | Rôle |
 |---|---|
-| `names` | Identité, slug, nom affiché, initiale, genre éditorial et publication |
-| `name_profile_versions` | Versions numérotées d'une fiche et contenus éditoriaux |
-| `sources` | Références documentaires et notes de portée |
-| `claims` | Affirmations atomiques, section, statut et note de preuve |
-| `claim_sources` | Relation plusieurs-à-plusieurs entre affirmations et sources |
-| `symbolic_associations` | Emplacement réservé aux associations culturelles contextualisées |
+| id | UUID, clé primaire |
+| slug | Identifiant URL unique et stable |
+| display_name | Graphie affichée |
+| gender | feminin, masculin, mixte ou inconnu |
+| created_at | Date de création |
 
-Les migrations sont conservées dans `supabase/migrations/`. Les six tables ont RLS activé. Les rôles `anon` et `authenticated` disposent uniquement de la lecture, et les politiques filtrent les versions publiées. Les opérations d'écriture restent réservées aux opérations de confiance qui seront conçues avec l'administration.
+L'initiale est calculée depuis display_name. Un booléen de publication n'est pas stocké ici : la publication appartient à une version de fiche. Dès la création, slug, display_name et gender sont stables : un import de contenu ne peut pas les modifier. Un renommage éventuel devra être une opération administrative dédiée.
 
-### Écarts assumés avec la cible
+### name_profiles
 
-- Le modèle actuel ne possède pas encore `name_forms`, `name_profiles`, `statistics_observations` ni `generation_runs`.
-- Le profil est directement lié à `names` ; le découpage par langue et marché sera nécessaire avant une ouverture multilingue.
-- Les sources sont reliées aux affirmations par `claim_sources`, ce qui permet plusieurs références pour une affirmation et plusieurs affirmations pour une source.
-- Le statut d'une affirmation dans la première migration est limité à `etabli` ou `discute`. Les statuts `incertain` et `non_documente` restent à intégrer.
-- Les premières fiches n'ont qu'une version chacune. Les versions publiées ne doivent pas être modifiées en place.
+Une ligne représente une version complète d'une fiche.
 
-Ne pas étendre le schéma au fil de l'eau sans mettre à jour cette section, les migrations, les types applicatifs et les tests RLS.
+| Colonne | Rôle |
+|---|---|
+| id | UUID, clé primaire |
+| name_id | Référence à names.id |
+| version | Numéro croissant par prénom |
+| schema_version | Version du contrat JSON reçu à l'import |
+| introduction | Présentation courte, colonne texte |
+| origin_text | Origine, colonne texte nullable |
+| history_text | Histoire, colonne texte nullable |
+| usage_text | Usages et variantes, colonne texte nullable |
+| status | brouillon, publie ou archive |
+| created_at | Date d'import |
+| published_at | Date de publication, nulle tant que la version n'a jamais été publiée |
+
+Contraintes :
+- unicité de (name_id, version) ;
+- version strictement positive ;
+- introduction est non vide ;
+- les longueurs maximales des rubriques sont contrôlées ;
+- une version publiée possède une date de publication ;
+- au plus une version publiée par prénom ;
+- une version publiée n'est jamais écrasée.
+
+### name_profile_associations
+
+Une ligne par association symbolique d'une version de fiche. Cette séparation permet de filtrer par catégorie ou valeur sans parcourir un document JSON.
+
+| Colonne | Rôle |
+|---|---|
+| id | UUID, clé primaire |
+| profile_id | Référence à name_profiles.id |
+| position | Ordre éditorial dans la fiche |
+| category | Catégorie filtrable |
+| value | Valeur ou association filtrable |
+| context_note | Explication éditoriale |
+
+Les rubriques textuelles restent des colonnes de `name_profiles` : une table supplémentaire par paragraphe n'apporterait rien. Les associations ont leur table car elles sont répétables, structurées et potentiellement filtrables. Les index ne sont pas ajoutés par anticipation sur chaque colonne : ils seront choisis à partir des filtres réellement proposés et des volumes observés. La recherche plein texte pourra utiliser un index dédié lorsqu'elle fera partie du besoin produit.
+
+### private.admin_users
+
+Liste d'autorisation des comptes Supabase Auth. La table réside dans le schéma PostgreSQL privé, qui n'est pas exposé par la Data API.
+
+- user_id : clé primaire et référence à auth.users.id ;
+- created_at : date d'autorisation.
+
+RLS est activé. Un utilisateur authentifié peut uniquement lire sa propre autorisation. L'ajout et le retrait d'un administrateur passent par le SQL Editor Supabase, pas par le navigateur.
+
+## 3. Contrat JSON
+
+Le contrat canonique d'entrée est [fiche-prenom.schema.json](../schemas/fiche-prenom.schema.json). L'API le valide avant d'appeler une fonction SQL transactionnelle qui répartit le contenu dans les colonnes `name_profiles` et les lignes `name_profile_associations`.
+
+Structure :
+- schema_version : version du schéma ;
+- identity : slug, graphie et genre ;
+- content : introduction, origine, histoire, usages et associations symboliques.
+
+Les rubriques facultatives peuvent être absentes lorsqu'une information n'est pas disponible. Une génération ne doit pas inventer de texte pour remplir artificiellement le document.
+
+Les associations symboliques restent explicitement présentées comme des interprétations culturelles ou éditoriales, sans valeur scientifique ou prédictive.
+
+## 4. Publication
+
+1. L'import valide le JSON et crée une nouvelle version brouillon.
+2. L'administration affiche une prévisualisation du contenu importé.
+3. Une action distincte demande la publication.
+4. La fonction SQL archive l'ancienne version publiée et publie la version brouillon dans une seule transaction.
+5. Le site public ne lit que les versions publiées.
+
+Le JSON entrant ne contient aucun statut, date de publication ou identifiant interne contrôlé par le modèle.
+
+## 5. Données volontairement absentes
+
+Les éléments suivants ne sont pas modélisés dans la V1 :
+- sources documentaires et liens de preuve ;
+- affirmations atomiques et statuts de preuve ;
+- statistiques structurées ;
+- génération IA intégrée et métadonnées de fournisseur ;
+- formes linguistiques et marchés multilingues ;
+- exécutions de génération et coûts par fournisseur.
+
+Ils ne seront ajoutés que lorsqu'un besoin produit concret et un processus réellement appliqué le justifieront. Ne pas créer de tables anticipant un workflow inexistant.
+
+## 6. État du schéma en production
+
+Le schéma relationnel cible est préparé par la migration additive `20261122001208_preparer_modele_relationnel.sql`. Les six fiches publiées possèdent leurs rubriques relationnelles et les six associations symboliques ont été reprises sans écart.
+
+L'ancienne colonne JSONB et les tables historiques sont encore présentes uniquement pour maintenir la compatibilité avec l'application actuellement déployée. Elles ne font pas partie du modèle cible et seront supprimées par `20261122140000_finaliser_nettoyage_modele.sql` après le déploiement et la vérification de l'application relationnelle.
+## 7. Administration
+
+La table privée private.admin_users associe un compte Supabase Auth à l'autorisation d'administrer Namesia. Elle ne contient pas de profil utilisateur public ni de rôle générique.
+
+Aucune lecture anonyme, aucun ajout public et aucune modification de l'autorisation depuis le navigateur. L'identifiant du premier administrateur est ajouté explicitement après création du compte Auth. L'auto-inscription est désactivée.

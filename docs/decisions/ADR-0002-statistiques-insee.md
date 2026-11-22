@@ -1,40 +1,33 @@
-# ADR-0002 — Utiliser le fichier des prénoms de l'Insee comme référence statistique française
+# ADR-0002 — Statistiques de prénoms issues de l'Insee
 
-- **Statut :** accepté
-- **Date :** 2026-11-21
-- **Décideurs :** équipe Namesia
+- **Statut :** en suspens, non implémenté
+- **Décision initiale :** 2026-11-21
+- **Réexamen :** 2026-11-22
 
-## Contexte
+## Contexte initial
 
-Namesia doit afficher la popularité des prénoms en France avec une provenance claire. Les chiffres issus de sites tiers ou de calculs non documentés risquent de mélanger naissances, population vivante, rangs et estimations.
+Une intégration des statistiques de naissances françaises avait été envisagée à partir du fichier des prénoms publié par l'Insee.
 
-## Décision
+## Réexamen
 
-Le fichier des prénoms publié par l'Insee est la source primaire de référence pour les statistiques de naissances en France.
+Le périmètre éditorial actuel repose sur des fiches générées par IA puis importées en JSON. Namesia ne dispose pas encore d'un processus d'import, de mise à jour et de présentation des statistiques sourcées.
 
-Références :
-- Publication : https://www.insee.fr/fr/statistiques/8595130
-- Méthodologie : https://www.insee.fr/fr/metadonnees/source/serie/s2236
-- Jeu de données : https://www.data.gouv.fr/datasets/fichier-des-prenoms-depuis-1900
+Conserver une décision d'intégration statistique comme si elle faisait partie du produit actuel serait trompeur et pousserait à ajouter prématurément des tables, des sources et des processus qui ne sont pas exploités.
 
-L'édition consultée le 21 novembre 2026 couvre les naissances de 1900 à 2025. La chaîne d'import doit conserver la date et l'édition exactes de la source.
+## Décision actuelle
 
-## Contraintes d'interprétation
+Aucune statistique de popularité ni donnée Insee n'est intégrée au modèle de fiche actuel. L'ancienne décision est mise en suspens, pas supprimée : elle pourra être réexaminée si le produit adopte un véritable pipeline de données statistiques.
 
-- Ces données décrivent les naissances enregistrées par année, pas le nombre de personnes vivantes portant le prénom.
-- Les effectifs publiés sont arrondis au multiple de 5 le plus proche dans l'édition consultée.
-- Les prénoms attribués moins de trois fois sont soumis aux règles de diffusion et ne doivent pas être reconstitués.
-- La couverture géographique n'est pas homogène sur toute la période : les données nationales antérieures à 2012 excluent Mayotte dans l'édition consultée.
-- L'Insee signale une exhaustivité moins bonne avant 1946 et la possibilité de corrections ou d'erreurs résiduelles.
-- Les statistiques doivent conserver période, territoire, sexe tel que défini dans le fichier, mesure, unité et référence de source.
+## Conditions de réactivation
 
-## Conséquences
+Avant toute réintégration, définir et implémenter :
+- le fichier source et son édition exacte ;
+- la méthode d'import et de contrôle ;
+- le territoire, la période, la mesure et l'unité ;
+- les règles de diffusion et d'arrondi ;
+- l'affichage des limites de couverture et de comparabilité.
 
-- Les séries statistiques sont importées et versionnées indépendamment des textes de fiches.
-- Toute visualisation indique la période et le périmètre géographique.
-- Les comparaisons temporelles utilisent les valeurs publiées et documentent tout calcul dérivé.
-- Une mise à jour annuelle du fichier déclenche une procédure d'import, de contrôle et de datation, pas une réécriture du contenu étymologique.
-
-## Revue
-
-Réexaminer cette décision si l'Insee change la structure, la licence, les seuils de diffusion ou la méthode de calcul.
+Références conservées pour une éventuelle reprise :
+- https://www.insee.fr/fr/statistiques/8595130
+- https://www.insee.fr/fr/metadonnees/source/serie/s2236
+- https://www.data.gouv.fr/datasets/fichier-des-prenoms-depuis-1900

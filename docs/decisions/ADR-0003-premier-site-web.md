@@ -1,54 +1,54 @@
-# ADR-0003 — Socle du site web et première intégration Supabase
+# ADR-0003 — Socle web et intégration Supabase
 
-- **Statut :** accepté provisoirement pour la V1
-- **Date :** 2026-11-21
+- **Statut :** accepté pour la V1, révisé le 22 novembre 2026
+- **Date initiale :** 2026-11-21
 
 ## Contexte
 
-Namesia doit être construit comme un produit directement présentable à un visiteur, et non comme une maquette technique exposant des messages de test. Le dépôt initial ne contenait que les fondations documentaires.
+Namesia doit proposer un site public rapide et indexable, alimenté par un catalogue de prénoms administrable. Le projet est personnel et ne nécessite pas une architecture distribuée ni un CMS multi-équipes.
 
 ## Décision
 
-- Retenir Next.js App Router et TypeScript pour les pages publiques, le rendu serveur et les métadonnées.
-- Utiliser le projet Supabase Namesia existant comme source de données du catalogue.
-- Accéder à PostgreSQL depuis les composants serveur avec `@supabase/supabase-js` et une clé publishable.
-- Protéger toutes les tables exposées avec RLS et n'accorder en lecture publique que les fiches publiées.
-- Versionner les fiches, séparer les sources et les affirmations atomiques.
-- Fournir six fiches initiales : Alice, Gabriel, Emma, Louis, Lina et Noah, chacune avec un repère symbolique ou culturel contextualisé.
-- Garder les parcours publics exempts de messages de debug et d'étiquettes « données de test ».
-- Mettre à niveau le socle vers Next.js 16.4.6, React 19.3.1, TypeScript 7.0.2 et Node.js 26 LTS (26.x), sous réserve de validation par CI.
-- Réserver les déploiements Vercel à `main` après fusion d'une PR ; interdire les previews et faire exécuter les builds de validation par GitHub Actions.
+- Next.js App Router et TypeScript pour les pages publiques et l'administration.
+- Supabase PostgreSQL comme stockage du catalogue.
+- Accès serveur au catalogue public avec la clé publishable et des politiques RLS.
+- Administration privée avec Supabase Auth, liste d'autorisation stockée dans le schéma PostgreSQL privé et API serveur.
+- Identité des prénoms et versions conservées relationnellement ; contenu éditorial d'une version stocké en JSONB.
+- Import JSON en brouillon, prévisualisation et publication explicite.
+- Pas de clé privilégiée dans le code de l'application.
+- Les builds de validation restent dans GitHub Actions ; aucun déploiement Preview Vercel.
 
 ## Options et compromis
 
 ### Next.js plutôt que Vite ou HTML statique
 
-Le rendu serveur et les routes de fiches sont utiles pour le référencement naturel. Vite aurait un démarrage plus léger mais demanderait une stratégie de rendu supplémentaire. Un site statique pur serait simple au début, mais moins adapté à l'évolution du catalogue.
+Le rendu serveur et les routes de fiches sont utiles pour le référencement naturel. Vite serait plus léger au démarrage mais demanderait une stratégie de rendu supplémentaire. Le site statique pur serait simple au début mais moins adapté à l'évolution du catalogue.
 
 ### Supabase plutôt qu'un fichier JSON
 
-Le catalogue doit devenir administrable, versionné et sourcé. Supabase apporte PostgreSQL et RLS sans construire immédiatement une API dédiée. Le risque est de coupler les pages à la structure de données ; les accès sont donc isolés dans `lib/prenoms.ts`.
+Le catalogue doit être modifiable sans déploiement du code, avec des identifiants stables, des versions et des droits. PostgreSQL apporte ces garanties sans construire une API de données dédiée.
 
-### Clé publishable et lecture publique
+### JSONB plutôt qu'une table par rubrique
 
-La clé publishable n'est pas un secret. Elle ne donne aucun droit d'écriture par elle-même. Les tables exposées ont RLS activé, des politiques de lecture ciblées et aucun droit public d'écriture. Aucune clé privilégiée n'est intégrée au site.
+Les rubriques sont principalement des blocs éditoriaux affichés ensemble. Les normaliser dans de nombreuses tables augmenterait les jointures et le coût de maintenance sans besoin de requêtes indépendantes. Les identités, versions, statuts et droits restent relationnels.
 
-### Vercel uniquement sur main
+### Administration maison plutôt qu'un CMS tiers
 
-Les previews Vercel sont pratiques pour les revues visuelles, mais elles consomment le quota quotidien de builds/déploiements. L'alternative retenue est de faire tourner les contrôles et le build de validation dans GitHub Actions, puis de ne construire/déployer sur Vercel qu'après fusion sur `main`. Le compromis est la perte des URLs Preview ; le quota est protégé et la validation technique reste automatisée.
+Un import JSON et une seule personne administratrice ne justifient pas le coût d'un CMS externe. L'interface reste volontairement limitée à l'import, la prévisualisation et la publication.
 
 ## Limites connues
 
-- Les six premières fiches constituent un corpus de départ, pas encore un corpus éditorial exhaustif.
-- Les références de vulgarisation ne remplacent pas les dictionnaires d'onomastique et les travaux universitaires ; les hypothèses sont présentées comme telles.
-- L'administration éditoriale, l'authentification et le pipeline IA restent hors de ce premier incrément.
-- Le build Next.js 16 et la compatibilité TypeScript 7 doivent être confirmés par GitHub Actions ; les versions sont déclarées mais pas encore validées localement.
+- Le contenu est généré par IA et peut comporter des erreurs.
+- La validation JSON ne vérifie pas les affirmations.
+- Les statistiques, sources documentaires, multi-langue et génération IA intégrée ne font pas partie de la V1.
+- La session Supabase Auth du panneau admin utilise le stockage navigateur du client Supabase ; la protection dépend également de RLS et de l'autorisation côté API.
+- Les tables historiques du modèle initial sont conservées jusqu'à la validation de la migration et du nouveau parcours.
 
-## Validation
+## Validation attendue
 
-- Vérifier les six fiches dans PostgreSQL.
-- Vérifier la lecture anonyme par l'API avec les seules politiques RLS.
-- Exécuter les advisors Supabase.
-- Exécuter le typage, les tests et le build dans GitHub Actions sur PR.
-- Vérifier qu'un push de branche n'entraîne aucun build Vercel et qu'un push sur `main` après merge déclenche le déploiement de production.
-- Tester les parcours accueil, recherche, catalogue, fiche et 404.
+- Six fiches existantes transférées sans perte des champs éditoriaux utiles.
+- Lecture publique limitée aux versions publiées.
+- Écriture impossible sans session et autorisation administrateur.
+- Import toujours en brouillon.
+- Publication atomique et version précédente archivée.
+- Typecheck, build et tests dans GitHub Actions.

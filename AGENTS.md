@@ -1,151 +1,113 @@
 # AGENTS.md — Charte de travail de Namesia
 
-Ce fichier définit les règles de collaboration applicables à l'ensemble du dépôt. Il s'adresse aux personnes qui contribuent au projet ainsi qu'aux agents IA. Il prime sur les habitudes implicites et s'applique à chaque intervention, petite ou grande.
+Cette charte s'applique à tout le dépôt, aux contributions humaines et aux agents IA.
 
 ## 1. Langue et traçabilité
 
-- Toute communication durable dans le dépôt est rédigée en français : documentation, documentation canonique, issues, titres et descriptions de PR, commentaires, revues, ADR, messages de commit et textes de suivi.
-- Les identifiants techniques, noms d'API, termes consacrés et extraits de code peuvent rester dans leur langue d'origine lorsque leur traduction nuirait à la précision.
-- La conversation de travail est éphémère : toute décision utile à l'avenir doit être consignée dans le dépôt, au bon endroit.
-- Ne jamais présenter une hypothèse comme un fait, une proposition comme une décision, ni une action envisagée comme une action réalisée.
+- Toute communication durable dans le dépôt est en français : documentation, issues, PR, commentaires, revues, ADR et suivi.
+- Les identifiants techniques et termes consacrés peuvent rester dans leur langue d'origine.
+- La conversation est éphémère : toute décision utile doit être inscrite dans le dépôt.
+- Distinguer faits, hypothèses, propositions, décisions et actions réellement effectuées.
 
-## 2. Challenge obligatoire et permanent
+## 2. Challenge obligatoire
 
-Le challenge critique est une obligation à chaque étape, pas une option réservée aux revues de code.
+Le challenge critique s'applique systématiquement aux demandes, idées, recommandations, décisions passées, code, schémas, données, processus et documentation. Aucun choix n'est intouchable parce qu'il existe déjà ou a été accepté auparavant.
 
-Il s'applique systématiquement :
-- aux demandes, idées, intuitions et affirmations de l'utilisateur ;
-- aux propositions, analyses et recommandations de l'agent IA ;
-- à la vision produit, aux publics, au positionnement, au modèle économique éventuel et au périmètre ;
-- aux choix éditoriaux, SEO, métier, juridiques, techniques et architecturaux ;
-- aux ADR et décisions déjà acceptées ;
-- au code, aux tests, aux schémas, aux données et aux processus existants ;
-- aux solutions temporaires qui risquent de devenir permanentes.
+Pour tout choix significatif :
+1. Reformuler le besoin réel sans confondre problème et solution proposée.
+2. Vérifier les prémisses, contraintes, dépendances et incertitudes.
+3. Chercher les angles morts : sécurité, vie privée, accessibilité, maintenabilité, coûts, SEO, dette et conséquences opérationnelles.
+4. Comparer les options crédibles, y compris ne rien faire lorsque pertinent.
+5. Expliquer la recommandation, les compromis et les conséquences.
+6. Définir comment vérifier le résultat.
 
-Aucune ancienneté, validation passée ou autorité de l'auteur ne rend un choix intouchable. L'existant doit être réévalué à la lumière du contexte actuel. Une décision antérieure peut être conservée, amendée ou annulée, mais jamais simplement reconduite par inertie.
+Le challenge doit être argumenté et proportionné. Il ne s'agit pas de contredire par principe, mais aucune proposition importante ne doit être approuvée par complaisance.
 
-### Méthode de challenge
+Pour un arbitrage significatif, expliciter le constat, le challenge, les options, la recommandation, les conséquences et la validation. Ne jamais fabriquer une certitude faute d'éléments.
 
-Pour chaque choix qui a un impact significatif :
+## 3. Vision et décisions
 
-1. **Reformuler** le besoin réel et le résultat attendu, sans confondre la solution proposée avec le problème.
-2. **Vérifier les prémisses** : faits, données, contraintes, hypothèses, dépendances et zones d'incertitude.
-3. **Chercher les angles morts** : cas limites, risques, coûts cachés, dette, sécurité, vie privée, accessibilité, maintenabilité, évolutivité et effets éditoriaux ou SEO.
-4. **Comparer des options** : présenter au moins une alternative crédible lorsque le choix n'est pas trivial, y compris l'option de ne rien faire.
-5. **Expliquer le choix recommandé** : pourquoi cette option, pourquoi pas les autres, quels compromis et quelles conséquences.
-6. **Définir la vérification** : preuve, test, mesure, prototype ou critère qui permettra de confirmer ou de réviser le choix.
+- Challenger régulièrement le problème utilisateur, le périmètre, la proposition de valeur et les indicateurs.
+- Ne pas confondre préférence, intuition et besoin démontré.
+- Les décisions structurantes sont consignées dans un ADR en français : contexte, options, décision, raisons, conséquences et conditions de réexamen.
+- Une décision antérieure doit être réévaluée si le contexte change ; ne pas la reconduire par inertie.
+- Toute modification d'une décision acceptée doit être explicite et motivée.
 
-Le challenge doit être argumenté, proportionné à l'enjeu et respectueux. Il ne s'agit ni de contredire systématiquement ni de ralentir les changements triviaux. En revanche, aucune proposition importante ne doit être approuvée par complaisance.
+## 4. Issues et pull requests
 
-### Format de réponse attendu
-
-Pour un arbitrage significatif, expliciter :
-- **Constat** : ce qui est établi et ce qui ne l'est pas.
-- **Challenge** : faiblesses, risques ou prémisses discutables.
-- **Options** : alternatives pertinentes et leurs compromis.
-- **Recommandation** : choix proposé et justification.
-- **Conséquences** : impacts, coûts, limites et risques résiduels.
-- **Validation** : comment vérifier et quand réexaminer.
-
-Si les éléments disponibles ne permettent pas de conclure, le dire clairement et proposer la plus petite investigation utile. Ne pas fabriquer une certitude pour satisfaire une demande.
-
-## 3. Vision produit et décisions
-
-- La vision produit n'est pas sacrée : challenger régulièrement le problème utilisateur, les publics, la proposition de valeur, le périmètre, la différenciation et les indicateurs de réussite.
-- Ne pas confondre une préférence personnelle, une intuition de marché et un besoin démontré.
-- Toute affirmation de marché, de comportement utilisateur, de concurrence ou de performance SEO doit être étayée ou explicitement qualifiée d'hypothèse.
-- Les décisions structurantes sont consignées dans un ADR en français : contexte, problème, options considérées, décision, raisons, conséquences, statut et conditions de réexamen.
-- Une ADR existante doit être relue lorsqu'un changement de contexte, une nouvelle preuve ou un coût observé remet en cause ses prémisses.
-- Ne pas modifier silencieusement une décision acceptée : proposer un nouvel ADR ou une mise à jour explicite avec historique et justification.
-- Une décision provisoire doit être marquée comme telle, avec responsable, échéance ou condition de réévaluation lorsque c'est pertinent.
-
-## 4. Issues GitHub
-
-Toute issue est rédigée en français et doit, selon le sujet, préciser :
-- le problème ou besoin, plutôt que prescrire trop tôt une solution ;
-- le contexte et les éléments observés ;
-- les hypothèses à vérifier et les questions ouvertes ;
-- les critères d'acceptation observables ;
-- les contraintes, dépendances, risques et éléments hors périmètre.
-
-Challenger également les issues existantes : détecter les doublons, besoins mal formulés, solutions prématurées, critères non testables et priorités non justifiées. Une issue n'est pas une vérité parce qu'elle existe déjà.
-
-## 5. Pull requests et stratégie Git
-
-- Tout changement passe par une branche et une pull request ; ne pas pousser directement sur la branche principale.
-- Une PR a un titre, une description et des commentaires en français.
-- Une PR doit expliquer le problème, la solution, les choix et compromis, les risques, les vérifications réalisées et les éventuelles tâches restantes.
-- Garder les PR aussi ciblées que possible. Éviter de mélanger refonte produit, changements d'architecture et implémentation sans lien.
-- Ne jamais fusionner une PR sans autorisation explicite de la personne responsable du dépôt.
+- Toute évolution passe par une branche et une PR ; aucun push direct sur main.
+- Titres, descriptions, commentaires, issues et revues sont en français.
+- Une PR explique le besoin, la solution, les choix, les compromis, les risques, les vérifications et les limites restantes.
+- Lire le diff complet et challenger aussi le code préexistant touché ou rendu obsolète.
+- Garder une seule PR de travail ouverte par défaut. Contribuer à la PR existante si le périmètre est cohérent ; ne pas créer de PR empilée par commodité.
+- Ne jamais fusionner sans autorisation explicite.
 - Ne pas déclarer une PR prête si les vérifications annoncées n'ont pas été exécutées.
-- Lire le diff complet, pas seulement le résumé. Challenger aussi bien le code ajouté que le code préexistant touché ou rendu obsolète.
-- Vérifier les régressions, migrations, compatibilités, sécurité, performances, accessibilité et conséquences opérationnelles.
-- Documenter les limites connues plutôt que masquer les contrôles manquants.
 
-### Politique de déploiement Vercel et de maîtrise du quota
+### Politique Vercel et quota
 
-- **Aucun déploiement Preview Vercel ne doit être créé**, ni automatiquement à l'ouverture/mise à jour d'une PR, ni manuellement, ni via la CLI ou l'API.
-- **Vercel ne doit construire et déployer que la branche `main`**, après la fusion d'une PR. Aucun push sur une branche de travail ne doit déclencher un build Vercel.
-- Le quota Vercel de 100 builds/déploiements par jour est une contrainte opérationnelle à préserver : ne pas le consommer avec des previews, des builds de branches ou des déploiements de convenance.
-- Les vérifications de PR (installation, typage, tests, build de validation) sont exécutées dans GitHub Actions, pas sur Vercel.
-- La configuration Vercel doit désactiver les déploiements Preview et ignorer explicitement tout build dont la référence Git n'est pas `main`. La seule cible autorisée est le déploiement de production déclenché par un push sur `main` après merge.
-- Ne pas contourner ces garde-fous avec un déploiement manuel. Toute exception exige une autorisation explicite préalable et une justification du coût en quota.
-- Après modification de la configuration Vercel, vérifier les paramètres effectifs ; ne pas se contenter de modifier la documentation.
+- Aucun déploiement Preview Vercel, automatique ou manuel.
+- Vercel ne construit et ne déploie que main après fusion d'une PR.
+- Aucun push de branche de travail ne doit déclencher de build Vercel.
+- Le quota de 100 builds/déploiements par jour doit être préservé.
+- Les vérifications de PR et builds de contrôle sont exécutés dans GitHub Actions.
+- La configuration Vercel doit désactiver les previews et ignorer toute référence autre que main.
+- Ne jamais contourner ces règles avec une CLI ou une API. Toute exception nécessite une autorisation explicite.
+- Aucune mise en production sans autorisation explicite.
 
-### Politique de sérialisation des pull requests
+### Checklist de PR
 
-- Par défaut, maintenir **une seule PR de travail ouverte à la fois** dans le dépôt.
-- Ne pas ouvrir une nouvelle PR tant que la précédente n'est pas fusionnée ou fermée : terminer, faire relire et intégrer le travail en cours avant d'entamer une autre PR.
-- Cette règle évite les modifications concurrentes des mêmes fichiers, les conflits de fusion, les bases obsolètes, les PR empilées difficiles à relire et les validations répétées.
-- Exception uniquement si le travail doit réellement avancer en parallèle et que les périmètres sont indépendants : expliquer pourquoi le parallélisme est nécessaire, vérifier l'absence de chevauchement et annoncer explicitement la stratégie de branches et de bases.
-- Ne jamais créer une PR empilée par simple commodité. Si une dépendance entre changements existe, privilégier une seule PR cohérente ou attendre la fusion de la PR parente.
-- Avant de créer une PR, vérifier les PR déjà ouvertes du dépôt et leur état. Si une PR existe, contribuer à celle-ci lorsque le périmètre est cohérent, ou attendre sa clôture/fusion.
+- [ ] Le besoin est clair et la solution traite la cause, pas seulement le symptôme.
+- [ ] Les hypothèses et choix significatifs ont été challengés.
+- [ ] L'existant concerné a été réévalué.
+- [ ] Documentation canonique et ADR sont alignées.
+- [ ] Tests et contrôles pertinents ont été ajoutés et exécutés.
+- [ ] Sécurité, accessibilité, performances et régressions ont été examinées.
+- [ ] Migrations et contrats sont documentés.
+- [ ] Les vérifications et limites restantes sont décrites.
+- [ ] Aucun secret ni donnée personnelle inutile n'est introduit.
 
-### Checklist obligatoire de PR
+## 5. Documentation canonique
 
-- [ ] Le besoin est clair et la solution ne traite pas seulement un symptôme.
-- [ ] Les hypothèses et choix significatifs ont été challengés ; les alternatives et compromis sont expliqués.
-- [ ] L'existant concerné a été réévalué, sans présumer qu'il est correct.
-- [ ] La documentation canonique et les ADR sont mises à jour si nécessaire.
-- [ ] Les tests pertinents ont été ajoutés ou adaptés et exécutés.
-- [ ] Les contrôles qualité, sécurité et accessibilité pertinents ont été effectués.
-- [ ] Les migrations et changements de contrat sont documentés et compatibles.
-- [ ] La PR indique précisément ce qui a été vérifié et ce qui reste à faire.
-- [ ] Aucun secret, donnée personnelle inutile ou contenu non autorisé n'est introduit.
+- Le dépôt Git est la mémoire durable du projet.
+- Toute PR qui change un comportement, un contrat, une architecture ou une décision met à jour les documents concernés dans la même PR.
+- Éviter les doublons et désigner un emplacement canonique par information structurante.
+- Distinguer les faits, hypothèses, propositions, décisions acceptées et décisions obsolètes.
+- Ne pas laisser sciemment une documentation fausse ou contradictoire.
+- La documentation canonique décrit l'état actuel et les règles encore applicables, pas le journal des opérations passées.
+- Supprimer régulièrement les procédures terminées, états intermédiaires, inventaires datés, noms de branches/commits, comptes rendus de migration et consignes devenues inutiles.
+- Conserver l'historique uniquement lorsqu'il a une valeur durable : décision structurante dans un ADR, migration versionnée, contrainte de compatibilité ou information nécessaire à l'exploitation.
+- Une fois une migration terminée, retirer des documents courants son plan d'exécution et ses étapes temporaires ; conserver le fichier de migration et, si nécessaire, une courte description du schéma final.
 
-## 6. Documentation canonique
+## 6. Qualité technique et maintenabilité
 
-- Le dépôt est la source de vérité durable du projet.
-- La documentation canonique doit évoluer avec le produit et le code, pas plusieurs semaines après.
-- Toute PR qui modifie un comportement, un contrat, une architecture, une règle éditoriale ou une décision doit mettre à jour les documents concernés dans la même PR.
-- Éviter les doublons : chaque information structurante doit avoir un emplacement canonique clairement identifiable ; les autres documents renvoient vers lui.
-- Distinguer explicitement faits, hypothèses, propositions, décisions acceptées et décisions obsolètes.
-- Ajouter les sources, dates, limites et conditions de validité pour les informations externes susceptibles d'évoluer.
-- Ne pas laisser une documentation connue comme fausse ou obsolète au motif qu'elle n'est pas directement liée à la tâche : signaler le problème et proposer sa correction.
+- Construire une base simple, cohérente, modulaire et durable. **Pas de rustines.**
+- Corriger les causes racines ; ne pas empiler overrides CSS, duplications, conditions spéciales ou abstractions artificielles.
+- Ne pas ajouter de fallback de confort, de secours redondant ou de valeur par défaut qui masque un défaut de conception. Chaque chemin d'exécution doit avoir une source de vérité et un comportement explicite.
+- Un fallback n'est acceptable qu'à une frontière réelle et justifiée (donnée facultative prévue par le contrat, indisponibilité externe avec stratégie produit définie, récupération d'erreur nécessaire). Il doit être ciblé, observable et testé ; jamais dupliqué à plusieurs couches pour le même problème.
+- En HTML/React, utiliser la sémantique native adaptée. Ne pas remplacer un élément HTML par des `div` génériques, des rôles ARIA manuels ou des structures de secours quand l'élément natif répond au besoin. Ne pas ajouter d'ARIA redondant ni de contenu de substitution décoratif.
+- Privilégier un monolithe modulaire adapté à la taille réelle du projet ; pas de microservices sans besoin.
+- Créer des modules et composants réutilisables lorsqu'ils apportent une cohésion, une réutilisation ou une testabilité réelle.
+- Valider les entrées aux frontières du système ; TypeScript seul ne valide pas les données à l'exécution.
+- Traiter explicitement les erreurs ; ne pas transformer une panne en résultat vide.
+- Ne pas ajouter de dépendance sans justifier le besoin, les alternatives et le coût de maintenance.
+- Ne jamais exposer de clé privilégiée, secret ou donnée sensible.
+- Prévoir des tests au niveau adapté au risque.
+- Ne jamais déclarer un test, build, contrôle ou déploiement réussi sans l'avoir exécuté.
+- Les migrations doivent être versionnées, relisibles, compatibles avec le schéma réel et vérifiées.
 
-## 7. Exigences de qualité technique
+## 7. Exigences propres à Namesia
 
-- Privilégier la simplicité explicite, les interfaces stables et les changements réversibles.
-- Ne pas ajouter de dépendance sans expliquer le besoin, les alternatives, le coût de maintenance et les implications de sécurité.
-- Valider les entrées aux frontières du système ; typer les contrats ; traiter les erreurs explicitement.
-- Ne pas introduire de secrets dans le dépôt, les logs, les fixtures ou les réponses client.
-- Prévoir les tests au niveau pertinent : unité, intégration, contrat et bout en bout.
-- Ne pas prétendre qu'un test, un lint, un build, une migration ou une validation a réussi sans l'avoir exécuté.
-- Éviter la sur-ingénierie, mais ne pas sacrifier l'intégrité des données, la sécurité ou la maintenabilité pour aller plus vite.
-- Pour les données et contenus, préserver provenance, version, date, statut et possibilité de correction.
-
-## 8. Exigences propres à Namesia
-
-- Séparer strictement les faits documentés des interprétations symboliques ou culturelles.
-- Sourcer les affirmations factuelles de manière traçable et au niveau le plus fin raisonnable.
-- Ne jamais présenter une symbolique, une numérologie ou un portrait de personnalité comme une vérité scientifique ou prédictive.
-- Une sortie d'IA est un candidat à contrôler, jamais une publication autonome.
-- Le modèle ne décide ni de la validité d'une preuve ni de l'approbation éditoriale ni de la publication.
-- Respecter les limites, périodes, seuils, licences et biais des sources statistiques et historiques.
+- Les fiches sont générées en amont par IA (API ou conversation), puis importées dans Namesia au format JSON.
+- La génération, la validation du schéma, la prévisualisation et la publication sont quatre opérations distinctes. Aucune ne prouve l'exactitude factuelle du contenu.
+- Ne jamais inventer de sources, références, citations, statistiques ou statuts de vérification.
+- Ne pas présenter une origine, une étymologie ou une tradition incertaine comme une certitude.
+- Ne pas présenter une symbolique, une numérologie ou un portrait de personnalité comme une vérité scientifique ou prédictive.
+- La publication est une action explicite de l'administrateur ; le modèle ne décide jamais du statut.
+- Toute évolution vers un véritable processus de recherche, de référencement ou de vérification doit être conçue comme une capacité nouvelle, avec ses données, son contrôle et sa documentation. Ne pas réintroduire implicitement les anciennes tables de sources et d'affirmations.
 - Ne pas créer de pages SEO pauvres, trompeuses, artificiellement démultipliées ou sans valeur ajoutée.
 - Challenger les choix de stack et d'hébergement : ils restent des moyens au service des besoins, pas des objectifs en soi.
 
-## 9. Projet personnel et mode de collaboration
+## 8. Projet personnel et mode de collaboration
 
 Namesia est un projet personnel dont le propriétaire est le seul développeur et décideur.
 

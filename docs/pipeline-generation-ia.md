@@ -1,113 +1,84 @@
-# Pipeline de génération IA — Namesia
+# Génération et import des fiches — Namesia
 
-- **Statut :** spécification initiale
-- **Version :** 1.0
-- **Mis à jour :** 2026-11-21
+- **Statut :** procédure cible de la V1
+- **Version :** 2.1
+- **Mis à jour :** 2026-11-22
 
-## 1. Objectif
+## 1. Périmètre réel
 
-Produire des candidats de fiches structurés et traçables, sans permettre au modèle de publier, d'inventer des sources ou de masquer les incertitudes.
+Namesia ne génère pas actuellement les fiches dans son application. Le contenu est produit en amont :
+- par une API de modèle IA ;
+- ou dans une conversation avec un assistant.
 
-Le pipeline est indépendant du frontend et du fournisseur de modèle.
+Le résultat est ensuite fourni à Namesia au format JSON. Ce JSON est un format d'échange, pas le format de stockage : l'API le valide puis une fonction SQL unique répartit les rubriques dans les colonnes relationnelles et les associations dans leurs lignes dédiées. La création du prénom, de sa version et de ses associations est atomique : tout est enregistré ou rien ne l'est. L'application assure ensuite la prévisualisation et la publication explicite.
 
-## 2. Entrées
+La génération par IA n'est pas une vérification documentaire. La validation technique du JSON ne confirme pas l'exactitude des étymologies, dates, traditions ou usages.
 
-Une demande de génération doit préciser :
-- identifiant interne du prénom et graphie cible ;
-- marché et langue ;
-- périmètre des sections à produire ;
-- version du schéma JSON ;
-- version du prompt système et du prompt métier ;
-- dossier de recherche contenant les sources déjà collectées et leurs identifiants ;
-- éventuelles variantes ou hypothèses à examiner.
+## 2. Contrat de sortie
 
-Le modèle ne doit pas recevoir l'instruction de « compléter tous les champs à tout prix ».
+Le fichier doit respecter exactement [schemas/fiche-prenom.schema.json](../schemas/fiche-prenom.schema.json).
 
-## 3. Étapes
+Règles :
+- JSON strict, sans commentaire ni texte avant/après ;
+- schema_version doit correspondre à une version prise en charge ;
+- identity contient le slug, le nom affiché et le genre ;
+- content contient l'introduction et les rubriques disponibles ;
+- aucune propriété inconnue ;
+- aucun statut de publication, date interne, identifiant de base ou rôle administrateur ;
+- ne pas inventer de contenu pour remplir les rubriques facultatives ;
+- ne pas inventer de sources, références ou statuts de preuve.
 
-1. **Préparer** : résoudre l'identité du prénom et réunir des sources vérifiées.
-2. **Générer** : produire uniquement le JSON demandé, sans texte autour.
-3. **Parser** : refuser toute sortie qui n'est pas un JSON strict.
-4. **Valider le schéma** : appliquer exactement la version déclarée du JSON Schema.
-5. **Valider les références** : chaque identifiant de source cité doit exister dans le dossier ; les URLs et références bibliographiques sont contrôlées hors du modèle.
-6. **Valider le métier** : contrôler cohérence locale, langues, dates, unités, statuts de preuve, champs requis et absence de valeurs interdites.
-7. **Contrôler les risques** : repérer les affirmations sans preuve, sources hors sujet, contradictions, formulations déterministes, contenu dupliqué et données personnelles.
-8. **Revue humaine** : un relecteur corrige ou rejette le candidat.
-9. **Approuver** : créer une version éditoriale immuable.
-10. **Publier** : action explicite du backend ou d'un rôle autorisé ; jamais du modèle.
+## 3. Import dans Namesia
 
-## 4. Contrat de sortie
+1. Se connecter à /admin avec un compte autorisé.
+2. Sélectionner un fichier JSON ou coller son contenu.
+3. Prévisualiser le document et contrôler les textes et associations.
+4. Corriger le JSON en amont si nécessaire.
+5. Importer : l'API valide de nouveau le contrat côté serveur.
+6. La base crée une nouvelle version en brouillon.
+7. Après relecture de la prévisualisation, publier explicitement.
 
-- Le modèle retourne une fiche conforme à `schemas/fiche-prenom.schema.json`.
-- Les faits doivent être décomposés en affirmations atomiques, chacune associée à ses sources.
-- Une information inconnue reste inconnue.
-- Les sources doivent provenir du dossier de recherche fourni ; le modèle ne peut pas créer de nouvel identifiant de source.
-- Les associations symboliques doivent avoir un cadre explicite et le disclaimer canonique.
-- Les métadonnées d'exécution (coût, tokens, identifiant de run, fournisseur) sont ajoutées par le backend, pas inventées par le modèle.
-- Les statuts d'approbation et de publication sont exclusivement gérés côté serveur.
+L'import ne remplace jamais directement la version publiée. La page d'administration liste les fiches et leurs versions, ce qui permet de retrouver un brouillon après reconnexion, de le prévisualiser et de le publier. Dès la création, l'identité du prénom (slug, graphie et genre) est stable ; un changement d'identité ne passe pas par un simple import de contenu.
 
-## 5. Contrôles métier obligatoires
+## 4. Contrôles effectués par l'application
 
-### Références
-- Tous les `source_ids` pointent vers une source présente.
-- Toute affirmation marquée `etabli` ou `discute` possède au moins une source.
-- La source doit réellement étayer l'affirmation après revue.
-- Une source non consultée ou non vérifiée ne peut pas être qualifiée de vérifiée.
+Les contrôles automatiques portent sur :
+- la syntaxe JSON ;
+- la version du schéma ;
+- les propriétés autorisées ;
+- les types et longueurs des champs ;
+- le format du slug ;
+- les valeurs autorisées du genre ;
+- la taille maximale de l'import ;
+- l'autorisation administrateur ;
+- l'unicité et la numérotation des versions ;
+- les transitions de publication.
 
-### Statistiques
-- Les statistiques sont séparées du texte éditorial.
-- Chaque observation possède une période, un territoire, une unité et une source.
-- Les valeurs Insee respectent les limites de diffusion et l'arrondi publiés.
-- Les données anciennes sont accompagnées des avertissements de couverture applicables.
+Ces contrôles sont des contrôles de structure et de cohérence applicative. Ils ne constituent pas un contrôle factuel.
 
-### Symbolique
-- Pas de formulation causale (« ce prénom rend… », « garantit… »).
-- Pas de prédiction du caractère ou de l'avenir.
-- Pas de pseudo-diagnostic ni de compatibilité présentée comme objective.
-- Le cadre culturel ou éditorial est explicite.
+À l'import, les champs éditoriaux deviennent des colonnes SQL distinctes (`introduction`, `origin_text`, `history_text`, `usage_text`). Chaque association symbolique devient une ligne de `name_profile_associations`, liée à la version. Les filtres SQL peuvent ainsi cibler le genre, la graphie, les rubriques ou les catégories/valeurs symboliques sans extraire des propriétés d'un JSONB global.
 
-### Qualité de texte
-- Pas de remplissage destiné à atteindre une longueur.
-- Pas de répétition entre résumé, étymologie et histoire.
-- Pas de superlatifs ou de classements non sourcés.
-- Pas de citations longues de sources protégées.
-- Les variantes ne sont pas présentées comme synonymes sans justification.
+## 5. Publication
 
-## 6. Idempotence et reprise
+- La publication est une action humaine explicite.
+- Le backend vérifie le compte administrateur.
+- La fonction SQL n'accepte qu'une version existante en brouillon.
+- L'ancienne version publiée est archivée dans la même transaction.
+- Une seule version est publique par prénom.
+- Les dates et statuts sont définis par Namesia, jamais par le JSON.
 
-- Une génération est identifiée par une empreinte des entrées, du prompt, du modèle et du schéma.
-- Une relance identique ne doit pas créer plusieurs versions publiées.
-- Les échecs sont conservés avec leur rapport de validation.
-- Les reprises ciblent l'étape en échec lorsque c'est possible ; elles ne doivent pas écraser les candidats précédents.
-- Un changement de schéma déclenche une nouvelle validation ou une nouvelle génération selon la compatibilité.
+## 6. Sécurité
 
-## 7. Observabilité et coûts
+- La page d'administration n'est pas une frontière de sécurité.
+- Chaque route administrative vérifie le jeton Supabase et l'autorisation présente dans private.admin_users, dans le schéma PostgreSQL privé.
+- Les fonctions SQL vérifient également le rôle administrateur.
+- Aucune clé privilégiée Supabase n'est envoyée au navigateur.
+- L'auto-inscription publique n'est pas nécessaire : seuls les comptes Auth préalablement autorisés peuvent administrer le catalogue.
+- Les tables internes ne doivent pas être exposées à anon.
+- Les réponses contenant les brouillons et l'historique sont privées et non mises en cache.
 
-Enregistrer côté serveur :
-- identifiant de génération ;
-- horodatages et durée ;
-- fournisseur et identifiant exact du modèle ;
-- versions de prompt et schéma ;
-- empreinte du dossier de sources ;
-- tokens entrants/sortants et coût estimé lorsque disponibles ;
-- erreurs, tentatives et rapport de validation.
+## 7. Limites et évolutions
 
-Ne jamais journaliser de secrets ou de données sensibles inutiles.
+Ne pas ajouter de pipeline de génération, de journal de tokens, de coût fournisseur, de stockage de prompts ou de gestion de sources tant que Namesia n'exécute pas réellement ces opérations et qu'un besoin concret n'existe pas.
 
-## 8. Tests à prévoir
-
-- JSON invalide ou tronqué.
-- Champ inconnu / propriété supplémentaire.
-- Source inexistante ou hors dossier.
-- Affirmation établie sans source.
-- Étymologies concurrentes.
-- Prénom absent des statistiques Insee.
-- Effectif masqué ou arrondi.
-- Sortie symbolique sans cadre ou disclaimer.
-- Prompt injection présente dans une page source.
-- Doublon de génération et reprise après panne.
-- Tentative de publication via un champ fourni par le modèle.
-
-## 9. Critère de sortie du pipeline
-
-Un candidat peut passer en revue humaine uniquement si les validations structurelles et les contrôles automatiques bloquants sont réussis. Il ne devient public qu'après validation humaine et transition explicite du backend.
+Si une génération automatisée est intégrée plus tard, elle devra produire le même contrat JSON et rester séparée de l'import et de la publication.

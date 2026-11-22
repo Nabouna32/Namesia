@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { RecherchePrenoms } from "@/components/recherche-prenoms";
 import { getPrenoms } from "@/lib/prenoms";
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Explorer les prénoms", description: "Parcourez le catalogue Namesia et découvrez l'histoire des prénoms." };
 export default async function Catalogue() {
   const prenoms = await getPrenoms();
