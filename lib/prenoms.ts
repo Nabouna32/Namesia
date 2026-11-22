@@ -1,4 +1,4 @@
-import { parseContenuFiche, type ContenuFichePrenom } from "@/lib/fiche-prenom";
+import { parseContenuFiche, type AssociationSymbolique, type ContenuFichePrenom } from "@/lib/fiche-prenom";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export type Prenom = {
@@ -9,19 +9,28 @@ export type Prenom = {
   genre: string;
 } & ContenuFichePrenom;
 
+type JoinedProfile = {
+  introduction: string;
+  origin_text: string | null;
+  history_text: string | null;
+  usage_text: string | null;
+  name_profile_associations: AssociationSymbolique[];
+};
+
 type JoinedName = {
   id: string;
   slug: string;
   display_name: string;
   gender: string;
-  name_profiles: {
-    content: unknown;
-  }[];
+  name_profiles: JoinedProfile[];
 };
 
 const selection = `
   id, slug, display_name, gender,
-  name_profiles!inner ( content )
+  name_profiles!inner (
+    introduction, origin_text, history_text, usage_text,
+    name_profile_associations ( category, value, context_note, position )
+  )
 `;
 
 function convertir(row: JoinedName): Prenom {
@@ -31,12 +40,21 @@ function convertir(row: JoinedName): Prenom {
   }
 
   const [profile] = profiles;
-
   const genres: Record<string, string> = {
     feminin: "Féminin",
     masculin: "Masculin",
     mixte: "Mixte",
     inconnu: "Genre non renseigné"
+  };
+
+  const content = {
+    introduction: profile.introduction,
+    ...(profile.origin_text ? { origin: profile.origin_text } : {}),
+    ...(profile.history_text ? { history: profile.history_text } : {}),
+    ...(profile.usage_text ? { usage: profile.usage_text } : {}),
+    symbolic_associations: [...(profile.name_profile_associations ?? [])]
+      .sort((a, b) => a.position - b.position)
+      .map(({ category, value, context_note }) => ({ category, value, context_note }))
   };
 
   return {
@@ -45,7 +63,7 @@ function convertir(row: JoinedName): Prenom {
     nom: row.display_name,
     lettre: Array.from(row.display_name.trim())[0]?.toLocaleUpperCase("fr") ?? "",
     genre: genres[row.gender] ?? "Genre non renseigné",
-    ...parseContenuFiche(profile.content)
+    ...parseContenuFiche(content)
   };
 }
 
