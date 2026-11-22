@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 1.2
+- **Version :** 1.3
 - **Mis à jour :** 2026-11-22
 
 ## 1. Positionnement
@@ -37,7 +37,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 
 - Catalogue de prénoms utilisé en France.
 - Page dédiée par prénom avec URL stable.
-- Recherche simple.
+- Recherche de prénoms avec prise en compte des accents et des variantes de casse.
 - Fiches de découverte avec introduction, origine, histoire, usages et associations symboliques facultatives.
 - Génération hors du site, par API ou conversation, puis import d'un JSON.
 - Administration privée : authentification, import, validation structurelle, création de brouillon, prévisualisation et publication explicite.
@@ -70,7 +70,8 @@ Les statuts et numéros de version sont attribués par le backend ; ils ne sont 
 Une page doit répondre à une intention réelle et apporter une information utile. Éviter la génération massive de pages quasi identiques ou de paragraphes génériques artificiellement allongés.
 
 Chaque fiche publiée doit :
-- proposer un contenu lisible et suffisamment spécifique ;
+- proposer un contenu lisible, suffisamment spécifique et organisé en rubriques clairement identifiables ;
+- offrir un sommaire permettant d'accéder directement aux rubriques présentes ;
 - éviter les affirmations catégoriques non justifiées ;
 - ne pas afficher de références fictives ni de statuts de vérification ;
 - afficher la mention relative à la génération par IA ;
@@ -88,6 +89,7 @@ La direction visuelle retenue est **arc-en-ciel, chaleureuse et compacte**.
 - Textes courants de 14 à 16 px sur ordinateur ; informations secondaires utiles d'au moins 12 px.
 - Navigation en unités relatives et mise à l'échelle fluide.
 - Pas de numérotation décorative sans fonction.
+- Donner aux fiches une hiérarchie éditoriale distincte de celle du catalogue : introduction mise en valeur, rubriques aérées, sommaire et repères de lecture ;
 - Réévaluer le rendu réel sur mobile et sur les pages de fiches.
 
 ## 8. Indicateurs
