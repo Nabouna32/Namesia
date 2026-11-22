@@ -4,7 +4,14 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { Prenom } from "@/lib/prenoms";
 
-type Props = { prenoms: Prenom[]; compact?: boolean };
+type Props = {
+  prenoms: Prenom[];
+  compact?: boolean;
+  synchroniserUrl?: boolean;
+  initialRecherche?: string;
+  initialGenre?: string | null;
+  initialLettre?: string | null;
+};
 
 function normaliserRecherche(value: string): string {
   return value.trim().normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("fr");
@@ -19,10 +26,17 @@ function comparerPertinence(a: Prenom, b: Prenom, terme: string): number {
   return rangA - rangB || a.nom.localeCompare(b.nom, "fr");
 }
 
-export function RecherchePrenoms({ prenoms, compact = false }: Props) {
-  const [recherche, setRecherche] = useState("");
-  const [genreActif, setGenreActif] = useState<string | null>(null);
-  const [lettreActive, setLettreActive] = useState<string | null>(null);
+export function RecherchePrenoms({
+  prenoms,
+  compact = false,
+  synchroniserUrl = false,
+  initialRecherche = "",
+  initialGenre = null,
+  initialLettre = null
+}: Props) {
+  const [recherche, setRecherche] = useState(initialRecherche);
+  const [genreActif, setGenreActif] = useState(initialGenre);
+  const [lettreActive, setLettreActive] = useState(initialLettre);
 
   const genres = useMemo(
     () => [...new Set(prenoms.map((prenom) => prenom.genre))].sort((a, b) => a.localeCompare(b, "fr")),
@@ -47,10 +61,48 @@ export function RecherchePrenoms({ prenoms, compact = false }: Props) {
 
   const filtresActifs = Boolean(recherche.trim() || genreActif || lettreActive);
 
+  function mettreAJourUrl(
+    rechercheSuivante: string,
+    genreSuivant: string | null,
+    lettreSuivante: string | null
+  ) {
+    if (!synchroniserUrl) return;
+
+    const url = new URL(window.location.href);
+    const parametres: [string, string][] = [
+      ["q", rechercheSuivante.trim()],
+      ["genre", genreSuivant ?? ""],
+      ["lettre", lettreSuivante ?? ""]
+    ];
+
+    for (const [cle, valeur] of parametres) {
+      if (valeur) url.searchParams.set(cle, valeur);
+      else url.searchParams.delete(cle);
+    }
+
+    window.history.replaceState(null, "", url.toString());
+  }
+
+  function changerRecherche(value: string) {
+    setRecherche(value);
+    mettreAJourUrl(value, genreActif, lettreActive);
+  }
+
+  function changerGenre(value: string | null) {
+    setGenreActif(value);
+    mettreAJourUrl(recherche, value, lettreActive);
+  }
+
+  function changerLettre(value: string | null) {
+    setLettreActive(value);
+    mettreAJourUrl(recherche, genreActif, value);
+  }
+
   function effacerFiltres() {
     setRecherche("");
     setGenreActif(null);
     setLettreActive(null);
+    mettreAJourUrl("", null, null);
   }
 
   return (
@@ -63,10 +115,10 @@ export function RecherchePrenoms({ prenoms, compact = false }: Props) {
           type="search"
           placeholder="Quel prénom cherchez-vous ?"
           value={recherche}
-          onChange={(event) => setRecherche(event.target.value)}
+          onChange={(event) => changerRecherche(event.target.value)}
         />
         {recherche && (
-          <button className="clear-search" type="button" onClick={() => setRecherche("")}>
+          <button className="clear-search" type="button" onClick={() => changerRecherche("")}>
             Effacer
           </button>
         )}
@@ -82,7 +134,7 @@ export function RecherchePrenoms({ prenoms, compact = false }: Props) {
                   className="filter-chip"
                   type="button"
                   aria-pressed={genreActif === null}
-                  onClick={() => setGenreActif(null)}
+                  onClick={() => changerGenre(null)}
                 >
                   Tous
                 </button>
@@ -92,7 +144,7 @@ export function RecherchePrenoms({ prenoms, compact = false }: Props) {
                     type="button"
                     key={genre}
                     aria-pressed={genreActif === genre}
-                    onClick={() => setGenreActif(genre)}
+                    onClick={() => changerGenre(genre)}
                   >
                     {genre}
                   </button>
@@ -109,7 +161,7 @@ export function RecherchePrenoms({ prenoms, compact = false }: Props) {
                   className="filter-chip"
                   type="button"
                   aria-pressed={lettreActive === null}
-                  onClick={() => setLettreActive(null)}
+                  onClick={() => changerLettre(null)}
                 >
                   Toutes
                 </button>
@@ -119,7 +171,7 @@ export function RecherchePrenoms({ prenoms, compact = false }: Props) {
                     type="button"
                     key={lettre}
                     aria-pressed={lettreActive === lettre}
-                    onClick={() => setLettreActive(lettre)}
+                    onClick={() => changerLettre(lettre)}
                   >
                     {lettre.toLocaleUpperCase("fr")}
                   </button>

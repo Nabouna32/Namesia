@@ -23,8 +23,33 @@ export const metadata: Metadata = {
   }
 };
 
-export default async function Catalogue() {
-  const prenoms = await getPrenoms();
+type Props = {
+  searchParams: Promise<{
+    q?: string | string[];
+    genre?: string | string[];
+    lettre?: string | string[];
+  }>;
+};
+
+function premierParametre(value: string | string[] | undefined): string {
+  return Array.isArray(value) ? value[0] ?? "" : value ?? "";
+}
+
+function normaliserFiltre(value: string): string {
+  return value.trim().normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("fr");
+}
+
+export default async function Catalogue({ searchParams }: Props) {
+  const [parametres, prenoms] = await Promise.all([searchParams, getPrenoms()]);
+  const rechercheInitiale = premierParametre(parametres.q);
+  const genreDemande = premierParametre(parametres.genre);
+  const lettreDemandee = normaliserFiltre(premierParametre(parametres.lettre));
+
+  const genresDisponibles = new Set(prenoms.map((prenom) => prenom.genre));
+  const lettresDisponibles = new Set(prenoms.map((prenom) => normaliserFiltre(prenom.lettre)));
+  const genreInitial = genresDisponibles.has(genreDemande) ? genreDemande : null;
+  const lettreInitiale = lettresDisponibles.has(lettreDemandee) ? lettreDemandee : null;
+
   const catalogueData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -54,7 +79,13 @@ export default async function Catalogue() {
         <span className="eyebrow">Le catalogue</span>
         <h1>Trouvez le prénom<br /><em>qui vous parle.</em></h1>
         <p className="page-intro">Des prénoms d'ici et d'ailleurs, leurs origines, leurs histoires et les traditions qui les accompagnent.</p>
-        <RecherchePrenoms prenoms={prenoms} />
+        <RecherchePrenoms
+          prenoms={prenoms}
+          synchroniserUrl
+          initialRecherche={rechercheInitiale}
+          initialGenre={genreInitial}
+          initialLettre={lettreInitiale}
+        />
       </div>
     </main>
   );
