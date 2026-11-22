@@ -103,11 +103,16 @@ Les tables documentaires historiques (sources, claims, claim_sources) et l'ancie
 | Microservices / orchestrateur | Écartés | Complexité sans besoin démontré |
 | Clé privilégiée dans le navigateur | Interdite | Risque de compromission des données |
 
-## 8. État du schéma
+## 8. Schéma en production
 
-Le schéma relationnel cible est préparé en production par la migration additive `20261122001208_preparer_modele_relationnel.sql`. Les six fiches et leurs six associations sont reprises sans divergence lors du contrôle.
+Le stockage métier est relationnel et repose sur trois tables :
+- `names` porte l'identité stable du prénom ;
+- `name_profiles` porte les versions éditoriales et leurs rubriques textuelles ;
+- `name_profile_associations` porte les associations symboliques répétables.
 
-La production utilise encore l'ancienne application tant que la PR #5 n'est pas déployée. Les tables historiques et la colonne JSONB sont donc conservées temporairement pour sa compatibilité. La migration `20261122140000_finaliser_nettoyage_modele.sql` sera appliquée après le déploiement et la vérification de l'application relationnelle ; elle supprimera définitivement les structures transitoires.
+Le JSON est uniquement un contrat d'échange à l'import. L'API le valide, puis une fonction SQL crée atomiquement une version brouillon et ses associations. La publication reste une opération distincte et explicite.
+
+Les anciennes tables documentaires, la colonne JSONB historique et les colonnes redondantes ont été supprimées. Le schéma exposé conserve RLS et des privilèges SQL minimaux : lecture publique des seules fiches publiées, opérations d'écriture réservées aux administrateurs autorisés.
 ## 9. Stack
 
 - Next.js App Router, React et TypeScript.

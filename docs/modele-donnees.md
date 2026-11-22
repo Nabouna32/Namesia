@@ -112,11 +112,11 @@ Les éléments suivants ne sont pas modélisés dans la V1 :
 
 Ils ne seront ajoutés que lorsqu'un besoin produit concret et un processus réellement appliqué le justifieront. Ne pas créer de tables anticipant un workflow inexistant.
 
-## 6. État du schéma en production
+## 6. Schéma en production
 
-Le schéma relationnel cible est préparé par la migration additive `20261122001208_preparer_modele_relationnel.sql`. Les six fiches publiées possèdent leurs rubriques relationnelles et les six associations symboliques ont été reprises sans écart.
+Le schéma de production correspond au modèle relationnel décrit dans ce document. Les tables `sources`, `claims`, `claim_sources`, `symbolic_associations` et `name_profile_versions` ainsi que la colonne JSONB historique ont été supprimées. Les colonnes redondantes de `names` (`first_letter` et `is_published`) n'existent plus : l'initiale est calculée depuis le nom affiché et la publication appartient à une version de fiche.
 
-L'ancienne colonne JSONB et les tables historiques sont encore présentes uniquement pour maintenir la compatibilité avec l'application actuellement déployée. Elles ne font pas partie du modèle cible et seront supprimées par `20261122140000_finaliser_nettoyage_modele.sql` après le déploiement et la vérification de l'application relationnelle.
+Le contrat JSON reste exclusivement un format d'entrée. La persistance se fait dans les colonnes de `name_profiles` et les lignes de `name_profile_associations`, sans document JSON complet stocké en base.
 ## 7. Administration
 
 La table privée private.admin_users associe un compte Supabase Auth à l'autorisation d'administrer Namesia. Elle ne contient pas de profil utilisateur public ni de rôle générique.

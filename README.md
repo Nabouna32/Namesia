@@ -31,9 +31,9 @@ La clé publishable peut être exposée au navigateur. La sécurité repose sur 
 
 ### Schéma de production
 
-Le schéma relationnel cible est préparé en production. La migration additive `20261122001208_preparer_modele_relationnel.sql` a repris les données éditoriales et les associations tout en conservant temporairement l'ancien modèle pour la compatibilité avec l'application actuellement déployée.
+Le stockage est relationnel et repose sur trois tables métier : `names` pour l'identité stable, `name_profiles` pour les versions éditoriales et `name_profile_associations` pour les associations symboliques répétables. Le JSON n'est qu'un format d'import : ses champs sont validés puis répartis dans les colonnes et lignes relationnelles au cours d'une transaction SQL.
 
-La migration destructive `20261122140000_finaliser_nettoyage_modele.sql` sera appliquée après le déploiement et la vérification de l'application relationnelle. Elle supprime les anciennes tables documentaires, l'ancien stockage JSONB et les colonnes redondantes. Une sauvegarde reste la pratique recommandée avant toute suppression définitive de données.
+Les anciennes tables documentaires, l'ancien stockage JSONB et les colonnes redondantes ont été supprimés. Les règles RLS et les privilèges SQL limitent la lecture publique aux fiches publiées et réservent les écritures aux administrateurs autorisés.
 ### Administration
 
 L'administration est disponible sur `/admin`. L'accès utilise Supabase Auth par lien e-mail et la liste privée `private.admin_users`. Le compte propriétaire initial est déjà autorisé en production. L'auto-inscription reste désactivée.
