@@ -8,9 +8,7 @@
 
 Le besoin réel est de stocker un catalogue de prénoms et des versions de fiches éditoriales importées en JSON.
 
-Le modèle reste relationnel pour les identités et les versions, et utilise JSONB pour le document éditorial complet. Les rubriques ne sont pas des entités indépendantes et ne justifient pas une table chacune.
-
-Le JSON est le contrat d'import et le contenu canonique d'une version. Il est validé par le schéma versionné avant son enregistrement.
+Le modèle de stockage est relationnel. Le JSON est uniquement le contrat d'échange avec le générateur et l'API d'import : il est validé, puis décomposé en colonnes et lignes dans une transaction SQL unique. Aucune colonne ne conserve le document complet.
 
 ## 2. Tables métier
 
@@ -37,8 +35,11 @@ Une ligne représente une version complète d'une fiche.
 | id | UUID, clé primaire |
 | name_id | Référence à names.id |
 | version | Numéro croissant par prénom |
-| schema_version | Version du contrat JSON |
-| content | Document éditorial JSONB |
+| schema_version | Version du contrat JSON reçu à l'import |
+| introduction | Présentation courte, colonne texte |
+| origin_text | Origine, colonne texte nullable |
+| history_text | Histoire, colonne texte nullable |
+| usage_text | Usages et variantes, colonne texte nullable |
 | status | brouillon, publie ou archive |
 | created_at | Date d'import |
 | published_at | Date de publication, nulle tant que la version n'a jamais été publiée |
@@ -51,6 +52,21 @@ Contraintes :
 - au plus une version publiée par prénom ;
 - une version publiée n'est jamais écrasée.
 
+### name_profile_associations
+
+Une ligne par association symbolique d'une version de fiche. Cette séparation permet de filtrer par catégorie ou valeur sans parcourir un document JSON.
+
+| Colonne | Rôle |
+|---|---|
+| id | UUID, clé primaire |
+| profile_id | Référence à name_profiles.id |
+| position | Ordre éditorial dans la fiche |
+| category | Catégorie filtrable |
+| value | Valeur ou association filtrable |
+| context_note | Explication éditoriale |
+
+Les rubriques textuelles restent des colonnes de `name_profiles` : une table supplémentaire par paragraphe n'apporterait rien. Les associations ont leur table car elles sont répétables, structurées et potentiellement filtrables.
+
 ### private.admin_users
 
 Liste d'autorisation des comptes Supabase Auth. La table réside dans le schéma PostgreSQL privé, qui n'est pas exposé par la Data API.
@@ -62,7 +78,7 @@ RLS est activé. Un utilisateur authentifié peut uniquement lire sa propre auto
 
 ## 3. Contrat JSON
 
-Le contrat canonique est [fiche-prenom.schema.json](../schemas/fiche-prenom.schema.json).
+Le contrat canonique d'entrée est [fiche-prenom.schema.json](../schemas/fiche-prenom.schema.json). L'API le valide avant d'appeler une fonction SQL transactionnelle qui répartit le contenu dans les colonnes `name_profiles` et les lignes `name_profile_associations`.
 
 Structure :
 - schema_version : version du schéma ;
@@ -89,7 +105,7 @@ Les éléments suivants ne sont pas modélisés dans la V1 :
 - sources documentaires et liens de preuve ;
 - affirmations atomiques et statuts de preuve ;
 - statistiques structurées ;
-- tables séparées pour les associations symboliques ;
+- table dédiée aux associations symboliques (elles sont structurées et filtrables) ;
 - formes linguistiques et marchés multilingues ;
 - exécutions de génération et coûts par fournisseur.
 
@@ -101,9 +117,9 @@ Le projet Supabase contient encore l'ancien modèle en parallèle du nouveau :
 - ancien : name_profile_versions, sources, claims, claim_sources et symbolic_associations ;
 - cible : names, name_profiles et private.admin_users.
 
-L'audit de la base au 22 novembre 2026 constate six prénoms, six anciennes versions, six versions JSONB, six associations symboliques historiques et six associations reprises dans JSONB. Les six prénoms possèdent une version JSONB publiée.
+L'audit de la base au 22 novembre 2026 constate six prénoms, six anciennes versions, six versions JSONB, six associations symboliques historiques et six associations reprises dans JSONB. Les six prénoms possèdent une version éditoriale importée au format JSON, puis stockée dans le modèle relationnel cible.
 
-Les sources et affirmations historiques ne sont pas reprises dans le nouveau modèle, car Namesia ne garantit plus de vérification documentaire. L'audit constate actuellement 2 sources, 6 affirmations et 6 liaisons claim-source ; ces éléments seront supprimés volontairement, sans migration vers le JSON éditorial. Les 6 associations symboliques, elles, sont reprises dans les documents JSONB. La migration 20261122130000_simplifier_modele_catalogue.sql vérifie la reprise des champs et associations avant de supprimer les anciennes tables et colonnes. Une sauvegarde préalable est obligatoire.
+Les sources et affirmations historiques ne sont pas reprises dans le nouveau modèle, car Namesia ne garantit plus de vérification documentaire. L'audit constate actuellement 2 sources, 6 affirmations et 6 liaisons claim-source ; ces éléments seront supprimés volontairement, sans migration vers le JSON éditorial. Les 6 associations symboliques, elles, sont reprises dans la table relationnelle `name_profile_associations`. La migration 20261122130000_simplifier_modele_catalogue.sql vérifie la reprise des champs et associations avant de supprimer les anciennes tables et colonnes. Une sauvegarde préalable est obligatoire.
 
 Les migrations déjà appliquées dans Supabase sont versionnées dans le dépôt avec leurs versions exactes : 20261121234038, 20261121234130, 20261121234347 et 20261121234359. La migration de simplification finale reste en attente de validation applicative. Elle ne doit être appliquée qu'après fusion et déploiement de la nouvelle application, afin que le code en production n'utilise plus les anciennes tables. Une sauvegarde Supabase et une autorisation explicite sont obligatoires avant son application.
 
