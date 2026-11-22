@@ -1,20 +1,12 @@
 # Standards techniques et règles de maintenabilité — Namesia
 
 - **Statut :** règle canonique
-- **Version :** 1.0
+- **Version :** 1.1
 - **Mis à jour :** 2026-11-22
 - **Portée :** application web, styles, composants, données et outillage
 
 Ce document définit le niveau de qualité attendu pour les évolutions techniques de Namesia. Il complète [AGENTS.md](../AGENTS.md), qui définit la méthode de travail et le challenge obligatoire.
 
-## 8. Environnement d'exécution et dépendances
-
-- La version de référence de Node.js est définie une seule fois dans `.nvmrc` (26.13.1).
-- `package.json` et `package-lock.json` expriment la contrainte compatible `>=26.13.1 <27` ; `.npmrc` active `engine-strict=true` pour refuser un runtime incompatible dès l'installation.
-- GitHub Actions lit directement `.nvmrc` avec `actions/setup-node` ; elle vérifie ensuite que la version réellement installée correspond exactement au fichier.
-- Les développeurs utilisent `npm ci` pour installer l'arbre verrouillé, pas `npm install` pour les installations reproductibles.
-- Toute montée de version Node doit modifier `.nvmrc` puis être validée par la CI ; ne pas dupliquer le numéro de version dans les workflows.
-- Les actions GitHub officielles sont maintenues sur leurs versions majeures stables actuelles ; leur mise à jour ne doit pas changer la politique de déploiement Vercel.
 
 ## 7. Principe directeur
 
@@ -163,3 +155,15 @@ La dette technique est suivie avec honnêteté. Une dette acceptée doit être v
 ## 9. Dérogations
 
 Une dérogation est acceptable si elle est plus simple, plus sûre ou mieux adaptée au besoin réel. Elle doit être localisée et justifiée dans le code ou la PR : contrainte, alternative écartée, coût et condition de réexamen. Une dérogation temporaire doit avoir un critère de sortie. L'absence de temps ne transforme pas une rustine en solution durable.
+
+
+## 10. Environnement d'exécution et dépendances
+
+- La version de référence de Node.js est définie une seule fois dans `.nvmrc` (24.22.3 LTS), version compatible avec le runtime Node.js 24.x configuré dans Vercel.
+- `package.json` et `package-lock.json` expriment la contrainte compatible `>=24.22.3 <25` ; `.npmrc` active `engine-strict=true` pour refuser un runtime incompatible dès l'installation.
+- Les types `@types/node` suivent la branche 24 et sa dépendance `undici-types`, afin de ne pas exposer des API de types d'une version Node plus récente que le runtime.
+- Le gestionnaire est verrouillé sur npm 11.19.1, livré avec Node.js 24.22.3.
+- GitHub Actions lit directement `.nvmrc` avec `actions/setup-node` ; elle vérifie ensuite que la version réellement installée correspond exactement au fichier.
+- Les développeurs utilisent `npm ci` pour installer l'arbre verrouillé, pas `npm install` pour les installations reproductibles.
+- Toute montée de version Node doit modifier `.nvmrc`, la contrainte de compatibilité, les types Node et le runtime Vercel dans la même PR ; la CI doit valider l'ensemble.
+- Les actions GitHub officielles sont maintenues sur leurs versions majeures stables actuelles ; leur mise à jour ne doit pas changer la politique de déploiement Vercel.
