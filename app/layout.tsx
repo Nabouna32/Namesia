@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: { default: "Namesia — Le sens derrière chaque prénom", template: "%s · Namesia" },
   description: "Explorez les origines, les histoires et les traditions des prénoms avec Namesia.",
   applicationName: "Namesia",
-  twitter: { card: "summary_large_image" },
+  twitter: { card: "summary_large_image", images: ["/opengraph-image"] },
   openGraph: {
     type: "website",
     locale: "fr_FR",
