@@ -107,7 +107,7 @@ export default async function FichePrenom({ params }: Props) {
               <ul>
                 {prenom.origin && <li><a href="#origine">Origine</a></li>}
                 {prenom.history && <li><a href="#histoire">Histoire</a></li>}
-                {prenom.usage && <li><a href="#usages">Variantes & usages</a></li>}
+                {prenom.usage && <li><a href="#usages">Variantes & usages</a></li>}\n                {prenom.references.length > 0 && <li><a href="#references">Références</a></li>}
                 {prenom.symbolic_associations.length > 0 && <li><a href="#symbolique">Symbolique</a></li>}
               </ul>
             </nav>
@@ -174,7 +174,7 @@ export default async function FichePrenom({ params }: Props) {
             </aside>
           </div>
 
-          {autresPrenoms.length > 0 && (
+          {prenom.references.length > 0 && (\n            <section className="profile-section" id="references">\n              <div className="profile-section-heading"><span className="profile-section-kicker">Pour aller plus loin</span><h2>Références consultées</h2></div>\n              <p className="profile-copy">Ces ressources ont été consultées lors de la rédaction. Leur présence ne signifie pas que chaque affirmation a été vérifiée indépendamment.</p>\n              <ul className="reference-list">{prenom.references.map((reference, index) => <li key={`${reference.url}-${index}`}><a href={reference.url} target="_blank" rel="noopener noreferrer">{reference.title}</a><span>{reference.publisher} · Rubrique : {reference.section} · Consulté le {new Date(`${reference.consulted_at}T00:00:00`).toLocaleDateString("fr-FR")}</span></li>)}</ul>\n            </section>\n          )}\n\n          {autresPrenoms.length > 0 && (
             <section className="profile-discovery" aria-labelledby="profile-discovery-title">
               <div className="profile-section-heading">
                 <span className="profile-section-kicker">Pour prolonger la découverte</span>
