@@ -39,7 +39,7 @@ export default async function FichePrenom({ params }: Props) {
               <span className="eyebrow">Découvrir un prénom</span>
               <h1>{prenom.nom}<span>.</span></h1>
               <p className="profile-lead">{prenom.introduction}</p>
-              <div className="profile-tags" aria-label="Informations sur le prénom">
+              <div className="profile-tags">
                 <span className="profile-tag">{prenom.genre}</span>
                 <span className="profile-tag">Lettre {prenom.lettre}</span>
               </div>
