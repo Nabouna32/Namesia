@@ -22,9 +22,9 @@ Une référence signifie uniquement qu'une ressource a été consultée. Elle ne
 ## Conséquences
 
 - Le stockage reste relationnel ; aucun document JSON complet n'est ajouté en base.
-- Les références suivent l'historique des versions et la publication explicite.
+- Les références suivent l'historique des versions et la publication explicite. Une correction éditoriale crée une nouvelle version : la version publiée précédente est conservée en archive, avec ses propres associations et références.
 - Les anciennes fiches sans références restent valides et affichent simplement aucune référence.
-- Les six fiches initiales sont reprises avec des références réellement ouvertes et des formulations plus prudentes.
+- Les six fiches initiales sont reprises avec des références réellement ouvertes et des formulations plus prudentes. La reprise éditoriale est portée par une nouvelle version publiée ; le contenu initial est conservé en archive.
 - Il n'existe toujours pas de workflow de claims, de validation scientifique ou de collecte documentaire automatisée.
 
 ## Réexamen
