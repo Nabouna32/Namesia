@@ -33,7 +33,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Génération réalisée à l'extérieur de Namesia, par API ou conversation.
 - La sortie attendue est un JSON strict conforme à schemas/fiche-prenom.schema.json.
 - Le modèle ne choisit jamais le statut de publication.
-- Les références, statuts de preuve et métadonnées de vérification ne doivent pas être inventés.
+- Aucun champ de source, référence, preuve ou vérification n'appartient au contrat.
 
 ### Administration
 - Connexion via Supabase Auth par lien e-mail.
@@ -83,7 +83,7 @@ Le modèle cible comporte trois tables métier :
 
 L'autorisation administrateur est stockée dans private.admin_users, un schéma PostgreSQL non exposé par la Data API. Les détails et contraintes sont décrits dans [Modèle de données](modele-donnees.md).
 
-Les tables documentaires historiques (sources, claims, claim_sources) et l'ancienne table de versions ne font plus partie de la cible. Les associations symboliques sont conservées dans une table relationnelle dédiée, car elles sont répétables et filtrables.
+Aucune table de sources, références ou preuves n'est nécessaire. Les associations symboliques sont conservées dans une table relationnelle dédiée, car elles sont répétables et filtrables.
 
 ## 5. Publication et historique
 
@@ -112,7 +112,7 @@ Les tables documentaires historiques (sources, claims, claim_sources) et l'ancie
 |---|---|---|
 | Génération IA intégrée au site | Écartée | La génération a lieu en amont ; l'import JSON suffit |
 | Une table par rubrique de texte | Écartée | Les rubriques ne sont pas exploitées indépendamment |
-| Sources et affirmations atomiques | Écartées actuellement | Aucun processus de vérification documentaire n'est assuré |
+| Sources et références éditoriales | Écartées | Les fiches sont générées en amont ; Namesia importe le JSON sans workflow documentaire |
 | Table dédiée aux associations symboliques | Retenue | Données répétables et filtrables, liées à une version |
 | Historique de versions | Conservé | Permet de remplacer et restaurer un contenu sans écraser l'historique |
 | Microservices / orchestrateur | Écartés | Complexité sans besoin démontré |
@@ -127,7 +127,7 @@ Le stockage métier est relationnel et repose sur trois tables :
 
 Le JSON est uniquement un contrat d'échange à l'import. L'API le valide, puis une fonction SQL crée atomiquement une version brouillon et ses associations. La publication reste une opération distincte et explicite.
 
-Les anciennes tables documentaires, la colonne JSONB historique et les colonnes redondantes ont été supprimées. Le schéma exposé conserve RLS et des privilèges SQL minimaux : lecture publique des seules fiches publiées, opérations d'écriture réservées aux administrateurs autorisés.
+Les anciennes tables documentaires, l'ancienne colonne JSONB et les colonnes redondantes ont été supprimées. Le schéma exposé conserve RLS et des privilèges SQL minimaux : lecture publique des seules fiches publiées, opérations d'écriture réservées aux administrateurs autorisés.
 ## 9. Stack
 
 - Next.js App Router, React et TypeScript.
