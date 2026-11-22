@@ -1,4 +1,4 @@
-export const FICHE_SCHEMA_VERSION = "2.0.0" as const;
+export const FICHE_SCHEMA_VERSION = "3.0.0" as const;
 
 export type GenrePrenom = "feminin" | "masculin" | "mixte" | "inconnu";
 
@@ -8,12 +8,12 @@ export type AssociationSymbolique = {
   context_note: string;
 };
 
-export type ContenuFichePrenom = {
+export type ReferenceFiche = { section: "origine" | "histoire" | "usages"; title: string; publisher: string; url: string; consulted_at: string };\n\nexport type ContenuFichePrenom = {
   introduction: string;
   origin?: string;
   history?: string;
   usage?: string;
-  symbolic_associations: AssociationSymbolique[];
+  symbolic_associations: AssociationSymbolique[];\n  references: ReferenceFiche[];
 };
 
 export type FichePrenomImport = {
@@ -81,7 +81,7 @@ export function parseFichePrenom(value: unknown): FichePrenomImport {
   }
 
   if (!estObjet(value.content)) throw new Error("content doit être un objet.");
-  verifierCles(value.content, ["introduction", "origin", "history", "usage", "symbolic_associations"], "content");
+  verifierCles(value.content, ["introduction", "origin", "history", "usage", "symbolic_associations", "references"], "content");
 
   const introduction = verifierTexte(value.content.introduction, "content.introduction", 600, true)!;
   const origin = verifierTexte(value.content.origin, "content.origin", 3000);
