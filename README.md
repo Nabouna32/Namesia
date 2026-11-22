@@ -36,10 +36,10 @@ Le projet Supabase possède temporairement les deux modèles de données. Les mi
 **Ne pas appliquer la migration de nettoyage avant que la nouvelle version de l'application soit déployée en production.** Le code actuellement en production peut encore lire l'ancien modèle.
 
 Après fusion autorisée de la PR et déploiement de la nouvelle version :
-1. Vérifier que le site public lit correctement les six fiches depuis name_profiles.
+1. Vérifier que le site public lit correctement les six fiches depuis les colonnes de name_profiles et les lignes de name_profile_associations.
 2. Relire puis appliquer la migration supabase/migrations/20261122130000_simplifier_modele_catalogue.sql.
 3. Vérifier le schéma, les privilèges, RLS et les six fiches publiées.
-4. Initialiser ensuite le premier administrateur selon la procédure ci-dessous.
+4. Initialiser le premier administrateur selon la procédure ci-dessous.
 
 Cette migration est destructive pour les anciennes tables documentaires et colonnes redondantes. Elle contrôle la reprise des contenus éditoriaux et des associations symboliques avant leur suppression. **Une sauvegarde ou un export SQL préalable de la base est obligatoire**, notamment des tables sources, claims, claim_sources, symbolic_associations et name_profile_versions. Ne pas appliquer la migration si cette sauvegarde n'est pas disponible.
 
@@ -49,9 +49,9 @@ L'administration est disponible sur /admin. La connexion se fait par lien e-mail
 
 Pour initialiser le premier compte (l'auto-inscription est désactivée) :
 
-1. Dans Supabase, ouvrir Authentication > Users et créer ou inviter manuellement le compte administrateur.
+1. Dans Supabase Dashboard, ouvrir Authentication > Users puis inviter l'adresse e-mail de l'administrateur. Le compte doit accepter l'invitation avant sa première connexion.
 2. Dans Authentication > URL Configuration, ajouter l'URL locale http://localhost:3000/admin aux Redirect URLs, puis l'URL de production lorsqu'elle sera connue.
-3. Dans SQL Editor, autoriser le compte dans la liste privée :
+3. Dans SQL Editor, autoriser le compte dans la liste privée avec son adresse e-mail :
 
 ```sql
 insert into private.admin_users (user_id)
@@ -61,7 +61,7 @@ where email = lower('adresse-administrateur@example.com')
 on conflict (user_id) do nothing;
 ```
 
-4. Remplacer l'adresse d'exemple par celle du compte créé.
+4. Remplacer l'adresse d'exemple par celle du compte invité. La requête ne crée pas de compte Auth : elle autorise un compte déjà existant.
 5. Ouvrir /admin, demander un lien de connexion et suivre le lien reçu.
 
 La table privée n'est pas exposée à la Data API. L'autorisation est vérifiée côté serveur et par les politiques RLS. Un compte Auth sans entrée dans cette liste n'a aucun droit d'administration.
@@ -70,7 +70,7 @@ L'import crée toujours un brouillon. La publication est une action distincte. U
 
 ### Contrat JSON
 
-Le contrat courant est schemas/fiche-prenom.schema.json, version 2.0.0. Il comprend :
+Le contrat courant est schemas/fiche-prenom.schema.json, version 2.0.0. Il est uniquement utilisé à l'import ; la base stocke les rubriques dans des colonnes SQL et les associations dans des lignes dédiées. Il comprend :
 
 - identity : slug, nom affiché et genre ;
 - content : introduction, origine, histoire, usages et associations symboliques facultatives.
