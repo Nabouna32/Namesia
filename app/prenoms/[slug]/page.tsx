@@ -22,6 +22,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: prenom.nom,
       description: prenom.introduction,
       url: `/prenoms/${prenom.slug}`
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: [`/prenoms/${prenom.slug}/opengraph-image`]
     }
   } : {};
 }
