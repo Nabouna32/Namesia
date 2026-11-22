@@ -73,7 +73,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: message }, { status: 400 });
   }
 
-  const { data, error } = await access.supabase.rpc("import_name_profile", {
+  const { data, error } = await access.supabase.rpc("import_name_profile_with_references", {
     p_slug: fiche.identity.slug,
     p_display_name: fiche.identity.display_name,
     p_gender: fiche.identity.gender,
