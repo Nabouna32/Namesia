@@ -56,7 +56,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Rendu serveur Next.js, dynamique pour ne pas dépendre de la disponibilité ou du schéma Supabase pendant le build.
 - Lecture des fiches publiées uniquement.\n- Suggestions contextuelles limitées à trois autres prénoms publiés du même genre, sans présenter cette catégorie comme une similarité étymologique ou culturelle.\n- Partage d'une fiche par l'API native du navigateur, avec copie du lien lorsque cette API n'est pas disponible.
 - Comparateur client de deux à trois fiches, alimenté par les seules fiches publiées et non indexé par les moteurs.
-- Images Open Graph générées à la demande depuis les fiches publiées ; aucune image ni donnée éditoriale supplémentaire n'est stockée.
+- Images Open Graph générées à la demande depuis les fiches publiées, dans le runtime Node.js pour conserver le client Supabase serveur ; aucune image ni donnée éditoriale supplémentaire n'est stockée.
 - Sitemap dynamique construit depuis les fiches publiées ; robots.txt excluant l'administration et les routes API.
 - Métadonnées canoniques fondées sur NEXT_PUBLIC_SITE_URL, sans inventer de date de mise à jour.
 - La génération des fichiers d'indexation ne modifie pas les contrôles d'accès ; le domaine Vercel par défaut reste protégé par SSO tant que sa configuration n'est pas changée.
