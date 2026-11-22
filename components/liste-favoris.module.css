@@ -29,7 +29,7 @@
   padding: 22px;
   border: 1px dashed var(--line);
   border-radius: 14px;
-  background: #fffaff;
+  background: var(--color-surface);
 }
 
 .empty p {
