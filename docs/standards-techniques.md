@@ -7,8 +7,7 @@
 
 Ce document définit le niveau de qualité attendu pour les évolutions techniques de Namesia. Il complète [AGENTS.md](../AGENTS.md), qui définit la méthode de travail et le challenge obligatoire.
 
-
-## 7. Principe directeur
+## 1. Principe directeur
 
 Construire une base simple, cohérente, modulaire et durable. Corriger la cause d'un problème plutôt que masquer son symptôme.
 
