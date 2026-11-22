@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 2.1
+- **Version :** 2.2
 - **Mis à jour :** 2026-11-22
 
 ## 1. Besoin réel
@@ -55,6 +55,8 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 ### Site public
 - Rendu serveur Next.js, dynamique pour ne pas dépendre de la disponibilité ou du schéma Supabase pendant le build.
 - Lecture des fiches publiées uniquement.
+- Sitemap dynamique construit depuis les fiches publiées ; robots.txt excluant l'administration et les routes API.
+- Métadonnées canoniques fondées sur NEXT_PUBLIC_SITE_URL, sans inventer de date de mise à jour.
 - Pas d'appel à un modèle IA lors de l'affichage.
 - Initiale calculée à partir du nom affiché ; elle n'est pas stockée.
 - Mention visible indiquant que le contenu est généré par IA et peut comporter des erreurs.
