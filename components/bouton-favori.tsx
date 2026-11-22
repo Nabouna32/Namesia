@@ -11,7 +11,7 @@ export function BoutonFavori({ slug, afficherErreur = true }: Props) {
 
   return (
     <div className={styles.container}>
-    <button
+      <button
       className={styles.button}
       type="button"
       aria-pressed={actif}
@@ -20,12 +20,12 @@ export function BoutonFavori({ slug, afficherErreur = true }: Props) {
     >
       <span aria-hidden="true">{actif ? "♥" : "♡"}</span>
       {pret ? actif ? "Retirer des favoris" : "Ajouter aux favoris" : "Chargement…"}
-    </button>
-    {erreur && afficherErreur && (
-      <p className={styles.error} role="alert">
-        Impossible d’enregistrer vos favoris. Vérifiez les paramètres de stockage de votre navigateur.
-      </p>
-    )}
+      </button>
+      {erreur && afficherErreur && (
+        <p className={styles.error} role="alert">
+          Le stockage des favoris est indisponible ou contient des données illisibles. Vérifiez les paramètres de votre navigateur.
+        </p>
+      )}
     </div>
   );
 }
