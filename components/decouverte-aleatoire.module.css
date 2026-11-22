@@ -1,0 +1,61 @@
+.discovery {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-top: 16px;
+}
+
+.button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 9px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  transition: border-color 0.18s, background-color 0.18s, transform 0.18s;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  background: #ffffff;
+}
+
+.button span {
+  color: var(--accent);
+}
+
+.copy {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.result {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+
+.result:hover {
+  color: var(--ink);
+  text-decoration-color: currentColor;
+}
+
+@media (max-width: 520px) {
+  .discovery {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

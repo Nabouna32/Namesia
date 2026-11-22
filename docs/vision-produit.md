@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 2.3
+- **Version :** 2.4
 - **Mis à jour :** 2026-11-22
 
 ## 1. Positionnement
@@ -38,6 +38,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 - Catalogue de prénoms utilisé en France.
 - Page dédiée par prénom avec URL stable.
 - Recherche de prénoms avec prise en compte des accents et des variantes de casse ; classement des résultats par pertinence (correspondance exacte, puis préfixe, puis occurrence), avec filtres combinables par genre et initiale.
+- Découverte aléatoire d'un prénom publié depuis l'accueil, sans répétition immédiate tant qu'un autre choix est disponible.
 - Fiches de découverte avec introduction, origine, histoire, usages et associations symboliques facultatives ; liens vers d'autres prénoms publiés de même genre et partage natif de la fiche.
 - Comparaison partageable de deux ou trois fiches sur leurs informations éditoriales publiées, via l'URL de la sélection.
 - Aperçus de partage visuels avec une carte dédiée à chaque fiche.
