@@ -18,7 +18,7 @@ export function BoutonFavori({ slug }: Props) {
       onClick={() => basculer(slug)}
     >
       <span aria-hidden="true">{actif ? "♥" : "♡"}</span>
-      {pret ? actif ? "Dans vos favoris" : "Ajouter aux favoris" : "Chargement…"}
+      {pret ? actif ? "Retirer des favoris" : "Ajouter aux favoris" : "Chargement…"}
     </button>
   );
 }
