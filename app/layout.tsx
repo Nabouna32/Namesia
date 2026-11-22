@@ -19,7 +19,7 @@ const siteWebData = {
 export const metadata: Metadata = {
   metadataBase: siteUrl,
   title: { default: siteTitle, template: "%s · Namesia" },
-  description: "Explorez les origines, les histoires et les traditions des prénoms avec Namesia.",
+  description: siteDescription,
   applicationName: "Namesia",
   twitter: { card: "summary_large_image", images: ["/opengraph-image"] },
   openGraph: {
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     siteName: "Namesia",
     title: siteTitle,
-    description: "Explorez les origines, les histoires et les traditions des prénoms avec Namesia.",
+    description: siteDescription,
     url: "/"
   }
 };
