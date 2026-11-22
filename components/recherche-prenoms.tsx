@@ -3,11 +3,15 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { Prenom } from "@/lib/prenoms";
 type Props = { prenoms: Prenom[]; compact?: boolean };
+
+function normaliserRecherche(value: string): string {
+  return value.trim().normalize("NFD").replace(/\\p{Diacritic}/gu, "").toLocaleLowerCase("fr");
+}
 export function RecherchePrenoms({ prenoms, compact = false }: Props) {
   const [recherche, setRecherche] = useState("");
   const resultats = useMemo(() => {
-    const terme = recherche.trim().toLocaleLowerCase("fr");
-    return terme ? prenoms.filter((prenom) => prenom.nom.toLocaleLowerCase("fr").includes(terme)) : prenoms;
+    const terme = normaliserRecherche(recherche);
+    return terme ? prenoms.filter((prenom) => normaliserRecherche(prenom.nom).includes(terme)) : prenoms;
   }, [prenoms, recherche]);
   return <div className={compact ? "search search-compact" : "search"}>
     <label className="sr-only" htmlFor={compact ? "recherche-accueil" : "recherche-catalogue"}>Rechercher un prénom</label>
