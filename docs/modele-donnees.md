@@ -1,7 +1,7 @@
 # Modèle de données — Namesia
 
 - **Statut :** modèle cible retenu pour la V1
-- **Version :** 2.2
+- **Version :** 2.3
 - **Mis à jour :** 2026-11-22
 
 ## 1. Principes
@@ -66,7 +66,7 @@ Une ligne par association symbolique d'une version de fiche. Cette séparation p
 | value | Valeur ou association filtrable |
 | context_note | Explication éditoriale |
 
-Les rubriques textuelles restent des colonnes de `name_profiles` : une table supplémentaire par paragraphe n'apporterait rien. Les associations ont leur table car elles sont répétables, structurées et potentiellement filtrables. Les index ne sont pas ajoutés par anticipation sur chaque colonne : ils seront choisis à partir des filtres réellement proposés et des volumes observés. La recherche plein texte pourra utiliser un index dédié lorsqu'elle fera partie du besoin produit.
+Les rubriques textuelles restent des colonnes de `name_profiles` : une table supplémentaire par paragraphe n'apporterait rien. Une fiche publiée est immuable : toute correction ou enrichissement crée une nouvelle ligne versionnée, puis archive l'ancienne lors de la publication explicite. Les associations et références sont copiées vers la nouvelle version lorsqu'elles restent pertinentes. Les associations ont leur table car elles sont répétables, structurées et potentiellement filtrables. Les index ne sont pas ajoutés par anticipation sur chaque colonne : ils seront choisis à partir des filtres réellement proposés et des volumes observés. La recherche plein texte pourra utiliser un index dédié lorsqu'elle fera partie du besoin produit.
 
 ### name_profile_references
 
@@ -83,7 +83,7 @@ Une ligne par ressource réellement consultée pour une rubrique d'une version d
 | url | URL HTTP(S) |
 | consulted_at | Date de consultation |
 
-Les références sont versionnées avec la fiche et visibles publiquement uniquement lorsque la version est publiée. Elles ne certifient pas automatiquement les affirmations.
+Les références sont versionnées avec la fiche et visibles publiquement uniquement lorsque la version est publiée. Une correction éditoriale doit créer une nouvelle version ; ne jamais modifier le texte d'une version publiée en place. Elles ne certifient pas automatiquement les affirmations.
 
 ### private.admin_users
 
