@@ -64,7 +64,7 @@ Rayons : 8 px (petit), 12 px (standard), 16 px (grand), 24 px (mise en avant), p
 
 Le thème suit `prefers-color-scheme` sans réglage applicatif supplémentaire. Les composants utilisent les mêmes tokens sémantiques dans les deux thèmes. La mise en page est conçue d'abord pour les écrans étroits, puis s'étend ; le contenu ne doit pas déborder à 320 px et reste lisible à 200 % de zoom.
 
-Les zones tactiles visent au moins 44 px de hauteur. La réduction des animations respecte `prefers-reduced-motion`.
+Les zones tactiles, notamment les liens de navigation, visent au moins 44 × 44 px. La réduction des animations respecte `prefers-reduced-motion`.
 
 ## Architecture CSS et dépendances
 
