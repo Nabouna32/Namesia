@@ -120,4 +120,5 @@ grant select on table private.admin_users to authenticated;
 
 revoke all on table public.names, public.name_profiles, public.name_profile_associations from anon, authenticated;
 grant select on table public.names, public.name_profiles, public.name_profile_associations to anon;
-grant select, insert, update on table public.names, public.name_profiles, public.name_profile_associations to authenticated;
+grant select, insert, update on table public.names, public.name_profiles to authenticated;
+grant select, insert on table public.name_profile_associations to authenticated;
