@@ -3,22 +3,29 @@
 import styles from "./bouton-favori.module.css";
 import { useFavoris } from "./favoris-provider";
 
-type Props = { slug: string };
+type Props = { slug: string; afficherErreur?: boolean };
 
-export function BoutonFavori({ slug }: Props) {
-  const { slugs, pret, basculer } = useFavoris();
+export function BoutonFavori({ slug, afficherErreur = true }: Props) {
+  const { slugs, pret, erreur, basculer } = useFavoris();
   const actif = slugs.includes(slug);
 
   return (
-    <button
-      className={styles.button}
-      type="button"
-      aria-pressed={actif}
-      disabled={!pret}
-      onClick={() => basculer(slug)}
-    >
-      <span aria-hidden="true">{actif ? "♥" : "♡"}</span>
-      {pret ? actif ? "Retirer des favoris" : "Ajouter aux favoris" : "Chargement…"}
-    </button>
+    <div className={styles.container}>
+      <button
+        className={styles.button}
+        type="button"
+        aria-pressed={actif}
+        disabled={!pret}
+        onClick={() => basculer(slug)}
+      >
+        <span aria-hidden="true">{actif ? "♥" : "♡"}</span>
+        {pret ? actif ? "Retirer des favoris" : "Ajouter aux favoris" : "Chargement…"}
+      </button>
+      {erreur && afficherErreur && (
+        <p className={styles.error} role="alert">
+          Le stockage des favoris est indisponible ou contient des données illisibles. Vérifiez les paramètres de votre navigateur.
+        </p>
+      )}
+    </div>
   );
 }

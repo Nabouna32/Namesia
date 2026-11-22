@@ -25,7 +25,7 @@ function lireFavoris(value: string | null): string[] {
   if (!value) return [];
   const parsed: unknown = JSON.parse(value);
   if (!Array.isArray(parsed) || !parsed.every((item): item is string => typeof item === "string")) {
-    return [];
+    throw new TypeError("Le contenu des favoris est invalide.");
   }
   return [...new Set(parsed)];
 }
@@ -79,9 +79,6 @@ export function FavorisProvider({ children }: { children: ReactNode }) {
   return (
     <FavorisContext.Provider value={valeur}>
       {children}
-      <p className="sr-only" role="status" aria-live="polite">
-        {erreur ? "Les favoris ne peuvent pas être enregistrés dans ce navigateur. Vérifiez ses paramètres de stockage." : ""}
-      </p>
     </FavorisContext.Provider>
   );
 }

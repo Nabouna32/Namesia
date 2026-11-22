@@ -9,7 +9,7 @@ import styles from "./liste-favoris.module.css";
 type Props = { prenoms: PrenomIndex[] };
 
 export function ListeFavoris({ prenoms }: Props) {
-  const { slugs, pret } = useFavoris();
+  const { slugs, pret, erreur } = useFavoris();
 
   if (!pret) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
 
@@ -22,7 +22,11 @@ export function ListeFavoris({ prenoms }: Props) {
   if (favoris.length === 0) {
     return (
       <div className={styles.empty}>
-        <p>{slugs.length === 0 ? "Vous n’avez pas encore enregistré de prénom." : "Aucun de vos favoris n’est actuellement publié."}</p>
+        {erreur ? (
+          <p role="alert">Le stockage des favoris est indisponible ou contient des données illisibles. Vérifiez les paramètres de votre navigateur puis rechargez la page.</p>
+        ) : (
+          <p>{slugs.length === 0 ? "Vous n’avez pas encore enregistré de prénom." : "Aucun de vos favoris n’est actuellement publié."}</p>
+        )}
         <Link className="button button-dark" href="/prenoms">Explorer les prénoms</Link>
       </div>
     );
@@ -30,6 +34,11 @@ export function ListeFavoris({ prenoms }: Props) {
 
   return (
     <div className="name-grid">
+      {erreur && (
+        <p className={styles.error} role="alert">
+          Le stockage des favoris est indisponible ou contient des données illisibles. Vos modifications ne sont pas enregistrées.
+        </p>
+      )}
       {favoris.map((prenom) => (
         <article className={styles.row} key={prenom.slug}>
           <Link className="name-card" href={`/prenoms/${prenom.slug}`}>
@@ -40,7 +49,7 @@ export function ListeFavoris({ prenoms }: Props) {
             </span>
             <span className="card-arrow" aria-hidden="true">↗</span>
           </Link>
-          <BoutonFavori slug={prenom.slug} />
+          <BoutonFavori slug={prenom.slug} afficherErreur={false} />
         </article>
       ))}
       {favoris.length !== slugs.length && (
