@@ -28,6 +28,16 @@ Les contenus peuvent comporter des erreurs, des approximations, des omissions ou
 - Ne pas allonger artificiellement les textes ni répéter la même information dans plusieurs rubriques.
 - Les informations facultatives peuvent rester absentes.
 
+### Grille minimale des rubriques
+
+- **Introduction :** présenter le prénom et son intérêt propre en quelques phrases concrètes. Ne pas répéter mot pour mot l'origine ou l'histoire.
+- **Origine :** identifier la langue et les formes anciennes lorsque les sources le permettent. Distinguer une attestation, une hypothèse de filiation et une glose de sens. Si plusieurs pistes coexistent, les présenter comme telles.
+- **Histoire :** donner des repères datés ou des porteurs identifiables lorsqu'ils sont documentés. Distinguer l'histoire du prénom de celle d'un personnage célèbre ; ne pas inventer une continuité de popularité.
+- **Variantes et usages :** distinguer les variantes orthographiques, les formes apparentées, les diminutifs, les équivalents dans d'autres langues et les prénoms composés. Préciser le genre ou la langue lorsqu'ils diffèrent. Une liste de formes dérivées issue d'un répertoire ne signifie pas qu'elles sont interchangeables.
+- **Associations symboliques :** les isoler des faits linguistiques et historiques et les présenter comme des représentations culturelles.
+
+Aucune rubrique n'a de longueur minimale artificielle. Une information absente ou incertaine vaut mieux qu'un paragraphe de remplissage.
+
 ## 4. Symbolique et interprétations culturelles
 
 Les associations symboliques sont des contenus éditoriaux ou culturels. Elles ne sont pas des propriétés objectives d'un prénom.
