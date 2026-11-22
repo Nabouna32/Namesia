@@ -83,6 +83,9 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
       ? selection.length < 3 && !selection.includes(slug) ? [...selection, slug] : selection
       : selection.filter((element) => element !== slug);
     setSelection(suivante);
+    setFiches({});
+    setChargement(suivante.length >= 2);
+    setErreur(false);
     synchroniserUrl(suivante);
   }
 
