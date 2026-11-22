@@ -8,22 +8,25 @@ export function PartagerFiche({ nom }: Props) {
   const [message, setMessage] = useState("");
 
   async function partager() {
-    const url = window.location.href;
+    const url = new URL(window.location.pathname, window.location.origin).toString();
 
-    try {
-      if (typeof navigator.share === "function") {
+    if (typeof navigator.share === "function") {
+      try {
         await navigator.share({
           title: `${nom} · Namesia`,
           text: `Découvrez le prénom ${nom} sur Namesia.`,
           url
         });
         return;
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") return;
       }
+    }
 
+    try {
       await navigator.clipboard.writeText(url);
       setMessage("Lien copié dans le presse-papiers.");
-    } catch (error) {
-      if (error instanceof DOMException && error.name === "AbortError") return;
+    } catch {
       setMessage("Le partage n’est pas disponible sur cet appareil.");
     }
   }
