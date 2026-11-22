@@ -23,7 +23,7 @@ export default async function Comparer({ searchParams }: Props) {
     .slice(0, 3);
 
   return (
-    <main className="page-main">
+    <main id="contenu" className="page-main">
       <div className="container catalogue">
         <span className="eyebrow">Le comparateur</span>
         <h1>Des prénoms,<br /><em>des repères pour choisir.</em></h1>
