@@ -168,6 +168,15 @@ using (
     where a.user_id = (select auth.uid())
   )
 );
+create policy "Administrateurs : ajout atomique des associations"
+on public.name_profile_associations
+for insert to authenticated
+with check (
+  exists (
+    select 1 from private.admin_users a
+    where a.user_id = (select auth.uid())
+  )
+);
 
 -- Le document JSONB a servi de transport/migration ; les données sont désormais relationnelles.
 alter table public.name_profiles drop column content;
@@ -240,8 +249,12 @@ begin
 
   if p_schema_version is distinct from '2.0.0'
     or jsonb_typeof(p_content) is distinct from 'object'
+    or (p_content - 'introduction' - 'origin' - 'history' - 'usage' - 'symbolic_associations') <> '{}'::jsonb
     or jsonb_typeof(p_content -> 'introduction') is distinct from 'string'
-    or btrim(p_content ->> 'introduction') = ''
+    or char_length(btrim(p_content ->> 'introduction')) not between 1 and 600
+    or (p_content ? 'origin' and (jsonb_typeof(p_content -> 'origin') is distinct from 'string' or char_length(p_content ->> 'origin') > 3000))
+    or (p_content ? 'history' and (jsonb_typeof(p_content -> 'history') is distinct from 'string' or char_length(p_content ->> 'history') > 3000))
+    or (p_content ? 'usage' and (jsonb_typeof(p_content -> 'usage') is distinct from 'string' or char_length(p_content ->> 'usage') > 3000))
     or jsonb_typeof(coalesce(p_content -> 'symbolic_associations', '[]'::jsonb)) is distinct from 'array'
     or jsonb_array_length(coalesce(p_content -> 'symbolic_associations', '[]'::jsonb)) > 12
   then
@@ -290,15 +303,27 @@ begin
     select value
     from jsonb_array_elements(coalesce(p_content -> 'symbolic_associations', '[]'::jsonb))
   loop
+    if jsonb_typeof(v_association) is distinct from 'object'
+      or (v_association - 'category' - 'value' - 'context_note') <> '{}'::jsonb
+      or jsonb_typeof(v_association -> 'category') is distinct from 'string'
+      or char_length(btrim(v_association ->> 'category')) not between 1 and 80
+      or jsonb_typeof(v_association -> 'value') is distinct from 'string'
+      or char_length(btrim(v_association ->> 'value')) not between 1 and 120
+      or jsonb_typeof(v_association -> 'context_note') is distinct from 'string'
+      or char_length(btrim(v_association ->> 'context_note')) not between 1 and 1000
+    then
+      raise exception 'Association symbolique invalide' using errcode = '22023';
+    end if;
+
     insert into public.name_profile_associations (
       profile_id, position, category, value, context_note
     )
     values (
       v_profile_id,
       v_position,
-      v_association ->> 'category',
-      v_association ->> 'value',
-      v_association ->> 'context_note'
+      btrim(v_association ->> 'category'),
+      btrim(v_association ->> 'value'),
+      btrim(v_association ->> 'context_note')
     );
     v_position := v_position + 1;
   end loop;
