@@ -31,15 +31,14 @@ La clé publishable peut être exposée au navigateur. La sécurité repose sur 
 
 ### Ordre de bascule du modèle en production
 
-Le projet Supabase possède temporairement les deux modèles de données. Les migrations qui créent le contrat d'import et le modèle relationnel cible sont déjà appliquées. La migration finale décompose les données JSON transitoires en colonnes et associations relationnelles, puis supprime l'ancien modèle documentaire.
+Le projet Supabase possède actuellement l'ancien modèle et une première couche JSONB transitoire. La bascule relationnelle est découpée en deux migrations pour éviter toute interruption :
 
-**Ne pas appliquer la migration de nettoyage avant que la nouvelle version de l'application soit déployée en production.** Le code actuellement en production peut encore lire l'ancien modèle.
+1. **Avant la fusion et le déploiement de la nouvelle application**, appliquer `supabase/migrations/20261122130000_preparer_modele_relationnel.sql`. Cette migration ajoute les colonnes et la table d'associations, reprend les données JSONB, prépare l'import atomique et conserve les anciennes tables ainsi que la colonne JSONB. L'application actuellement en production continue donc de fonctionner.
+2. Fusionner la PR et laisser le déploiement de production se faire selon la politique Vercel du dépôt. La nouvelle application lit les colonnes et les lignes relationnelles.
+3. Après vérification de la production et sauvegarde/export SQL, appliquer `supabase/migrations/20261122140000_finaliser_nettoyage_modele.sql`. Cette migration est destructive : elle retire le JSONB transitoire, les anciennes tables documentaires et les colonnes redondantes.
+4. Vérifier le schéma, les privilèges, RLS et les six fiches publiées.
 
-Après fusion autorisée de la PR et déploiement de la nouvelle version :
-1. Vérifier que le site public lit correctement les six fiches depuis les colonnes de name_profiles et les lignes de name_profile_associations.
-2. Relire puis appliquer la migration supabase/migrations/20261122130000_simplifier_modele_catalogue.sql.
-3. Vérifier le schéma, les privilèges, RLS et les six fiches publiées.
-4. Initialiser le premier administrateur selon la procédure ci-dessous.
+**Ne pas inverser cet ordre.** La première migration doit précéder le déploiement ; la seconde doit le suivre. Aucune des deux n'a été appliquée dans le cadre de cette PR. Les opérations sur la base de production exigent une autorisation explicite.
 
 Cette migration est destructive pour les anciennes tables documentaires et colonnes redondantes. Elle contrôle la reprise des contenus éditoriaux et des associations symboliques avant leur suppression. **Une sauvegarde ou un export SQL préalable de la base est obligatoire**, notamment des tables sources, claims, claim_sources, symbolic_associations et name_profile_versions. Ne pas appliquer la migration si cette sauvegarde n'est pas disponible.
 
