@@ -107,13 +107,14 @@ Les tables documentaires historiques (sources, claims, claim_sources) et l'ancie
 
 Le dépôt et le projet Supabase possèdent un contrat JSON d'import et un écran d'administration. Le JSON est validé puis décomposé atomiquement en colonnes et lignes relationnelles ; il n'est pas stocké comme document global.
 
-La migration de simplification doit :
-1. vérifier que chaque rubrique est reprise dans sa colonne et chaque association dans sa ligne relationnelle ;
-2. retirer les tables et colonnes devenues inutiles ;
-3. corriger les contraintes, privilèges et fonctions de publication ;
-4. vérifier les politiques RLS et les accès Data API.
+La bascule est séparée en deux migrations :
+1. avant le déploiement, ajouter les colonnes relationnelles et la table d'associations, recopier les données JSONB, préparer l'import atomique et conserver l'ancien modèle ;
+2. déployer l'application qui lit le modèle relationnel ;
+3. après vérification et sauvegarde, supprimer le JSONB transitoire, les anciennes tables et les colonnes redondantes.
 
-Les migrations déjà appliquées sont synchronisées avec les versions Supabase. La migration destructive finale est préparée dans le dépôt et comporte des contrôles bloquants de reprise des données. Elle ne doit être appliquée qu'après fusion et déploiement de la version applicative qui lit exclusivement le modèle relationnel cible : la production actuelle peut encore dépendre des anciennes tables. Avant son application, effectuer une sauvegarde Supabase et relire le SQL ; l'exécution exige une autorisation explicite. Aucun déploiement Vercel n'est déclenché par cette opération.
+Cet ordre évite de déployer du code qui lirait des colonnes encore inexistantes ou de supprimer des tables encore utilisées par la production.
+
+Les migrations déjà appliquées sont synchronisées avec les versions Supabase. La migration additive `20261122130000_preparer_modele_relationnel.sql` doit être appliquée avant la fusion et le déploiement de la nouvelle application. La migration destructive `20261122140000_finaliser_nettoyage_modele.sql` ne doit être appliquée qu'après vérification de la nouvelle version en production et sauvegarde Supabase. Aucune migration n'a été appliquée dans le cadre de cette PR ; chaque opération sur la base de production exige une autorisation explicite.
 
 ## 9. Stack
 
