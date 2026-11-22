@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 1.4
+- **Version :** 1.5
 - **Mis à jour :** 2026-11-22
 
 ## 1. Positionnement
@@ -43,7 +43,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 - Administration privée : authentification, import, validation structurelle, création de brouillon, prévisualisation et publication explicite.
 - Historique des versions afin de remplacer une fiche sans écraser la version précédemment publiée.
 - Lecture publique limitée aux versions publiées.
-- Interface responsive et fondamentaux SEO.
+- Interface responsive et fondamentaux SEO : URL canoniques, métadonnées sociales, sitemap des fiches publiées et règles robots.
 
 ### Hors périmètre actuel
 

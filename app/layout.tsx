@@ -2,10 +2,21 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 
+const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://namesia.vercel.app");
+
 export const metadata: Metadata = {
+  metadataBase: siteUrl,
   title: { default: "Namesia — Le sens derrière chaque prénom", template: "%s · Namesia" },
   description: "Explorez les origines, les histoires et les traditions des prénoms avec Namesia.",
-  applicationName: "Namesia"
+  applicationName: "Namesia",
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    siteName: "Namesia",
+    title: "Namesia — Le sens derrière chaque prénom",
+    description: "Explorez les origines, les histoires et les traditions des prénoms avec Namesia.",
+    url: "/"
+  }
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
