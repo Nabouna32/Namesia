@@ -158,10 +158,10 @@ Une dérogation est acceptable si elle est plus simple, plus sûre ou mieux adap
 
 ## 10. Environnement d'exécution et dépendances
 
-- La version de référence de Node.js est définie une seule fois dans `.nvmrc` (24.22.3 LTS), version compatible avec le runtime Node.js 24.x configuré dans Vercel.
-- `package.json` et `package-lock.json` expriment la contrainte compatible `>=24.22.3 <25` ; `.npmrc` active `engine-strict=true` pour refuser un runtime incompatible dès l'installation.
-- Les types `@types/node` suivent la branche 24 et sa dépendance `undici-types`, afin de ne pas exposer des API de types d'une version Node plus récente que le runtime.
-- Le gestionnaire est verrouillé sur npm 11.19.1, livré avec Node.js 24.22.3.
+- La version de référence de Node.js est définie une seule fois dans `.nvmrc` (26.13.1), sur la branche majeure 26.x ; le paramètre de runtime Vercel doit être réglé sur 26.x.
+- `package.json` et `package-lock.json` expriment la contrainte compatible `26.x` ; `.npmrc` active `engine-strict=true` pour refuser un runtime incompatible dès l'installation.
+- Les types `@types/node` suivent la branche 26 et leur dépendance `undici-types`, afin de ne pas exposer des API de types d'une version Node plus récente que le runtime.
+- npm est celui fourni avec l'installation Node.js retenue ; aucune version npm indépendante n'est épinglée.
 - GitHub Actions lit directement `.nvmrc` avec `actions/setup-node` ; elle vérifie ensuite que la version réellement installée correspond exactement au fichier.
 - Les développeurs utilisent `npm ci` pour installer l'arbre verrouillé, pas `npm install` pour les installations reproductibles.
 - Toute montée de version Node doit modifier `.nvmrc`, la contrainte de compatibilité, les types Node et le runtime Vercel dans la même PR ; la CI doit valider l'ensemble.
