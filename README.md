@@ -29,44 +29,11 @@ Variables requises :
 
 La clé publishable peut être exposée au navigateur. La sécurité repose sur les privilèges SQL, RLS et l'autorisation administrateur. Aucune clé service_role ou clé secrète ne doit être intégrée au site.
 
-### Ordre de bascule du modèle en production
+### Schéma de production
 
-Le projet Supabase possède actuellement l'ancien modèle et une première couche JSONB transitoire. La bascule relationnelle est découpée en deux migrations pour éviter toute interruption :
+Le schéma relationnel cible est préparé en production. La migration additive `20261122001208_preparer_modele_relationnel.sql` a repris les données éditoriales et les associations tout en conservant temporairement l'ancien modèle pour la compatibilité avec l'application actuellement déployée.
 
-1. **Migration additive appliquée le 22 novembre 2026** : `supabase/migrations/20261122001208_preparer_modele_relationnel.sql`. Elle ajoute les colonnes et la table d'associations, reprend les données JSONB, prépare l'import atomique et conserve les anciennes tables ainsi que la colonne JSONB. L'application actuellement en production continue donc de fonctionner.
-2. Fusionner la PR et laisser le déploiement de production se faire selon la politique Vercel du dépôt. La nouvelle application lit les colonnes et les lignes relationnelles.
-3. Après vérification de la production et sauvegarde/export SQL, appliquer `supabase/migrations/20261122140000_finaliser_nettoyage_modele.sql`. Cette migration est destructive : elle retire le JSONB transitoire, les anciennes tables documentaires et les colonnes redondantes.
-4. Vérifier le schéma, les privilèges, RLS et les six fiches publiées.
-
-**Ne pas inverser cet ordre.** La migration additive est appliquée ; la migration destructive attend le déploiement et la vérification de la nouvelle application. Une sauvegarde reste fortement recommandée avant cette seconde étape.
-
-Cette migration est destructive pour les anciennes tables documentaires et colonnes redondantes. Elle contrôle la reprise des contenus éditoriaux et des associations symboliques avant leur suppression. **Une sauvegarde ou un export SQL préalable de la base est obligatoire**, notamment des tables sources, claims, claim_sources, symbolic_associations et name_profile_versions. Ne pas appliquer la migration si cette sauvegarde n'est pas disponible.
-
-### Premier accès à l'administration
-
-L'administration est disponible sur /admin. La connexion se fait par lien e-mail via Supabase Auth. Cette procédure est à effectuer après la bascule du schéma décrite ci-dessus.
-
-Pour initialiser le premier compte (l'auto-inscription est désactivée) :
-
-1. Dans Supabase Dashboard, ouvrir Authentication > Users puis inviter l'adresse e-mail de l'administrateur. Le compte doit accepter l'invitation avant sa première connexion.
-2. Dans Authentication > URL Configuration, ajouter l'URL locale http://localhost:3000/admin aux Redirect URLs, puis l'URL de production lorsqu'elle sera connue.
-3. Dans SQL Editor, autoriser le compte dans la liste privée avec son adresse e-mail :
-
-```sql
-insert into private.admin_users (user_id)
-select id
-from auth.users
-where email = lower('adresse-administrateur@example.com')
-on conflict (user_id) do nothing;
-```
-
-4. Remplacer l'adresse d'exemple par celle du compte invité. La requête ne crée pas de compte Auth : elle autorise un compte déjà existant.
-5. Ouvrir /admin, demander un lien de connexion et suivre le lien reçu.
-
-La table privée n'est pas exposée à la Data API. L'autorisation est vérifiée côté serveur et par les politiques RLS. Un compte Auth sans entrée dans cette liste n'a aucun droit d'administration.
-
-L'import crée toujours un brouillon. La publication est une action distincte. Une nouvelle publication archive la version précédente.
-
+La migration destructive `20261122140000_finaliser_nettoyage_modele.sql` sera appliquée après le déploiement et la vérification de l'application relationnelle. Elle supprime les anciennes tables documentaires, l'ancien stockage JSONB et les colonnes redondantes. Une sauvegarde reste la pratique recommandée avant toute suppression définitive de données.
 ### Contrat JSON
 
 Le contrat courant est schemas/fiche-prenom.schema.json, version 2.0.0. Il est uniquement utilisé à l'import ; la base stocke les rubriques dans des colonnes SQL et les associations dans des lignes dédiées. Il comprend :
