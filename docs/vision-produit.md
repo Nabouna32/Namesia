@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.3
+- **Version :** 3.4
 - **Mis à jour :** 2026-11-22
 
 ## 1. Positionnement
@@ -39,7 +39,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 - Page dédiée par prénom avec URL stable.
 - Recherche de prénoms avec prise en compte des accents et des variantes de casse ; classement des résultats par pertinence (correspondance exacte, puis préfixe, puis occurrence la plus proche du début du prénom), avec filtres combinables par genre et initiale. En l'absence de résultat normal, proposer jusqu'à cinq suggestions proches pour les recherches d'au moins quatre caractères, avec une tolérance d'une ou deux modifications selon la longueur et en respectant les filtres actifs. Les résultats et suggestions affichent aussi le genre associé à chaque fiche.
 - URL partageable du catalogue : la recherche et les filtres actifs sont conservés dans les paramètres q, genre et lettre, puis restaurés à l'ouverture du lien.
-- Vitrine d'accueil de trois prénoms qui tourne quotidiennement dans le catalogue, sans modifier l'ordre alphabétique du catalogue.
+- Vitrine d'accueil de trois prénoms qui tourne quotidiennement dans le catalogue, sans modifier l'ordre alphabétique du catalogue ; chaque carte indique aussi le genre du prénom.
 - Découverte aléatoire d'un prénom publié depuis l'accueil, sans répétition immédiate tant qu'un autre choix est disponible.
 - Favoris locaux : enregistrer des prénoms depuis leur fiche et les retrouver dans une liste dédiée, sans compte ni synchronisation entre appareils. La liste utilise uniquement les informations d'index nécessaires à son affichage, pas les textes complets des fiches.
 - Accès direct au comparateur depuis une fiche, avec le prénom déjà sélectionné et la possibilité d'en ajouter jusqu'à deux autres.
