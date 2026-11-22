@@ -116,7 +116,7 @@ select:focus-visible {
   color: var(--color-surface);
   font-size: 14px;
   font-weight: 700;
-  box-shadow: 0 5px 18px rgba(48, 36, 59, 0.2);
+  box-shadow: 0 5px 18px var(--shadow-sm);
   transition: transform 0.18s ease;
 }
 
@@ -131,7 +131,7 @@ select:focus-visible {
   z-index: 5;
   height: 68px;
   border-bottom: 1px solid var(--color-surface-muted);
-  background: rgba(255, 250, 253, 0.96);
+  background: color-mix(in srgb, var(--color-accent) 96%, transparent);
 }
 
 .header-inner {
@@ -201,7 +201,7 @@ select:focus-visible {
   width: 460px;
   height: 460px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(224, 178, 245, 0.45), rgba(224, 178, 245, 0) 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-accent) 45%, transparent), color-mix(in srgb, var(--color-accent) 0%, transparent) 70%);
 }
 
 .eyebrow {
@@ -272,9 +272,9 @@ h2 em {
   height: 270px;
   place-items: center;
   transform: translateY(-50%);
-  border: 1px solid rgba(164, 99, 181, 0.2);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 20%, transparent);
   border-radius: 50%;
-  color: rgba(153, 88, 174, 0.13);
+  color: color-mix(in srgb, var(--color-accent) 13%, transparent);
   font-family: var(--font-sans);
   font-size: 145px;
 }
@@ -283,7 +283,7 @@ h2 em {
 .hero-decoration::after {
   position: absolute;
   inset: 26px;
-  border: 1px solid rgba(164, 99, 181, 0.16);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 16%, transparent);
   border-radius: 50%;
   content: "";
 }
@@ -323,7 +323,7 @@ h2 em {
   border-radius: 12px;
   outline: 0;
   background: var(--surface);
-  box-shadow: 0 7px 22px rgba(115, 65, 132, 0.09);
+  box-shadow: 0 7px 22px color-mix(in srgb, var(--color-accent) 9%, transparent);
 }
 
 .search-field:focus-within {
@@ -603,7 +603,7 @@ h2 em {
 .featured-letter {
   position: absolute;
   inset: 25px 0 0;
-  color: rgba(94, 49, 111, 0.13);
+  color: color-mix(in srgb, var(--color-accent) 13%, transparent);
   font-family: var(--font-sans);
   font-size: 145px;
   line-height: 0.95;
@@ -736,7 +736,7 @@ h2 em {
   border: 1px solid var(--color-surface-muted);
   border-radius: 22px;
   background:
-    radial-gradient(ellipse at 88% 15%, rgba(229, 203, 246, 0.68), transparent 40%),
+    radial-gradient(ellipse at 88% 15%, color-mix(in srgb, var(--color-accent) 68%, transparent), transparent 40%),
     linear-gradient(118deg, var(--color-surface-muted) 0%, var(--color-surface) 38%, var(--color-surface-muted) 70%, var(--color-surface-muted) 100%);
 }
 
@@ -778,9 +778,9 @@ h2 em {
   align-items: center;
   min-height: 32px;
   padding: 6px 12px;
-  border: 1px solid rgba(126, 77, 143, 0.2);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 20%, transparent);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
+  background: var(--color-surface);
   color: var(--color-accent);
   font-size: 12px;
   font-weight: 600;
@@ -790,7 +790,7 @@ h2 em {
   position: absolute;
   right: 5%;
   bottom: -0.25em;
-  color: rgba(124, 75, 145, 0.12);
+  color: color-mix(in srgb, var(--color-accent) 12%, transparent);
   font-family: var(--font-sans);
   font-size: clamp(230px, 34vw, 410px);
   line-height: 0.95;
@@ -1082,9 +1082,9 @@ h2 em {
   align-items: center;
   justify-content: center;
   padding: 9px 15px;
-  border: 1px solid rgba(126, 77, 143, 0.28);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 28%, transparent);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.82);
+  background: var(--color-surface);
   color: var(--color-accent);
   cursor: pointer;
   font-size: 13px;
@@ -1320,7 +1320,7 @@ h2 em {
 .symbolic-card small {
   display: block;
   padding-top: 11px;
-  border-top: 1px solid rgba(115, 65, 132, 0.16);
+  border-top: 1px solid color-mix(in srgb, var(--color-accent) 16%, transparent);
   color: var(--color-accent);
   font-size: 12px;
   line-height: 1.6;
