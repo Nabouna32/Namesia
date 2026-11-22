@@ -81,6 +81,16 @@ type JoinedNameIndex = {
   name_profiles: { status: string; published_at: string | null }[];
 };
 
+function convertirIndex(row: JoinedNameIndex): PrenomIndex {
+  return {
+    id: row.id,
+    slug: row.slug,
+    nom: row.display_name,
+    lettre: Array.from(row.display_name.trim())[0]?.toLocaleUpperCase("fr") ?? "",
+    genre: libellesGenres[row.gender] ?? "Genre non renseigné"
+  };
+}
+
 export const getPrenomsIndex = cache(async (): Promise<PrenomIndex[]> => {
   const supabase = createSupabaseServerClient();
   const { data, error } = await supabase
@@ -95,13 +105,7 @@ export const getPrenomsIndex = cache(async (): Promise<PrenomIndex[]> => {
     throw new Error("Le catalogue des prénoms est momentanément indisponible.");
   }
 
-  return (data as unknown as JoinedNameIndex[]).map((row) => ({
-    id: row.id,
-    slug: row.slug,
-    nom: row.display_name,
-    lettre: Array.from(row.display_name.trim())[0]?.toLocaleUpperCase("fr") ?? "",
-    genre: libellesGenres[row.gender] ?? "Genre non renseigné"
-  }));
+  return (data as unknown as JoinedNameIndex[]).map(convertirIndex);
 });
 
 export async function getPrenoms(): Promise<Prenom[]> {
@@ -159,14 +163,14 @@ export const getPrenom = cache(async (slug: string): Promise<Prenom | null> => {
   return data ? convertir(data as unknown as JoinedName) : null;
 });
 
-export const getAutresPrenomsDuGenre = cache(async (genre: string, slug: string): Promise<Prenom[]> => {
+export const getAutresPrenomsIndexDuGenre = cache(async (genre: string, slug: string): Promise<PrenomIndex[]> => {
   const codeGenre = Object.entries(libellesGenres).find(([, libelle]) => libelle === genre)?.[0];
   if (!codeGenre || codeGenre === "inconnu") return [];
 
   const supabase = createSupabaseServerClient();
   const { data, error } = await supabase
     .from("names")
-    .select(selection)
+    .select("id, slug, display_name, gender, name_profiles!inner(status, published_at)")
     .eq("gender", codeGenre)
     .neq("slug", slug)
     .eq("name_profiles.status", "publie")
@@ -175,9 +179,9 @@ export const getAutresPrenomsDuGenre = cache(async (genre: string, slug: string)
     .limit(3);
 
   if (error) {
-    console.error(`Échec du chargement des autres prénoms du genre "${genre}" :`, error);
+    console.error(`Échec du chargement des suggestions de prénoms du genre "${genre}" :`, error);
     throw new Error("Les suggestions de prénoms sont momentanément indisponibles.");
   }
 
-  return (data as unknown as JoinedName[]).map(convertir);
+  return (data as unknown as JoinedNameIndex[]).map(convertirIndex);
 });

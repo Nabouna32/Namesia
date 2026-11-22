@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 3.11
+- **Version :** 3.12
 - **Mis à jour :** 2026-11-22
 
 ## 1. Besoin réel
@@ -63,7 +63,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Favoris gérés par un fournisseur client commun : seuls les slugs sont enregistrés dans localStorage ; aucune fiche, donnée personnelle ou information éditoriale n'est copiée dans le stockage du navigateur. La page des favoris charge uniquement l'index léger (nom, slug, initiale et genre), jamais les rubriques éditoriales ; elle ne montre que les prénoms encore publiés.
 - Les favoris ne sont ni envoyés au serveur ni synchronisés entre appareils ; ils restent propres au navigateur utilisé.
 - Accès au comparateur depuis une fiche via le paramètre d'URL `prenoms`, qui préselectionne le slug et laisse l'utilisateur choisir les autres prénoms publiés.
-- Suggestions contextuelles limitées à trois autres prénoms publiés du même genre, sans présenter cette catégorie comme une similarité étymologique ou culturelle.
+- Suggestions contextuelles limitées à trois autres prénoms publiés du même genre, sans présenter cette catégorie comme une similarité étymologique ou culturelle ; elles utilisent uniquement l'index léger (identité, nom, initiale et genre), jamais les contenus éditoriaux des fiches suggérées.
 - Partage d'une fiche par l'API native du navigateur, avec copie du lien lorsque cette API n'est pas disponible.
 - Comparateur client de deux à trois fiches : le sélecteur utilise l'index léger et les rubriques éditoriales sont chargées à la demande uniquement pour les deux ou trois slugs sélectionnés, via une route publique qui valide strictement les paramètres et ne retourne que les fiches publiées. Les slugs sélectionnés sont synchronisés dans l'URL, sans stockage permanent ; le lien partagé ne conserve que ce paramètre de sélection. La page reste non indexée.
 - Images Open Graph générées à la demande depuis les fiches publiées, dans le runtime Node.js pour conserver le client Supabase serveur ; aucune image ni donnée éditoriale supplémentaire n'est stockée.
