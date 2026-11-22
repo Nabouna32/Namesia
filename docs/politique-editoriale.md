@@ -1,7 +1,7 @@
 # Principes éditoriaux — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.0
+- **Version :** 2.0
 - **Mis à jour :** 2026-11-22
 
 ## 1. Nature des contenus
@@ -15,8 +15,6 @@ Les contenus peuvent comporter des erreurs, des approximations, des omissions ou
 ## 2. Transparence
 
 - La mention indiquant que le contenu est généré par IA et peut comporter des erreurs doit être visible sur le site.
-- Ne pas afficher de référence bibliographique qui n'a pas été réellement consultée et contrôlée.
-- Ne pas utiliser de statuts tels que « établi », « vérifié » ou « confirmé » sans processus de preuve correspondant.
 - Ne pas laisser entendre que l'import ou la prévisualisation constitue une validation factuelle.
 - Corriger les erreurs identifiées sans masquer les limites du processus de génération.
 
@@ -47,15 +45,7 @@ Les associations symboliques sont des contenus éditoriaux ou culturels. Elles n
 - Ne pas présenter la numérologie ou une association culturelle comme une vérité scientifique ou prédictive.
 - Conserver un avertissement explicite à proximité de ces contenus.
 
-## 5. Références et statistiques
-
-Namesia ne dispose pas d'un workflow de vérification indépendante des affirmations. Le contrat 3.0.0 permet néanmoins de joindre à une fiche des références réellement consultées, rattachées à une rubrique. Chaque référence comporte un titre, un éditeur ou organisme, une URL et une date de consultation.
-
-Une référence documente une ressource utilisée ; elle ne prouve pas automatiquement chaque phrase de la rubrique et ne constitue jamais un statut de validation. Distinguer les sources primaires, les dictionnaires spécialisés et les ressources de vulgarisation. Une ressource commerciale ne doit pas être présentée comme une autorité linguistique.
-
-Lorsqu'une origine est discutée ou que les sources sont insuffisantes, le dire clairement et ne pas remplir artificiellement la rubrique. Une fiche peut ne comporter aucune référence pour une rubrique donnée. Ne jamais simuler de sources, claims ou données statistiques.
-
-## 6. Publication
+## 5. Publication
 
 La publication est une décision d'administration distincte de la génération :
 - toute importation crée un brouillon ;
