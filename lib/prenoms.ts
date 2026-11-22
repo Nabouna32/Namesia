@@ -1,5 +1,5 @@
 import { cache } from "react";
-import { parseContenuFiche, type AssociationSymbolique, type ContenuFichePrenom, type ReferenceFiche } from "@/lib/fiche-prenom";
+import { parseContenuFiche, type AssociationSymbolique, type ContenuFichePrenom } from "@/lib/fiche-prenom";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export type Prenom = {
@@ -18,7 +18,6 @@ type JoinedProfile = {
   history_text: string | null;
   usage_text: string | null;
   name_profile_associations: JoinedAssociation[];
-  name_profile_references: (ReferenceFiche & { position: number })[];
 };
 
 const libellesGenres: Record<string, string> = {
@@ -41,7 +40,6 @@ const selection = `
   name_profiles!inner (
     introduction, origin_text, history_text, usage_text,
     name_profile_associations ( category, value, context_note, position ),
-    name_profile_references ( section, title, publisher, url, consulted_at, position )
   )
 `;
 
@@ -60,9 +58,7 @@ function convertir(row: JoinedName): Prenom {
     symbolic_associations: [...(profile.name_profile_associations ?? [])]
       .sort((a, b) => a.position - b.position)
       .map(({ category, value, context_note }) => ({ category, value, context_note })),
-    references: [...(profile.name_profile_references ?? [])]
-      .sort((a, b) => a.position - b.position)
-      .map(({ section, title, publisher, url, consulted_at }) => ({ section, title, publisher, url, consulted_at }))
+
   };
 
   return {
