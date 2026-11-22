@@ -31,9 +31,9 @@ export default async function Image({ params }: Props) {
         <div style={{ width: 48, height: 48, borderRadius: 17, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #ff5d8f, #ff9f43 28%, #62c88a 54%, #48b8e8 76%, #9870e8)", color: "#fff", fontFamily: "Georgia, serif", fontSize: 32 }}>n.</div>
         <div style={{ fontSize: 24, fontWeight: 700, letterSpacing: 2 }}>NAMESIA</div>
       </div>
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 880, display: "flex", flexDirection: "column", gap: 18 }}>
+      <div style={{ position: "relative", maxWidth: 880, display: "flex", flexDirection: "column", gap: 18 }}>
         <div style={{ color: "#9253a1", fontSize: 20, fontWeight: 700, letterSpacing: 4 }}>DÉCOUVRIR UN PRÉNOM</div>
-        <div style={{ fontFamily: "Georgia, serif", fontSize: tailleNom, lineHeight: 1.02, letterSpacing: -3 }}>{prenom.nom}<span style={{ color: "#a85ab7" }}>.</span></div>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 0, fontFamily: "Georgia, serif", fontSize: tailleNom, lineHeight: 1.02, letterSpacing: -3 }}>{prenom.nom}<span style={{ color: "#a85ab7" }}>.</span></div>
         <div style={{ maxWidth: 820, color: "#51445a", fontSize: 25, lineHeight: 1.4 }}>{extrait}</div>
         <div style={{ display: "flex", gap: 12, marginTop: 8 }}>
           <div style={{ padding: "9px 18px", borderRadius: 24, border: "1px solid rgba(126, 77, 143, 0.24)", background: "rgba(255,255,255,0.75)", color: "#684875", fontSize: 17 }}>{prenom.genre}</div>
