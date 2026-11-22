@@ -18,7 +18,7 @@ Les contenus sont générés à l'aide de modèles d'intelligence artificielle, 
 
 **La génération par IA n'est pas une vérification.** Un contenu enregistré ou publié n'est pas, de ce seul fait, confirmé par une source indépendante ou validé par un spécialiste. Il peut comporter des erreurs, des approximations ou des informations incomplètes.
 
-Namesia ne promet actuellement ni référencement systématique, ni vérification documentaire, ni validation par un spécialiste, ni distinction épistémique garantie entre faits historiques, hypothèses et interprétations culturelles. Les références consultées sont prises en charge de manière légère et rattachées à une rubrique ; elles ne constituent pas une validation indépendante. Les statistiques structurées restent hors du modèle.
+Namesia ne promet actuellement ni référencement systématique, ni vérification documentaire, ni validation par un spécialiste, ni distinction épistémique garantie entre faits historiques, hypothèses et interprétations culturelles. Les statistiques structurées restent hors du modèle.
 
 ## 3. Principes de contenu
 
@@ -42,7 +42,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 - Découverte aléatoire d'un prénom publié depuis l'accueil, sans répétition immédiate tant qu'un autre choix est disponible.
 - Favoris locaux : enregistrer des prénoms depuis leur fiche et les retrouver dans une liste dédiée, sans compte ni synchronisation entre appareils.
 - Accès direct au comparateur depuis une fiche, avec le prénom déjà sélectionné et la possibilité d'en ajouter jusqu'à deux autres.
-- Fiches de découverte avec introduction, origine, histoire, usages, associations symboliques facultatives et références consultées rattachées à une rubrique ; liens vers d'autres prénoms publiés de même genre et partage natif de la fiche.
+- Fiches de découverte avec introduction, origine, histoire, usages, associations symboliques facultatives  ; liens vers d'autres prénoms publiés de même genre et partage natif de la fiche.
 - Comparaison partageable de deux ou trois fiches sur leurs informations éditoriales publiées, via l'URL de la sélection.
 - Aperçus de partage visuels avec une carte dédiée à chaque fiche.
 - Génération hors du site, par API ou conversation, puis import d'un JSON.
@@ -79,7 +79,6 @@ Chaque fiche publiée doit :
 - proposer un contenu lisible, suffisamment spécifique et organisé en rubriques clairement identifiables ;
 - offrir un sommaire permettant d'accéder directement aux rubriques présentes ;
 - éviter les affirmations catégoriques non justifiées ;
-- afficher les références réellement consultées à proximité de la fiche, sans les présenter comme une validation ;
 - ne pas afficher de références fictives ni de statuts de vérification ;
 - afficher la mention relative à la génération par IA ;
 - avoir un titre, une description et une URL cohérents.
