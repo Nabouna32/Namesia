@@ -126,7 +126,7 @@ Les anciennes tables documentaires, la colonne JSONB historique et les colonnes 
 ## 9. Stack
 
 - Next.js App Router, React et TypeScript.
-- Runtime Node.js 24.22.3, défini dans `.nvmrc`, appliqué par GitHub Actions et aligné sur le runtime Vercel 24.x ; npm 11.19.1 et les types Node 24 sont verrouillés, et npm refuse les runtimes incompatibles via `engine-strict`.
+- Runtime Node.js 26.13.1, défini dans `.nvmrc`, appliqué par GitHub Actions et destiné à être aligné sur le runtime Vercel 26.x ; les types Node 26 suivent cette branche et npm refuse les runtimes incompatibles via `engine-strict`.
 - Supabase Auth et PostgreSQL.
 - JSON Schema comme contrat d'échange ; validation TypeScript à la frontière de l'API.
 - GitHub Actions pour les contrôles des PR.
