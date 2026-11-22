@@ -89,10 +89,8 @@ export default async function FichePrenom({ params }: Props) {
                 <span className="profile-tag">{prenom.genre}</span>
                 <span className="profile-tag">Lettre {prenom.lettre}</span>
               </div>
-              <div className="profile-actions">
-                <BoutonFavori slug={prenom.slug} />
-                <PartagerFiche nom={prenom.nom} />
-              </div>
+              <BoutonFavori slug={prenom.slug} />
+              <PartagerFiche nom={prenom.nom} />
             </div>
             <div className="profile-monogram" aria-hidden="true">{prenom.lettre}</div>
           </header>
