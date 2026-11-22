@@ -61,14 +61,14 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 
 ## 4. Modèle de données
 
-Le modèle cible comporte deux tables métier :
+Le modèle cible comporte trois tables métier :
 - names : identité stable du prénom (id, slug, display_name, gender, created_at).
 - name_profiles : versions éditoriales (id, name_id, version, schema_version, introduction, origin_text, history_text, usage_text, status, created_at, published_at).
 - name_profile_associations : associations symboliques structurées, une ligne par association (profile_id, position, category, value, context_note).
 
 L'autorisation administrateur est stockée dans private.admin_users, un schéma PostgreSQL non exposé par la Data API. Les détails et contraintes sont décrits dans [Modèle de données](modele-donnees.md).
 
-Les tables documentaires historiques (sources, claims, claim_sources), l'ancienne table de versions et la table symbolique dédiée ne font plus partie de la cible. Les contenus symboliques sont des rubriques du JSON de fiche.
+Les tables documentaires historiques (sources, claims, claim_sources) et l'ancienne table de versions ne font plus partie de la cible. Les associations symboliques sont conservées dans une table relationnelle dédiée, car elles sont répétables et filtrables.
 
 ## 5. Publication et historique
 
