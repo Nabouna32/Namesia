@@ -39,9 +39,12 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Titres, descriptions, commentaires, issues et revues sont en français.
 - Une PR explique le besoin, la solution, les choix, les compromis, les risques, les vérifications et les limites restantes.
 - Lire le diff complet et challenger aussi le code préexistant touché ou rendu obsolète.
-- Garder une seule PR de travail ouverte par défaut. Contribuer à la PR existante si le périmètre est cohérent ; ne pas créer de PR empilée par commodité.
-- Ne jamais fusionner sans autorisation explicite.
-- Ne pas déclarer une PR prête si les vérifications annoncées n'ont pas été exécutées.
+- Garder une seule PR de travail ouverte à la fois. Contribuer à la PR existante si le périmètre est cohérent ; ne pas créer de PR empilée par commodité.
+- Autorisation permanente : fusionner les PR vers main sans demander d'autorisation supplémentaire.
+- Autorisation permanente : supprimer des données, effectuer les migrations nécessaires et faire évoluer ou refondre la base de données lorsque cela sert l'objectif du projet. Préserver l'intégrité des données et documenter les opérations structurantes.
+- La CI GitHub Actions est l'unique mécanisme de vérification : ne pas exécuter de commandes de test, de build ou de contrôle localement.
+- Consulter l'état de la CI GitHub Actions une fois pour chaque PR. Si elle est en échec, corriger avant de fusionner. Si elle est encore en cours, ne pas l'attendre et fusionner. Si la CI de main est rouge au passage suivant, la corriger en priorité.
+- Ne jamais déclarer un test, build ou contrôle réussi sans que la CI GitHub Actions l'ait confirmé.
 
 ### Politique Vercel et quota
 
@@ -51,8 +54,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Le quota de 100 builds/déploiements par jour doit être préservé.
 - Les vérifications de PR et builds de contrôle sont exécutés dans GitHub Actions.
 - La configuration Vercel doit désactiver les previews et ignorer toute référence autre que main.
-- Ne jamais contourner ces règles avec une CLI ou une API. Toute exception nécessite une autorisation explicite.
-- Aucune mise en production sans autorisation explicite.
+- Ne jamais contourner ces règles avec une CLI ou une API. Toute exception à cette politique nécessite une autorisation explicite.
 
 ### Checklist de PR
 
@@ -60,7 +62,8 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - [ ] Les hypothèses et choix significatifs ont été challengés.
 - [ ] L'existant concerné a été réévalué.
 - [ ] Documentation canonique et ADR sont alignées.
-- [ ] Tests et contrôles pertinents ont été ajoutés et exécutés.
+- [ ] Les tests et contrôles pertinents sont couverts par la CI GitHub Actions.
+- [ ] La CI GitHub Actions a été consultée et son état est décrit sans présenter un résultat non confirmé comme réussi.
 - [ ] Sécurité, accessibilité, performances et régressions ont été examinées.
 - [ ] Migrations et contrats sont documentés.
 - [ ] Les vérifications et limites restantes sont décrites.
@@ -91,9 +94,8 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Traiter explicitement les erreurs ; ne pas transformer une panne en résultat vide.
 - Ne pas ajouter de dépendance sans justifier le besoin, les alternatives et le coût de maintenance.
 - Ne jamais exposer de clé privilégiée, secret ou donnée sensible.
-- Prévoir des tests au niveau adapté au risque.
-- Ne jamais déclarer un test, build, contrôle ou déploiement réussi sans l'avoir exécuté.
-- Les migrations doivent être versionnées, relisibles, compatibles avec le schéma réel et vérifiées.
+- Prévoir des tests au niveau adapté au risque ; leur réussite n'est établie que lorsque la CI GitHub Actions l'a confirmée.
+- Les migrations doivent être versionnées, relisibles, compatibles avec le schéma réel et vérifiées par la CI lorsque des contrôles automatisés sont pertinents.
 
 ## 7. Exigences propres à Namesia
 
@@ -107,7 +109,30 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Ne pas créer de pages SEO pauvres, trompeuses, artificiellement démultipliées ou sans valeur ajoutée.
 - Challenger les choix de stack et d'hébergement : ils restent des moyens au service des besoins, pas des objectifs en soi.
 
-## 8. Projet personnel et mode de collaboration
+## 8. Mode autonome
+
+### Objectif permanent
+
+Faire de Namesia un site de fiches de prénoms agréable, joli et fonctionnel. Carte blanche totale sur le design, le style, les textes du site, la structure, la base de données (migrations, refonte), l'optimisation et la création. L'objectif est améliorable en continu.
+
+### Boucle de travail
+
+À chaque passage :
+1. Examiner la PR ouverte et les issues ouvertes.
+2. Choisir l'amélioration qui apporte le plus de valeur au visiteur, en tenant compte des risques et des priorités.
+3. Réaliser cette amélioration jusqu'au bout : conception, implémentation, documentation, PR et fusion.
+4. Reprendre la boucle avec l'amélioration suivante, en respectant la règle d'une seule PR ouverte à la fois.
+
+Le travail ne se limite pas à exécuter une liste : challenger les priorités et chercher continuellement ce qui rendra le site meilleur.
+
+### Autonomie et arbitrages
+
+- Le propriétaire n'est pas disponible pour superviser chaque étape : décider seul, sans poser de question ni attendre de validation.
+- Prendre les décisions produit et techniques nécessaires, y compris lorsqu'elles sont structurantes, en appliquant le challenge obligatoire.
+- Consigner les choix importants, leurs raisons et leurs conséquences dans la PR ou dans un ADR en français.
+- Pour les actions risquées ou irréversibles, évaluer les conséquences, choisir une approche proportionnée et préserver autant que possible une possibilité de retour arrière ; ne pas suspendre le travail pour demander une autorisation.
+
+### Projet personnel et collaboration
 
 Namesia est un projet personnel dont le propriétaire est le seul développeur et décideur.
 
@@ -123,18 +148,17 @@ Principes :
 - Challenger les demandes et les choix, y compris ceux du propriétaire et de l'agent, sans transformer chaque détail en débat.
 - Privilégier les solutions simples, proportionnées et réversibles.
 - Toute complexité ajoutée doit avoir une justification concrète et identifiable.
-- Le propriétaire conserve toutes les décisions finales. Aucune fusion ou mise en production sans son autorisation explicite.
 
 ## 9. Conduite de l'agent IA
 
 - Agir concrètement dans le dépôt lorsque la demande le permet ; éviter les réponses qui se limitent à promettre un travail futur.
 - Avant toute modification, inspecter le contexte utile, les fichiers concernés, les conventions et l'état Git/PR.
 - Ne pas inventer de contenu, de résultats de tests, de sources, de commits, de branches ou d'actions GitHub.
-- Signaler les désaccords clairement, avec raisons et proposition alternative.
-- Si la demande conduit à un risque important ou à une contradiction avec une décision, exposer le problème avant d'agir ; pour les changements réversibles et à faible risque, proposer puis exécuter une solution cohérente.
-- Demander une clarification uniquement lorsqu'une information réellement bloquante manque.
-- Ne pas fusionner, supprimer des données, déployer en production ou effectuer une action irréversible sans autorisation explicite.
-- À la fin d'une intervention, résumer les changements réellement effectués, les vérifications réellement exécutées, les limites restantes et les liens vers les PR/issues.
+- Signaler les désaccords clairement, avec raisons et proposition alternative ; décider seul de la suite cohérente.
+- En cas de risque important ou de contradiction avec une décision antérieure, analyser le problème, arbitrer et agir sans demander de clarification ni suspendre le travail.
+- Les informations bloquantes manquantes sont traitées par une décision prudente et documentée lorsque cela est possible ; ne solliciter le propriétaire que si aucune action sûre et utile n'est possible.
+- Ne pas demander d'autorisation pour fusionner, supprimer des données, migrer ou refondre la base, ni mettre en production dans le cadre de la politique Vercel définie au §4.
+- À la fin d'une intervention, résumer les changements réellement effectués, les vérifications confirmées par la CI, les limites restantes et les liens vers les PR/issues.
 
 ## 10. Principe directeur
 
