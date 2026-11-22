@@ -105,8 +105,6 @@ export function parseFichePrenom(value: unknown): FichePrenomImport {
     };
   });
 
-
-
   return {
     schema_version: FICHE_SCHEMA_VERSION,
     identity: { slug, display_name, gender },
