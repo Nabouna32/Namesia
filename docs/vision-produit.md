@@ -42,7 +42,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 - Découverte aléatoire d'un prénom publié depuis l'accueil, sans répétition immédiate tant qu'un autre choix est disponible.
 - Favoris locaux : enregistrer des prénoms depuis leur fiche et les retrouver dans une liste dédiée, sans compte ni synchronisation entre appareils.
 - Accès direct au comparateur depuis une fiche, avec le prénom déjà sélectionné et la possibilité d'en ajouter jusqu'à deux autres.
-- Fiches de découverte avec introduction, origine, histoire, usages, associations symboliques facultatives  ; liens vers d'autres prénoms publiés de même genre et partage natif de la fiche.
+- Fiches de découverte avec introduction, origine, histoire, usages, associations symboliques facultatives ; liens vers d'autres prénoms publiés de même genre et partage natif de la fiche.
 - Comparaison partageable de deux ou trois fiches sur leurs informations éditoriales publiées, via l'URL de la sélection.
 - Aperçus de partage visuels avec une carte dédiée à chaque fiche.
 - Génération hors du site, par API ou conversation, puis import d'un JSON.
@@ -78,7 +78,6 @@ Une page doit répondre à une intention réelle et apporter une information uti
 Chaque fiche publiée doit :
 - proposer un contenu lisible, suffisamment spécifique et organisé en rubriques clairement identifiables ;
 - offrir un sommaire permettant d'accéder directement aux rubriques présentes ;
-- ne pas afficher de références fictives ni de statuts de vérification ;
 - afficher la mention relative à la génération par IA ;
 - avoir un titre, une description et une URL cohérents.
 
