@@ -735,6 +735,246 @@ h2 em {
   user-select: none;
 }
 
+.comparator {
+  display: grid;
+  gap: 28px;
+  margin-top: 28px;
+}
+
+.compare-selector {
+  padding: clamp(18px, 3vw, 26px);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fff5f8, #fffdf5 55%, #f5f1ff);
+}
+
+.compare-search {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.compare-search label,
+.compare-options legend {
+  color: #66566e;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.compare-search input {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 14px;
+  border: 1px solid #e8d9eb;
+  border-radius: 10px;
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.compare-search input:focus-visible {
+  outline: 2px solid #a14eb2;
+  outline-offset: 2px;
+}
+
+.compare-options {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.compare-options legend {
+  margin-bottom: 12px;
+}
+
+.compare-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.compare-option {
+  display: flex;
+  min-width: 0;
+  min-height: 66px;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 13px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: border-color 0.18s, background-color 0.18s;
+}
+
+.compare-option:has(input:checked) {
+  border-color: #a66ab4;
+  background: #fff8ff;
+}
+
+.compare-option:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.compare-option input {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  accent-color: #87509a;
+}
+
+.compare-option-initial {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffe0ed, #e9dcff);
+  color: #813c91;
+  font-family: var(--serif);
+  font-size: 21px;
+}
+
+.compare-option-name {
+  min-width: 0;
+}
+
+.compare-option-name strong,
+.compare-option-name small {
+  display: block;
+}
+
+.compare-option-name strong {
+  font-family: var(--serif);
+  font-size: 18px;
+}
+
+.compare-option-name small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.compare-selection-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.compare-selection-footer button {
+  padding: 7px 0;
+  border: 0;
+  background: transparent;
+  color: #82458f;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.compare-selection-footer button:disabled {
+  cursor: default;
+  opacity: 0.45;
+  text-decoration: none;
+}
+
+.compare-status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  align-items: start;
+  gap: 14px;
+}
+
+.compare-card {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.compare-card header {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.compare-card h2 {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.compare-card .profile-tag {
+  background: #fff8ff;
+}
+
+.compare-field {
+  padding: 17px 0;
+  border-bottom: 1px solid #f1e9f2;
+}
+
+.compare-field:last-child {
+  border-bottom: 0;
+}
+
+.compare-field h3 {
+  margin: 0 0 8px;
+  color: #9253a1;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.compare-field p {
+  margin: 0;
+  color: #51475a;
+  font-size: 14px;
+  line-height: 1.75;
+  white-space: pre-line;
+}
+
+.compare-field .compare-missing {
+  color: #887d8c;
+  font-style: italic;
+}
+
+.compare-associations {
+  display: grid;
+  gap: 10px;
+}
+
+.compare-association strong {
+  display: block;
+  color: #633a70;
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.compare-association span {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
 .profile-share {
   display: flex;
   flex-wrap: wrap;
@@ -1160,6 +1400,14 @@ h2 em {
   .catalogue-filters {
     gap: 15px;
     padding: 16px;
+  }
+
+  .compare-options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .compare-card {
+    padding: 18px;
   }
 
   .filter-options {
