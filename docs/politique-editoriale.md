@@ -8,7 +8,7 @@
 
 Les fiches Namesia sont produites à l'aide de modèles d'intelligence artificielle, puis importées dans la base au format JSON. La génération peut avoir lieu via une API ou dans une conversation avec un assistant.
 
-**Un contenu généré par IA n'est pas une information vérifiée.** Sa présence dans la base ou sa publication ne signifie pas qu'une source indépendante l'a confirmé ou qu'un spécialiste l'a validé.
+**Un contenu généré par IA n'est pas une information vérifiée.** Sa présence dans la base ou sa publication ne signifie pas qu'un spécialiste l'a validé.
 
 Les contenus peuvent comporter des erreurs, des approximations, des omissions ou des interprétations discutables.
 
@@ -53,4 +53,4 @@ La publication est une décision d'administration distincte de la génération :
 - la publication est explicite ;
 - la version précédente est conservée dans l'historique.
 
-Cette étape permet un contrôle éditorial du contenu et de sa présentation, mais ne constitue pas une validation scientifique ou documentaire.
+Cette étape permet de contrôler le contenu et sa présentation avant publication.
