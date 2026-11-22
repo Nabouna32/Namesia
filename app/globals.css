@@ -694,6 +694,14 @@ h2 em {
   min-width: 0;
 }
 
+.profile-layout-empty {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.profile-layout-empty .profile-aside {
+  max-width: 460px;
+}
+
 .profile-section {
   padding: 0 0 34px;
   scroll-margin-top: 24px;
