@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import type { Prenom } from "@/lib/prenoms";
+import type { PrenomIndex } from "@/lib/prenoms";
 
 type Props = {
-  prenoms: Prenom[];
+  prenoms: PrenomIndex[];
   compact?: boolean;
   synchroniserUrl?: boolean;
   initialRecherche?: string;
@@ -17,7 +17,7 @@ function normaliserRecherche(value: string): string {
   return value.trim().normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("fr");
 }
 
-function comparerPertinence(a: Prenom, b: Prenom, terme: string): number {
+function comparerPertinence(a: PrenomIndex, b: PrenomIndex, terme: string): number {
   if (!terme) return a.nom.localeCompare(b.nom, "fr");
   const nomA = normaliserRecherche(a.nom);
   const nomB = normaliserRecherche(b.nom);
