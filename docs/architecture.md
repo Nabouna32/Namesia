@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 2.8
+- **Version :** 2.9
 - **Mis à jour :** 2026-11-22
 
 ## 1. Besoin réel
@@ -61,6 +61,8 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Images Open Graph générées à la demande depuis les fiches publiées, dans le runtime Node.js pour conserver le client Supabase serveur ; aucune image ni donnée éditoriale supplémentaire n'est stockée.
 - Sitemap dynamique construit depuis les fiches publiées ; robots.txt excluant l'administration et les routes API.
 - Métadonnées canoniques fondées sur NEXT_PUBLIC_SITE_URL, sans inventer de date de mise à jour.
+- Données structurées Schema.org pour le site, le catalogue et les fiches ; aucune date, popularité ou affirmation non disponible n'est ajoutée.
+- `lib/site-url.ts` centralise l'origine canonique ; `lib/json-ld.ts` sérialise les données structurées en échappant les chevrons.
 - La génération des fichiers d'indexation ne modifie pas les contrôles d'accès ; le domaine Vercel par défaut reste protégé par SSO tant que sa configuration n'est pas changée.
 - Pas d'appel à un modèle IA lors de l'affichage.
 - Initiale calculée à partir du nom affiché ; elle n'est pas stockée.
