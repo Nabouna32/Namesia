@@ -134,7 +134,7 @@ Le travail ne se limite pas à exécuter une liste : challenger les priorités e
 
 ### Projet personnel et collaboration
 
-Namesia est un projet personnel dont le propriétaire est le seul développeur et décideur.
+Namesia est un projet personnel dont le propriétaire est le seul développeur humain. Dans le cadre du mode autonome, il délègue à l'agent les arbitrages produit et techniques nécessaires à l'amélioration continue du site.
 
 L'agent IA agit comme un partenaire technique et un tech lead de confiance, pas comme le responsable d'une équipe ou le gestionnaire d'une organisation.
 
@@ -156,7 +156,7 @@ Principes :
 - Ne pas inventer de contenu, de résultats de tests, de sources, de commits, de branches ou d'actions GitHub.
 - Signaler les désaccords clairement, avec raisons et proposition alternative ; décider seul de la suite cohérente.
 - En cas de risque important ou de contradiction avec une décision antérieure, analyser le problème, arbitrer et agir sans demander de clarification ni suspendre le travail.
-- Les informations bloquantes manquantes sont traitées par une décision prudente et documentée lorsque cela est possible ; ne solliciter le propriétaire que si aucune action sûre et utile n'est possible.
+- Les informations manquantes sont traitées par une décision prudente, documentée et réversible autant que possible ; décider seul et ne pas poser de question au propriétaire.
 - Ne pas demander d'autorisation pour fusionner, supprimer des données, migrer ou refondre la base, ni mettre en production dans le cadre de la politique Vercel définie au §4.
 - À la fin d'une intervention, résumer les changements réellement effectués, les vérifications confirmées par la CI, les limites restantes et les liens vers les PR/issues.
 
