@@ -117,10 +117,6 @@ export default async function FichePrenom({ params }: Props) {
                 <h2>À lire avec curiosité</h2>
                 <p>Les textes de cette fiche sont générés par intelligence artificielle. Ils peuvent comporter des erreurs : prenez-les comme un point de départ pour votre découverte, pas comme une source de référence.</p>
               </div>
-              <div className="profile-aside-link">
-                <span>Envie de continuer ?</span>
-                <Link href="/prenoms">Explorer tous les prénoms <span aria-hidden="true">↗</span></Link>
-              </div>
             </aside>
           </div>
 
