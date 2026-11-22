@@ -47,7 +47,7 @@ export default async function FichePrenom({ params }: Props) {
   );
 
   return (
-    <main className="page-main profile-main">
+    <main id="contenu" className="page-main profile-main">
       <div className="container profile">
         <nav className="breadcrumb" aria-label="Fil d’Ariane">
           <ol>
