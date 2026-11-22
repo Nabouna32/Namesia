@@ -16,7 +16,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
   const selectionInitialeKey = selectionInitiale.join(",");
 
   useEffect(() => {
-    setSelection(selectionInitiale);
+    setSelection(selectionInitialeKey ? selectionInitialeKey.split(",") : []);
   }, [selectionInitialeKey]);
   const resultats = useMemo(() => {
     const terme = normaliser(recherche);
