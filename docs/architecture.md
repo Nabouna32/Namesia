@@ -126,7 +126,7 @@ Les anciennes tables documentaires, la colonne JSONB historique et les colonnes 
 ## 9. Stack
 
 - Next.js App Router, React et TypeScript.
-- Runtime Node.js 26.13.1, défini dans `.nvmrc` et appliqué par GitHub Actions ; npm refuse les versions incompatibles via `engine-strict`.
+- Runtime Node.js 24.22.3, défini dans `.nvmrc` et appliqué par GitHub Actions ; npm refuse les versions incompatibles via `engine-strict`.
 - Supabase Auth et PostgreSQL.
 - JSON Schema comme contrat d'échange ; validation TypeScript à la frontière de l'API.
 - GitHub Actions pour les contrôles des PR.
