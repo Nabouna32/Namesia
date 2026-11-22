@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.4
+- **Version :** 3.5
 - **Mis à jour :** 2026-11-22
 
 ## 1. Positionnement
@@ -37,7 +37,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 
 - Catalogue de prénoms utilisé en France.
 - Page dédiée par prénom avec URL stable.
-- Recherche de prénoms avec prise en compte des accents et des variantes de casse ; classement des résultats par pertinence (correspondance exacte, puis préfixe, puis occurrence la plus proche du début du prénom), avec filtres combinables par genre et initiale. En l'absence de résultat normal, proposer jusqu'à cinq suggestions proches pour les recherches d'au moins quatre caractères, avec une tolérance d'une ou deux modifications selon la longueur et en respectant les filtres actifs. Les résultats et suggestions affichent aussi le genre associé à chaque fiche.
+- Recherche de prénoms avec prise en compte des accents et des variantes de casse ; classement des résultats par pertinence (correspondance exacte, puis préfixe, puis occurrence la plus proche du début du prénom), avec filtres combinables par genre et initiale. En l'absence de résultat normal, proposer jusqu'à cinq suggestions proches pour les recherches d'au moins quatre caractères, avec une tolérance d'une ou deux modifications selon la longueur et en respectant les filtres actifs. Les résultats et suggestions affichent aussi le genre associé à chaque fiche. Le catalogue présente 24 résultats au départ et révèle les suivants par lots de 24 pour garder une liste facile à parcourir.
 - URL partageable du catalogue : la recherche et les filtres actifs sont conservés dans les paramètres q, genre et lettre, puis restaurés à l'ouverture du lien.
 - Vitrine d'accueil de trois prénoms qui tourne quotidiennement dans le catalogue, sans modifier l'ordre alphabétique du catalogue ; chaque carte indique aussi le genre du prénom.
 - Découverte aléatoire d'un prénom publié depuis l'accueil, sans répétition immédiate tant qu'un autre choix est disponible.
