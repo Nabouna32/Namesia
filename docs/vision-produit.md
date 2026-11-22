@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.0
+- **Version :** 3.1
 - **Mis à jour :** 2026-11-22
 
 ## 1. Positionnement
@@ -41,7 +41,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 - URL partageable du catalogue : la recherche et les filtres actifs sont conservés dans les paramètres q, genre et lettre, puis restaurés à l'ouverture du lien.
 - Vitrine d'accueil de trois prénoms qui tourne quotidiennement dans le catalogue, sans modifier l'ordre alphabétique du catalogue.
 - Découverte aléatoire d'un prénom publié depuis l'accueil, sans répétition immédiate tant qu'un autre choix est disponible.
-- Favoris locaux : enregistrer des prénoms depuis leur fiche et les retrouver dans une liste dédiée, sans compte ni synchronisation entre appareils.
+- Favoris locaux : enregistrer des prénoms depuis leur fiche et les retrouver dans une liste dédiée, sans compte ni synchronisation entre appareils. La liste utilise uniquement les informations d'index nécessaires à son affichage, pas les textes complets des fiches.
 - Accès direct au comparateur depuis une fiche, avec le prénom déjà sélectionné et la possibilité d'en ajouter jusqu'à deux autres.
 - Fiches de découverte avec introduction, origine, histoire, usages, associations symboliques facultatives ; liens vers d'autres prénoms publiés de même genre et partage natif de la fiche.
 - Comparaison partageable de deux ou trois fiches sur leurs informations éditoriales publiées, via l'URL de la sélection.
