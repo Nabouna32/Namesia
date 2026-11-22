@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getPrenom } from "@/lib/prenoms";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const alt = "Aperçu d’une fiche prénom Namesia";
 export const size = { width: 1200, height: 630 };
