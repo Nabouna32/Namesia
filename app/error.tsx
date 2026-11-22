@@ -22,14 +22,14 @@ export default function Error({
         <p role="alert">
           Cette page n’a pas pu être chargée. Le problème a été signalé ; vous pouvez réessayer.
         </p>
-        <div className="error-actions">
+        <p>
           <button className="button button-dark" type="button" onClick={reset}>
             Réessayer
-          </button>
+          </button>{" "}
           <Link className="text-link" href="/">
             Retour à l’accueil
           </Link>
-        </div>
+        </p>
         {error.digest && <p className="footer-note">Référence : {error.digest}</p>}
       </div>
     </main>
