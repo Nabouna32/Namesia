@@ -123,7 +123,6 @@ Le stockage métier est relationnel et repose sur trois tables :
 Le JSON est uniquement un contrat d'échange à l'import. L'API le valide, puis une fonction SQL crée atomiquement une version brouillon et ses associations. La publication reste une opération distincte et explicite.
 
 Les anciennes tables documentaires, la colonne JSONB historique et les colonnes redondantes ont été supprimées. Le schéma exposé conserve RLS et des privilèges SQL minimaux : lecture publique des seules fiches publiées, opérations d'écriture réservées aux administrateurs autorisés.
-
 ## 9. Stack
 
 - Next.js App Router, React et TypeScript.
