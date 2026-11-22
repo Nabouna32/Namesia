@@ -15,7 +15,9 @@ export function DecouverteAleatoire({ prenoms }: Props) {
       ? prenoms.filter((prenom) => prenom.slug !== selection.slug)
       : prenoms;
     const index = Math.floor(Math.random() * candidats.length);
-    setSelection(candidats[index]);
+    const prochain = candidats[index];
+
+    if (prochain) setSelection(prochain);
   }
 
   return (
