@@ -165,6 +165,14 @@ select:focus-visible {
   font-weight: 500;
 }
 
+.site-nav a {
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+}
+
 .site-nav {
   display: flex;
   gap: 1.5rem;
