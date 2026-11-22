@@ -8,12 +8,15 @@ export type AssociationSymbolique = {
   context_note: string;
 };
 
-export type ReferenceFiche = { section: "origine" | "histoire" | "usages"; title: string; publisher: string; url: string; consulted_at: string };\n\nexport type ContenuFichePrenom = {
+export type ReferenceFiche = { section: "origine" | "histoire" | "usages"; title: string; publisher: string; url: string; consulted_at: string };
+
+export type ContenuFichePrenom = {
   introduction: string;
   origin?: string;
   history?: string;
   usage?: string;
-  symbolic_associations: AssociationSymbolique[];\n  references: ReferenceFiche[];
+  symbolic_associations: AssociationSymbolique[];
+  references: ReferenceFiche[];
 };
 
 export type FichePrenomImport = {
