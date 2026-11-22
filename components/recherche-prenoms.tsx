@@ -253,7 +253,8 @@ export function RecherchePrenoms({
                 : `0 résultat affiché sur ${prenoms.length}`}
           </p>
           {resultats.length > 0 ? (
-            <div className="name-grid">
+            <>
+              <div className="name-grid">
               {resultats.slice(0, nombreVisible).map((prenom) => (
                 <Link className="name-card" href={`/prenoms/${prenom.slug}`} key={prenom.slug}>
                   <span className="name-initial">{prenom.lettre}</span>
@@ -274,6 +275,7 @@ export function RecherchePrenoms({
                 Afficher les {Math.min(24, resultats.length - nombreVisible)} prénoms suivants
               </button>
             )}
+            </>
           ) : suggestions.length > 0 ? (
             <div className="empty-results">
               <p className="empty-state">
