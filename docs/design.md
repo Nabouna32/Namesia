@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 1.3
+- **Version :** 1.4
 - **Mis à jour :** 2026-11-22
 
 ## Intention
@@ -62,7 +62,7 @@ Rayons : 8 px (petit), 12 px (standard), 16 px (grand), 24 px (mise en avant), p
 
 ## Thèmes et responsive
 
-Le thème suit `prefers-color-scheme` sans réglage applicatif supplémentaire. Les composants utilisent les mêmes tokens sémantiques dans les deux thèmes. La mise en page est conçue d'abord pour les écrans étroits, puis s'étend ; le contenu ne doit pas déborder à 320 px et reste lisible à 200 % de zoom.
+Le thème suit `prefers-color-scheme` sans réglage applicatif supplémentaire. Les composants utilisent les mêmes tokens sémantiques dans les deux thèmes. La mise en page est conçue d'abord pour les écrans étroits, puis s'étend ; le contenu ne doit pas déborder à 320 px et reste lisible à 200 % de zoom. Les adaptations des écrans les plus étroits sont déclarées après les règles des seuils plus larges afin de conserver leur priorité dans la cascade CSS.
 
 Les zones tactiles interactives visent au moins 44 × 44 px, y compris les filtres du catalogue, les actions d'effacement et les liens de navigation. Les libellés peuvent rester visuellement compacts, mais la zone cliquable ne doit pas être réduite pour gagner quelques pixels. La réduction des animations respecte `prefers-reduced-motion`.
 
