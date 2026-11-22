@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 2.1
+- **Version :** 2.2
 - **Mis à jour :** 2026-11-22
 
 ## 1. Positionnement
@@ -46,7 +46,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 - Historique des versions afin de remplacer une fiche sans écraser la version précédemment publiée.
 - Lecture publique limitée aux versions publiées.
 - Interface responsive et navigation accessible au clavier, avec lien d'évitement et respect de la préférence de réduction des mouvements.
-- Fondamentaux SEO : URL canoniques, métadonnées sociales, sitemap des fiches publiées et règles robots.
+- Fondamentaux SEO : URL canoniques, métadonnées sociales, données structurées Schema.org, sitemap des fiches publiées et règles robots.
 
 ### Hors périmètre actuel
 
