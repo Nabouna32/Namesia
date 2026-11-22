@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { BoutonFavori } from "@/components/bouton-favori";
 import { PartagerFiche } from "@/components/partager-fiche";
 import styles from "@/components/actions-fiche.module.css";
-import { getAutresPrenomsDuGenre, getPrenom } from "@/lib/prenoms";
+import { getAutresPrenomsIndexDuGenre, getPrenom } from "@/lib/prenoms";
 import { jsonLd } from "@/lib/json-ld";
 import { siteUrl } from "@/lib/site-url";
 
@@ -39,7 +39,7 @@ export default async function FichePrenom({ params }: Props) {
   const prenom = await getPrenom(slug);
   if (!prenom) notFound();
 
-  const autresPrenoms = await getAutresPrenomsDuGenre(prenom.genre, prenom.slug);
+  const autresPrenoms = await getAutresPrenomsIndexDuGenre(prenom.genre, prenom.slug);
   const genreAuPluriel: Record<string, string> = {
     "Féminin": "féminins",
     "Masculin": "masculins",
