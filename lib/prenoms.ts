@@ -20,6 +20,13 @@ type JoinedProfile = {
   name_profile_associations: JoinedAssociation[];
 };
 
+const libellesGenres: Record<string, string> = {
+  feminin: "Féminin",
+  masculin: "Masculin",
+  mixte: "Mixte",
+  inconnu: "Genre non renseigné"
+};
+
 type JoinedName = {
   id: string;
   slug: string;
@@ -43,13 +50,6 @@ function convertir(row: JoinedName): Prenom {
   }
 
   const [profile] = profiles;
-  const genres: Record<string, string> = {
-    feminin: "Féminin",
-    masculin: "Masculin",
-    mixte: "Mixte",
-    inconnu: "Genre non renseigné"
-  };
-
   const content = {
     introduction: profile.introduction,
     ...(profile.origin_text ? { origin: profile.origin_text } : {}),
@@ -65,7 +65,7 @@ function convertir(row: JoinedName): Prenom {
     slug: row.slug,
     nom: row.display_name,
     lettre: Array.from(row.display_name.trim())[0]?.toLocaleUpperCase("fr") ?? "",
-    genre: genres[row.gender] ?? "Genre non renseigné",
+    genre: libellesGenres[row.gender] ?? "Genre non renseigné",
     ...parseContenuFiche(content)
   };
 }
@@ -103,4 +103,27 @@ export const getPrenom = cache(async (slug: string): Promise<Prenom | null> => {
   }
 
   return data ? convertir(data as unknown as JoinedName) : null;
+});
+
+export const getAutresPrenomsDuGenre = cache(async (genre: string, slug: string): Promise<Prenom[]> => {
+  const codeGenre = Object.entries(libellesGenres).find(([, libelle]) => libelle === genre)?.[0];
+  if (!codeGenre || codeGenre === "inconnu") return [];
+
+  const supabase = createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("names")
+    .select(selection)
+    .eq("gender", codeGenre)
+    .neq("slug", slug)
+    .eq("name_profiles.status", "publie")
+    .not("name_profiles.published_at", "is", null)
+    .order("display_name", { ascending: true })
+    .limit(3);
+
+  if (error) {
+    console.error(`Échec du chargement des autres prénoms du genre "${genre}" :`, error);
+    throw new Error("Les suggestions de prénoms sont momentanément indisponibles.");
+  }
+
+  return (data as unknown as JoinedName[]).map(convertir);
 });
