@@ -113,6 +113,7 @@ export function ComparateurPrenoms({ prenoms }: Props) {
                       <div className="compare-association" key={`${association.category}-${association.value}`}>
                         <strong>{association.value}</strong>
                         <span>{association.category}</span>
+                        <p>{association.context_note}</p>
                       </div>
                     ))}
                   </div>
