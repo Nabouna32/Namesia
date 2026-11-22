@@ -770,26 +770,6 @@ h2 em {
   line-height: 1.75;
 }
 
-.profile-aside-link {
-  display: grid;
-  gap: 8px;
-  padding: 18px 20px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--surface);
-}
-
-.profile-aside-link > span {
-  color: #75677c;
-  font-size: 12px;
-}
-
-.profile-aside-link a {
-  color: #80438f;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.5;
-}
 
 .profile-footer {
   margin-top: 12px;
@@ -999,9 +979,6 @@ h2 em {
     gap: 18px;
   }
 
-  .profile-aside {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 
   .profile-toc {
     align-items: flex-start;
