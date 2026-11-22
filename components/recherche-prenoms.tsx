@@ -249,7 +249,7 @@ export function RecherchePrenoms({
                   <span className="name-initial">{prenom.lettre}</span>
                   <span>
                     <strong>{prenom.nom}</strong>
-                    <small>Découvrir la fiche</small>
+                    <small>{prenom.genre} · Découvrir la fiche</small>
                   </span>
                   <span className="card-arrow" aria-hidden="true">↗</span>
                 </Link>
@@ -264,7 +264,7 @@ export function RecherchePrenoms({
                 {suggestions.map((prenom) => (
                   <Link className="name-card" href={`/prenoms/${prenom.slug}`} key={prenom.slug}>
                     <span className="name-initial">{prenom.lettre}</span>
-                    <span><strong>{prenom.nom}</strong><small>Suggestion proche</small></span>
+                    <span><strong>{prenom.nom}</strong><small>{prenom.genre} · Suggestion proche</small></span>
                     <span className="card-arrow" aria-hidden="true">↗</span>
                   </Link>
                 ))}
