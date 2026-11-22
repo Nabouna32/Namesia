@@ -321,7 +321,8 @@ export function AdminClient() {
       {preview.content.origin && <section><h4>Origine & signification</h4><p>{preview.content.origin}</p></section>}
       {preview.content.history && <section><h4>Histoire du prénom</h4><p>{preview.content.history}</p></section>}
       {preview.content.usage && <section><h4>Variantes & usages</h4><p>{preview.content.usage}</p></section>}
-      {preview.content.references.length > 0 && <section><h4>Références consultées</h4><ul>{preview.content.references.map((reference, index) => <li key={`${reference.url}-${index}`}><a href={reference.url} target="_blank" rel="noopener noreferrer">{reference.title}</a> — {reference.publisher} ({reference.section}, consulté le {reference.consulted_at})</li>)}</ul></section>}\n      {preview.content.symbolic_associations.map((symbol) => <section key={`${symbol.category}-${symbol.value}`}><h4>{symbol.category} · {symbol.value}</h4><p>{symbol.context_note}</p></section>)}
+      {preview.content.references.length > 0 && <section><h4>Références consultées</h4><ul>{preview.content.references.map((reference, index) => <li key={`${reference.url}-${index}`}><a href={reference.url} target="_blank" rel="noopener noreferrer">{reference.title}</a> — {reference.publisher} ({reference.section}, consulté le {reference.consulted_at})</li>)}</ul></section>}
+      {preview.content.symbolic_associations.map((symbol) => <section key={`${symbol.category}-${symbol.value}`}><h4>{symbol.category} · {symbol.value}</h4><p>{symbol.context_note}</p></section>)}
       <p className={styles.previewWarning}>La validation porte sur la structure du JSON, pas sur la véracité des contenus générés.</p>
     </article>}
 
