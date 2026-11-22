@@ -58,8 +58,7 @@ export async function GET(request: Request, { params }: Props) {
         ...(profile.usage_text ? { usage: profile.usage_text } : {}),
         symbolic_associations: [...(profile.name_profile_associations ?? [])]
           .sort((a, b) => a.position - b.position)
-          .map(({ category, value, context_note }) => ({ category, value, context_note })),
-
+          .map(({ category, value, context_note }) => ({ category, value, context_note }))
       }
     });
 
