@@ -26,6 +26,7 @@ Variables requises :
 
 - NEXT_PUBLIC_SUPABASE_URL
 - NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+- NEXT_PUBLIC_SITE_URL (optionnelle, origine canonique du site ; défaut : `https://namesia.vercel.app`)
 
 La clé publishable peut être exposée au navigateur. La sécurité repose sur les privilèges SQL, RLS et l'autorisation administrateur. Aucune clé service_role ou clé secrète ne doit être intégrée au site.
 
@@ -55,6 +56,10 @@ Le JSON ne contient ni identifiant de base, ni numéro de version, ni statut de 
 - npm run typecheck : vérification TypeScript ;
 - npm run build : build de production ;
 - npm run start : serveur de production après build.
+
+## Référencement public
+
+Le site publie un sitemap dynamique limité aux fiches effectivement publiées, ainsi qu'un fichier robots.txt qui exclut l'administration et les routes API. `NEXT_PUBLIC_SITE_URL` définit l'origine canonique ; renseigner le domaine public réellement utilisé avant l'ouverture à l'indexation. Les robots ne remplacent jamais l'authentification ni les règles RLS.
 
 ## Déploiement et quota Vercel
 
