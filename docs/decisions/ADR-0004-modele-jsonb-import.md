@@ -12,10 +12,11 @@ Une première évolution a introduit un schéma JSON versionné et une administr
 
 ## Décision
 
-Pour la V1, le modèle métier est limité à deux tables :
+Pour la V1, le modèle métier comporte trois tables :
 - names pour l'identité stable d'un prénom ;
 - name_profiles pour les versions et les rubriques éditoriales en colonnes dédiées ;
 - name_profile_associations pour les associations symboliques répétables et filtrables.
+La table privée private.admin_users gère séparément l'autorisation des administrateurs.
 
 Le JSON Schema versionné est le contrat unique d'import. La validation est effectuée côté client pour aider l'administrateur, puis obligatoirement côté serveur avant l'écriture.
 
