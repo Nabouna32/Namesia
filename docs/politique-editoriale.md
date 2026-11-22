@@ -1,7 +1,7 @@
 # Principes éditoriaux — Namesia
 
 - **Statut :** document canonique
-- **Version :** 2.0
+- **Version :** 3.0
 - **Mis à jour :** 2026-11-22
 
 ## 1. Nature des contenus
@@ -39,9 +39,11 @@ Les associations symboliques sont des contenus éditoriaux ou culturels. Elles n
 
 ## 5. Références et statistiques
 
-Namesia ne met actuellement en œuvre ni référencement systématique des affirmations, ni collecte documentaire, ni vérification indépendante, ni base statistique structurée.
+Namesia ne dispose pas d'un workflow de vérification indépendante des affirmations. Le contrat 3.0.0 permet néanmoins de joindre à une fiche des références réellement consultées, rattachées à une rubrique. Chaque référence comporte un titre, un éditeur ou organisme, une URL et une date de consultation.
 
-Les références, sources, claims et données statistiques ne doivent donc pas être simulés dans le contenu ou dans l'interface. Si un véritable processus documentaire ou statistique est introduit ultérieurement, il devra être conçu, documenté et testé avant d'être présenté comme une capacité du produit.
+Une référence documente une ressource utilisée ; elle ne prouve pas automatiquement chaque phrase de la rubrique et ne constitue jamais un statut de validation. Distinguer les sources primaires, les dictionnaires spécialisés et les ressources de vulgarisation. Une ressource commerciale ne doit pas être présentée comme une autorité linguistique.
+
+Lorsqu'une origine est discutée ou que les sources sont insuffisantes, le dire clairement et ne pas remplir artificiellement la rubrique. Une fiche peut ne comporter aucune référence pour une rubrique donnée. Ne jamais simuler de sources, claims ou données statistiques.
 
 ## 6. Publication
 

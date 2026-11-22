@@ -1,4 +1,4 @@
-export const FICHE_SCHEMA_VERSION = "2.0.0" as const;
+export const FICHE_SCHEMA_VERSION = "3.0.0" as const;
 
 export type GenrePrenom = "feminin" | "masculin" | "mixte" | "inconnu";
 
@@ -8,12 +8,15 @@ export type AssociationSymbolique = {
   context_note: string;
 };
 
+export type ReferenceFiche = { section: "origine" | "histoire" | "usages"; title: string; publisher: string; url: string; consulted_at: string };
+
 export type ContenuFichePrenom = {
   introduction: string;
   origin?: string;
   history?: string;
   usage?: string;
   symbolic_associations: AssociationSymbolique[];
+  references: ReferenceFiche[];
 };
 
 export type FichePrenomImport = {
@@ -81,7 +84,7 @@ export function parseFichePrenom(value: unknown): FichePrenomImport {
   }
 
   if (!estObjet(value.content)) throw new Error("content doit être un objet.");
-  verifierCles(value.content, ["introduction", "origin", "history", "usage", "symbolic_associations"], "content");
+  verifierCles(value.content, ["introduction", "origin", "history", "usage", "symbolic_associations", "references"], "content");
 
   const introduction = verifierTexte(value.content.introduction, "content.introduction", 600, true)!;
   const origin = verifierTexte(value.content.origin, "content.origin", 3000);
@@ -104,6 +107,25 @@ export function parseFichePrenom(value: unknown): FichePrenomImport {
     };
   });
 
+  const referencesBrutes = value.content.references ?? [];
+  if (!Array.isArray(referencesBrutes) || referencesBrutes.length > 20) throw new Error("content.references doit contenir au plus 20 références.");
+  const references = referencesBrutes.map((reference, index): ReferenceFiche => {
+    const chemin = `content.references[${index}]`;
+    if (!estObjet(reference)) throw new Error(`${chemin} doit être un objet.`);
+    verifierCles(reference, ["section", "title", "publisher", "url", "consulted_at"], chemin);
+    const section = reference.section;
+    if (section !== "origine" && section !== "histoire" && section !== "usages") throw new Error(`${chemin}.section invalide.`);
+    const title = verifierTexte(reference.title, `${chemin}.title`, 240, true)!;
+    const publisher = verifierTexte(reference.publisher, `${chemin}.publisher`, 160, true)!;
+    const url = verifierTexte(reference.url, `${chemin}.url`, 2048, true)!;
+    let parsed: URL;
+    try { parsed = new URL(url); } catch { throw new Error(`${chemin}.url invalide.`); }
+    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") throw new Error(`${chemin}.url doit utiliser HTTP ou HTTPS.`);
+    const consulted_at = verifierTexte(reference.consulted_at, `${chemin}.consulted_at`, 10, true)!;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(consulted_at) || Number.isNaN(Date.parse(`${consulted_at}T00:00:00Z`))) throw new Error(`${chemin}.consulted_at invalide.`);
+    return { section, title, publisher, url, consulted_at };
+  });
+
   return {
     schema_version: FICHE_SCHEMA_VERSION,
     identity: { slug, display_name, gender },
@@ -112,7 +134,8 @@ export function parseFichePrenom(value: unknown): FichePrenomImport {
       ...(origin ? { origin } : {}),
       ...(history ? { history } : {}),
       ...(usage ? { usage } : {}),
-      symbolic_associations
+      symbolic_associations,
+      references
     }
   };
 }
