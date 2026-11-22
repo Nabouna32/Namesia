@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 2.2
+- **Version :** 2.3
 - **Mis à jour :** 2026-11-22
 
 ## 1. Positionnement
@@ -14,7 +14,7 @@ Le lancement éditorial vise la France et les usages francophones. L'ouverture �
 
 Proposer des fiches agréables à lire et des outils simples pour rechercher, comparer et découvrir des prénoms.
 
-Les contenus sont générés à l'aide de modèles d'intelligence artificielle, depuis une API ou une conversation avec un assistant. Le résultat est un JSON conforme au contrat Namesia, importé dans l'administration puis enregistré en base.
+Les contenus sont générés à l'aide de modèles d'intelligence artificielle, depuis une API ou une conversation. Le résultat est un JSON conforme au contrat Namesia, importé dans l'administration puis enregistré en base.
 
 **La génération par IA n'est pas une vérification.** Un contenu enregistré ou publié n'est pas, de ce seul fait, confirmé par une source indépendante ou validé par un spécialiste. Il peut comporter des erreurs, des approximations ou des informations incomplètes.
 
@@ -37,7 +37,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 
 - Catalogue de prénoms utilisé en France.
 - Page dédiée par prénom avec URL stable.
-- Recherche de prénoms avec prise en compte des accents et des variantes de casse ; filtres combinables par genre et initiale.
+- Recherche de prénoms avec prise en compte des accents et des variantes de casse ; classement des résultats par pertinence (correspondance exacte, puis préfixe, puis occurrence), avec filtres combinables par genre et initiale.
 - Fiches de découverte avec introduction, origine, histoire, usages et associations symboliques facultatives ; liens vers d'autres prénoms publiés de même genre et partage natif de la fiche.
 - Comparaison partageable de deux ou trois fiches sur leurs informations éditoriales publiées, via l'URL de la sélection.
 - Aperçus de partage visuels avec une carte dédiée à chaque fiche.
