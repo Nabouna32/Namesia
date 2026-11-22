@@ -871,6 +871,32 @@ h2 em {
 }
 
 
+.profile-discovery {
+  margin-top: 42px;
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid #eadcf0;
+  border-radius: 18px;
+  background: linear-gradient(125deg, #fff4f8, #fffaf0 52%, #f3f0ff);
+}
+
+.profile-discovery .profile-section-heading {
+  margin-bottom: 18px;
+}
+
+.profile-discovery .profile-section-heading h2 {
+  font-size: clamp(25px, 3vw, 32px);
+}
+
+.profile-discovery .name-grid {
+  max-width: 780px;
+}
+
+.profile-discovery > .text-link {
+  display: inline-flex;
+  margin-top: 20px;
+  padding-bottom: 0;
+}
+
 .profile-footer {
   margin-top: 12px;
   padding-top: 22px;

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPrenom } from "@/lib/prenoms";
+import { getAutresPrenomsDuGenre, getPrenom } from "@/lib/prenoms";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -29,6 +29,13 @@ export default async function FichePrenom({ params }: Props) {
   const { slug } = await params;
   const prenom = await getPrenom(slug);
   if (!prenom) notFound();
+
+  const autresPrenoms = await getAutresPrenomsDuGenre(prenom.genre, prenom.slug);
+  const genreAuPluriel: Record<string, string> = {
+    "Féminin": "féminins",
+    "Masculin": "masculins",
+    "Mixte": "mixtes"
+  };
 
   const aDesRubriques = Boolean(
     prenom.origin || prenom.history || prenom.usage || prenom.symbolic_associations.length
@@ -131,6 +138,28 @@ export default async function FichePrenom({ params }: Props) {
               </div>
             </aside>
           </div>
+
+          {autresPrenoms.length > 0 && (
+            <section className="profile-discovery" aria-labelledby="profile-discovery-title">
+              <div className="profile-section-heading">
+                <span className="profile-section-kicker">Pour prolonger la découverte</span>
+                <h2 id="profile-discovery-title">D'autres prénoms {genreAuPluriel[prenom.genre] ?? "à découvrir"}</h2>
+              </div>
+              <div className="name-grid">
+                {autresPrenoms.map((autrePrenom) => (
+                  <Link className="name-card" href={`/prenoms/${autrePrenom.slug}`} key={autrePrenom.slug}>
+                    <span className="name-initial">{autrePrenom.lettre}</span>
+                    <span>
+                      <strong>{autrePrenom.nom}</strong>
+                      <small>{autrePrenom.genre}</small>
+                    </span>
+                    <span className="card-arrow" aria-hidden="true">↗</span>
+                  </Link>
+                ))}
+              </div>
+              <Link className="text-link" href="/prenoms">Explorer tout le catalogue <span aria-hidden="true">↗</span></Link>
+            </section>
+          )}
 
           <footer className="profile-footer">
             <Link href="/prenoms">← Retour au catalogue</Link>
