@@ -183,6 +183,24 @@ export default async function FichePrenom({ params }: Props) {
             </section>
           )}
 
+          {prenom.references.length > 0 && (
+            <section className="profile-section" id="references">
+              <div className="profile-section-heading">
+                <span className="profile-section-kicker">Pour aller plus loin</span>
+                <h2>Références consultées</h2>
+              </div>
+              <p className="profile-copy">Ces ressources ont été consultées lors de la rédaction. Leur présence ne signifie pas que chaque affirmation de la fiche a été vérifiée indépendamment.</p>
+              <ul className="reference-list">
+                {prenom.references.map((reference, index) => (
+                  <li key={`${reference.url}-${index}`}>
+                    <a href={reference.url} target="_blank" rel="noopener noreferrer">{reference.title}</a>
+                    <span>{reference.publisher} · Rubrique : {reference.section} · Consulté le {new Date(`${reference.consulted_at}T00:00:00`).toLocaleDateString("fr-FR")}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
           {autresPrenoms.length > 0 && (
             <section className="profile-discovery" aria-labelledby="profile-discovery-title">
               <div className="profile-section-heading">
