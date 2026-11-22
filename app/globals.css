@@ -116,7 +116,7 @@ select:focus-visible {
   color: var(--color-surface);
   font-size: 14px;
   font-weight: 700;
-  box-shadow: 0 5px 18px var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   transition: transform 0.18s ease;
 }
 
@@ -1599,6 +1599,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 button:disabled, input:disabled, select:disabled { cursor: not-allowed; opacity: .56; }
 ::selection { background: var(--color-accent); color: var(--color-accent-contrast); }
 .site-header { background: var(--color-surface); border-color: var(--color-border); }
+.site-nav { color: var(--color-text-muted); }
+.search-field input::placeholder, .name-card small { color: var(--color-text-muted); }
 .site-nav, .hero-copy, .ai-disclaimer, .page-intro, .breadcrumb ol,
 .profile-lead, .profile-copy, .compare-field p, .compare-association p { color: var(--color-text-muted); }
 .hero { background: var(--color-background); }
