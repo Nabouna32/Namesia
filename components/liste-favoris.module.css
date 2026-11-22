@@ -10,6 +10,10 @@
   flex: 1;
 }
 
+.row > button {
+  margin-top: 0;
+}
+
 .note {
   grid-column: 1 / -1;
   margin: 4px 0 0;
