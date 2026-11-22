@@ -1088,7 +1088,7 @@ h2 em {
 
 .share-button {
   display: inline-flex;
-  min-height: 42px;
+  min-height: 44px;
   align-items: center;
   justify-content: center;
   padding: 9px 15px;
@@ -1518,7 +1518,7 @@ h2 em {
   }
 
   .filter-chip {
-    min-height: 40px;
+    min-height: 44px;
   }
 
   .eyebrow {
