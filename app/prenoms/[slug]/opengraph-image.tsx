@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { getPrenom } from "@/lib/prenoms";
+import { chargerPolicesOpenGraph } from "@/lib/polices-open-graph";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -21,28 +22,78 @@ export default async function Image({ params }: Props) {
 
   return new ImageResponse(
     <div style={{
-      width: "100%", height: "100%", display: "flex", flexDirection: "column",
-      justifyContent: "space-between", padding: "64px 76px", position: "relative",
-      overflow: "hidden",
-      background: "linear-gradient(118deg, #fff0f5 0%, #fff9ed 38%, #effaf5 70%, #f2efff 100%)",
-      color: "#30243b"
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      padding: "48px 64px",
+      background: "#f2f3fa",
+      color: "#191b20",
+      fontFamily: "Roboto"
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-        <div style={{ width: 48, height: 48, borderRadius: 17, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #ff5d8f, #ff9f43 28%, #62c88a 54%, #48b8e8 76%, #9870e8)", color: "#fff", fontFamily: "Georgia, serif", fontSize: 32 }}>n.</div>
-        <div style={{ fontSize: 24, fontWeight: 700, letterSpacing: 2 }}>NAMESIA</div>
+        <div style={{
+          width: 48,
+          height: 48,
+          borderRadius: 16,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "linear-gradient(105deg, #ef568b 0%, #f29a42 19%, #e8c94c 36%, #55b987 54%, #49a9d5 72%, #8669d4 88%, #d76bb5 100%)",
+          color: "#ffffff",
+          fontSize: 25
+        }}>n.</div>
+        <div style={{ fontSize: 25, letterSpacing: 0.2 }}>namesia</div>
       </div>
-      <div style={{ position: "relative", maxWidth: 880, display: "flex", flexDirection: "column", gap: 18 }}>
-        <div style={{ color: "#9253a1", fontSize: 20, fontWeight: 700, letterSpacing: 4 }}>DÉCOUVRIR UN PRÉNOM</div>
-        <div style={{ display: "flex", alignItems: "baseline", gap: 0, fontFamily: "Georgia, serif", fontSize: tailleNom, lineHeight: 1.02, letterSpacing: -3 }}>{prenom.nom}<span style={{ color: "#a85ab7" }}>.</span></div>
-        <div style={{ maxWidth: 820, color: "#51445a", fontSize: 25, lineHeight: 1.4 }}>{extrait}</div>
-        <div style={{ display: "flex", gap: 12, marginTop: 8 }}>
-          <div style={{ padding: "9px 18px", borderRadius: 24, border: "1px solid rgba(126, 77, 143, 0.24)", background: "rgba(255,255,255,0.75)", color: "#684875", fontSize: 17 }}>{prenom.genre}</div>
-          <div style={{ padding: "9px 18px", borderRadius: 24, border: "1px solid rgba(126, 77, 143, 0.24)", background: "rgba(255,255,255,0.75)", color: "#684875", fontSize: 17 }}>Lettre {prenom.lettre}</div>
+      <div style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 16,
+        padding: 36,
+        borderRadius: 28,
+        background: "#f9f9ff"
+      }}>
+        <div style={{
+          alignSelf: "flex-start",
+          padding: "8px 14px",
+          borderRadius: 18,
+          background: "#dbe2f9",
+          color: "#131b2c",
+          fontSize: 18
+        }}>Découvrir un prénom</div>
+        <div style={{
+          display: "flex",
+          alignItems: "baseline",
+          fontSize: tailleNom,
+          lineHeight: 1.04,
+          letterSpacing: -2
+        }}>{prenom.nom}<span style={{ color: "#005ac1" }}>.</span></div>
+        <div style={{
+          maxWidth: 1000,
+          color: "#44474f",
+          fontSize: 23,
+          lineHeight: 1.35
+        }}>{extrait}</div>
+        <div style={{ display: "flex", gap: 12, marginTop: 4 }}>
+          <div style={{
+            padding: "8px 16px",
+            borderRadius: 20,
+            background: "#dbe2f9",
+            color: "#131b2c",
+            fontSize: 17
+          }}>{prenom.genre}</div>
+          <div style={{
+            padding: "8px 16px",
+            borderRadius: 20,
+            background: "#dbe2f9",
+            color: "#131b2c",
+            fontSize: 17
+          }}>Lettre {prenom.lettre}</div>
         </div>
       </div>
-      <div style={{ position: "absolute", right: 24, bottom: -210, color: "rgba(124, 75, 145, 0.10)", fontFamily: "Georgia, serif", fontSize: 460, lineHeight: 1 }}>{prenom.lettre}</div>
-      <div style={{ color: "#8a7b91", fontSize: 17, letterSpacing: 1 }}>ORIGINE · HISTOIRE · USAGES</div>
+      <div style={{ color: "#44474f", fontSize: 16 }}>ORIGINE · HISTOIRE · USAGES</div>
     </div>,
-    size
+    { ...size, fonts: await chargerPolicesOpenGraph() }
   );
 }
