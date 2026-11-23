@@ -248,3 +248,18 @@ test("la navigation applique des couches d'état Material, pas des surfaces opaq
   assert.doesNotMatch(navigationStyles, /\.navigation-item:hover[^}]*surface-container-high/);
   assert.doesNotMatch(navigationStyles, /transition:[^;]*(?:180|250)ms/);
 });
+
+
+test("la typographie suit une échelle Material 3 unique sans surcharges responsives concurrentes", () => {
+  assert.match(globalStyles, /--md-sys-typescale-display-small-size: 36px/);
+  assert.match(globalStyles, /--md-sys-typescale-headline-large-size: 32px/);
+  assert.match(globalStyles, /--md-sys-typescale-headline-medium-size: 28px/);
+  assert.match(globalStyles, /--md-sys-typescale-headline-small-size: 24px/);
+  assert.match(globalStyles, /\\.hero h1 \\{[^}]*var\\(--md-sys-typescale-display-small-size\\)/s);
+  assert.match(globalStyles, /\\.profile-hero h1 \\{[^}]*var\\(--md-sys-typescale-headline-large-size\\)/s);
+  assert.match(globalStyles, /\\.section-heading h2 \\{[^}]*var\\(--md-sys-typescale-headline-medium-size\\)/s);
+  assert.equal((globalStyles.match(/\\.hero h1\\s*\\{/g) ?? []).length, 1);
+  assert.equal((globalStyles.match(/\\.profile-hero h1\\s*\\{/g) ?? []).length, 1);
+  assert.equal((globalStyles.match(/\\.section-heading h2\\s*\\{/g) ?? []).length, 1);
+  assert.doesNotMatch(globalStyles, /--font-serif|var\\(--serif\\)/);
+});
