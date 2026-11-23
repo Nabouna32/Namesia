@@ -5,13 +5,13 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 0 14px;
+  padding: 0 16px;
   border: 1px solid var(--md-sys-color-outline);
   border-radius: var(--md-sys-shape-corner-small);
   background: var(--md-sys-color-surface);
   color: var(--md-sys-color-on-surface-variant);
   font: inherit;
-  font-size: 14px;
+  font-size: var(--md-sys-typescale-body-medium-size);
   font-weight: 500;
   cursor: pointer;
   transition: border-color 160ms var(--motion-standard), background-color 160ms var(--motion-standard), color 160ms var(--motion-standard);
@@ -39,8 +39,8 @@
 
 .initial {
   min-width: 48px;
-  padding-inline: 10px;
-  font-size: 16px;
+  padding-inline: 12px;
+  font-size: var(--md-sys-typescale-body-large-size);
 }
 
 @media (prefers-reduced-motion: reduce) {
