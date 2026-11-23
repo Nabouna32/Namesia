@@ -82,11 +82,13 @@ export function ListeFavoris({ prenoms }: Props) {
     setMessageCopie("");
     setErreurCopie("");
 
+    if (!navigator.clipboard?.writeText) {
+      setErreurCopie("La copie n’est pas disponible sur cet appareil ou a été refusée.");
+      return;
+    }
+
     try {
-      if (!navigator.clipboard?.writeText) {
-        throw new Error("Presse-papiers indisponible");
-      }
-      await navigator.clipboard.writeText(favorisFiltres.map((prenom) => prenom.nom).join("\\n"));
+      await navigator.clipboard.writeText(favorisFiltres.map((prenom) => prenom.nom).join("\n"));
       setMessageCopie(`${favorisFiltres.length} ${favorisFiltres.length > 1 ? "prénoms copiés" : "prénom copié"} dans le presse-papiers.`);
     } catch {
       setErreurCopie("La copie n’est pas disponible sur cet appareil ou a été refusée.");
