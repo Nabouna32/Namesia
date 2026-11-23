@@ -204,7 +204,7 @@ export function ListeFavoris({
             : favorisFiltres.length > 1
               ? `Copier les ${favorisFiltres.length} prénoms`
               : "Copier la liste filtrée"}
-        </button>
+        </Bouton>
         <label className={styles.importButton}>
           Importer une sauvegarde
           <input type="file" accept=".json,application/json" onChange={importerFavoris} />
@@ -297,7 +297,7 @@ export function ListeFavoris({
                 }}
               >
                 Effacer les filtres
-              </button>
+              </Bouton>
             </div>
           ) : (
             <div className="name-grid">
@@ -337,7 +337,7 @@ export function ListeFavoris({
               onClick={chargerPlus}
             >
               Afficher les {Math.min(24, favorisFiltres.length - nombreVisible)} favoris suivants
-            </button>
+            </Bouton>
           )}
         </>
       )}
@@ -352,7 +352,7 @@ export function ListeFavoris({
             onClick={() => retirerPlusieurs(slugsIndisponibles)}
           >
             Retirer les favoris indisponibles
-          </button>
+          </Bouton>
         </div>
       )}
     </div>
