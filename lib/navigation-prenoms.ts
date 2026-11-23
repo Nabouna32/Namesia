@@ -91,6 +91,10 @@ export function creerUrlFicheDepuisFavoris(
   return creerUrlFiche(slug, parametres);
 }
 
+function normaliserSlugsComparateur(slugs: string[]): string[] {
+  return [...new Set(slugs.filter((slug) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)))].slice(0, 3);
+}
+
 export function creerUrlFicheDepuisComparateur(slug: string, prenoms: string[]): string {
   const selection = normaliserSlugsComparateur(prenoms);
   if (selection.length < 2) return creerUrlFiche(slug, new URLSearchParams());
