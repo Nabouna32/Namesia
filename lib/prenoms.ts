@@ -2,6 +2,7 @@ import { cache } from "react";
 import { parseContenuFiche, type AssociationSymbolique, type ContenuFichePrenom } from "@/lib/fiche-prenom";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { lireToutesLesPages } from "@/lib/pagination";
+import { calculerFenetreSuggestions } from "@/lib/suggestions-prenoms";
 
 export type Prenom = {
   id: string;
@@ -185,10 +186,42 @@ export const getAutresPrenomsIndexDuGenre = cache(async (genre: string, slug: st
   const [codeGenre] = entreeGenre;
   if (codeGenre === "inconnu") return [];
 
-  const prenoms = await getPrenomsIndex();
+  const supabase = createSupabaseServerClient();
+  const { count, error: erreurCompte } = await supabase
+    .from("names")
+    .select("id, name_profiles!inner(status, published_at)", { count: "exact", head: true })
+    .eq("gender", codeGenre)
+    .eq("name_profiles.status", "publie")
+    .not("name_profiles.published_at", "is", null)
+    .neq("slug", slug);
 
-  return prenoms
-    .filter((prenom) => prenom.genre === genre && prenom.slug !== slug)
+  if (erreurCompte) {
+    console.error("Échec du comptage des suggestions Namesia :", erreurCompte);
+    throw new Error("Les suggestions de prénoms sont momentanément indisponibles.");
+  }
+  if (count === null || !Number.isSafeInteger(count) || count < 0) {
+    throw new Error("Le compte exact des suggestions de prénoms est invalide.");
+  }
+  if (count === 0) return [];
+
+  const fenetre = calculerFenetreSuggestions(slug, count);
+  const { data, error } = await supabase
+    .from("names")
+    .select("id, slug, display_name, gender, name_profiles!inner(status, published_at)")
+    .eq("gender", codeGenre)
+    .eq("name_profiles.status", "publie")
+    .not("name_profiles.published_at", "is", null)
+    .neq("slug", slug)
+    .order("id", { ascending: true })
+    .range(fenetre.debut, fenetre.debut + fenetre.taille - 1);
+
+  if (error || data === null) {
+    console.error("Échec du chargement des suggestions Namesia :", error);
+    throw new Error("Les suggestions de prénoms sont momentanément indisponibles.");
+  }
+
+  return (data as unknown as JoinedNameIndex[])
+    .map(convertirIndex)
     .sort((a, b) => scoreSuggestion(slug, a.slug) - scoreSuggestion(slug, b.slug)
       || a.slug.localeCompare(b.slug, "fr"))
     .slice(0, 3);
