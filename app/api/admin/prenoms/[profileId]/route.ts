@@ -56,7 +56,7 @@ export async function GET(request: Request, { params }: Props) {
         ...(profile.origin_text ? { origin: profile.origin_text } : {}),
         ...(profile.history_text ? { history: profile.history_text } : {}),
         ...(profile.usage_text ? { usage: profile.usage_text } : {}),
-        symbolic_associations: [...(profile.name_profile_associations ?? [])]
+        symbolic_associations: [...profile.name_profile_associations]
           .sort((a, b) => a.position - b.position)
           .map(({ category, value, context_note }) => ({ category, value, context_note }))
       }
