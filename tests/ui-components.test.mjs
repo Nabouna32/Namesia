@@ -265,7 +265,7 @@ test("la typographie suit une échelle Material 3 unique sans surcharges respons
   assert.equal((globalStyles.match(/\.section-heading h2\s*\{/g) ?? []).length, 1);
   assert.doesNotMatch(globalStyles, /--font-serif|var\(--serif\)/);
   assert.match(globalStyles, /--md-sys-typescale-body-large-font: Roboto;/);
-  assert.match(globalStyles, /--font-display: Roboto;/);
+  assert.match(globalStyles, /--md-sys-typescale-headline-large-font: Roboto;/);
   assert.doesNotMatch(globalStyles, /Google Sans|--font-(?:sans|display):[^;]*(?:Arial|system-ui|sans-serif)/);
 });
 
@@ -277,7 +277,7 @@ test("les cartes Rainbow utilisent la couleur de premier plan de leur propre cat
     globalStyles.indexOf(".compare-association {")
   );
   assert.equal((globalStyles.match(/\.symbolic-card\s*\{/g) ?? []).length, 1);
-  assert.match(symbolicCard, /var\(--category, var\(--md-sys-color-outline\)\)/);
+  assert.match(symbolicCard, /var\(--md-sys-color-category\)/);
   assert.match(symbolicCard, /var\(--category-container/);
   assert.match(categoryBadge, /var\(--category-on-container/);
   assert.doesNotMatch(globalStyles, /\.symbolic-card > span \{[^}]*on-tertiary-container/);
