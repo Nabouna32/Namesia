@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   ajouterConsultation,
+  retirerConsultation,
   lireHistoriqueSession,
   NOMBRE_MAX_HISTORIQUE
 } from "../lib/historique-prenoms.ts";
@@ -46,4 +47,17 @@ test("une sauvegarde invalide est rejetée", () => {
 test("une sauvegarde trop longue est limitée aux huit consultations les plus récentes", () => {
   const slugs = Array.from({ length: 12 }, (_, index) => "prenom-" + index);
   assert.deepEqual(lireHistoriqueSession(JSON.stringify(slugs)), slugs.slice(0, NOMBRE_MAX_HISTORIQUE));
+});
+
+test("retirer une consultation ne modifie que l'entrée demandée", () => {
+  assert.deepEqual(retirerConsultation(["alice", "bob", "charlie"], "bob"), ["alice", "charlie"]);
+});
+
+test("retirer une consultation absente laisse l'historique inchangé", () => {
+  const slugs = ["alice", "bob"];
+  assert.deepEqual(retirerConsultation(slugs, "inconnu"), slugs);
+});
+
+test("retirer une consultation vide conserve les autres entrées", () => {
+  assert.deepEqual(retirerConsultation(["alice", "bob"], ""), ["alice", "bob"]);
 });
