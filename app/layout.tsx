@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { FavorisProvider } from "@/components/favoris-provider";
 import { HistoriqueProvider } from "@/components/historique-provider";
@@ -18,6 +18,17 @@ const siteWebData = {
   url: siteUrl.toString(),
   inLanguage: "fr-FR",
   description: siteDescription
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fef7ff" },
+    { media: "(prefers-color-scheme: dark)", color: "#141218" }
+  ]
 };
 
 export const metadata: Metadata = {
