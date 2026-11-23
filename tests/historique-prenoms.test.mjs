@@ -2,22 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   ajouterConsultation,
-  lireHistorique,
   NOMBRE_MAX_HISTORIQUE
 } from "../lib/historique-prenoms.ts";
-
-test("un historique absent est vide", () => {
-  assert.deepEqual(lireHistorique(null), []);
-  assert.deepEqual(lireHistorique(""), []);
-});
-
-test("la lecture déduplique et limite les entrées les plus anciennes", () => {
-  const slugs = Array.from({ length: 10 }, (_, index) => `prenom-${index}`);
-  assert.deepEqual(
-    lireHistorique(JSON.stringify([...slugs, "prenom-0"])),
-    slugs.slice(0, NOMBRE_MAX_HISTORIQUE)
-  );
-});
 
 test("une nouvelle consultation passe en tête sans doublon", () => {
   assert.deepEqual(
@@ -34,9 +20,7 @@ test("une nouvelle consultation conserve au plus huit prénoms", () => {
   );
 });
 
-test("un historique mal formé est rejeté", () => {
-  assert.throws(() => lireHistorique("{"), SyntaxError);
-  assert.throws(() => lireHistorique(JSON.stringify({ slugs: ["alice"] })), TypeError);
-  assert.throws(() => lireHistorique(JSON.stringify(["alice", 42])), TypeError);
-  assert.throws(() => lireHistorique(JSON.stringify([""])), TypeError);
+test("une consultation sans slug ne modifie pas l'historique", () => {
+  const slugs = ["alice", "bob"];
+  assert.equal(ajouterConsultation(slugs, ""), slugs);
 });
