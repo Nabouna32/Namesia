@@ -3,9 +3,9 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 10px 16px;
-  margin: 16px 0;
-  padding: 12px 16px;
+gap: 12px 16px;
+margin: 16px 0;
+padding: 12px 16px;
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-sys-shape-corner-medium);
   background: var(--md-sys-color-surface-container);
@@ -17,6 +17,6 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
+gap: 8px;
 }
 
