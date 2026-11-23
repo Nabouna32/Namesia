@@ -1580,8 +1580,8 @@ h1 em, h2 em { color: var(--color-accent); background: none; -webkit-text-fill-c
 .filter-chip[aria-pressed="true"] { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-accent-contrast); }
 .name-initial, .compare-option-initial { background: var(--color-surface-muted); color: var(--color-accent); }
 .profile-hero { background: var(--color-surface); }
-.profile-hero h1 span, .profile-toc a, .profile-footer a, .profile-note h2,
-.profile-section-heading h2, .text-link, .card-arrow { color: var(--color-accent); }
+.profile-hero h1 span, .profile-toc a, .profile-footer a,
+.text-link, .card-arrow { color: var(--color-accent); }
 .profile-tag { background: var(--color-surface-muted); border-color: var(--color-border); color: var(--color-text); }
 .profile-toc, .profile-section + .profile-section, .compare-field, .compare-card header { border-color: var(--color-border); }
 .profile-note { border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-6); }
