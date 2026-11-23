@@ -1794,7 +1794,9 @@ h1 em, h2 em {
   box-shadow: none;
 }
 .search-field:focus-within { border: 2px solid var(--md-sys-color-primary); outline: 0; }
-.search-icon, .clear-search { color: var(--md-sys-color-on-surface-variant); }
+.material-icon { display: block; flex: 0 0 auto; }
+.search-icon { display: grid; width: 24px; height: 24px; flex: 0 0 auto; place-items: center; transform: none; color: var(--md-sys-color-on-surface-variant); }
+.clear-search { color: var(--md-sys-color-on-surface-variant); }
 .search-field input::placeholder { color: var(--md-sys-color-on-surface-variant); }
 
 .catalogue-filters, .compare-selector {
@@ -1838,6 +1840,8 @@ h1 em, h2 em {
 }
 .name-card small { color: var(--md-sys-color-on-surface-variant); }
 .card-arrow, .text-link, .profile-toc a, .profile-footer a { color: var(--md-sys-color-primary); }
+.card-arrow { display: grid; width: 40px; height: 40px; flex: 0 0 auto; place-items: center; border-radius: var(--md-sys-shape-corner-full); background: var(--md-sys-color-surface-container); }
+.card-arrow .material-icon { width: 20px; height: 20px; }
 
 .featured-1 { border: 1px solid var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-extra-large); background: var(--md-sys-color-primary-container); }
 .featured-2 { border: 1px solid var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-extra-large); background: var(--md-sys-color-secondary-container); }
@@ -1852,8 +1856,9 @@ h1 em, h2 em {
 .featured-action { color: var(--md-sys-color-on-primary-container); }
 .featured-2 .featured-action { color: var(--md-sys-color-on-secondary-container); }
 .featured-3 .featured-action { color: var(--md-sys-color-on-tertiary-container); }
-.featured-action b { display: inline-block; transition: transform 180ms var(--motion-emphasized); }
+.featured-action b { display: inline-grid; place-items: center; transition: transform 180ms var(--motion-emphasized); }
 .featured-card:hover .featured-action b { transform: translate(3px, -2px); }
+.featured-action b .material-icon { width: 18px; height: 18px; }
 
 .profile-hero {
   border: 1px solid var(--md-sys-color-outline-variant);
