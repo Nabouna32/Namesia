@@ -163,19 +163,20 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
 
         <div className="compare-selection-footer">
           {prenomsSelectionnes.length > 0 && (
-            <div className="compare-selected-list" aria-label="Prénoms sélectionnés">
+            <ul className="compare-selected-list" aria-label="Prénoms sélectionnés">
               {prenomsSelectionnes.map((prenom) => (
-                <button
-                  className="compare-selected-item"
-                  type="button"
-                  key={prenom.slug}
-                  aria-label={`Retirer ${prenom.nom} de la comparaison`}
-                  onClick={() => changerSelection(prenom.slug, false)}
-                >
-                  {prenom.nom}<span aria-hidden="true">×</span>
-                </button>
+                <li key={prenom.slug}>
+                  <button
+                    className="compare-selected-item"
+                    type="button"
+                    aria-label={`Retirer ${prenom.nom} de la comparaison`}
+                    onClick={() => changerSelection(prenom.slug, false)}
+                  >
+                    {prenom.nom}<span aria-hidden="true">×</span>
+                  </button>
+                </li>
               ))}
-            </div>
+            </ul>
           )}
           <span role="status" aria-live="polite">{selection.length} / 3 prénoms sélectionnés</span>
           <button type="button" disabled={selection.length === 0} onClick={effacerSelection}>
