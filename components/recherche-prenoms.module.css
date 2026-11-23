@@ -17,9 +17,9 @@
 }
 
 .favoriteError {
-  margin: 0 0 14px;
-  color: var(--color-error);
-  font-size: 14px;
+  margin: 0 0 16px;
+  color: var(--md-sys-color-error);
+  font-size: var(--md-sys-typescale-body-medium-size);
   line-height: 1.6;
 }
 
