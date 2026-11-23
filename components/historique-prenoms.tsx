@@ -10,13 +10,13 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
 
   if (!pret) return null;
 
-  const index = new Map(prenoms.map((prenom) => [prenom.slug, prenom]));
+  const index = new Map(prenoms.map((prenom) => [prenom.slug, prenom] as const));
   const recentes = slugs.flatMap((slug) => {
     const prenom = index.get(slug);
     return prenom ? [prenom] : [];
   });
 
-  if (!erreur && recentes.length === 0) return null;
+  if (!erreur && slugs.length === 0) return null;
 
   return (
     <section className={`section ${styles.section}`} aria-labelledby="historique-title">
@@ -34,7 +34,7 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
           <p className={styles.error} role="alert">
             L’historique local n’a pas pu être lu ou enregistré. Vous pouvez tenter de l’effacer pour repartir.
           </p>
-        ) : (
+        ) : recentes.length > 0 ? (
           <>
             <div className="name-grid">
               {recentes.map((prenom) => (
@@ -48,8 +48,10 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
                 </Link>
               ))}
             </div>
-            <p className={styles.note}>Les huit dernières fiches consultées sont conservées dans ce navigateur uniquement.</p>
+            <p className={styles.note}>Jusqu’aux huit dernières fiches consultées sont conservées dans ce navigateur uniquement.</p>
           </>
+        ) : (
+          <p className={styles.note}>Aucune des fiches consultées récemment n’est actuellement publiée.</p>
         )}
       </div>
     </section>
