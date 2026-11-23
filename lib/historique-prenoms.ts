@@ -15,3 +15,7 @@ export function lireHistoriqueSession(value: string | null): string[] {
   }
   return [...new Set(contenu)].slice(0, NOMBRE_MAX_HISTORIQUE);
 }
+
+export function retirerConsultation(slugs: string[], slug: string): string[] {
+  return slugs.filter((element) => element !== slug);
+}
