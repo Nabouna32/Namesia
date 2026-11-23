@@ -1620,11 +1620,13 @@ h1 em, h2 em { color: var(--color-accent); background: none; -webkit-text-fill-c
 
 @media (max-width: 420px) {
   .brand {
+    flex: 0 0 auto;
     font-size: 19px;
   }
 
   .site-nav {
-    gap: 0;
+    flex-wrap: wrap;
+    gap: 8px 12px;
   }
 
   .site-nav a {
@@ -1695,7 +1697,7 @@ h1 em, h2 em { color: var(--color-accent); background: none; -webkit-text-fill-c
     width: 100%;
     flex-wrap: wrap;
     justify-content: flex-start;
-    gap: 4px;
+    gap: 8px 12px;
   }
 
   .site-nav a {
