@@ -250,7 +250,7 @@ h2 em {
   max-width: 490px;
   margin-bottom: 18px;
   color: var(--color-accent);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.6;
 }
 
@@ -341,7 +341,7 @@ h2 em {
   outline: 0;
   background: transparent;
   color: var(--ink);
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .search-field input::placeholder {
@@ -355,7 +355,7 @@ h2 em {
   background: none;
   color: var(--color-accent);
   cursor: pointer;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .search-results {
@@ -413,7 +413,7 @@ h2 em {
   background: var(--color-surface);
   color: var(--color-accent);
   cursor: pointer;
-  font-size: 13px;
+  font-size: 14px;
   transition: border-color 0.18s, background-color 0.18s, color 0.18s;
 }
 
@@ -445,7 +445,7 @@ h2 em {
   background: transparent;
   color: var(--color-accent);
   cursor: pointer;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   text-decoration: underline;
   text-decoration-color: var(--color-text-muted);
@@ -628,7 +628,7 @@ h2 em {
 
 .featured-name small {
   color: var(--color-text-muted);
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .featured-action {
@@ -713,7 +713,7 @@ h2 em {
   margin: 0;
   padding: 0;
   color: var(--color-accent);
-  font-size: 13px;
+  font-size: 14px;
   list-style: none;
 }
 
@@ -946,7 +946,7 @@ h2 em {
   gap: 12px;
   margin-top: 18px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .compare-selected-list {
@@ -996,7 +996,7 @@ h2 em {
   background: transparent;
   color: var(--color-accent);
   cursor: pointer;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -1114,7 +1114,7 @@ h2 em {
 .compare-share > p {
   margin: 0;
   color: var(--color-accent);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -1140,7 +1140,7 @@ h2 em {
   background: var(--color-surface);
   color: var(--color-accent);
   cursor: pointer;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   transition: border-color 0.18s, background-color 0.18s;
 }
@@ -1152,7 +1152,7 @@ h2 em {
 
 .share-feedback {
   color: var(--color-accent);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .profile-toc {
@@ -1286,7 +1286,7 @@ h2 em {
 .profile-note p {
   margin: 0;
   color: var(--color-accent);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.75;
 }
 
