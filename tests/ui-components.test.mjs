@@ -203,15 +203,16 @@ const adminClient = await readFile(new URL("../app/admin/admin-client.tsx", impo
 const adminFormStyles = await readFile(new URL("../app/admin/admin.module.css", import.meta.url), "utf8");
 const partage = await readFile(new URL("../components/partager-fiche.tsx", import.meta.url), "utf8");
 
-test("les quatre destinations de navigation ont des icônes Material distinctes à l'état actif", () => {
-  assert.match(icones, /\| "search-filled"/);
-  assert.match(icones, /\| "compare-arrows-filled"/);
-  assert.match(icones, /name === "search" \|\| name === "compare-arrows"/);
+test("les quatre destinations de navigation utilisent les SVG Material Symbols adaptés", () => {
+  assert.match(icones, /viewBox="0 -960 960 960"/);
+  assert.match(icones, /fill="currentColor"/);
+  assert.doesNotMatch(icones, /search-filled|compare-arrows-filled/);
   assert.match(navigation, /icon: "home", activeIcon: "home-filled"/);
-  assert.match(navigation, /icon: "search", activeIcon: "search-filled"/);
-  assert.match(navigation, /icon: "compare-arrows", activeIcon: "compare-arrows-filled"/);
+  assert.match(navigation, /icon: "search" \}/);
+  assert.match(navigation, /icon: "compare-arrows" \}/);
   assert.match(navigation, /icon: "favorite", activeIcon: "favorite-filled"/);
-  assert.match(navigation, /name=\{active \? destination\.activeIcon : destination\.icon\}/);
+  assert.match(navigation, /const icon = active && "activeIcon" in destination/);
+  assert.match(navigation, /name=\{icon\}/);
 });
 
 test("les formulaires administratifs utilisent les surfaces, formes et dimensions Fidelity", () => {
