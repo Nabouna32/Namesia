@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 2.6
+- **Version :** 2.7
 - **Mis à jour :** 2026-11-23
 
 ## Intention
@@ -43,7 +43,7 @@ Une seule famille sans empattement : pile système (Inter lorsqu'elle est instal
 - 24–32 px : titres de section ;
 - 40–56 px : titre principal, fluide selon l'écran.
 
-Corps à interligne confortable (1,6 à 1,75). Les textes éditoriaux sont limités en largeur pour éviter les longues lignes.
+Corps à interligne confortable (1,6 à 1,75). Les textes éditoriaux sont limités en largeur pour éviter les longues lignes. Les introductions de page et de recherche utilisent 16 px ; les aides, avertissements, messages d'état, actions secondaires et éléments de navigation utilisent au moins 14 px. Le niveau 12 px reste réservé aux repères de section et aux métadonnées.
 
 ## Espacements, rayons et ombres
 
