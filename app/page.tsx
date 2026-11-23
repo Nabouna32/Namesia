@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DecouverteAleatoire } from "@/components/decouverte-aleatoire";
+import { PrenomsVedette } from "@/components/prenoms-vedette";
 import { RecherchePrenoms } from "@/components/recherche-prenoms";
 import { getPrenomsIndex, type PrenomIndex } from "@/lib/prenoms";
 
@@ -41,20 +42,7 @@ export default async function Accueil() {
             <div><span className="eyebrow">À explorer</span><h2>Les prénoms à découvrir</h2></div>
             <Link className="text-link" href="/prenoms">Tous les prénoms <span>↗</span></Link>
           </div>
-          <div className="featured-grid">
-            {prenomsMisEnAvant.map((prenom, index) => (
-              <Link className={`featured-card featured-${index + 1}`} href={`/prenoms/${prenom.slug}`} key={prenom.slug}>
-                <span className="featured-letter">{prenom.lettre}</span>
-                <span className="featured-bottom">
-                  <span className="featured-name">
-                    <strong>{prenom.nom}</strong>
-                    <small>{prenom.genre}</small>
-                  </span>
-                  <span className="featured-action">Découvrir <b>↗</b></span>
-                </span>
-              </Link>
-            ))}
-          </div>
+          <PrenomsVedette prenoms={prenomsMisEnAvant} />
           {prenoms.length === 0 && <p className="empty-state">Le catalogue sera bientôt disponible.</p>}
         </div>
       </section>

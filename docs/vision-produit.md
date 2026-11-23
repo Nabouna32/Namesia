@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.21
+- **Version :** 3.22
 - **Mis à jour :** 2026-11-23
 
 ## 1. Positionnement
@@ -39,7 +39,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 - Page dédiée par prénom avec URL stable.
 - Recherche de prénoms avec prise en compte des accents, des variantes de casse et des séparateurs des prénoms composés (espace, tiret, apostrophe) ; classement des résultats par pertinence (correspondance exacte, puis préfixe, puis occurrence la plus proche du début du prénom), avec filtres combinables par genre et initiale. En l'absence de résultat normal, proposer jusqu'à cinq suggestions proches pour les recherches d'au moins quatre caractères, avec une tolérance d'une ou deux modifications selon la longueur et en respectant les filtres actifs. Les résultats et suggestions affichent aussi le genre associé à chaque fiche. Le catalogue présente 24 résultats au départ et révèle les suivants par lots de 24 pour garder une liste facile à parcourir.
 - URL partageable du catalogue : la recherche et les filtres actifs sont conservés dans les paramètres q, genre et lettre, puis restaurés à l'ouverture du lien.
-- Vitrine d'accueil de trois prénoms répartis sur le catalogue et renouvelés quotidiennement en UTC, plutôt que trois entrées alphabétiques consécutives ; chaque carte indique aussi le genre du prénom. La sélection s'adapte si le catalogue contient moins de trois fiches.
+- Vitrine d'accueil de trois prénoms répartis sur le catalogue et renouvelés quotidiennement en UTC, plutôt que trois entrées alphabétiques consécutives ; chaque carte indique aussi le genre du prénom. La sélection s'adapte si le catalogue contient moins de trois fiches. Chaque prénom mis en avant peut être ajouté ou retiré des favoris directement depuis sa carte.
 - Découverte aléatoire d'un prénom publié depuis l'accueil, sans répétition immédiate tant qu'un autre choix est disponible. Le résultat peut être ajouté ou retiré des favoris sans quitter l'accueil.
 - Favoris locaux : enregistrer ou retirer un prénom depuis sa fiche ou directement depuis les résultats du catalogue et de la recherche, puis retrouver la sélection dans une liste dédiée, sans compte ni synchronisation entre appareils. Les actions compactes des résultats restent distinctes du lien vers la fiche. La liste utilise uniquement les informations d'index nécessaires à son affichage, pas les textes complets des fiches. Une sauvegarde JSON des seuls identifiants peut être exportée puis importée dans un autre navigateur ; l'import fusionne la sélection sans effacer les favoris déjà présents. La liste peut aussi être filtrée par nom, sans distinction d'accents, de casse ou de séparateurs. Elle affiche 24 favoris au départ puis les suivants par lots de 24 ; une nouvelle recherche revient au premier lot. La sélection peut aussi être filtrée par genre lorsque plusieurs genres sont présents dans les favoris.
 - Accès direct au comparateur depuis une fiche, avec le prénom déjà sélectionné et la possibilité d'en ajouter jusqu'à deux autres. Depuis les résultats et suggestions du catalogue, sélection de deux ou trois prénoms puis ouverture du comparateur avec cette sélection préremplie. La barre de sélection garde les prénoms retenus visibles et individuellement supprimables même si un filtre ou une recherche les masque.
