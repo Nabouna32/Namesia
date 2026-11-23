@@ -109,6 +109,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
       <section className="compare-selector" aria-labelledby="compare-selector-title">
         <ChampRecherche
           id="compare-search"
+          className="compare-search"
           label="Rechercher un prénom"
           placeholder="Saisissez un prénom..."
           value={recherche}
