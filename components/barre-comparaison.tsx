@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { PrenomIndex } from "@/lib/prenoms";
 import styles from "./barre-comparaison.module.css";
+import { ListeSelectionComparaison } from "@/components/ui/liste-selection-comparaison";
 
 type Props = {
   prenoms: Pick<PrenomIndex, "slug" | "nom">[];
@@ -17,20 +18,11 @@ export function BarreComparaison({ prenoms, onRetirer, onEffacer }: Props) {
 
   return (
     <div className={styles.bar}>
-      <ul className="compare-selected-list" aria-label="Prénoms sélectionnés pour la comparaison">
-        {prenoms.map((prenom) => (
-          <li key={prenom.slug}>
-            <button
-              className="compare-selected-item"
-              type="button"
-              aria-label={`Retirer ${prenom.nom} de la comparaison`}
-              onClick={() => onRetirer(prenom.slug)}
-            >
-              {prenom.nom}<span aria-hidden="true">×</span>
-            </button>
-          </li>
-        ))}
-      </ul>
+      <ListeSelectionComparaison
+        prenoms={prenoms}
+        label="Prénoms sélectionnés pour la comparaison"
+        onRetirer={onRetirer}
+      />
       <span role="status" aria-live="polite">{prenoms.length} / 3 prénoms pour la comparaison</span>
       <div className={styles.actions}>
         <button type="button" onClick={onEffacer}>Effacer</button>
