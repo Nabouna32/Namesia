@@ -200,7 +200,7 @@ test("les boutons et cartes utilisent les state layers Material plutôt que des 
 
 const navigation = await readFile(new URL("../components/navigation-adaptative.tsx", import.meta.url), "utf8");
 const adminClient = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
-const adminStyles = await readFile(new URL("../app/admin/admin.module.css", import.meta.url), "utf8");
+const adminFormStyles = await readFile(new URL("../app/admin/admin.module.css", import.meta.url), "utf8");
 const partage = await readFile(new URL("../components/partager-fiche.tsx", import.meta.url), "utf8");
 
 test("les quatre destinations de navigation ont des icônes Material distinctes à l'état actif", () => {
@@ -215,13 +215,13 @@ test("les quatre destinations de navigation ont des icônes Material distinctes 
 });
 
 test("les formulaires administratifs utilisent les surfaces, formes et dimensions Fidelity", () => {
-  assert.match(adminStyles, /surface-container-low/);
-  assert.match(adminStyles, /outline-variant/);
-  assert.match(adminStyles, /corner-extra-large/);
-  assert.match(adminStyles, /min-height: 56px/);
-  assert.match(adminStyles, /:focus-visible/);
-  assert.match(adminStyles, /::file-selector-button/);
-  assert.doesNotMatch(adminStyles, /var\(--color-(?:border|surface|text|accent)/);
+  assert.match(adminFormStyles, /surface-container-low/);
+  assert.match(adminFormStyles, /outline-variant/);
+  assert.match(adminFormStyles, /corner-extra-large/);
+  assert.match(adminFormStyles, /min-height: 56px/);
+  assert.match(adminFormStyles, /:focus-visible/);
+  assert.match(adminFormStyles, /::file-selector-button/);
+  assert.doesNotMatch(adminFormStyles, /var\(--color-(?:border|surface|text|accent)/);
   assert.match(adminClient, /htmlFor="fiche-fichier"/);
   assert.match(adminClient, /id="fiche-fichier"/);
 });
