@@ -153,7 +153,7 @@ test("l'échelle typographique Material 3 est complète et limitée aux graisses
     assert.ok(globalCss.includes("--md-sys-typescale-" + role + "-weight: " + weight + ";"), "Graisse M3 incorrecte : " + role);
     assert.ok(globalCss.includes("--md-sys-typescale-" + role + "-tracking: " + tracking + ";"), "Approche M3 incorrecte : " + role);
   }
-  assert.doesNotMatch(allCss, /font-size\\s*:[^;]*px/);
+  assert.doesNotMatch(allCss, /font-size\s*:[^;]*px/);
   const weights = [...allCss.matchAll(/font-weight:\s*([^;]+);/g)].map((match) => match[1].trim());
   assert.ok(weights.every((weight) => weight === "400" || weight === "500"), `Graisses interdites : ${weights.join(", ")}`);
   assert.doesNotMatch(allCss, /text-transform:\s*uppercase/i);
@@ -176,6 +176,15 @@ test("les données de fiche et les libellés de genre invalides échouent explic
   assert.match(prenoms, /ne peut pas avoir un nom vide/);
   assert.match(schema, /"required":\["introduction","symbolic_associations"\]/);
   assert.doesNotMatch(fiche, /symbolic_associations\s*\?\?\s*\[\]/);
+});
+
+
+test("les cartes de prénoms acceptent les noms longs sans déborder ni couper leur contenu", () => {
+  assert.match(globalCss, /\.name-card strong\s*\{[^}]*overflow-wrap:\s*anywhere/s);
+  assert.match(globalCss, /\.featured-name\s*\{[^}]*min-width:\s*0/s);
+  assert.match(globalCss, /\.featured-bottom strong\s*\{[^}]*overflow-wrap:\s*anywhere/s);
+  assert.match(globalCss, /\.featured-card\s*\{[^}]*min-height:\s*210px/s);
+  assert.doesNotMatch(globalCss, /\.featured-card\s*\{[^}]*\n\s*height:\s*210px/s);
 });
 
 test("les catégories Rainbow utilisent des rôles explicites sans couleur de repli", () => {
