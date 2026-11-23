@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.7
+- **Version :** 4.8
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -82,6 +82,8 @@ Les composants doivent partager les mêmes rôles, formes et interactions :
 - boutons flottants uniquement lorsqu'une action principale persistante existe réellement.
 
 États attendus : repos, survol, focus clavier, pressé, sélectionné, désactivé, chargement, erreur et succès. Les états sont explicites et ne reposent jamais sur la couleur seule.
+
+Les surfaces de l'accueil, des cartes vedettes, des fiches et du pied de page sont définies dans leurs règles canoniques, sans seconde couche de redéfinition tardive.
 
 Les interactions utilisent les courbes Material de standard, d'accélération et de décélération, avec des durées courtes, moyennes et longues centralisées. Les boutons partagés et les indicateurs de navigation emploient des couches d'état translucides (8 % au survol avec un pointeur fin, 12 % au focus et à la pression) plutôt que des filtres de luminosité ou des surfaces opaques. La couche utilise la couleur de premier plan du composant, y compris sur l'indicateur sélectionné. Les cartes réagissent par une surface tonale plus élevée et un état pressé, sans déplacement ni ombre artificielle. Le mouvement doit rendre l'action compréhensible : indicateur qui s'étend, surface qui réagit à la pression, changement d'état animé. Les animations décoratives restent secondaires. `prefers-reduced-motion: reduce` supprime les mouvements non essentiels.
 
