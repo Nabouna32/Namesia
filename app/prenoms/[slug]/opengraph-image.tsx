@@ -18,7 +18,7 @@ export default async function Image({ params }: Props) {
   const extrait = prenom.introduction.length > 150
     ? `${prenom.introduction.slice(0, 147).trimEnd()}…`
     : prenom.introduction;
-  const tailleNom = prenom.nom.length > 14 ? 74 : prenom.nom.length > 10 ? 88 : 108;
+  const tailleNom = Math.min(108, Math.max(48, Math.floor(1050 / (prenom.nom.length * 0.58))));
 
   return new ImageResponse(
     <div style={{
