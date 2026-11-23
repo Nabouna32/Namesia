@@ -93,7 +93,7 @@ export function creerUrlFicheDepuisFavoris(
 
 export function creerUrlFicheDepuisComparateur(slug: string, prenoms: string[]): string {
   const selection = normaliserSlugsComparateur(prenoms);
-  if (selection.length < 2 || !selection.includes(slug)) return creerUrlFiche(slug, new URLSearchParams());
+  if (selection.length < 2) return creerUrlFiche(slug, new URLSearchParams());
 
   const parametres = new URLSearchParams({
     retour_vue: "comparateur",
