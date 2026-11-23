@@ -131,6 +131,59 @@
   --md-sys-motion-duration-long: 400ms;
 }
 
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+    --md-sys-color-primary: #adc7ff;
+    --md-sys-color-on-primary: #002e69;
+    --md-sys-color-primary-container: #004494;
+    --md-sys-color-on-primary-container: #d8e2ff;
+    --md-sys-color-inverse-primary: #005ac1;
+    --md-sys-color-secondary: #c1c7dc;
+    --md-sys-color-on-secondary: #2a3042;
+    --md-sys-color-secondary-container: #3e4558;
+    --md-sys-color-on-secondary-container: #dbe2f9;
+    --md-sys-color-tertiary: #dfb9dc;
+    --md-sys-color-on-tertiary: #402744;
+    --md-sys-color-tertiary-container: #583d5b;
+    --md-sys-color-on-tertiary-container: #fbd7fc;
+    --md-sys-color-error: #f2b8b5;
+    --md-sys-color-on-error: #601410;
+    --md-sys-color-error-container: #8c1d18;
+    --md-sys-color-on-error-container: #f9dedc;
+    --md-sys-color-background: #111318;
+    --md-sys-color-on-background: #e2e2e9;
+    --md-sys-color-surface: #111318;
+    --md-sys-color-on-surface: #e2e2e9;
+    --md-sys-color-surface-variant: #44474f;
+    --md-sys-color-on-surface-variant: #c4c6d0;
+    --md-sys-color-surface-container-lowest: #0f0d13;
+    --md-sys-color-surface-container-low: #191b22;
+    --md-sys-color-surface-container: #1d1f26;
+    --md-sys-color-surface-container-high: #272a31;
+    --md-sys-color-surface-container-highest: #32353c;
+    --md-sys-color-outline: #8e9099;
+    --md-sys-color-outline-variant: #44474f;
+    --md-sys-color-shadow: #000000;
+    --md-sys-color-scrim: #000000;
+    --md-sys-color-inverse-surface: #e2e2e9;
+    --md-sys-color-inverse-on-surface: #2e3036;
+    --md-sys-color-surface-tint: #adc7ff;
+    --md-sys-color-success: #b5f397;
+    --md-sys-color-warning: #f1d28b;
+    --md-sys-color-info: #9ecaff;
+    --md-sys-color-category-1: #adc7ff;
+    --md-sys-color-category-1-container: #004494;
+    --md-sys-color-category-1-on-container: #d8e2ff;
+    --md-sys-color-category-2: #4fd8eb;
+    --md-sys-color-category-2-container: #004f58;
+    --md-sys-color-category-2-on-container: #9eeffd;
+    --md-sys-color-category-3: #9cd67d;
+    --md-sys-color-category-3-container: #204f0d;
+    --md-sys-color-category-3-on-container: #b7f397;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
