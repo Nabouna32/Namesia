@@ -17,7 +17,7 @@ Les filtres du catalogue, le sélecteur du comparateur, les cartes de prénoms e
 ## Décision
 
 - Les filtres et le sélecteur de comparaison utilisent `surface-container-low`, `outline-variant` et les formes extra-large.
-- Les cartes de prénoms et les cartes de comparaison utilisent les surfaces Fidelity, un contour standard et des états de pression ; la sélection comparative utilise `primary-container` et `on-primary-container`.
+- Les cartes de prénoms et les cartes de comparaison utilisent les surfaces Fidelity, un contour standard et des états de pression ; la sélection comparative utilise `primary-container` et `on-primary-container`, avec une initiale `primary` / `on-primary` pour garder un repère visuel distinct.
 - Les survols des options de comparaison ne sont appliqués qu'aux pointeurs fins ; les états pressés restent actifs sur tactile.
 - Les initiales utilisent `primary-container` / `on-primary-container` ; les textes secondaires utilisent `on-surface-variant`.
 - Les actions de réinitialisation, de pagination, d'effacement et de copie utilisent la primitive `Bouton` en variante text ou tonal. Les anciennes classes ne gardent que les contraintes de disposition.
