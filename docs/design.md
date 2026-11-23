@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.3
+- **Version :** 4.4
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -83,7 +83,7 @@ Les composants doivent partager les mêmes rôles, formes et interactions :
 
 États attendus : repos, survol, focus clavier, pressé, sélectionné, désactivé, chargement, erreur et succès. Les états sont explicites et ne reposent jamais sur la couleur seule.
 
-Les interactions utilisent les courbes Material de standard, d'accélération et de décélération, avec des durées courtes, moyennes et longues centralisées. Les boutons partagés emploient une couche d'état translucide (8 % au survol, 12 % au focus et à la pression) plutôt qu'un filtre de luminosité. Les cartes réagissent par une surface tonale plus élevée et un état pressé, sans déplacement ni ombre artificielle. Le mouvement doit rendre l'action compréhensible : indicateur qui s'étend, surface qui réagit à la pression, changement d'état animé. Les animations décoratives restent secondaires. `prefers-reduced-motion: reduce` supprime les mouvements non essentiels.
+Les interactions utilisent les courbes Material de standard, d'accélération et de décélération, avec des durées courtes, moyennes et longues centralisées. Les boutons partagés et les indicateurs de navigation emploient des couches d'état translucides (8 % au survol avec un pointeur fin, 12 % au focus et à la pression) plutôt que des filtres de luminosité ou des surfaces opaques. La couche utilise la couleur de premier plan du composant, y compris sur l'indicateur sélectionné. Les cartes réagissent par une surface tonale plus élevée et un état pressé, sans déplacement ni ombre artificielle. Le mouvement doit rendre l'action compréhensible : indicateur qui s'étend, surface qui réagit à la pression, changement d'état animé. Les animations décoratives restent secondaires. `prefers-reduced-motion: reduce` supprime les mouvements non essentiels.
 
 Les SVG fonctionnels suivent le langage visuel arrondi de Material Symbols : grille de 24 × 24, couleur `currentColor`, tracés arrondis et variantes pleines pour les états actifs lorsque le pictogramme le permet. La navigation dispose d'une paire repos/actif pour chacune de ses quatre destinations. Les pictogrammes restent décoratifs pour les technologies d'assistance, le nom étant porté par le lien ou le bouton. Les cibles interactives restent d'au moins 48 × 48 px ; le SVG ne porte pas lui-même la cible. Les SVG de marque peuvent être colorés.
 
