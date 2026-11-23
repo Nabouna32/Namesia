@@ -60,7 +60,6 @@
   --md-category-3-container: #b7f397;
   --md-category-3-on-container: #0b2000;
   --color-rainbow: linear-gradient(105deg, #ef568b 0%, #f29a42 19%, #e8c94c 36%, #55b987 54%, #49a9d5 72%, #8669d4 88%, #d76bb5 100%);
-  --color-rainbow-text: linear-gradient(105deg, #b4235a 0%, #a34f10 19%, #806000 36%, #176b4b 54%, #23659a 72%, #65439b 88%, #a03b83 100%);
   --font-sans: Roboto, "Arial", system-ui, sans-serif;
   --font-display: "Google Sans", Roboto, system-ui, sans-serif;
   --font-serif: "Google Sans", Roboto, system-ui, sans-serif;
@@ -141,7 +140,6 @@
     --color-success: #b5f397;
     --color-warning: #f1d28b;
     --color-info: #9ecaff;
-    --color-rainbow-text: linear-gradient(105deg, #ff8fb4 0%, #ffc08a 19%, #f1d77b 36%, #86ddb0 54%, #8ecaf2 72%, #c3a0f1 88%, #f0a0d5 100%);
     --shadow-sm: 0 1px 2px rgb(0 0 0 / 35%), 0 1px 3px rgb(0 0 0 / 25%);
     --shadow-md: 0 4px 8px rgb(0 0 0 / 35%), 0 2px 4px rgb(0 0 0 / 25%);
   }
