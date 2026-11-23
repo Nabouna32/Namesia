@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.1
+- **Version :** 4.2
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -83,7 +83,7 @@ Les composants doivent partager les mêmes rôles, formes et interactions :
 
 États attendus : repos, survol, focus clavier, pressé, sélectionné, désactivé, chargement, erreur et succès. Les états sont explicites et ne reposent jamais sur la couleur seule.
 
-Les interactions utilisent les courbes Material de standard, d'accélération et de décélération, avec des durées courtes, moyennes et longues centralisées. Les surfaces réagissent au survol lorsque le périphérique le permet et à l'état pressé sur écran tactile, sans déplacer le contenu à chaque clic. Le mouvement doit rendre l'action compréhensible : indicateur qui s'étend, surface qui réagit à la pression, changement d'état animé. Les animations décoratives restent secondaires. `prefers-reduced-motion: reduce` supprime les mouvements non essentiels.
+Les interactions utilisent les courbes Material de standard, d'accélération et de décélération, avec des durées courtes, moyennes et longues centralisées. Les boutons partagés emploient une couche d'état translucide (8 % au survol, 12 % au focus et à la pression) plutôt qu'un filtre de luminosité. Les cartes réagissent par une surface tonale plus élevée et un état pressé, sans déplacement ni ombre artificielle. Le mouvement doit rendre l'action compréhensible : indicateur qui s'étend, surface qui réagit à la pression, changement d'état animé. Les animations décoratives restent secondaires. `prefers-reduced-motion: reduce` supprime les mouvements non essentiels.
 
 Les SVG d'interface sont des icônes vectorielles monochromes à `currentColor`, sur une grille de 24 × 24 et une boîte tactile de 48 × 48. Les tracés gardent une famille cohérente ; les variantes pleines signalent l'état actif lorsque le pictogramme le permet. Les SVG de marque peuvent être colorés.
 
