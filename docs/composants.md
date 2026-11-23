@@ -8,9 +8,9 @@ Ce document est le point d'entrée pour les composants d'interface réutilisable
 ## Principes
 
 - Une primitive partagée porte une interaction ou un contrat visuel commun, pas seulement un nom générique.
-- Les variantes sont explicites et reposent sur les rôles Material 3 Fidelity.
+- Les variantes sont explicites et reposent sur les rôles Material 3 Fidelity, calculés depuis la couleur source Pixel `#005AC1`.
 - Une couleur ne doit jamais être attribuée selon la position d'un élément dans une liste. Rainbow est réservé à une catégorie éditoriale identifiée.
-- Les CSS Modules des composants métier gèrent leur disposition ; les primitives partagées gèrent leur apparence et leurs états communs. Les composants interactifs suivent les mêmes cibles tactiles, transitions et états pressed/focus.
+- Les CSS Modules des composants métier gèrent leur disposition ; les primitives partagées gèrent leur apparence et leurs états communs. Les composants interactifs suivent les mêmes cibles tactiles, transitions et états pressed/focus ; le mouvement et ses durées viennent des tokens globaux.
 - Préférer les éléments HTML natifs et les liens Next.js. Garder distincts les contrôles interactifs et les liens de navigation.
 - Une primitive est extraite après identification d'au moins deux usages concrets ; elle ne doit pas absorber la logique métier des écrans.
 
