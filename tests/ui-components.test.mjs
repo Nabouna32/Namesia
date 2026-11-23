@@ -302,7 +302,7 @@ const comparateurActions = await readFile(new URL("../components/comparateur-pre
 test("les actions de catalogue, favoris et comparaison utilisent le bouton commun", () => {
   for (const source of [rechercheActions, favorisActions, comparateurActions]) {
     assert.doesNotMatch(source, /<button\b/);
-    assert.match(source, /<Bouton variante="text"/);
+    assert.match(source, /<Bouton\s+variante="text"/);
     assert.match(source, /className="filter-action"/);
   }
   assert.match(favorisActions, /<Bouton\s+variante="tonal"/);
