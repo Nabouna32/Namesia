@@ -6,8 +6,8 @@
   min-height: 48px;
   align-items: center;
   justify-content: center;
-  gap: 9px;
-  padding: 0 20px;
+gap: 8px;
+padding: 0 20px;
   border: 1px solid transparent;
   border-radius: var(--md-sys-shape-corner-full);
   font: inherit;
@@ -73,6 +73,6 @@
 .icon {
   width: 48px;
   min-width: 48px;
-  padding: 0;
+padding: 0;
   border-radius: var(--md-sys-shape-corner-full);
 }
