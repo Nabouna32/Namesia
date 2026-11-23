@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import type { ReactNode } from "react";
 import styles from "./bouton.module.css";
 
@@ -19,7 +18,7 @@ type Props = {
   onClick?: () => void;
 };
 
-function classes(variante: Variante, taille: Taille, className?: string) {
+export function classesBouton(variante: Variante, taille: Taille, className?: string) {
   return [styles.button, styles[variante], taille === "icon" ? styles.icon : "", className]
     .filter(Boolean)
     .join(" ");
@@ -38,7 +37,7 @@ export function Bouton({
 }: Props) {
   return (
     <button
-      className={classes(variante, taille, className)}
+      className={classesBouton(variante, taille, className)}
       type={type}
       disabled={disabled}
       aria-label={ariaLabel}
@@ -47,20 +46,5 @@ export function Bouton({
     >
       {children}
     </button>
-  );
-}
-
-type PropsLien = {
-  href: string;
-  children: ReactNode;
-  variante?: Variante;
-  className?: string;
-};
-
-export function LienBouton({ href, children, variante = "filled", className }: PropsLien) {
-  return (
-    <Link className={classes(variante, "standard", className)} href={href}>
-      {children}
-    </Link>
   );
 }
