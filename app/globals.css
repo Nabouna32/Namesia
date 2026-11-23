@@ -1351,9 +1351,9 @@ h2 em {
 
 .compare-association {
   padding: 12px;
-  border: 1px solid color-mix(in srgb, var(--category, var(--md-sys-color-outline)) 24%, var(--color-border));
+  border: 1px solid color-mix(in srgb, var(--category, var(--md-sys-color-outline)) 24%, var(--md-sys-color-outline-variant));
   border-radius: var(--md-sys-shape-corner-medium);
-  background: color-mix(in srgb, var(--category-container, var(--md-sys-color-surface-container)) 28%, var(--color-surface));
+  background: color-mix(in srgb, var(--category-container, var(--md-sys-color-surface-container-low)) 28%, var(--md-sys-color-surface-container-low));
 }
 
 .symbolic-card {
