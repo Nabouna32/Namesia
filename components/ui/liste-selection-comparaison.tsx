@@ -1,6 +1,5 @@
 "use client";
 
-import type { Pick } from "react";
 import { IconeMaterial } from "@/components/icone-material";
 import styles from "./liste-selection-comparaison.module.css";
 
