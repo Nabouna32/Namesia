@@ -14,6 +14,8 @@ import { IconeMaterial } from "./icone-material";
 import { ChampRecherche } from "@/components/ui/champ-recherche";
 import { ChampSelect } from "@/components/ui/champ-select";
 import { BoutonComparaison } from "@/components/ui/bouton-comparaison";
+import { Bouton } from "@/components/ui/bouton";
+import { LienBouton } from "@/components/ui/lien-bouton";
 
 type Props = {
   prenoms: PrenomIndex[];
@@ -188,9 +190,9 @@ export function ListeFavoris({
   return (
     <div className={styles.content}>
       <div className={styles.tools}>
-        <button className="button button-dark" type="button" disabled={slugs.length === 0} onClick={exporterFavoris}>
+        <Bouton disabled={slugs.length === 0} onClick={exporterFavoris}>
           Exporter mes favoris
-        </button>
+        </Bouton>
         <button
           className={styles.copyButton}
           type="button"
@@ -227,7 +229,7 @@ export function ListeFavoris({
             : slugs.length === 0
               ? "Vous n’avez pas encore enregistré de prénom."
               : "Aucun de vos favoris n’est actuellement publié."}</p>
-          <Link className="button button-dark" href="/prenoms">Explorer les prénoms</Link>
+          <LienBouton href="/prenoms">Explorer les prénoms</LienBouton>
         </div>
       ) : (
         <>
