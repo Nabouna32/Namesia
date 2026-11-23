@@ -285,7 +285,7 @@ export function AdminClient() {
       <h2>Accès non autorisé</h2>
       <p>Ce compte est connecté, mais ne figure pas dans la liste des administrateurs Namesia.</p>
       {message && <p className={styles.notice} role="status">{message}</p>}
-      <button className="button button-dark" type="button" onClick={deconnecter}>Se déconnecter</button>
+      <Bouton type="button" onClick={deconnecter}>Se déconnecter</Bouton>
     </section>;
   }
 
