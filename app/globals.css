@@ -1,6 +1,5 @@
 :root {
   /* Valeurs initiales SSR ; MaterialThemeProvider calcule le thème actif après hydratation. */
-  color-scheme: light;
   --md-sys-color-primary: #005ac1;
   --md-sys-color-on-primary: #ffffff;
   --md-sys-color-primary-container: #d8e2ff;
@@ -145,7 +144,6 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   min-height: 100svh;
 margin: 0;
   background: var(--md-sys-color-background);
@@ -1468,9 +1466,6 @@ button {
   transition: background-color var(--md-sys-motion-duration-short) var(--md-sys-motion-standard), border-color var(--md-sys-motion-duration-short) var(--md-sys-motion-standard), color var(--md-sys-motion-duration-short) var(--md-sys-motion-standard), box-shadow var(--md-sys-motion-duration-short) var(--md-sys-motion-standard);
 }
 
-button:active:not(:disabled) {
-  transform: none;
-}
 
 button:disabled {
   cursor: not-allowed;
