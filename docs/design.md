@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.11
+- **Version :** 4.12
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -14,7 +14,7 @@ La personnalité Namesia reste présente à travers son dégradé de marque. Les
 
 ## 2. Source de vérité des couleurs
 
-La palette d'interface est calculée avec la bibliothèque officielle Google **`@material/material-color-utilities`**. Le thème est construit avec :
+La palette d'interface est calculée avec la bibliothèque officielle Google **`@material/material-color-utilities`**. Les valeurs du bloc `:root` sont exclusivement les valeurs initiales SSR ; `MaterialThemeProvider` recalcule ensuite le thème actif, les catégories Rainbow et les extensions sémantiques selon la préférence système. Le thème est construit avec :
 - couleur source primaire : `#005AC1`, bleu Pixel choisi pour Namesia ;
 - variante du thème d'interface : `Variant.FIDELITY` ;
 - variante complémentaire des catégories : `Variant.RAINBOW`, calculée séparément avec la même couleur source ;
@@ -37,23 +37,24 @@ Les composants consomment les rôles du schéma, jamais des couleurs arbitraires
 - `on-surface`, `on-surface-variant`, `outline`, `outline-variant` : texte et contours ;
 - `error` et ses conteneurs : erreurs.
 
-Les tokens applicatifs historiques `--color-*` restent des alias de compatibilité vers les rôles Material ou les couleurs sémantiques ; ils ne définissent pas une deuxième palette. Les couleurs de succès, d'avertissement et d'information sont des extensions sémantiques distinctes, car le schéma de base Material ne définit pas ces trois états.
+Les composants consomment directement les rôles `--md-sys-color-*`. Aucun alias applicatif `--color-*`, `--ink`, `--muted` ou `--line` n'est admis. Les rôles `success`, `warning` et `info` sont des extensions sémantiques explicites, calculées par le fournisseur de thème pour les deux modes. Aucune valeur de secours n'est autorisée dans `var()` : une donnée de thème absente doit rester visible comme défaut de contrat.
 
 ### Signature Rainbow
 
-Le dégradé de marque `--color-rainbow` reste réservé au monogramme Namesia. Les catégories utilisent trois familles de rôles tonals issues du schéma `Variant.RAINBOW` (`--md-category-1` à `--md-category-3`, avec leurs conteneurs et couleurs de premier plan). Une catégorie reçoit toujours la même teinte, quelle que soit la fiche ou l'ordre d'affichage. Une carte de prénom, un bouton ou une surface fonctionnelle ne constitue pas une catégorie : elle utilise les rôles Fidelity neutres ou sémantiques. Les titres, les accents typographiques et les fonds de page ne reçoivent pas de dégradé Rainbow. Les cartes d'associations peuvent recevoir une légère teinte stable issue de la catégorie, sur une surface Fidelity ; leur contour et leur badge utilisent respectivement la teinte et le rôle `on-container` de cette même catégorie, jamais un rôle tertiary générique. La vitrine « Les prénoms à découvrir » applique une surface neutre identique à ses cartes ; aucune carte ne reçoit primary, secondary ou tertiary selon sa position. Les variations de mise en page suivent la largeur disponible : trois colonnes sur grand écran, deux sur fenêtre intermédiaire et une sur écran compact.
+Le dégradé de marque `--md-sys-color-brand-gradient` reste réservé au monogramme Namesia. Les catégories utilisent trois familles de rôles tonals issues du schéma `Variant.RAINBOW` (`--md-sys-color-category-1` à `--md-sys-color-category-3`, avec leurs conteneurs et couleurs de premier plan). Une catégorie reçoit toujours la même teinte, quelle que soit la fiche ou l'ordre d'affichage. Une carte de prénom, un bouton ou une surface fonctionnelle ne constitue pas une catégorie : elle utilise les rôles Fidelity neutres ou sémantiques. Les titres, les accents typographiques et les fonds de page ne reçoivent pas de dégradé Rainbow. Les cartes d'associations peuvent recevoir une légère teinte stable issue de la catégorie, sur une surface Fidelity ; leur contour et leur badge utilisent respectivement la teinte et le rôle `on-container` de cette même catégorie, jamais un rôle tertiary générique. La vitrine « Les prénoms à découvrir » applique une surface neutre identique à ses cartes ; aucune carte ne reçoit primary, secondary ou tertiary selon sa position. Les variations de mise en page suivent la largeur disponible : trois colonnes sur grand écran, deux sur fenêtre intermédiaire et une sur écran compact.
 
 ## 3. Formes, typographie et élévation
 
 - Typographie : Roboto pour tous les rôles, des titres aux contrôles et au corps. Une seule famille est déclarée ; aucune police de substitution ni pile générique n’est définie. La police système Android est utilisée directement, sans chargement de police distante. Le corps courant reste à 16 px.
-- Échelle Material 3 : display small 36/44 px, headline large 32/40 px, headline medium 28/36 px, headline small 24/32 px et body large 16/24 px. Les rôles sont des tokens CSS uniques ; aucune surcharge de taille par breakpoint ne réintroduit une hiérarchie concurrente.
+- Échelle Material 3 : display small 36/44 px ; headline large/medium/small 32/40, 28/36 et 24/32 px ; title large/medium/small 22/28, 16/24 et 14/20 px ; body large/medium/small 16/24, 14/20 et 12/16 px ; label large/medium/small 14/20, 12/16 et 11/16 px. Les graisses sont strictement 400 et 500. Les libellés ne sont pas forcés en capitales. Chaque rôle possède ses tokens `--md-sys-typescale-*` de famille, taille, graisse, interligne et approche. Aucune surcharge de taille par breakpoint ne réintroduit une hiérarchie concurrente.
+- Les espacements suivent une grille de 4 px, avec les pas de 8 px privilégiés. Les rayons sont exclusivement les tokens `--md-sys-shape-corner-*`.
 - Formes : extra-small 4 px, small 8 px, medium 12 px, large 16 px, extra-large 28 px et full/pill.
 - Élévation : surfaces tonales en premier ; ombres discrètes uniquement pour les éléments flottants et les plans qui doivent se détacher.
 - Densité : cibles tactiles d'au moins 48 × 48 px lorsque l'espace le permet ; les éléments visuels peuvent être plus petits à l'intérieur de leur cible.
 
 ### Fiche de prénom
 
-La fiche est un parcours de lecture : son introduction et ses rubriques utilisent le premier plan `on-surface`, avec l'échelle body large 16/24 px. Les libellés de rubrique et les métadonnées restent secondaires. Le sommaire est composé de liens natifs présentés comme des chips tonales outlined de 48 px de haut, avec états hover réservés aux pointeurs fins, pression tactile et focus clavier visible. Les ancres ménagent 88 px au-dessus de chaque rubrique pour que le titre reste visible sous la barre supérieure fixe. Les surfaces du hero, de la note éditoriale et de la découverte utilisent directement les rôles Fidelity dans leurs règles de base ; aucune couche tardive ne redéfinit ces composants.
+La fiche est un parcours de lecture : son introduction et ses rubriques utilisent le premier plan `on-surface`, avec l'échelle body large 16/24 px. Les libellés de rubrique et les métadonnées utilisent les rôles label/body adaptés, sans capitales forcées. Le sommaire est composé de liens natifs présentés comme des chips tonales outlined de 48 px de haut, avec états hover réservés aux pointeurs fins, pression tactile et focus clavier visible. Les ancres ménagent 88 px au-dessus de chaque rubrique pour que le titre reste visible sous la barre supérieure fixe. Les surfaces du hero, de la note éditoriale et de la découverte utilisent directement les rôles Fidelity dans leurs règles de base ; aucune couche tardive ne redéfinit ces composants.
 
 ## 4. Navigation adaptative
 
@@ -112,7 +113,7 @@ Les icônes fonctionnelles utilisent les tracés officiels Google Material Symbo
 - `components/navigation-adaptative.tsx` porte la navigation de premier niveau.
 - `components/ui/` contient les primitives d'interface partagées.
 - `app/layout.tsx` compose la barre supérieure, le rail/la barre de navigation, le contenu et le pied de page.
-- `app/globals.css` contient les rôles de secours SSR, les alias, les formes et les styles structurels partagés.
+- `app/globals.css` contient les rôles initiaux SSR documentés, les formes, la typographie et les styles structurels partagés. Un seul bloc `:root` fournit les valeurs initiales avant hydratation ; il n'existe aucun alias ni fallback CSS.
 - Les CSS Modules consomment les tokens partagés. Ils gèrent la disposition propre à un composant, sans redéfinir les styles d'un contrôle commun.
 - Les composants natifs React/HTML sont préférés à une dépendance UI supplémentaire tant qu'une bibliothèque Web officielle maintenue et complète ne répond pas au besoin.
 
