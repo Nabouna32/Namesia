@@ -1570,18 +1570,8 @@ h2 em {
 
 @media (max-width: 760px) {
   .container,
-  .header-inner,
   .footer-inner {
     width: calc(100% - 36px);
-  }
-
-  .site-header {
-    height: 70px;
-  }
-
-  .site-nav {
-    gap: 0.9375rem;
-    font-size: clamp(0.875rem, 0.875rem + 0.08vw, 0.9375rem);
   }
 
   .hero-content {
