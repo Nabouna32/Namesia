@@ -296,7 +296,8 @@ export function AdminClient() {
     </div>
     <form className={styles.form} onSubmit={importer}>
       <label htmlFor="fiche-json">Fiche JSON (version {FICHE_SCHEMA_VERSION})</label>
-      <input type="file" accept="application/json,.json" disabled={busy} onChange={async (event) => {
+      <label htmlFor="fiche-fichier">Importer un fichier JSON</label>
+      <input id="fiche-fichier" type="file" accept="application/json,.json" disabled={busy} onChange={async (event) => {
         const file = event.target.files?.[0];
         if (file) {
           setJson(await file.text());
