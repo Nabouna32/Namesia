@@ -760,8 +760,8 @@ h2 em {
   max-width: 560px;
   margin-bottom: 18px;
   color: var(--muted);
-  font-size: 16px;
-  line-height: 1.7;
+  font-size: var(--md-sys-typescale-body-large-size);
+  line-height: var(--md-sys-typescale-body-large-line-height);
 }
 
 .profile {
@@ -834,8 +834,8 @@ h2 em {
   margin: 0;
   color: var(--color-accent);
   font-family: var(--font-sans);
-  font-size: clamp(18px, 2vw, 21px);
-  line-height: 1.65;
+  font-size: var(--md-sys-typescale-body-large-size);
+  line-height: var(--md-sys-typescale-body-large-line-height);
 }
 
 .profile-tags {
@@ -1240,8 +1240,8 @@ h2 em {
 .profile-copy {
   margin: 0;
   color: var(--color-accent);
-  font-size: 16px;
-  line-height: 1.9;
+  font-size: var(--md-sys-typescale-body-large-size);
+  line-height: var(--md-sys-typescale-body-large-line-height);
   white-space: pre-line;
 }
 
@@ -1386,8 +1386,8 @@ h2 em {
 .symbolic-card p {
   margin: 0 0 14px;
   color: var(--color-text-muted);
-  font-size: 16px;
-  line-height: 1.75;
+  font-size: var(--md-sys-typescale-body-large-size);
+  line-height: var(--md-sys-typescale-body-large-line-height);
 }
 
 .symbolic-card small {
