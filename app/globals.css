@@ -2091,3 +2091,11 @@ h1 em, h2 em {
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
+
+.symbolic-card[data-category-tone] {
+  border-color: color-mix(in srgb, var(--category) 24%, var(--color-border));
+}
+.symbolic-card[data-category-tone] > span {
+  background: var(--category-container);
+  color: var(--category-on-container);
+}
