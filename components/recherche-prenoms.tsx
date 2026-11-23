@@ -1,6 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { BoutonFavori } from "@/components/bouton-favori";
+import { useFavoris } from "@/components/favoris-provider";
+import styles from "./recherche-prenoms.module.css";
 import { useMemo, useState } from "react";
 import type { PrenomIndex } from "@/lib/prenoms";
 
@@ -64,6 +67,7 @@ export function RecherchePrenoms({
   initialGenre = null,
   initialLettre = null
 }: Props) {
+  const { erreur: erreurFavoris } = useFavoris();
   const [recherche, setRecherche] = useState(initialRecherche);
   const [genreActif, setGenreActif] = useState(initialGenre);
   const [lettreActive, setLettreActive] = useState(initialLettre);
@@ -252,18 +256,26 @@ export function RecherchePrenoms({
                 ? `${suggestions.length} suggestions proches`
                 : `0 résultat affiché sur ${prenoms.length}`}
           </p>
+          {erreurFavoris && (
+            <p className={styles.favoriteError} role="alert">
+              Le stockage des favoris est indisponible ou contient des données illisibles. Vos modifications ne sont pas enregistrées.
+            </p>
+          )}
           {resultats.length > 0 ? (
             <>
-              <div className="name-grid">
+              <div className={styles.resultsGrid}>
                 {resultats.slice(0, nombreVisible).map((prenom) => (
-                  <Link className="name-card" href={`/prenoms/${prenom.slug}`} key={prenom.slug}>
-                    <span className="name-initial">{prenom.lettre}</span>
-                    <span>
-                      <strong>{prenom.nom}</strong>
-                      <small>{prenom.genre} · Découvrir la fiche</small>
-                    </span>
-                    <span className="card-arrow" aria-hidden="true">↗</span>
-                  </Link>
+                  <article className={styles.resultCard} key={prenom.slug}>
+                    <Link className={`name-card ${styles.resultLink}`} href={`/prenoms/${prenom.slug}`}>
+                      <span className="name-initial">{prenom.lettre}</span>
+                      <span>
+                        <strong>{prenom.nom}</strong>
+                        <small>{prenom.genre} · Découvrir la fiche</small>
+                      </span>
+                      <span className="card-arrow" aria-hidden="true">↗</span>
+                    </Link>
+                    <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
+                  </article>
                 ))}
               </div>
             {resultats.length > nombreVisible && (
@@ -283,11 +295,14 @@ export function RecherchePrenoms({
               </p>
               <div className="name-grid">
                 {suggestions.map((prenom) => (
-                  <Link className="name-card" href={`/prenoms/${prenom.slug}`} key={prenom.slug}>
-                    <span className="name-initial">{prenom.lettre}</span>
-                    <span><strong>{prenom.nom}</strong><small>{prenom.genre} · Suggestion proche</small></span>
-                    <span className="card-arrow" aria-hidden="true">↗</span>
-                  </Link>
+                  <article className={styles.resultCard} key={prenom.slug}>
+                    <Link className={`name-card ${styles.resultLink}`} href={`/prenoms/${prenom.slug}`}>
+                      <span className="name-initial">{prenom.lettre}</span>
+                      <span><strong>{prenom.nom}</strong><small>{prenom.genre} · Suggestion proche</small></span>
+                      <span className="card-arrow" aria-hidden="true">↗</span>
+                    </Link>
+                    <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
+                  </article>
                 ))}
               </div>
             </div>
