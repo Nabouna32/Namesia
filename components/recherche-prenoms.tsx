@@ -332,7 +332,7 @@ export function RecherchePrenoms({
                     <Link className={`name-card ${styles.resultLink}`} href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
                       <span className="name-initial">{prenom.lettre}</span>
                       <span><strong>{prenom.nom}</strong><small>{prenom.genre} · Suggestion proche</small></span>
-                      <span className="card-arrow" aria-hidden="true">↗</span>
+                      <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
                     </Link>
                     {!compact && (
                       <button
@@ -344,7 +344,7 @@ export function RecherchePrenoms({
                         onClick={() => basculerComparaison(prenom.slug)}
                       >
                         <span className={styles.compareLabel}>{selectionComparaison.includes(prenom.slug) ? "Ajouté" : "Comparer"}</span>
-                        <span className={styles.compareIcon} aria-hidden="true">{selectionComparaison.includes(prenom.slug) ? "✓" : "⇄"}</span>
+                        <span className={styles.compareIcon} aria-hidden="true"><IconeMaterial name={selectionComparaison.includes(prenom.slug) ? "check" : "compare-arrows"} size={18} /></span>
                       </button>
                     )}
                     <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
