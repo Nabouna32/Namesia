@@ -21,7 +21,26 @@ function applyMaterialTheme(isDark: boolean) {
     specVersion: "2025"
   });
 
-  for (const [role, value] of Object.entries(scheme.toJSON())) {
+  const roles = [
+    "primaryPaletteKeyColor", "secondaryPaletteKeyColor", "tertiaryPaletteKeyColor",
+    "neutralPaletteKeyColor", "neutralVariantPaletteKeyColor", "errorPaletteKeyColor",
+    "background", "onBackground", "surface", "surfaceDim", "surfaceBright",
+    "surfaceContainerLowest", "surfaceContainerLow", "surfaceContainer",
+    "surfaceContainerHigh", "surfaceContainerHighest", "onSurface", "surfaceVariant",
+    "onSurfaceVariant", "inverseSurface", "inverseOnSurface", "outline", "outlineVariant",
+    "shadow", "scrim", "surfaceTint", "primary", "primaryDim", "onPrimary",
+    "primaryContainer", "onPrimaryContainer", "primaryFixed", "primaryFixedDim",
+    "onPrimaryFixed", "onPrimaryFixedVariant", "inversePrimary", "secondary",
+    "secondaryDim", "onSecondary", "secondaryContainer", "onSecondaryContainer",
+    "secondaryFixed", "secondaryFixedDim", "onSecondaryFixed", "onSecondaryFixedVariant",
+    "tertiary", "tertiaryDim", "onTertiary", "tertiaryContainer", "onTertiaryContainer",
+    "tertiaryFixed", "tertiaryFixedDim", "onTertiaryFixed", "onTertiaryFixedVariant",
+    "error", "errorDim", "onError", "errorContainer", "onErrorContainer"
+  ] as const;
+
+  for (const role of roles) {
+    const value: unknown = Reflect.get(scheme, role);
+    if (typeof value !== "number") continue;
     const token = role.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
     document.documentElement.style.setProperty(`--md-sys-color-${token}`, hexFromArgb(value));
   }
