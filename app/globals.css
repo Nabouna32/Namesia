@@ -1109,27 +1109,6 @@ h2 em {
   margin-top: 20px;
 }
 
-.share-button {
-  display: inline-flex;
-  min-height: 48px;
-  align-items: center;
-  justify-content: center;
-  padding: 9px 15px;
-  border: 1px solid color-mix(in srgb, var(--color-accent) 28%, transparent);
-  border-radius: 999px;
-  background: var(--color-surface);
-  color: var(--color-accent);
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  transition: border-color 0.18s, background-color 0.18s;
-}
-
-.share-button:hover {
-  border-color: var(--color-accent);
-  background: var(--color-surface);
-}
-
 .share-feedback {
   color: var(--color-accent);
   font-size: 14px;
