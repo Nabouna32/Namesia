@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 3.3
+- **Version :** 3.4
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -10,7 +10,7 @@ Namesia adopte **Material 3**, avec une palette générale **Fidelity** et une p
 
 Ce choix est une référence de conception et de comportement, pas une prétention à reproduire le système Android natif ou ses barres système. Le navigateur conserve ses conventions, ses capacités et ses limites.
 
-La personnalité Namesia reste présente à travers son dégradé de marque. Les couleurs Rainbow générées par Material Color Utilities servent aux catégories éditoriales (notamment les associations symboliques) et à d'autres repères qui gagnent à être distingués. Elles ne remplacent jamais les rôles fonctionnels du thème ni les états sémantiques.
+La personnalité Namesia reste présente à travers son dégradé de marque. Les couleurs Rainbow générées par Material Color Utilities servent aux catégories éditoriales identifiées (notamment les associations symboliques). Elles ne sont jamais attribuées en fonction de l'ordre, de la position, du hasard ou du prénom lui-même sans donnée éditoriale qui le justifie. Elles ne remplacent jamais les rôles fonctionnels du thème ni les états sémantiques.
 
 ## 2. Source de vérité des couleurs
 
@@ -39,9 +39,9 @@ Les composants consomment les rôles du schéma, jamais des couleurs arbitraires
 
 Les tokens applicatifs historiques `--color-*` restent des alias de compatibilité vers les rôles Material ou les couleurs sémantiques ; ils ne définissent pas une deuxième palette. Les couleurs de succès, d'avertissement et d'information sont des extensions sémantiques distinctes, car le schéma de base Material ne définit pas ces trois états.
 
-### Signature rainbow
+### Signature Rainbow
 
-Le dégradé de marque `--color-rainbow` reste un accent décoratif limité au monogramme et à quelques détails éditoriaux. Les catégories utilisent trois familles de rôles tonals issues du schéma `Variant.RAINBOW` (`--md-category-1` à `--md-category-3`, avec leurs conteneurs et couleurs de premier plan). Une catégorie reçoit toujours la même teinte, quelle que soit la fiche ou l'ordre d'affichage. Les surfaces, actions, navigation, formulaires et états fonctionnels restent pilotés par `Variant.FIDELITY` et ses rôles sémantiques.
+Le dégradé de marque `--color-rainbow` reste un accent décoratif limité au monogramme et à quelques détails éditoriaux. Les catégories utilisent trois familles de rôles tonals issues du schéma `Variant.RAINBOW` (`--md-category-1` à `--md-category-3`, avec leurs conteneurs et couleurs de premier plan). Une catégorie reçoit toujours la même teinte, quelle que soit la fiche ou l'ordre d'affichage. Une carte de prénom, un bouton ou une surface fonctionnelle ne constitue pas une catégorie : elle utilise les rôles Fidelity neutres ou sémantiques.
 
 ## 3. Formes, typographie et élévation
 
@@ -64,10 +64,16 @@ Les destinations de premier niveau sont Accueil, Explorer, Comparer et Favoris. 
 
 Ces seuils suivent la logique des window size classes Android : la barre convient aux fenêtres compactes en largeur ou en hauteur et le rail aux fenêtres plus larges. Les adaptations sont pilotées par l'espace disponible, pas par la détection d'une marque d'appareil.
 
-## 5. Composants et états
+## 5. Bibliothèque de composants
+
+L'inventaire des composants partagés, leurs responsabilités et les règles d'évolution sont centralisés dans [Bibliothèque de composants](composants.md).
+
+Les primitives communes portent les interactions et états transversaux ; les composants métier composent ces primitives et conservent leur logique propre. Les variantes des contrôles utilisent les rôles Fidelity. Une règle de style locale n'est pas une nouvelle primitive.
+
+## 6. Composants et états
 
 Les composants doivent partager les mêmes rôles, formes et interactions :
-- boutons remplis, tonals, contour et texte ;
+- boutons filled, tonal, outlined et text ;
 - champs de saisie, recherche et sélection ;
 - cartes élevées, remplies ou avec contour ;
 - chips de filtre et de suggestion ;
@@ -81,7 +87,7 @@ Les interactions utilisent des transitions courtes et des courbes d'accélérati
 
 Les SVG d'interface sont des icônes vectorielles monochromes à `currentColor`, généralement sur une grille de 24 × 24 ; leur dessin reste cohérent d'une destination à l'autre. Les SVG de marque peuvent être colorés.
 
-## 6. Responsive, accessibilité et navigateur
+## 7. Responsive, accessibilité et navigateur
 
 - Conception fluide à partir de 320 px, sans débordement horizontal.
 - Navigation du pouce en bas sur téléphone ; rail sur tablette et fenêtres larges.
@@ -93,17 +99,18 @@ Les SVG d'interface sont des icônes vectorielles monochromes à `currentColor`,
 - Le viewport utilise `viewport-fit=cover` et une couleur de thème claire/sombre pour accorder les zones sûres et la barre du navigateur Android aux surfaces de l'application.
 - Les barres système, gestes de retour Android et indicateur de geste restent la responsabilité du navigateur et de l'OS ; Namesia ne dessine pas de fausses barres système.
 
-## 7. Architecture
+## 8. Architecture
 
 - `@material/material-color-utilities` génère les rôles de couleurs ; aucun autre moteur de thème n'est ajouté.
 - `components/material-theme-provider.tsx` synchronise le schéma avec la préférence système.
 - `components/navigation-adaptative.tsx` porte la navigation de premier niveau.
+- `components/ui/` contient les primitives d'interface partagées.
 - `app/layout.tsx` compose la barre supérieure, le rail/la barre de navigation, le contenu et le pied de page.
-- `app/globals.css` contient les rôles de secours SSR, les alias, les formes et les styles partagés.
-- Les CSS Modules consomment les tokens partagés. Ils ne redéfinissent pas une palette parallèle.
+- `app/globals.css` contient les rôles de secours SSR, les alias, les formes et les styles structurels partagés.
+- Les CSS Modules consomment les tokens partagés. Ils gèrent la disposition propre à un composant, sans redéfinir les styles d'un contrôle commun.
 - Les composants natifs React/HTML sont préférés à une dépendance UI supplémentaire tant qu'une bibliothèque Web officielle maintenue et complète ne répond pas au besoin.
 
-## 8. Références et limites de fidélité
+## 9. Références et limites de fidélité
 
 La référence est Material 3 pour Android, notamment ses principes de navigation adaptative, ses rôles de couleur et ses composants. La palette principale suit Fidelity ; Rainbow est un système d'accents catégoriels distinct. La bibliothèque officielle Material Web est en mode maintenance en attente de nouveaux mainteneurs ; elle n'est pas retenue comme fondation UI. Material Color Utilities est la dépendance officielle retenue pour les algorithmes de couleur, pas une bibliothèque de composants.
 

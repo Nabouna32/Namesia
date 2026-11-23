@@ -9,9 +9,9 @@ type Props = { prenoms: PrenomIndex[] };
 export function PrenomsVedette({ prenoms }: Props) {
   return (
     <div className="featured-grid">
-      {prenoms.map((prenom, index) => (
+      {prenoms.map((prenom) => (
         <article className={styles.item} key={prenom.slug}>
-          <Link className={`featured-card featured-${index + 1}`} href={`/prenoms/${prenom.slug}`}>
+          <Link className="featured-card" href={`/prenoms/${prenom.slug}`}>
             <span className="featured-letter">{prenom.lettre}</span>
             <span className="featured-bottom">
               <span className="featured-name">

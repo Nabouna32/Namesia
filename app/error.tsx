@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import { Bouton } from "@/components/ui/bouton";
 
 export default function Error({
   error,
@@ -23,9 +24,7 @@ export default function Error({
           Cette page n’a pas pu être chargée. Le problème a été signalé ; vous pouvez réessayer.
         </p>
         <p>
-          <button className="button button-dark" type="button" onClick={reset}>
-            Réessayer
-          </button>{" "}
+          <Bouton onClick={reset}>Réessayer</Bouton>{" "}
           <Link className="text-link" href="/">
             Retour à l’accueil
           </Link>
