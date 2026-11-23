@@ -9,6 +9,7 @@ import { comparerPertinence, normaliserRecherche } from "@/lib/recherche-prenoms
 import { categoryTone } from "@/lib/category-color";
 import { ChampRecherche } from "@/components/ui/champ-recherche";
 import { ListeSelectionComparaison } from "@/components/ui/liste-selection-comparaison";
+import { Bouton } from "@/components/ui/bouton";
 
 type Props = { prenoms: PrenomIndex[]; selectionInitiale: string[] };
 
@@ -186,9 +187,9 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
       ) : erreur ? (
         <div className="compare-status" role="alert">
           <p>Les fiches sélectionnées n’ont pas pu être chargées.</p>
-          <button className="button button-dark" type="button" onClick={() => setTentative((value) => value + 1)}>
+          <Bouton onClick={() => setTentative((value) => value + 1)}>
             Réessayer
-          </button>
+          </Bouton>
         </div>
       ) : !selectionComplete ? (
         <p className="compare-status" role="status">Une des fiches sélectionnées n’est plus publiée. Modifiez votre sélection pour continuer.</p>
