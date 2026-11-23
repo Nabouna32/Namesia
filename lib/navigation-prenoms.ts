@@ -18,9 +18,15 @@ export type ContexteRetourFavoris = {
   limite: number;
 };
 
+export type ContexteRetourComparateur = {
+  vue: "comparateur";
+  prenoms: string[];
+};
+
 export type ContexteRetourNavigation =
   | ContexteRetourCatalogue
-  | ContexteRetourFavoris;
+  | ContexteRetourFavoris
+  | ContexteRetourComparateur;
 
 type ParametresFiche = {
   retour_vue?: ParametreUrl;
@@ -29,6 +35,7 @@ type ParametresFiche = {
   retour_lettre?: ParametreUrl;
   retour_tri?: ParametreUrl;
   retour_limite?: ParametreUrl;
+  retour_prenoms?: ParametreUrl;
 };
 
 function premierParametre(value: ParametreUrl): string {
@@ -84,12 +91,28 @@ export function creerUrlFicheDepuisFavoris(
   return creerUrlFiche(slug, parametres);
 }
 
+function normaliserSlugsComparateur(slugs: string[]): string[] {
+  return [...new Set(slugs.filter((slug) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)))].slice(0, 3);
+}
+
+export function creerUrlFicheDepuisComparateur(slug: string, prenoms: string[]): string {
+  const selection = normaliserSlugsComparateur(prenoms);
+  if (selection.length < 2) return creerUrlFiche(slug, new URLSearchParams());
+
+  const parametres = new URLSearchParams({
+    retour_vue: "comparateur",
+    retour_prenoms: selection.join(",")
+  });
+  return creerUrlFiche(slug, parametres);
+}
+
 export function creerUrlFicheDepuisContexte(
   slug: string,
   contexte: ContexteRetourNavigation | null
 ): string {
   if (!contexte) return creerUrlFicheDepuisCatalogue(slug, null);
   if (contexte.vue === "favoris") return creerUrlFicheDepuisFavoris(slug, contexte);
+  if (contexte.vue === "comparateur") return creerUrlFicheDepuisComparateur(slug, contexte.prenoms);
   return creerUrlFicheDepuisCatalogue(slug, contexte);
 }
 
@@ -100,6 +123,11 @@ export function lireContexteRetourNavigation(
   const q = premierParametre(parametres.retour_q);
   const genre = premierParametre(parametres.retour_genre);
   const limite = lireNombreVisible(parametres.retour_limite);
+
+  if (vue === "comparateur") {
+    const prenoms = normaliserSlugsComparateur(premierParametre(parametres.retour_prenoms).split(","));
+    return prenoms.length >= 2 ? { vue: "comparateur", prenoms } : null;
+  }
 
   if (vue === "favoris") {
     const tri = premierParametre(parametres.retour_tri);
@@ -121,6 +149,10 @@ export function lireContexteRetourNavigation(
 export function creerUrlRetourNavigation(parametres: ParametresFiche): string {
   const contexte = lireContexteRetourNavigation(parametres);
   if (!contexte) return "/prenoms";
+  if (contexte.vue === "comparateur") {
+    const parametres = new URLSearchParams({ prenoms: contexte.prenoms.join(",") });
+    return `/comparer?${parametres.toString()}`;
+  }
 
   const recherche = new URLSearchParams();
   if (contexte.q) recherche.set("q", contexte.q);

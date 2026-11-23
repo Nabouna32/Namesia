@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { creerUrlFicheDepuisComparateur } from "@/lib/navigation-prenoms";
 import type { Prenom, PrenomIndex } from "@/lib/prenoms";
 import { PartagerLien } from "@/components/partager-fiche";
 import { BoutonFavori } from "@/components/bouton-favori";
@@ -211,7 +212,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
                 <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
                 <Link
                   className="compare-card-link"
-                  href={`/prenoms/${encodeURIComponent(prenom.slug)}`}
+                  href={creerUrlFicheDepuisComparateur(prenom.slug, selection)}
                   aria-label={`Lire la fiche complète de ${prenom.nom}`}
                 >
                   Voir la fiche complète

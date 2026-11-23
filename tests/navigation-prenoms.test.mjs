@@ -4,6 +4,7 @@ import {
   creerUrlCatalogueDepuisRecherche,
   creerUrlFicheDepuisCatalogue,
   creerUrlFicheDepuisFavoris,
+  creerUrlFicheDepuisComparateur,
   creerUrlFicheDepuisContexte,
   creerUrlRetourNavigation,
   lireContexteRetourNavigation,
@@ -149,4 +150,47 @@ test("la recherche compacte ouvre le catalogue avec le terme saisi", () => {
   assert.equal(creerUrlCatalogueDepuisRecherche("  Jean Luc  "), "/prenoms?q=Jean+Luc");
   assert.equal(creerUrlCatalogueDepuisRecherche("Éloïse & Anna"), "/prenoms?q=%C3%89lo%C3%AFse+%26+Anna");
   assert.equal(creerUrlCatalogueDepuisRecherche("   "), "/prenoms");
+});
+
+test("un lien depuis le comparateur conserve les deux ou trois prénoms sélectionnés", () => {
+  assert.equal(
+    creerUrlFicheDepuisComparateur("alice", ["alice", "bob", "claire"]),
+    "/prenoms/alice?retour_vue=comparateur&retour_prenoms=alice%2Cbob%2Cclaire"
+  );
+  assert.equal(
+    creerUrlFicheDepuisComparateur("alice", ["alice", "bob"]),
+    "/prenoms/alice?retour_vue=comparateur&retour_prenoms=alice%2Cbob"
+  );
+  assert.equal(
+    creerUrlFicheDepuisComparateur("claire", ["alice", "bob"]),
+    "/prenoms/claire?retour_vue=comparateur&retour_prenoms=alice%2Cbob"
+  );
+});
+
+test("le retour depuis une fiche restaure le comparateur et sa sélection partageable", () => {
+  const contexte = lireContexteRetourNavigation({
+    retour_vue: "comparateur",
+    retour_prenoms: "alice,bob,alice,slug invalide"
+  });
+
+  assert.deepEqual(contexte, { vue: "comparateur", prenoms: ["alice", "bob"] });
+  assert.equal(creerUrlRetourNavigation({
+    retour_vue: "comparateur",
+    retour_prenoms: "alice,bob"
+  }), "/comparer?prenoms=alice%2Cbob");
+  assert.equal(
+    creerUrlFicheDepuisContexte("bob", contexte),
+    "/prenoms/bob?retour_vue=comparateur&retour_prenoms=alice%2Cbob"
+  );
+});
+
+test("un contexte de comparateur invalide ne crée pas de lien de retour cassé", () => {
+  assert.equal(lireContexteRetourNavigation({
+    retour_vue: "comparateur",
+    retour_prenoms: "alice,slug invalide"
+  }), null);
+  assert.equal(creerUrlRetourNavigation({
+    retour_vue: "comparateur",
+    retour_prenoms: "alice"
+  }), "/prenoms");
 });
