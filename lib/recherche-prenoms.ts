@@ -5,6 +5,8 @@ export function normaliserRecherche(value: string): string {
     .normalize("NFD")
     .replace(/\p{Diacritic}/gu, "")
     .toLocaleLowerCase("fr")
+    .replace(/œ/g, "oe")
+    .replace(/æ/g, "ae")
     .replace(/(?<=[\p{L}\p{N}])[\s\p{P}\p{Z}]+(?=[\p{L}\p{N}])/gu, "");
 }
 
