@@ -10,7 +10,7 @@ import { IconeMaterial } from "./icone-material";
 import { Bouton } from "@/components/ui/bouton";
 
 export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
-  const { slugs, effacer, erreur } = useHistorique();
+  const { slugs, retirer, effacer, erreur } = useHistorique();
   const { erreur: erreurFavoris } = useFavoris();
   if (slugs.length === 0 && !erreur) return null;
 
@@ -55,6 +55,14 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
                   {!erreurFavoris && (
                     <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
                   )}
+                  <Bouton
+                    variante="text"
+                    taille="icon"
+                    ariaLabel={`Retirer ${prenom.nom} de l’historique`}
+                    onClick={() => retirer(prenom.slug)}
+                  >
+                    <span aria-hidden="true"><IconeMaterial name="close" size={20} /></span>
+                  </Bouton>
                 </article>
               ))}
             </div>
