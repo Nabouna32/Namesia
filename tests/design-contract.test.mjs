@@ -184,7 +184,7 @@ test("les cartes de prénoms acceptent les noms longs sans déborder ni couper l
   assert.match(globalCss, /\.featured-name\s*\{[^}]*min-width:\s*0/s);
   assert.match(globalCss, /\.featured-bottom strong\s*\{[^}]*overflow-wrap:\s*anywhere/s);
   assert.match(globalCss, /\.featured-card\s*\{[^}]*min-height:\s*210px/s);
-  assert.doesNotMatch(globalCss, /\.featured-card\s*\{[^}]*height:\s*210px/s);
+  assert.doesNotMatch(globalCss, /\.featured-card\s*\{[^}]*\n\s*height:\s*210px/s);
 });
 
 test("les catégories Rainbow utilisent des rôles explicites sans couleur de repli", () => {
