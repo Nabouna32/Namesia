@@ -32,7 +32,7 @@ export function ChampRecherche({
       <label className={compact ? "sr-only" : undefined} htmlFor={id}>{label}</label>
       <div className={styles.control}>
         <span className={styles.icon} aria-hidden="true">
-          <IconeMaterial name="search" size={22} />
+          <IconeMaterial name="search" size={24} />
         </span>
         <input
           id={id}
