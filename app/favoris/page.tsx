@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ListeFavoris } from "@/components/liste-favoris";
-import type { TriFavoris } from "@/lib/navigation-prenoms";
+import { lireNombreVisible, type TriFavoris } from "@/lib/navigation-prenoms";
 import { getPrenomsIndex } from "@/lib/prenoms";
 
 export const dynamic = "force-dynamic";
@@ -25,13 +25,6 @@ function premierParametre(value: ParametreUrl): string {
   return Array.isArray(value) ? value[0] ?? "" : value ?? "";
 }
 
-function lireNombreVisible(value: string): number {
-  const nombre = Number(value);
-  return Number.isSafeInteger(nombre) && nombre >= 24
-    ? Math.floor(nombre / 24) * 24
-    : 24;
-}
-
 function lireTri(value: string): TriFavoris {
   return value === "nom-asc" || value === "nom-desc" ? value : "enregistrement";
 }
@@ -50,7 +43,7 @@ export default async function FavorisPage({ searchParams }: Props) {
           initialRecherche={premierParametre(parametres.q)}
           initialGenre={premierParametre(parametres.genre)}
           initialTri={lireTri(premierParametre(parametres.tri))}
-          initialNombreVisible={lireNombreVisible(premierParametre(parametres.limite))}
+          initialNombreVisible={lireNombreVisible(parametres.limite)}
         />
       </div>
     </main>
