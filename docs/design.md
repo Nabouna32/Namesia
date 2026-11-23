@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 1.7
+- **Version :** 1.8
 - **Mis à jour :** 2026-11-23
 
 ## Intention
@@ -36,8 +36,8 @@ Les couples texte/fond, texte atténué/fond et accent/fond sont choisis pour d�
 
 Une seule famille sans empattement : pile système (Inter lorsqu'elle est installée, puis polices natives de la plateforme). Pas de police distante ni de chargement réseau. Échelle :
 
-- 12 px : métadonnées non essentielles uniquement ;
-- 14 px : aides et informations secondaires ;
+- 12 px : repères de section et métadonnées ;
+- 14 px : aides, navigation et actions secondaires ;
 - 16 px : corps de texte et contrôles ;
 - 18–20 px : introduction et texte mis en avant ;
 - 24–32 px : titres de section ;
