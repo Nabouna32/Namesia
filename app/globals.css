@@ -21,19 +21,19 @@
   --md-sys-color-on-background: #191b20;
   --md-sys-color-surface: #f9f9ff;
   --md-sys-color-on-surface: #191b20;
-  --md-sys-color-surface-variant: #e7e0ec;
-  --md-sys-color-on-surface-variant: #49454f;
+  --md-sys-color-surface-variant: #e1e2ea;
+  --md-sys-color-on-surface-variant: #44474f;
   --md-sys-color-surface-container-lowest: #ffffff;
   --md-sys-color-surface-container-low: #f2f3fa;
   --md-sys-color-surface-container: #eef0f7;
   --md-sys-color-surface-container-high: #e8eaf1;
   --md-sys-color-surface-container-highest: #e2e4eb;
-  --md-sys-color-outline: #79747e;
-  --md-sys-color-outline-variant: #cac4d0;
+  --md-sys-color-outline: #747780;
+  --md-sys-color-outline-variant: #c4c6d0;
   --md-sys-color-shadow: #000000;
   --md-sys-color-scrim: #000000;
-  --md-sys-color-inverse-surface: #322f35;
-  --md-sys-color-inverse-on-surface: #f5eff7;
+  --md-sys-color-inverse-surface: #2e3036;
+  --md-sys-color-inverse-on-surface: #f0f0f7;
   --md-sys-color-surface-tint: #005ac1;
 
   --color-background: var(--md-sys-color-background);
@@ -99,14 +99,14 @@
     --md-sys-color-primary-container: #004494;
     --md-sys-color-on-primary-container: #d8e2ff;
     --md-sys-color-inverse-primary: #005ac1;
-    --md-sys-color-secondary: #ccc2dc;
-    --md-sys-color-on-secondary: #332d41;
-    --md-sys-color-secondary-container: #4a4458;
-    --md-sys-color-on-secondary-container: #e8def8;
-    --md-sys-color-tertiary: #efb8c8;
-    --md-sys-color-on-tertiary: #492532;
-    --md-sys-color-tertiary-container: #633b48;
-    --md-sys-color-on-tertiary-container: #ffd8e4;
+    --md-sys-color-secondary: #c1c7dc;
+    --md-sys-color-on-secondary: #2a3042;
+    --md-sys-color-secondary-container: #3e4558;
+    --md-sys-color-on-secondary-container: #dbe2f9;
+    --md-sys-color-tertiary: #dfb9dc;
+    --md-sys-color-on-tertiary: #402744;
+    --md-sys-color-tertiary-container: #583d5b;
+    --md-sys-color-on-tertiary-container: #fbd7fc;
     --md-sys-color-error: #f2b8b5;
     --md-sys-color-on-error: #601410;
     --md-sys-color-error-container: #8c1d18;
@@ -115,19 +115,19 @@
     --md-sys-color-on-background: #e2e2e9;
     --md-sys-color-surface: #111318;
     --md-sys-color-on-surface: #e2e2e9;
-    --md-sys-color-surface-variant: #49454f;
-    --md-sys-color-on-surface-variant: #cac4d0;
+    --md-sys-color-surface-variant: #44474f;
+    --md-sys-color-on-surface-variant: #c4c6d0;
     --md-sys-color-surface-container-lowest: #0f0d13;
     --md-sys-color-surface-container-low: #191b22;
     --md-sys-color-surface-container: #1d1f26;
     --md-sys-color-surface-container-high: #272a31;
     --md-sys-color-surface-container-highest: #32353c;
-    --md-sys-color-outline: #938f99;
-    --md-sys-color-outline-variant: #49454f;
+    --md-sys-color-outline: #8e9099;
+    --md-sys-color-outline-variant: #44474f;
     --md-sys-color-shadow: #000000;
     --md-sys-color-scrim: #000000;
-    --md-sys-color-inverse-surface: #e6e0e9;
-    --md-sys-color-inverse-on-surface: #322f35;
+    --md-sys-color-inverse-surface: #e2e2e9;
+    --md-sys-color-inverse-on-surface: #2e3036;
     --md-sys-color-surface-tint: #adc7ff;
     --md-category-1: #adc7ff;
     --md-category-1-container: #004494;
@@ -312,7 +312,12 @@ input {
   transition: background-color 250ms var(--motion-emphasized), width 250ms var(--motion-emphasized), transform 180ms var(--motion-emphasized);
 }
 
-.navigation-icon,
+.navigation-icon {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
 .navigation-item.is-active {
   color: var(--md-sys-color-on-surface);
 }
@@ -1563,7 +1568,7 @@ body {
 }
 a { text-decoration-thickness: 1px; text-underline-offset: 3px; }
 button, input, select, textarea { font-family: inherit; }
-button { -webkit-tap-highlight-color: transparent; transition: background-color 180ms var(--motion-standard), border-color 180ms var(--motion-standard), color 180ms var(--motion-standard), box-shadow 180ms var(--motion-standard), transform 120ms var(--motion-standard); }
+button { -webkit-tap-highlight-color: transparent; transition: background-color var(--motion-duration-short) var(--motion-standard), border-color var(--motion-duration-short) var(--motion-standard), color var(--motion-duration-short) var(--motion-standard), box-shadow var(--motion-duration-short) var(--motion-standard); }
 button:active:not(:disabled) { transform: none; filter: brightness(.94); }
 button:disabled { cursor: not-allowed; opacity: .48; }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
