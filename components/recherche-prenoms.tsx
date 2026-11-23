@@ -8,6 +8,7 @@ import { useFavoris } from "@/components/favoris-provider";
 import styles from "./recherche-prenoms.module.css";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { comparerPertinence, normaliserRecherche } from "@/lib/recherche-prenoms";
+import { creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
 
 type Props = {
   prenoms: PrenomIndex[];
@@ -106,6 +107,9 @@ export function RecherchePrenoms({
   });
 
   const filtresActifs = Boolean(recherche.trim() || genreActif || lettreActive);
+  const contexteRetour = synchroniserUrl
+    ? { q: recherche, genre: genreActif, lettre: lettreActive }
+    : null;
 
   function basculerComparaison(slug: string) {
     setSelectionComparaison((selection) => selection.includes(slug)
@@ -271,7 +275,7 @@ export function RecherchePrenoms({
               <div className={styles.resultsGrid}>
                 {resultats.slice(0, nombreVisible).map((prenom) => (
                   <article className={styles.resultCard} key={prenom.slug}>
-                    <Link className={`name-card ${styles.resultLink}`} href={`/prenoms/${prenom.slug}`}>
+                    <Link className={`name-card ${styles.resultLink}`} href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
                       <span className="name-initial">{prenom.lettre}</span>
                       <span>
                         <strong>{prenom.nom}</strong>
@@ -314,7 +318,7 @@ export function RecherchePrenoms({
               <div className={styles.resultsGrid}>
                 {suggestions.map((prenom) => (
                   <article className={styles.resultCard} key={prenom.slug}>
-                    <Link className={`name-card ${styles.resultLink}`} href={`/prenoms/${prenom.slug}`}>
+                    <Link className={`name-card ${styles.resultLink}`} href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
                       <span className="name-initial">{prenom.lettre}</span>
                       <span><strong>{prenom.nom}</strong><small>{prenom.genre} · Suggestion proche</small></span>
                       <span className="card-arrow" aria-hidden="true">↗</span>
