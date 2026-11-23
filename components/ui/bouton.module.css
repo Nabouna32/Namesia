@@ -11,8 +11,8 @@
   border: 1px solid transparent;
   border-radius: var(--md-sys-shape-corner-full);
   font: inherit;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--md-sys-typescale-body-medium-size);
+  font-weight: 500;
   line-height: 1.25;
   text-decoration: none;
   cursor: pointer;
@@ -74,5 +74,5 @@
   width: 48px;
   min-width: 48px;
   padding: 0;
-  border-radius: 50%;
+  border-radius: var(--md-sys-shape-corner-full);
 }
