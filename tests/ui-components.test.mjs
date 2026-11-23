@@ -321,3 +321,18 @@ test("les options de comparaison ont des états tactiles Material sans survol co
   assert.match(globalStyles, /\.compare-option:has\(input:checked\) \.compare-option-initial\s*\{[^}]*on-primary/s);
   assert.match(globalStyles, /\.compare-option input\s*\{[^}]*accent-color: var\(--md-sys-color-primary\)/s);
 });
+
+
+test("les surfaces du catalogue et du comparateur ne dépendent plus de la couche Fidelity finale", () => {
+  const fidelityLayer = globalStyles.slice(globalStyles.indexOf("/* Couche Material 3 Fidelity"));
+  const fidelityBase = fidelityLayer.slice(0, fidelityLayer.indexOf("@media (max-width: 599px)"));
+  assert.match(globalStyles, /\.catalogue-filters\s*\{[^}]*surface-container-low/s);
+  assert.match(globalStyles, /\.compare-selector\s*\{[^}]*surface-container-low/s);
+  assert.match(globalStyles, /\.empty-results\s*\{[^}]*outline-variant/s);
+  assert.match(globalStyles, /\.name-card\s*\{[^}]*surface-container-low/s);
+  assert.match(globalStyles, /\.compare-option\s*\{[^}]*surface-container-low/s);
+  assert.match(globalStyles, /\.compare-card\s*\{[^}]*surface-container-low/s);
+  assert.match(globalStyles, /\.profile-note\s*\{[^}]*surface-container/s);
+  assert.doesNotMatch(fidelityBase, /\.catalogue-filters|\.compare-selector|\.empty-results|\.name-card|\.compare-option|\.compare-card|\.profile-note/);
+  assert.doesNotMatch(globalStyles, /linear-gradient\(135deg, var\(--color-surface/);
+});
