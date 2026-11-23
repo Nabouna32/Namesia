@@ -12,6 +12,7 @@ import { useFavoris } from "./favoris-provider";
 import styles from "./liste-favoris.module.css";
 import { IconeMaterial } from "./icone-material";
 import { ChampRecherche } from "@/components/ui/champ-recherche";
+import { ChampSelect } from "@/components/ui/champ-select";
 import { BoutonComparaison } from "@/components/ui/bouton-comparaison";
 
 type Props = {
@@ -243,30 +244,32 @@ export function ListeFavoris({
               }}
             />
             {genres.length > 1 && (
-              <div className={styles.genre}>
-                <label htmlFor="genre-favoris">Filtrer par genre</label>
-                <select
-                  id="genre-favoris"
-                  value={genreActifValide}
-                  onChange={(event) => {
-                    setNombreVisible(24);
-                    setGenreActif(event.target.value);
-                    mettreAJourUrl(recherche, event.target.value, triActif);
-                  }}
-                >
-                  <option value="">Tous les genres</option>
-                  {genres.map((genre) => <option key={genre} value={genre}>{genre}</option>)}
-                </select>
-              </div>
+              <ChampSelect
+                id="genre-favoris"
+                label="Filtrer par genre"
+                value={genreActifValide}
+                options={[
+                  { value: "", label: "Tous les genres" },
+                  ...genres.map((genre) => ({ value: genre, label: genre }))
+                ]}
+                onChange={(value) => {
+                  setNombreVisible(24);
+                  setGenreActif(value);
+                  mettreAJourUrl(recherche, value, triActif);
+                }}
+              />
             )}
-            <div className={styles.sort}>
-              <label htmlFor="tri-favoris">Trier les favoris</label>
-              <select id="tri-favoris" value={triActif} onChange={(event) => changerTri(event.target.value)}>
-                <option value="enregistrement">Ordre d’enregistrement</option>
-                <option value="nom-asc">Nom · A à Z</option>
-                <option value="nom-desc">Nom · Z à A</option>
-              </select>
-            </div>
+            <ChampSelect
+              id="tri-favoris"
+              label="Trier les favoris"
+              value={triActif}
+              options={[
+                { value: "enregistrement", label: "Ordre d’enregistrement" },
+                { value: "nom-asc", label: "Nom · A à Z" },
+                { value: "nom-desc", label: "Nom · Z à A" }
+              ]}
+              onChange={changerTri}
+            />
           </div>
           <BarreComparaison
             prenoms={prenomsSelectionnes}

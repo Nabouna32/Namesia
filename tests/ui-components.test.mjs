@@ -104,3 +104,18 @@ test("les filtres de genre et d'initiale partagent des puces Fidelity", () => {
   assert.match(rechercheFiltres, /<ChipFiltre/);
   assert.doesNotMatch(globalStyles, /filter-chip|filter-letter|Expressive/);
 });
+
+const champSelect = await readFile(new URL("../components/ui/champ-select.tsx", import.meta.url), "utf8");
+const champSelectStyles = await readFile(new URL("../components/ui/champ-select.module.css", import.meta.url), "utf8");
+const favorisSelects = await readFile(new URL("../components/liste-favoris.tsx", import.meta.url), "utf8");
+const favorisSelectStyles = await readFile(new URL("../components/liste-favoris.module.css", import.meta.url), "utf8");
+
+test("les sélecteurs des favoris utilisent un champ natif partagé", () => {
+  assert.match(champSelect, /export function ChampSelect\(/);
+  assert.match(champSelect, /<label htmlFor=\{id\}>/);
+  assert.match(champSelect, /<select id=\{id\}/);
+  assert.match(champSelect, /options\.map/);
+  assert.match(champSelectStyles, /:focus-visible/);
+  assert.match(favorisSelects, /<ChampSelect/);
+  assert.doesNotMatch(favorisSelectStyles, /\.genre select|\.sort select/);
+});
