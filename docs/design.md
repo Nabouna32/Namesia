@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.0
+- **Version :** 4.1
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -10,7 +10,7 @@ Namesia adopte **Material 3**, avec une palette générale **Fidelity** et une p
 
 Ce choix est une référence de conception et de comportement, pas une prétention à reproduire le système Android natif ou ses barres système. Le navigateur conserve ses conventions, ses capacités et ses limites.
 
-La personnalité Namesia reste présente à travers son dégradé de marque. Les couleurs Rainbow générées par Material Color Utilities servent aux catégories éditoriales identifiées (notamment les associations symboliques). Elles ne sont jamais attribuées en fonction de l'ordre, de la position, du hasard ou du prénom lui-même sans donnée éditoriale qui le justifie. Elles ne remplacent jamais les rôles fonctionnels du thème ni les états sémantiques.
+La personnalité Namesia reste présente à travers son dégradé de marque. Les couleurs Rainbow générées par Material Color Utilities servent aux catégories éditoriales identifiées (notamment les associations symboliques). Elles ne sont jamais attribuées en fonction de l'ordre, de la position, du hasard ou du prénom lui-même sans donnée éditoriale qui le justifie. Elles ne remplacent jamais les rôles fonctionnels du thème ni les états sémantiques. Les titres, les actions, les surfaces générales et les repères de navigation restent Fidelity : Rainbow n'est pas un dégradé décoratif appliqué aux textes ou aux fonds de page.
 
 ## 2. Source de vérité des couleurs
 
@@ -41,7 +41,7 @@ Les tokens applicatifs historiques `--color-*` restent des alias de compatibilit
 
 ### Signature Rainbow
 
-Le dégradé de marque `--color-rainbow` reste un accent décoratif limité au monogramme et à quelques détails éditoriaux. Les catégories utilisent trois familles de rôles tonals issues du schéma `Variant.RAINBOW` (`--md-category-1` à `--md-category-3`, avec leurs conteneurs et couleurs de premier plan). Une catégorie reçoit toujours la même teinte, quelle que soit la fiche ou l'ordre d'affichage. Une carte de prénom, un bouton ou une surface fonctionnelle ne constitue pas une catégorie : elle utilise les rôles Fidelity neutres ou sémantiques. La vitrine « Les prénoms à découvrir » applique une surface neutre identique à ses cartes ; aucune carte ne reçoit primary, secondary ou tertiary selon sa position. Les variations de mise en page suivent la largeur disponible : trois colonnes sur grand écran, deux sur fenêtre intermédiaire et une sur écran compact.
+Le dégradé de marque `--color-rainbow` reste réservé au monogramme Namesia. Les catégories utilisent trois familles de rôles tonals issues du schéma `Variant.RAINBOW` (`--md-category-1` à `--md-category-3`, avec leurs conteneurs et couleurs de premier plan). Une catégorie reçoit toujours la même teinte, quelle que soit la fiche ou l'ordre d'affichage. Une carte de prénom, un bouton ou une surface fonctionnelle ne constitue pas une catégorie : elle utilise les rôles Fidelity neutres ou sémantiques. Les titres, les accents typographiques et les fonds de page ne reçoivent pas de dégradé Rainbow. Les cartes d'associations peuvent recevoir une légère teinte stable issue de la catégorie, sur une surface Fidelity. La vitrine « Les prénoms à découvrir » applique une surface neutre identique à ses cartes ; aucune carte ne reçoit primary, secondary ou tertiary selon sa position. Les variations de mise en page suivent la largeur disponible : trois colonnes sur grand écran, deux sur fenêtre intermédiaire et une sur écran compact.
 
 ## 3. Formes, typographie et élévation
 
