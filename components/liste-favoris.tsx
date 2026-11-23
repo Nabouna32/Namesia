@@ -18,6 +18,7 @@ export function ListeFavoris({ prenoms }: Props) {
   const [messageImport, setMessageImport] = useState("");
   const [erreurImport, setErreurImport] = useState("");
   const [recherche, setRecherche] = useState("");
+  const [nombreVisible, setNombreVisible] = useState(24);
 
   if (!pret) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
 
@@ -31,6 +32,7 @@ export function ListeFavoris({ prenoms }: Props) {
   const favorisFiltres = termeNormalise
     ? favoris.filter((prenom) => normaliserRecherche(prenom.nom).includes(termeNormalise))
     : favoris;
+  const nombreAffiche = Math.min(favorisFiltres.length, nombreVisible);
 
   function exporterFavoris() {
     const fichier = new Blob([creerSauvegardeFavoris(slugs)], { type: "application/json;charset=utf-8" });
@@ -112,14 +114,17 @@ export function ListeFavoris({ prenoms }: Props) {
               id="recherche-favoris"
               type="search"
               value={recherche}
-              onChange={(event) => setRecherche(event.target.value)}
+              onChange={(event) => {
+                setNombreVisible(24);
+                setRecherche(event.target.value);
+              }}
               placeholder="Saisissez un prénom..."
             />
           </div>
           <p className={styles.count} role="status" aria-live="polite">
             {termeNormalise
-              ? `${favorisFiltres.length} ${favorisFiltres.length === 1 ? "favori affiché" : "favoris affichés"} sur ${favoris.length}`
-              : `${favoris.length} ${favoris.length === 1 ? "favori enregistré" : "favoris enregistrés"}`}
+              ? nombreAffiche + " " + (nombreAffiche === 1 ? "favori affiché" : "favoris affichés") + " sur " + favorisFiltres.length + " résultats"
+              : nombreAffiche + " " + (nombreAffiche === 1 ? "favori affiché" : "favoris affichés") + " sur " + favoris.length + " enregistrés"}
           </p>
           {favorisFiltres.length === 0 ? (
             <div className={styles.empty}>
@@ -130,7 +135,7 @@ export function ListeFavoris({ prenoms }: Props) {
             </div>
           ) : (
             <div className="name-grid">
-              {favorisFiltres.map((prenom) => (
+              {favorisFiltres.slice(0, nombreVisible).map((prenom) => (
                 <article className={styles.row} key={prenom.slug}>
                   <Link className="name-card" href={`/prenoms/${prenom.slug}`}>
                     <span className="name-initial">{prenom.lettre}</span>
@@ -144,6 +149,15 @@ export function ListeFavoris({ prenoms }: Props) {
                 </article>
               ))}
             </div>
+          )}
+          {favorisFiltres.length > nombreVisible && (
+            <button
+              className="filter-reset"
+              type="button"
+              onClick={() => setNombreVisible((visible) => visible + 24)}
+            >
+              Afficher les {Math.min(24, favorisFiltres.length - nombreVisible)} favoris suivants
+            </button>
           )}
         </>
       )}
