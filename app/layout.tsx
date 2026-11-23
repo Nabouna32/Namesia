@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FavorisProvider } from "@/components/favoris-provider";
+import { HistoriqueProvider } from "@/components/historique-provider";
 import "./globals.css";
 import { jsonLd } from "@/lib/json-ld";
 import { siteUrl } from "@/lib/site-url";
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(siteWebData) }} />
     <a className="skip-link" href="#contenu">Aller au contenu</a>
     <FavorisProvider>
+      <HistoriqueProvider>
       <header className="site-header"><div className="header-inner">
         <Link className="brand" href="/" aria-label="Namesia, accueil"><span className="brand-mark">n.</span><span>namesia</span></Link>
         <nav className="site-nav" aria-label="Navigation principale">
@@ -52,6 +54,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <p>Les prénoms ont des histoires. Prenons le temps de les raconter.</p>
         <span className="footer-note">© {new Date().getFullYear()} Namesia</span>
       </div></footer>
+      </HistoriqueProvider>
     </FavorisProvider>
   </body></html>;
 }
