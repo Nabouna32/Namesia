@@ -1,3 +1,60 @@
+.content {
+  display: grid;
+  gap: 12px;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.importButton {
+  position: relative;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0 16px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.importButton input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.importButton:focus-within {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.help {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.success {
+  margin: 0;
+  color: var(--color-success);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 .row {
   display: flex;
   min-width: 0;
@@ -17,8 +74,8 @@
 .note {
   grid-column: 1 / -1;
   margin: 4px 0 0;
-  color: var(--muted);
-  font-size: 12px;
+  color: var(--color-text-muted);
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -27,18 +84,17 @@
   justify-items: start;
   gap: 14px;
   padding: 22px;
-  border: 1px dashed var(--line);
+  border: 1px dashed var(--color-border);
   border-radius: 14px;
   background: var(--color-surface);
 }
 
 .empty p {
   margin: 0;
-  color: var(--muted);
+  color: var(--color-text-muted);
 }
 
 .error {
-  grid-column: 1 / -1;
   margin: 0;
   color: var(--color-error);
   font-size: 14px;
