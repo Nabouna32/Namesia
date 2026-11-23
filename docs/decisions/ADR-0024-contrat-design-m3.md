@@ -28,6 +28,11 @@ La passe M3 Fidelity a révélé que la feuille globale et les modules CSS n'app
 
 La cascade devient lisible et les tokens portent une seule signification. Le rendu SSR possède une base déterministe, tandis que les couleurs actives restent calculées par Material Color Utilities. Une donnée de catégorie ou de thème absente n'est plus maquillée par une couleur de secours. Les exceptions propres à un composant restent locales, sans créer de nouvelles primitives globales.
 
+## Références
+
+- [Material 3 — Type scale tokens](https://m3.material.io/styles/typography/type-scale-tokens)
+- [Android Developers — Material 3 typography](https://developer.android.com/develop/ui/compose/designsystems/material3)
+
 ## Validation
 
 `tests/design-contract.test.mjs` contrôle les alias, fallbacks, blocs racine, règles dupliquées, typographie, rayons, espacements et valeurs par défaut dans les modules de domaine. La CI GitHub Actions est le seul mécanisme de validation.
