@@ -9,7 +9,7 @@ import {
   useState,
   type ReactNode
 } from "react";
-import { ajouterConsultation, lireHistoriqueSession } from "@/lib/historique-prenoms";
+import { ajouterConsultation, lireHistoriqueSession, retirerConsultation } from "@/lib/historique-prenoms";
 
 const CLE_HISTORIQUE = "namesia:historique-session:v1";
 
@@ -54,7 +54,7 @@ export function HistoriqueProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const retirer = useCallback((slug: string) => {
-    setSlugs((courants) => courants.filter((element) => element !== slug));
+    setSlugs((courants) => retirerConsultation(courants, slug));
   }, []);
 
   const effacer = useCallback(() => setSlugs([]), []);
