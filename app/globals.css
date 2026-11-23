@@ -812,20 +812,25 @@ h2 em {
   gap: 9px;
   margin: 0;
   padding: 0;
-  color: var(--color-accent);
+  color: var(--md-sys-color-on-surface-variant);
   font-size: 14px;
   list-style: none;
 }
 
 .breadcrumb li + li::before {
   margin-right: 9px;
-  color: var(--color-text-muted);
+  color: var(--md-sys-color-outline);
   content: "/";
+}
+
+.breadcrumb a {
+  color: var(--md-sys-color-on-surface-variant);
+  text-decoration: none;
 }
 
 .breadcrumb a:hover,
 .profile-footer a:hover {
-  color: var(--color-accent);
+  color: var(--md-sys-color-primary);
 }
 
 .breadcrumb [aria-current="page"] {
@@ -869,7 +874,7 @@ h2 em {
 .profile-lead {
   max-width: 640px;
   margin: 0;
-  color: var(--color-accent);
+  color: var(--md-sys-color-on-surface);
   font-family: var(--font-sans);
   font-size: var(--md-sys-typescale-body-large-size);
   line-height: var(--md-sys-typescale-body-large-line-height);
@@ -887,10 +892,10 @@ h2 em {
   align-items: center;
   min-height: 32px;
   padding: 6px 12px;
-  border: 1px solid color-mix(in srgb, var(--color-accent) 20%, transparent);
-  border-radius: 999px;
-  background: var(--color-surface);
-  color: var(--color-accent);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-full);
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
   font-size: 12px;
   font-weight: 600;
 }
@@ -899,7 +904,7 @@ h2 em {
   position: absolute;
   right: 5%;
   bottom: -0.25em;
-  color: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  color: color-mix(in srgb, var(--md-sys-color-primary) 12%, transparent);
   font-family: var(--font-sans);
   font-size: clamp(230px, 34vw, 410px);
   line-height: 0.95;
@@ -1207,33 +1212,50 @@ h2 em {
 }
 
 .profile-toc-label {
-  color: var(--color-accent);
+  color: var(--md-sys-color-on-surface-variant);
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .profile-toc ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 20px;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .profile-toc a {
-  color: var(--color-accent);
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  padding: 8px 16px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-full);
+  background: var(--md-sys-color-surface-container-low);
+  color: var(--md-sys-color-on-surface);
   font-size: 14px;
-  text-decoration: underline;
-  text-decoration-color: var(--color-text-muted);
-  text-underline-offset: 4px;
+  text-decoration: none;
+  transition: background-color var(--motion-duration-short) var(--motion-standard), border-color var(--motion-duration-short) var(--motion-standard);
 }
 
-.profile-toc a:hover {
-  color: var(--color-accent);
-  text-decoration-color: currentColor;
+.profile-toc a:active {
+  background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 12%, var(--md-sys-color-secondary-container));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .profile-toc a:hover {
+    border-color: var(--md-sys-color-outline);
+    background: var(--md-sys-color-surface-container-high);
+  }
+}
+
+.profile-toc a:focus-visible {
+  outline: 3px solid var(--md-sys-color-primary);
+  outline-offset: 3px;
 }
 
 .profile-layout {
@@ -1257,12 +1279,12 @@ h2 em {
 
 .profile-section {
   padding: 0 0 34px;
-  scroll-margin-top: 24px;
+  scroll-margin-top: 88px;
 }
 
 .profile-section + .profile-section {
   padding-top: 30px;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--md-sys-color-outline-variant);
 }
 
 .profile-section-heading {
@@ -1270,10 +1292,10 @@ h2 em {
 }
 
 .profile-section-kicker {
-  color: var(--color-accent);
+  color: var(--md-sys-color-on-surface-variant);
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
@@ -1288,7 +1310,7 @@ h2 em {
 
 .profile-copy {
   margin: 0;
-  color: var(--color-accent);
+  color: var(--md-sys-color-on-surface);
   font-size: var(--md-sys-typescale-body-large-size);
   line-height: var(--md-sys-typescale-body-large-line-height);
   white-space: pre-line;
@@ -1337,9 +1359,9 @@ h2 em {
 .profile-discovery {
   margin-top: 42px;
   padding: clamp(20px, 3vw, 30px);
-  border: 1px solid var(--color-surface-muted);
-  border-radius: 18px;
-  background: linear-gradient(125deg, var(--color-surface-muted), var(--color-surface) 52%, var(--color-surface-muted));
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-extra-large);
+  background: var(--md-sys-color-surface-container-low);
 }
 
 .profile-discovery .profile-section-heading {
@@ -1363,7 +1385,7 @@ h2 em {
 }
 
 .profile-footer a {
-  color: var(--color-accent);
+  color: var(--md-sys-color-primary);
   font-size: 14px;
   font-weight: 600;
 }
@@ -1536,13 +1558,13 @@ h2 em {
   }
 
   .profile-hero {
-    min-height: 280px;
+    min-height: 240px;
     padding: 28px 24px;
   }
 
   .profile-monogram {
     right: -4%;
-    font-size: 280px;
+    font-size: clamp(180px, 38vw, 280px);
   }
 
   .profile-layout {
@@ -1616,11 +1638,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 .material-icon { display: block; flex: 0 0 auto; }
 
-.profile-lead, .profile-copy, .compare-field p, .compare-association p { color: var(--md-sys-color-on-surface-variant); }
-.profile-monogram { color: color-mix(in srgb, var(--md-sys-color-primary) 14%, transparent); }
-.profile-tag { border-color: var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-full); background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
-.profile-discovery { border-color: var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-extra-large); background: var(--md-sys-color-surface-container-low); }
-.profile-toc, .profile-section + .profile-section, .compare-field, .compare-card header { border-color: var(--md-sys-color-outline-variant); }
+ .compare-field, .compare-association p { color: var(--md-sys-color-on-surface-variant); }
 .compare-card h2, .compare-association strong { color: var(--md-sys-color-on-surface); }
 .compare-share { border-color: var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-large); background: var(--md-sys-color-secondary-container); }
 .compare-share > p { color: var(--md-sys-color-on-secondary-container); }
