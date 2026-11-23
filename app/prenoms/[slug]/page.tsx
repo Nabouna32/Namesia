@@ -9,17 +9,19 @@ import { getAutresPrenomsIndexDuGenre, getPrenom } from "@/lib/prenoms";
 import { jsonLd } from "@/lib/json-ld";
 import { siteUrl } from "@/lib/site-url";
 import {
-  creerUrlRetourCatalogue,
-  lireContexteRetourCatalogue
+  creerUrlRetourNavigation,
+  lireContexteRetourNavigation
 } from "@/lib/navigation-prenoms";
 
 type ParametreUrl = string | string[] | undefined;
 type Props = {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{
+    retour_vue?: ParametreUrl;
     retour_q?: ParametreUrl;
     retour_genre?: ParametreUrl;
     retour_lettre?: ParametreUrl;
+    retour_tri?: ParametreUrl;
   }>;
 };
 
@@ -56,8 +58,12 @@ export default async function FichePrenom({ params, searchParams }: Props) {
     searchParams,
     getAutresPrenomsIndexDuGenre(prenom.genre, prenom.slug)
   ]);
-  const contexteRetour = lireContexteRetourCatalogue(parametresRetour);
-  const urlRetourCatalogue = creerUrlRetourCatalogue(parametresRetour);
+  const contexteRetour = lireContexteRetourNavigation(parametresRetour);
+  const urlRetour = creerUrlRetourNavigation(parametresRetour);
+  const libelleRetour = contexteRetour?.vue === "favoris" ? "Favoris" : "Prénoms";
+  const texteRetour = contexteRetour?.vue === "favoris"
+    ? "← Retour aux favoris"
+    : "← Retour au catalogue";
   const genreAuPluriel: Record<string, string> = {
     "Féminin": "féminins",
     "Masculin": "masculins",
@@ -93,7 +99,7 @@ export default async function FichePrenom({ params, searchParams }: Props) {
         <nav className="breadcrumb" aria-label="Fil d’Ariane">
           <ol>
             <li><Link href="/">Accueil</Link></li>
-            <li><Link href={urlRetourCatalogue}>Prénoms</Link></li>
+            <li><Link href={urlRetour}>{libelleRetour}</Link></li>
             <li aria-current="page">{prenom.nom}</li>
           </ol>
         </nav>
@@ -199,12 +205,12 @@ export default async function FichePrenom({ params, searchParams }: Props) {
                 <h2 id="profile-discovery-title">D'autres prénoms {genreAuPluriel[prenom.genre] ?? "à découvrir"}</h2>
               </div>
               <SuggestionsPrenoms prenoms={autresPrenoms} contexteRetour={contexteRetour} />
-              <Link className="text-link" href={urlRetourCatalogue}>Explorer tout le catalogue <span aria-hidden="true">↗</span></Link>
+              <Link className="text-link" href="/prenoms">Explorer tout le catalogue <span aria-hidden="true">↗</span></Link>
             </section>
           )}
 
           <footer className="profile-footer">
-            <Link href={urlRetourCatalogue}>← Retour au catalogue</Link>
+            <Link href={urlRetour}>{texteRetour}</Link>
           </footer>
         </article>
       </div>

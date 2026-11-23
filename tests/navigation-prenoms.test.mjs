@@ -2,20 +2,20 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   creerUrlFicheDepuisCatalogue,
-  creerUrlRetourCatalogue,
-  lireContexteRetourCatalogue
+  creerUrlFicheDepuisFavoris,
+  creerUrlFicheDepuisContexte,
+  creerUrlRetourNavigation,
+  lireContexteRetourNavigation
 } from "../lib/navigation-prenoms.ts";
 
-test("un lien de fiche conserve la recherche et les filtres du catalogue", () => {
-  const url = creerUrlFicheDepuisCatalogue("jean-luc", {
-    q: "Jean Luc",
-    genre: "Masculin",
-    lettre: "j"
-  });
-
+test("un lien de fiche depuis le catalogue conserve recherche et filtres", () => {
   assert.equal(
-    url,
-    "/prenoms/jean-luc?retour_q=Jean+Luc&retour_genre=Masculin&retour_lettre=j"
+    creerUrlFicheDepuisCatalogue("jean-luc", {
+      q: "Jean Luc",
+      genre: "Masculin",
+      lettre: "j"
+    }),
+    "/prenoms/jean-luc?retour_vue=catalogue&retour_q=Jean+Luc&retour_genre=Masculin&retour_lettre=j"
   );
 });
 
@@ -27,24 +27,75 @@ test("un lien direct vers une fiche ne transporte pas de contexte vide", () => {
   );
 });
 
-test("le retour reconstruit uniquement les paramètres du catalogue", () => {
+test("un lien depuis les favoris conserve la vue même sans filtre", () => {
+  const url = creerUrlFicheDepuisFavoris("alice", {
+    q: "",
+    genre: null,
+    tri: "enregistrement"
+  });
+
+  assert.equal(url, "/prenoms/alice?retour_vue=favoris");
   assert.equal(
-    creerUrlRetourCatalogue({
+    creerUrlRetourNavigation({ retour_vue: "favoris" }),
+    "/favoris"
+  );
+});
+
+test("le retour aux favoris restaure recherche, genre et tri", () => {
+  const url = creerUrlFicheDepuisFavoris("jean-luc", {
+    q: "Jean Luc",
+    genre: "Masculin",
+    tri: "nom-desc"
+  });
+
+  assert.equal(
+    url,
+    "/prenoms/jean-luc?retour_vue=favoris&retour_q=Jean+Luc&retour_genre=Masculin&retour_tri=nom-desc"
+  );
+  assert.equal(
+    creerUrlRetourNavigation({
+      retour_vue: "favoris",
+      retour_q: "Jean Luc",
+      retour_genre: "Masculin",
+      retour_tri: "nom-desc"
+    }),
+    "/favoris?q=Jean+Luc&genre=Masculin&tri=nom-desc"
+  );
+});
+
+test("les paramètres répétés utilisent leur première valeur et le tri invalide revient au défaut", () => {
+  assert.deepEqual(
+    lireContexteRetourNavigation({
+      retour_vue: "favoris",
+      retour_q: ["Alice", "ignoré"],
+      retour_genre: ["Féminin", "Masculin"],
+      retour_tri: "inconnu"
+    }),
+    { vue: "favoris", q: "Alice", genre: "Féminin", tri: "enregistrement" }
+  );
+});
+
+test("les suggestions conservent la provenance favoris au fil de la découverte", () => {
+  const contexte = lireContexteRetourNavigation({
+    retour_vue: "favoris",
+    retour_q: "Jean",
+    retour_tri: "nom-asc"
+  });
+
+  assert.equal(
+    creerUrlFicheDepuisContexte("jean-pierre", contexte),
+    "/prenoms/jean-pierre?retour_vue=favoris&retour_q=Jean&retour_tri=nom-asc"
+  );
+});
+
+test("les anciens liens catalogue sans discriminant restent compatibles", () => {
+  assert.equal(
+    creerUrlRetourNavigation({
       retour_q: "Jean Luc",
       retour_genre: "Masculin",
       retour_lettre: "j"
     }),
     "/prenoms?q=Jean+Luc&genre=Masculin&lettre=j"
   );
-  assert.equal(creerUrlRetourCatalogue({}), "/prenoms");
-});
-
-test("les paramètres répétés utilisent leur première valeur", () => {
-  assert.deepEqual(
-    lireContexteRetourCatalogue({
-      retour_q: ["Alice", "ignoré"],
-      retour_genre: ["Féminin", "Masculin"]
-    }),
-    { q: "Alice", genre: "Féminin", lettre: null }
-  );
+  assert.equal(creerUrlRetourNavigation({}), "/prenoms");
 });
