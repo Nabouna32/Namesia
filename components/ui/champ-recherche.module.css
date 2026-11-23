@@ -7,8 +7,8 @@
 
 .field label {
   color: var(--md-sys-color-on-surface);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--md-sys-typescale-body-medium-size);
+  font-weight: 500;
 }
 
 .control {
@@ -27,7 +27,7 @@
 
 .control:focus-within {
   border: 2px solid var(--md-sys-color-primary);
-  padding-inline: 15px;
+  padding-inline: 16px;
   background: var(--md-sys-color-surface);
 }
 
@@ -47,7 +47,7 @@
   background: transparent;
   color: var(--md-sys-color-on-surface);
   font: inherit;
-  font-size: 16px;
+  font-size: var(--md-sys-typescale-body-large-size);
 }
 
 .control input::placeholder {
@@ -64,8 +64,8 @@
   background: transparent;
   color: var(--md-sys-color-primary);
   font: inherit;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--md-sys-typescale-body-medium-size);
+  font-weight: 500;
   cursor: pointer;
 }
 
