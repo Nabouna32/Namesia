@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { DecouverteAleatoire } from "@/components/decouverte-aleatoire";
 import { RecherchePrenoms } from "@/components/recherche-prenoms";
-import { getPrenomsIndex } from "@/lib/prenoms";
+import { getPrenomsIndex, type PrenomIndex } from "@/lib/prenoms";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { alternates: { canonical: "/" } };
@@ -12,9 +12,14 @@ export default async function Accueil() {
   const decalageDuJour = prenoms.length > 0
     ? Math.floor(Date.now() / 86_400_000) % prenoms.length
     : 0;
-  const prenomsMisEnAvant = prenoms.length > 0
-    ? [...prenoms.slice(decalageDuJour), ...prenoms.slice(0, decalageDuJour)].slice(0, 3)
-    : [];
+  const nombreMisEnAvant = Math.min(3, prenoms.length);
+  const prenomsMisEnAvant: PrenomIndex[] = [];
+
+  for (let position = 0; position < nombreMisEnAvant; position += 1) {
+    const indexCatalogue = (decalageDuJour + Math.floor(position * prenoms.length / nombreMisEnAvant)) % prenoms.length;
+    const prenom = prenoms[indexCatalogue];
+    if (prenom) prenomsMisEnAvant.push(prenom);
+  }
 
   return (
     <main id="contenu" tabIndex={-1}>
