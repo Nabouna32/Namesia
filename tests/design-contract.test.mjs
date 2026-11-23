@@ -78,6 +78,26 @@ test("les animations globales utilisent les tokens de mouvement", () => {
   assert.doesNotMatch(allCss, /transition\s*:[^;]*(?:\d+(?:\.\d+)?(?:ms|s))/i);
 });
 
+test("les états hover sont réservés aux appareils qui disposent d'un pointeur fin", () => {
+  const reglesSurvol = styles.flatMap(({ path, content }) =>
+    collectRules(content)
+      .filter(({ selector }) => selector.includes(":hover"))
+      .map(({ selector, context }) => ({ path, selector, context }))
+  );
+
+  for (const regle of reglesSurvol) {
+    assert.match(
+      regle.context,
+      /@media \\(hover: hover\\) and \\(pointer: fine\\)/,
+      `${regle.path} applique ${regle.selector} hors d'un pointeur fin`
+    );
+  }
+
+  const selectionStyles = styles.find(({ path }) => path === "components/ui/liste-selection-comparaison.module.css")?.content ?? "";
+  assert.match(selectionStyles, /\\.chip:active/);
+  assert.match(selectionStyles, /on-secondary-container\\) 12%, var\\(--md-sys-color-secondary-container\\)/);
+});
+
 test("la feuille globale conserve un seul :root SSR et aucune couche d'overrides finale", () => {
   assert.equal((globalCss.match(/:root\s*\{/g) ?? []).length, 1);
   assert.match(globalCss, /Valeurs initiales SSR/);
