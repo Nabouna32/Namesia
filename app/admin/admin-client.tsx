@@ -4,6 +4,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { createClient, type Session } from "@supabase/supabase-js";
 import { FICHE_SCHEMA_VERSION, parseFichePrenom, type FichePrenomImport } from "@/lib/fiche-prenom";
 import styles from "./admin.module.css";
+import { Bouton } from "@/components/ui/bouton";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -273,7 +274,7 @@ export function AdminClient() {
       <form className={styles.form} onSubmit={connecter}>
         <label htmlFor="admin-email">Adresse e-mail</label>
         <input id="admin-email" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
-        <button className="button button-dark" type="submit" disabled={busy}>{busy ? "Envoi…" : "Recevoir un lien de connexion"}</button>
+        <Bouton type="submit" disabled={busy}>{busy ? "Envoi…" : "Recevoir un lien de connexion"}</Bouton>
       </form>
       {message && <p className={styles.notice} role="status">{message}</p>}
     </section>;
@@ -310,7 +311,7 @@ export function AdminClient() {
       }} placeholder={'{"schema_version":"3.0.0","identity":{...},"content":{...}}'} />
       <div className={styles.actions}>
         <button className={styles.secondary} type="button" disabled={busy || !json.trim()} onClick={previsualiser}>Prévisualiser</button>
-        <button className="button button-dark" type="submit" disabled={busy || !preview}>{busy ? "Import…" : "Enregistrer en brouillon"}</button>
+        <Bouton type="submit" disabled={busy || !preview}>{busy ? "Import…" : "Enregistrer en brouillon"}</Bouton>
       </div>
     </form>
 
@@ -327,7 +328,7 @@ export function AdminClient() {
 
     {imported && <div className={styles.publish}>
       <p>La version {imported.version} est enregistrée en brouillon. Après vérification de l'aperçu, tu peux la publier.</p>
-      <button className="button button-dark" type="button" disabled={busy} onClick={publier}>Publier cette version</button>
+      <Bouton type="button" disabled={busy} onClick={publier}>Publier cette version</Bouton>
     </div>}
 
     <section className={styles.library}>
