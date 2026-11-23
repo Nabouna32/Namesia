@@ -1208,7 +1208,7 @@ h2 em {
   gap: 12px 24px;
   margin: 22px 0 38px;
   padding: 16px 0;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
 }
 
 .profile-toc-label {
@@ -1230,9 +1230,9 @@ h2 em {
 
 .profile-toc a {
   display: inline-flex;
-  min-height: 40px;
+  min-height: 48px;
   align-items: center;
-  padding: 8px 16px;
+  padding: 12px 16px;
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-sys-shape-corner-full);
   background: var(--md-sys-color-surface-container-low);
@@ -1638,7 +1638,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 .material-icon { display: block; flex: 0 0 auto; }
 
- .compare-field, .compare-association p { color: var(--md-sys-color-on-surface-variant); }
+.compare-field, .compare-association p { color: var(--md-sys-color-on-surface-variant); }
 .compare-card h2, .compare-association strong { color: var(--md-sys-color-on-surface); }
 .compare-share { border-color: var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-large); background: var(--md-sys-color-secondary-container); }
 .compare-share > p { color: var(--md-sys-color-on-secondary-container); }
