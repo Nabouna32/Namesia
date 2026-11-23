@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.5
+- **Version :** 4.6
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -45,8 +45,8 @@ Le dégradé de marque `--color-rainbow` reste réservé au monogramme Namesia. 
 
 ## 3. Formes, typographie et élévation
 
-- Typographie : Roboto en priorité, puis la pile système native (`system-ui`, sans-serif). Google Sans n’est utilisé que s’il est déjà installé ; aucune police distante n’est téléchargée. Le corps reste à 16 px minimum pour les contrôles et la lecture courante.
-- Échelle : display, headline, title, body et label selon la hiérarchie Material ; les titres utilisent des graisses modérées et un interlettrage resserré, pas une serif éditoriale étrangère à Android.
+- Typographie : Roboto pour le corps et les contrôles ; Google Sans pour les titres uniquement s'il est déjà installé, avec Roboto comme repli. Aucune police distante n'est téléchargée. Le corps courant reste à 16 px.
+- Échelle Material 3 : display small 36/44 px, headline large 32/40 px, headline medium 28/36 px, headline small 24/32 px et body large 16/24 px. Les rôles sont des tokens CSS uniques ; aucune surcharge de taille par breakpoint ne réintroduit une hiérarchie concurrente.
 - Formes : extra-small 4 px, small 8 px, medium 12 px, large 16 px, extra-large 28 px et full/pill.
 - Élévation : surfaces tonales en premier ; ombres discrètes uniquement pour les éléments flottants et les plans qui doivent se détacher.
 - Densité : cibles tactiles d'au moins 48 × 48 px lorsque l'espace le permet ; les éléments visuels peuvent être plus petits à l'intérieur de leur cible.
