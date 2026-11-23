@@ -1,0 +1,51 @@
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin: 16px 0;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+  font-size: 14px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.actions button,
+.link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0 12px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.link {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-background);
+}
+
+.actions button:focus-visible,
+.link:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
