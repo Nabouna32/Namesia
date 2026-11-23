@@ -1,6 +1,9 @@
 type NomIconeMaterial =
   | "favorite"
   | "favorite-filled"
+  | "home"
+  | "home-filled"
+  | "menu"
   | "arrow-up-right"
   | "search"
   | "shuffle"
@@ -8,6 +11,9 @@ type NomIconeMaterial =
   | "check";
 
 const chemins: Record<NomIconeMaterial, string> = {
+  home: "M3 10.5 12 3l9 7.5M5.25 9v11.25h13.5V9M9 20.25v-6h6v6",
+  "home-filled": "M12 3 2 12h3v9h5v-6h4v6h5v-9h3L12 3z",
+  menu: "M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z",
   favorite: "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z",
   "favorite-filled": "M12 21.35 10.55 20C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09A6 6 0 0 1 16.5 3C19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.51z",
   "arrow-up-right": "M5 19 19 5M8 5h11v11",
@@ -26,7 +32,7 @@ export function IconeMaterial({
   size?: number;
   className?: string;
 }) {
-  const trace = name === "favorite" || name === "arrow-up-right";
+  const trace = name === "favorite" || name === "arrow-up-right" || name === "home";
   return (
     <svg
       aria-hidden="true"
