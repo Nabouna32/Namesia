@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.17
+- **Version :** 4.18
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -75,7 +75,7 @@ Ces seuils suivent la logique des window size classes Android : la barre convien
 
 ## 5. Bibliothèque de composants
 
-L'inventaire des composants partagés, leurs responsabilités et les règles d'évolution sont centralisés dans [Bibliothèque de composants](composants.md). Les champs de recherche des parcours catalogue, comparateur et favoris utilisent une même primitive : libellé accessible, icône, effacement, surface Fidelity et focus visible. Le contrôle d'ajout/retrait à la comparaison partage aussi son état tonal, son libellé accessible et son adaptation compacte entre catalogue et favoris. Les prénoms retenus apparaissent sous forme de puces tonales communes, avec un retrait individuel explicite. Les filtres de genre et d'initiale utilisent une puce commune qui rend la sélection explicite par une coche et une surface secondaire tonale. Les sélecteurs de genre et de tri des favoris partagent un champ natif avec libellé visible et focus Fidelity, sans remplacer le menu du navigateur.
+L'inventaire des composants partagés, leurs responsabilités et les règles d'évolution sont centralisés dans [Bibliothèque de composants](composants.md). Les champs de recherche des parcours catalogue, comparateur et favoris utilisent une même primitive : libellé accessible, icône, effacement par le bouton iconique Fidelity partagé, surface Fidelity et focus visible. Le bouton natif de suppression du navigateur est masqué afin de ne pas doubler l'action. Le contrôle d'ajout/retrait à la comparaison partage aussi son état tonal, son libellé accessible et son adaptation compacte entre catalogue et favoris. Les prénoms retenus apparaissent sous forme de puces tonales communes, avec un retrait individuel explicite. Les filtres de genre et d'initiale utilisent une puce commune qui rend la sélection explicite par une coche et une surface secondaire tonale. Les sélecteurs de genre et de tri des favoris partagent un champ natif avec libellé visible et focus Fidelity, sans remplacer le menu du navigateur.
 
 Les primitives communes portent les interactions et états transversaux ; les composants métier composent ces primitives et conservent leur logique propre. Les actions de l'administration et des parcours visiteurs utilisent les mêmes variantes de bouton Fidelity ; aucune classe globale de bouton ne constitue une seconde source de style. Les variantes des contrôles utilisent les rôles Fidelity. Une règle de style locale n'est pas une nouvelle primitive.
 

@@ -51,9 +51,15 @@ test("les trois parcours visiteurs utilisent le même champ de recherche accessi
   assert.match(champ, /export function ChampRecherche\(/);
   assert.match(champ, /<label[^>]+htmlFor=\{id\}/);
   assert.match(champ, /type="search"/);
-  assert.match(champ, /aria-label=\{.Effacer/);
+  assert.match(champ, /ariaLabel=\{.Effacer/);
+  assert.match(champ, /<Bouton[\s\S]*?taille="icon"/);
+  assert.match(champ, /IconeMaterial name="close"/);
+  assert.doesNotMatch(champ, /<button/);
   assert.match(champStyles, /:focus-within/);
-  assert.match(champStyles, /min-height: 48px/);
+  assert.match(champStyles, /::-webkit-search-cancel-button/);
+  assert.match(champStyles, /--md-sys-motion-duration-short/);
+  assert.doesNotMatch(champStyles, /\.clear\s*\{/);
+  assert.match(styles, /min-height: 48px/);
   assert.match(catalogue, /<ChampRecherche/);
   assert.match(comparateur, /<ChampRecherche/);
   assert.match(listeFavoris, /<ChampRecherche/);

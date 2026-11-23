@@ -22,7 +22,7 @@ padding: 0 16px;
   border-radius: var(--md-sys-shape-corner-large);
   background: var(--md-sys-color-surface-container-low);
   color: var(--md-sys-color-on-surface);
-  transition: border-color 160ms var(--md-sys-motion-standard), background-color 160ms var(--md-sys-motion-standard);
+  transition: border-color var(--md-sys-motion-duration-short) var(--md-sys-motion-standard), background-color var(--md-sys-motion-duration-short) var(--md-sys-motion-standard);
 }
 
 .control:focus-within {
@@ -55,27 +55,8 @@ padding-inline: 16px;
   opacity: 1;
 }
 
-.clear {
-  min-width: 48px;
-  min-height: 48px;
-  flex: 0 0 auto;
-  border: 0;
-  border-radius: var(--md-sys-shape-corner-full);
-  background: transparent;
-  color: var(--md-sys-color-primary);
-  font: inherit;
-  font-size: var(--md-sys-typescale-body-medium-size);
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.clear:hover {
-  background: var(--md-sys-color-secondary-container);
-}
-
-.clear:focus-visible {
-  outline: 2px solid var(--md-sys-color-primary);
-  outline-offset: 2px;
+.control input::-webkit-search-cancel-button {
+  appearance: none;
 }
 
 .compact .control {

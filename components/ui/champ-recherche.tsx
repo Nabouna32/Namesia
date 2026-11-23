@@ -2,6 +2,7 @@
 
 import type { ChangeEvent } from "react";
 import { IconeMaterial } from "@/components/icone-material";
+import { Bouton } from "@/components/ui/bouton";
 import styles from "./champ-recherche.module.css";
 
 type Props = {
@@ -43,14 +44,14 @@ export function ChampRecherche({
           placeholder={placeholder}
         />
         {value && (
-          <button
-            className={styles.clear}
-            type="button"
-            aria-label={`Effacer : ${label.toLocaleLowerCase("fr")}`}
+          <Bouton
+            variante="text"
+            taille="icon"
+            ariaLabel={`Effacer : ${label.toLocaleLowerCase("fr")}`}
             onClick={() => onChange("")}
           >
-            Effacer
-          </button>
+            <IconeMaterial name="close" size={20} />
+          </Bouton>
         )}
       </div>
     </div>
