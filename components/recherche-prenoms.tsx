@@ -263,7 +263,7 @@ export function RecherchePrenoms({
                 Voir tous les résultats dans le catalogue <IconeMaterial name="arrow-up-right" size={18} />
               </Link>
             )}
-            {resultats.length > nombreVisible && (
+            {!compact && resultats.length > nombreVisible && (
               <Bouton variante="text"
                 className="filter-action"
                 type="button"
