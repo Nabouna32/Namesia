@@ -6,7 +6,7 @@ const route = await readFile(new URL("../app/api/prenoms/route.ts", import.meta.
 const comparateur = await readFile(new URL("../components/comparateur-prenoms.tsx", import.meta.url), "utf8");
 
 test("les fiches publiques du comparateur ont une durée de cache courte et explicite", () => {
-  assert.match(route, /Cache-Control": "public, max-age=60, s-maxage=300, stale-while-revalidate=600"/);
+  assert.match(route, /Cache-Control": "public, max-age=30, s-maxage=60, stale-while-revalidate=60"/);
 });
 
 test("le navigateur peut réutiliser une réponse de comparaison identique", () => {
