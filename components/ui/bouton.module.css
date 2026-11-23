@@ -22,7 +22,11 @@
   outline-offset: 3px;
 }
 
-.button:active:not(:disabled) {\n  filter: brightness(0.92);\n}\n\n.button:disabled {
+.button:active:not(:disabled) {
+  filter: brightness(0.92);
+}
+
+.button:disabled {
   cursor: not-allowed;
   opacity: 0.38;
 }
