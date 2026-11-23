@@ -5,7 +5,8 @@ import {
   creerUrlFicheDepuisFavoris,
   creerUrlFicheDepuisContexte,
   creerUrlRetourNavigation,
-  lireContexteRetourNavigation
+  lireContexteRetourNavigation,
+  lireNombreVisible
 } from "../lib/navigation-prenoms.ts";
 
 test("un lien de fiche depuis le catalogue conserve recherche et filtres", () => {
@@ -25,6 +26,26 @@ test("un lien direct vers une fiche ne transporte pas de contexte vide", () => {
   assert.equal(
     creerUrlFicheDepuisCatalogue("alice", { q: " ", genre: null, lettre: null, limite: 24 }),
     "/prenoms/alice"
+  );
+});
+
+test("le nombre visible est normalisé et borné par le catalogue", () => {
+  assert.equal(lireNombreVisible("72"), 72);
+  assert.equal(lireNombreVisible("25"), 24);
+  assert.equal(lireNombreVisible("invalide"), 24);
+  assert.equal(lireNombreVisible("72", 48), 48);
+});
+
+test("le retour catalogue restaure recherche, filtres et pagination", () => {
+  assert.equal(
+    creerUrlRetourNavigation({
+      retour_vue: "catalogue",
+      retour_q: "Jean Luc",
+      retour_genre: "Masculin",
+      retour_lettre: "j",
+      retour_limite: "48"
+    }),
+    "/prenoms?q=Jean+Luc&genre=Masculin&limite=48&lettre=j"
   );
 });
 
