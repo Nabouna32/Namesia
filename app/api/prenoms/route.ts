@@ -22,7 +22,7 @@ export async function GET(request: Request) {
     const prenoms = await getPrenomsParSlugs(slugs);
     return NextResponse.json(
       { prenoms },
-      { headers: { "Cache-Control": "public, max-age=60, s-maxage=300, stale-while-revalidate=600" } }
+      { headers: { "Cache-Control": "public, max-age=30, s-maxage=60, stale-while-revalidate=60" } }
     );
   } catch {
     return NextResponse.json(
