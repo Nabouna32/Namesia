@@ -61,6 +61,9 @@ export default async function FichePrenom({ params, searchParams }: Props) {
   const contexteRetour = lireContexteRetourNavigation(parametresRetour);
   const urlRetour = creerUrlRetourNavigation(parametresRetour);
   const libelleRetour = contexteRetour?.vue === "favoris" ? "Favoris" : "Prénoms";
+  const texteRetour = contexteRetour?.vue === "favoris"
+    ? "← Retour aux favoris"
+    : "← Retour au catalogue";
   const genreAuPluriel: Record<string, string> = {
     "Féminin": "féminins",
     "Masculin": "masculins",
@@ -207,7 +210,7 @@ export default async function FichePrenom({ params, searchParams }: Props) {
           )}
 
           <footer className="profile-footer">
-            <Link href={urlRetour}>← Retour aux {libelleRetour === "Favoris" ? "favoris" : "catalogue"}</Link>
+            <Link href={urlRetour}>{texteRetour}</Link>
           </footer>
         </article>
       </div>
