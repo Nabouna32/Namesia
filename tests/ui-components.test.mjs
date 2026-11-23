@@ -286,13 +286,11 @@ test("les cartes Rainbow utilisent la couleur de premier plan de leur propre cat
 
 
 test("les surfaces principales Material sont définies à leur emplacement canonique", () => {
-  const fidelityLayer = globalStyles.slice(globalStyles.indexOf("/* Couche Material 3 Fidelity"));
-  const fidelityBase = fidelityLayer.slice(0, fidelityLayer.indexOf("@media (max-width: 599px)"));
   assert.match(globalStyles, /\.hero \{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.featured-card \{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.profile-hero \{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.site-footer \{[^}]*surface-container/s);
-  assert.doesNotMatch(fidelityBase, /\.hero \{|\.hero-content \{|\.eyebrow \{|\.eyebrow-dot \{|\.featured-card \{|\.featured-card:hover \{|\.profile-hero \{|\.profile-hero h1 span \{|\.site-footer \{/);
+  assert.doesNotMatch(globalStyles, /Couche Material 3 Fidelity/);
   assert.doesNotMatch(globalStyles, /radial-gradient\(ellipse at 88% 15%/);
   assert.doesNotMatch(globalStyles, /linear-gradient\(118deg/);
 });
@@ -336,7 +334,7 @@ test("les surfaces du catalogue et du comparateur ne dépendent plus de la couch
   assert.match(globalStyles, /\.compare-option\s*\{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.compare-card\s*\{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.profile-note\s*\{[^}]*surface-container/s);
-  assert.doesNotMatch(fidelityBase, /\.catalogue-filters|\.compare-selector|\.empty-results|\.name-card|\.compare-option|\.compare-card|\.profile-note/);
+  assert.doesNotMatch(globalStyles, /Couche Material 3 Fidelity/);
   assert.doesNotMatch(globalStyles, /linear-gradient\(135deg, var\(--color-surface/);
 });
 
@@ -348,7 +346,7 @@ test("la fiche prénom applique Material 3 dans ses règles canoniques", () => {
   assert.match(globalStyles, /\.profile-section\s*\{[^}]*scroll-margin-top: 88px/s);
   assert.match(globalStyles, /\.profile-copy\s*\{[^}]*color: var\(--md-sys-color-on-surface\)/s);
   assert.match(globalStyles, /\.profile-section \+ \.profile-section\s*\{[^}]*outline-variant/s);
-  assert.doesNotMatch(fidelityBase, /\.profile-(?:lead|copy|tag|toc|discovery|monogram)|\.profile-section \+ \.profile-section/);
+  assert.doesNotMatch(globalStyles, /Couche Material 3 Fidelity/);
   assert.doesNotMatch(globalStyles, /linear-gradient\(125deg, var\(--md-sys-color-surface-container/);
 });
 
