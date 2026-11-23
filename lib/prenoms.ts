@@ -121,17 +121,17 @@ export const getPrenomsIndex = cache(async (): Promise<PrenomIndex[]> => {
   const supabase = createSupabaseServerClient();
 
   try {
-    const lignes = await lireToutesLesPages<JoinedNameIndex>(async (debut, fin) => {
-      const { data, error } = await supabase
+    const lignes = await lireToutesLesPages<JoinedNameIndex>(async (debut, fin, compter) => {
+      const { data, error, count } = await supabase
         .from("names")
-        .select("id, slug, display_name, gender, name_profiles!inner(status, published_at)")
+        .select("id, slug, display_name, gender, name_profiles!inner(status, published_at)", compter ? { count: "exact" } : undefined)
         .eq("name_profiles.status", "publie")
         .not("name_profiles.published_at", "is", null)
         .order("display_name", { ascending: true })
         .order("id", { ascending: true })
         .range(debut, fin);
 
-      return { data: data as unknown as JoinedNameIndex[] | null, error };
+      return { data: data as unknown as JoinedNameIndex[] | null, error, count };
     }, TAILLE_PAGE_INDEX);
 
     return lignes.map(convertirIndex);
