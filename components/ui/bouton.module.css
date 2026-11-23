@@ -13,13 +13,17 @@
   line-height: 1.25;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 180ms var(--motion-standard), border-color 180ms var(--motion-standard), color 180ms var(--motion-standard);
+  transition: background-color var(--motion-duration-short) var(--motion-standard), border-color var(--motion-duration-short) var(--motion-standard), color var(--motion-duration-short) var(--motion-standard), box-shadow var(--motion-duration-short) var(--motion-standard);
   -webkit-tap-highlight-color: transparent;
 }
 
 .button:focus-visible {
   outline: 3px solid var(--md-sys-color-primary);
   outline-offset: 3px;
+}
+
+.button:active:not(:disabled) {
+  filter: brightness(0.92);
 }
 
 .button:disabled {

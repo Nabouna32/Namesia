@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 import { IconeMaterial } from "./icone-material";
 
 const destinations = [
@@ -33,17 +32,12 @@ function NavigationItems({ pathname }: { pathname: string }) {
 
 export function NavigationAdaptative() {
   const pathname = usePathname() ?? "/";
-  const [expanded, setExpanded] = useState(false);
 
   return <>
     <nav className="navigation-bar" aria-label="Navigation principale">
       <NavigationItems pathname={pathname} />
     </nav>
-
-    <nav className={`navigation-rail${expanded ? " is-expanded" : ""}`} aria-label="Navigation principale">
-      <button className="navigation-rail-toggle" type="button" aria-expanded={expanded} aria-label={expanded ? "Réduire la navigation" : "Développer la navigation"} onClick={() => setExpanded((value) => !value)}>
-        <IconeMaterial name="menu" size={24} />
-      </button>
+    <nav className="navigation-rail" aria-label="Navigation principale">
       <NavigationItems pathname={pathname} />
     </nav>
   </>;
