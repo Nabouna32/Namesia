@@ -9,7 +9,7 @@ import styles from "./liste-favoris.module.css";
 type Props = { prenoms: PrenomIndex[] };
 
 export function ListeFavoris({ prenoms }: Props) {
-  const { slugs, pret, erreur } = useFavoris();
+  const { slugs, pret, erreur, retirerPlusieurs } = useFavoris();
 
   if (!pret) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
 
@@ -18,6 +18,7 @@ export function ListeFavoris({ prenoms }: Props) {
     const prenom = parSlug.get(slug);
     return prenom ? [prenom] : [];
   });
+  const slugsIndisponibles = slugs.filter((slug) => !parSlug.has(slug));
 
   if (favoris.length === 0) {
     return (
@@ -26,6 +27,15 @@ export function ListeFavoris({ prenoms }: Props) {
           <p role="alert">Le stockage des favoris est indisponible ou contient des données illisibles. Vérifiez les paramètres de votre navigateur puis rechargez la page.</p>
         ) : (
           <p>{slugs.length === 0 ? "Vous n’avez pas encore enregistré de prénom." : "Aucun de vos favoris n’est actuellement publié."}</p>
+        )}
+        {slugsIndisponibles.length > 0 && !erreur && (
+          <button
+            className="filter-reset"
+            type="button"
+            onClick={() => retirerPlusieurs(slugsIndisponibles)}
+          >
+            Retirer les {slugsIndisponibles.length} favoris indisponibles
+          </button>
         )}
         <Link className="button button-dark" href="/prenoms">Explorer les prénoms</Link>
       </div>
@@ -52,8 +62,21 @@ export function ListeFavoris({ prenoms }: Props) {
           <BoutonFavori slug={prenom.slug} afficherErreur={false} />
         </article>
       ))}
-      {favoris.length !== slugs.length && (
-        <p className={styles.note}>Les fiches qui ne sont plus publiées ne sont pas affichées.</p>
+      {slugsIndisponibles.length > 0 && (
+        <>
+          <p className={styles.note} role="status">
+            {slugsIndisponibles.length} {slugsIndisponibles.length > 1 ? "favoris ne sont plus" : "favori n’est plus"} publiés.
+          </p>
+          {!erreur && (
+            <button
+              className="filter-reset"
+              type="button"
+              onClick={() => retirerPlusieurs(slugsIndisponibles)}
+            >
+              Retirer les favoris indisponibles
+            </button>
+          )}
+        </>
       )}
     </div>
   );
