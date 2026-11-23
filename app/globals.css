@@ -1059,44 +1059,6 @@ h2 em {
   font-size: 14px;
 }
 
-.compare-selected-list {
-  display: flex;
-  flex: 1 0 100%;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.compare-selected-list li {
-  display: flex;
-}
-
-.compare-selected-item {
-  display: inline-flex;
-  min-height: 48px;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
-  background: var(--color-surface-muted);
-  color: var(--color-text);
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.compare-selected-item:hover {
-  border-color: var(--color-accent);
-}
-
-.compare-selected-item span {
-  color: var(--color-accent);
-  font-size: 18px;
-  line-height: 1;
-}
-
 .compare-selection-footer > button {
   display: inline-flex;
   min-height: 48px;
