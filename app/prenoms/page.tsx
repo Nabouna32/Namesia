@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { RecherchePrenoms } from "@/components/recherche-prenoms";
 import { jsonLd } from "@/lib/json-ld";
 import { getPrenomsIndex } from "@/lib/prenoms";
+import { lireNombreVisible } from "@/lib/navigation-prenoms";
 import { siteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
@@ -36,14 +37,6 @@ function premierParametre(value: string | string[] | undefined): string {
   return Array.isArray(value) ? value[0] ?? "" : value ?? "";
 }
 
-function lireNombreVisible(value: string, total: number): number {
-  const nombre = Number(value);
-  const maximum = Math.max(24, Math.ceil(total / 24) * 24);
-  return Number.isSafeInteger(nombre) && nombre >= 24
-    ? Math.min(maximum, Math.floor(nombre / 24) * 24)
-    : 24;
-}
-
 function normaliserFiltre(value: string): string {
   return value.trim().normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("fr");
 }
@@ -51,7 +44,7 @@ function normaliserFiltre(value: string): string {
 export default async function Catalogue({ searchParams }: Props) {
   const [parametres, prenoms] = await Promise.all([searchParams, getPrenomsIndex()]);
   const rechercheInitiale = premierParametre(parametres.q);
-  const nombreVisibleInitial = lireNombreVisible(premierParametre(parametres.limite), prenoms.length);
+  const nombreVisibleInitial = lireNombreVisible(parametres.limite, Math.max(24, Math.ceil(prenoms.length / 24) * 24));
   const genreDemande = premierParametre(parametres.genre);
   const lettreDemandee = normaliserFiltre(premierParametre(parametres.lettre));
 
