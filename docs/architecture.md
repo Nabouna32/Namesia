@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 3.16
+- **Version :** 3.17
 - **Mis à jour :** 2026-11-23
 
 ## 1. Besoin réel
@@ -62,7 +62,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Découverte aléatoire déclenchée depuis un composant client de l'accueil, à partir de la liste de fiches déjà chargée côté serveur ; le choix reste en mémoire dans le composant et évite la sélection précédente si plusieurs prénoms sont disponibles.
 - Favoris gérés par un fournisseur client commun : seuls les slugs sont enregistrés dans localStorage ; aucune fiche, donnée personnelle ou information éditoriale n'est copiée dans le stockage du navigateur. L'ajout et le retrait sont disponibles sur les fiches ainsi que sur les cartes de résultats et de suggestions du catalogue/recherche, au moyen d'un bouton compact séparé du lien de navigation. Les erreurs d'accès ou de format du stockage sont signalées une seule fois dans la zone de résultats et ne sont pas présentées comme une liste vide. La page des favoris charge uniquement l'index léger (nom, slug, initiale et genre), jamais les rubriques éditoriales ; elle ne montre que les prénoms encore publiés.
 - Les favoris ne sont ni envoyés au serveur ni synchronisés entre appareils ; ils restent propres au navigateur utilisé.
-- Accès au comparateur depuis une fiche via le paramètre d'URL `prenoms`, qui préselectionne le slug et laisse l'utilisateur choisir les autres prénoms publiés.
+- Accès au comparateur depuis une fiche via le paramètre d'URL `prenoms`, qui préselectionne le slug et laisse l'utilisateur choisir les autres prénoms publiés. Depuis le catalogue, les résultats et suggestions permettent aussi de retenir jusqu'à trois prénoms ; la sélection est transmise au comparateur par le même paramètre d'URL, sans stockage durable.
 - Suggestions contextuelles limitées à trois autres prénoms publiés du même genre, sans présenter cette catégorie comme une similarité étymologique ou culturelle ; elles utilisent uniquement l'index léger (identité, nom, initiale et genre), jamais les contenus éditoriaux des fiches suggérées.
 - Partage d'une fiche par l'API native du navigateur, avec copie du lien lorsque cette API n'est pas disponible.
 - Comparateur client de deux à trois fiches : le sélecteur utilise l'index léger et les rubriques éditoriales sont chargées à la demande uniquement pour les deux ou trois slugs sélectionnés, via une route publique qui valide strictement les paramètres et ne retourne que les fiches publiées. Les slugs sélectionnés sont synchronisés dans l'URL, sans stockage permanent ; le lien partagé ne conserve que ce paramètre de sélection. La page reste non indexée. Le sélecteur affiche 24 choix au départ, puis révèle les suivants par lots de 24 ; une nouvelle recherche repart du premier lot.

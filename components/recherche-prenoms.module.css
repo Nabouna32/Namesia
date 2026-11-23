@@ -28,3 +28,80 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.compareBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin: 16px 0;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+  font-size: 14px;
+}
+
+.compareActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.compareActions button,
+.compareLink,
+.compareToggle {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0 12px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.compareLink {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-background);
+}
+
+.compareToggle[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  background: var(--color-surface-muted);
+  color: var(--color-accent);
+}
+
+.compareActions button:disabled,
+.compareToggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.compareActions button:focus-visible,
+.compareLink:focus-visible,
+.compareToggle:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+@media (max-width: 420px) {
+  .resultCard {
+    gap: 6px;
+  }
+
+  .compareToggle {
+    padding-inline: 8px;
+    font-size: 12px;
+  }
+}
