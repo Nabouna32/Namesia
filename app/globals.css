@@ -1368,10 +1368,9 @@ h2 em {
   color: var(--md-sys-color-on-surface);
 }
 
-.symbolic-card > span {
-  color: var(--category-on-container, var(--md-sys-color-on-secondary-container));
+ .symbolic-card > span {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -1386,7 +1385,7 @@ h2 em {
 
 .symbolic-card p {
   margin: 0 0 14px;
-  color: var(--color-text-muted);
+  color: var(--md-sys-color-on-surface-variant);
   font-size: var(--md-sys-typescale-body-large-size);
   line-height: var(--md-sys-typescale-body-large-line-height);
 }
