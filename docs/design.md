@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.10
+- **Version :** 4.11
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -50,6 +50,10 @@ Le dégradé de marque `--color-rainbow` reste réservé au monogramme Namesia. 
 - Formes : extra-small 4 px, small 8 px, medium 12 px, large 16 px, extra-large 28 px et full/pill.
 - Élévation : surfaces tonales en premier ; ombres discrètes uniquement pour les éléments flottants et les plans qui doivent se détacher.
 - Densité : cibles tactiles d'au moins 48 × 48 px lorsque l'espace le permet ; les éléments visuels peuvent être plus petits à l'intérieur de leur cible.
+
+### Fiche de prénom
+
+La fiche est un parcours de lecture : son introduction et ses rubriques utilisent le premier plan `on-surface`, avec l'échelle body large 16/24 px. Les libellés de rubrique et les métadonnées restent secondaires. Le sommaire est composé de liens natifs présentés comme des chips tonales outlined, avec états hover réservés aux pointeurs fins, pression tactile et focus clavier visible. Les ancres ménagent 88 px au-dessus de chaque rubrique pour que le titre reste visible sous la barre supérieure fixe. Les surfaces du hero, de la note éditoriale et de la découverte utilisent directement les rôles Fidelity dans leurs règles de base ; aucune couche tardive ne redéfinit ces composants.
 
 ## 4. Navigation adaptative
 
