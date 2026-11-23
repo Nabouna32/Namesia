@@ -7,7 +7,7 @@ import { BoutonFavori } from "@/components/bouton-favori";
 import { useFavoris } from "@/components/favoris-provider";
 import styles from "./recherche-prenoms.module.css";
 import type { PrenomIndex } from "@/lib/prenoms";
-import { comparerPertinence, normaliserRecherche } from "@/lib/recherche-prenoms";
+import { comparerPertinence, distanceEditionBornee, normaliserRecherche } from "@/lib/recherche-prenoms";
 import { creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
 import { IconeMaterial } from "./icone-material";
 import { ChampRecherche } from "@/components/ui/champ-recherche";
@@ -100,7 +100,7 @@ export function RecherchePrenoms({
           return [];
         }
 
-        const distance = distanceEdition(terme, nom, limite);
+        const distance = distanceEditionBornee(terme, nom, limite);
         return distance <= limite ? [{ prenom, distance }] : [];
       })
       .sort((a, b) => a.distance - b.distance || a.prenom.nom.localeCompare(b.prenom.nom, "fr"))
