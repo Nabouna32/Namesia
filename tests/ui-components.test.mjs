@@ -54,6 +54,9 @@ test("les trois parcours visiteurs utilisent le même champ de recherche accessi
   assert.match(champ, /ariaLabel=\{.Effacer/);
   assert.match(champ, /<Bouton[\s\S]*?taille="icon"/);
   assert.match(champ, /IconeMaterial name="close"/);
+  assert.match(champ, /useRef<HTMLInputElement>\(null\)/);
+  assert.match(champ, /champRef\.current\?\.focus\(\)/);
+  assert.match(champ, /ref=\{champRef\}/);
   assert.doesNotMatch(champ, /<button/);
   assert.match(champStyles, /:focus-within/);
   assert.match(champStyles, /::-webkit-search-cancel-button/);

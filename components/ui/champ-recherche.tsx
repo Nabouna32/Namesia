@@ -1,6 +1,6 @@
 "use client";
 
-import type { ChangeEvent } from "react";
+import { useRef, type ChangeEvent } from "react";
 import { IconeMaterial } from "@/components/icone-material";
 import { Bouton } from "@/components/ui/bouton";
 import styles from "./champ-recherche.module.css";
@@ -24,8 +24,15 @@ export function ChampRecherche({
   compact = false,
   className
 }: Props) {
+  const champRef = useRef<HTMLInputElement>(null);
+
   function changer(event: ChangeEvent<HTMLInputElement>) {
     onChange(event.currentTarget.value);
+  }
+
+  function effacer() {
+    onChange("");
+    champRef.current?.focus();
   }
 
   return (
@@ -36,6 +43,7 @@ export function ChampRecherche({
           <IconeMaterial name="search" size={24} />
         </span>
         <input
+          ref={champRef}
           id={id}
           type="search"
           autoComplete="off"
@@ -48,7 +56,7 @@ export function ChampRecherche({
             variante="text"
             taille="icon"
             ariaLabel={`Effacer : ${label.toLocaleLowerCase("fr")}`}
-            onClick={() => onChange("")}
+            onClick={effacer}
           >
             <IconeMaterial name="close" size={20} />
           </Bouton>
