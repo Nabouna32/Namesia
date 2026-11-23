@@ -35,11 +35,12 @@ function premierParametre(value: ParametreUrl): string {
   return Array.isArray(value) ? value[0] ?? "" : value ?? "";
 }
 
-function lireLimite(value: ParametreUrl): number {
+export function lireNombreVisible(value: ParametreUrl, maximum = Number.MAX_SAFE_INTEGER): number {
   const nombre = Number(premierParametre(value));
-  return Number.isSafeInteger(nombre) && nombre >= 24
+  const limite = Number.isSafeInteger(nombre) && nombre >= 24
     ? Math.floor(nombre / 24) * 24
     : 24;
+  return Math.min(Math.max(24, maximum), limite);
 }
 
 function creerUrlFiche(slug: string, parametres: URLSearchParams): string {
@@ -91,7 +92,7 @@ export function lireContexteRetourNavigation(
   const vue = premierParametre(parametres.retour_vue);
   const q = premierParametre(parametres.retour_q);
   const genre = premierParametre(parametres.retour_genre);
-  const limite = lireLimite(parametres.retour_limite);
+  const limite = lireNombreVisible(parametres.retour_limite);
 
   if (vue === "favoris") {
     const tri = premierParametre(parametres.retour_tri);
