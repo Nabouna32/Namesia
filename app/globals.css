@@ -488,7 +488,7 @@ h2 em {
   transition: border-color 0.2s;
 }
 
- .name-card:hover {
+.name-card:hover {
   border-color: var(--color-text-muted);
 }
 
