@@ -42,7 +42,9 @@ export function creerUrlFicheDepuisCatalogue(
   slug: string,
   contexte: Omit<ContexteRetourCatalogue, "vue"> | null
 ): string {
-  if (!contexte) return creerUrlFiche(slug, new URLSearchParams());
+  if (!contexte || (!contexte.q.trim() && !contexte.genre && !contexte.lettre)) {
+    return creerUrlFiche(slug, new URLSearchParams());
+  }
 
   const parametres = new URLSearchParams({ retour_vue: "catalogue" });
   if (contexte.q.trim()) parametres.set("retour_q", contexte.q.trim());
