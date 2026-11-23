@@ -257,9 +257,9 @@ h2 em {
 .ai-disclaimer {
   margin: 15px 0 0;
   color: var(--color-accent);
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 0.1px;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .hero-decoration {
@@ -698,7 +698,7 @@ h2 em {
   max-width: 560px;
   margin-bottom: 18px;
   color: var(--muted);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.7;
 }
 
