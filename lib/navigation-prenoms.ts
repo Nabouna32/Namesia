@@ -43,6 +43,13 @@ export function lireNombreVisible(value: ParametreUrl, maximum = Number.MAX_SAFE
   return Math.min(Math.max(24, maximum), limite);
 }
 
+export function creerUrlCatalogueDepuisRecherche(recherche: string): string {
+  const terme = recherche.trim();
+  if (!terme) return "/prenoms";
+  const parametres = new URLSearchParams({ q: terme });
+  return `/prenoms?${parametres.toString()}`;
+}
+
 function creerUrlFiche(slug: string, parametres: URLSearchParams): string {
   const url = `/prenoms/${encodeURIComponent(slug)}`;
   const query = parametres.toString();
