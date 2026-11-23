@@ -72,6 +72,7 @@ export function RecherchePrenoms({
   const [genreActif, setGenreActif] = useState(initialGenre);
   const [lettreActive, setLettreActive] = useState(initialLettre);
   const [nombreVisible, setNombreVisible] = useState(24);
+  const [selectionComparaison, setSelectionComparaison] = useState<string[]>([]);
 
   const genres = useMemo(
     () => [...new Set(prenoms.map((prenom) => prenom.genre))].sort((a, b) => a.localeCompare(b, "fr")),
@@ -115,6 +116,12 @@ export function RecherchePrenoms({
   }, [genreActif, lettreActive, prenoms, recherche, resultats.length]);
 
   const filtresActifs = Boolean(recherche.trim() || genreActif || lettreActive);
+
+  function basculerComparaison(slug: string) {
+    setSelectionComparaison((selection) => selection.includes(slug)
+      ? selection.filter((element) => element !== slug)
+      : selection.length < 3 ? [...selection, slug] : selection);
+  }
 
   function mettreAJourUrl(
     rechercheSuivante: string,
@@ -247,6 +254,25 @@ export function RecherchePrenoms({
         </div>
       )}
 
+      {!compact && selectionComparaison.length > 0 && (
+        <div className={styles.compareBar} role="status">
+          <span>{selectionComparaison.length} / 3 prénoms pour la comparaison</span>
+          <div className={styles.compareActions}>
+            <button type="button" onClick={() => setSelectionComparaison([])}>
+              Effacer
+            </button>
+            {selectionComparaison.length >= 2 && (
+              <Link
+                className={styles.compareLink}
+                href={`/comparer?prenoms=${selectionComparaison.map(encodeURIComponent).join(",")}`}
+              >
+                Comparer les {selectionComparaison.length} prénoms
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
+
       {(!compact || recherche.trim()) && (
         <div className="search-results">
           <p className={compact ? "results-meta sr-only" : "results-meta"} role="status">
@@ -274,6 +300,18 @@ export function RecherchePrenoms({
                       </span>
                       <span className="card-arrow" aria-hidden="true">↗</span>
                     </Link>
+                    {!compact && (
+                      <button
+                        className={styles.compareToggle}
+                        type="button"
+                        aria-pressed={selectionComparaison.includes(prenom.slug)}
+                        aria-label={`${selectionComparaison.includes(prenom.slug) ? "Retirer" : "Ajouter"} ${prenom.nom} ${selectionComparaison.includes(prenom.slug) ? "de" : "à"} la comparaison`}
+                        disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
+                        onClick={() => basculerComparaison(prenom.slug)}
+                      >
+                        {selectionComparaison.includes(prenom.slug) ? "Ajouté" : "Comparer"}
+                      </button>
+                    )}
                     <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
                   </article>
                 ))}
@@ -301,6 +339,18 @@ export function RecherchePrenoms({
                       <span><strong>{prenom.nom}</strong><small>{prenom.genre} · Suggestion proche</small></span>
                       <span className="card-arrow" aria-hidden="true">↗</span>
                     </Link>
+                    {!compact && (
+                      <button
+                        className={styles.compareToggle}
+                        type="button"
+                        aria-pressed={selectionComparaison.includes(prenom.slug)}
+                        aria-label={`${selectionComparaison.includes(prenom.slug) ? "Retirer" : "Ajouter"} ${prenom.nom} ${selectionComparaison.includes(prenom.slug) ? "de" : "à"} la comparaison`}
+                        disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
+                        onClick={() => basculerComparaison(prenom.slug)}
+                      >
+                        {selectionComparaison.includes(prenom.slug) ? "Ajouté" : "Comparer"}
+                      </button>
+                    )}
                     <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
                   </article>
                 ))}
