@@ -111,7 +111,9 @@ a {
   text-underline-offset: 3px;}
 
 button,
-input {
+input,
+select,
+textarea {
   font: inherit;
 }
 
