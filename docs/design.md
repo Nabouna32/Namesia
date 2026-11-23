@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.23
+- **Version :** 4.24
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -54,7 +54,7 @@ Le dégradé de marque `--md-sys-color-brand-gradient` reste réservé au monogr
 
 ### Accueil
 
-Le hero sépare le message éditorial et les outils de découverte : introduction à gauche et panneau de recherche à droite à partir de 900 px, puis empilement naturel sur les fenêtres plus étroites. Le panneau utilise une surface Fidelity distincte, un contour discret et un titre explicite ; la recherche et la découverte aléatoire y forment un seul point de départ. Le texte descriptif utilise `on-surface-variant`, jamais la couleur primaire comme simple décoration. La mention de génération par IA reste visible dans le panneau, au même endroit que les outils auxquels elle se rapporte. Les cartes vedettes gardent une hauteur minimale plutôt qu'une hauteur rigide ; les noms longs peuvent revenir à la ligne sans pousser l'action de découverte hors de la carte. Les cartes du catalogue appliquent la même règle de retour à la ligne.
+Les titres de section et leurs liens d'action forment un groupe lisible : sur grand écran, le lien reste aligné au titre ; sous 600 px, il passe sur sa propre ligne, sous le titre, sans comprimer celui-ci. Le lien conserve une cible tactile minimale de 48 px. Le hero sépare le message éditorial et les outils de découverte : introduction à gauche et panneau de recherche à droite à partir de 900 px, puis empilement naturel sur les fenêtres plus étroites. Le panneau utilise une surface Fidelity distincte, un contour discret et un titre explicite ; la recherche et la découverte aléatoire y forment un seul point de départ. Le texte descriptif utilise `on-surface-variant`, jamais la couleur primaire comme simple décoration. La mention de génération par IA reste visible dans le panneau, au même endroit que les outils auxquels elle se rapporte. Les cartes vedettes gardent une hauteur minimale plutôt qu'une hauteur rigide ; les noms longs peuvent revenir à la ligne sans pousser l'action de découverte hors de la carte. Les cartes du catalogue appliquent la même règle de retour à la ligne.
 
 ### Fiche de prénom
 

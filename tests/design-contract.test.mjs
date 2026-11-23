@@ -204,3 +204,10 @@ test("le hero d'accueil sépare le récit et les outils dans une composition Fid
   assert.match(globalCss, /\.hero-copy\s*\{[^}]*color:\s*var\(--md-sys-color-on-surface-variant\)/s);
   assert.match(globalCss, /@media \(min-width:\s*900px\)[\s\S]*?\.hero-content\s*\{[^}]*grid-template-columns:/);
 });
+
+
+test("les en-têtes de section restent lisibles et leurs actions accessibles sur mobile", () => {
+  assert.match(globalCss, /\.text-link\s*\{[^}]*display:\s*inline-flex/s);
+  assert.match(globalCss, /\.text-link\s*\{[^}]*min-height:\s*48px/s);
+  assert.match(globalCss, /@media \(max-width:\s*599px\)[\s\S]*?\.section-heading\s*\{[^}]*flex-direction:\s*column/s);
+});
