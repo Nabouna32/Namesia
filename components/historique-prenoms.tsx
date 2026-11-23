@@ -10,9 +10,9 @@ import { IconeMaterial } from "./icone-material";
 import { Bouton } from "@/components/ui/bouton";
 
 export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
-  const { slugs, effacer } = useHistorique();
+  const { slugs, effacer, erreur } = useHistorique();
   const { erreur: erreurFavoris } = useFavoris();
-  if (slugs.length === 0) return null;
+  if (slugs.length === 0 && !erreur) return null;
 
   const index = new Map(prenoms.map((prenom) => [prenom.slug, prenom] as const));
   const recentes = slugs.flatMap((slug) => {
@@ -28,10 +28,17 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
             <span className="eyebrow">Reprendre la découverte</span>
             <h2 id="historique-title">Vos dernières fiches</h2>
           </div>
-          <Bouton variante="text" type="button" onClick={effacer}>
-            Effacer l’historique
-          </Bouton>
+          {slugs.length > 0 && (
+            <Bouton variante="text" type="button" onClick={effacer}>
+              Effacer l’historique
+            </Bouton>
+          )}
         </div>
+        {erreur && (
+          <p className={styles.favoriteError} role="status">
+            L’historique ne peut pas être conservé après rechargement dans cet onglet. Il reste disponible tant que la page est ouverte.
+          </p>
+        )}
         {recentes.length > 0 ? (
           <>
             <div className={styles.grid}>
@@ -56,11 +63,11 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
                 Le stockage des favoris est indisponible ou contient des données illisibles. Les actions de sauvegarde sont temporairement masquées.
               </p>
             )}
-            <p className={styles.note}>Cet historique reste en mémoire pendant cette session et disparaît au rechargement.</p>
+            <p className={styles.note}>Cet historique est propre à cet onglet : il est conservé lors des rechargements et supprimé à sa fermeture.</p>
           </>
-        ) : (
+        ) : !erreur ? (
           <p className={styles.note}>Aucune des fiches consultées récemment n’est actuellement publiée.</p>
-        )}
+        ) : null}
       </div>
     </section>
   );
