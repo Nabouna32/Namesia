@@ -722,7 +722,9 @@ margin: 12px 0 0;
 }
 
 .text-link {
-padding-bottom: 8px;
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
   font-size: var(--md-sys-typescale-body-medium-size);
   font-weight: 500;
 }
@@ -1637,6 +1639,12 @@ padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
   .navigation-bar .navigation-item-label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .app-content { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
   .hero-content { padding-block: 52px 60px; }
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
   .featured-grid, .name-grid { grid-template-columns: minmax(0, 1fr); }
   .featured-card { min-height: 160px; }
   .page-main { padding-block: 32px 48px; }
