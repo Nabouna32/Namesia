@@ -33,7 +33,7 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-function NavigationItems({ pathname, expanded = false }: { pathname: string; expanded?: boolean }) {
+function NavigationItems({ pathname }: { pathname: string }) {
   return <ul className="navigation-items">
     {destinations.map((destination) => {
       const active = isActive(pathname, destination.href);
@@ -60,7 +60,7 @@ export function NavigationAdaptative() {
       <button className="navigation-rail-toggle" type="button" aria-expanded={expanded} aria-label={expanded ? "Réduire la navigation" : "Développer la navigation"} onClick={() => setExpanded((value) => !value)}>
         <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z" fill="currentColor" /></svg>
       </button>
-      <NavigationItems pathname={pathname} expanded={expanded} />
+      <NavigationItems pathname={pathname} />
     </nav>
   </>;
 }
