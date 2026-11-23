@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BoutonFavori } from "@/components/bouton-favori";
+import { SuggestionsPrenoms } from "@/components/suggestions-prenoms";
 import { PartagerFiche } from "@/components/partager-fiche";
 import styles from "@/components/actions-fiche.module.css";
 import { getAutresPrenomsIndexDuGenre, getPrenom } from "@/lib/prenoms";
@@ -180,18 +181,7 @@ export default async function FichePrenom({ params }: Props) {
                 <span className="profile-section-kicker">Pour prolonger la découverte</span>
                 <h2 id="profile-discovery-title">D'autres prénoms {genreAuPluriel[prenom.genre] ?? "à découvrir"}</h2>
               </div>
-              <div className="name-grid">
-                {autresPrenoms.map((autrePrenom) => (
-                  <Link className="name-card" href={`/prenoms/${autrePrenom.slug}`} key={autrePrenom.slug}>
-                    <span className="name-initial">{autrePrenom.lettre}</span>
-                    <span>
-                      <strong>{autrePrenom.nom}</strong>
-                      <small>{autrePrenom.genre}</small>
-                    </span>
-                    <span className="card-arrow" aria-hidden="true">↗</span>
-                  </Link>
-                ))}
-              </div>
+              <SuggestionsPrenoms prenoms={autresPrenoms} />
               <Link className="text-link" href="/prenoms">Explorer tout le catalogue <span aria-hidden="true">↗</span></Link>
             </section>
           )}
