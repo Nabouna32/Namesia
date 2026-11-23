@@ -53,7 +53,7 @@ Le dégradé de marque `--color-rainbow` reste réservé au monogramme Namesia. 
 
 ### Fiche de prénom
 
-La fiche est un parcours de lecture : son introduction et ses rubriques utilisent le premier plan `on-surface`, avec l'échelle body large 16/24 px. Les libellés de rubrique et les métadonnées restent secondaires. Le sommaire est composé de liens natifs présentés comme des chips tonales outlined, avec états hover réservés aux pointeurs fins, pression tactile et focus clavier visible. Les ancres ménagent 88 px au-dessus de chaque rubrique pour que le titre reste visible sous la barre supérieure fixe. Les surfaces du hero, de la note éditoriale et de la découverte utilisent directement les rôles Fidelity dans leurs règles de base ; aucune couche tardive ne redéfinit ces composants.
+La fiche est un parcours de lecture : son introduction et ses rubriques utilisent le premier plan `on-surface`, avec l'échelle body large 16/24 px. Les libellés de rubrique et les métadonnées restent secondaires. Le sommaire est composé de liens natifs présentés comme des chips tonales outlined de 48 px de haut, avec états hover réservés aux pointeurs fins, pression tactile et focus clavier visible. Les ancres ménagent 88 px au-dessus de chaque rubrique pour que le titre reste visible sous la barre supérieure fixe. Les surfaces du hero, de la note éditoriale et de la découverte utilisent directement les rôles Fidelity dans leurs règles de base ; aucune couche tardive ne redéfinit ces composants.
 
 ## 4. Navigation adaptative
 
