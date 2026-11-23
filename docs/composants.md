@@ -11,16 +11,16 @@ Ce document est le point d'entrée pour les composants d'interface réutilisable
 - Les variantes sont explicites et reposent sur les rôles Material 3 Fidelity.
 - Une couleur ne doit jamais être attribuée selon la position d'un élément dans une liste. Rainbow est réservé à une catégorie éditoriale identifiée.
 - Les CSS Modules des composants métier gèrent leur disposition ; les primitives partagées gèrent leur apparence et leurs états communs.
-- Préférer les éléments HTML natifs et les liens Next.js. Ne pas fabriquer une API polymorphe complexe lorsqu'un composant bouton et un composant lien suffisent.
+- Préférer les éléments HTML natifs et les liens Next.js. Garder distincts les contrôles interactifs et les liens de navigation.
 
 ## Primitives partagées
 
 | Composant | Emplacement | Responsabilité |
 |---|---|---|
 | `Bouton` | `components/ui/bouton.tsx` | Action native avec variantes filled, tonal, outlined et text ; tailles standard et icône |
-| `LienBouton` | `components/ui/bouton.tsx` | Navigation Next.js présentée comme une action, sans perdre le comportement natif du lien |
+| `LienBouton` | `components/ui/lien-bouton.tsx` | Navigation Next.js présentée comme une action, sous forme de composant serveur |
 
-Les deux composants utilisent les mêmes styles, dimensions tactiles, états de focus et tokens Material.
+Les deux composants utilisent les mêmes styles, dimensions tactiles, états de focus et tokens Material. Le composant lien reste serveur : il ne transforme pas une simple navigation en frontière cliente.
 
 ## Composants métier
 
