@@ -1467,7 +1467,7 @@ h2 em {
   }
 
   .featured-bottom strong {
-    font-size: 25px;
+    font-size: 22px;
   }
 
   .featured-action {
@@ -1727,12 +1727,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .navigation-bar .navigation-item-label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .app-content { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
   .hero-content { padding-block: 52px 60px; }
-  .hero-copy { font-size: 16px; }
   .featured-grid, .name-grid { grid-template-columns: minmax(0, 1fr); }
   .featured-card { min-height: 160px; }
   .page-main { padding-block: 32px 48px; }
   .profile-hero { min-height: 0; padding: 24px; }
-  .profile-lead { font-size: 1.125rem; }
   .profile-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .profile-toc { align-items: flex-start; flex-direction: column; margin-bottom: 32px; }
   .profile-section { padding-bottom: 32px; }
