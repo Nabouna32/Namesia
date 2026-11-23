@@ -833,7 +833,14 @@ h2 em {
 }
 
 .compare-search label,
-.compare-options legend,
+.compare-options legend {
+  color: var(--color-accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .compare-field h3 {
   color: var(--color-text);
   font-size: 12px;
@@ -1005,7 +1012,7 @@ h2 em {
 
 .compare-field h3 {
   margin: 0 0 8px;
-  color: var(--color-accent);
+  color: var(--color-text);
 }
 
 .compare-field p {
@@ -1568,7 +1575,7 @@ button:disabled, input:disabled, select:disabled { cursor: not-allowed; opacity:
 .compare-card h2, .compare-association strong { color: var(--color-text); font-family: var(--font-sans); }
 h1 em, h2 em { color: var(--color-accent); background: none; -webkit-text-fill-color: currentColor; }
 .eyebrow, .filter-group legend, .compare-search label, .compare-options legend,
-.compare-field h3, .profile-section-kicker, .profile-toc-label { color: var(--color-text-muted); }
+.profile-section-kicker, .profile-toc-label { color: var(--color-text-muted); }
 .eyebrow-dot, .brand-mark { background: var(--color-accent); }
 .search-field, .catalogue-filters, .filter-chip, .name-card, .compare-selector,
 .compare-card, .compare-option, .compare-search input, .search-field input,
