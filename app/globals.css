@@ -1188,7 +1188,7 @@ h2 em {
 
 .profile-section-kicker {
   color: var(--color-accent);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1306,7 +1306,7 @@ h2 em {
 
 .symbolic-card > span {
   color: var(--color-accent);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1386,7 +1386,7 @@ h2 em {
 
   .site-nav {
     gap: 0.9375rem;
-    font-size: clamp(0.8125rem, 0.78rem + 0.15vw, 0.875rem);
+    font-size: clamp(0.875rem, 0.875rem + 0.08vw, 0.9375rem);
   }
 
   .hero-content {
@@ -1522,13 +1522,13 @@ h2 em {
   }
 
   .eyebrow {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .back-link,
   .text-link,
   .button {
-    font-size: 13px;
+    font-size: 14px;
   }
 }
 
@@ -1650,7 +1650,7 @@ h1 em, h2 em { color: var(--color-accent); background: none; -webkit-text-fill-c
   }
 
   .site-nav a {
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
   }
 
   .hero h1 {
