@@ -293,3 +293,28 @@ test("les surfaces principales Material sont définies à leur emplacement canon
   assert.doesNotMatch(globalStyles, /radial-gradient\(ellipse at 88% 15%/);
   assert.doesNotMatch(globalStyles, /linear-gradient\(118deg/);
 });
+
+
+const rechercheActions = await readFile(new URL("../components/recherche-prenoms.tsx", import.meta.url), "utf8");
+const favorisActions = await readFile(new URL("../components/liste-favoris.tsx", import.meta.url), "utf8");
+const comparateurActions = await readFile(new URL("../components/comparateur-prenoms.tsx", import.meta.url), "utf8");
+
+test("les actions de catalogue, favoris et comparaison utilisent le bouton commun", () => {
+  for (const source of [rechercheActions, favorisActions, comparateurActions]) {
+    assert.doesNotMatch(source, /<button\\b/);
+    assert.match(source, /<Bouton variante="text"/);
+    assert.match(source, /className="filter-action"/);
+  }
+  assert.match(favorisActions, /<Bouton\\s+variante="tonal"/);
+  assert.doesNotMatch(globalStyles, /\\.filter-reset|\\.compare-selection-footer > button/);
+  assert.doesNotMatch(globalStyles, /\\.copyButton\\s*\\{/);
+  assert.match(globalStyles, /\\.filter-action\\s*\\{[^}]*width: max-content/s);
+});
+
+test("les options de comparaison ont des états tactiles Material sans survol collant", () => {
+  assert.match(globalStyles, /@media \\(hover: hover\\) and \\(pointer: fine\\) \\{\\s*\\.compare-option:hover/);
+  assert.match(globalStyles, /\\.compare-option:active:not\\(:has\\(input:disabled\\)\\)/);
+  assert.match(globalStyles, /\\.compare-option:has\\(input:checked\\):active/);
+  assert.match(globalStyles, /\\.compare-option:has\\(input:checked\\)\\s*\\{[^}]*primary-container/s);
+  assert.match(globalStyles, /\\.compare-option input\\s*\\{[^}]*accent-color: var\\(--md-sys-color-primary\\)/s);
+});
