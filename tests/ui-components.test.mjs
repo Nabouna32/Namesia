@@ -232,3 +232,18 @@ test("le partage réutilise le bouton commun et ne garde pas un style concurrent
   assert.doesNotMatch(partage, /share-button/);
   assert.doesNotMatch(globalStyles, /\.share-button\s*\{/);
 });
+
+
+test("la navigation applique des couches d'état Material, pas des surfaces opaques au survol", () => {
+  const navigationStyles = globalStyles.slice(
+    globalStyles.indexOf(".navigation-item {"),
+    globalStyles.indexOf(".navigation-rail .navigation-items")
+  );
+  assert.match(navigationStyles, /@media \(hover: hover\) and \(pointer: fine\)/);
+  assert.match(navigationStyles, /on-surface-variant\) 8%, transparent/);
+  assert.match(navigationStyles, /on-secondary-container\) 8%, var\(--md-sys-color-secondary-container\)/);
+  assert.match(navigationStyles, /on-surface-variant\) 12%, transparent/);
+  assert.match(navigationStyles, /on-secondary-container\) 12%, var\(--md-sys-color-secondary-container\)/);
+  assert.doesNotMatch(navigationStyles, /\.navigation-item:hover[^}]*surface-container-high/);
+  assert.doesNotMatch(navigationStyles, /transition:[^;]*(?:180|250)ms/);
+});
