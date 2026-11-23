@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 3.18
+- **Version :** 3.19
 - **Mis à jour :** 2026-11-23
 
 ## 1. Besoin réel
@@ -58,7 +58,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Lecture des fiches publiées uniquement.
 - Recherche du catalogue synchronisée avec les paramètres q, genre et lettre de l'URL ; ces valeurs sont validées contre les filtres disponibles, restaurées à l'ouverture du lien et mises à jour sans créer d'entrée d'historique à chaque frappe. L'URL canonique reste /prenoms pour éviter l'indexation de combinaisons de filtres.
 - Les pages d'accueil, de catalogue et le sitemap utilisent un index léger (identité, nom, initiale et genre) ; les rubriques éditoriales ne sont chargées que pour les fiches et outils qui les affichent. La recherche et la vitrine d'accueil ne transfèrent donc pas les textes complets au navigateur.
-- Vitrine de trois prénoms sur l'accueil, issue d'une rotation quotidienne déterministe en UTC du catalogue alphabétique ; chaque carte affiche le nom et le genre du prénom, et la sélection change chaque jour sans modifier l'ordre du catalogue ni les résultats de recherche.
+- Vitrine de trois prénoms sur l'accueil, issue d'un échantillon réparti sur le catalogue alphabétique et décalé chaque jour en UTC ; les cartes couvrent ainsi différentes zones du catalogue au lieu d'afficher trois entrées consécutives. Chaque carte affiche le nom et le genre du prénom. L'échantillon s'adapte aux catalogues de moins de trois fiches et ne modifie jamais l'ordre du catalogue ni les résultats de recherche.
 - Découverte aléatoire déclenchée depuis un composant client de l'accueil, à partir de la liste de fiches déjà chargée côté serveur ; le choix reste en mémoire dans le composant et évite la sélection précédente si plusieurs prénoms sont disponibles.
 - Favoris gérés par un fournisseur client commun : seuls les slugs sont enregistrés dans localStorage ; aucune fiche, donnée personnelle ou information éditoriale n'est copiée dans le stockage du navigateur. L'ajout et le retrait sont disponibles sur les fiches ainsi que sur les cartes de résultats et de suggestions du catalogue/recherche, au moyen d'un bouton compact séparé du lien de navigation. Les erreurs d'accès ou de format du stockage sont signalées une seule fois dans la zone de résultats et ne sont pas présentées comme une liste vide. La page des favoris charge uniquement l'index léger (nom, slug, initiale et genre), jamais les rubriques éditoriales ; elle ne montre que les prénoms encore publiés.
 - Les favoris ne sont ni envoyés au serveur ni synchronisés entre appareils ; ils restent propres au navigateur utilisé.
