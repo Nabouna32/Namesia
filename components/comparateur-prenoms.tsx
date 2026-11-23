@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import type { Prenom, PrenomIndex } from "@/lib/prenoms";
 import { PartagerLien } from "@/components/partager-fiche";
 import { BoutonFavori } from "@/components/bouton-favori";
@@ -208,6 +209,13 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
                 <span className="profile-tag">{prenom.genre}</span>
                 <span className="profile-tag">Lettre {prenom.lettre}</span>
                 <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
+                <Link
+                  className="compare-card-link"
+                  href={`/prenoms/${encodeURIComponent(prenom.slug)}`}
+                  aria-label={`Lire la fiche complète de ${prenom.nom}`}
+                >
+                  Voir la fiche complète
+                </Link>
               </header>
               <div className="compare-field">
                 <h3>Introduction</h3>
