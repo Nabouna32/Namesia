@@ -209,7 +209,7 @@ input {
   transform: translateY(0);
 }
 
-/* Structure de l'application et navigation Material 3 Expressive */
+/* Structure de l'application et navigation Material 3 Fidelity */
 
 .app-shell {
   min-height: 100svh;
@@ -526,38 +526,6 @@ h2 em {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-}
-
-.filter-chip {
-  min-height: 48px;
-  padding: 9px 14px;
-  border: 1px solid var(--color-surface-muted);
-  border-radius: 999px;
-  background: var(--color-surface);
-  color: var(--color-accent);
-  cursor: pointer;
-  font-size: 14px;
-  transition: border-color 0.18s, background-color 0.18s, color 0.18s;
-}
-
-.filter-chip:hover {
-  border-color: var(--color-text-muted);
-  color: var(--color-accent);
-}
-
-.filter-chip[aria-pressed="true"] {
-  border-color: var(--color-accent);
-  background: var(--color-accent);
-  color: var(--color-surface);
-}
-
-.filter-letter {
-  min-width: 48px;
-  min-height: 48px;
-  padding-inline: 10px;
-  font-family: var(--font-sans);
-  font-size: 16px;
-  font-weight: 600;
 }
 
 .filter-reset {
@@ -1648,10 +1616,6 @@ h2 em {
     gap: 7px;
   }
 
-  .filter-chip {
-    min-height: 48px;
-  }
-
   .eyebrow {
     font-size: 12px;
   }
@@ -1665,7 +1629,7 @@ h2 em {
 
 
 
-/* Couche Material 3 Expressive : surfaces, formes et interactions */
+/* Couche Material 3 Fidelity : surfaces, formes et interactions */
 
 html { color-scheme: light dark; }
 body {
@@ -1765,20 +1729,6 @@ h1 em, h2 em {
   background: var(--md-sys-color-surface-container-low);
 }
 .filter-group legend, .compare-options legend { color: var(--md-sys-color-on-surface-variant); }
-.filter-chip {
-  min-height: 48px;
-  border: 1px solid var(--md-sys-color-outline);
-  border-radius: var(--md-sys-shape-corner-small);
-  background: transparent;
-  color: var(--md-sys-color-on-surface-variant);
-  font-weight: 500;
-}
-.filter-chip:hover { border-color: var(--md-sys-color-on-surface); background: var(--md-sys-color-surface-container-high); }
-.filter-chip[aria-pressed="true"] {
-  border-color: var(--md-sys-color-secondary-container);
-  background: var(--md-sys-color-secondary-container);
-  color: var(--md-sys-color-on-secondary-container);
-}
 .filter-reset { color: var(--md-sys-color-primary); }
 .empty-results, .empty-state {
   border-color: var(--md-sys-color-outline-variant);
