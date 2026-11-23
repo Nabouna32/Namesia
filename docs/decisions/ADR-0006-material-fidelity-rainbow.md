@@ -37,6 +37,11 @@ La documentation officielle de Material Color Utilities distingue les variantes 
 - Trois familles catégorielles sont disponibles ; elles peuvent être réévaluées si l'interface révèle un besoin réel de davantage de groupes.
 - Le dégradé de marque et les accents catégoriels ne doivent pas être utilisés pour coder des états de succès, d'erreur ou d'avertissement.
 
+## Références
+
+- [Guide officiel Material Color Utilities — création d'un schéma de couleurs](https://github.com/material-foundation/material-color-utilities/blob/main/dev_guide/creating_color_scheme.md)
+- [Concept officiel Material — Dynamic Color Scheme](https://github.com/material-foundation/material-color-utilities/blob/main/concepts/dynamic_color_scheme.md)
+
 ## Validation
 
 La CI vérifie les contrats source du fournisseur et les fallbacks CSS. La revue visuelle doit contrôler les trois teintes sur les fiches et le comparateur, en clair et sombre, avec contraste et cohérence entre les mêmes catégories.
