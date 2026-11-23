@@ -594,7 +594,7 @@ h2 em {
 .section-heading h2 {
   margin: 13px 0 0;
   font-family: var(--font-sans);
-  font-size: 38px;
+  font-size: 32px;
   font-weight: 500;
   letter-spacing: -1px;
   line-height: 1.15;
@@ -1223,7 +1223,7 @@ h2 em {
 .profile-section-heading h2 {
   margin: 7px 0 0;
   font-family: var(--font-sans);
-  font-size: clamp(27px, 3vw, 34px);
+  font-size: clamp(24px, 2.5vw, 30px);
   font-weight: 500;
   letter-spacing: -0.025em;
   line-height: 1.2;
@@ -1583,21 +1583,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 .hero {
   isolation: isolate;
-  background:
-    radial-gradient(ellipse at 88% 12%, color-mix(in srgb, var(--md-sys-color-tertiary-container) 78%, transparent), transparent 38%),
-    radial-gradient(ellipse at 8% 88%, color-mix(in srgb, var(--md-sys-color-primary-container) 68%, transparent), transparent 42%),
-    var(--md-sys-color-surface-container-low);
+  background: var(--md-sys-color-surface-container-low);
   border-bottom: 1px solid var(--md-sys-color-outline-variant);
-}
-.hero::after {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 3px;
-  background: var(--color-rainbow);
-  content: "";
-  pointer-events: none;
 }
 .hero-content { padding-block: clamp(56px, 8vw, 104px); }
 .eyebrow {
@@ -1612,7 +1599,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   font-weight: 600;
   letter-spacing: .04em;
 }
-.eyebrow-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-rainbow); }
+.eyebrow-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--md-sys-color-primary);
+}
 .hero h1, .catalogue h1, .profile h1, .not-found h1 {
   color: var(--md-sys-color-on-surface);
   font-family: var(--font-display);
@@ -1621,11 +1613,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 .hero h1 { font-size: clamp(3rem, 7vw, 5.5rem); line-height: 1.04; }
 h1 em, h2 em {
-  background: var(--color-rainbow-text);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  background: none;
+  color: var(--md-sys-color-primary);
+  -webkit-text-fill-color: currentColor;
   font-style: normal;
 }
 .hero-copy { color: var(--md-sys-color-on-surface-variant); font-size: 18px; line-height: 1.65; }
@@ -1692,18 +1682,22 @@ h1 em, h2 em {
   box-shadow: var(--shadow-sm);
 }
 .profile-hero h1 span {
-  background: var(--color-rainbow-text);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  background: none;
+  color: var(--md-sys-color-primary);
+  -webkit-text-fill-color: currentColor;
 }
 .profile-lead, .profile-copy, .profile-note p, .compare-field p, .compare-association p { color: var(--md-sys-color-on-surface-variant); }
 .profile-monogram { color: color-mix(in srgb, var(--md-sys-color-primary) 14%, transparent); }
 .profile-tag { border-color: var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-full); background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
 .profile-note { background: var(--md-sys-color-surface-container); }
 .profile-discovery { border-color: var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-extra-large); background: var(--md-sys-color-surface-container-low); }
-.symbolic-card { background: var(--md-sys-color-tertiary-container); }
+.symbolic-card {
+  background: color-mix(
+    in srgb,
+    var(--category-container, var(--md-sys-color-surface-container-low)) 30%,
+    var(--md-sys-color-surface-container-low)
+  );
+}
 .symbolic-card > span { color: var(--md-sys-color-on-tertiary-container); }
 .profile-toc, .profile-section + .profile-section, .compare-field, .compare-card header { border-color: var(--md-sys-color-outline-variant); }
 .compare-card h2, .compare-field h3, .compare-association strong { color: var(--md-sys-color-on-surface); }
@@ -1745,14 +1739,19 @@ h1 em, h2 em {
   .navigation-bar .navigation-item-label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .app-content { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
   .hero-content { padding-block: 52px 60px; }
-  .hero h1 { max-width: 12ch; font-size: clamp(3rem, 12vw, 4.5rem); }
+  .hero h1 { font-size: clamp(2.75rem, 5vw, 4rem); line-height: 1.08; }
   .hero-copy { font-size: 16px; }
   .featured-grid, .name-grid { grid-template-columns: minmax(0, 1fr); }
   .featured-card { min-height: 160px; }
   .page-main { padding-block: 32px 48px; }
   .catalogue h1, .not-found h1 { font-size: clamp(2.5rem, 11vw, 3.5rem); }
-  .profile-hero { min-height: 0; padding: 24px; }
-  .profile-hero h1 { font-size: clamp(3.25rem, 15vw, 5.5rem); }
+  .profile-hero {
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-extra-large);
+  background: var(--md-sys-color-surface-container-low);
+  box-shadow: none;
+}
+  .profile-hero h1 { font-size: clamp(2.75rem, 12vw, 4rem); }
   .profile-lead { font-size: 1.125rem; }
   .profile-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .profile-toc { align-items: flex-start; flex-direction: column; margin-bottom: 32px; }
