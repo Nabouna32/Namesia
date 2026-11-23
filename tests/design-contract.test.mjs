@@ -73,6 +73,11 @@ test("les feuilles consomment les rôles Material sans alias hérités ni fallba
   assert.match(globalCss, /--md-sys-shape-corner-extra-large:/);
 });
 
+test("les animations globales utilisent les tokens de mouvement", () => {
+  assert.match(globalCss, /\.skip-link\s*\{[^}]*transition: transform var\(--md-sys-motion-duration-short\) var\(--md-sys-motion-standard\)/s);
+  assert.doesNotMatch(allCss, /transition(?:-duration)?\s*:[^;]*(?:\d+(?:\.\d+)?(?:ms|s))/i);
+});
+
 test("la feuille globale conserve un seul :root SSR et aucune couche d'overrides finale", () => {
   assert.equal((globalCss.match(/:root\s*\{/g) ?? []).length, 1);
   assert.match(globalCss, /Valeurs initiales SSR/);
