@@ -163,7 +163,7 @@ test("Fidelity et Rainbow sont calculés depuis la source Pixel documentée", ()
   assert.match(themeProvider, /variant: Variant\.FIDELITY/);
   assert.match(themeProvider, /variant: Variant\.RAINBOW/);
   assert.match(globalStyles, /--md-sys-color-primary: #005ac1/);
-  assert.match(globalStyles, /--motion-emphasized-decelerate/);
+  assert.match(globalStyles, /--md-sys-motion-emphasized-decelerate/);
   assert.match(globalStyles, /prefers-reduced-motion: reduce/);
 });
 
@@ -264,7 +264,7 @@ test("la typographie suit une échelle Material 3 unique sans surcharges respons
   assert.equal((globalStyles.match(/\.profile-hero h1\s*\{/g) ?? []).length, 1);
   assert.equal((globalStyles.match(/\.section-heading h2\s*\{/g) ?? []).length, 1);
   assert.doesNotMatch(globalStyles, /--font-serif|var\(--serif\)/);
-  assert.match(globalStyles, /--font-sans: Roboto;/);
+  assert.match(globalStyles, /--md-sys-typescale-body-large-font: Roboto;/);
   assert.match(globalStyles, /--font-display: Roboto;/);
   assert.doesNotMatch(globalStyles, /Google Sans|--font-(?:sans|display):[^;]*(?:Arial|system-ui|sans-serif)/);
 });
@@ -349,7 +349,7 @@ test("la fiche prénom applique Material 3 dans ses règles canoniques", () => {
   assert.match(globalStyles, /\.profile-copy\s*\{[^}]*color: var\(--md-sys-color-on-surface\)/s);
   assert.match(globalStyles, /\.profile-section \+ \.profile-section\s*\{[^}]*outline-variant/s);
   assert.doesNotMatch(fidelityBase, /\.profile-(?:lead|copy|tag|toc|discovery|monogram)|\.profile-section \+ \.profile-section/);
-  assert.doesNotMatch(globalStyles, /linear-gradient\(125deg, var\(--color-surface-muted/);
+  assert.doesNotMatch(globalStyles, /linear-gradient\(125deg, var\(--md-sys-color-surface-container/);
 });
 
 const historiqueActions = await readFile(new URL("../components/historique-prenoms.tsx", import.meta.url), "utf8");
