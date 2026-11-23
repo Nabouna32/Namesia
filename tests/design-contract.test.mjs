@@ -89,13 +89,33 @@ test("aucun sélecteur n'est déclaré plusieurs fois dans un même contexte CSS
 });
 
 test("l'échelle typographique Material 3 est complète et limitée aux graisses 400/500", () => {
-  const roles = ["display-large", "display-medium", "display-small", "headline-large", "headline-medium", "headline-small", "title-large", "title-medium", "title-small", "body-large", "body-medium", "body-small", "label-large", "label-medium", "label-small"];
-  for (const role of roles) {
+  const roles = {
+    "display-large": [57, 64, 400, "-0.25px"],
+    "display-medium": [45, 52, 400, "0"],
+    "display-small": [36, 44, 400, "0"],
+    "headline-large": [32, 40, 400, "0"],
+    "headline-medium": [28, 36, 400, "0"],
+    "headline-small": [24, 32, 400, "0"],
+    "title-large": [22, 28, 400, "0"],
+    "title-medium": [16, 24, 500, "0.15px"],
+    "title-small": [14, 20, 500, "0.1px"],
+    "body-large": [16, 24, 400, "0.5px"],
+    "body-medium": [14, 20, 400, "0.25px"],
+    "body-small": [12, 16, 400, "0.4px"],
+    "label-large": [14, 20, 500, "0.1px"],
+    "label-medium": [12, 16, 500, "0.5px"],
+    "label-small": [11, 16, 500, "0.5px"]
+  };
+  for (const [role, [size, lineHeight, weight, tracking]] of Object.entries(roles)) {
     for (const property of ["font", "size", "line-height", "weight", "tracking"]) {
-      assert.match(globalCss, new RegExp(`--md-sys-typescale-${role}-${property}:`), `Token manquant : ${role}-${property}`);
+      assert.match(globalCss, new RegExp("--md-sys-typescale-" + role + "-" + property + ":"), "Token manquant : " + role + "-" + property);
     }
+    assert.ok(globalCss.includes("--md-sys-typescale-" + role + "-size: " + size + "px;"), "Taille M3 incorrecte : " + role);
+    assert.ok(globalCss.includes("--md-sys-typescale-" + role + "-line-height: " + lineHeight + "px;"), "Interligne M3 incorrect : " + role);
+    assert.ok(globalCss.includes("--md-sys-typescale-" + role + "-weight: " + weight + ";"), "Graisse M3 incorrecte : " + role);
+    assert.ok(globalCss.includes("--md-sys-typescale-" + role + "-tracking: " + tracking + ";"), "Approche M3 incorrecte : " + role);
   }
-  assert.doesNotMatch(allCss, /font-size\s*:[^;]*px/);
+  assert.doesNotMatch(allCss, /font-size\\s*:[^;]*px/);
   const weights = [...allCss.matchAll(/font-weight:\s*([^;]+);/g)].map((match) => match[1].trim());
   assert.ok(weights.every((weight) => weight === "400" || weight === "500"), `Graisses interdites : ${weights.join(", ")}`);
   assert.doesNotMatch(allCss, /text-transform:\s*uppercase/i);
