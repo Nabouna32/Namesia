@@ -948,6 +948,10 @@ h2 em {
   background: linear-gradient(135deg, var(--color-surface-muted), var(--color-surface) 55%, var(--color-surface-muted));
 }
 
+.compare-search {
+  margin-bottom: 20px;
+}
+
 .compare-options legend {
   color: var(--color-accent);
   font-size: 12px;
