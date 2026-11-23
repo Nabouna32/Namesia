@@ -35,6 +35,9 @@ test("la vitrine n'attribue aucune couleur selon l'index du prénom", () => {
   assert.match(vitrine, /prenoms\.map\(\(prenom\)/);
   assert.doesNotMatch(vitrine, /featured-\$\{index/);
   assert.doesNotMatch(vitrine, /featured-\d/);
+  assert.doesNotMatch(globalStyles, /\.featured-[123]\b/);
+  assert.match(globalStyles, /\.featured-card\s*\{[^}]*surface-container-low/s);
+  assert.match(globalStyles, /\.featured-bottom strong\s*\{[^}]*on-surface/s);
 });
 
 const champ = await readFile(new URL("../components/ui/champ-recherche.tsx", import.meta.url), "utf8");
