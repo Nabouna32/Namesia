@@ -351,3 +351,18 @@ test("la fiche prénom applique Material 3 dans ses règles canoniques", () => {
   assert.doesNotMatch(fidelityBase, /\.profile-(?:lead|copy|tag|toc|discovery|monogram)|\.profile-section \+ \.profile-section/);
   assert.doesNotMatch(globalStyles, /linear-gradient\(125deg, var\(--color-surface-muted/);
 });
+
+const historiqueActions = await readFile(new URL("../components/historique-prenoms.tsx", import.meta.url), "utf8");
+const barreComparaisonActions = await readFile(new URL("../components/barre-comparaison.tsx", import.meta.url), "utf8");
+const historiqueStyles = await readFile(new URL("../components/historique-prenoms.module.css", import.meta.url), "utf8");
+const barreComparaisonStyles = await readFile(new URL("../components/barre-comparaison.module.css", import.meta.url), "utf8");
+
+test("les actions d'effacement de l'accueil et de comparaison utilisent les primitives communes", () => {
+  assert.match(historiqueActions, /<Bouton variante="text"[^>]*onClick=\{effacer\}/);
+  assert.match(barreComparaisonActions, /<Bouton variante="text"[^>]*onClick=\{onEffacer\}/);
+  assert.match(barreComparaisonActions, /<LienBouton[^>]*variante="filled"/);
+  assert.doesNotMatch(historiqueActions, /<button\b/);
+  assert.doesNotMatch(barreComparaisonActions, /<button\b|<Link\b/);
+  assert.doesNotMatch(historiqueStyles, /\.clear\s*\{/);
+  assert.doesNotMatch(barreComparaisonStyles, /\.actions button|\.link\s*\{/);
+});
