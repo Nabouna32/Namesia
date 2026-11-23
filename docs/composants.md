@@ -18,6 +18,7 @@ Ce document est le point d'entrée pour les composants d'interface réutilisable
 
 | Composant | Emplacement | Responsabilité |
 |---|---|---|
+| `IconeMaterial` | `components/icone-material.tsx` | Registre unique de SVG fonctionnels 24 px, variantes de contour et pleines, couleur héritée |
 | `Bouton` | `components/ui/bouton.tsx` | Action native avec variantes filled, tonal, outlined et text ; tailles standard et icône, utilisée aussi par l'administration |
 | `LienBouton` | `components/ui/lien-bouton.tsx` | Navigation Next.js présentée comme une action, utilisable dans les écrans serveur et client |
 | `ChampRecherche` | `components/ui/champ-recherche.tsx` | Champ de recherche contrôlé, libellé accessible, icône, effacement et états Material partagés |
