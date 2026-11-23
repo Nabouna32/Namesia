@@ -5,24 +5,35 @@ import Link from "next/link";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
 import { normaliserRecherche } from "@/lib/recherche-prenoms";
+import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
 import { BarreComparaison } from "./barre-comparaison";
 import { BoutonFavori } from "./bouton-favori";
 import { useFavoris } from "./favoris-provider";
 import styles from "./liste-favoris.module.css";
 
-type Props = { prenoms: PrenomIndex[] };
+type Props = {
+  prenoms: PrenomIndex[];
+  initialRecherche?: string;
+  initialGenre?: string;
+  initialTri?: TriFavoris;
+};
 
 const TAILLE_MAX_SAUVEGARDE = 1_000_000;
 
-export function ListeFavoris({ prenoms }: Props) {
+export function ListeFavoris({
+  prenoms,
+  initialRecherche = "",
+  initialGenre = "",
+  initialTri = "enregistrement"
+}: Props) {
   const { slugs, pret, erreur, retirerPlusieurs, ajouterPlusieurs } = useFavoris();
   const [messageImport, setMessageImport] = useState("");
   const [erreurImport, setErreurImport] = useState("");
   const [messageCopie, setMessageCopie] = useState("");
   const [erreurCopie, setErreurCopie] = useState("");
-  const [recherche, setRecherche] = useState("");
-  const [genreActif, setGenreActif] = useState("");
-  const [triActif, setTriActif] = useState<"enregistrement" | "nom-asc" | "nom-desc">("enregistrement");
+  const [recherche, setRecherche] = useState(initialRecherche);
+  const [genreActif, setGenreActif] = useState(initialGenre);
+  const [triActif, setTriActif] = useState<TriFavoris>(initialTri);
   const [nombreVisible, setNombreVisible] = useState(24);
   const [selectionComparaison, setSelectionComparaison] = useState<string[]>([]);
 
@@ -47,13 +58,6 @@ export function ListeFavoris({ prenoms }: Props) {
 
   if (!pret) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
 
-  function changerTri(value: string) {
-    if (value === "enregistrement" || value === "nom-asc" || value === "nom-desc") {
-      setNombreVisible(24);
-      setTriActif(value);
-    }
-  }
-
   function basculerComparaison(slug: string) {
     setSelectionComparaison((selection) => {
       const selectionCourante = selection.filter((element) => favorisDisponibles.has(element));
@@ -65,9 +69,35 @@ export function ListeFavoris({ prenoms }: Props) {
   const termeNormalise = normaliserRecherche(recherche);
   const genres = [...new Set(favoris.map((prenom) => prenom.genre))]
     .sort((a, b) => a.localeCompare(b, "fr"));
+  const genreActifValide = genres.includes(genreActif) ? genreActif : "";
+
+  function mettreAJourUrl(rechercheSuivante: string, genreSuivant: string, triSuivant: TriFavoris) {
+    const url = new URL(window.location.href);
+    const parametres: [string, string][] = [
+      ["q", rechercheSuivante.trim()],
+      ["genre", genreSuivant],
+      ["tri", triSuivant === "enregistrement" ? "" : triSuivant]
+    ];
+
+    for (const [cle, valeur] of parametres) {
+      if (valeur) url.searchParams.set(cle, valeur);
+      else url.searchParams.delete(cle);
+    }
+
+    window.history.replaceState(null, "", url.toString());
+  }
+
+  function changerTri(value: string) {
+    if (value === "enregistrement" || value === "nom-asc" || value === "nom-desc") {
+      setNombreVisible(24);
+      setTriActif(value);
+      mettreAJourUrl(recherche, genreActifValide, value);
+    }
+  }
+
   const favorisFiltres = favoris.filter((prenom) => (
     (!termeNormalise || normaliserRecherche(prenom.nom).includes(termeNormalise))
-    && (!genreActif || prenom.genre === genreActif)
+    && (!genreActifValide || prenom.genre === genreActifValide)
   ));
   if (triActif !== "enregistrement") {
     favorisFiltres.sort((a, b) => {
@@ -75,7 +105,7 @@ export function ListeFavoris({ prenoms }: Props) {
       return triActif === "nom-asc" ? ordre : -ordre;
     });
   }
-  const filtresActifs = Boolean(termeNormalise || genreActif);
+  const filtresActifs = Boolean(termeNormalise || genreActifValide);
   const nombreAffiche = Math.min(favorisFiltres.length, nombreVisible);
 
   async function copierFavorisFiltres() {
@@ -193,6 +223,7 @@ export function ListeFavoris({ prenoms }: Props) {
                 onChange={(event) => {
                   setNombreVisible(24);
                   setRecherche(event.target.value);
+                  mettreAJourUrl(event.target.value, genreActifValide, triActif);
                 }}
                 placeholder="Saisissez un prénom..."
               />
@@ -202,10 +233,11 @@ export function ListeFavoris({ prenoms }: Props) {
                 <label htmlFor="genre-favoris">Filtrer par genre</label>
                 <select
                   id="genre-favoris"
-                  value={genreActif}
+                  value={genreActifValide}
                   onChange={(event) => {
                     setNombreVisible(24);
                     setGenreActif(event.target.value);
+                    mettreAJourUrl(recherche, event.target.value, triActif);
                   }}
                 >
                   <option value="">Tous les genres</option>
@@ -242,6 +274,7 @@ export function ListeFavoris({ prenoms }: Props) {
                   setRecherche("");
                   setGenreActif("");
                   setNombreVisible(24);
+                  mettreAJourUrl("", "", triActif);
                 }}
               >
                 Effacer les filtres
@@ -251,7 +284,14 @@ export function ListeFavoris({ prenoms }: Props) {
             <div className="name-grid">
               {favorisFiltres.slice(0, nombreVisible).map((prenom) => (
                 <article className={styles.row} key={prenom.slug}>
-                  <Link className="name-card" href={`/prenoms/${prenom.slug}`}>
+                  <Link
+                    className="name-card"
+                    href={creerUrlFicheDepuisFavoris(prenom.slug, {
+                      q: recherche,
+                      genre: genreActifValide || null,
+                      tri: triActif
+                    })}
+                  >
                     <span className="name-initial">{prenom.lettre}</span>
                     <span>
                       <strong>{prenom.nom}</strong>
