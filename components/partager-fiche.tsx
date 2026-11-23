@@ -3,16 +3,17 @@
 import { useState } from "react";
 import { Bouton } from "@/components/ui/bouton";
 
-type Props = { titre: string; texte: string; label: string; avecParametres?: boolean };
+type Props = { titre: string; texte: string; label: string; parametres?: string[] };
 
-export function PartagerLien({ titre, texte, label, avecParametres = false }: Props) {
+export function PartagerLien({ titre, texte, label, parametres = [] }: Props) {
   const [message, setMessage] = useState("");
 
   async function partager() {
     const url = new URL(window.location.pathname, window.location.origin);
-    if (avecParametres) {
-      const selection = new URL(window.location.href).searchParams.get("prenoms");
-      if (selection) url.searchParams.set("prenoms", selection);
+    const recherche = new URL(window.location.href).searchParams;
+    for (const parametre of parametres) {
+      const valeur = recherche.get(parametre);
+      if (valeur) url.searchParams.set(parametre, valeur);
     }
     const urlPartage = url.toString();
 
