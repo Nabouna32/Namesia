@@ -325,8 +325,6 @@ test("les options de comparaison ont des états tactiles Material sans survol co
 
 
 test("les surfaces du catalogue et du comparateur ne dépendent plus de la couche Fidelity finale", () => {
-  const fidelityLayer = globalStyles.slice(globalStyles.indexOf("/* Couche Material 3 Fidelity"));
-  const fidelityBase = fidelityLayer.slice(0, fidelityLayer.indexOf("@media (max-width: 599px)"));
   assert.match(globalStyles, /\.catalogue-filters\s*\{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.compare-selector\s*\{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.empty-results\s*\{[^}]*outline-variant/s);
@@ -339,8 +337,6 @@ test("les surfaces du catalogue et du comparateur ne dépendent plus de la couch
 });
 
 test("la fiche prénom applique Material 3 dans ses règles canoniques", () => {
-  const fidelityLayer = globalStyles.slice(globalStyles.indexOf("/* Couche Material 3 Fidelity"));
-  const fidelityBase = fidelityLayer.slice(0, fidelityLayer.indexOf("@media (max-width: 599px)"));
   assert.match(globalStyles, /\.profile-toc a\s*\{[^}]*min-height: 48px/s);
   assert.match(globalStyles, /\.profile-toc a:focus-visible\s*\{[^}]*outline: 3px solid var\(--md-sys-color-primary\)/s);
   assert.match(globalStyles, /\.profile-section\s*\{[^}]*scroll-margin-top: 88px/s);
