@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 1.6
+- **Version :** 1.7
 - **Mis à jour :** 2026-11-23
 
 ## Intention
@@ -28,7 +28,7 @@ Les variables sont définies dans `app/globals.css`. L'accent unique est un bleu
 | `--color-error` | `#b42318` | `#ff9b91` | Erreur |
 | `--color-info` | `#2457c5` | `#91b2ff` | Information |
 
-Le bleu est la seule couleur d'accent. Succès, avertissement, erreur et information sont des couleurs d'état, pas des accents décoratifs interchangeables.
+Le bleu est la seule couleur d'accent. Succès, avertissement, erreur et information sont des couleurs d'état, pas des accents décoratifs interchangeables. Les titres éditoriaux (titres de section et de panneaux) utilisent `--color-text` ; le bleu reste réservé aux liens, actions, repères interactifs et emphases courtes. Un titre ne doit pas prendre la couleur d'accent simplement parce qu'il est placé dans un panneau.
 
 Les couples texte/fond, texte atténué/fond et accent/fond sont choisis pour dépasser le seuil WCAG AA de 4,5:1 pour le texte courant dans les deux thèmes. Les grandes surfaces ne reposent jamais sur la couleur seule pour exprimer un état. Les contrôles utilisent une bordure, un libellé ou un pictogramme en plus de la couleur.
 
