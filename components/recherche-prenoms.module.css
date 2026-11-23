@@ -73,7 +73,7 @@
 .compareLink {
   border-color: var(--color-accent);
   background: var(--color-accent);
-  color: white;
+  color: var(--color-background);
 }
 
 .compareToggle[aria-pressed="true"] {
