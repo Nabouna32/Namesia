@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 3.64
+- **Version :** 3.65
 - **Mis à jour :** 2026-11-23
 
 ## 1. Besoin réel
