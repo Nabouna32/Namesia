@@ -28,9 +28,11 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
             <span className="eyebrow">Reprendre la découverte</span>
             <h2 id="historique-title">Vos dernières fiches</h2>
           </div>
-          <Bouton variante="text" type="button" onClick={effacer}>
-            Effacer l’historique
-          </Bouton>
+          {slugs.length > 0 && (
+            <Bouton variante="text" type="button" onClick={effacer}>
+              Effacer l’historique
+            </Bouton>
+          )}
         </div>
         {erreur && (
           <p className={styles.favoriteError} role="status">
@@ -63,9 +65,9 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
             )}
             <p className={styles.note}>Cet historique est propre à cet onglet : il est conservé lors des rechargements et supprimé à sa fermeture.</p>
           </>
-        ) : (
+        ) : !erreur ? (
           <p className={styles.note}>Aucune des fiches consultées récemment n’est actuellement publiée.</p>
-        )}
+        ) : null}
       </div>
     </section>
   );
