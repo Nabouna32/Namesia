@@ -6,8 +6,8 @@ import { IconeMaterial } from "./icone-material";
 
 const destinations = [
   { href: "/", label: "Accueil", icon: "home", activeIcon: "home-filled" },
-  { href: "/prenoms", label: "Explorer", icon: "search", activeIcon: "search-filled" },
-  { href: "/comparer", label: "Comparer", icon: "compare-arrows", activeIcon: "compare-arrows-filled" },
+  { href: "/prenoms", label: "Explorer", icon: "search" },
+  { href: "/comparer", label: "Comparer", icon: "compare-arrows" },
   { href: "/favoris", label: "Favoris", icon: "favorite", activeIcon: "favorite-filled" }
 ] as const;
 
@@ -20,9 +20,10 @@ function NavigationItems({ pathname }: { pathname: string }) {
   return <ul className="navigation-items">
     {destinations.map((destination) => {
       const active = isActive(pathname, destination.href);
+      const icon = active && "activeIcon" in destination ? destination.activeIcon : destination.icon;
       return <li key={destination.href}>
         <Link className={`navigation-item${active ? " is-active" : ""}`} href={destination.href} aria-current={active ? "page" : undefined}>
-          <span className="navigation-item-indicator"><IconeMaterial name={active ? destination.activeIcon : destination.icon} size={24} /></span>
+          <span className="navigation-item-indicator"><IconeMaterial name={icon} size={24} /></span>
           <span className="navigation-item-label">{destination.label}</span>
         </Link>
       </li>;

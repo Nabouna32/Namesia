@@ -1,6 +1,6 @@
 # ADR-0018 — Icônes actives et formulaires Material 3
 
-- **Statut :** acceptée
+- **Statut :** partiellement remplacée par ADR-0020
 - **Date :** 2026-11-23
 
 ## Contexte
@@ -17,7 +17,7 @@ L'interface avait un registre SVG unique, mais les destinations Explorer et Comp
 ## Décision
 
 - Garder les SVG fonctionnels dans `components/icone-material.tsx`, avec une grille 24 px, une couleur héritée, des tracés arrondis et des variantes de contour/pleines.
-- Définir explicitement une paire contour/pleine pour chacune des quatre destinations ; le pictogramme plein est affiché quand la destination est active.
+- La navigation distingue l'état actif par une variante pleine lorsqu'elle existe ; ce point est précisé et remplacé par ADR-0020 pour respecter les variantes réelles des symboles Google.
 - Retirer le pictogramme inutilisé et conserver les cibles tactiles sur les boutons et liens qui contiennent les icônes, pas sur le SVG.
 - Refaire les champs administratifs avec les rôles Fidelity, une hauteur minimale de 56 px pour les champs de saisie, une cible de 48 px pour le sélecteur de fichier et un focus visible.
 - Conserver les champs natifs propres à l'administration dans son CSS Module : pas de primitive formulaire à usage unique.
