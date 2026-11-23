@@ -1718,7 +1718,7 @@ h1 em, h2 em {
 .footer-inner p, .footer-note { color: #e0d3e4; }
 
 /* Les couleurs d'état sont réservées à leur signification fonctionnelle. */
-[role="status"], .status-info { color: var(--color-info); }
+.status-info { color: var(--color-info); }
 .status-success { color: var(--color-success); }
 .status-warning { color: var(--color-warning); }
 .status-error, [aria-invalid="true"] { color: var(--color-error); }
