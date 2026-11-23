@@ -10,6 +10,7 @@ import type { PrenomIndex } from "@/lib/prenoms";
 import { comparerPertinence, normaliserRecherche } from "@/lib/recherche-prenoms";
 import { creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
 import { IconeMaterial } from "./icone-material";
+import { ChampRecherche } from "@/components/ui/champ-recherche";
 
 type Props = {
   prenoms: PrenomIndex[];
@@ -178,22 +179,14 @@ export function RecherchePrenoms({
 
   return (
     <div className={compact ? "search search-compact" : "search"}>
-      <label className="sr-only" htmlFor={compact ? "recherche-accueil" : "recherche-catalogue"}>Rechercher un prénom</label>
-      <div className="search-field">
-        <span aria-hidden="true" className="search-icon"><IconeMaterial name="search" size={24} /></span>
-        <input
-          id={compact ? "recherche-accueil" : "recherche-catalogue"}
-          type="search"
-          placeholder="Quel prénom cherchez-vous ?"
-          value={recherche}
-          onChange={(event) => changerRecherche(event.target.value)}
-        />
-        {recherche && (
-          <button className="clear-search" type="button" onClick={() => changerRecherche("")}>
-            Effacer
-          </button>
-        )}
-      </div>
+      <ChampRecherche
+        id={compact ? "recherche-accueil" : "recherche-catalogue"}
+        label="Rechercher un prénom"
+        placeholder="Quel prénom cherchez-vous ?"
+        value={recherche}
+        onChange={changerRecherche}
+        compact={compact}
+      />
 
       {!compact && (
         <div className="catalogue-filters">

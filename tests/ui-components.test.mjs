@@ -36,3 +36,24 @@ test("la vitrine n'attribue aucune couleur selon l'index du prénom", () => {
   assert.doesNotMatch(vitrine, /featured-\$\{index/);
   assert.doesNotMatch(vitrine, /featured-\d/);
 });
+
+const champ = await readFile(new URL("../components/ui/champ-recherche.tsx", import.meta.url), "utf8");
+const champStyles = await readFile(new URL("../components/ui/champ-recherche.module.css", import.meta.url), "utf8");
+const catalogue = await readFile(new URL("../components/recherche-prenoms.tsx", import.meta.url), "utf8");
+const comparateur = await readFile(new URL("../components/comparateur-prenoms.tsx", import.meta.url), "utf8");
+const listeFavoris = await readFile(new URL("../components/liste-favoris.tsx", import.meta.url), "utf8");
+const globalStyles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+
+test("les trois parcours visiteurs utilisent le même champ de recherche accessible", () => {
+  assert.match(champ, /export function ChampRecherche\(/);
+  assert.match(champ, /<label[^>]+htmlFor=\{id\}/);
+  assert.match(champ, /type="search"/);
+  assert.match(champ, /aria-label=\{.Effacer/);
+  assert.match(champStyles, /:focus-within/);
+  assert.match(champStyles, /min-height: 48px/);
+  assert.match(catalogue, /<ChampRecherche/);
+  assert.match(comparateur, /<ChampRecherche/);
+  assert.match(listeFavoris, /<ChampRecherche/);
+  assert.doesNotMatch(globalStyles, /\.search-field\s*\{/);
+  assert.doesNotMatch(globalStyles, /\.compare-search input\s*\{/);
+});

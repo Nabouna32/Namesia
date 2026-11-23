@@ -7,6 +7,7 @@ import { BoutonFavori } from "@/components/bouton-favori";
 import { useFavoris } from "@/components/favoris-provider";
 import { comparerPertinence, normaliserRecherche } from "@/lib/recherche-prenoms";
 import { categoryTone } from "@/lib/category-color";
+import { ChampRecherche } from "@/components/ui/champ-recherche";
 
 type Props = { prenoms: PrenomIndex[]; selectionInitiale: string[] };
 
@@ -106,19 +107,17 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
   return (
     <div className="comparator">
       <section className="compare-selector" aria-labelledby="compare-selector-title">
-        <div className="compare-search">
-          <label htmlFor="compare-search">Rechercher un prénom</label>
-          <input
-            id="compare-search"
-            type="search"
-            value={recherche}
-            onChange={(event) => {
-              setNombreVisible(24);
-              setRecherche(event.target.value);
-            }}
-            placeholder="Saisissez un prénom..."
-          />
-        </div>
+        <ChampRecherche
+          id="compare-search"
+          className="compare-search"
+          label="Rechercher un prénom"
+          placeholder="Saisissez un prénom..."
+          value={recherche}
+          onChange={(value) => {
+            setNombreVisible(24);
+            setRecherche(value);
+          }}
+        />
 
         <fieldset className="compare-options">
           <legend id="compare-selector-title">Choisissez jusqu’à trois prénoms</legend>

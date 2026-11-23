@@ -66,7 +66,7 @@ Ces seuils suivent la logique des window size classes Android : la barre convien
 
 ## 5. Bibliothèque de composants
 
-L'inventaire des composants partagés, leurs responsabilités et les règles d'évolution sont centralisés dans [Bibliothèque de composants](composants.md).
+L'inventaire des composants partagés, leurs responsabilités et les règles d'évolution sont centralisés dans [Bibliothèque de composants](composants.md). Les champs de recherche des parcours catalogue, comparateur et favoris utilisent une même primitive : libellé accessible, icône, effacement, surface Fidelity et focus visible.
 
 Les primitives communes portent les interactions et états transversaux ; les composants métier composent ces primitives et conservent leur logique propre. Les variantes des contrôles utilisent les rôles Fidelity. Une règle de style locale n'est pas une nouvelle primitive.
 
