@@ -78,6 +78,13 @@ test("les animations globales utilisent les tokens de mouvement", () => {
   assert.doesNotMatch(allCss, /transition\s*:[^;]*(?:\d+(?:\.\d+)?(?:ms|s))/i);
 });
 
+test("un seul indicateur global matérialise le focus clavier", () => {
+  assert.equal((allCss.match(/outline:\s*3px solid var\(--md-sys-color-primary\)/g) ?? []).length, 1);
+  assert.match(globalCss, /\.skip-link:focus-visible/);
+  assert.doesNotMatch(globalCss, /\.navigation-item:focus-visible\s*\{[^}]*outline/s);
+  assert.doesNotMatch(globalCss, /\.profile-toc a:focus-visible\s*\{[^}]*outline/s);
+});
+
 test("les états hover sont réservés aux appareils qui disposent d'un pointeur fin", () => {
   const reglesSurvol = styles.flatMap(({ path, content }) =>
     collectRules(content)
