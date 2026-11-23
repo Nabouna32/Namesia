@@ -64,3 +64,32 @@ test("un catalogue dépassant mille lignes est entièrement parcouru", async () 
   assert.deepEqual(resultat, lignes);
   assert.deepEqual(plages, [[0, 499], [500, 999], [1000, 1499]]);
 });
+
+test("un plafond API inférieur à la taille demandée ne tronque pas le catalogue", async () => {
+  const lignes = Array.from({ length: 1201 }, (_, index) => index);
+  const plages = [];
+  const tailles = [];
+  const resultat = await lireToutesLesPages(async (debut, fin, compter) => {
+    plages.push([debut, fin]);
+    tailles.push(compter);
+    return {
+      data: lignes.slice(debut, Math.min(fin + 1, debut + 100)),
+      error: null,
+      count: compter ? lignes.length : null
+    };
+  });
+
+  assert.deepEqual(resultat, lignes);
+  assert.deepEqual(plages, [
+    [0, 499], [100, 599], [200, 699], [300, 799], [400, 899], [500, 999],
+    [600, 1099], [700, 1199], [800, 1299], [900, 1399], [1000, 1499], [1100, 1599], [1200, 1699]
+  ]);
+  assert.equal(tailles.filter(Boolean).length, 1);
+});
+
+test("une pagination qui n'avance plus échoue explicitement", async () => {
+  await assert.rejects(
+    lireToutesLesPages(async () => ({ data: [], error: null, count: 20 }), 5),
+    /n’a pas progressé/
+  );
+});
