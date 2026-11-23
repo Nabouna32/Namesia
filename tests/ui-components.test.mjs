@@ -339,3 +339,16 @@ test("les surfaces du catalogue et du comparateur ne dépendent plus de la couch
   assert.doesNotMatch(fidelityBase, /\.catalogue-filters|\.compare-selector|\.empty-results|\.name-card|\.compare-option|\.compare-card|\.profile-note/);
   assert.doesNotMatch(globalStyles, /linear-gradient\(135deg, var\(--color-surface/);
 });
+
+
+test("la fiche prénom applique Material 3 dans ses règles canoniques", () => {
+  const fidelityLayer = globalStyles.slice(globalStyles.indexOf("/* Couche Material 3 Fidelity"));
+  const fidelityBase = fidelityLayer.slice(0, fidelityLayer.indexOf("@media (max-width: 599px)"));
+  assert.match(globalStyles, /\\.profile-toc a\\s*\\{[^}]*min-height: 40px/s);
+  assert.match(globalStyles, /\\.profile-toc a:focus-visible\\s*\\{[^}]*outline: 3px solid var\\(--md-sys-color-primary\\)/s);
+  assert.match(globalStyles, /\\.profile-section\\s*\\{[^}]*scroll-margin-top: 88px/s);
+  assert.match(globalStyles, /\\.profile-copy\\s*\\{[^}]*color: var\\(--md-sys-color-on-surface\\)/s);
+  assert.match(globalStyles, /\\.profile-section \\+ \\.profile-section\\s*\\{[^}]*outline-variant/s);
+  assert.doesNotMatch(fidelityBase, /\\.profile-(?:lead|copy|tag|toc|discovery|monogram)|\\.profile-section \\+ \\.profile-section/);
+  assert.doesNotMatch(globalStyles, /linear-gradient\\(125deg, var\\(--color-surface-muted/);
+});
