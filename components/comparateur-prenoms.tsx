@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Prenom, PrenomIndex } from "@/lib/prenoms";
 import { PartagerLien } from "@/components/partager-fiche";
+import { BoutonFavori } from "@/components/bouton-favori";
+import { useFavoris } from "@/components/favoris-provider";
 import { comparerPertinence, normaliserRecherche } from "@/lib/recherche-prenoms";
 
 type Props = { prenoms: PrenomIndex[]; selectionInitiale: string[] };
@@ -16,6 +18,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
   const [chargement, setChargement] = useState(false);
   const [erreur, setErreur] = useState(false);
   const [tentative, setTentative] = useState(0);
+  const { erreur: erreurFavoris } = useFavoris();
   const selectionInitialeKey = selectionInitiale.join(",");
   const selectionKey = selection.join(",");
 
@@ -187,6 +190,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
                 <h2>{prenom.nom}</h2>
                 <span className="profile-tag">{prenom.genre}</span>
                 <span className="profile-tag">Lettre {prenom.lettre}</span>
+                <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
               </header>
               <div className="compare-field">
                 <h3>Introduction</h3>
@@ -222,6 +226,12 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
           ))}
           <p className="compare-disclaimer">Les associations symboliques sont des représentations culturelles, pas des caractéristiques scientifiques ou prédictives.</p>
         </section>
+      )}
+
+      {erreurFavoris && (
+        <p role="alert">
+          Le stockage des favoris est indisponible ou contient des données illisibles. Vos modifications ne sont pas enregistrées.
+        </p>
       )}
 
       {selection.length >= 2 && selectionComplete && !chargement && !erreur && (
