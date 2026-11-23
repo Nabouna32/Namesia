@@ -1,5 +1,6 @@
 "use client";
 
+import { normaliserSlugsFavoris } from "@/lib/sauvegarde-favoris";
 import {
   createContext,
   useCallback,
@@ -26,10 +27,9 @@ const FavorisContext = createContext<ContexteFavoris | null>(null);
 function lireFavoris(value: string | null): string[] {
   if (!value) return [];
   const parsed: unknown = JSON.parse(value);
-  if (!Array.isArray(parsed) || !parsed.every((item): item is string => typeof item === "string")) {
-    throw new TypeError("Le contenu des favoris est invalide.");
-  }
-  return [...new Set(parsed)];
+  const slugs = normaliserSlugsFavoris(parsed);
+  if (!slugs) throw new TypeError("Le contenu des favoris est invalide.");
+  return slugs;
 }
 
 export function FavorisProvider({ children }: { children: ReactNode }) {
