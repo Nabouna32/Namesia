@@ -255,8 +255,8 @@ export function RecherchePrenoms({
       )}
 
       {!compact && selectionComparaison.length > 0 && (
-        <div className={styles.compareBar} role="status">
-          <span>{selectionComparaison.length} / 3 prénoms pour la comparaison</span>
+        <div className={styles.compareBar}>
+          <span role="status" aria-live="polite">{selectionComparaison.length} / 3 prénoms pour la comparaison</span>
           <div className={styles.compareActions}>
             <button type="button" onClick={() => setSelectionComparaison([])}>
               Effacer
