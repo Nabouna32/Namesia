@@ -1,11 +1,21 @@
 const VERSION_SAUVEGARDE = 1;
-const LIMITE_FAVORIS = 10_000;
+export const LIMITE_FAVORIS = 10_000;
 const FORMAT_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
+export function normaliserSlugsFavoris(value: unknown): string[] | null {
+  if (!Array.isArray(value) || value.length > LIMITE_FAVORIS) return null;
+  if (!value.every((slug): slug is string =>
+    typeof slug === "string" && FORMAT_SLUG.test(slug)
+  )) return null;
+  return [...new Set(value)];
+}
+
 export function creerSauvegardeFavoris(slugs: string[]): string {
+  const slugsValides = normaliserSlugsFavoris(slugs);
+  if (!slugsValides) throw new Error("La liste contient des identifiants de prénoms invalides.");
   return JSON.stringify({
     schema_version: VERSION_SAUVEGARDE,
-    slugs: [...new Set(slugs)]
+    slugs: slugsValides
   }, null, 2);
 }
 
@@ -28,11 +38,7 @@ export function lireSauvegardeFavoris(value: unknown): string[] {
     throw new Error("La sauvegarde doit contenir au maximum 10 000 favoris.");
   }
 
-  if (!sauvegarde.slugs.every((slug): slug is string =>
-    typeof slug === "string" && FORMAT_SLUG.test(slug)
-  )) {
-    throw new Error("La sauvegarde contient un identifiant de prénom invalide.");
-  }
-
-  return [...new Set(sauvegarde.slugs)];
+  const slugs = normaliserSlugsFavoris(sauvegarde.slugs);
+  if (!slugs) throw new Error("La sauvegarde contient un identifiant de prénom invalide.");
+  return slugs;
 }
