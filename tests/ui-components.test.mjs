@@ -9,6 +9,7 @@ const favoris = await readFile(new URL("../components/bouton-favori.tsx", import
 const decouverte = await readFile(new URL("../components/decouverte-aleatoire.tsx", import.meta.url), "utf8");
 const vitrine = await readFile(new URL("../components/prenoms-vedette.tsx", import.meta.url), "utf8");
 const notFound = await readFile(new URL("../app/not-found.tsx", import.meta.url), "utf8");
+const errorBoundary = await readFile(new URL("../app/error.tsx", import.meta.url), "utf8");
 
 test("les primitives partagées exposent des variantes sémantiques et préservent les éléments natifs", () => {
   assert.match(bouton, /export function Bouton\(/);
@@ -29,6 +30,12 @@ test("les composants métier réutilisent les primitives au lieu de redéfinir l
   assert.match(decouverte, /<Bouton/);
   assert.doesNotMatch(decouverte, /<button/);
   assert.match(notFound, /<LienBouton/);
+});
+
+test("la page d'erreur ne prétend pas transmettre une erreur journalisée localement", () => {
+  assert.match(errorBoundary, /console\.error/);
+  assert.match(errorBoundary, /Vous pouvez réessayer ou revenir à l’accueil/);
+  assert.doesNotMatch(errorBoundary, /problème a été signalé/);
 });
 
 test("la vitrine n'attribue aucune couleur selon l'index du prénom", () => {
