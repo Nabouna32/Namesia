@@ -960,6 +960,13 @@ h2 em {
   flex: 1 0 100%;
   flex-wrap: wrap;
   gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.compare-selected-list li {
+  display: flex;
 }
 
 .compare-selected-item {
@@ -976,7 +983,7 @@ h2 em {
 }
 
 .compare-selected-item:hover {
-  border-color: var(--color-accent) !important;
+  border-color: var(--color-accent);
 }
 
 .compare-selected-item span {
