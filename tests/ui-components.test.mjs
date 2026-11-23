@@ -278,7 +278,7 @@ test("les cartes Rainbow utilisent la couleur de premier plan de leur propre cat
   );
   assert.equal((globalStyles.match(/\.symbolic-card\s*\{/g) ?? []).length, 1);
   assert.match(symbolicCard, /var\(--md-sys-color-category\)/);
-  assert.match(symbolicCard, /var\(--category-container/);
+  assert.match(symbolicCard, /var\(--md-sys-color-category-container/);
   assert.match(categoryBadge, /var\(--md-sys-color-category-on-container/);
   assert.doesNotMatch(globalStyles, /\.symbolic-card > span \{[^}]*on-tertiary-container/);
   assert.doesNotMatch(symbolicCard, /linear-gradient/);
