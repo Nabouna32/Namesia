@@ -92,12 +92,12 @@ test("aucun sélecteur n'est déclaré plusieurs fois dans un même contexte CSS
 });
 
 test("Roboto est chargée une fois, auto-hébergée et sans police de substitution", () => {
-  assert.match(layout, /import \\{ Roboto \\} from "next\\/font\\/google"/);
-  assert.match(layout, /weight: \\[ "400", "500" \\]/);
-  assert.match(layout, /subsets: \\[ "latin", "latin-ext" \\]/);
+  assert.match(layout, /import \{ Roboto \} from "next\/font\/google"/);
+  assert.match(layout, /weight: \[ "400", "500" \]/);
+  assert.match(layout, /subsets: \[ "latin", "latin-ext" \]/);
   assert.match(layout, /variable: "--font-roboto"/);
-  assert.match(layout, /className=\\{roboto\\.variable\\}/);
-  assert.match(globalCss, /--md-sys-typescale-body-large-font: var\\(--font-roboto\\);/);
+  assert.match(layout, /className=\{roboto\.variable\}/);
+  assert.match(globalCss, /--md-sys-typescale-body-large-font: var\(--font-roboto\);/);
   assert.doesNotMatch(globalCss, /-font: Roboto;/);
 });
 
