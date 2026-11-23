@@ -43,6 +43,15 @@ test("les rôles Material essentiels ont des valeurs de secours avant hydratatio
   }
 });
 
+test("les catégories disposent de rôles tonals Rainbow en clair et sombre", () => {
+  for (const tone of [1, 2, 3]) {
+    assert.match(styles, new RegExp(`--md-category-${tone}:`));
+    assert.match(styles, new RegExp(`--md-category-${tone}-container:`));
+    assert.match(styles, new RegExp(`--md-category-${tone}-on-container:`));
+  }
+  assert.match(styles, /data-category-tone/);
+});
+
 test("les préférences de thème sont synchronisées sans toucher aux réglages système", () => {
   assert.match(provider, /preference\.addEventListener\("change", updateTheme\)/);
   assert.match(provider, /preference\.removeEventListener\("change", updateTheme\)/);
