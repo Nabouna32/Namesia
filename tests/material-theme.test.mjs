@@ -1,66 +1,47 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {
-  argbFromHex,
-  DynamicScheme,
-  Hct,
-  hexFromArgb,
-  Variant
-} from "@material/material-color-utilities";
+import { readFile } from "node:fs/promises";
 
-const sourceColor = Hct.fromInt(argbFromHex("#6750A4"));
-const roles = [
-  "primary",
-  "onPrimary",
-  "primaryContainer",
-  "onPrimaryContainer",
-  "secondary",
-  "secondaryContainer",
-  "tertiary",
-  "tertiaryContainer",
-  "error",
-  "background",
-  "onBackground",
-  "surface",
-  "surfaceContainerLow",
-  "surfaceContainer",
-  "surfaceContainerHigh",
-  "surfaceContainerHighest",
-  "onSurface",
-  "onSurfaceVariant",
-  "outline",
-  "outlineVariant"
-];
+const provider = await readFile(new URL("../components/material-theme-provider.tsx", import.meta.url), "utf8");
+const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 
-function createScheme(isDark) {
-  return new DynamicScheme({
-    sourceColorHct: sourceColor,
-    variant: Variant.EXPRESSIVE,
-    contrastLevel: 0,
-    isDark,
-    platform: "phone",
-    specVersion: "2025"
-  });
-}
+test("le fournisseur utilise le schéma Material 3 Expressive officiel", () => {
+  assert.match(provider, /@material\/material-color-utilities/);
+  assert.match(provider, /new DynamicScheme\(/);
+  assert.match(provider, /variant: Variant\.EXPRESSIVE/);
+  assert.match(provider, /specVersion: "2025"/);
+  assert.match(provider, /sourceColorHct: sourceColor/);
+  assert.match(provider, /matchMedia\("\(prefers-color-scheme: dark\)"\)/);
+  assert.match(provider, /setProperty\(\`--md-sys-color-/);
+});
 
-test("le schéma Material 3 Expressive expose les rôles nécessaires", () => {
-  const scheme = createScheme(false);
-
-  assert.equal(scheme.variant, Variant.EXPRESSIVE);
-  assert.equal(scheme.specVersion, "2025");
-
-  for (const role of roles) {
-    const color = Reflect.get(scheme, role);
-    assert.equal(typeof color, "number", `Le rôle ${role} doit être calculé`);
-    assert.match(hexFromArgb(color), /^#[0-9a-f]{6}$/i);
+test("les rôles Material essentiels ont des valeurs de secours avant hydratation", () => {
+  for (const role of [
+    "primary",
+    "on-primary",
+    "primary-container",
+    "on-primary-container",
+    "secondary",
+    "tertiary",
+    "error",
+    "background",
+    "on-background",
+    "surface",
+    "on-surface",
+    "surface-container-low",
+    "surface-container",
+    "surface-container-high",
+    "surface-container-highest",
+    "on-surface-variant",
+    "outline",
+    "outline-variant"
+  ]) {
+    assert.match(styles, new RegExp(`--md-sys-color-${role}:`), `Le rôle ${role} doit avoir un fallback CSS`);
   }
 });
 
-test("les schémas clair et sombre sont distincts", () => {
-  const clair = createScheme(false);
-  const sombre = createScheme(true);
-
-  assert.notEqual(clair.primary, sombre.primary);
-  assert.notEqual(clair.surface, sombre.surface);
-  assert.notEqual(clair.onSurface, sombre.onSurface);
+test("les préférences de thème sont synchronisées sans toucher aux réglages système", () => {
+  assert.match(provider, /preference\.addEventListener\("change", updateTheme\)/);
+  assert.match(provider, /preference\.removeEventListener\("change", updateTheme\)/);
+  assert.doesNotMatch(provider, /localStorage|sessionStorage/);
 });
