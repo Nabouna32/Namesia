@@ -3,6 +3,7 @@ import test from "node:test";
 import {
   creerUrlFicheDepuisCatalogue,
   creerUrlFicheDepuisFavoris,
+  creerUrlFicheDepuisContexte,
   creerUrlRetourNavigation,
   lireContexteRetourNavigation
 } from "../lib/navigation-prenoms.ts";
@@ -71,6 +72,19 @@ test("les paramètres répétés utilisent leur première valeur et le tri inval
       retour_tri: "inconnu"
     }),
     { vue: "favoris", q: "Alice", genre: "Féminin", tri: "enregistrement" }
+  );
+});
+
+test("les suggestions conservent la provenance favoris au fil de la découverte", () => {
+  const contexte = lireContexteRetourNavigation({
+    retour_vue: "favoris",
+    retour_q: "Jean",
+    retour_tri: "nom-asc"
+  });
+
+  assert.equal(
+    creerUrlFicheDepuisContexte("jean-pierre", contexte),
+    "/prenoms/jean-pierre?retour_vue=favoris&retour_q=Jean&retour_tri=nom-asc"
   );
 });
 
