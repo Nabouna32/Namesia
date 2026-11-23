@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 import { IconeMaterial } from "./icone-material";
 
 const destinations = [
-  { href: "/", label: "Accueil", icon: "home" },
-  { href: "/prenoms", label: "Explorer", icon: "search" },
-  { href: "/comparer", label: "Comparer", icon: "compare-arrows" },
-  { href: "/favoris", label: "Favoris", icon: "favorite" }
+  { href: "/", label: "Accueil", icon: "home", activeIcon: "home-filled" },
+  { href: "/prenoms", label: "Explorer", icon: "search", activeIcon: "search-filled" },
+  { href: "/comparer", label: "Comparer", icon: "compare-arrows", activeIcon: "compare-arrows-filled" },
+  { href: "/favoris", label: "Favoris", icon: "favorite", activeIcon: "favorite-filled" }
 ] as const;
 
 function isActive(pathname: string, href: string) {
@@ -22,7 +22,7 @@ function NavigationItems({ pathname }: { pathname: string }) {
       const active = isActive(pathname, destination.href);
       return <li key={destination.href}>
         <Link className={`navigation-item${active ? " is-active" : ""}`} href={destination.href} aria-current={active ? "page" : undefined}>
-          <span className="navigation-item-indicator"><IconeMaterial name={active && destination.icon === "home" ? "home-filled" : active && destination.icon === "favorite" ? "favorite-filled" : destination.icon} size={24} /></span>
+          <span className="navigation-item-indicator"><IconeMaterial name={active ? destination.activeIcon : destination.icon} size={24} /></span>
           <span className="navigation-item-label">{destination.label}</span>
         </Link>
       </li>;
