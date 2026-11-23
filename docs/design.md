@@ -55,7 +55,8 @@ Le dégradé Namesia est défini une seule fois par `--color-rainbow`. Il sert a
 Les destinations de premier niveau sont Accueil, Explorer, Comparer et Favoris. Elles restent identiques sur toutes les tailles d'écran.
 
 - **Compact, moins de 600 px :** navigation bar fixe en bas, quatre destinations avec icône et libellé, prise en compte de `safe-area-inset-bottom`.
-- **Medium et plus, à partir de 600 px :** navigation rail fixe sur le bord de départ, largeur de 96 px, icône et libellé empilés.
+- **Medium et plus, à partir de 600 px :** navigation rail fixe sur le bord de départ, largeur de 96 px, icône et libellé empilés. Le rail s'étend temporairement à 280 px et le contenu suit son déplacement.
+- **Hauteur compacte, jusqu'à 480 px :** la navigation revient en bas même si la largeur dépasse 600 px, pour les fenêtres paysage peu hautes.
 - Le rail peut s'étendre temporairement à 280 px ; les libellés passent alors à côté des icônes.
 - La barre supérieure reste présente, avec la marque Namesia et une hauteur de 64 px.
 - La destination courante utilise l'indicateur tonal en pilule et `aria-current="page"`.
