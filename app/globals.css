@@ -50,15 +50,10 @@
   --color-error: var(--md-sys-color-error);
   --color-info: #005b9a;
   --color-focus: var(--md-sys-color-primary);
-  --color-pink: #d94f8b;
-  --color-orange: #b85b22;
-  --color-gold: #86620a;
-  --color-green: #267453;
-  --color-blue: #2868a6;
-  --color-violet: #8050b5;
   --color-rainbow: linear-gradient(105deg, #ef568b 0%, #f29a42 19%, #e8c94c 36%, #55b987 54%, #49a9d5 72%, #8669d4 88%, #d76bb5 100%);
   --color-rainbow-text: linear-gradient(105deg, #b4235a 0%, #a34f10 19%, #806000 36%, #176b4b 54%, #23659a 72%, #65439b 88%, #a03b83 100%);
-  --font-sans: "Roboto", "Google Sans", "Arial", sans-serif;
+  --font-sans: "Roboto", "Arial", sans-serif;
+  --font-display: "Google Sans", "Roboto", "Arial", sans-serif;
   --font-serif: "Google Sans", "Roboto", "Arial", sans-serif;
   --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
   --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem;
@@ -1769,7 +1764,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .eyebrow-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-rainbow); }
 .hero h1, .catalogue h1, .profile h1, .not-found h1 {
   color: var(--md-sys-color-on-surface);
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
   font-weight: 400;
   letter-spacing: -.045em;
 }
@@ -1999,4 +1994,10 @@ h1 em, h2 em {
   .navigation-bar .navigation-item-indicator { width: 48px; height: 40px; }
   .app-content { margin-left: 0; padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
   .top-app-bar { margin-left: 0; }
+}
+
+@supports (transition-timing-function: linear(0, 1)) {
+  :root {
+    --motion-emphasized: linear(0, 0.08 12%, 0.28 28%, 0.68 52%, 0.96 78%, 1.025 91%, 1 100%);
+  }
 }
