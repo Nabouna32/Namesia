@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.32
+- **Version :** 3.33
 - **Mis à jour :** 2026-11-23
 
 ## 1. Positionnement
@@ -87,7 +87,7 @@ Les pages de filtres, recherches internes et combinaisons sans contenu éditoria
 
 ## 7. Direction visuelle
 
-La direction visuelle canonique est **Material 3 Fidelity** pour l'interface générale, avec **Material 3 Rainbow** comme palette complémentaire pour les catégories éditoriales et les repères qui bénéficient d'une variation de couleur. Les deux schémas sont calculés par Material Color Utilities à partir d'une couleur source maîtrisée par Namesia. La navigation, les actions et les états fonctionnels restent pilotés par Fidelity et les rôles sémantiques. Le dégradé de marque reste décoratif. Les règles détaillées et les limites Web sont définies dans [docs/design.md](design.md). Les règles détaillées et les limites Web sont définies dans [docs/design.md](design.md).
+La direction visuelle canonique est **Material 3 Fidelity** pour l'interface générale, avec **Material 3 Rainbow** comme palette complémentaire pour les catégories éditoriales et les repères qui bénéficient d'une variation de couleur. Les deux schémas sont calculés par Material Color Utilities à partir d'une couleur source maîtrisée par Namesia. La navigation, les actions et les états fonctionnels restent pilotés par Fidelity et les rôles sémantiques. Le dégradé de marque reste décoratif. Les règles détaillées et les limites Web sont définies dans [docs/design.md](design.md).
 
 
 ## 8. Indicateurs
