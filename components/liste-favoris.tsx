@@ -11,6 +11,7 @@ import { BoutonFavori } from "./bouton-favori";
 import { useFavoris } from "./favoris-provider";
 import styles from "./liste-favoris.module.css";
 import { IconeMaterial } from "./icone-material";
+import { ChampRecherche } from "@/components/ui/champ-recherche";
 
 type Props = {
   prenoms: PrenomIndex[];
@@ -230,17 +231,16 @@ export function ListeFavoris({
         <>
           <div className={styles.filters}>
             <div className={styles.search}>
-              <label htmlFor="recherche-favoris">Rechercher dans mes favoris</label>
-              <input
+              <ChampRecherche
                 id="recherche-favoris"
-                type="search"
-                value={recherche}
-                onChange={(event) => {
-                  setNombreVisible(24);
-                  setRecherche(event.target.value);
-                  mettreAJourUrl(event.target.value, genreActifValide, triActif);
-                }}
+                label="Rechercher dans mes favoris"
                 placeholder="Saisissez un prénom..."
+                value={recherche}
+                onChange={(value) => {
+                  setNombreVisible(24);
+                  setRecherche(value);
+                  mettreAJourUrl(value, genreActifValide, triActif);
+                }}
               />
             </div>
             {genres.length > 1 && (
