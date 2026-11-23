@@ -11,6 +11,10 @@ test("la sauvegarde exportée est versionnée et dédupliquée", () => {
   });
 });
 
+test("l’export refuse les identifiants invalides", () => {
+  assert.throws(() => creerSauvegardeFavoris(["Alice"]), /identifiants de prénoms invalides/);
+});
+
 test("l’import valide et déduplique les identifiants", () => {
   assert.deepEqual(
     lireSauvegardeFavoris({ schema_version: 1, slugs: ["alice", "jean-luc", "alice"] }),
