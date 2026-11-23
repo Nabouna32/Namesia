@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.10
+- **Version :** 3.11
 - **Mis à jour :** 2026-11-23
 
 ## 1. Positionnement
@@ -44,7 +44,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 - Favoris locaux : enregistrer ou retirer un prénom depuis sa fiche ou directement depuis les résultats du catalogue et de la recherche, puis retrouver la sélection dans une liste dédiée, sans compte ni synchronisation entre appareils. Les actions compactes des résultats restent distinctes du lien vers la fiche. La liste utilise uniquement les informations d'index nécessaires à son affichage, pas les textes complets des fiches.
 - Accès direct au comparateur depuis une fiche, avec le prénom déjà sélectionné et la possibilité d'en ajouter jusqu'à deux autres. Depuis les résultats et suggestions du catalogue, sélection de deux ou trois prénoms puis ouverture du comparateur avec cette sélection préremplie.
 - Fiches de découverte avec introduction, origine, histoire, usages, associations symboliques facultatives ; suggestions de trois autres prénoms publiés du même genre, diversifiées selon la fiche consultée et stables dans le temps. Ce critère ne prétend pas établir une proximité d'origine ou de signification ; partage natif de la fiche.
-- Comparaison partageable de deux ou trois fiches sur leurs informations éditoriales publiées, via l'URL de la sélection. Le catalogue de choix ne charge que l'index léger ; les contenus complets sont demandés uniquement pour les fiches sélectionnées. Le sélecteur présente 24 prénoms au départ et permet d'en afficher 24 de plus à chaque étape ; la recherche revient au premier lot.
+- Comparaison partageable de deux ou trois fiches sur leurs informations éditoriales publiées, via l'URL de la sélection. Le catalogue de choix ne charge que l'index léger ; les contenus complets sont demandés uniquement pour les fiches sélectionnées. La recherche sans distinction d'accents ni de casse classe les correspondances exactes avant les préfixes, puis les occurrences plus éloignées, comme dans le catalogue. Le sélecteur présente 24 prénoms au départ et permet d'en afficher 24 de plus à chaque étape ; la recherche revient au premier lot.
 - Aperçus de partage visuels avec une carte dédiée à chaque fiche.
 - Génération hors du site, par API ou conversation, puis import d'un JSON.
 - Administration privée : authentification, import, validation structurelle, création de brouillon, prévisualisation et publication explicite.
