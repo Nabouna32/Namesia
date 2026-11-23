@@ -9,6 +9,7 @@ import styles from "./recherche-prenoms.module.css";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { comparerPertinence, normaliserRecherche } from "@/lib/recherche-prenoms";
 import { creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
+import { IconeMaterial } from "./icone-material";
 
 type Props = {
   prenoms: PrenomIndex[];
@@ -179,7 +180,7 @@ export function RecherchePrenoms({
     <div className={compact ? "search search-compact" : "search"}>
       <label className="sr-only" htmlFor={compact ? "recherche-accueil" : "recherche-catalogue"}>Rechercher un prénom</label>
       <div className="search-field">
-        <span aria-hidden="true" className="search-icon">⌕</span>
+        <span aria-hidden="true" className="search-icon"><IconeMaterial name="search" size={24} /></span>
         <input
           id={compact ? "recherche-accueil" : "recherche-catalogue"}
           type="search"
@@ -291,7 +292,7 @@ export function RecherchePrenoms({
                         <strong>{prenom.nom}</strong>
                         <small>{prenom.genre} · Découvrir la fiche</small>
                       </span>
-                      <span className="card-arrow" aria-hidden="true">↗</span>
+                      <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
                     </Link>
                     {!compact && (
                       <button
@@ -303,7 +304,7 @@ export function RecherchePrenoms({
                         onClick={() => basculerComparaison(prenom.slug)}
                       >
                         <span className={styles.compareLabel}>{selectionComparaison.includes(prenom.slug) ? "Ajouté" : "Comparer"}</span>
-                        <span className={styles.compareIcon} aria-hidden="true">{selectionComparaison.includes(prenom.slug) ? "✓" : "⇄"}</span>
+                        <span className={styles.compareIcon} aria-hidden="true"><IconeMaterial name={selectionComparaison.includes(prenom.slug) ? "check" : "compare-arrows"} size={18} /></span>
                       </button>
                     )}
                     <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
