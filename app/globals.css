@@ -1526,22 +1526,6 @@ h2 em {
 }
 
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition: none !important;
-  }
-}
-
-
 /* Identité visuelle, états sémantiques et interactions */
 body {
   background: var(--color-background);
@@ -1706,6 +1690,7 @@ h1 em, h2 em {
   -webkit-text-fill-color: transparent;
 }
 .profile-lead { color: var(--color-text-muted); }
+.profile-note p { color: var(--color-text-muted); }
 .profile-monogram { color: color-mix(in srgb, var(--color-violet) 16%, transparent); }
 .profile-tag { background: color-mix(in srgb, var(--color-pink) 8%, var(--color-surface)); border-color: color-mix(in srgb, var(--color-pink) 24%, var(--color-border)); color: var(--color-accent); }
 .profile-note { background: linear-gradient(145deg, var(--color-surface), color-mix(in srgb, var(--color-violet) 7%, var(--color-surface))); }
@@ -1752,12 +1737,6 @@ h1 em, h2 em {
   .name-initial, .compare-option-initial { background: linear-gradient(145deg, #593b52, #40375f); color: #f5dafa; }
   .site-footer { background: #100d17; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .hero::before { animation: none; }
-  .featured-card:hover, .name-card:hover { transform: none; }
-  .featured-action b { transition: none; }
-}
-
 @media (max-width: 640px) {
   .container { width: min(100% - 32px, 1120px); }
   .header-inner, .footer-inner { width: calc(100% - 32px); }
@@ -1788,10 +1767,6 @@ h1 em, h2 em {
   .footer-inner p { flex-basis: 100%; order: 3; }
   .footer-note { margin-left: auto; }
 }
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-}
-
 @media (max-width: 420px) {
   .brand {
     flex: 0 0 auto;
@@ -1877,4 +1852,14 @@ h1 em, h2 em {
   .site-nav a {
     padding-inline: 4px;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .featured-card:hover, .name-card:hover { transform: none; }
 }
