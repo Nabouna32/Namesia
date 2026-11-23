@@ -17,11 +17,17 @@ Les titres de l'accueil, du catalogue, des fiches et du comparateur avaient des 
 ## Décision
 
 - Définir une seule échelle CSS Material 3 : display small 36/44 px, headline large 32/40 px, headline medium 28/36 px, headline small 24/32 px et body large 16/24 px.
-- Utiliser Google Sans pour les titres uniquement lorsqu'elle est installée, avec Roboto comme repli ; Roboto reste la police du corps et des contrôles.
+- Utiliser Roboto pour tous les rôles typographiques. Material 3 Android définit Roboto pour les titres comme pour le corps ; Google Sans n’est pas la police de son échelle standard. Une seule famille est déclarée, sans pile de substitution ni police distante.
 - Appliquer display small au hero, headline large aux titres de page et de fiche, headline medium aux sections et headline small aux sous-sections et cartes de comparaison.
 - Ramener les textes d'introduction et de lecture courante au rôle body large 16/24 px.
 - Supprimer les anciennes règles responsives qui remplaçaient ces tailles par 51, 61 ou 88 px et retirer les tokens de police serif inutilisés.
 - Conserver les dimensions de mise en page responsives ; seuls les rôles typographiques restent stables.
+
+## Rectification de la décision typographique
+
+La première rédaction de cette ADR introduisait Google Sans pour les titres « si installée », puis Roboto en repli. Ce choix était erroné : il contredisait la direction Roboto de l’ADR-0015 et la typographie standard Material 3 documentée par Android. Il est remplacé par Roboto pour l’ensemble des rôles.
+
+Référence : [Typographie Material 3 pour Jetpack Compose](https://developer.android.com/develop/ui/compose/designsystems/material3), dont l’échelle associe explicitement Roboto à chaque rôle display, headline, title, body et label.
 
 ## Conséquences
 
