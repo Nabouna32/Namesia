@@ -265,3 +265,18 @@ test("la typographie suit une échelle Material 3 unique sans surcharges respons
   assert.equal((globalStyles.match(/\.section-heading h2\s*\{/g) ?? []).length, 1);
   assert.doesNotMatch(globalStyles, /--font-serif|var\(--serif\)/);
 });
+
+
+test("les cartes Rainbow utilisent la couleur de premier plan de leur propre catégorie", () => {
+  const symbolicCard = globalStyles.slice(globalStyles.indexOf(".symbolic-card {"));
+  const categoryBadge = globalStyles.slice(
+    globalStyles.indexOf(".symbolic-card > span,\n.compare-association span {"),
+    globalStyles.indexOf(".compare-association {")
+  );
+  assert.equal((globalStyles.match(/\.symbolic-card\s*\{/g) ?? []).length, 1);
+  assert.match(symbolicCard, /var\(--category, var\(--md-sys-color-outline\)\)/);
+  assert.match(symbolicCard, /var\(--category-container/);
+  assert.match(categoryBadge, /var\(--category-on-container/);
+  assert.doesNotMatch(globalStyles, /\.symbolic-card > span \{[^}]*on-tertiary-container/);
+  assert.doesNotMatch(symbolicCard, /linear-gradient/);
+});
