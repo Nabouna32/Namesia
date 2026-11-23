@@ -7,6 +7,7 @@ export type ContexteRetourCatalogue = {
   q: string;
   genre: string | null;
   lettre: string | null;
+  limite: number;
 };
 
 export type ContexteRetourFavoris = {
@@ -14,6 +15,7 @@ export type ContexteRetourFavoris = {
   q: string;
   genre: string | null;
   tri: TriFavoris;
+  limite: number;
 };
 
 export type ContexteRetourNavigation =
@@ -26,10 +28,18 @@ type ParametresFiche = {
   retour_genre?: ParametreUrl;
   retour_lettre?: ParametreUrl;
   retour_tri?: ParametreUrl;
+  retour_limite?: ParametreUrl;
 };
 
 function premierParametre(value: ParametreUrl): string {
   return Array.isArray(value) ? value[0] ?? "" : value ?? "";
+}
+
+function lireLimite(value: ParametreUrl): number {
+  const nombre = Number(premierParametre(value));
+  return Number.isSafeInteger(nombre) && nombre >= 24
+    ? Math.floor(nombre / 24) * 24
+    : 24;
 }
 
 function creerUrlFiche(slug: string, parametres: URLSearchParams): string {
@@ -42,7 +52,7 @@ export function creerUrlFicheDepuisCatalogue(
   slug: string,
   contexte: Omit<ContexteRetourCatalogue, "vue"> | null
 ): string {
-  if (!contexte || (!contexte.q.trim() && !contexte.genre && !contexte.lettre)) {
+  if (!contexte || (!contexte.q.trim() && !contexte.genre && !contexte.lettre && contexte.limite <= 24)) {
     return creerUrlFiche(slug, new URLSearchParams());
   }
 
@@ -50,6 +60,7 @@ export function creerUrlFicheDepuisCatalogue(
   if (contexte.q.trim()) parametres.set("retour_q", contexte.q.trim());
   if (contexte.genre) parametres.set("retour_genre", contexte.genre);
   if (contexte.lettre) parametres.set("retour_lettre", contexte.lettre);
+  if (contexte.limite > 24) parametres.set("retour_limite", String(contexte.limite));
   return creerUrlFiche(slug, parametres);
 }
 
@@ -61,6 +72,7 @@ export function creerUrlFicheDepuisFavoris(
   if (contexte.q.trim()) parametres.set("retour_q", contexte.q.trim());
   if (contexte.genre) parametres.set("retour_genre", contexte.genre);
   if (contexte.tri !== "enregistrement") parametres.set("retour_tri", contexte.tri);
+  if (contexte.limite > 24) parametres.set("retour_limite", String(contexte.limite));
   return creerUrlFiche(slug, parametres);
 }
 
@@ -79,6 +91,7 @@ export function lireContexteRetourNavigation(
   const vue = premierParametre(parametres.retour_vue);
   const q = premierParametre(parametres.retour_q);
   const genre = premierParametre(parametres.retour_genre);
+  const limite = lireLimite(parametres.retour_limite);
 
   if (vue === "favoris") {
     const tri = premierParametre(parametres.retour_tri);
@@ -86,14 +99,15 @@ export function lireContexteRetourNavigation(
       vue: "favoris",
       q,
       genre: genre || null,
-      tri: tri === "nom-asc" || tri === "nom-desc" ? tri : "enregistrement"
+      tri: tri === "nom-asc" || tri === "nom-desc" ? tri : "enregistrement",
+      limite
     };
   }
 
   const lettre = premierParametre(parametres.retour_lettre);
   // Les anciens liens de la première version ne contenaient pas retour_vue.
-  if (vue !== "catalogue" && !q && !genre && !lettre) return null;
-  return { vue: "catalogue", q, genre: genre || null, lettre: lettre || null };
+  if (vue !== "catalogue" && !q && !genre && !lettre && limite <= 24) return null;
+  return { vue: "catalogue", q, genre: genre || null, lettre: lettre || null, limite };
 }
 
 export function creerUrlRetourNavigation(parametres: ParametresFiche): string {
@@ -103,6 +117,7 @@ export function creerUrlRetourNavigation(parametres: ParametresFiche): string {
   const recherche = new URLSearchParams();
   if (contexte.q) recherche.set("q", contexte.q);
   if (contexte.genre) recherche.set("genre", contexte.genre);
+  if (contexte.limite > 24) recherche.set("limite", String(contexte.limite));
 
   if (contexte.vue === "favoris") {
     if (contexte.tri !== "enregistrement") recherche.set("tri", contexte.tri);
