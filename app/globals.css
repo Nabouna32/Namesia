@@ -1611,7 +1611,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   font-weight: 400;
   letter-spacing: -.045em;
 }
-.hero h1 { font-size: clamp(3rem, 7vw, 5.5rem); line-height: 1.04; }
+.hero h1 { font-size: clamp(2.75rem, 5vw, 4rem); line-height: 1.08; }
 h1 em, h2 em {
   background: none;
   color: var(--md-sys-color-primary);
@@ -1676,10 +1676,8 @@ h1 em, h2 em {
 .profile-hero {
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-sys-shape-corner-extra-large);
-  background:
-    radial-gradient(ellipse at 88% 12%, color-mix(in srgb, var(--md-sys-color-tertiary-container) 70%, transparent), transparent 42%),
-    linear-gradient(120deg, var(--md-sys-color-primary-container), var(--md-sys-color-surface-container-low) 62%);
-  box-shadow: var(--shadow-sm);
+  background: var(--md-sys-color-surface-container-low);
+  box-shadow: none;
 }
 .profile-hero h1 span {
   background: none;
@@ -1745,12 +1743,7 @@ h1 em, h2 em {
   .featured-card { min-height: 160px; }
   .page-main { padding-block: 32px 48px; }
   .catalogue h1, .not-found h1 { font-size: clamp(2.5rem, 11vw, 3.5rem); }
-  .profile-hero {
-  border: 1px solid var(--md-sys-color-outline-variant);
-  border-radius: var(--md-sys-shape-corner-extra-large);
-  background: var(--md-sys-color-surface-container-low);
-  box-shadow: none;
-}
+  .profile-hero { min-height: 0; padding: 24px; }
   .profile-hero h1 { font-size: clamp(2.75rem, 12vw, 4rem); }
   .profile-lead { font-size: 1.125rem; }
   .profile-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
