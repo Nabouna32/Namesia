@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 const bouton = await readFile(new URL("../components/ui/bouton.tsx", import.meta.url), "utf8");
+const lienBouton = await readFile(new URL("../components/ui/lien-bouton.tsx", import.meta.url), "utf8");
 const styles = await readFile(new URL("../components/ui/bouton.module.css", import.meta.url), "utf8");
 const favoris = await readFile(new URL("../components/bouton-favori.tsx", import.meta.url), "utf8");
 const decouverte = await readFile(new URL("../components/decouverte-aleatoire.tsx", import.meta.url), "utf8");
@@ -11,9 +12,9 @@ const notFound = await readFile(new URL("../app/not-found.tsx", import.meta.url)
 
 test("les primitives partagées exposent des variantes sémantiques et préservent les éléments natifs", () => {
   assert.match(bouton, /export function Bouton\(/);
-  assert.match(bouton, /export function LienBouton\(/);
   assert.match(bouton, /<button/);
-  assert.match(bouton, /<Link/);
+  assert.match(lienBouton, /export function LienBouton\(/);
+  assert.match(lienBouton, /<Link/);
   for (const variante of ["filled", "tonal", "outlined", "text"]) {
     assert.match(styles, new RegExp(`\\.${variante} \\{`));
   }
