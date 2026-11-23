@@ -161,6 +161,10 @@ test("un lien depuis le comparateur conserve les deux ou trois prénoms sélecti
     creerUrlFicheDepuisComparateur("alice", ["alice", "bob"]),
     "/prenoms/alice?retour_vue=comparateur&retour_prenoms=alice%2Cbob"
   );
+  assert.equal(
+    creerUrlFicheDepuisComparateur("claire", ["alice", "bob"]),
+    "/prenoms/claire?retour_vue=comparateur&retour_prenoms=alice%2Cbob"
+  );
 });
 
 test("le retour depuis une fiche restaure le comparateur et sa sélection partageable", () => {
