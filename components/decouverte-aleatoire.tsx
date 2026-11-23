@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { PrenomIndex } from "@/lib/prenoms";
+import { BoutonFavori } from "@/components/bouton-favori";
 import styles from "./decouverte-aleatoire.module.css";
 
 type Props = { prenoms: PrenomIndex[] };
@@ -25,13 +26,16 @@ export function DecouverteAleatoire({ prenoms }: Props) {
       <button className={styles.button} type="button" onClick={decouvrir}>
         Surprenez-moi <span aria-hidden="true">↗</span>
       </button>
-      <p className={styles.copy} aria-live="polite" aria-atomic="true">
+      <div className={styles.copy} aria-live="polite" aria-atomic="true">
         {selection ? (
-          <>Votre prochaine découverte : <Link className={styles.result} href={`/prenoms/${selection.slug}`}>{selection.nom}</Link></>
+          <span className={styles.resultLine}>
+            <span>Votre prochaine découverte : <Link className={styles.result} href={`/prenoms/${selection.slug}`}>{selection.nom}</Link></span>
+            <BoutonFavori slug={selection.slug} nom={selection.nom} compact afficherErreur={false} />
+          </span>
         ) : (
           "Pas d’idée précise ? Laissez-vous guider par le hasard."
         )}
-      </p>
+      </div>
     </div>
   );
 }
