@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.15
+- **Version :** 4.16
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -51,6 +51,10 @@ Le dégradé de marque `--md-sys-color-brand-gradient` reste réservé au monogr
 - Formes : extra-small 4 px, small 8 px, medium 12 px, large 16 px, extra-large 28 px et full/pill.
 - Élévation : surfaces tonales en premier ; ombres discrètes uniquement pour les éléments flottants et les plans qui doivent se détacher.
 - Densité : cibles tactiles d'au moins 48 × 48 px lorsque l'espace le permet ; les éléments visuels peuvent être plus petits à l'intérieur de leur cible.
+
+### Accueil
+
+Le hero sépare le message éditorial et les outils de découverte : introduction à gauche et panneau de recherche à droite à partir de 900 px, puis empilement naturel sur les fenêtres plus étroites. Le panneau utilise une surface Fidelity distincte, un contour discret et un titre explicite ; la recherche et la découverte aléatoire y forment un seul point de départ. Le texte descriptif utilise `on-surface-variant`, jamais la couleur primaire comme simple décoration. La mention de génération par IA reste visible dans le panneau, au même endroit que les outils auxquels elle se rapporte.
 
 ### Fiche de prénom
 

@@ -8,6 +8,7 @@ const root = fileURLToPath(new URL("../", import.meta.url));
 const globalCss = await readFile(join(root, "app/globals.css"), "utf8");
 const provider = await readFile(join(root, "components/material-theme-provider.tsx"), "utf8");
 const layout = await readFile(join(root, "app/layout.tsx"), "utf8");
+const home = await readFile(join(root, "app/page.tsx"), "utf8");
 const prenoms = await readFile(join(root, "lib/prenoms.ts"), "utf8");
 const fiche = await readFile(join(root, "lib/fiche-prenom.ts"), "utf8");
 const schema = await readFile(join(root, "schemas/fiche-prenom.schema.json"), "utf8");
@@ -158,4 +159,15 @@ test("les catégories Rainbow utilisent des rôles explicites sans couleur de re
   assert.match(provider, /--md-sys-color-\$\{role\}/);
   assert.match(allCss, /var\(--md-sys-color-category-container\)/);
   assert.doesNotMatch(allCss, /var\(--md-sys-color-category[^)]*,/);
+});
+
+test("le hero d'accueil sépare le récit et les outils dans une composition Fidelity responsive", () => {
+  assert.match(home, /className="hero-intro"/);
+  assert.match(home, /className="hero-tools"/);
+  assert.match(home, /<h2>Un prénom en tête\?<\/h2>/);
+  assert.match(home, /<RecherchePrenoms prenoms=\{prenoms\} compact \/>/);
+  assert.match(globalCss, /\.hero-content\s*\{[^}]*display:\s*grid/s);
+  assert.match(globalCss, /\.hero-tools\s*\{[^}]*background:\s*var\(--md-sys-color-surface-container-lowest\)/s);
+  assert.match(globalCss, /\.hero-copy\s*\{[^}]*color:\s*var\(--md-sys-color-on-surface-variant\)/s);
+  assert.match(globalCss, /@media \(min-width:\s*900px\)[\s\S]*?\.hero-content\s*\{[^}]*grid-template-columns:/);
 });

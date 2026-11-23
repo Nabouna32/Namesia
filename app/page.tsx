@@ -28,12 +28,17 @@ export default async function Accueil() {
     <main id="contenu" tabIndex={-1}>
       <section className="hero">
         <div className="container hero-content">
-          <span className="eyebrow"><span className="eyebrow-dot" /> L'univers des prénoms, autrement</span>
-          <h1>Chaque prénom<br />a <em>son histoire.</em></h1>
-          <p className="hero-copy">Une origine, des sonorités, des cultures et des traditions. Explorez les histoires qui se cachent derrière les prénoms.</p>
-          <RecherchePrenoms prenoms={prenoms} compact />
-          {prenoms.length > 0 && <DecouverteAleatoire prenoms={prenoms} />}
-          <p className="ai-disclaimer">Les contenus sont générés par IA et peuvent comporter des erreurs.</p>
+          <div className="hero-intro">
+            <span className="eyebrow"><span className="eyebrow-dot" /> L'univers des prénoms, autrement</span>
+            <h1>Chaque prénom<br />a <em>son histoire.</em></h1>
+            <p className="hero-copy">Une origine, des sonorités, des cultures et des traditions. Explorez les histoires qui se cachent derrière les prénoms.</p>
+          </div>
+          <div className="hero-tools">
+            <h2>Un prénom en tête ?</h2>
+            <RecherchePrenoms prenoms={prenoms} compact />
+            {prenoms.length > 0 && <DecouverteAleatoire prenoms={prenoms} />}
+            <p className="ai-disclaimer">Les contenus sont générés par IA et peuvent comporter des erreurs.</p>
+          </div>
         </div>
       </section>
       <HistoriquePrenoms prenoms={prenoms} />
