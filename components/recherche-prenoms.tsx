@@ -8,7 +8,7 @@ import { useFavoris } from "@/components/favoris-provider";
 import styles from "./recherche-prenoms.module.css";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { comparerPertinence, distanceEditionBornee, normaliserRecherche } from "@/lib/recherche-prenoms";
-import { creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
+import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
 import { IconeMaterial } from "./icone-material";
 import { ChampRecherche } from "@/components/ui/champ-recherche";
 import { BoutonComparaison } from "@/components/ui/bouton-comparaison";
@@ -258,6 +258,11 @@ export function RecherchePrenoms({
                   </article>
                 ))}
               </div>
+            {compact && resultats.length > nombreVisible && (
+              <Link className="text-link" href={creerUrlCatalogueDepuisRecherche(recherche)}>
+                Voir tous les résultats dans le catalogue <IconeMaterial name="arrow-up-right" size={18} />
+              </Link>
+            )}
             {resultats.length > nombreVisible && (
               <Bouton variante="text"
                 className="filter-action"
