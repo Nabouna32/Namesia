@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.31
+- **Version :** 3.32
 - **Mis à jour :** 2026-11-23
 
 ## 1. Positionnement
@@ -87,7 +87,7 @@ Les pages de filtres, recherches internes et combinaisons sans contenu éditoria
 
 ## 7. Direction visuelle
 
-La direction visuelle et ses règles détaillées sont définies dans [docs/design.md](design.md). Namesia adopte une identité éditoriale chaleureuse, expressive et colorée, avec son dégradé rainbow et une palette d'accents complémentaires. Les couleurs sémantiques restent réservées aux états fonctionnels. Les principes éprouvés de lisibilité, hiérarchie, contraste, responsive et accessibilité encadrent cette personnalité sans la neutraliser. Les animations discrètes sont bienvenues lorsqu'elles améliorent le retour d'interaction ou donnent de la vie à la composition ; elles respectent toujours `prefers-reduced-motion`.
+La direction visuelle canonique est **Material 3 Expressive**, avec une fidélité prioritaire aux conventions d'une application Android Pixel : navigation adaptative, composants, formes, rôles de couleurs, typographie et mouvements. Le thème est calculé par Material Color Utilities à partir d'une couleur source maîtrisée par Namesia. Le rainbow demeure une signature de marque, sans déroger aux rôles Material ni aux états sémantiques. Les règles détaillées et les limites Web sont définies dans [docs/design.md](design.md).
 
 
 ## 8. Indicateurs
