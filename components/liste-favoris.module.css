@@ -13,7 +13,7 @@
 .importButton {
   position: relative;
   display: inline-flex;
-  min-height: 44px;
+  min-height: 48px;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--color-border);
@@ -165,7 +165,7 @@
 
 .compareToggle {
   display: inline-flex;
-  min-height: 44px;
+  min-height: 48px;
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
@@ -198,8 +198,8 @@
 
 @media (max-width: 420px) {
   .compareToggle {
-    width: 44px;
-    min-width: 44px;
+    width: 48px;
+    min-width: 48px;
     padding: 0;
     border-radius: 50%;
   }
@@ -217,7 +217,7 @@
 
 .copyButton {
   display: inline-flex;
-  min-height: 44px;
+  min-height: 48px;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--color-border);
