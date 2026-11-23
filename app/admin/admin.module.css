@@ -32,8 +32,7 @@ margin-top: 24px;
   font-weight: 500;
 }
 
-.form input[type="email"],
-.form textarea {
+.form :is(input[type="email"], textarea) {
   width: 100%;
   min-width: 0;
   min-height: 56px;
