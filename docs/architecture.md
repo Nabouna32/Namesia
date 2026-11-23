@@ -54,7 +54,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 
 ### Site public
 - Rendu serveur Next.js, dynamique pour ne pas dépendre de la disponibilité ou du schéma Supabase pendant le build.
-- Shell applicatif Material 3 Expressive : barre supérieure commune, navigation basse sur fenêtres compactes et rail latéral sur fenêtres medium/expanded. Les quatre destinations publiques sont partagées entre les deux modes ; les couleurs du schéma sont calculées par Material Color Utilities et synchronisées avec le thème système.
+- Shell applicatif Material 3 Expressive : barre supérieure commune, navigation basse sur fenêtres compactes (largeur ou hauteur) et rail latéral sur fenêtres medium/expanded. Les quatre destinations publiques sont partagées entre les deux modes ; les couleurs du schéma sont calculées par Material Color Utilities et synchronisées avec le thème système.
 - Frontière d’erreur globale `app/error.tsx` pour les erreurs de rendu des pages : message compréhensible, référence technique éventuelle, tentative de rechargement du segment et retour à l’accueil ; l’erreur est journalisée côté navigateur sans exposer sa trace à l’utilisateur.
 - Lecture des fiches publiées uniquement.
 - Recherche du catalogue synchronisée avec les paramètres q, genre et lettre de l'URL ; ces valeurs sont validées contre les filtres disponibles, restaurées à l'ouverture du lien et mises à jour sans créer d'entrée d'historique à chaque frappe. Le paramètre limite conserve aussi le nombre de résultats déjà révélés par lots de 24, à l'ouverture d'un lien et au retour d'une fiche ; toute modification de recherche ou de filtre revient à 24 et retire ce paramètre. L'URL canonique reste /prenoms pour éviter l'indexation de combinaisons de filtres.
