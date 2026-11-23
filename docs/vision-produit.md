@@ -87,7 +87,7 @@ Les pages de filtres, recherches internes et combinaisons sans contenu éditoria
 
 ## 7. Direction visuelle
 
-La direction visuelle canonique est **Material 3 Expressive**, avec une fidélité prioritaire aux conventions d'une application Android Pixel : navigation adaptative, composants, formes, rôles de couleurs, typographie et mouvements. Le thème est calculé par Material Color Utilities à partir d'une couleur source maîtrisée par Namesia. Le rainbow demeure une signature de marque, sans déroger aux rôles Material ni aux états sémantiques. Les règles détaillées et les limites Web sont définies dans [docs/design.md](design.md).
+La direction visuelle canonique est **Material 3 Fidelity** pour l'interface générale, avec **Material 3 Rainbow** comme palette complémentaire pour les catégories éditoriales et les repères qui bénéficient d'une variation de couleur. Les deux schémas sont calculés par Material Color Utilities à partir d'une couleur source maîtrisée par Namesia. La navigation, les actions et les états fonctionnels restent pilotés par Fidelity et les rôles sémantiques. Le dégradé de marque reste décoratif. Les règles détaillées et les limites Web sont définies dans [docs/design.md](design.md). Les règles détaillées et les limites Web sont définies dans [docs/design.md](design.md).
 
 
 ## 8. Indicateurs
