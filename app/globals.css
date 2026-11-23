@@ -1018,7 +1018,7 @@ h2 em {
   width: 18px;
   height: 18px;
   flex: 0 0 auto;
-  accent-color: var(--color-accent);
+  accent-color: var(--md-sys-color-primary);
 }
 
 .compare-option-initial {
@@ -1633,57 +1633,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 .material-icon { display: block; flex: 0 0 auto; }
 
-.catalogue-filters, .compare-selector {
-  border: 1px solid var(--md-sys-color-outline-variant);
-  border-radius: var(--md-sys-shape-corner-extra-large);
-  background: var(--md-sys-color-surface-container-low);
-}
-.filter-group legend, .compare-options legend { color: var(--md-sys-color-on-surface-variant); }
-.filter-reset { color: var(--md-sys-color-primary); }
-.empty-results, .empty-state {
-  border-color: var(--md-sys-color-outline-variant);
-  border-radius: var(--md-sys-shape-corner-large);
-  background: var(--md-sys-color-surface-container-low);
-}
-
-.name-card, .compare-option, .compare-card, .profile-note {
-  border-color: var(--md-sys-color-outline-variant);
-  border-radius: var(--md-sys-shape-corner-large);
-  background: var(--md-sys-color-surface-container-low);
-  color: var(--md-sys-color-on-surface);
-}
-.name-card {
-  min-height: 76px;
-  box-shadow: none;
-  transition: background-color var(--motion-duration-short) var(--motion-standard), border-color var(--motion-duration-short) var(--motion-standard);
-}
-.name-card:hover {
-  border-color: var(--md-sys-color-outline);
-  background: var(--md-sys-color-surface-container-high);
-  box-shadow: none;
-  transform: none;
-}
-.name-card:active {
-  background: color-mix(in srgb, var(--md-sys-color-primary) 12%, var(--md-sys-color-surface-container-low));
-}
-.name-initial, .compare-option-initial {
-  background: var(--md-sys-color-primary-container);
-  color: var(--md-sys-color-on-primary-container);
-}
-.name-card small { color: var(--md-sys-color-on-surface-variant); }
-.card-arrow, .text-link, .profile-toc a, .profile-footer a { color: var(--md-sys-color-primary); }
-.card-arrow { display: grid; width: 40px; height: 40px; flex: 0 0 auto; place-items: center; border-radius: var(--md-sys-shape-corner-full); background: var(--md-sys-color-surface-container); }
-.card-arrow .material-icon { width: 20px; height: 20px; }
-
-.profile-lead, .profile-copy, .profile-note p, .compare-field p, .compare-association p { color: var(--md-sys-color-on-surface-variant); }
+.profile-lead, .profile-copy, .compare-field p, .compare-association p { color: var(--md-sys-color-on-surface-variant); }
 .profile-monogram { color: color-mix(in srgb, var(--md-sys-color-primary) 14%, transparent); }
 .profile-tag { border-color: var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-full); background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
-.profile-note { background: var(--md-sys-color-surface-container); }
 .profile-discovery { border-color: var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-extra-large); background: var(--md-sys-color-surface-container-low); }
 .profile-toc, .profile-section + .profile-section, .compare-field, .compare-card header { border-color: var(--md-sys-color-outline-variant); }
-.compare-card h2, .compare-field h3, .compare-association strong { color: var(--md-sys-color-on-surface); }
-.compare-option:has(input:checked) { border-color: var(--md-sys-color-primary); background: var(--md-sys-color-primary-container); }
-.compare-option input { accent-color: var(--md-sys-color-primary); }
+.compare-card h2, .compare-association strong { color: var(--md-sys-color-on-surface); }
 .compare-share { border-color: var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-large); background: var(--md-sys-color-secondary-container); }
 .compare-share > p { color: var(--md-sys-color-on-secondary-container); }
 
