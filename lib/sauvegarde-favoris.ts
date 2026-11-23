@@ -4,7 +4,7 @@ const FORMAT_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 export function normaliserSlugsFavoris(value: unknown): string[] | null {
   if (!Array.isArray(value) || value.length > LIMITE_FAVORIS) return null;
-  if (!value.every((slug): slug is string =>
+  if (!value.every((slug: unknown): slug is string =>
     typeof slug === "string" && FORMAT_SLUG.test(slug)
   )) return null;
   return [...new Set(value)];
