@@ -454,6 +454,7 @@ padding: 4px 0;
 
 .hero-tools {
   min-width: 0;
+  max-width: 760px;
   padding: clamp(24px, 3vw, 32px);
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-sys-shape-corner-extra-large);
@@ -464,7 +465,7 @@ padding: 4px 0;
   margin: 0 0 20px;
   color: var(--md-sys-color-on-surface);
   font-size: var(--md-sys-typescale-title-large-size);
-  font-weight: var(--md-sys-typescale-title-medium-weight);
+  font-weight: 500;
   line-height: var(--md-sys-typescale-title-large-line-height);
 }
 
