@@ -16,6 +16,7 @@ type Props = {
   initialRecherche?: string;
   initialGenre?: string;
   initialTri?: TriFavoris;
+  initialNombreVisible?: number;
 };
 
 const TAILLE_MAX_SAUVEGARDE = 1_000_000;
@@ -24,7 +25,8 @@ export function ListeFavoris({
   prenoms,
   initialRecherche = "",
   initialGenre = "",
-  initialTri = "enregistrement"
+  initialTri = "enregistrement",
+  initialNombreVisible = 24
 }: Props) {
   const { slugs, pret, erreur, retirerPlusieurs, ajouterPlusieurs } = useFavoris();
   const [messageImport, setMessageImport] = useState("");
@@ -34,7 +36,7 @@ export function ListeFavoris({
   const [recherche, setRecherche] = useState(initialRecherche);
   const [genreActif, setGenreActif] = useState(initialGenre);
   const [triActif, setTriActif] = useState<TriFavoris>(initialTri);
-  const [nombreVisible, setNombreVisible] = useState(24);
+  const [nombreVisible, setNombreVisible] = useState(initialNombreVisible);
   const [selectionComparaison, setSelectionComparaison] = useState<string[]>([]);
 
   const parSlug = new Map(prenoms.map((prenom) => [prenom.slug, prenom]));
@@ -71,12 +73,18 @@ export function ListeFavoris({
     .sort((a, b) => a.localeCompare(b, "fr"));
   const genreActifValide = genres.includes(genreActif) ? genreActif : "";
 
-  function mettreAJourUrl(rechercheSuivante: string, genreSuivant: string, triSuivant: TriFavoris) {
+  function mettreAJourUrl(
+    rechercheSuivante: string,
+    genreSuivant: string,
+    triSuivant: TriFavoris,
+    nombreVisibleSuivant = 24
+  ) {
     const url = new URL(window.location.href);
     const parametres: [string, string][] = [
       ["q", rechercheSuivante.trim()],
       ["genre", genreSuivant],
-      ["tri", triSuivant === "enregistrement" ? "" : triSuivant]
+      ["tri", triSuivant === "enregistrement" ? "" : triSuivant],
+      ["limite", nombreVisibleSuivant > 24 ? String(nombreVisibleSuivant) : ""]
     ];
 
     for (const [cle, valeur] of parametres) {
@@ -107,6 +115,12 @@ export function ListeFavoris({
   }
   const filtresActifs = Boolean(termeNormalise || genreActifValide);
   const nombreAffiche = Math.min(favorisFiltres.length, nombreVisible);
+
+  function chargerPlus() {
+    const suivant = nombreVisible + 24;
+    setNombreVisible(suivant);
+    mettreAJourUrl(recherche, genreActifValide, triActif, suivant);
+  }
 
   async function copierFavorisFiltres() {
     setMessageCopie("");
@@ -289,7 +303,8 @@ export function ListeFavoris({
                     href={creerUrlFicheDepuisFavoris(prenom.slug, {
                       q: recherche,
                       genre: genreActifValide || null,
-                      tri: triActif
+                      tri: triActif,
+                      limite: nombreVisible
                     })}
                   >
                     <span className="name-initial">{prenom.lettre}</span>
@@ -319,7 +334,7 @@ export function ListeFavoris({
             <button
               className="filter-reset"
               type="button"
-              onClick={() => setNombreVisible((visible) => visible + 24)}
+              onClick={chargerPlus}
             >
               Afficher les {Math.min(24, favorisFiltres.length - nombreVisible)} favoris suivants
             </button>
