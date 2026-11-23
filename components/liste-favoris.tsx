@@ -4,7 +4,7 @@ import { useEffect, useState, type ChangeEvent } from "react";
 import Link from "next/link";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
-import { normaliserRecherche } from "@/lib/recherche-prenoms";
+import { normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
 import { BarreComparaison } from "./barre-comparaison";
 import { BoutonFavori } from "./bouton-favori";
@@ -119,6 +119,13 @@ export function ListeFavoris({
       return triActif === "nom-asc" ? ordre : -ordre;
     });
   }
+  const favorisProches = favorisFiltres.length === 0 && termeNormalise
+    ? suggererPrenomsProches(
+      favoris.filter((prenom) => !genreActifValide || prenom.genre === genreActifValide),
+      recherche
+    )
+    : [];
+  const favorisAffiches = favorisFiltres.length > 0 ? favorisFiltres : favorisProches;
   const filtresActifs = Boolean(termeNormalise || genreActifValide);
   const nombreAffiche = Math.min(favorisFiltres.length, nombreVisible);
 
@@ -279,11 +286,13 @@ export function ListeFavoris({
             onEffacer={() => setSelectionComparaison([])}
           />
           <p className={styles.count} role="status" aria-live="polite">
-            {filtresActifs
-              ? nombreAffiche + " " + (nombreAffiche === 1 ? "favori affiché" : "favoris affichés") + " sur " + favorisFiltres.length + (favorisFiltres.length === 1 ? " résultat" : " résultats")
-              : nombreAffiche + " " + (nombreAffiche === 1 ? "favori affiché" : "favoris affichés") + " sur " + favoris.length + (favoris.length === 1 ? " favori enregistré" : " favoris enregistrés")}
+            {favorisFiltres.length === 0 && favorisProches.length > 0
+              ? `Aucun résultat exact · ${favorisProches.length} ${favorisProches.length > 1 ? "suggestions proches" : "suggestion proche"} parmi vos favoris`
+              : filtresActifs
+                ? nombreAffiche + " " + (nombreAffiche === 1 ? "favori affiché" : "favoris affichés") + " sur " + favorisFiltres.length + (favorisFiltres.length === 1 ? " résultat" : " résultats")
+                : nombreAffiche + " " + (nombreAffiche === 1 ? "favori affiché" : "favoris affichés") + " sur " + favoris.length + (favoris.length === 1 ? " favori enregistré" : " favoris enregistrés")}
           </p>
-          {favorisFiltres.length === 0 ? (
+          {favorisFiltres.length === 0 && favorisProches.length === 0 ? (
             <div className={styles.empty}>
               <p>Aucun favori ne correspond à ces critères.</p>
               <Bouton variante="text"
@@ -300,8 +309,12 @@ export function ListeFavoris({
               </Bouton>
             </div>
           ) : (
-            <div className="name-grid">
-              {favorisFiltres.slice(0, nombreVisible).map((prenom) => (
+            <>
+              {favorisProches.length > 0 && (
+                <p className={styles.note}>Aucun résultat exact. Voici les prénoms les plus proches dans votre sélection.</p>
+              )}
+              <div className="name-grid">
+              {favorisAffiches.slice(0, nombreVisible).map((prenom) => (
                 <article className={styles.row} key={prenom.slug}>
                   <Link
                     className="name-card"
@@ -328,7 +341,8 @@ export function ListeFavoris({
                   <BoutonFavori slug={prenom.slug} afficherErreur={false} />
                 </article>
               ))}
-            </div>
+              </div>
+            </>
           )}
           {favorisFiltres.length > nombreVisible && (
             <Bouton variante="text"
