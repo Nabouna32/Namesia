@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import Link from "next/link";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
 import { normaliserRecherche } from "@/lib/recherche-prenoms";
+import { BarreComparaison } from "./barre-comparaison";
 import { BoutonFavori } from "./bouton-favori";
 import { useFavoris } from "./favoris-provider";
 import styles from "./liste-favoris.module.css";
@@ -20,8 +21,7 @@ export function ListeFavoris({ prenoms }: Props) {
   const [recherche, setRecherche] = useState("");
   const [genreActif, setGenreActif] = useState("");
   const [nombreVisible, setNombreVisible] = useState(24);
-
-  if (!pret) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
+  const [selectionComparaison, setSelectionComparaison] = useState<string[]>([]);
 
   const parSlug = new Map(prenoms.map((prenom) => [prenom.slug, prenom]));
   const favoris = slugs.flatMap((slug) => {
@@ -29,6 +29,29 @@ export function ListeFavoris({ prenoms }: Props) {
     return prenom ? [prenom] : [];
   });
   const slugsIndisponibles = slugs.filter((slug) => !parSlug.has(slug));
+  const favorisDisponibles = new Set(favoris.map((prenom) => prenom.slug));
+  const favorisDisponiblesKey = favoris.map((prenom) => prenom.slug).join(",");
+  const selectionValide = selectionComparaison.filter((slug) => favorisDisponibles.has(slug));
+  const prenomsSelectionnes = selectionValide.flatMap((slug) => {
+    const prenom = parSlug.get(slug);
+    return prenom ? [prenom] : [];
+  });
+
+  useEffect(() => {
+    const disponibles = new Set(favorisDisponiblesKey ? favorisDisponiblesKey.split(",") : []);
+    setSelectionComparaison((selection) => selection.filter((slug) => disponibles.has(slug)));
+  }, [favorisDisponiblesKey]);
+
+  if (!pret) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
+
+  function basculerComparaison(slug: string) {
+    setSelectionComparaison((selection) => {
+      const selectionCourante = selection.filter((element) => favorisDisponibles.has(element));
+      return selectionCourante.includes(slug)
+        ? selectionCourante.filter((element) => element !== slug)
+        : selectionCourante.length < 3 ? [...selectionCourante, slug] : selectionCourante;
+    });
+  }
   const termeNormalise = normaliserRecherche(recherche);
   const genres = [...new Set(favoris.map((prenom) => prenom.genre))]
     .sort((a, b) => a.localeCompare(b, "fr"));
@@ -144,6 +167,11 @@ export function ListeFavoris({ prenoms }: Props) {
               </div>
             )}
           </div>
+          <BarreComparaison
+            prenoms={prenomsSelectionnes}
+            onRetirer={basculerComparaison}
+            onEffacer={() => setSelectionComparaison([])}
+          />
           <p className={styles.count} role="status" aria-live="polite">
             {filtresActifs
               ? nombreAffiche + " " + (nombreAffiche === 1 ? "favori affiché" : "favoris affichés") + " sur " + favorisFiltres.length + (favorisFiltres.length === 1 ? " résultat" : " résultats")
@@ -176,6 +204,16 @@ export function ListeFavoris({ prenoms }: Props) {
                     </span>
                     <span className="card-arrow" aria-hidden="true">↗</span>
                   </Link>
+                  <button
+                    className={styles.compareToggle}
+                    type="button"
+                    aria-pressed={selectionValide.includes(prenom.slug)}
+                    aria-label={`${selectionValide.includes(prenom.slug) ? "Retirer" : "Ajouter"} ${prenom.nom} ${selectionValide.includes(prenom.slug) ? "de" : "à"} la comparaison`}
+                    disabled={!selectionValide.includes(prenom.slug) && selectionValide.length >= 3}
+                    onClick={() => basculerComparaison(prenom.slug)}
+                  >
+                    {selectionValide.includes(prenom.slug) ? "Ajouté" : "Comparer"}
+                  </button>
                   <BoutonFavori slug={prenom.slug} afficherErreur={false} />
                 </article>
               ))}

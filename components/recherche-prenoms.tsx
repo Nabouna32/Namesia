@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { BarreComparaison } from "@/components/barre-comparaison";
 import { BoutonFavori } from "@/components/bouton-favori";
 import { useFavoris } from "@/components/favoris-provider";
 import styles from "./recherche-prenoms.module.css";
@@ -243,37 +244,12 @@ export function RecherchePrenoms({
         </div>
       )}
 
-      {!compact && selectionComparaison.length > 0 && (
-        <div className={styles.compareBar}>
-          <ul className="compare-selected-list" aria-label="Prénoms sélectionnés pour la comparaison">
-            {prenomsSelectionnes.map((prenom) => (
-              <li key={prenom.slug}>
-                <button
-                  className="compare-selected-item"
-                  type="button"
-                  aria-label={`Retirer ${prenom.nom} de la comparaison`}
-                  onClick={() => basculerComparaison(prenom.slug)}
-                >
-                  {prenom.nom}<span aria-hidden="true">×</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-          <span role="status" aria-live="polite">{selectionComparaison.length} / 3 prénoms pour la comparaison</span>
-          <div className={styles.compareActions}>
-            <button type="button" onClick={() => setSelectionComparaison([])}>
-              Effacer
-            </button>
-            {selectionComparaison.length >= 2 && (
-              <Link
-                className={styles.compareLink}
-                href={`/comparer?prenoms=${selectionComparaison.map(encodeURIComponent).join(",")}`}
-              >
-                Comparer les {selectionComparaison.length} prénoms
-              </Link>
-            )}
-          </div>
-        </div>
+      {!compact && (
+        <BarreComparaison
+          prenoms={prenomsSelectionnes}
+          onRetirer={basculerComparaison}
+          onEffacer={() => setSelectionComparaison([])}
+        />
       )}
 
       {(!compact || recherche.trim()) && (
