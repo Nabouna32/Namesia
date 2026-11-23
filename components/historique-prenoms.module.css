@@ -38,13 +38,6 @@
   font-size: 14px;
 }
 
-.error {
-  margin: 0;
-  color: var(--color-error);
-  font-size: 14px;
-  line-height: 1.6;
-}
-
 @media (max-width: 520px) {
   .heading {
     align-items: flex-start;
