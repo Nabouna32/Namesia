@@ -198,7 +198,6 @@ test("les boutons et cartes utilisent les state layers Material plutôt que des 
 });
 
 
-const navigation = await readFile(new URL("../components/navigation-adaptative.tsx", import.meta.url), "utf8");
 const adminClient = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
 const adminFormStyles = await readFile(new URL("../app/admin/admin.module.css", import.meta.url), "utf8");
 const partage = await readFile(new URL("../components/partager-fiche.tsx", import.meta.url), "utf8");
