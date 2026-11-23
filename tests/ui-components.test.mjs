@@ -293,3 +293,46 @@ test("les surfaces principales Material sont définies à leur emplacement canon
   assert.doesNotMatch(globalStyles, /radial-gradient\(ellipse at 88% 15%/);
   assert.doesNotMatch(globalStyles, /linear-gradient\(118deg/);
 });
+
+
+const rechercheActions = await readFile(new URL("../components/recherche-prenoms.tsx", import.meta.url), "utf8");
+const favorisActions = await readFile(new URL("../components/liste-favoris.tsx", import.meta.url), "utf8");
+const comparateurActions = await readFile(new URL("../components/comparateur-prenoms.tsx", import.meta.url), "utf8");
+
+test("les actions de catalogue, favoris et comparaison utilisent le bouton commun", () => {
+  for (const source of [rechercheActions, favorisActions, comparateurActions]) {
+    assert.doesNotMatch(source, /<button\b/);
+    assert.match(source, /<Bouton\s+variante="text"/);
+    assert.match(source, /className="filter-action"/);
+  }
+  assert.match(favorisActions, /<Bouton\s+variante="tonal"/);
+  assert.doesNotMatch(globalStyles, /\.filter-reset|\.compare-selection-footer > button/);
+  assert.doesNotMatch(globalStyles, /\.copyButton\s*\{/);
+  assert.match(globalStyles, /\.filter-action\s*\{[^}]*width: max-content/s);
+});
+
+test("les options de comparaison ont des états tactiles Material sans survol collant", () => {
+  assert.match(globalStyles, /@media \(hover: hover\) and \(pointer: fine\) \{\s*\.compare-option:hover/);
+  assert.match(globalStyles, /@media \(hover: hover\) and \(pointer: fine\) \{\s*\.name-card:hover/);
+  assert.match(globalStyles, /@media \(hover: hover\) and \(pointer: fine\) \{\s*\.featured-card:hover/);
+  assert.match(globalStyles, /\.compare-option:active:not\(:has\(input:disabled\)\)/);
+  assert.match(globalStyles, /\.compare-option:has\(input:checked\):active/);
+  assert.match(globalStyles, /\.compare-option:has\(input:checked\)\s*\{[^}]*primary-container/s);
+  assert.match(globalStyles, /\.compare-option:has\(input:checked\) \.compare-option-initial\s*\{[^}]*on-primary/s);
+  assert.match(globalStyles, /\.compare-option input\s*\{[^}]*accent-color: var\(--md-sys-color-primary\)/s);
+});
+
+
+test("les surfaces du catalogue et du comparateur ne dépendent plus de la couche Fidelity finale", () => {
+  const fidelityLayer = globalStyles.slice(globalStyles.indexOf("/* Couche Material 3 Fidelity"));
+  const fidelityBase = fidelityLayer.slice(0, fidelityLayer.indexOf("@media (max-width: 599px)"));
+  assert.match(globalStyles, /\.catalogue-filters\s*\{[^}]*surface-container-low/s);
+  assert.match(globalStyles, /\.compare-selector\s*\{[^}]*surface-container-low/s);
+  assert.match(globalStyles, /\.empty-results\s*\{[^}]*outline-variant/s);
+  assert.match(globalStyles, /\.name-card\s*\{[^}]*surface-container-low/s);
+  assert.match(globalStyles, /\.compare-option\s*\{[^}]*surface-container-low/s);
+  assert.match(globalStyles, /\.compare-card\s*\{[^}]*surface-container-low/s);
+  assert.match(globalStyles, /\.profile-note\s*\{[^}]*surface-container/s);
+  assert.doesNotMatch(fidelityBase, /\.catalogue-filters|\.compare-selector|\.empty-results|\.name-card|\.compare-option|\.compare-card|\.profile-note/);
+  assert.doesNotMatch(globalStyles, /linear-gradient\(135deg, var\(--color-surface/);
+});

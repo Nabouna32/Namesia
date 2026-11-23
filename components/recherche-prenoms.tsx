@@ -12,6 +12,7 @@ import { creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
 import { IconeMaterial } from "./icone-material";
 import { ChampRecherche } from "@/components/ui/champ-recherche";
 import { BoutonComparaison } from "@/components/ui/bouton-comparaison";
+import { Bouton } from "@/components/ui/bouton";
 import { ChipFiltre } from "@/components/ui/chip-filtre";
 
 type Props = {
@@ -228,9 +229,9 @@ export function RecherchePrenoms({
           )}
 
           {filtresActifs && (
-            <button className="filter-reset" type="button" onClick={effacerFiltres}>
+            <Bouton variante="text" className="filter-action" type="button" onClick={effacerFiltres}>
               Réinitialiser les filtres
-            </button>
+            </Bouton>
           )}
         </div>
       )}
@@ -283,13 +284,13 @@ export function RecherchePrenoms({
                 ))}
               </div>
             {resultats.length > nombreVisible && (
-              <button
-                className="filter-reset"
+              <Bouton variante="text"
+                className="filter-action"
                 type="button"
                 onClick={chargerPlus}
               >
                 Afficher les {Math.min(24, resultats.length - nombreVisible)} prénoms suivants
-              </button>
+              </Bouton>
             )}
             </>
           ) : suggestions.length > 0 ? (
@@ -326,9 +327,9 @@ export function RecherchePrenoms({
                   : "Aucun prénom n’est encore publié."}
               </p>
               {filtresActifs && (
-                <button className="filter-reset" type="button" onClick={effacerFiltres}>
+                <Bouton variante="text" className="filter-action" type="button" onClick={effacerFiltres}>
                   Voir tous les prénoms
-                </button>
+                </Bouton>
               )}
             </div>
           )}
