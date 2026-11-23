@@ -25,6 +25,7 @@ type Props = {
     retour_lettre?: ParametreUrl;
     retour_tri?: ParametreUrl;
     retour_limite?: ParametreUrl;
+    retour_prenoms?: ParametreUrl;
   }>;
 };
 
@@ -63,10 +64,12 @@ export default async function FichePrenom({ params, searchParams }: Props) {
   ]);
   const contexteRetour = lireContexteRetourNavigation(parametresRetour);
   const urlRetour = creerUrlRetourNavigation(parametresRetour);
-  const libelleRetour = contexteRetour?.vue === "favoris" ? "Favoris" : "Prénoms";
+  const libelleRetour = contexteRetour?.vue === "favoris"
+    ? "Favoris"
+    : contexteRetour?.vue === "comparateur" ? "Comparateur" : "Prénoms";
   const texteRetour = contexteRetour?.vue === "favoris"
     ? "← Retour aux favoris"
-    : "← Retour au catalogue";
+    : contexteRetour?.vue === "comparateur" ? "← Retour au comparateur" : "← Retour au catalogue";
   const genreAuPluriel: Record<string, string> = {
     "Féminin": "féminins",
     "Masculin": "masculins",
