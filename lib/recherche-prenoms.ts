@@ -35,8 +35,8 @@ export function distanceEditionBornee(a: string, b: string, limite: number): num
   const longueurB = caracteresB.length;
 
   if (Math.abs(longueurA - longueurB) > limite) return limite + 1;
-  if (longueurA === 0) return longueurB;
-  if (longueurB === 0) return longueurA;
+  if (longueurA === 0) return Math.min(longueurB, limite + 1);
+  if (longueurB === 0) return Math.min(longueurA, limite + 1);
 
   let precedent = new Map<number, number>();
   for (let index = 0; index <= Math.min(longueurB, limite); index += 1) {
@@ -64,5 +64,5 @@ export function distanceEditionBornee(a: string, b: string, limite: number): num
     precedent = courant;
   }
 
-  return precedent.get(longueurB) ?? limite + 1;
+  return Math.min(precedent.get(longueurB) ?? limite + 1, limite + 1);
 }

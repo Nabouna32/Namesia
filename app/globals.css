@@ -63,7 +63,7 @@
   --md-sys-typescale-display-small-size: 36px;
   --md-sys-typescale-display-small-line-height: 44px;
   --md-sys-typescale-display-small-weight: 400;
-  --md-sys-typescale-display-small-tracking: -0.25px;
+  --md-sys-typescale-display-small-tracking: 0;
   --md-sys-typescale-headline-large-font: var(--font-roboto);
   --md-sys-typescale-headline-large-size: 32px;
   --md-sys-typescale-headline-large-line-height: 40px;

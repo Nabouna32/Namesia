@@ -94,8 +94,8 @@ test("aucun sélecteur n'est déclaré plusieurs fois dans un même contexte CSS
 
 test("Roboto est chargée une fois, auto-hébergée et sans police de substitution", () => {
   assert.match(layout, /import \{ Roboto \} from "next\/font\/google"/);
-  assert.match(layout, /weight: \[ "400", "500" \]/);
-  assert.match(layout, /subsets: \[ "latin", "latin-ext" \]/);
+  assert.match(layout, /weight:\s*\[\s*"400",\s*"500"\s*\]/);
+  assert.match(layout, /subsets:\s*\[\s*"latin",\s*"latin-ext"\s*\]/);
   assert.match(layout, /variable: "--font-roboto"/);
   assert.match(layout, /className=\{roboto\.variable\}/);
   assert.match(globalCss, /--md-sys-typescale-body-large-font: var\(--font-roboto\);/);
@@ -140,7 +140,7 @@ test("les rayons sont tokenisés et les espacements suivent la grille de 4 px", 
   const spacingPattern = /^\s*((?:margin|padding)(?:-(?:top|right|bottom|left|block|inline))?|gap|row-gap|column-gap)\s*:\s*([^;]+);/gm;
   for (const match of allCss.matchAll(spacingPattern)) {
     for (const pixel of match[2].matchAll(/(-?\d+(?:\.\d+)?)px/g)) {
-      assert.equal(Number(pixel[1]) % 4, 0, `Espacement hors grille : ${match[1]} = ${pixel[1]}px`);
+      assert.ok(Number(pixel[1]) === 0 || Number(pixel[1]) % 4 === 0, `Espacement hors grille : ${match[1]} = ${pixel[1]}px`);
     }
   }
 });
