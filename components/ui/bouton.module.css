@@ -22,7 +22,7 @@
 
 .button::after {
   position: absolute;
-  z-index: 0;
+  z-index: -1;
   inset: 0;
   border-radius: inherit;
   background: currentColor;
