@@ -292,7 +292,7 @@ export function AdminClient() {
   return <section className={styles.panel}>
     <div className={styles.heading}>
       <div><h2>Importer une fiche</h2><p>Connecté en tant que {session.user.email}</p></div>
-      <button className={styles.secondary} type="button" onClick={deconnecter}>Déconnexion</button>
+      <Bouton variante="outlined" type="button" onClick={deconnecter}>Déconnexion</Bouton>
     </div>
     <form className={styles.form} onSubmit={importer}>
       <label htmlFor="fiche-json">Fiche JSON (version {FICHE_SCHEMA_VERSION})</label>
@@ -310,7 +310,7 @@ export function AdminClient() {
         setImported(null);
       }} placeholder={'{"schema_version":"3.0.0","identity":{...},"content":{...}}'} />
       <div className={styles.actions}>
-        <button className={styles.secondary} type="button" disabled={busy || !json.trim()} onClick={previsualiser}>Prévisualiser</button>
+        <Bouton variante="outlined" type="button" disabled={busy || !json.trim()} onClick={previsualiser}>Prévisualiser</Bouton>
         <Bouton type="submit" disabled={busy || !preview}>{busy ? "Import…" : "Enregistrer en brouillon"}</Bouton>
       </div>
     </form>
@@ -343,10 +343,10 @@ export function AdminClient() {
         </div>
         {[...name.name_profiles].sort((a, b) => b.version - a.version).map((profile) => <div className={styles.versionRow} key={profile.id}>
           <span>Version {profile.version} · {statusLabels[profile.status]} · {new Date(profile.created_at).toLocaleDateString("fr-FR")}</span>
-          <button className={styles.secondary} type="button" disabled={busy} onClick={() => void previsualiserVersion(profile)}>Prévisualiser</button>
+          <Bouton variante="outlined" type="button" disabled={busy} onClick={() => void previsualiserVersion(profile)}>Prévisualiser</Bouton>
         </div>)}
       </article>)}
-      {catalogNextOffset !== null && <button className={styles.secondary} type="button" disabled={catalogLoading} onClick={() => setCatalogOffset(catalogNextOffset)}>Charger les fiches suivantes</button>}
+      {catalogNextOffset !== null && <Bouton variante="outlined" type="button" disabled={catalogLoading} onClick={() => setCatalogOffset(catalogNextOffset)}>Charger les fiches suivantes</Bouton>}
     </section>
     {message && <p className={styles.notice} role="status">{message}</p>}
   </section>;
