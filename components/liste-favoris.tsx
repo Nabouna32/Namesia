@@ -18,6 +18,8 @@ export function ListeFavoris({ prenoms }: Props) {
   const { slugs, pret, erreur, retirerPlusieurs, ajouterPlusieurs } = useFavoris();
   const [messageImport, setMessageImport] = useState("");
   const [erreurImport, setErreurImport] = useState("");
+  const [messageCopie, setMessageCopie] = useState("");
+  const [erreurCopie, setErreurCopie] = useState("");
   const [recherche, setRecherche] = useState("");
   const [genreActif, setGenreActif] = useState("");
   const [triActif, setTriActif] = useState<"enregistrement" | "nom-asc" | "nom-desc">("enregistrement");
@@ -76,6 +78,23 @@ export function ListeFavoris({ prenoms }: Props) {
   const filtresActifs = Boolean(termeNormalise || genreActif);
   const nombreAffiche = Math.min(favorisFiltres.length, nombreVisible);
 
+  async function copierFavorisFiltres() {
+    setMessageCopie("");
+    setErreurCopie("");
+
+    if (!navigator.clipboard?.writeText) {
+      setErreurCopie("La copie n’est pas disponible sur cet appareil ou a été refusée.");
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(favorisFiltres.map((prenom) => prenom.nom).join("\n"));
+      setMessageCopie(`${favorisFiltres.length} ${favorisFiltres.length > 1 ? "prénoms copiés" : "prénom copié"} dans le presse-papiers.`);
+    } catch {
+      setErreurCopie("La copie n’est pas disponible sur cet appareil ou a été refusée.");
+    }
+  }
+
   function exporterFavoris() {
     const fichier = new Blob([creerSauvegardeFavoris(slugs)], { type: "application/json;charset=utf-8" });
     const url = URL.createObjectURL(fichier);
@@ -124,12 +143,26 @@ export function ListeFavoris({ prenoms }: Props) {
         <button className="button button-dark" type="button" disabled={slugs.length === 0} onClick={exporterFavoris}>
           Exporter mes favoris
         </button>
+        <button
+          className={styles.copyButton}
+          type="button"
+          disabled={favorisFiltres.length === 0}
+          onClick={copierFavorisFiltres}
+        >
+          {favorisFiltres.length === 1
+            ? "Copier le prénom"
+            : favorisFiltres.length > 1
+              ? `Copier les ${favorisFiltres.length} prénoms`
+              : "Copier la liste filtrée"}
+        </button>
         <label className={styles.importButton}>
           Importer une sauvegarde
           <input type="file" accept=".json,application/json" onChange={importerFavoris} />
         </label>
       </div>
-      <p className={styles.help}>La sauvegarde contient uniquement les identifiants de vos favoris. L’import les ajoute à votre sélection actuelle, sans remplacer vos favoris existants.</p>
+      <p className={styles.help}>La sauvegarde contient uniquement les identifiants de vos favoris. L’import les ajoute à votre sélection actuelle, sans remplacer vos favoris existants. La copie reprend les noms de tous les résultats correspondant aux filtres, même au-delà des 24 premiers affichés.</p>
+      {messageCopie && <p className={styles.success} role="status">{messageCopie}</p>}
+      {erreurCopie && <p className={styles.error} role="alert">{erreurCopie}</p>}
 
       {messageImport && <p className={styles.success} role="status">{messageImport}</p>}
       {erreurImport && <p className={styles.error} role="alert">{erreurImport}</p>}
