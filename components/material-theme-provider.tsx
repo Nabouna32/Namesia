@@ -69,12 +69,19 @@ function applyMaterialTheme(isDark: boolean) {
       const value: unknown = Reflect.get(rainbowScheme, property);
       if (typeof value === "number") {
         document.documentElement.style.setProperty(
-          `--md-category-${token}${suffix}`,
+          `--md-sys-color-category-${token}${suffix}`,
           hexFromArgb(value)
         );
       }
     }
   });
+
+  const statusColors = isDark
+    ? { success: "#b5f397", warning: "#f1d28b", info: "#9ecaff" }
+    : { success: "#386a20", warning: "#795900", info: "#005b9a" };
+  for (const [role, value] of Object.entries(statusColors)) {
+    document.documentElement.style.setProperty(`--md-sys-color-${role}`, value);
+  }
 
   document.documentElement.dataset.theme = isDark ? "dark" : "light";
 }

@@ -1,14 +1,14 @@
 .resultsGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 9px;
+gap: 8px;
 }
 
 .resultCard {
   display: flex;
   min-width: 0;
   align-items: stretch;
-  gap: 8px;
+gap: 8px;
 }
 
 .resultLink {
@@ -17,9 +17,9 @@
 }
 
 .favoriteError {
-  margin: 0 0 14px;
-  color: var(--color-error);
-  font-size: 14px;
+margin: 0 0 16px;
+  color: var(--md-sys-color-error);
+  font-size: var(--md-sys-typescale-body-medium-size);
   line-height: 1.6;
 }
 
@@ -31,6 +31,6 @@
 
 @media (max-width: 420px) {
   .resultCard {
-    gap: 6px;
+gap: 8px;
   }
 }

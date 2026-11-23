@@ -3,9 +3,9 @@
   min-width: 0;
   flex: 1 0 100%;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
+gap: 8px;
+margin: 0;
+padding: 0;
   list-style: none;
 }
 
@@ -19,14 +19,14 @@
   min-width: 0;
   min-height: 48px;
   align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
+gap: 8px;
+padding: 8px 12px;
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-sys-shape-corner-full);
   background: var(--md-sys-color-secondary-container);
   color: var(--md-sys-color-on-secondary-container);
   font: inherit;
-  font-size: 14px;
+  font-size: var(--md-sys-typescale-body-medium-size);
   font-weight: 500;
   cursor: pointer;
 }

@@ -163,7 +163,7 @@ test("Fidelity et Rainbow sont calculés depuis la source Pixel documentée", ()
   assert.match(themeProvider, /variant: Variant\.FIDELITY/);
   assert.match(themeProvider, /variant: Variant\.RAINBOW/);
   assert.match(globalStyles, /--md-sys-color-primary: #005ac1/);
-  assert.match(globalStyles, /--motion-emphasized-decelerate/);
+  assert.match(globalStyles, /--md-sys-motion-emphasized-decelerate/);
   assert.match(globalStyles, /prefers-reduced-motion: reduce/);
 });
 
@@ -177,7 +177,7 @@ test("Rainbow ne colore plus les titres ou les surfaces générales", () => {
   assert.doesNotMatch(titre.slice(0, titre.indexOf("\n}")), /color-rainbow/);
   assert.doesNotMatch(profil.slice(0, profil.indexOf("\n}")), /color-rainbow/);
   assert.match(titre, /--md-sys-color-primary/);
-  assert.match(surfaceSymbolique, /var\(--category-container/);
+  assert.match(surfaceSymbolique, /var\(--md-sys-color-category-container/);
   assert.match(surfaceSymbolique, /surface-container-low/);
 });
 
@@ -264,8 +264,8 @@ test("la typographie suit une échelle Material 3 unique sans surcharges respons
   assert.equal((globalStyles.match(/\.profile-hero h1\s*\{/g) ?? []).length, 1);
   assert.equal((globalStyles.match(/\.section-heading h2\s*\{/g) ?? []).length, 1);
   assert.doesNotMatch(globalStyles, /--font-serif|var\(--serif\)/);
-  assert.match(globalStyles, /--font-sans: Roboto;/);
-  assert.match(globalStyles, /--font-display: Roboto;/);
+  assert.match(globalStyles, /--md-sys-typescale-body-large-font: Roboto;/);
+  assert.match(globalStyles, /--md-sys-typescale-headline-large-font: Roboto;/);
   assert.doesNotMatch(globalStyles, /Google Sans|--font-(?:sans|display):[^;]*(?:Arial|system-ui|sans-serif)/);
 });
 
@@ -277,22 +277,20 @@ test("les cartes Rainbow utilisent la couleur de premier plan de leur propre cat
     globalStyles.indexOf(".compare-association {")
   );
   assert.equal((globalStyles.match(/\.symbolic-card\s*\{/g) ?? []).length, 1);
-  assert.match(symbolicCard, /var\(--category, var\(--md-sys-color-outline\)\)/);
-  assert.match(symbolicCard, /var\(--category-container/);
-  assert.match(categoryBadge, /var\(--category-on-container/);
+  assert.match(symbolicCard, /var\(--md-sys-color-category\)/);
+  assert.match(symbolicCard, /var\(--md-sys-color-category-container/);
+  assert.match(categoryBadge, /var\(--md-sys-color-category-on-container/);
   assert.doesNotMatch(globalStyles, /\.symbolic-card > span \{[^}]*on-tertiary-container/);
   assert.doesNotMatch(symbolicCard, /linear-gradient/);
 });
 
 
 test("les surfaces principales Material sont définies à leur emplacement canonique", () => {
-  const fidelityLayer = globalStyles.slice(globalStyles.indexOf("/* Couche Material 3 Fidelity"));
-  const fidelityBase = fidelityLayer.slice(0, fidelityLayer.indexOf("@media (max-width: 599px)"));
   assert.match(globalStyles, /\.hero \{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.featured-card \{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.profile-hero \{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.site-footer \{[^}]*surface-container/s);
-  assert.doesNotMatch(fidelityBase, /\.hero \{|\.hero-content \{|\.eyebrow \{|\.eyebrow-dot \{|\.featured-card \{|\.featured-card:hover \{|\.profile-hero \{|\.profile-hero h1 span \{|\.site-footer \{/);
+  assert.doesNotMatch(globalStyles, /Couche Material 3 Fidelity/);
   assert.doesNotMatch(globalStyles, /radial-gradient\(ellipse at 88% 15%/);
   assert.doesNotMatch(globalStyles, /linear-gradient\(118deg/);
 });
@@ -327,8 +325,6 @@ test("les options de comparaison ont des états tactiles Material sans survol co
 
 
 test("les surfaces du catalogue et du comparateur ne dépendent plus de la couche Fidelity finale", () => {
-  const fidelityLayer = globalStyles.slice(globalStyles.indexOf("/* Couche Material 3 Fidelity"));
-  const fidelityBase = fidelityLayer.slice(0, fidelityLayer.indexOf("@media (max-width: 599px)"));
   assert.match(globalStyles, /\.catalogue-filters\s*\{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.compare-selector\s*\{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.empty-results\s*\{[^}]*outline-variant/s);
@@ -336,20 +332,18 @@ test("les surfaces du catalogue et du comparateur ne dépendent plus de la couch
   assert.match(globalStyles, /\.compare-option\s*\{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.compare-card\s*\{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.profile-note\s*\{[^}]*surface-container/s);
-  assert.doesNotMatch(fidelityBase, /\.catalogue-filters|\.compare-selector|\.empty-results|\.name-card|\.compare-option|\.compare-card|\.profile-note/);
+  assert.doesNotMatch(globalStyles, /Couche Material 3 Fidelity/);
   assert.doesNotMatch(globalStyles, /linear-gradient\(135deg, var\(--color-surface/);
 });
 
 test("la fiche prénom applique Material 3 dans ses règles canoniques", () => {
-  const fidelityLayer = globalStyles.slice(globalStyles.indexOf("/* Couche Material 3 Fidelity"));
-  const fidelityBase = fidelityLayer.slice(0, fidelityLayer.indexOf("@media (max-width: 599px)"));
   assert.match(globalStyles, /\.profile-toc a\s*\{[^}]*min-height: 48px/s);
   assert.match(globalStyles, /\.profile-toc a:focus-visible\s*\{[^}]*outline: 3px solid var\(--md-sys-color-primary\)/s);
   assert.match(globalStyles, /\.profile-section\s*\{[^}]*scroll-margin-top: 88px/s);
   assert.match(globalStyles, /\.profile-copy\s*\{[^}]*color: var\(--md-sys-color-on-surface\)/s);
   assert.match(globalStyles, /\.profile-section \+ \.profile-section\s*\{[^}]*outline-variant/s);
-  assert.doesNotMatch(fidelityBase, /\.profile-(?:lead|copy|tag|toc|discovery|monogram)|\.profile-section \+ \.profile-section/);
-  assert.doesNotMatch(globalStyles, /linear-gradient\(125deg, var\(--color-surface-muted/);
+  assert.doesNotMatch(globalStyles, /Couche Material 3 Fidelity/);
+  assert.doesNotMatch(globalStyles, /linear-gradient\(125deg, var\(--md-sys-color-surface-container/);
 });
 
 const historiqueActions = await readFile(new URL("../components/historique-prenoms.tsx", import.meta.url), "utf8");
