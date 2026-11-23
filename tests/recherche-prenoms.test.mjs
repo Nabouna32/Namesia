@@ -16,3 +16,9 @@ test("la recherche rapproche les séparateurs des prénoms composés", () => {
 test("un séparateur isolé ne devient pas une recherche vide", () => {
   assert.equal(normaliserRecherche("-"), "-");
 });
+
+test("la recherche développe les ligatures françaises et latines", () => {
+  assert.equal(normaliserRecherche("CŒLIA"), "coelia");
+  assert.equal(normaliserRecherche("ÆLIA"), "aelia");
+  assert.equal(normaliserRecherche("Cœur"), "coeur");
+});
