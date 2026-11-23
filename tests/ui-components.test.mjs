@@ -315,6 +315,6 @@ test("les options de comparaison ont des états tactiles Material sans survol co
   assert.match(globalStyles, /@media \(hover: hover\) and \(pointer: fine\) \{\s*\.compare-option:hover/);
   assert.match(globalStyles, /\.compare-option:active:not\(:has\(input:disabled\)\)/);
   assert.match(globalStyles, /\.compare-option:has\(input:checked\):active/);
-  assert.match(globalStyles, /\.compare-option:has\(input:checked\)\s*\{[^}]*primary-container/s);
+  assert.match(globalStyles, /\.compare-option:has\(input:checked\)\s*\{[^}]*primary-container/s);\n  assert.match(globalStyles, /\.compare-option:has\(input:checked\) \.compare-option-initial\s*\{[^}]*on-primary/s);
   assert.match(globalStyles, /\.compare-option input\s*\{[^}]*accent-color: var\(--md-sys-color-primary\)/s);
 });
