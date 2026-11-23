@@ -230,8 +230,7 @@ export function ListeFavoris({
       ) : (
         <>
           <div className={styles.filters}>
-            <div className={styles.search}>
-              <ChampRecherche
+            <ChampRecherche
                 id="recherche-favoris"
                 label="Rechercher dans mes favoris"
                 placeholder="Saisissez un prénom..."
@@ -242,7 +241,6 @@ export function ListeFavoris({
                   mettreAJourUrl(value, genreActifValide, triActif);
                 }}
               />
-            </div>
             {genres.length > 1 && (
               <div className={styles.genre}>
                 <label htmlFor="genre-favoris">Filtrer par genre</label>
