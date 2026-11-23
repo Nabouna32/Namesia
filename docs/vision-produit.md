@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.7
+- **Version :** 3.8
 - **Mis à jour :** 2026-11-23
 
 ## 1. Positionnement
@@ -42,7 +42,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 - Vitrine d'accueil de trois prénoms qui tourne quotidiennement dans le catalogue, sans modifier l'ordre alphabétique du catalogue ; chaque carte indique aussi le genre du prénom.
 - Découverte aléatoire d'un prénom publié depuis l'accueil, sans répétition immédiate tant qu'un autre choix est disponible.
 - Favoris locaux : enregistrer ou retirer un prénom depuis sa fiche ou directement depuis les résultats du catalogue et de la recherche, puis retrouver la sélection dans une liste dédiée, sans compte ni synchronisation entre appareils. Les actions compactes des résultats restent distinctes du lien vers la fiche. La liste utilise uniquement les informations d'index nécessaires à son affichage, pas les textes complets des fiches.
-- Accès direct au comparateur depuis une fiche, avec le prénom déjà sélectionné et la possibilité d'en ajouter jusqu'à deux autres.
+- Accès direct au comparateur depuis une fiche, avec le prénom déjà sélectionné et la possibilité d'en ajouter jusqu'à deux autres. Depuis les résultats et suggestions du catalogue, sélection de deux ou trois prénoms puis ouverture du comparateur avec cette sélection préremplie.
 - Fiches de découverte avec introduction, origine, histoire, usages, associations symboliques facultatives ; liens vers d'autres prénoms publiés de même genre et partage natif de la fiche.
 - Comparaison partageable de deux ou trois fiches sur leurs informations éditoriales publiées, via l'URL de la sélection. Le catalogue de choix ne charge que l'index léger ; les contenus complets sont demandés uniquement pour les fiches sélectionnées. Le sélecteur présente 24 prénoms au départ et permet d'en afficher 24 de plus à chaque étape ; la recherche revient au premier lot.
 - Aperçus de partage visuels avec une carte dédiée à chaque fiche.
