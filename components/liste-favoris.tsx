@@ -56,10 +56,7 @@ export function ListeFavoris({ prenoms }: Props) {
       const contenu: unknown = JSON.parse(await fichier.text());
       const slugsImportes = lireSauvegardeFavoris(contenu);
       const nombreAjoute = ajouterPlusieurs(slugsImportes);
-      if (nombreAjoute === null) {
-        setErreurImport("Le stockage du navigateur est indisponible. La sauvegarde n’a pas été importée.");
-        return;
-      }
+      if (nombreAjoute === null) return;
 
       setMessageImport(nombreAjoute === 0
         ? "Cette sauvegarde ne contient aucun nouveau favori."
