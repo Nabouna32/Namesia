@@ -90,3 +90,17 @@ test("les listes de prénoms sélectionnés partagent un seul composant accessib
   assert.doesNotMatch(globalStyles, /\.compare-selected-item\s*\{/);
   assert.doesNotMatch(globalStyles, /\.compare-selected-list\s*\{/);
 });
+
+const chipFiltre = await readFile(new URL("../components/ui/chip-filtre.tsx", import.meta.url), "utf8");
+const chipFiltreStyles = await readFile(new URL("../components/ui/chip-filtre.module.css", import.meta.url), "utf8");
+const rechercheFiltres = await readFile(new URL("../components/recherche-prenoms.tsx", import.meta.url), "utf8");
+
+test("les filtres de genre et d'initiale partagent des puces Fidelity", () => {
+  assert.match(chipFiltre, /export function ChipFiltre\(/);
+  assert.match(chipFiltre, /aria-pressed=\{selectionne\}/);
+  assert.match(chipFiltre, /selectionne && <IconeMaterial name="check"/);
+  assert.match(chipFiltreStyles, /secondary-container/);
+  assert.match(chipFiltreStyles, /:focus-visible/);
+  assert.match(rechercheFiltres, /<ChipFiltre/);
+  assert.doesNotMatch(globalStyles, /filter-chip|filter-letter|Expressive/);
+});
