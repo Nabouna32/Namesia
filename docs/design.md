@@ -35,8 +35,9 @@ Les tokens sont définis dans `app/globals.css`. Les CSS Modules consomment ces 
 | `--color-error` | `#b4234d` | `#ff9baa` | Erreurs et validation invalide |
 | `--color-info` | `#2868a6` | `#91c5f2` | Information neutre |
 | `--color-focus` | `#9c4fba` | `#e2a9f0` | Indicateur de focus |
+| `--color-rainbow-text` | Dégradé de teintes soutenues | Dégradé de teintes lumineuses | Texte de marque avec contraste renforcé |
 
-Les accents complémentaires (`--color-pink`, `--color-orange`, `--color-gold`, `--color-green`, `--color-blue`, `--color-violet`) et `--color-rainbow` servent aux compositions de marque et aux surfaces éditoriales. Le dégradé rainbow est réservé aux signatures, titres mis en valeur et détails décoratifs ; il ne sert jamais de fond à un long texte ni d'indicateur d'état.
+Les accents complémentaires (`--color-pink`, `--color-orange`, `--color-gold`, `--color-green`, `--color-blue`, `--color-violet`) et `--color-rainbow` servent aux compositions de marque et aux surfaces éditoriales. Le dégradé rainbow est réservé aux signatures, titres mis en valeur et détails décoratifs ; il ne sert jamais de fond à un long texte ni d'indicateur d'état. Les titres utilisent `--color-rainbow-text`, une variante à teintes soutenues en clair et lumineuses en sombre, afin de conserver une lisibilité suffisante sur les fonds de page.
 
 Les couleurs d'état sont distinctes des couleurs de marque. Une erreur ne devient pas violette, une information ne devient pas un succès et un dégradé ne remplace jamais un message explicite. Ne jamais exprimer une information uniquement par la couleur : conserver un libellé, une icône ou une indication textuelle adaptée.
 
