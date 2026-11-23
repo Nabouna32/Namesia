@@ -6,6 +6,7 @@ import { PartagerLien } from "@/components/partager-fiche";
 import { BoutonFavori } from "@/components/bouton-favori";
 import { useFavoris } from "@/components/favoris-provider";
 import { comparerPertinence, normaliserRecherche } from "@/lib/recherche-prenoms";
+import { categoryTone } from "@/lib/category-color";
 
 type Props = { prenoms: PrenomIndex[]; selectionInitiale: string[] };
 
@@ -233,7 +234,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
                 {prenom.symbolic_associations.length > 0 ? (
                   <div className="compare-associations">
                     {prenom.symbolic_associations.map((association) => (
-                      <div className="compare-association" key={`${association.category}-${association.value}`}>
+                      <div className="compare-association" data-category-tone={categoryTone(association.category)} key={`${association.category}-${association.value}`}>
                         <strong>{association.value}</strong>
                         <span>{association.category}</span>
                         <p>{association.context_note}</p>
