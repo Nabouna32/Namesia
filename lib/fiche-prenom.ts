@@ -89,7 +89,7 @@ export function parseFichePrenom(value: unknown): FichePrenomImport {
   const history = verifierTexte(value.content.history, "content.history", 3000);
   const usage = verifierTexte(value.content.usage, "content.usage", 3000);
 
-  const associationsBrutes = value.content.symbolic_associations ?? [];
+  const associationsBrutes = value.content.symbolic_associations;
   if (!Array.isArray(associationsBrutes) || associationsBrutes.length > 12) {
     throw new Error("content.symbolic_associations doit être une liste de 12 associations maximum.");
   }
