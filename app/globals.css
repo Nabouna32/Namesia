@@ -80,7 +80,7 @@
   --shadow-md: 0 4px 8px rgb(29 27 32 / 14%), 0 2px 4px rgb(29 27 32 / 8%);
   --ink: var(--color-text); --muted: var(--color-text-muted); --paper: var(--color-background);
   --surface: var(--color-surface); --line: var(--color-border); --accent: var(--color-accent);
---serif: var(--font-serif); --sans: var(--font-sans);
+  --serif: var(--font-serif); --sans: var(--font-sans);
   --motion-standard: cubic-bezier(0.2, 0, 0, 1);
   --motion-emphasized: cubic-bezier(0.2, 0, 0, 1);
   --motion-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
