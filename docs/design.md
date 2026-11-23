@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 2.5
+- **Version :** 2.6
 - **Mis à jour :** 2026-11-23
 
 ## Intention
@@ -78,6 +78,6 @@ La stack utilise Next.js, React et des feuilles CSS natives / CSS Modules. Un fr
 - Les autres pages utilisent les mêmes variables : aucun style de page ne doit introduire une couleur d'accent indépendante.
 - L'administration privée consomme elle aussi les tokens sémantiques pour ses panneaux, formulaires, aperçus et états ; aucun fond ou texte ne doit être figé pour le seul thème clair. Les champs et actions gardent une hauteur tactile minimale de 44 px, les contrôles de saisie utilisent 16 px et les aides courantes 14 px. Les petits libellés de métadonnées peuvent rester à 12 px.
 - Dans le comparateur, les titres de rubriques et les textes éditoriaux utilisent `--color-text` ; les contenus absents utilisent `--color-text-muted`. Le bleu reste réservé aux repères de formulaire et aux actions, pas aux paragraphes courants. Les textes des rubriques et notes d'association restent à 16 px ; l'avertissement éditorial est à 14 px minimum.
-- Les actions de comparaison utilisent une typographie de 14 px (13 px sur les écrans étroits), une zone tactile d'au moins 44 px et le focus visible global. Les pastilles de retrait ont un curseur explicite et conservent une zone tactile de 44 px.
+- Les actions de comparaison utilisent une typographie de 14 px (13 px sur les écrans étroits), une zone tactile d'au moins 44 px et le focus visible global. Les pastilles de retrait ont un curseur explicite et conservent une zone tactile de 44 px. Dans les cartes de résultats, les libellés de comparaison sont remplacés par un pictogramme sur les écrans étroits ; le nom accessible complet reste porté par le bouton et sa zone tactile demeure de 44 × 44 px.
 - Dans les cartes symboliques des fiches, le titre utilise `--color-text`, le descriptif `--color-text-muted` à 16 px et la note secondaire `--color-text-muted` à 12 px, séparée par une bordure neutre. Le bleu reste réservé au court libellé de catégorie. Les boutons principaux utilisent `--color-accent-contrast` pour garantir la paire de contraste prévue par chaque thème.
 - L'en-tête utilise une surface neutre et une bordure sémantique ; les liens de navigation sont en texte secondaire au repos et passent à l'accent au survol. Ne jamais placer un texte de navigation dans la même couleur que son fond.
