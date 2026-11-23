@@ -12,6 +12,7 @@ import { creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
 import { IconeMaterial } from "./icone-material";
 import { ChampRecherche } from "@/components/ui/champ-recherche";
 import { BoutonComparaison } from "@/components/ui/bouton-comparaison";
+import { Bouton } from "@/components/ui/bouton";
 import { ChipFiltre } from "@/components/ui/chip-filtre";
 
 type Props = {
