@@ -63,7 +63,7 @@
   max-width: 960px;
 }
 
- .genre,
+.genre,
 .sort {
   display: grid;
   min-width: 0;
