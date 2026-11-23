@@ -32,7 +32,7 @@
   background: var(--color-surface);
   color: var(--color-text);
   font: inherit;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
@@ -44,8 +44,3 @@
   color: var(--color-background);
 }
 
-.actions button:focus-visible,
-.link:focus-visible {
-  outline: 3px solid var(--color-focus);
-  outline-offset: 3px;
-}
