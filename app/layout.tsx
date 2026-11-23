@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
+import { Roboto } from "next/font/google";
 import { FavorisProvider } from "@/components/favoris-provider";
 import { HistoriqueProvider } from "@/components/historique-provider";
 import { MaterialThemeProvider } from "@/components/material-theme-provider";
@@ -7,6 +8,13 @@ import { NavigationAdaptative } from "@/components/navigation-adaptative";
 import "./globals.css";
 import { jsonLd } from "@/lib/json-ld";
 import { siteUrl } from "@/lib/site-url";
+
+const roboto = Roboto({
+  weight: ["400", "500"],
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  variable: "--font-roboto"
+});
 
 const siteTitle = "Namesia — Le sens derrière chaque prénom";
 const siteDescription = "Explorez les origines, les histoires et les traditions des prénoms avec Namesia.";
@@ -48,7 +56,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="fr" data-scroll-behavior="smooth"><body>
+  return <html lang="fr" className={roboto.variable} data-scroll-behavior="smooth"><body>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(siteWebData) }} />
     <a className="skip-link" href="#contenu">Aller au contenu</a>
     <MaterialThemeProvider>
