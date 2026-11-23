@@ -141,3 +141,28 @@ test("les actions de l'administration et des visiteurs utilisent les boutons par
   assert.doesNotMatch(globalStyles, /\.button\s*\{|\.button-dark/);
   assert.doesNotMatch(adminStyles, /\.secondary\s*\{/);
 });
+
+
+const navigation = await readFile(new URL("../components/navigation-adaptative.tsx", import.meta.url), "utf8");
+const themeProvider = await readFile(new URL("../components/material-theme-provider.tsx", import.meta.url), "utf8");
+
+test("la navigation reprend les modèles Material 3 compacts et rail sans tiroir propriétaire", () => {
+  assert.match(navigation, /className="navigation-bar"/);
+  assert.match(navigation, /className="navigation-rail"/);
+  assert.match(navigation, /aria-current=\{active \? "page" : undefined\}/);
+  assert.doesNotMatch(navigation, /navigation-rail-toggle|is-expanded|useState/);
+  assert.match(globalStyles, /width: 80px;/);
+  assert.match(globalStyles, /@media \(max-width: 599px\)/);
+  assert.match(globalStyles, /@media \(min-width: 600px\)/);
+  assert.match(globalStyles, /safe-area-inset-bottom/);
+  assert.doesNotMatch(globalStyles, /navigation-rail\.is-expanded|navigation-rail-toggle/);
+});
+
+test("Fidelity et Rainbow sont calculés depuis la source Pixel documentée", () => {
+  assert.match(themeProvider, /argbFromHex\("#005AC1"\)/);
+  assert.match(themeProvider, /variant: Variant\.FIDELITY/);
+  assert.match(themeProvider, /variant: Variant\.RAINBOW/);
+  assert.match(globalStyles, /--md-sys-color-primary: #005ac1/);
+  assert.match(globalStyles, /--motion-emphasized-decelerate/);
+  assert.match(globalStyles, /prefers-reduced-motion: reduce/);
+});
