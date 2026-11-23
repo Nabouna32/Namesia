@@ -12,6 +12,7 @@ import { useFavoris } from "./favoris-provider";
 import styles from "./liste-favoris.module.css";
 import { IconeMaterial } from "./icone-material";
 import { ChampRecherche } from "@/components/ui/champ-recherche";
+import { ChampSelect } from "@/components/ui/champ-select";
 import { BoutonComparaison } from "@/components/ui/bouton-comparaison";
 
 type Props = {
