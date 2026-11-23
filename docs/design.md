@@ -56,13 +56,12 @@ Les destinations de premier niveau sont Accueil, Explorer, Comparer et Favoris. 
 
 - **Compact, moins de 600 px :** navigation bar fixe en bas, quatre destinations avec icône et libellé, prise en compte de `safe-area-inset-bottom`.
 - **Medium et plus, à partir de 600 px :** navigation rail fixe sur le bord de départ, largeur de 96 px, icône et libellé empilés. Le rail s'étend temporairement à 280 px et le contenu suit son déplacement.
-- **Hauteur compacte, jusqu'à 480 px :** la navigation revient en bas même si la largeur dépasse 600 px, pour les fenêtres paysage peu hautes.
-- Le rail peut s'étendre temporairement à 280 px ; les libellés passent alors à côté des icônes.
+- **Hauteur compacte, jusqu'à 480 px :** la navigation revient en bas même si la largeur dépasse 600 px, pour les fenêtres paysage peu hautes. Les éléments passent alors en disposition horizontale.
 - La barre supérieure reste présente, avec la marque Namesia et une hauteur de 64 px.
 - La destination courante utilise l'indicateur tonal en pilule et `aria-current="page"`.
 - La navigation est une navigation de pages, pas un tablist ARIA : les liens natifs conservent l'historique, les ouvertures dans un nouvel onglet et les usages clavier du navigateur.
 
-Ces seuils suivent la logique des window size classes Android : la barre convient aux fenêtres compactes et le rail aux fenêtres plus larges. Les adaptations sont pilotées par la largeur disponible, pas par la détection d'une marque d'appareil.
+Ces seuils suivent la logique des window size classes Android : la barre convient aux fenêtres compactes en largeur ou en hauteur et le rail aux fenêtres plus larges. Les adaptations sont pilotées par l'espace disponible, pas par la détection d'une marque d'appareil.
 
 ## 5. Composants et états
 
@@ -90,6 +89,7 @@ Les SVG d'interface sont des icônes vectorielles monochromes à `currentColor`,
 - Focus clavier visible, structure HTML native et noms accessibles explicites.
 - Contraste WCAG AA minimum pour le texte courant et les contrôles.
 - Les préférences de thème et de mouvement suivent le système ; aucune permission ou donnée de l'appareil n'est demandée.
+- Le viewport utilise `viewport-fit=cover` et une couleur de thème claire/sombre pour accorder les zones sûres et la barre du navigateur Android aux surfaces de l'application.
 - Les barres système, gestes de retour Android et indicateur de geste restent la responsabilité du navigateur et de l'OS ; Namesia ne dessine pas de fausses barres système.
 
 ## 7. Architecture
