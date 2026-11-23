@@ -5,10 +5,13 @@ import { readFile } from "node:fs/promises";
 const provider = await readFile(new URL("../components/material-theme-provider.tsx", import.meta.url), "utf8");
 const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 
-test("le fournisseur utilise le schéma Material 3 Expressive officiel", () => {
+test("le thème général est Fidelity et les accents catégoriels sont Rainbow", () => {
   assert.match(provider, /@material\/material-color-utilities/);
   assert.match(provider, /new DynamicScheme\(/);
-  assert.match(provider, /variant: Variant\.EXPRESSIVE/);
+  assert.match(provider, /variant: Variant\.FIDELITY/);
+  assert.match(provider, /variant: Variant\.RAINBOW/);
+  assert.match(provider, /--md-category-/);
+  assert.doesNotMatch(provider, /Variant\.EXPRESSIVE/);
   assert.match(provider, /specVersion: "2025"/);
   assert.match(provider, /sourceColorHct: sourceColor/);
   assert.match(provider, /matchMedia\("\(prefers-color-scheme: dark\)"\)/);
