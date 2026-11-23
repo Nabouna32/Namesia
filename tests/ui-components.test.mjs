@@ -130,6 +130,7 @@ test("les actions de l'administration et des visiteurs utilisent les boutons par
   assert.match(adminActions, /<Bouton/);
   assert.match(favorisActions, /<Bouton/);
   assert.match(favorisActions, /<LienBouton/);
+  assert.match(lienBouton, /^"use client";/);
   assert.match(comparateurActions, /<Bouton/);
   assert.doesNotMatch(adminActions, /button-dark|styles\.secondary/);
   assert.doesNotMatch(favorisActions, /button-dark/);
