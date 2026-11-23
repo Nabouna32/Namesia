@@ -72,7 +72,7 @@ Les primitives communes portent les interactions et états transversaux ; les co
 
 ## 6. Composants et états
 
-Les composants doivent partager les mêmes rôles, formes et interactions. Les surfaces de l'accueil, des cartes vedettes, des fiches et du pied de page sont définies dans leurs règles canoniques, sans seconde couche de redéfinition tardive :
+Les composants doivent partager les mêmes rôles, formes et interactions :
 - boutons filled, tonal, outlined et text ;
 - champs de saisie, recherche et sélection ;
 - cartes élevées, remplies ou avec contour ;
