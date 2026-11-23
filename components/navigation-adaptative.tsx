@@ -19,7 +19,8 @@ function isActive(pathname: string, href: string) {
 function NavigationItems({ pathname }: { pathname: string }) {
   return <ul className="navigation-items">
     {destinations.map((destination) => {
-      const active = isActive(pathname, destination.href);\n      const icon = active && "activeIcon" in destination ? destination.activeIcon : destination.icon;
+      const active = isActive(pathname, destination.href);
+      const icon = active && "activeIcon" in destination ? destination.activeIcon : destination.icon;
       return <li key={destination.href}>
         <Link className={`navigation-item${active ? " is-active" : ""}`} href={destination.href} aria-current={active ? "page" : undefined}>
           <span className="navigation-item-indicator"><IconeMaterial name={icon} size={24} /></span>
