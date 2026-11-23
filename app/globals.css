@@ -1359,7 +1359,7 @@ h2 em {
 
 .symbolic-card h3 {
   margin: 10px 0 7px;
-  color: var(--color-accent);
+  color: var(--color-text);
   font-family: var(--font-sans);
   font-size: 22px;
   font-weight: 500;
@@ -1367,16 +1367,16 @@ h2 em {
 
 .symbolic-card p {
   margin: 0 0 14px;
-  color: var(--color-accent);
-  font-size: 14px;
+  color: var(--color-text-muted);
+  font-size: 16px;
   line-height: 1.75;
 }
 
 .symbolic-card small {
   display: block;
   padding-top: 11px;
-  border-top: 1px solid color-mix(in srgb, var(--color-accent) 16%, transparent);
-  color: var(--color-accent);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
   font-size: 12px;
   line-height: 1.6;
 }
@@ -1400,8 +1400,8 @@ h2 em {
 }
 
 .button-dark {
-  background: linear-gradient(105deg, var(--color-accent), var(--color-accent));
-  color: var(--color-surface);
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
 }
 
 .sr-only {
@@ -1632,7 +1632,7 @@ h1 em, h2 em { color: var(--color-accent); background: none; -webkit-text-fill-c
 .profile-note { border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-6); }
 .featured-1, .featured-2, .featured-3 { background: var(--color-surface-muted); border: 1px solid var(--color-border); }
 .featured-letter, .profile-monogram { color: color-mix(in srgb, var(--color-accent) 13%, transparent); }
-.featured-name small, .profile-note p, .symbolic-card p { color: var(--color-text-muted); }
+.featured-name small, .profile-note p { color: var(--color-text-muted); }
 .featured-action { color: var(--color-accent); }
 .site-footer { background: var(--color-surface); color: var(--color-text); border-top: 1px solid var(--color-border); }
 .footer-inner p, .footer-note { color: var(--color-text-muted); }
