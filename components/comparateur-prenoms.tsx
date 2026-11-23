@@ -3,12 +3,10 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Prenom, PrenomIndex } from "@/lib/prenoms";
 import { PartagerLien } from "@/components/partager-fiche";
+import { comparerPertinence, normaliserRecherche } from "@/lib/recherche-prenoms";
 
 type Props = { prenoms: PrenomIndex[]; selectionInitiale: string[] };
 
-function normaliser(value: string): string {
-  return value.trim().normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("fr");
-}
 
 export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
   const [recherche, setRecherche] = useState("");
@@ -66,8 +64,10 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
   }, [selectionKey, tentative]);
 
   const resultats = useMemo(() => {
-    const terme = normaliser(recherche);
-    return prenoms.filter((prenom) => !terme || normaliser(prenom.nom).includes(terme));
+    const terme = normaliserRecherche(recherche);
+    return prenoms
+      .filter((prenom) => !terme || normaliserRecherche(prenom.nom).includes(terme))
+      .sort((a, b) => comparerPertinence(a, b, terme));
   }, [prenoms, recherche]);
   const selectionnes = selection.flatMap((slug) => fiches[slug] ? [fiches[slug]] : []);
   const selectionComplete = selectionnes.length === selection.length;
