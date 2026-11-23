@@ -119,7 +119,7 @@ test("les suggestions proches autorisent deux modifications pour les recherches 
     { id: "2", slug: "alexandrine", nom: "Alexandrine", lettre: "A", genre: "Féminin" }
   ];
   assert.deepEqual(
-    suggererPrenomsProches(prenoms, "alexandrx"),
+    suggererPrenomsProches(prenoms, "alexandrx").map((prenom) => prenom.nom),
     ["Alexandra"]
   );
 });
