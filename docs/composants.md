@@ -19,7 +19,7 @@ Ce document est le point d'entrée pour les composants d'interface réutilisable
 | Composant | Emplacement | Responsabilité |
 |---|---|---|
 | `IconeMaterial` | `components/icone-material.tsx` | Registre unique des tracés Google Material Symbols Rounded 400, SVG locaux 24 px et variantes pleines disponibles |
-| `Bouton` | `components/ui/bouton.tsx` | Action native avec variantes filled, tonal, outlined et text ; tailles standard et icône, utilisée par l'administration, l'effacement de l'historique et la sélection comparative |
+| `Bouton` | `components/ui/bouton.tsx` | Action native avec variantes filled, tonal, outlined et text ; tailles standard et icône, utilisée par l'administration, les actions d'effacement de l'historique et des recherches, et la sélection comparative |
 | `LienBouton` | `components/ui/lien-bouton.tsx` | Navigation Next.js présentée comme une action, notamment pour ouvrir le comparateur depuis la barre de sélection |
 | `ChampRecherche` | `components/ui/champ-recherche.tsx` | Champ de recherche contrôlé, libellé accessible, icône, effacement et états Material partagés |
 | `BoutonComparaison` | `components/ui/bouton-comparaison.tsx` | Sélection comparative accessible, état sélectionné, limite désactivée et adaptation mobile |
@@ -27,7 +27,7 @@ Ce document est le point d'entrée pour les composants d'interface réutilisable
 | `ChipFiltre` | `components/ui/chip-filtre.tsx` | Filtre sélectionnable avec état pressé, indicateur de sélection et variante initiale |
 | `ChampSelect` | `components/ui/champ-select.tsx` | Sélecteur natif contrôlé, libellé associé et options typées |
 
-Les contrôles partagés reposent sur les tokens Fidelity et conservent les éléments natifs. `ChampSelect` garde le comportement natif du sélecteur : il ne simule pas un menu personnalisé. Les composants métier gardent leurs règles de recherche, de synchronisation d'URL et de sélection ; les contrôles de comparaison ne connaissent ni la limite métier ni la synchronisation d'URL. La liste partagée reçoit les identités à afficher et un callback de retrait.
+Les contrôles partagés reposent sur les tokens Fidelity et conservent les éléments natifs. Le champ de recherche délègue son action d'effacement à la variante textuelle iconique de `Bouton` ; le bouton de suppression natif du navigateur est masqué pour éviter deux affordances concurrentes. `ChampSelect` garde le comportement natif du sélecteur : il ne simule pas un menu personnalisé. Les composants métier gardent leurs règles de recherche, de synchronisation d'URL et de sélection ; les contrôles de comparaison ne connaissent ni la limite métier ni la synchronisation d'URL. La liste partagée reçoit les identités à afficher et un callback de retrait.
 
 ## Composants métier
 
