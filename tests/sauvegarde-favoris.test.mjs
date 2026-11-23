@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { creerSauvegardeFavoris, lireSauvegardeFavoris } from "../lib/sauvegarde-favoris.ts";
+import { creerSauvegardeFavoris, lireSauvegardeFavoris, normaliserSlugsFavoris } from "../lib/sauvegarde-favoris.ts";
 
 test("la sauvegarde exportée est versionnée et dédupliquée", () => {
   const sauvegarde = JSON.parse(creerSauvegardeFavoris(["alice", "jean-luc", "alice"]));
@@ -16,6 +16,13 @@ test("l’import valide et déduplique les identifiants", () => {
     lireSauvegardeFavoris({ schema_version: 1, slugs: ["alice", "jean-luc", "alice"] }),
     ["alice", "jean-luc"]
   );
+});
+
+test("la validation commune déduplique et rejette les slugs invalides ou les listes excessives", () => {
+  assert.deepEqual(normaliserSlugsFavoris(["alice", "alice", "jean-luc"]), ["alice", "jean-luc"]);
+  for (const invalide of [null, {}, ["Alice"], ["../admin"], [""], Array.from({ length: 10_001 }, (_, index) => `prenom-${index}`)]) {
+    assert.equal(normaliserSlugsFavoris(invalide), null);
+  }
 });
 
 test("l’import refuse les formats inconnus", () => {
