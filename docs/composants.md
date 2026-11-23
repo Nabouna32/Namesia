@@ -19,8 +19,8 @@ Ce document est le point d'entrée pour les composants d'interface réutilisable
 | Composant | Emplacement | Responsabilité |
 |---|---|---|
 | `IconeMaterial` | `components/icone-material.tsx` | Registre unique des tracés Google Material Symbols Rounded 400, SVG locaux 24 px et variantes pleines disponibles |
-| `Bouton` | `components/ui/bouton.tsx` | Action native avec variantes filled, tonal, outlined et text ; tailles standard et icône, utilisée aussi par l'administration |
-| `LienBouton` | `components/ui/lien-bouton.tsx` | Navigation Next.js présentée comme une action, utilisable dans les écrans serveur et client |
+| `Bouton` | `components/ui/bouton.tsx` | Action native avec variantes filled, tonal, outlined et text ; tailles standard et icône, utilisée par l'administration, l'effacement de l'historique et la sélection comparative |
+| `LienBouton` | `components/ui/lien-bouton.tsx` | Navigation Next.js présentée comme une action, notamment pour ouvrir le comparateur depuis la barre de sélection |
 | `ChampRecherche` | `components/ui/champ-recherche.tsx` | Champ de recherche contrôlé, libellé accessible, icône, effacement et états Material partagés |
 | `BoutonComparaison` | `components/ui/bouton-comparaison.tsx` | Sélection comparative accessible, état sélectionné, limite désactivée et adaptation mobile |
 | `ListeSelectionComparaison` | `components/ui/liste-selection-comparaison.tsx` | Liste sémantique des prénoms retenus, retrait individuel et puces tonales |
