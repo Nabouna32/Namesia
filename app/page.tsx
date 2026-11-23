@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DecouverteAleatoire } from "@/components/decouverte-aleatoire";
+import { HistoriquePrenoms } from "@/components/historique-prenoms";
 import { PrenomsVedette } from "@/components/prenoms-vedette";
 import { RecherchePrenoms } from "@/components/recherche-prenoms";
 import { getPrenomsIndex, type PrenomIndex } from "@/lib/prenoms";
@@ -36,6 +37,7 @@ export default async function Accueil() {
         </div>
         <div className="hero-decoration" aria-hidden="true"><span>A</span><span>é</span><span>∞</span></div>
       </section>
+      <HistoriquePrenoms prenoms={prenoms} />
       <section className="section explore-section">
         <div className="container">
           <div className="section-heading">
