@@ -185,11 +185,6 @@
   font-size: 14px;
 }
 
-.versionRow .secondary {
-  flex: 0 0 auto;
-  padding-inline: .65rem;
-}
-
 @media (max-width: 560px) {
   .heading {
     flex-direction: column;
