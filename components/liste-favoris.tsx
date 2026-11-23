@@ -38,7 +38,8 @@ export function ListeFavoris({ prenoms }: Props) {
   });
 
   useEffect(() => {
-    setSelectionComparaison((selection) => selection.filter((slug) => favorisDisponibles.has(slug)));
+    const disponibles = new Set(favorisDisponiblesKey ? favorisDisponiblesKey.split(",") : []);
+    setSelectionComparaison((selection) => selection.filter((slug) => disponibles.has(slug)));
   }, [favorisDisponiblesKey]);
 
   if (!pret) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
