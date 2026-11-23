@@ -85,7 +85,7 @@ Les composants doivent partager les mêmes rôles, formes et interactions :
 
 Les interactions utilisent les courbes Material de standard, d'accélération et de décélération, avec des durées courtes, moyennes et longues centralisées. Les surfaces réagissent au survol lorsque le périphérique le permet et à l'état pressé sur écran tactile, sans déplacer le contenu à chaque clic. Le mouvement doit rendre l'action compréhensible : indicateur qui s'étend, surface qui réagit à la pression, changement d'état animé. Les animations décoratives restent secondaires. `prefers-reduced-motion: reduce` supprime les mouvements non essentiels.
 
-Les SVG d'interface sont des icônes vectorielles monochromes à `currentColor`, généralement sur une grille de 24 × 24 ; leur dessin reste cohérent d'une destination à l'autre. Les SVG de marque peuvent être colorés.
+Les SVG d'interface sont des icônes vectorielles monochromes à `currentColor`, sur une grille de 24 × 24 et une boîte tactile de 48 × 48. Les tracés gardent une famille cohérente ; les variantes pleines signalent l'état actif lorsque le pictogramme le permet. Les SVG de marque peuvent être colorés.
 
 ## 7. Responsive, accessibilité et navigateur
 
