@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BoutonFavori } from "@/components/bouton-favori";
+import { EnregistrerConsultation } from "@/components/enregistrer-consultation";
 import { SuggestionsPrenoms } from "@/components/suggestions-prenoms";
 import { PartagerFiche } from "@/components/partager-fiche";
 import styles from "@/components/actions-fiche.module.css";
@@ -95,6 +96,7 @@ export default async function FichePrenom({ params, searchParams }: Props) {
   return (
     <main id="contenu" tabIndex={-1} className="page-main profile-main">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ficheData) }} />
+      <EnregistrerConsultation slug={prenom.slug} />
       <div className="container profile">
         <nav className="breadcrumb" aria-label="Fil d’Ariane">
           <ol>
