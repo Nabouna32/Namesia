@@ -516,19 +516,9 @@ h2 em {
   gap: 8px;
 }
 
-.filter-reset {
-  min-height: 48px;
+.filter-action {
   justify-self: start;
-  padding: 0 8px;
-  border: 0;
-  background: transparent;
-  color: var(--md-sys-color-primary);
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--md-sys-color-primary) 40%, transparent);
-  text-underline-offset: 4px;
+  width: max-content;
 }
 
 .empty-results {
@@ -986,23 +976,25 @@ h2 em {
   transition: background-color var(--motion-duration-short) var(--motion-standard), border-color var(--motion-duration-short) var(--motion-standard);
 }
 
-.compare-option:hover:not(:has(input:disabled)) {
-  border-color: var(--md-sys-color-outline);
-  background: var(--md-sys-color-surface-container-high);
-}
-
 .compare-option:active:not(:has(input:disabled)) {
   background: color-mix(in srgb, var(--md-sys-color-primary) 12%, var(--md-sys-color-surface-container-low));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .compare-option:hover:not(:has(input:disabled)) {
+    border-color: var(--md-sys-color-outline);
+    background: var(--md-sys-color-surface-container-high);
+  }
+
+  .compare-option:has(input:checked):hover {
+    background: color-mix(in srgb, var(--md-sys-color-on-primary-container) 8%, var(--md-sys-color-primary-container));
+  }
 }
 
 .compare-option:has(input:checked) {
   border-color: var(--md-sys-color-primary);
   background: var(--md-sys-color-primary-container);
   color: var(--md-sys-color-on-primary-container);
-}
-
-.compare-option:has(input:checked):hover {
-  background: color-mix(in srgb, var(--md-sys-color-on-primary-container) 8%, var(--md-sys-color-primary-container));
 }
 
 .compare-option:has(input:checked):active {
@@ -1044,14 +1036,17 @@ h2 em {
 }
 
 .compare-option-name strong {
-  font-family: var(--font-sans);
-  font-size: 18px;
+  color: inherit;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .compare-option-name small {
   margin-top: 3px;
-  color: var(--muted);
+  color: inherit;
   font-size: 12px;
+  opacity: 0.78;
 }
 
 .compare-selection-footer {
@@ -1063,21 +1058,6 @@ h2 em {
   margin-top: 18px;
   color: var(--muted);
   font-size: 14px;
-}
-
-.compare-selection-footer > button {
-  display: inline-flex;
-  min-height: 48px;
-  align-items: center;
-  padding: 0 4px;
-  border: 0;
-  background: transparent;
-  color: var(--color-accent);
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 4px;
 }
 
 .compare-selection-footer > button:disabled {
