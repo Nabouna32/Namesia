@@ -1795,26 +1795,14 @@ h1 em, h2 em {
 .hero-copy { color: var(--md-sys-color-on-surface-variant); font-size: 18px; line-height: 1.65; }
 .ai-disclaimer { color: var(--md-sys-color-on-surface-variant); }
 
-.search-field, .compare-search input {
-  min-height: 56px;
-  border: 1px solid var(--md-sys-color-outline);
-  border-radius: var(--md-sys-shape-corner-full);
-  background: var(--md-sys-color-surface-container-highest);
-  color: var(--md-sys-color-on-surface);
-  box-shadow: none;
-}
-.search-field:focus-within { border: 2px solid var(--md-sys-color-primary); outline: 0; }
 .material-icon { display: block; flex: 0 0 auto; }
-.search-icon { display: grid; width: 24px; height: 24px; flex: 0 0 auto; place-items: center; transform: none; color: var(--md-sys-color-on-surface-variant); }
-.clear-search { color: var(--md-sys-color-on-surface-variant); }
-.search-field input::placeholder { color: var(--md-sys-color-on-surface-variant); }
 
 .catalogue-filters, .compare-selector {
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-sys-shape-corner-extra-large);
   background: var(--md-sys-color-surface-container-low);
 }
-.filter-group legend, .compare-search label, .compare-options legend { color: var(--md-sys-color-on-surface-variant); }
+.filter-group legend, .compare-options legend { color: var(--md-sys-color-on-surface-variant); }
 .filter-chip {
   min-height: 48px;
   border: 1px solid var(--md-sys-color-outline);
