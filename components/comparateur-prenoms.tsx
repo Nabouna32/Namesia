@@ -51,8 +51,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
 
       try {
         const response = await fetch(`/api/prenoms?${parametres.toString()}`, {
-          signal: controleur.signal,
-          cache: "no-store"
+          signal: controleur.signal
         });
         if (!response.ok) throw new Error("Chargement impossible.");
 
