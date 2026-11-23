@@ -20,5 +20,5 @@ test("le catalogue partage sa recherche, ses filtres et le lot révélé", () =>
 });
 
 test("le comparateur conserve uniquement sa sélection lors du partage", () => {
-  assert.match(comparateur, /parametres=\{\['prenoms'\]\}/);
+  assert.match(comparateur, /parametres=\{\["prenoms"\]\}/);
 });
