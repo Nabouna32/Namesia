@@ -6,17 +6,14 @@ import { useHistorique } from "@/components/historique-provider";
 import styles from "./historique-prenoms.module.css";
 
 export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
-  const { slugs, pret, erreur, effacer } = useHistorique();
-
-  if (!pret) return null;
+  const { slugs, effacer } = useHistorique();
+  if (slugs.length === 0) return null;
 
   const index = new Map(prenoms.map((prenom) => [prenom.slug, prenom] as const));
   const recentes = slugs.flatMap((slug) => {
     const prenom = index.get(slug);
     return prenom ? [prenom] : [];
   });
-
-  if (!erreur && slugs.length === 0) return null;
 
   return (
     <section className={styles.section} aria-labelledby="historique-title">
@@ -30,11 +27,7 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
             Effacer l’historique
           </button>
         </div>
-        {erreur ? (
-          <p className={styles.error} role="alert">
-            L’historique local n’a pas pu être lu ou enregistré. Vous pouvez tenter de l’effacer pour repartir.
-          </p>
-        ) : recentes.length > 0 ? (
+        {recentes.length > 0 ? (
           <>
             <div className="name-grid">
               {recentes.map((prenom) => (
@@ -48,7 +41,7 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
                 </Link>
               ))}
             </div>
-            <p className={styles.note}>L’historique conserve jusqu’à huit fiches consultées dans ce navigateur uniquement.</p>
+            <p className={styles.note}>Cet historique reste en mémoire pendant cette session et disparaît au rechargement.</p>
           </>
         ) : (
           <p className={styles.note}>Aucune des fiches consultées récemment n’est actuellement publiée.</p>
