@@ -1953,8 +1953,9 @@ h1 em, h2 em {
     background: var(--md-sys-color-surface);
     transition: width 260ms var(--motion-emphasized);
   }
-  .app-content { margin-left: 96px; }
+  .app-content { margin-left: 96px; transition: margin-left 260ms var(--motion-emphasized); }
   .top-app-bar { margin-left: 96px; }
+  .app-shell:has(.navigation-rail.is-expanded) .app-content { margin-left: 280px; }
 }
 
 @media (max-width: 360px) {
@@ -1972,4 +1973,25 @@ h1 em, h2 em {
     transition-duration: 0.01ms !important;
   }
   .featured-card:hover, .name-card:hover { transform: none; }
+}
+
+@media (min-width: 600px) and (max-height: 480px) {
+  .navigation-rail { display: none; }
+  .navigation-bar {
+    position: fixed;
+    z-index: 40;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    padding: 6px 12px calc(6px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    background: color-mix(in srgb, var(--md-sys-color-surface-container) 94%, transparent);
+    backdrop-filter: blur(24px);
+  }
+  .navigation-bar .navigation-items { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; }
+  .navigation-bar .navigation-item { min-height: 60px; flex-direction: row; gap: 8px; }
+  .navigation-bar .navigation-item-indicator { width: 48px; height: 40px; }
+  .app-content { margin-left: 0; padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
+  .top-app-bar { margin-left: 0; }
 }
