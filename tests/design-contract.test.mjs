@@ -178,6 +178,15 @@ test("les données de fiche et les libellés de genre invalides échouent explic
   assert.doesNotMatch(fiche, /symbolic_associations\s*\?\?\s*\[\]/);
 });
 
+
+test("les cartes de prénoms acceptent les noms longs sans déborder ni couper leur contenu", () => {
+  assert.match(globalCss, /\.name-card strong\\s*\\{[^}]*overflow-wrap:\\s*anywhere/s);
+  assert.match(globalCss, /\.featured-name\\s*\\{[^}]*min-width:\\s*0/s);
+  assert.match(globalCss, /\.featured-bottom strong\\s*\\{[^}]*overflow-wrap:\\s*anywhere/s);
+  assert.match(globalCss, /\.featured-card\\s*\\{[^}]*min-height:\\s*210px/s);
+  assert.doesNotMatch(globalCss, /\.featured-card\\s*\\{[^}]*height:\\s*210px/s);
+});
+
 test("les catégories Rainbow utilisent des rôles explicites sans couleur de repli", () => {
   assert.match(provider, /--md-sys-color-category-/);
   assert.match(provider, /--md-sys-color-\$\{role\}/);
