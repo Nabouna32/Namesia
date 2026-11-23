@@ -206,12 +206,12 @@ const partage = await readFile(new URL("../components/partager-fiche.tsx", impor
 test("les quatre destinations de navigation ont des icônes Material distinctes à l'état actif", () => {
   assert.match(icones, /\| "search-filled"/);
   assert.match(icones, /\| "compare-arrows-filled"/);
-  assert.match(icones, /name === "search" \\|\\| name === "compare-arrows"/);
+  assert.match(icones, /name === "search" \|\| name === "compare-arrows"/);
   assert.match(navigation, /icon: "home", activeIcon: "home-filled"/);
   assert.match(navigation, /icon: "search", activeIcon: "search-filled"/);
   assert.match(navigation, /icon: "compare-arrows", activeIcon: "compare-arrows-filled"/);
   assert.match(navigation, /icon: "favorite", activeIcon: "favorite-filled"/);
-  assert.match(navigation, /name=\\{active \\? destination\\.activeIcon : destination\\.icon\\}/);
+  assert.match(navigation, /name=\{active \? destination\.activeIcon : destination\.icon\}/);
 });
 
 test("les formulaires administratifs utilisent les surfaces, formes et dimensions Fidelity", () => {
@@ -221,14 +221,14 @@ test("les formulaires administratifs utilisent les surfaces, formes et dimension
   assert.match(adminStyles, /min-height: 56px/);
   assert.match(adminStyles, /:focus-visible/);
   assert.match(adminStyles, /::file-selector-button/);
-  assert.doesNotMatch(adminStyles, /var\\(--color-(?:border|surface|text|accent)/);
+  assert.doesNotMatch(adminStyles, /var\(--color-(?:border|surface|text|accent)/);
   assert.match(adminClient, /htmlFor="fiche-fichier"/);
   assert.match(adminClient, /id="fiche-fichier"/);
 });
 
 test("le partage réutilise le bouton commun et ne garde pas un style concurrent", () => {
-  assert.match(partage, /import \\{ Bouton \\} from "@\\/components\\/ui\\/bouton"/);
+  assert.match(partage, /import \{ Bouton \} from "@\/components\/ui\/bouton"/);
   assert.match(partage, /<Bouton variante="tonal"/);
   assert.doesNotMatch(partage, /share-button/);
-  assert.doesNotMatch(globalStyles, /\\.share-button\\s*\\{/);
+  assert.doesNotMatch(globalStyles, /\.share-button\s*\{/);
 });
