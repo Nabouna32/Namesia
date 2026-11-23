@@ -21,7 +21,7 @@ export default function Error({
         <span className="eyebrow">Incident temporaire</span>
         <h1>Un petit détour<br /><em>technique.</em></h1>
         <p role="alert">
-          Cette page n’a pas pu être chargée. Le problème a été signalé ; vous pouvez réessayer.
+          Cette page n’a pas pu être chargée. Vous pouvez réessayer ou revenir à l’accueil.
         </p>
         <p>
           <Bouton onClick={reset}>Réessayer</Bouton>{" "}
