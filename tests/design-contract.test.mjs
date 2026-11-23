@@ -86,16 +86,15 @@ test("les états hover sont réservés aux appareils qui disposent d'un pointeur
   );
 
   for (const regle of reglesSurvol) {
-    assert.match(
-      regle.context,
-      /@media \\(hover: hover\\) and \\(pointer: fine\\)/,
+    assert.ok(
+      regle.context.includes("@media (hover: hover) and (pointer: fine)"),
       `${regle.path} applique ${regle.selector} hors d'un pointeur fin`
     );
   }
 
   const selectionStyles = styles.find(({ path }) => path === "components/ui/liste-selection-comparaison.module.css")?.content ?? "";
-  assert.match(selectionStyles, /\\.chip:active/);
-  assert.match(selectionStyles, /on-secondary-container\\) 12%, var\\(--md-sys-color-secondary-container\\)/);
+  assert.ok(selectionStyles.includes(".chip:active"));
+  assert.ok(selectionStyles.includes("on-secondary-container) 12%, var(--md-sys-color-secondary-container)"));
 });
 
 test("la feuille globale conserve un seul :root SSR et aucune couche d'overrides finale", () => {
