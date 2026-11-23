@@ -89,7 +89,7 @@ test("aucun sélecteur n'est déclaré plusieurs fois dans un même contexte CSS
 });
 
 test("l'échelle typographique Material 3 est complète et limitée aux graisses 400/500", () => {
-  const roles = ["display-small", "headline-large", "headline-medium", "headline-small", "title-large", "title-medium", "title-small", "body-large", "body-medium", "body-small", "label-large", "label-medium", "label-small"];
+  const roles = ["display-large", "display-medium", "display-small", "headline-large", "headline-medium", "headline-small", "title-large", "title-medium", "title-small", "body-large", "body-medium", "body-small", "label-large", "label-medium", "label-small"];
   for (const role of roles) {
     for (const property of ["font", "size", "line-height", "weight", "tracking"]) {
       assert.match(globalCss, new RegExp(`--md-sys-typescale-${role}-${property}:`), `Token manquant : ${role}-${property}`);
