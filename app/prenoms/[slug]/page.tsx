@@ -199,7 +199,7 @@ export default async function FichePrenom({ params, searchParams }: Props) {
                 <h2 id="profile-discovery-title">D'autres prénoms {genreAuPluriel[prenom.genre] ?? "à découvrir"}</h2>
               </div>
               <SuggestionsPrenoms prenoms={autresPrenoms} contexteRetour={contexteRetour} />
-              <Link className="text-link" href="/prenoms">Explorer tout le catalogue <span aria-hidden="true">↗</span></Link>
+              <Link className="text-link" href={urlRetourCatalogue}>Explorer tout le catalogue <span aria-hidden="true">↗</span></Link>
             </section>
           )}
 
