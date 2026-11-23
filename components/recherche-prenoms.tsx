@@ -1,10 +1,10 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { BoutonFavori } from "@/components/bouton-favori";
 import { useFavoris } from "@/components/favoris-provider";
 import styles from "./recherche-prenoms.module.css";
-import { useMemo, useState } from "react";
 import type { PrenomIndex } from "@/lib/prenoms";
 
 type Props = {
@@ -293,7 +293,7 @@ export function RecherchePrenoms({
               <p className="empty-state">
                 Aucun résultat exact pour « {recherche.trim()} ». Voici les prénoms les plus proches :
               </p>
-              <div className="name-grid">
+              <div className={styles.resultsGrid}>
                 {suggestions.map((prenom) => (
                   <article className={styles.resultCard} key={prenom.slug}>
                     <Link className={`name-card ${styles.resultLink}`} href={`/prenoms/${prenom.slug}`}>
