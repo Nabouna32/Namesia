@@ -8,6 +8,7 @@ import { useFavoris } from "@/components/favoris-provider";
 import { comparerPertinence, normaliserRecherche } from "@/lib/recherche-prenoms";
 import { categoryTone } from "@/lib/category-color";
 import { ChampRecherche } from "@/components/ui/champ-recherche";
+import { ListeSelectionComparaison } from "@/components/ui/liste-selection-comparaison";
 
 type Props = { prenoms: PrenomIndex[]; selectionInitiale: string[] };
 
