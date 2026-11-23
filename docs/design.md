@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.13
+- **Version :** 4.14
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -45,7 +45,7 @@ Le dégradé de marque `--md-sys-color-brand-gradient` reste réservé au monogr
 
 ## 3. Formes, typographie et élévation
 
-- Typographie : Roboto pour tous les rôles, des titres aux contrôles et au corps. Une seule famille est déclarée ; aucune police de substitution ni pile générique n’est définie. La police système Android est utilisée directement, sans chargement de police distante. Le corps courant reste à 16 px.
+- Typographie : Roboto pour tous les rôles, des titres aux contrôles et au corps. La police est chargée au build par `next/font/google`, auto-hébergée sur le domaine Namesia et préchargée ; le navigateur ne contacte pas Google. Les sous-ensembles `latin` et `latin-ext` couvrent les textes français. Les graisses 400 et 500 sont chargées ; aucune police de substitution ni pile générique n’est définie. Le corps courant reste à 16 px.
 - Échelle Material 3 : display large/medium/small 57/64, 45/52 et 36/44 px ; headline large/medium/small 32/40, 28/36 et 24/32 px ; title large/medium/small 22/28, 16/24 et 14/20 px ; body large/medium/small 16/24, 14/20 et 12/16 px ; label large/medium/small 14/20, 12/16 et 11/16 px. Les graisses sont strictement 400 et 500. Les libellés ne sont pas forcés en capitales. Chaque rôle possède ses tokens `--md-sys-typescale-*` de famille, taille, graisse, interligne et approche. Aucune surcharge de taille par breakpoint ne réintroduit une hiérarchie concurrente.
 - Les espacements suivent une grille de 4 px, avec les pas de 8 px privilégiés. Les rayons sont exclusivement les tokens `--md-sys-shape-corner-*`.
 - Formes : extra-small 4 px, small 8 px, medium 12 px, large 16 px, extra-large 28 px et full/pill.
@@ -110,6 +110,7 @@ Les icônes fonctionnelles utilisent les tracés officiels Google Material Symbo
 
 - `@material/material-color-utilities` génère les rôles de couleurs ; aucun autre moteur de thème n'est ajouté.
 - `components/material-theme-provider.tsx` synchronise le schéma avec la préférence système.
+- `app/layout.tsx` charge Roboto via `next/font/google` et expose `--font-roboto` à tous les rôles typographiques ; les tokens ne désignent jamais une famille non chargée.
 - `components/navigation-adaptative.tsx` porte la navigation de premier niveau.
 - `components/ui/` contient les primitives d'interface partagées.
 - `app/layout.tsx` compose la barre supérieure, le rail/la barre de navigation, le contenu et le pied de page.
