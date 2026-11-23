@@ -63,15 +63,13 @@
   max-width: 960px;
 }
 
-.search,
-.genre,
+ .genre,
 .sort {
   display: grid;
   min-width: 0;
   gap: 8px;
 }
 
-.search label,
 .genre label,
 .sort label {
   color: var(--color-text);
