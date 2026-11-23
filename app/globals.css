@@ -49,6 +49,16 @@
   --md-sys-color-category-3-container: #b7f397;
   --md-sys-color-category-3-on-container: #0b2000;
   --md-sys-color-brand-gradient: linear-gradient(105deg, #ef568b 0%, #f29a42 19%, #e8c94c 36%, #55b987 54%, #49a9d5 72%, #8669d4 88%, #d76bb5 100%);
+  --md-sys-typescale-display-large-font: Roboto;
+  --md-sys-typescale-display-large-size: 57px;
+  --md-sys-typescale-display-large-line-height: 64px;
+  --md-sys-typescale-display-large-weight: 400;
+  --md-sys-typescale-display-large-tracking: -0.25px;
+  --md-sys-typescale-display-medium-font: Roboto;
+  --md-sys-typescale-display-medium-size: 45px;
+  --md-sys-typescale-display-medium-line-height: 52px;
+  --md-sys-typescale-display-medium-weight: 400;
+  --md-sys-typescale-display-medium-tracking: 0;
   --md-sys-typescale-display-small-font: Roboto;
   --md-sys-typescale-display-small-size: 36px;
   --md-sys-typescale-display-small-line-height: 44px;
@@ -221,8 +231,7 @@ a {
   color: inherit;
   text-decoration: none;
 
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;}
+}
 
 button,
 input,
