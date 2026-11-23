@@ -26,6 +26,7 @@ Ce document est le point d'entrée pour les composants d'interface réutilisable
 | `ListeSelectionComparaison` | `components/ui/liste-selection-comparaison.tsx` | Liste sémantique des prénoms retenus, retrait individuel et puces tonales |
 | `ChipFiltre` | `components/ui/chip-filtre.tsx` | Filtre sélectionnable avec état pressé, indicateur de sélection et variante initiale |
 | `ChampSelect` | `components/ui/champ-select.tsx` | Sélecteur natif contrôlé, libellé associé et options typées |
+| `PartagerLien` | `components/partager-fiche.tsx` | Partage natif ou copie d'une URL reconstruite avec une liste explicite de paramètres autorisés |
 
 Les contrôles partagés reposent sur les tokens Fidelity et conservent les éléments natifs. `ChipFiltre` et `ListeSelectionComparaison` réservent le survol aux pointeurs fins et exposent un état pressé adapté au tactile. Le champ de recherche délègue son action d'effacement à la variante textuelle iconique de `Bouton` ; le bouton de suppression natif du navigateur est masqué pour éviter deux affordances concurrentes. Après effacement, le focus revient dans le champ pour permettre une nouvelle saisie immédiate au clavier. `ChampSelect` garde le comportement natif du sélecteur : il ne simule pas un menu personnalisé. Les composants métier gardent leurs règles de recherche, de synchronisation d'URL et de sélection ; les contrôles de comparaison ne connaissent ni la limite métier ni la synchronisation d'URL. La liste partagée reçoit les identités à afficher et un callback de retrait.
 
