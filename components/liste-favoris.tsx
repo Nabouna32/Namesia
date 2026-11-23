@@ -195,7 +195,6 @@ export function ListeFavoris({
         </Bouton>
         <Bouton
           variante="tonal"
-          className={styles.copyButton}
           type="button"
           disabled={favorisFiltres.length === 0}
           onClick={copierFavorisFiltres}
