@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.12
+- **Version :** 4.13
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -46,7 +46,7 @@ Le dégradé de marque `--md-sys-color-brand-gradient` reste réservé au monogr
 ## 3. Formes, typographie et élévation
 
 - Typographie : Roboto pour tous les rôles, des titres aux contrôles et au corps. Une seule famille est déclarée ; aucune police de substitution ni pile générique n’est définie. La police système Android est utilisée directement, sans chargement de police distante. Le corps courant reste à 16 px.
-- Échelle Material 3 : display small 36/44 px ; headline large/medium/small 32/40, 28/36 et 24/32 px ; title large/medium/small 22/28, 16/24 et 14/20 px ; body large/medium/small 16/24, 14/20 et 12/16 px ; label large/medium/small 14/20, 12/16 et 11/16 px. Les graisses sont strictement 400 et 500. Les libellés ne sont pas forcés en capitales. Chaque rôle possède ses tokens `--md-sys-typescale-*` de famille, taille, graisse, interligne et approche. Aucune surcharge de taille par breakpoint ne réintroduit une hiérarchie concurrente.
+- Échelle Material 3 : display large/medium/small 57/64, 45/52 et 36/44 px ; headline large/medium/small 32/40, 28/36 et 24/32 px ; title large/medium/small 22/28, 16/24 et 14/20 px ; body large/medium/small 16/24, 14/20 et 12/16 px ; label large/medium/small 14/20, 12/16 et 11/16 px. Les graisses sont strictement 400 et 500. Les libellés ne sont pas forcés en capitales. Chaque rôle possède ses tokens `--md-sys-typescale-*` de famille, taille, graisse, interligne et approche. Aucune surcharge de taille par breakpoint ne réintroduit une hiérarchie concurrente.
 - Les espacements suivent une grille de 4 px, avec les pas de 8 px privilégiés. Les rayons sont exclusivement les tokens `--md-sys-shape-corner-*`.
 - Formes : extra-small 4 px, small 8 px, medium 12 px, large 16 px, extra-large 28 px et full/pill.
 - Élévation : surfaces tonales en premier ; ombres discrètes uniquement pour les éléments flottants et les plans qui doivent se détacher.

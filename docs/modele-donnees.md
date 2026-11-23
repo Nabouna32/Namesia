@@ -1,7 +1,7 @@
 # Modèle de données — Namesia
 
 - **Statut :** modèle cible retenu pour la V1
-- **Version :** 2.4
+- **Version :** 2.5
 - **Mis à jour :** 2026-11-22
 
 ## 1. Principes
@@ -84,9 +84,9 @@ Le contrat canonique d'entrée est [fiche-prenom.schema.json](../schemas/fiche-p
 Structure du contrat 2.0.0 :
 - schema_version : version du schéma ;
 - identity : slug, graphie et genre ;
-- content : introduction, origine, histoire, usages et associations symboliques facultatives.
+- content : introduction, origine, histoire, usages et tableau `symbolic_associations` obligatoire, qui peut être vide lorsqu'aucune association n'est retenue.
 
-Les rubriques facultatives peuvent être absentes lorsqu'une information n'est pas disponible. Une génération ne doit pas inventer de texte pour remplir artificiellement le document.
+Les rubriques `origin`, `history` et `usage` peuvent être absentes lorsqu'une information n'est pas disponible. `symbolic_associations` est un tableau obligatoire, éventuellement vide : son absence est une entrée invalide et ne doit pas être convertie silencieusement en liste vide. Une génération ne doit pas inventer de texte pour remplir artificiellement le document.
 
 Les associations symboliques restent explicitement présentées comme des interprétations culturelles ou éditoriales, sans valeur scientifique ou prédictive.
 

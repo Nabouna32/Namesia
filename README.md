@@ -46,7 +46,7 @@ Tout nouveau compte doit être invité dans Supabase Auth puis ajouté explicite
 Le contrat courant est schemas/fiche-prenom.schema.json, version 2.0.0. Il est uniquement utilisé à l'import ; la base stocke les rubriques dans des colonnes SQL et les associations dans des lignes dédiées. Il comprend :
 
 - identity : slug, nom affiché et genre ;
-- content : introduction, origine, histoire, usages et associations symboliques facultatives.
+- content : introduction, origine, histoire, usages et tableau `symbolic_associations` obligatoire (vide si aucune association ne s’applique).
 
 Le JSON ne contient ni identifiant de base, ni numéro de version, ni statut de publication. Ces valeurs sont attribuées par le backend. La validation vérifie la structure, pas la véracité des contenus.
 
