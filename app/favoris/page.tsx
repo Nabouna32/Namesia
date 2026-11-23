@@ -17,11 +17,19 @@ type Props = {
     q?: ParametreUrl;
     genre?: ParametreUrl;
     tri?: ParametreUrl;
+    limite?: ParametreUrl;
   }>;
 };
 
 function premierParametre(value: ParametreUrl): string {
   return Array.isArray(value) ? value[0] ?? "" : value ?? "";
+}
+
+function lireNombreVisible(value: string): number {
+  const nombre = Number(value);
+  return Number.isSafeInteger(nombre) && nombre >= 24
+    ? Math.floor(nombre / 24) * 24
+    : 24;
 }
 
 function lireTri(value: string): TriFavoris {
@@ -42,6 +50,7 @@ export default async function FavorisPage({ searchParams }: Props) {
           initialRecherche={premierParametre(parametres.q)}
           initialGenre={premierParametre(parametres.genre)}
           initialTri={lireTri(premierParametre(parametres.tri))}
+          initialNombreVisible={lireNombreVisible(premierParametre(parametres.limite))}
         />
       </div>
     </main>
