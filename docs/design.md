@@ -1,83 +1,97 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 3.0
+- **Version :** 3.1
 - **Mis à jour :** 2026-11-23
 
 ## Intention
 
-Une interface éditoriale contemporaine, calme et précise. La priorité est donnée à la lecture, à la navigation évidente et à une hiérarchie nette. Les références de qualité sont les grandes interfaces produit sobres : peu d'effets, des surfaces bien séparées, des composants prévisibles et des états explicites.
+Namesia est un univers éditorial consacré aux prénoms : son interface doit être chaleureuse, expressive, lumineuse et immédiatement reconnaissable. La couleur fait partie de son identité. Le rainbow historique est conservé comme signature visuelle, accompagné d'accents rose, violet, pêche, doré, vert et bleu. Les pages ne doivent pas être ramenées à une interface monochrome ou à un bleu d'action omniprésent.
 
-La direction précédente « arc-en-ciel, chaleureuse et compacte » est abandonnée : elle multipliait les accents, les dégradés et les contrastes décoratifs sans aider à comprendre le contenu. Namesia conserve une personnalité par la qualité de sa typographie, ses compositions et son ton, pas par une palette multicolore. Les pages privilégient des surfaces neutres et une hiérarchie typographique ; les halos, ornements géométriques et glyphes décoratifs superposés au contenu sont écartés lorsqu'ils n'apportent aucune information.
+La qualité s'appuie sur des conventions éprouvées des produits web soignés : hiérarchie visuelle claire, typographie lisible, grilles cohérentes, espaces généreux, contrastes contrôlés, composants prévisibles, retours d'interaction discrets et navigation mobile robuste. La personnalité vient de l'association de ces fondamentaux avec une palette éditoriale colorée, pas d'une accumulation d'effets.
 
-## Couleurs sémantiques
+La couleur est organisée par rôle :
+- les couleurs de marque et les dégradés donnent le ton et distinguent les espaces éditoriaux ;
+- les couleurs d'accent guident vers les liens et les actions ;
+- les couleurs sémantiques signalent exclusivement un succès, un avertissement, une erreur ou une information ;
+- les surfaces et le texte restent suffisamment neutres pour préserver le confort de lecture.
 
-Les variables sont définies dans `app/globals.css`. L'accent unique est un bleu franc (`#2457c5` en clair, `#91b2ff` en sombre) : il est immédiatement identifiable comme couleur d'action, reste adapté à un univers éditorial et offre un contraste élevé avec les surfaces.
+## Palette et tokens
+
+Les tokens sont définis dans `app/globals.css`. Les CSS Modules consomment ces variables et ne recréent pas leur propre palette.
 
 | Token | Mode clair | Mode sombre | Usage |
 |---|---|---|---|
-| `--color-background` | `#f7f8fb` | `#101522` | Fond global |
-| `--color-surface` | `#ffffff` | `#171f30` | Cartes, champs, navigation |
-| `--color-surface-muted` | `#eef1f6` | `#222d40` | Surface secondaire |
-| `--color-text` | `#172033` | `#edf2fb` | Texte principal |
-| `--color-text-muted` | `#526078` | `#b2bfd2` | Texte secondaire |
-| `--color-border` | `#d8deea` | `#39465c` | Séparateurs et contours |
-| `--color-accent` | `#2457c5` | `#91b2ff` | Liens et actions |
-| `--color-success` | `#176b45` | `#72d6a4` | Succès |
-| `--color-warning` | `#854d0e` | `#f2c078` | Avertissement |
-| `--color-error` | `#b42318` | `#ff9b91` | Erreur |
-| `--color-info` | `#2457c5` | `#91b2ff` | Information |
+| `--color-background` | `#fffafd` | `#191421` | Fond général |
+| `--color-surface` | `#ffffff` | `#241c2d` | Cartes, champs, navigation |
+| `--color-surface-muted` | `#fff1f7` | `#302338` | Fonds secondaires |
+| `--color-text` | `#30243b` | `#f8effa` | Texte principal |
+| `--color-text-muted` | `#6f6278` | `#d1bfd8` | Texte secondaire |
+| `--color-border` | `#eedfeb` | `#4b3852` | Contours et séparateurs |
+| `--color-accent` | `#8b3fa5` | `#dda2e9` | Liens et actions |
+| `--color-accent-hover` | `#6d2e83` | `#f0c6f5` | Survol des liens et actions |
+| `--color-success` | `#176b4b` | `#83d7ad` | Confirmation et réussite |
+| `--color-warning` | `#8a5a0a` | `#f1c276` | Attention et précaution |
+| `--color-error` | `#b4234d` | `#ff9baa` | Erreurs et validation invalide |
+| `--color-info` | `#2868a6` | `#91c5f2` | Information neutre |
+| `--color-focus` | `#9c4fba` | `#e2a9f0` | Indicateur de focus |
+| `--color-rainbow-text` | Dégradé de teintes soutenues | Dégradé de teintes lumineuses | Texte de marque avec contraste renforcé |
 
-Le bleu est la seule couleur d'accent. Succès, avertissement, erreur et information sont des couleurs d'état, pas des accents décoratifs interchangeables. Les titres éditoriaux (titres de section et de panneaux) utilisent `--color-text` ; le bleu reste réservé aux liens, actions, repères interactifs et emphases courtes. Un titre ne doit pas prendre la couleur d'accent simplement parce qu'il est placé dans un panneau.
+Les accents complémentaires (`--color-pink`, `--color-orange`, `--color-gold`, `--color-green`, `--color-blue`, `--color-violet`) et `--color-rainbow` servent aux compositions de marque et aux surfaces éditoriales. Le dégradé rainbow est réservé aux signatures, titres mis en valeur et détails décoratifs ; il ne sert jamais de fond à un long texte ni d'indicateur d'état. Les titres utilisent `--color-rainbow-text`, une variante à teintes soutenues en clair et lumineuses en sombre, afin de conserver une lisibilité suffisante sur les fonds de page.
 
-Les couples texte/fond, texte atténué/fond et accent/fond sont choisis pour dépasser le seuil WCAG AA de 4,5:1 pour le texte courant dans les deux thèmes. Les grandes surfaces ne reposent jamais sur la couleur seule pour exprimer un état. Les contrôles utilisent une bordure, un libellé ou un pictogramme en plus de la couleur.
+Les couleurs d'état sont distinctes des couleurs de marque. Une erreur ne devient pas violette, une information ne devient pas un succès et un dégradé ne remplace jamais un message explicite. Ne jamais exprimer une information uniquement par la couleur : conserver un libellé, une icône ou une indication textuelle adaptée.
+
+Les couleurs de texte courant et secondaire doivent conserver un contraste WCAG AA d'au moins 4,5:1 sur leur surface réelle. Vérifier les combinaisons effectivement utilisées, y compris les thèmes sombres et les cartes colorées ; ne pas supposer qu'une paire est conforme parce que ses couleurs semblent douces.
 
 ## Typographie
 
-Une seule famille sans empattement : pile système (Inter lorsqu'elle est installée, puis polices natives de la plateforme). Pas de police distante ni de chargement réseau. Échelle :
+Deux registres complémentaires :
+- pile sans empattement système pour le corps, la navigation, les contrôles et les données ;
+- Georgia (ou serif système équivalente) pour les grands titres éditoriaux, les noms de prénoms et les compositions de découverte.
 
-- 12 px : repères de section et métadonnées ;
-- 14 px : aides, navigation et actions secondaires ;
-- 16 px : corps de texte et contrôles ;
-- 18–20 px : introduction et texte mis en avant ;
-- 24–32 px : titres de section ;
-- 40–56 px : titre principal, fluide selon l'écran.
+Aucune police distante ni dépendance typographique n'est nécessaire. Échelle indicative :
+- 12 px : métadonnées uniquement ;
+- 14 px : aides, avertissements, navigation et actions secondaires ;
+- 16 px : corps, contrôles et textes de fiche ;
+- 18–21 px : introductions et textes mis en avant ;
+- 24–38 px : titres de section ;
+- 40–88 px : titres principaux, fluides selon l'écran.
 
-Corps à interligne confortable (1,6 à 1,75). Les textes éditoriaux sont limités en largeur pour éviter les longues lignes. Les introductions de page et de recherche utilisent 16 px ; les aides, avertissements, messages d'état (y compris les erreurs de stockage) et actions secondaires utilisent au moins 14 px. Le niveau 12 px reste réservé aux repères de section et aux métadonnées.
+Le corps utilise un interligne de 1,6 à 1,75. Les paragraphes éditoriaux restent limités en largeur. Aucun texte utile (aide, avertissement, erreur, action) ne doit être réduit pour faire tenir une composition.
 
-## Espacements, rayons et ombres
+## Composition, espacements et surfaces
 
-Les espacements suivent une base de 4 px : 4, 8, 12, 16, 20, 24, 32, 40 et 48 px. Les composants utilisent les variables `--space-*` plutôt que des valeurs inventées.
+- Grille et largeur de lecture cohérentes, avec un conteneur principal plafonné à 1 120 px.
+- Échelle d'espacement basée sur 4 px : 4, 8, 12, 16, 20, 24, 32, 40 et 48 px.
+- Rayons : 8 px (petit), 12 px (standard), 16 px (grand), 24 px (mise en avant) ; pilule pour les badges et filtres adaptés.
+- Ombres douces pour les plans qui doivent se détacher ; les bordures suffisent pour les séparations simples.
+- Surfaces éditoriales pastel autorisées et encouragées lorsqu'elles distinguent une section ou une carte. Les textes qui y figurent restent dans une couleur foncée contrastée.
+- Les cartes de prénoms mis en avant peuvent avoir des variantes de couleurs distinctes, mais conservent les mêmes dimensions, la même hiérarchie et les mêmes interactions.
 
-Rayons : 8 px (petit), 12 px (standard), 16 px (grand), 24 px (mise en avant), pilule uniquement pour les éléments réellement arrondis. Ombres discrètes, réservées à la séparation de plans ; la bordure suffit pour la plupart des cartes.
+## Interactions et mouvement
 
-## Comportement des composants
-
-- **Survol :** changement léger de couleur/bordure ; les cartes et actions ne se déplacent pas et ne changent pas d'échelle. Les effets de translation sont réservés aux mécanismes structurels (lien d'évitement, centrage), pas aux retours interactifs.
-- **Focus :** contour de 3 px utilisant `--color-focus`, avec un décalage de 3 px ; la règle s'applique uniformément aux liens, boutons, champs et sélecteurs, y compris dans le comparateur et la recherche. Aucun composant ne réduit ou ne supprime cet indicateur.
-- **Désactivé :** opacité réduite et curseur adapté, sans perdre la lisibilité du libellé.
-- **Chargement :** conserver l'espace du contrôle et annoncer l'état si une opération asynchrone existe ; pas de faux indicateur sur une action synchrone.
-- **Erreur :** message explicite proche du champ ou de l'action, associé sémantiquement au contrôle ; utiliser `--color-error`.
-- **Succès / avertissement / information :** utiliser les tokens d'état et un texte explicite.
+- Les interactions ont un retour perceptible : couleur, bordure, ombre ou léger déplacement. Les cartes peuvent se soulever de quelques pixels au survol ; les flèches et détails peuvent bouger subtilement.
+- Les transitions restent courtes (environ 150 à 250 ms) et ne doivent pas retarder les actions.
+- Les animations décoratives sont lentes, discrètes et ne doivent jamais gêner la lecture ou détourner l'attention des contrôles.
+- `prefers-reduced-motion: reduce` désactive les mouvements non essentiels et les transitions ; aucune information ne dépend d'une animation.
+- **Focus :** contour de 3 px utilisant `--color-focus`, avec un décalage de 3 px, visible sur les liens, boutons, champs et sélecteurs.
+- **Désactivé :** opacité réduite et curseur adapté, sans perdre la lisibilité.
+- **Chargement :** conserver l'espace du contrôle et annoncer l'état si une opération asynchrone existe.
+- **Erreur / succès / avertissement / information :** utiliser le token sémantique correspondant et un texte explicite.
 
 ## Thèmes et responsive
 
-Le thème suit `prefers-color-scheme` sans réglage applicatif supplémentaire. Les composants utilisent les mêmes tokens sémantiques dans les deux thèmes. La mise en page est conçue d'abord pour les écrans étroits, puis s'étend ; le contenu ne doit pas déborder à 320 px et reste lisible à 200 % de zoom. Les adaptations des écrans les plus étroits sont déclarées après les règles des seuils plus larges afin de conserver leur priorité dans la cascade CSS.
+Le thème suit `prefers-color-scheme`. Les tokens et les composants doivent fonctionner dans les deux thèmes ; les surfaces pastel du mode clair sont adaptées en tons profonds dans le mode sombre, sans conserver des textes sombres sur des fonds foncés.
 
-Les zones tactiles interactives visent au moins 44 × 44 px, y compris les filtres du catalogue, les actions d'effacement, le bouton de découverte aléatoire et les liens de navigation. La navigation principale conserve un espacement horizontal explicite entre ses liens sur les écrans étroits (12 px), et peut passer sur plusieurs lignes lorsque la largeur disponible ne suffit plus, notamment sous 360 px ou lorsque le zoom est élevé. Le logo ne se contracte pas ; les liens ne doivent ni se toucher, ni se chevaucher, ni provoquer de défilement horizontal. Les libellés peuvent rester visuellement compacts, mais la zone cliquable ne doit pas être réduite pour gagner quelques pixels. Les boutons de partage et les filtres du catalogue conservent également cette hauteur minimale sur mobile. La réduction des animations respecte `prefers-reduced-motion`.
+La conception part du mobile. À 320 px et à 200 % de zoom, le contenu ne déborde pas horizontalement. Les zones tactiles visent au moins 44 × 44 px. La navigation conserve un espacement explicite, peut revenir à la ligne et ne réduit jamais les zones cliquables pour gagner quelques pixels. Les adaptations des écrans étroits sont déclarées après les règles des seuils plus larges.
 
-## Architecture CSS et dépendances
+## Architecture et application
 
-La stack utilise Next.js, React et des feuilles CSS natives / CSS Modules. Un framework supplémentaire n'est pas retenu : Tailwind ou shadcn/ui ajouterait une seconde convention de styles et une migration de composants alors que le besoin est d'unifier une interface existante, pas de construire un kit complet. Les variables CSS natives fournissent thèmes, tokens et adaptation au système sans dépendance, compilation ni dette de version. Les composants React existants restent les briques partagées ; les styles de domaine consomment les mêmes tokens.
-
-## Application
-
-- `app/globals.css` porte les tokens et les règles globales communes.
-- Les CSS Modules des composants ne redéfinissent pas la palette ; ils consomment les tokens.
-- Les pages accueil et fiche prénom partagent les mêmes surfaces, échelles et états.
-- Les autres pages utilisent les mêmes variables : aucun style de page ne doit introduire une couleur d'accent indépendante.
-- L'administration privée consomme elle aussi les tokens sémantiques pour ses panneaux, formulaires, aperçus et états ; aucun fond ou texte ne doit être figé pour le seul thème clair. Les champs et actions gardent une hauteur tactile minimale de 44 px, les contrôles de saisie utilisent 16 px et les aides courantes 14 px. Les petits libellés de métadonnées peuvent rester à 12 px.
-- Dans le comparateur, les titres de rubriques et les textes éditoriaux utilisent `--color-text` ; les contenus absents utilisent `--color-text-muted`. Le bleu reste réservé aux repères de formulaire et aux actions, pas aux paragraphes courants. Les textes des rubriques et notes d'association restent à 16 px ; l'avertissement éditorial est à 14 px minimum.
-- Les actions de comparaison utilisent une typographie de 14 px sur tous les écrans, une zone tactile d'au moins 44 px et le focus visible global. Les pastilles de retrait ont un curseur explicite et conservent une zone tactile de 44 px. Dans les cartes de résultats, les libellés de comparaison sont remplacés par un pictogramme sur les écrans étroits ; le nom accessible complet reste porté par le bouton et sa zone tactile demeure de 44 × 44 px.
-- Dans les cartes symboliques des fiches, le titre utilise `--color-text`, le descriptif `--color-text-muted` à 16 px et la note secondaire `--color-text-muted` à 12 px, séparée par une bordure neutre. Le bleu reste réservé au court libellé de catégorie. Les boutons principaux utilisent `--color-accent-contrast` pour garantir la paire de contraste prévue par chaque thème.
-- L'en-tête utilise une surface neutre et une bordure sémantique ; les liens de navigation sont en texte secondaire au repos et passent à l'accent au survol. Ne jamais placer un texte de navigation dans la même couleur que son fond.
+- `app/globals.css` porte les tokens, thèmes, composants globaux et règles de mouvement.
+- Les CSS Modules consomment les tokens ; ils ne réintroduisent pas de couleurs arbitraires pour des éléments récurrents.
+- Accueil, catalogue, comparateur, fiches et administration partagent les mêmes règles de typographie, de contraste, de focus et d'espacement.
+- Les pages peuvent avoir des compositions colorées propres à leur rôle, à condition de respecter les tokens et le contraste.
+- Les champs et actions de l'administration gardent une hauteur tactile minimale de 44 px ; les contrôles de saisie utilisent 16 px et les aides courantes 14 px.
+- Les rubriques éditoriales et les notes d'association utilisent le texte principal pour les titres et le texte secondaire pour les descriptions ; les couleurs de marque servent à identifier les catégories et les repères, pas à colorer tous les paragraphes.
+- Le comparateur garde des états de sélection clairement visibles, un focus global et des zones tactiles de 44 px.
+- La stack reste fondée sur CSS natif et CSS Modules : aucun framework visuel supplémentaire n'est nécessaire pour retrouver une identité cohérente.

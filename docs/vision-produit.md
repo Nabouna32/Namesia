@@ -87,7 +87,7 @@ Les pages de filtres, recherches internes et combinaisons sans contenu éditoria
 
 ## 7. Direction visuelle
 
-La direction visuelle et ses règles détaillées sont définies dans [docs/design.md](design.md). Toute évolution d'interface doit utiliser ses tokens sémantiques, ses deux thèmes et ses composants cohérents. La sobriété, la lisibilité et le mobile-first priment sur les effets décoratifs.
+La direction visuelle et ses règles détaillées sont définies dans [docs/design.md](design.md). Namesia adopte une identité éditoriale chaleureuse, expressive et colorée, avec son dégradé rainbow et une palette d'accents complémentaires. Les couleurs sémantiques restent réservées aux états fonctionnels. Les principes éprouvés de lisibilité, hiérarchie, contraste, responsive et accessibilité encadrent cette personnalité sans la neutraliser. Les animations discrètes sont bienvenues lorsqu'elles améliorent le retour d'interaction ou donnent de la vie à la composition ; elles respectent toujours `prefers-reduced-motion`.
 
 
 ## 8. Indicateurs
