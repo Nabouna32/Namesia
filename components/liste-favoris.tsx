@@ -123,8 +123,8 @@ export function ListeFavoris({ prenoms }: Props) {
           </div>
           <p className={styles.count} role="status" aria-live="polite">
             {termeNormalise
-              ? nombreAffiche + " " + (nombreAffiche === 1 ? "favori affiché" : "favoris affichés") + " sur " + favorisFiltres.length + " résultats"
-              : nombreAffiche + " " + (nombreAffiche === 1 ? "favori affiché" : "favoris affichés") + " sur " + favoris.length + " enregistrés"}
+              ? nombreAffiche + " " + (nombreAffiche === 1 ? "favori affiché" : "favoris affichés") + " sur " + favorisFiltres.length + (favorisFiltres.length === 1 ? " résultat" : " résultats")
+              : nombreAffiche + " " + (nombreAffiche === 1 ? "favori affiché" : "favoris affichés") + " sur " + favoris.length + (favoris.length === 1 ? " favori enregistré" : " favoris enregistrés")}
           </p>
           {favorisFiltres.length === 0 ? (
             <div className={styles.empty}>
