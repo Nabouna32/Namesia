@@ -180,3 +180,18 @@ test("Rainbow ne colore plus les titres ou les surfaces générales", () => {
   assert.match(surfaceSymbolique, /var\(--category-container/);
   assert.match(surfaceSymbolique, /surface-container-low/);
 });
+
+
+test("les boutons et cartes utilisent les state layers Material plutôt que des zooms ou élévations", () => {
+  const nomHover = globalStyles.slice(globalStyles.lastIndexOf(".name-card:hover {"));
+  const vedetteHover = globalStyles.slice(globalStyles.lastIndexOf(".featured-card:hover {"));
+  assert.match(styles, /\.button::after/);
+  assert.match(styles, /opacity: 0\.08/);
+  assert.match(styles, /opacity: 0\.12/);
+  assert.doesNotMatch(styles, /filter:\s*brightness/);
+  assert.match(nomHover, /surface-container-high/);
+  assert.match(vedetteHover, /surface-container-high/);
+  assert.doesNotMatch(nomHover.slice(0, nomHover.indexOf("\n}")), /translateY|box-shadow:\s*var/);
+  assert.doesNotMatch(vedetteHover.slice(0, vedetteHover.indexOf("\n}")), /translateY|box-shadow:\s*var/);
+  assert.doesNotMatch(globalStyles, /button:active[^}]*scale\(/);
+});
