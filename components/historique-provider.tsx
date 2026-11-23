@@ -18,6 +18,7 @@ type ContexteHistorique = {
   pret: boolean;
   erreur: boolean;
   enregistrer: (slug: string) => void;
+  retirer: (slug: string) => void;
   effacer: () => void;
 };
 
@@ -52,11 +53,15 @@ export function HistoriqueProvider({ children }: { children: ReactNode }) {
     setSlugs((courants) => ajouterConsultation(courants, slug));
   }, []);
 
+  const retirer = useCallback((slug: string) => {
+    setSlugs((courants) => courants.filter((element) => element !== slug));
+  }, []);
+
   const effacer = useCallback(() => setSlugs([]), []);
 
   const valeur = useMemo(
-    () => ({ slugs, pret, erreur, enregistrer, effacer }),
-    [slugs, pret, erreur, enregistrer, effacer]
+    () => ({ slugs, pret, erreur, enregistrer, retirer, effacer }),
+    [slugs, pret, erreur, enregistrer, retirer, effacer]
   );
 
   return (
