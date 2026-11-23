@@ -295,7 +295,7 @@ input {
   line-height: 16px;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
-  transition: color 180ms var(--motion-standard), background-color 180ms var(--motion-standard);
+  transition: color var(--motion-duration-short) var(--motion-standard);
 }
 
 .navigation-item-indicator {
@@ -307,7 +307,7 @@ input {
   border-radius: var(--md-sys-shape-corner-full);
   background: transparent;
   color: inherit;
-  transition: background-color 250ms var(--motion-emphasized), width 250ms var(--motion-emphasized), transform 180ms var(--motion-emphasized);
+  transition: background-color var(--motion-duration-short) var(--motion-standard);
 }
 
 .navigation-icon {
@@ -319,12 +319,29 @@ input {
 .navigation-item.is-active {
   color: var(--md-sys-color-on-surface);
 }
-.navigation-item:hover .navigation-item-indicator { background: var(--md-sys-color-surface-container-high); }
-.navigation-item.is-active:hover .navigation-item-indicator { background: var(--md-sys-color-secondary-container); }
-
 .navigation-item.is-active .navigation-item-indicator {
   background: var(--md-sys-color-secondary-container);
   color: var(--md-sys-color-on-secondary-container);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .navigation-item:not(.is-active):hover .navigation-item-indicator {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 8%, transparent);
+  }
+
+  .navigation-item.is-active:hover .navigation-item-indicator {
+    background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 8%, var(--md-sys-color-secondary-container));
+  }
+}
+
+.navigation-item:focus-visible .navigation-item-indicator,
+.navigation-item:active:not(.is-active) .navigation-item-indicator {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 12%, transparent);
+}
+
+.navigation-item.is-active:focus-visible .navigation-item-indicator,
+.navigation-item.is-active:active .navigation-item-indicator {
+  background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 12%, var(--md-sys-color-secondary-container));
 }
 
 .navigation-item:focus-visible {
