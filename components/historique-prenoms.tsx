@@ -48,7 +48,7 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
                 </Link>
               ))}
             </div>
-            <p className={styles.note}>Jusqu’aux huit dernières fiches consultées sont conservées dans ce navigateur uniquement.</p>
+            <p className={styles.note}>L’historique conserve jusqu’à huit fiches consultées dans ce navigateur uniquement.</p>
           </>
         ) : (
           <p className={styles.note}>Aucune des fiches consultées récemment n’est actuellement publiée.</p>
