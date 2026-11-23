@@ -109,8 +109,8 @@ function convertirIndex(row: JoinedNameIndex): PrenomIndex {
     id: row.id,
     slug: row.slug,
     nom: row.display_name,
-    lettre: Array.from(row.display_name.trim())[0]?.toLocaleUpperCase("fr") ?? "",
-    genre: libellesGenres[row.gender] ?? "Genre non renseigné"
+    lettre: obtenirInitiale(row.display_name),
+    genre: obtenirLibelleGenre(row.gender)
   };
 }
 
