@@ -1,6 +1,6 @@
 "use client";
 
-import { normaliserSlugsFavoris } from "@/lib/sauvegarde-favoris";
+import { LIMITE_FAVORIS, normaliserSlugsFavoris } from "@/lib/sauvegarde-favoris";
 import {
   createContext,
   useCallback,
@@ -62,7 +62,7 @@ export function FavorisProvider({ children }: { children: ReactNode }) {
   const basculer = useCallback((slug: string) => {
     const prochain = slugs.includes(slug)
       ? slugs.filter((favori) => favori !== slug)
-      : [...slugs, slug];
+      : slugs.length < LIMITE_FAVORIS ? [...slugs, slug] : slugs;
 
     try {
       window.localStorage.setItem(CLE_FAVORIS, JSON.stringify(prochain));
@@ -93,7 +93,7 @@ export function FavorisProvider({ children }: { children: ReactNode }) {
     let nombreAjoute = 0;
 
     for (const slug of slugsImportes) {
-      if (!presents.has(slug)) {
+      if (!presents.has(slug) && prochainsSlugs.length < LIMITE_FAVORIS) {
         presents.add(slug);
         prochainsSlugs.push(slug);
         nombreAjoute += 1;
