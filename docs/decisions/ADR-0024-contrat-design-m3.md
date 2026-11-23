@@ -17,7 +17,7 @@ La passe M3 Fidelity a révélé que la feuille globale et les modules CSS n'app
 ## Décision
 
 - Les CSS consomment directement les rôles `--md-sys-color-*`, les rôles typographiques `--md-sys-typescale-*`, les formes `--md-sys-shape-*` et les tokens de mouvement/élévation `--md-sys-*`.
-- Un unique bloc `:root` fournit les valeurs initiales SSR ; le fournisseur calcule le thème actif et les extensions sémantiques après hydratation.
+- Un unique bloc `:root` fournit les valeurs claires SSR ; une règle sombre sur `html` préserve le rendu initial selon la préférence système sans second bloc racine. Le fournisseur recalcule le thème actif et les extensions sémantiques après hydratation.
 - Les alias `--color-*`, `--ink`, `--muted`, `--line`, les alias de rayon/police/espacement et les valeurs de secours `var(..., ...)` sont supprimés.
 - Les règles de la couche Fidelity finale sont déplacées dans les règles canoniques ou dans les media queries responsives correspondantes.
 - L'échelle typographique Material 3 complète est disponible ; seules les graisses 400/500 sont admises, sans capitalisation forcée des labels.
