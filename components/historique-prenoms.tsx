@@ -7,6 +7,7 @@ import { useFavoris } from "@/components/favoris-provider";
 import { useHistorique } from "@/components/historique-provider";
 import styles from "./historique-prenoms.module.css";
 import { IconeMaterial } from "./icone-material";
+import { Bouton } from "@/components/ui/bouton";
 
 export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
   const { slugs, effacer } = useHistorique();
@@ -27,9 +28,9 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
             <span className="eyebrow">Reprendre la découverte</span>
             <h2 id="historique-title">Vos dernières fiches</h2>
           </div>
-          <button className={styles.clear} type="button" onClick={effacer}>
+          <Bouton variante="text" type="button" onClick={effacer}>
             Effacer l’historique
-          </button>
+          </Bouton>
         </div>
         {recentes.length > 0 ? (
           <>
