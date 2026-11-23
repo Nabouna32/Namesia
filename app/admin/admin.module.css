@@ -10,7 +10,7 @@
 .panel h2 {
   margin: 0 0 8px;
   color: var(--md-sys-color-on-surface);
-  font-size: 24px;
+  font-size: var(--md-sys-typescale-headline-small-size);
   font-weight: 500;
   letter-spacing: -0.02em;
 }
@@ -28,7 +28,7 @@
 
 .form label {
   color: var(--md-sys-color-on-surface);
-  font-size: 14px;
+  font-size: var(--md-sys-typescale-body-medium-size);
   font-weight: 500;
 }
 
@@ -43,7 +43,7 @@
   background: var(--md-sys-color-surface);
   color: var(--md-sys-color-on-surface);
   font: inherit;
-  font-size: 16px;
+  font-size: var(--md-sys-typescale-body-large-size);
   transition: border-color var(--motion-duration-short) var(--motion-standard), background-color var(--motion-duration-short) var(--motion-standard);
 }
 
@@ -63,7 +63,7 @@
   border-radius: var(--md-sys-shape-corner-medium);
   color: var(--md-sys-color-on-surface-variant);
   font: inherit;
-  font-size: 14px;
+  font-size: var(--md-sys-typescale-body-medium-size);
 }
 
 .form input[type="file"]::file-selector-button {
@@ -105,7 +105,7 @@
 
 .heading p {
   margin: 4px 0 0;
-  font-size: 14px;
+  font-size: var(--md-sys-typescale-body-medium-size);
   overflow-wrap: anywhere;
 }
 
@@ -133,7 +133,7 @@
   border-radius: var(--md-sys-shape-corner-medium);
   background: var(--md-sys-color-surface-container);
   color: var(--md-sys-color-on-surface-variant);
-  font-size: 14px;
+  font-size: var(--md-sys-typescale-body-medium-size);
   line-height: 1.5;
 }
 
@@ -147,17 +147,17 @@
 
 .previewLabel {
   color: var(--md-sys-color-primary);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--md-sys-typescale-body-small-size);
+  font-weight: 500;
   letter-spacing: .04em;
-  text-transform: uppercase;
+  
 }
 
 .preview h3 {
   margin: 8px 0;
   color: var(--md-sys-color-on-surface);
   font-family: var(--font-sans);
-  font-size: 28px;
+  font-size: var(--md-sys-typescale-headline-medium-size);
   font-weight: 500;
   letter-spacing: -.02em;
 }
@@ -165,7 +165,7 @@
 .preview h4 {
   margin: 20px 0 4px;
   color: var(--md-sys-color-on-surface);
-  font-size: 16px;
+  font-size: var(--md-sys-typescale-body-large-size);
   font-weight: 500;
 }
 
@@ -180,7 +180,7 @@
   padding-top: 16px;
   border-top: 1px solid var(--md-sys-color-outline-variant);
   color: var(--md-sys-color-on-surface-variant) !important;
-  font-size: 14px;
+  font-size: var(--md-sys-typescale-body-medium-size);
   line-height: 1.6;
 }
 
@@ -216,7 +216,7 @@
 
 .entryHeading span {
   color: var(--md-sys-color-on-surface-variant);
-  font-size: 12px;
+  font-size: var(--md-sys-typescale-body-small-size);
 }
 
 .versionRow {
@@ -229,7 +229,7 @@
 
 .versionRow span {
   color: var(--md-sys-color-on-surface-variant);
-  font-size: 14px;
+  font-size: var(--md-sys-typescale-body-medium-size);
 }
 
 @media (max-width: 560px) {
