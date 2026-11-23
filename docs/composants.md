@@ -21,8 +21,9 @@ Ce document est le point d'entrée pour les composants d'interface réutilisable
 | `Bouton` | `components/ui/bouton.tsx` | Action native avec variantes filled, tonal, outlined et text ; tailles standard et icône |
 | `LienBouton` | `components/ui/lien-bouton.tsx` | Navigation Next.js présentée comme une action, sous forme de composant serveur |
 | `ChampRecherche` | `components/ui/champ-recherche.tsx` | Champ de recherche contrôlé, libellé accessible, icône, effacement et états Material partagés |
+| `BoutonComparaison` | `components/ui/bouton-comparaison.tsx` | Sélection comparative accessible, état sélectionné, limite désactivée et adaptation mobile |
 
-Les contrôles partagés reposent sur les tokens Fidelity et conservent les éléments natifs. Les composants métier gardent leurs règles de recherche, de synchronisation d'URL et de sélection.
+Les contrôles partagés reposent sur les tokens Fidelity et conservent les éléments natifs. Les composants métier gardent leurs règles de recherche, de synchronisation d'URL et de sélection ; le contrôle comparateur ne connaît ni la limite métier ni la liste des slugs, il reçoit seulement son état et son action.
 
 ## Composants métier
 

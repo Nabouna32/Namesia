@@ -23,38 +23,6 @@
   line-height: 1.6;
 }
 
-.compareToggle {
-  display: inline-flex;
-  min-height: 48px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--color-border);
-  border-radius: var(--md-sys-shape-corner-small);
-  padding: 0 12px;
-  background: var(--color-surface);
-  color: var(--color-text);
-  font: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.compareToggle[aria-pressed="true"] {
-  border-color: var(--color-accent);
-  background: var(--color-surface-muted);
-  color: var(--color-accent);
-}
-
-.compareIcon {
-  display: none;
-}
-
-.compareToggle:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-
 @media (max-width: 760px) {
   .resultsGrid {
     grid-template-columns: minmax(0, 1fr);
@@ -64,22 +32,5 @@
 @media (max-width: 420px) {
   .resultCard {
     gap: 6px;
-  }
-
-  .compareToggle {
-    width: 48px;
-    min-width: 48px;
-    padding: 0;
-    border-radius: 50%;
-  }
-
-  .compareLabel {
-    display: none;
-  }
-
-  .compareIcon {
-    display: inline-flex;
-    font-size: 18px;
-    line-height: 1;
   }
 }

@@ -11,6 +11,7 @@ import { comparerPertinence, normaliserRecherche } from "@/lib/recherche-prenoms
 import { creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
 import { IconeMaterial } from "./icone-material";
 import { ChampRecherche } from "@/components/ui/champ-recherche";
+import { BoutonComparaison } from "@/components/ui/bouton-comparaison";
 
 type Props = {
   prenoms: PrenomIndex[];
@@ -288,17 +289,12 @@ export function RecherchePrenoms({
                       <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
                     </Link>
                     {!compact && (
-                      <button
-                        className={styles.compareToggle}
-                        type="button"
-                        aria-pressed={selectionComparaison.includes(prenom.slug)}
-                        aria-label={`${selectionComparaison.includes(prenom.slug) ? "Retirer" : "Ajouter"} ${prenom.nom} ${selectionComparaison.includes(prenom.slug) ? "de" : "à"} la comparaison`}
-                        disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
+                      <BoutonComparaison
+                        prenom={prenom.nom}
+                        selectionne={selectionComparaison.includes(prenom.slug)}
+                        desactive={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
                         onClick={() => basculerComparaison(prenom.slug)}
-                      >
-                        <span className={styles.compareLabel}>{selectionComparaison.includes(prenom.slug) ? "Ajouté" : "Comparer"}</span>
-                        <span className={styles.compareIcon} aria-hidden="true"><IconeMaterial name={selectionComparaison.includes(prenom.slug) ? "check" : "compare-arrows"} size={18} /></span>
-                      </button>
+                      />
                     )}
                     <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
                   </article>
@@ -328,17 +324,12 @@ export function RecherchePrenoms({
                       <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
                     </Link>
                     {!compact && (
-                      <button
-                        className={styles.compareToggle}
-                        type="button"
-                        aria-pressed={selectionComparaison.includes(prenom.slug)}
-                        aria-label={`${selectionComparaison.includes(prenom.slug) ? "Retirer" : "Ajouter"} ${prenom.nom} ${selectionComparaison.includes(prenom.slug) ? "de" : "à"} la comparaison`}
-                        disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
+                      <BoutonComparaison
+                        prenom={prenom.nom}
+                        selectionne={selectionComparaison.includes(prenom.slug)}
+                        desactive={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
                         onClick={() => basculerComparaison(prenom.slug)}
-                      >
-                        <span className={styles.compareLabel}>{selectionComparaison.includes(prenom.slug) ? "Ajouté" : "Comparer"}</span>
-                        <span className={styles.compareIcon} aria-hidden="true"><IconeMaterial name={selectionComparaison.includes(prenom.slug) ? "check" : "compare-arrows"} size={18} /></span>
-                      </button>
+                      />
                     )}
                     <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
                   </article>

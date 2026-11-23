@@ -57,3 +57,19 @@ test("les trois parcours visiteurs utilisent le même champ de recherche accessi
   assert.doesNotMatch(globalStyles, /\.search-field\s*\{/);
   assert.doesNotMatch(globalStyles, /\.compare-search input\s*\{/);
 });
+
+const boutonComparaison = await readFile(new URL("../components/ui/bouton-comparaison.tsx", import.meta.url), "utf8");
+const boutonComparaisonStyles = await readFile(new URL("../components/ui/bouton-comparaison.module.css", import.meta.url), "utf8");
+const favorisComparaison = await readFile(new URL("../components/liste-favoris.module.css", import.meta.url), "utf8");
+const catalogueComparaison = await readFile(new URL("../components/recherche-prenoms.module.css", import.meta.url), "utf8");
+
+test("le contrôle de comparaison partagé couvre catalogue et favoris sans styles dupliqués", () => {
+  assert.match(boutonComparaison, /export function BoutonComparaison\(/);
+  assert.match(boutonComparaison, /ariaPressed=\{selectionne\}/);
+  assert.match(boutonComparaison, /ariaLabel=\{/);
+  assert.match(boutonComparaison, /variante=\{selectionne \? "tonal" : "outlined"\}/);
+  assert.match(boutonComparaisonStyles, /@media \(max-width: 420px\)/);
+  assert.match(boutonComparaisonStyles, /min-width: 48px/);
+  assert.doesNotMatch(favorisComparaison, /\.compareToggle/);
+  assert.doesNotMatch(catalogueComparaison, /\.compareToggle/);
+});
