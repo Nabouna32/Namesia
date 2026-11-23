@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  creerUrlCatalogueDepuisRecherche,
   creerUrlFicheDepuisCatalogue,
   creerUrlFicheDepuisFavoris,
   creerUrlFicheDepuisContexte,
@@ -141,4 +142,11 @@ test("les anciens liens catalogue sans discriminant restent compatibles", () => 
     "/prenoms?q=Jean+Luc&genre=Masculin&lettre=j"
   );
   assert.equal(creerUrlRetourNavigation({}), "/prenoms");
+});
+
+
+test("la recherche compacte ouvre le catalogue avec le terme saisi", () => {
+  assert.equal(creerUrlCatalogueDepuisRecherche("  Jean Luc  "), "/prenoms?q=Jean+Luc");
+  assert.equal(creerUrlCatalogueDepuisRecherche("Éloïse & Anna"), "/prenoms?q=%C3%89lo%C3%AFse+%26+Anna");
+  assert.equal(creerUrlCatalogueDepuisRecherche("   "), "/prenoms");
 });
