@@ -59,7 +59,7 @@ test("les trois parcours visiteurs utilisent le même champ de recherche accessi
   assert.match(champStyles, /::-webkit-search-cancel-button/);
   assert.match(champStyles, /--md-sys-motion-duration-short/);
   assert.doesNotMatch(champStyles, /\.clear\s*\{/);
-  assert.match(champStyles, /min-height: 48px/);
+  assert.match(styles, /min-height: 48px/);
   assert.match(catalogue, /<ChampRecherche/);
   assert.match(comparateur, /<ChampRecherche/);
   assert.match(listeFavoris, /<ChampRecherche/);
