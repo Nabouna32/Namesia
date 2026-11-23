@@ -65,7 +65,9 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
 
   const resultats = useMemo(() => {
     const terme = normaliserRecherche(recherche);
-    return prenoms.filter((prenom) => !terme || normaliser(prenom.nom).includes(terme));
+    return prenoms
+      .filter((prenom) => !terme || normaliserRecherche(prenom.nom).includes(terme))
+      .sort((a, b) => comparerPertinence(a, b, terme));
   }, [prenoms, recherche]);
   const selectionnes = selection.flatMap((slug) => fiches[slug] ? [fiches[slug]] : []);
   const selectionComplete = selectionnes.length === selection.length;
