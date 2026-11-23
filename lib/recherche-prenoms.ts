@@ -66,3 +66,24 @@ export function distanceEditionBornee(a: string, b: string, limite: number): num
 
   return Math.min(precedent.get(longueurB) ?? limite + 1, limite + 1);
 }
+
+/**
+ * Retourne jusqu'à cinq prénoms proches d'une recherche sans correspondance.
+ * Les candidats doivent déjà respecter les filtres actifs de l'écran appelant.
+ */
+export function suggererPrenomsProches(prenoms: PrenomIndex[], recherche: string): PrenomIndex[] {
+  const terme = normaliserRecherche(recherche);
+  if (terme.length < 4) return [];
+
+  const limite = terme.length >= 8 ? 2 : 1;
+  return prenoms
+    .flatMap((prenom) => {
+      const nom = normaliserRecherche(prenom.nom);
+      if (nom.includes(terme)) return [];
+      const distance = distanceEditionBornee(terme, nom, limite);
+      return distance <= limite ? [{ prenom, distance }] : [];
+    })
+    .sort((a, b) => a.distance - b.distance || a.prenom.nom.localeCompare(b.prenom.nom, "fr"))
+    .slice(0, 5)
+    .map(({ prenom }) => prenom);
+}

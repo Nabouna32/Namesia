@@ -7,7 +7,7 @@ import { BoutonFavori } from "@/components/bouton-favori";
 import { useFavoris } from "@/components/favoris-provider";
 import styles from "./recherche-prenoms.module.css";
 import type { PrenomIndex } from "@/lib/prenoms";
-import { comparerPertinence, distanceEditionBornee, normaliserRecherche } from "@/lib/recherche-prenoms";
+import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
 import { IconeMaterial } from "./icone-material";
 import { ChampRecherche } from "@/components/ui/champ-recherche";
@@ -63,24 +63,12 @@ export function RecherchePrenoms({
   }, [genreActif, lettreActive, prenoms, recherche]);
 
   const suggestions = useMemo(() => {
-    const terme = normaliserRecherche(recherche);
-    if (resultats.length > 0 || terme.length < 4) return [];
-
-    const limite = terme.length >= 8 ? 2 : 1;
-    return prenoms
-      .flatMap((prenom) => {
-        const nom = normaliserRecherche(prenom.nom);
-        if ((genreActif && prenom.genre !== genreActif)
-          || (lettreActive && normaliserRecherche(prenom.lettre) !== lettreActive)) {
-          return [];
-        }
-
-        const distance = distanceEditionBornee(terme, nom, limite);
-        return distance <= limite ? [{ prenom, distance }] : [];
-      })
-      .sort((a, b) => a.distance - b.distance || a.prenom.nom.localeCompare(b.prenom.nom, "fr"))
-      .slice(0, 5)
-      .map(({ prenom }) => prenom);
+    if (resultats.length > 0) return [];
+    const candidats = prenoms.filter((prenom) => (
+      (!genreActif || prenom.genre === genreActif)
+      && (!lettreActive || normaliserRecherche(prenom.lettre) === lettreActive)
+    ));
+    return suggererPrenomsProches(candidats, recherche);
   }, [genreActif, lettreActive, prenoms, recherche, resultats.length]);
 
   const prenomsSelectionnes = selectionComparaison.flatMap((slug) => {

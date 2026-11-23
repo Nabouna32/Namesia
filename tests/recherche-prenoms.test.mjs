@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { distanceEditionBornee, normaliserRecherche } from "../lib/recherche-prenoms.ts";
+import { distanceEditionBornee, normaliserRecherche, suggererPrenomsProches } from "../lib/recherche-prenoms.ts";
 
 test("la recherche ignore les accents et la casse", () => {
   assert.equal(normaliserRecherche(" ÉLODIE "), "elodie");
@@ -98,4 +98,28 @@ test("la distance bornée correspond à Levenshtein sur un ensemble exhaustif de
       }
     }
   }
+});
+
+
+test("les suggestions proches sont mutualisées, bornées et classées par distance", () => {
+  const prenoms = ["Alice", "Alix", "Alise", "Aline", "Alina", "Alisa", "Alicia"]
+    .map((nom) => ({ id: nom, slug: nom.toLowerCase(), nom, lettre: "A", genre: "Féminin" }));
+
+  assert.deepEqual(
+    suggererPrenomsProches(prenoms, "Alis").map((prenom) => prenom.nom),
+    ["Alisa", "Alise", "Alix"]
+  );
+  assert.deepEqual(suggererPrenomsProches(prenoms, "ali"), []);
+  assert.deepEqual(suggererPrenomsProches(prenoms, "Alice"), []);
+});
+
+test("les suggestions proches autorisent deux modifications pour les recherches longues", () => {
+  const prenoms = [
+    { id: "1", slug: "alexandra", nom: "Alexandra", lettre: "A", genre: "Féminin" },
+    { id: "2", slug: "alexandrine", nom: "Alexandrine", lettre: "A", genre: "Féminin" }
+  ];
+  assert.deepEqual(
+    suggererPrenomsProches(prenoms, "alexandrx").map((prenom) => prenom.nom),
+    ["Alexandra"]
+  );
 });
