@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 2.0
+- **Version :** 2.1
 - **Mis à jour :** 2026-11-23
 
 ## Intention
@@ -76,5 +76,5 @@ La stack utilise Next.js, React et des feuilles CSS natives / CSS Modules. Un fr
 - Les CSS Modules des composants ne redéfinissent pas la palette ; ils consomment les tokens.
 - Les pages accueil et fiche prénom partagent les mêmes surfaces, échelles et états.
 - Les autres pages utilisent les mêmes variables : aucun style de page ne doit introduire une couleur d'accent indépendante.
-- Dans le comparateur, les titres de rubriques et les textes éditoriaux utilisent `--color-text` ; les contenus absents utilisent `--color-text-muted`. Le bleu reste réservé aux repères de formulaire et aux actions, pas aux paragraphes courants.
+- Dans le comparateur, les titres de rubriques et les textes éditoriaux utilisent `--color-text` ; les contenus absents utilisent `--color-text-muted`. Le bleu reste réservé aux repères de formulaire et aux actions, pas aux paragraphes courants. Les textes des rubriques et notes d'association restent à 16 px ; l'avertissement éditorial est à 14 px minimum.
 - L'en-tête utilise une surface neutre et une bordure sémantique ; les liens de navigation sont en texte secondaire au repos et passent à l'accent au survol. Ne jamais placer un texte de navigation dans la même couleur que son fond.
