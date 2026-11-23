@@ -172,7 +172,7 @@ test("Rainbow ne colore plus les titres ou les surfaces générales", () => {
   const titre = globalStyles.slice(globalStyles.lastIndexOf("h1 em, h2 em {"));
   const profil = globalStyles.slice(globalStyles.lastIndexOf(".profile-hero h1 span {"));
   const surfaceSymbolique = globalStyles.slice(globalStyles.lastIndexOf(".symbolic-card {"));
-  assert.doesNotMatch(globalStyles, /\.hero::after\s*\{/);
+  assert.doesNotMatch(globalStyles, /\.hero::after\s*\{/);\n  assert.doesNotMatch(globalStyles, /var\(--rainbow\)|color-rainbow-text/);
   assert.doesNotMatch(titre.slice(0, titre.indexOf("\n}")), /color-rainbow/);
   assert.doesNotMatch(profil.slice(0, profil.indexOf("\n}")), /color-rainbow/);
   assert.match(titre, /--md-sys-color-primary/);
