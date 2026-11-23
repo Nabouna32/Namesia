@@ -18,6 +18,7 @@ test("les deux aperçus chargent la même Roboto locale sans police de substitut
   assert.match(fontLoader, /Buffer\.from\(contenu, "base64"\)/);
   assert.match(fontLoader, /weight: 400/);
   assert.ok(fontAsset.trim().length > 200_000);
+  assert.match(fontAsset, /^[A-Za-z0-9+/=\\s]+$/);
 });
 
 test("le favicon dessine le monogramme en vecteurs sans dépendre d'une police système", () => {
