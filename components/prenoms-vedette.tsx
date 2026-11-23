@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BoutonFavori } from "@/components/bouton-favori";
 import type { PrenomIndex } from "@/lib/prenoms";
 import styles from "./prenoms-vedette.module.css";
+import { IconeMaterial } from "./icone-material";
 
 type Props = { prenoms: PrenomIndex[] };
 
@@ -17,7 +18,7 @@ export function PrenomsVedette({ prenoms }: Props) {
                 <strong>{prenom.nom}</strong>
                 <small>{prenom.genre}</small>
               </span>
-              <span className="featured-action">Découvrir <b>↗</b></span>
+              <span className="featured-action">Découvrir <b><IconeMaterial name="arrow-up-right" size={18} /></b></span>
             </span>
           </Link>
           <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />

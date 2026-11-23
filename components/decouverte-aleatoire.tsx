@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { BoutonFavori } from "@/components/bouton-favori";
 import styles from "./decouverte-aleatoire.module.css";
+import { IconeMaterial } from "./icone-material";
 
 type Props = { prenoms: PrenomIndex[] };
 
@@ -24,7 +25,7 @@ export function DecouverteAleatoire({ prenoms }: Props) {
   return (
     <div className={styles.discovery}>
       <button className={styles.button} type="button" onClick={decouvrir}>
-        Surprenez-moi <span aria-hidden="true">↗</span>
+        Surprenez-moi <span aria-hidden="true"><IconeMaterial name="shuffle" size={18} /></span>
       </button>
       <div className={styles.copy} aria-live="polite" aria-atomic="true">
         {selection ? (

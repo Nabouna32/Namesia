@@ -1,7 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { FavorisProvider } from "@/components/favoris-provider";
 import { HistoriqueProvider } from "@/components/historique-provider";
+import { MaterialThemeProvider } from "@/components/material-theme-provider";
+import { NavigationAdaptative } from "@/components/navigation-adaptative";
 import "./globals.css";
 import { jsonLd } from "@/lib/json-ld";
 import { siteUrl } from "@/lib/site-url";
@@ -16,6 +18,17 @@ const siteWebData = {
   url: siteUrl.toString(),
   inLanguage: "fr-FR",
   description: siteDescription
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fef7ff" },
+    { media: "(prefers-color-scheme: dark)", color: "#141218" }
+  ]
 };
 
 export const metadata: Metadata = {
@@ -38,23 +51,36 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return <html lang="fr" data-scroll-behavior="smooth"><body>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(siteWebData) }} />
     <a className="skip-link" href="#contenu">Aller au contenu</a>
-    <FavorisProvider>
-      <HistoriqueProvider>
-        <header className="site-header"><div className="header-inner">
-          <Link className="brand" href="/" aria-label="Namesia, accueil"><span className="brand-mark">n.</span><span>namesia</span></Link>
-          <nav className="site-nav" aria-label="Navigation principale">
-            <Link href="/prenoms">Explorer</Link>
-            <Link href="/comparer">Comparer</Link>
-            <Link href="/favoris">Favoris</Link>
-          </nav>
-        </div></header>
-        {children}
-        <footer className="site-footer"><div className="footer-inner">
-          <Link className="brand footer-brand" href="/"><span className="brand-mark">n.</span><span>namesia</span></Link>
-          <p>Les prénoms ont des histoires. Prenons le temps de les raconter.</p>
-          <span className="footer-note">© {new Date().getFullYear()} Namesia</span>
-        </div></footer>
-      </HistoriqueProvider>
-    </FavorisProvider>
+    <MaterialThemeProvider>
+      <FavorisProvider>
+        <HistoriqueProvider>
+          <div className="app-shell">
+            <header className="top-app-bar">
+              <div className="top-app-bar-inner">
+                <Link className="brand" href="/" aria-label="Namesia, accueil">
+                  <span className="brand-mark">n.</span>
+                  <span>namesia</span>
+                </Link>
+                <span className="top-app-bar-caption">Le sens derrière chaque prénom</span>
+              </div>
+            </header>
+            <NavigationAdaptative />
+            <div className="app-content">
+              {children}
+              <footer className="site-footer">
+                <div className="footer-inner">
+                  <Link className="brand footer-brand" href="/">
+                    <span className="brand-mark">n.</span>
+                    <span>namesia</span>
+                  </Link>
+                  <p>Les prénoms ont des histoires. Prenons le temps de les raconter.</p>
+                  <span className="footer-note">© {new Date().getFullYear()} Namesia</span>
+                </div>
+              </footer>
+            </div>
+          </div>
+        </HistoriqueProvider>
+      </FavorisProvider>
+    </MaterialThemeProvider>
   </body></html>;
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import styles from "./bouton-favori.module.css";
+import { IconeMaterial } from "./icone-material";
 import { useFavoris } from "./favoris-provider";
 
 type Props = { slug: string; nom?: string; compact?: boolean; afficherErreur?: boolean };
@@ -21,7 +22,7 @@ export function BoutonFavori({ slug, nom, compact = false, afficherErreur = true
         disabled={!pret}
         onClick={() => basculer(slug)}
       >
-        <span aria-hidden="true">{actif ? "♥" : "♡"}</span>
+        <span aria-hidden="true"><IconeMaterial name={actif ? "favorite-filled" : "favorite"} size={20} /></span>
         {!compact && (pret ? action : "Chargement…")}
       </button>
       {erreur && afficherErreur && (

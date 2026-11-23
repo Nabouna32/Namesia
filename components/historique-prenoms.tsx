@@ -6,6 +6,7 @@ import type { PrenomIndex } from "@/lib/prenoms";
 import { useFavoris } from "@/components/favoris-provider";
 import { useHistorique } from "@/components/historique-provider";
 import styles from "./historique-prenoms.module.css";
+import { IconeMaterial } from "./icone-material";
 
 export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
   const { slugs, effacer } = useHistorique();
@@ -41,7 +42,7 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
                       <strong>{prenom.nom}</strong>
                       <small>{prenom.genre}</small>
                     </span>
-                    <span className="card-arrow" aria-hidden="true">↗</span>
+                    <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
                   </Link>
                   {!erreurFavoris && (
                     <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
