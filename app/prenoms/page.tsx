@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { RecherchePrenoms } from "@/components/recherche-prenoms";
 import { jsonLd } from "@/lib/json-ld";
 import { getPrenomsIndex } from "@/lib/prenoms";
+import { lireNombreVisible } from "@/lib/navigation-prenoms";
 import { siteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
@@ -28,6 +29,7 @@ type Props = {
     q?: string | string[];
     genre?: string | string[];
     lettre?: string | string[];
+    limite?: string | string[];
   }>;
 };
 
@@ -42,6 +44,7 @@ function normaliserFiltre(value: string): string {
 export default async function Catalogue({ searchParams }: Props) {
   const [parametres, prenoms] = await Promise.all([searchParams, getPrenomsIndex()]);
   const rechercheInitiale = premierParametre(parametres.q);
+  const nombreVisibleInitial = lireNombreVisible(parametres.limite, Math.max(24, Math.ceil(prenoms.length / 24) * 24));
   const genreDemande = premierParametre(parametres.genre);
   const lettreDemandee = normaliserFiltre(premierParametre(parametres.lettre));
 
@@ -85,6 +88,7 @@ export default async function Catalogue({ searchParams }: Props) {
           initialRecherche={rechercheInitiale}
           initialGenre={genreInitial}
           initialLettre={lettreInitiale}
+          initialNombreVisible={nombreVisibleInitial}
         />
       </div>
     </main>

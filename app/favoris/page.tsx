@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ListeFavoris } from "@/components/liste-favoris";
-import type { TriFavoris } from "@/lib/navigation-prenoms";
+import { lireNombreVisible, type TriFavoris } from "@/lib/navigation-prenoms";
 import { getPrenomsIndex } from "@/lib/prenoms";
 
 export const dynamic = "force-dynamic";
@@ -17,6 +17,7 @@ type Props = {
     q?: ParametreUrl;
     genre?: ParametreUrl;
     tri?: ParametreUrl;
+    limite?: ParametreUrl;
   }>;
 };
 
@@ -42,6 +43,7 @@ export default async function FavorisPage({ searchParams }: Props) {
           initialRecherche={premierParametre(parametres.q)}
           initialGenre={premierParametre(parametres.genre)}
           initialTri={lireTri(premierParametre(parametres.tri))}
+          initialNombreVisible={lireNombreVisible(parametres.limite)}
         />
       </div>
     </main>

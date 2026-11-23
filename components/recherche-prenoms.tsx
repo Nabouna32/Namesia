@@ -17,6 +17,7 @@ type Props = {
   initialRecherche?: string;
   initialGenre?: string | null;
   initialLettre?: string | null;
+  initialNombreVisible?: number;
 };
 
 function distanceEdition(a: string, b: string, limite: number): number {
@@ -50,13 +51,14 @@ export function RecherchePrenoms({
   synchroniserUrl = false,
   initialRecherche = "",
   initialGenre = null,
-  initialLettre = null
+  initialLettre = null,
+  initialNombreVisible = 24
 }: Props) {
   const { erreur: erreurFavoris } = useFavoris();
   const [recherche, setRecherche] = useState(initialRecherche);
   const [genreActif, setGenreActif] = useState(initialGenre);
   const [lettreActive, setLettreActive] = useState(initialLettre);
-  const [nombreVisible, setNombreVisible] = useState(24);
+  const [nombreVisible, setNombreVisible] = useState(initialNombreVisible);
   const [selectionComparaison, setSelectionComparaison] = useState<string[]>([]);
 
   const genres = useMemo(
@@ -108,7 +110,7 @@ export function RecherchePrenoms({
 
   const filtresActifs = Boolean(recherche.trim() || genreActif || lettreActive);
   const contexteRetour = synchroniserUrl
-    ? { q: recherche, genre: genreActif, lettre: lettreActive }
+    ? { q: recherche, genre: genreActif, lettre: lettreActive, limite: nombreVisible }
     : null;
 
   function basculerComparaison(slug: string) {
@@ -120,7 +122,8 @@ export function RecherchePrenoms({
   function mettreAJourUrl(
     rechercheSuivante: string,
     genreSuivant: string | null,
-    lettreSuivante: string | null
+    lettreSuivante: string | null,
+    nombreVisibleSuivant = 24
   ) {
     if (!synchroniserUrl) return;
 
@@ -128,7 +131,8 @@ export function RecherchePrenoms({
     const parametres: [string, string][] = [
       ["q", rechercheSuivante.trim()],
       ["genre", genreSuivant ?? ""],
-      ["lettre", lettreSuivante ?? ""]
+      ["lettre", lettreSuivante ?? ""],
+      ["limite", nombreVisibleSuivant > 24 ? String(nombreVisibleSuivant) : ""]
     ];
 
     for (const [cle, valeur] of parametres) {
@@ -163,6 +167,12 @@ export function RecherchePrenoms({
     setGenreActif(null);
     setLettreActive(null);
     mettreAJourUrl("", null, null);
+  }
+
+  function chargerPlus() {
+    const suivant = nombreVisible + 24;
+    setNombreVisible(suivant);
+    mettreAJourUrl(recherche, genreActif, lettreActive, suivant);
   }
 
   return (
@@ -304,7 +314,7 @@ export function RecherchePrenoms({
               <button
                 className="filter-reset"
                 type="button"
-                onClick={() => setNombreVisible((visible) => visible + 24)}
+                onClick={chargerPlus}
               >
                 Afficher les {Math.min(24, resultats.length - nombreVisible)} prénoms suivants
               </button>

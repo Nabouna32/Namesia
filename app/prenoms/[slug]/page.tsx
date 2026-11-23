@@ -23,6 +23,7 @@ type Props = {
     retour_genre?: ParametreUrl;
     retour_lettre?: ParametreUrl;
     retour_tri?: ParametreUrl;
+    retour_limite?: ParametreUrl;
   }>;
 };
 
