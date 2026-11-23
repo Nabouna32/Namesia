@@ -485,11 +485,10 @@ h2 em {
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--surface);
-  transition: transform 0.2s, border-color 0.2s;
+  transition: border-color 0.2s;
 }
 
 .name-card:hover {
-  transform: translateY(-2px);
   border-color: var(--color-text-muted);
 }
 
@@ -579,11 +578,11 @@ h2 em {
   overflow: hidden;
   padding: 18px;
   border-radius: 12px;
-  transition: transform 0.2s;
+  transition: border-color 0.2s;
 }
 
 .featured-card:hover {
-  transform: translateY(-4px);
+  border-color: var(--color-accent);
 }
 
 .featured-1 {
@@ -1144,11 +1143,10 @@ h2 em {
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
-  transition: border-color 0.18s, background-color 0.18s, transform 0.18s;
+  transition: border-color 0.18s, background-color 0.18s;
 }
 
 .share-button:hover {
-  transform: translateY(-1px);
   border-color: var(--color-accent);
   background: var(--color-surface);
 }

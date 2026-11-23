@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 2.3
+- **Version :** 2.4
 - **Mis à jour :** 2026-11-23
 
 ## Intention
@@ -53,7 +53,7 @@ Rayons : 8 px (petit), 12 px (standard), 16 px (grand), 24 px (mise en avant), p
 
 ## Comportement des composants
 
-- **Survol :** changement léger de couleur/bordure ; pas de déplacement important ni d'animation décorative.
+- **Survol :** changement léger de couleur/bordure ; les cartes et actions ne se déplacent pas et ne changent pas d'échelle. Les effets de translation sont réservés aux mécanismes structurels (lien d'évitement, centrage), pas aux retours interactifs.
 - **Focus :** contour de 3 px utilisant `--color-focus`, avec un décalage de 3 px ; la règle s'applique uniformément aux liens, boutons, champs et sélecteurs, y compris dans le comparateur et la recherche. Aucun composant ne réduit ou ne supprime cet indicateur.
 - **Désactivé :** opacité réduite et curseur adapté, sans perdre la lisibilité du libellé.
 - **Chargement :** conserver l'espace du contrôle et annoncer l'état si une opération asynchrone existe ; pas de faux indicateur sur une action synchrone.
