@@ -1,7 +1,11 @@
 import type { PrenomIndex } from "@/lib/prenoms";
 
 export function normaliserRecherche(value: string): string {
-  return value.trim().normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("fr");
+  return value.trim()
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLocaleLowerCase("fr")
+    .replace(/(?<=[\p{L}\p{N}])[\s\p{P}\p{Z}]+(?=[\p{L}\p{N}])/gu, "");
 }
 
 export function comparerPertinence(a: PrenomIndex, b: PrenomIndex, terme: string): number {
