@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.24
+- **Version :** 4.25
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -97,6 +97,10 @@ Les surfaces de l'accueil, des cartes vedettes, des fiches, du catalogue, du com
 Les interactions utilisent les courbes Material de standard, d'accélération et de décélération, avec des durées courtes, moyennes et longues centralisées. Le lien d'évitement suit lui aussi ces tokens : aucune durée ni courbe de transition n'est codée localement. Les boutons partagés et les indicateurs de navigation emploient des couches d'état translucides (8 % au survol avec un pointeur fin, 12 % au focus et à la pression) plutôt que des filtres de luminosité ou des surfaces opaques. La couche utilise la couleur de premier plan du composant, y compris sur l'indicateur sélectionné. Les cartes réagissent par une surface tonale plus élevée et un état pressé, sans déplacement ni ombre artificielle. Le mouvement doit rendre l'action compréhensible : indicateur qui s'étend, surface qui réagit à la pression, changement d'état animé. Les animations décoratives restent secondaires. `prefers-reduced-motion: reduce` supprime les mouvements non essentiels.
 
 Les icônes fonctionnelles utilisent les tracés officiels Google Material Symbols Rounded, poids 400, embarqués localement et affichés sur une grille de 24 × 24 avec `currentColor`. Les variantes pleines ne sont utilisées que lorsqu'elles ont une forme réellement distincte : Accueil et Favoris changent de glyphe à l'état actif ; Recherche et Comparer conservent leur dessin officiel, et leur sélection est portée par l'indicateur tonal et le libellé. Les pictogrammes restent décoratifs pour les technologies d'assistance, le nom étant porté par le lien ou le bouton. Les cibles interactives restent d'au moins 48 × 48 px ; le SVG ne porte pas lui-même la cible. Les SVG de marque peuvent être colorés. Source et licence : `licenses/NOTICE-Material-Symbols.md` et `licenses/Apache-2.0-Material-Symbols.txt`.
+
+### Focus clavier
+
+Un seul sélecteur global applique l'indicateur de focus visible (contour primaire de 3 px avec décalage de 3 px) aux liens, boutons et champs natifs. Les composants peuvent enrichir leur état sélectionné ou pressé, mais ne redéfinissent pas le contour de focus. Le lien d'évitement apparaît sur `:focus-visible`, comme les autres liens : la navigation au clavier est mise en évidence sans afficher un contour au simple toucher.
 
 ## 7. Responsive, accessibilité et navigateur
 
