@@ -48,7 +48,7 @@ test("les trois parcours visiteurs utilisent le même champ de recherche accessi
   assert.match(champ, /export function ChampRecherche\(/);
   assert.match(champ, /<label[^>]+htmlFor=\{id\}/);
   assert.match(champ, /type="search"/);
-  assert.match(champ, /aria-label=\{\`Effacer/);
+  assert.match(champ, /aria-label=\\{.Effacer/);
   assert.match(champStyles, /:focus-within/);
   assert.match(champStyles, /min-height: 48px/);
   assert.match(catalogue, /<ChampRecherche/);
