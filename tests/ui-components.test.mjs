@@ -264,6 +264,9 @@ test("la typographie suit une échelle Material 3 unique sans surcharges respons
   assert.equal((globalStyles.match(/\.profile-hero h1\s*\{/g) ?? []).length, 1);
   assert.equal((globalStyles.match(/\.section-heading h2\s*\{/g) ?? []).length, 1);
   assert.doesNotMatch(globalStyles, /--font-serif|var\(--serif\)/);
+  assert.match(globalStyles, /--font-sans: Roboto;/);
+  assert.match(globalStyles, /--font-display: Roboto;/);
+  assert.doesNotMatch(globalStyles, /Google Sans|--font-(?:sans|display):[^;]*(?:Arial|system-ui|sans-serif)/);
 });
 
 

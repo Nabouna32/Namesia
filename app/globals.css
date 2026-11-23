@@ -60,8 +60,8 @@
   --md-category-3-container: #b7f397;
   --md-category-3-on-container: #0b2000;
   --color-rainbow: linear-gradient(105deg, #ef568b 0%, #f29a42 19%, #e8c94c 36%, #55b987 54%, #49a9d5 72%, #8669d4 88%, #d76bb5 100%);
-  --font-sans: Roboto, "Arial", system-ui, sans-serif;
-  --font-display: "Google Sans", Roboto, system-ui, sans-serif;
+  --font-sans: Roboto;
+  --font-display: Roboto;
   --md-sys-typescale-display-small-size: 36px;
   --md-sys-typescale-display-small-line-height: 44px;
   --md-sys-typescale-display-small-tracking: -0.25px;
