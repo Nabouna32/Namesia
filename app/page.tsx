@@ -26,7 +26,6 @@ export default async function Accueil() {
   return (
     <main id="contenu" tabIndex={-1}>
       <section className="hero">
-        <div className="hero-glow" aria-hidden="true" />
         <div className="container hero-content">
           <span className="eyebrow"><span className="eyebrow-dot" /> L'univers des prénoms, autrement</span>
           <h1>Chaque prénom<br />a <em>son histoire.</em></h1>
@@ -35,7 +34,6 @@ export default async function Accueil() {
           {prenoms.length > 0 && <DecouverteAleatoire prenoms={prenoms} />}
           <p className="ai-disclaimer">Les contenus sont générés par IA et peuvent comporter des erreurs.</p>
         </div>
-        <div className="hero-decoration" aria-hidden="true"><span>A</span><span>é</span><span>∞</span></div>
       </section>
       <HistoriquePrenoms prenoms={prenoms} />
       <section className="section explore-section">
