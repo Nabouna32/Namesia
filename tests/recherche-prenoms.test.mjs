@@ -107,7 +107,7 @@ test("les suggestions proches sont mutualisées, bornées et classées par dista
 
   assert.deepEqual(
     suggererPrenomsProches(prenoms, "Alis").map((prenom) => prenom.nom),
-    ["Alisa", "Alise", "Alina", "Alisa", "Alice"].sort((a, b) => a.localeCompare(b, "fr")).slice(0, 5)
+    ["Alisa", "Alise", "Alix"]
   );
   assert.deepEqual(suggererPrenomsProches(prenoms, "ali"), []);
   assert.deepEqual(suggererPrenomsProches(prenoms, "Alice"), []);
