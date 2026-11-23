@@ -213,8 +213,3 @@
   font-weight: 600;
   cursor: pointer;
 }
-
-.copyButton:disabled {
-  cursor: not-allowed;
-  opacity: 0.56;
-}
