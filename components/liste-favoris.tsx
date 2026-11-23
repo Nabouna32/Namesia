@@ -231,16 +231,16 @@ export function ListeFavoris({
         <>
           <div className={styles.filters}>
             <ChampRecherche
-                id="recherche-favoris"
-                label="Rechercher dans mes favoris"
-                placeholder="Saisissez un prénom..."
-                value={recherche}
-                onChange={(value) => {
-                  setNombreVisible(24);
-                  setRecherche(value);
-                  mettreAJourUrl(value, genreActifValide, triActif);
-                }}
-              />
+              id="recherche-favoris"
+              label="Rechercher dans mes favoris"
+              placeholder="Saisissez un prénom..."
+              value={recherche}
+              onChange={(value) => {
+                setNombreVisible(24);
+                setRecherche(value);
+                mettreAJourUrl(value, genreActifValide, triActif);
+              }}
+            />
             {genres.length > 1 && (
               <div className={styles.genre}>
                 <label htmlFor="genre-favoris">Filtrer par genre</label>
