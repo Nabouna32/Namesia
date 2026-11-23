@@ -73,3 +73,20 @@ test("le contrôle de comparaison partagé couvre catalogue et favoris sans styl
   assert.doesNotMatch(favorisComparaison, /\.compareToggle/);
   assert.doesNotMatch(catalogueComparaison, /\.compareToggle/);
 });
+
+const listeSelection = await readFile(new URL("../components/ui/liste-selection-comparaison.tsx", import.meta.url), "utf8");
+const listeSelectionStyles = await readFile(new URL("../components/ui/liste-selection-comparaison.module.css", import.meta.url), "utf8");
+const barreComparaison = await readFile(new URL("../components/barre-comparaison.tsx", import.meta.url), "utf8");
+const comparateurSelection = await readFile(new URL("../components/comparateur-prenoms.tsx", import.meta.url), "utf8");
+const icones = await readFile(new URL("../components/icone-material.tsx", import.meta.url), "utf8");
+
+test("les listes de prénoms sélectionnés partagent un seul composant accessible", () => {
+  assert.match(listeSelection, /export function ListeSelectionComparaison\(/);
+  assert.match(listeSelection, /aria-label=\{.*Retirer/);
+  assert.match(listeSelectionStyles, /min-height: 48px/);
+  assert.match(barreComparaison, /<ListeSelectionComparaison/);
+  assert.match(comparateurSelection, /<ListeSelectionComparaison/);
+  assert.match(icones, /\| "close"/);
+  assert.doesNotMatch(globalStyles, /\.compare-selected-item\s*\{/);
+  assert.doesNotMatch(globalStyles, /\.compare-selected-list\s*\{/);
+});
