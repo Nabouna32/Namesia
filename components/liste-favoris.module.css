@@ -171,7 +171,7 @@
   background: var(--color-surface);
   color: var(--color-text);
   font: inherit;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -187,7 +187,9 @@
   opacity: 0.5;
 }
 
-.compareToggle:focus-visible {
-  outline: 3px solid var(--color-focus);
-  outline-offset: 3px;
+
+@media (max-width: 420px) {
+  .compareToggle {
+    font-size: 13px;
+  }
 }
