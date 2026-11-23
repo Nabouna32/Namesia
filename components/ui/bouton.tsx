@@ -18,7 +18,7 @@ type Props = {
   onClick?: () => void;
 };
 
-export function classesBouton(variante: Variante, taille: Taille, className?: string) {
+function classesBouton(variante: Variante, taille: Taille, className?: string) {
   return [styles.button, styles[variante], taille === "icon" ? styles.icon : "", className]
     .filter(Boolean)
     .join(" ");
