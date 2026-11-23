@@ -119,3 +119,22 @@ test("les sélecteurs des favoris utilisent un champ natif partagé", () => {
   assert.match(favorisSelects, /<ChampSelect/);
   assert.doesNotMatch(favorisSelectStyles, /\.genre select|\.sort select/);
 });
+
+const adminActions = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
+const favorisActions = await readFile(new URL("../components/liste-favoris.tsx", import.meta.url), "utf8");
+const comparateurActions = await readFile(new URL("../components/comparateur-prenoms.tsx", import.meta.url), "utf8");
+const adminStyles = await readFile(new URL("../app/admin/admin.module.css", import.meta.url), "utf8");
+
+test("les actions de l'administration et des visiteurs utilisent les boutons partagés", () => {
+  assert.match(adminActions, /import \{ Bouton \} from "@\/components\/ui\/bouton"/);
+  assert.match(adminActions, /<Bouton/);
+  assert.match(favorisActions, /<Bouton/);
+  assert.match(favorisActions, /<LienBouton/);
+  assert.match(lienBouton, /^"use client";/);
+  assert.match(comparateurActions, /<Bouton/);
+  assert.doesNotMatch(adminActions, /button-dark|styles\.secondary/);
+  assert.doesNotMatch(favorisActions, /button-dark/);
+  assert.doesNotMatch(comparateurActions, /button-dark/);
+  assert.doesNotMatch(globalStyles, /\.button\s*\{|\.button-dark/);
+  assert.doesNotMatch(adminStyles, /\.secondary\s*\{/);
+});

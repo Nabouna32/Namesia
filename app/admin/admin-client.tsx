@@ -4,6 +4,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { createClient, type Session } from "@supabase/supabase-js";
 import { FICHE_SCHEMA_VERSION, parseFichePrenom, type FichePrenomImport } from "@/lib/fiche-prenom";
 import styles from "./admin.module.css";
+import { Bouton } from "@/components/ui/bouton";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -273,7 +274,7 @@ export function AdminClient() {
       <form className={styles.form} onSubmit={connecter}>
         <label htmlFor="admin-email">Adresse e-mail</label>
         <input id="admin-email" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
-        <button className="button button-dark" type="submit" disabled={busy}>{busy ? "Envoi…" : "Recevoir un lien de connexion"}</button>
+        <Bouton type="submit" disabled={busy}>{busy ? "Envoi…" : "Recevoir un lien de connexion"}</Bouton>
       </form>
       {message && <p className={styles.notice} role="status">{message}</p>}
     </section>;
@@ -284,14 +285,14 @@ export function AdminClient() {
       <h2>Accès non autorisé</h2>
       <p>Ce compte est connecté, mais ne figure pas dans la liste des administrateurs Namesia.</p>
       {message && <p className={styles.notice} role="status">{message}</p>}
-      <button className="button button-dark" type="button" onClick={deconnecter}>Se déconnecter</button>
+      <Bouton type="button" onClick={deconnecter}>Se déconnecter</Bouton>
     </section>;
   }
 
   return <section className={styles.panel}>
     <div className={styles.heading}>
       <div><h2>Importer une fiche</h2><p>Connecté en tant que {session.user.email}</p></div>
-      <button className={styles.secondary} type="button" onClick={deconnecter}>Déconnexion</button>
+      <Bouton variante="outlined" type="button" onClick={deconnecter}>Déconnexion</Bouton>
     </div>
     <form className={styles.form} onSubmit={importer}>
       <label htmlFor="fiche-json">Fiche JSON (version {FICHE_SCHEMA_VERSION})</label>
@@ -309,8 +310,8 @@ export function AdminClient() {
         setImported(null);
       }} placeholder={'{"schema_version":"3.0.0","identity":{...},"content":{...}}'} />
       <div className={styles.actions}>
-        <button className={styles.secondary} type="button" disabled={busy || !json.trim()} onClick={previsualiser}>Prévisualiser</button>
-        <button className="button button-dark" type="submit" disabled={busy || !preview}>{busy ? "Import…" : "Enregistrer en brouillon"}</button>
+        <Bouton variante="outlined" type="button" disabled={busy || !json.trim()} onClick={previsualiser}>Prévisualiser</Bouton>
+        <Bouton type="submit" disabled={busy || !preview}>{busy ? "Import…" : "Enregistrer en brouillon"}</Bouton>
       </div>
     </form>
 
@@ -327,7 +328,7 @@ export function AdminClient() {
 
     {imported && <div className={styles.publish}>
       <p>La version {imported.version} est enregistrée en brouillon. Après vérification de l'aperçu, tu peux la publier.</p>
-      <button className="button button-dark" type="button" disabled={busy} onClick={publier}>Publier cette version</button>
+      <Bouton type="button" disabled={busy} onClick={publier}>Publier cette version</Bouton>
     </div>}
 
     <section className={styles.library}>
@@ -342,10 +343,10 @@ export function AdminClient() {
         </div>
         {[...name.name_profiles].sort((a, b) => b.version - a.version).map((profile) => <div className={styles.versionRow} key={profile.id}>
           <span>Version {profile.version} · {statusLabels[profile.status]} · {new Date(profile.created_at).toLocaleDateString("fr-FR")}</span>
-          <button className={styles.secondary} type="button" disabled={busy} onClick={() => void previsualiserVersion(profile)}>Prévisualiser</button>
+          <Bouton variante="outlined" type="button" disabled={busy} onClick={() => void previsualiserVersion(profile)}>Prévisualiser</Bouton>
         </div>)}
       </article>)}
-      {catalogNextOffset !== null && <button className={styles.secondary} type="button" disabled={catalogLoading} onClick={() => setCatalogOffset(catalogNextOffset)}>Charger les fiches suivantes</button>}
+      {catalogNextOffset !== null && <Bouton variante="outlined" type="button" disabled={catalogLoading} onClick={() => setCatalogOffset(catalogNextOffset)}>Charger les fiches suivantes</Bouton>}
     </section>
     {message && <p className={styles.notice} role="status">{message}</p>}
   </section>;
