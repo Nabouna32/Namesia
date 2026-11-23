@@ -1,13 +1,13 @@
 .content {
   display: grid;
-  gap: 12px;
+gap: 12px;
 }
 
 .tools {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
+gap: 12px;
 }
 
 .importButton {
@@ -18,7 +18,7 @@
   justify-content: center;
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-sys-shape-corner-small);
-  padding: 0 16px;
+padding: 0 16px;
   background: var(--md-sys-color-surface-container-lowest);
   color: var(--md-sys-color-on-surface);
   font: inherit;
@@ -42,14 +42,14 @@
 }
 
 .help {
-  margin: 0;
+margin: 0;
   color: var(--md-sys-color-on-surface-variant);
   font-size: var(--md-sys-typescale-body-medium-size);
   line-height: 1.6;
 }
 
 .success {
-  margin: 0;
+margin: 0;
   color: var(--md-sys-color-success);
   font-size: var(--md-sys-typescale-body-medium-size);
   line-height: 1.5;
@@ -59,12 +59,12 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
   align-items: end;
-  gap: 16px;
+gap: 16px;
   max-width: 960px;
 }
 
 .count {
-  margin: 0;
+margin: 0;
   color: var(--md-sys-color-on-surface-variant);
   font-size: var(--md-sys-typescale-body-medium-size);
 }
@@ -73,7 +73,7 @@
   display: flex;
   min-width: 0;
   align-items: center;
-  gap: 8px;
+gap: 8px;
 }
 
 .row > a {
@@ -88,11 +88,11 @@
 .stale {
   display: grid;
   justify-items: start;
-  gap: 4px;
+gap: 4px;
 }
 
 .note {
-  margin: 4px 0 0;
+margin: 4px 0 0;
   color: var(--md-sys-color-on-surface-variant);
   font-size: var(--md-sys-typescale-body-medium-size);
   line-height: 1.6;
@@ -101,20 +101,20 @@
 .empty {
   display: grid;
   justify-items: start;
-  gap: 14px;
-  padding: 24px;
+gap: 16px;
+padding: 24px;
   border: 1px dashed var(--md-sys-color-outline-variant);
   border-radius: var(--md-sys-shape-corner-large);
   background: var(--md-sys-color-surface-container-lowest);
 }
 
 .empty p {
-  margin: 0;
+margin: 0;
   color: var(--md-sys-color-on-surface-variant);
 }
 
 .error {
-  margin: 0;
+margin: 0;
   color: var(--md-sys-color-error);
   font-size: var(--md-sys-typescale-body-medium-size);
   line-height: 1.5;
@@ -123,7 +123,7 @@
 @media (max-width: 560px) {
   .filters {
     grid-template-columns: minmax(0, 1fr);
-    gap: 12px;
+gap: 12px;
   }
 }
 
