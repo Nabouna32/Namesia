@@ -1569,7 +1569,7 @@ body {
 a { text-decoration-thickness: 1px; text-underline-offset: 3px; }
 button, input, select, textarea { font-family: inherit; }
 button { -webkit-tap-highlight-color: transparent; transition: background-color var(--motion-duration-short) var(--motion-standard), border-color var(--motion-duration-short) var(--motion-standard), color var(--motion-duration-short) var(--motion-standard), box-shadow var(--motion-duration-short) var(--motion-standard); }
-button:active:not(:disabled) { transform: none; filter: brightness(.94); }
+button:active:not(:disabled) { transform: none; }
 button:disabled { cursor: not-allowed; opacity: .48; }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
   outline: 3px solid var(--md-sys-color-primary);
@@ -1638,8 +1638,20 @@ h1 em, h2 em {
   background: var(--md-sys-color-surface-container-low);
   color: var(--md-sys-color-on-surface);
 }
-.name-card { min-height: 76px; box-shadow: none; transition: background-color 180ms var(--motion-standard), box-shadow 180ms var(--motion-standard), transform 180ms var(--motion-standard); }
-.name-card:hover { border-color: var(--md-sys-color-outline); background: var(--md-sys-color-surface-container); box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+.name-card {
+  min-height: 76px;
+  box-shadow: none;
+  transition: background-color var(--motion-duration-short) var(--motion-standard), border-color var(--motion-duration-short) var(--motion-standard);
+}
+.name-card:hover {
+  border-color: var(--md-sys-color-outline);
+  background: var(--md-sys-color-surface-container-high);
+  box-shadow: none;
+  transform: none;
+}
+.name-card:active {
+  background: color-mix(in srgb, var(--md-sys-color-primary) 12%, var(--md-sys-color-surface-container-low));
+}
 .name-initial, .compare-option-initial {
   background: var(--md-sys-color-primary-container);
   color: var(--md-sys-color-on-primary-container);
@@ -1654,19 +1666,22 @@ h1 em, h2 em {
   border-radius: var(--md-sys-shape-corner-extra-large);
   background: var(--md-sys-color-surface-container-low);
   color: var(--md-sys-color-on-surface);
-  transition: transform 220ms var(--motion-emphasized), box-shadow 220ms var(--motion-standard), border-color 180ms var(--motion-standard);
+  transition: background-color var(--motion-duration-short) var(--motion-standard), border-color var(--motion-duration-short) var(--motion-standard);
 }
 .featured-card:hover {
   border-color: var(--md-sys-color-outline);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  background: var(--md-sys-color-surface-container-high);
+  box-shadow: none;
+  transform: none;
+}
+.featured-card:active {
+  background: color-mix(in srgb, var(--md-sys-color-primary) 12%, var(--md-sys-color-surface-container-low));
 }
 .featured-letter { color: color-mix(in srgb, var(--md-sys-color-primary) 14%, transparent); }
 .featured-bottom strong { color: var(--md-sys-color-on-surface); }
 .featured-name small { color: var(--md-sys-color-on-surface-variant); }
 .featured-action { color: var(--md-sys-color-primary); }
-.featured-action b { display: inline-grid; place-items: center; transition: transform 180ms var(--motion-emphasized); }
-.featured-card:hover .featured-action b { transform: translate(3px, -2px); }
+.featured-action b { display: inline-grid; place-items: center; }
 .featured-action b .material-icon { width: 18px; height: 18px; }
 
 .profile-hero {

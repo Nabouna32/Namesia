@@ -1,4 +1,7 @@
 .button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex;
   min-height: 48px;
   align-items: center;
@@ -17,13 +20,28 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+.button::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-duration-short) var(--motion-standard);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover:not(:disabled)::after { opacity: 0.08; }
+}
+
+.button:focus-visible::after,
+.button:active:not(:disabled)::after { opacity: 0.12; }
+
 .button:focus-visible {
   outline: 3px solid var(--md-sys-color-primary);
   outline-offset: 3px;
-}
-
-.button:active:not(:disabled) {
-  filter: brightness(0.92);
 }
 
 .button:disabled {
@@ -36,19 +54,9 @@
   color: var(--md-sys-color-on-primary);
 }
 
-.filled:hover:not(:disabled) {
-  background: var(--md-sys-color-primary);
-  filter: brightness(0.94);
-}
-
 .tonal {
   background: var(--md-sys-color-secondary-container);
   color: var(--md-sys-color-on-secondary-container);
-}
-
-.tonal:hover:not(:disabled) {
-  background: var(--md-sys-color-secondary-container);
-  filter: brightness(0.96);
 }
 
 .outlined {
@@ -57,17 +65,9 @@
   color: var(--md-sys-color-primary);
 }
 
-.outlined:hover:not(:disabled) {
-  background: var(--md-sys-color-surface-container);
-}
-
 .text {
   background: transparent;
   color: var(--md-sys-color-primary);
-}
-
-.text:hover:not(:disabled) {
-  background: var(--md-sys-color-surface-container);
 }
 
 .icon {
