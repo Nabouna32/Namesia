@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.25
+- **Version :** 3.26
 - **Mis à jour :** 2026-11-23
 
 ## 1. Positionnement
