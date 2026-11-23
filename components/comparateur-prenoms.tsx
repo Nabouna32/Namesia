@@ -266,7 +266,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
             titre={`Comparaison de ${selectionnes.length} prénoms · Namesia`}
             texte={`Comparez ${selectionnes.map((prenom) => prenom.nom).join(", ")} sur Namesia.`}
             label="Partager cette comparaison"
-            avecParametres
+            parametres={["prenoms"]}
           />
         </div>
       )}

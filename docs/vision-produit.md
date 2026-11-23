@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.40
+- **Version :** 3.41
 - **Mis à jour :** 2026-11-23
 
 ## 1. Positionnement
@@ -38,7 +38,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 - Catalogue de prénoms utilisé en France.
 - Page dédiée par prénom avec URL stable.
 - Recherche de prénoms avec prise en compte des accents, des variantes de casse et des séparateurs des prénoms composés (espace, tiret, apostrophe) ; classement des résultats par pertinence (correspondance exacte, puis préfixe, puis occurrence la plus proche du début du prénom), avec filtres combinables par genre et initiale. Depuis la recherche compacte de l'accueil, un lien permet d'ouvrir le catalogue avec le terme déjà saisi lorsque plus de 24 résultats existent. En l'absence de résultat normal, proposer jusqu'à cinq suggestions proches pour les recherches d'au moins quatre caractères, avec une tolérance d'une ou deux modifications selon la longueur et en respectant les filtres actifs. Les résultats et suggestions affichent aussi le genre associé à chaque fiche. Le catalogue présente 24 résultats au départ et révèle les suivants par lots de 24 pour garder une liste facile à parcourir.
-- URL partageable du catalogue : la recherche, les filtres actifs et le nombre de résultats déjà révélés (paramètre limite) sont conservés dans l'URL. Le retour depuis une fiche et ses suggestions restaure ces critères et le lot visible, sans les intégrer à l'URL canonique de la fiche. Modifier la recherche ou un filtre repart du premier lot.
+- URL partageable du catalogue : la recherche, les filtres actifs et le nombre de résultats déjà révélés (paramètre limite) sont conservés dans l'URL. Lorsque ces critères sont actifs, une action partage le lien avec uniquement q, genre, lettre et limite. Le retour depuis une fiche et ses suggestions restaure ces critères et le lot visible, sans les intégrer à l'URL canonique de la fiche. Modifier la recherche ou un filtre repart du premier lot.
 - Vitrine d'accueil de trois prénoms répartis sur le catalogue et renouvelés quotidiennement en UTC, plutôt que trois entrées alphabétiques consécutives ; chaque carte indique aussi le genre du prénom. La sélection s'adapte si le catalogue contient moins de trois fiches. Chaque prénom mis en avant peut être ajouté ou retiré des favoris directement depuis sa carte.
 - Découverte aléatoire d'un prénom publié depuis l'accueil, sans répétition immédiate tant qu'un autre choix est disponible. Le résultat peut être ajouté ou retiré des favoris sans quitter l'accueil.
 - Reprise de la découverte depuis l'accueil : afficher les huit dernières fiches consultées dans l'onglet courant, sans compte ni synchronisation. L'historique est conservé dans sessionStorage : il survit aux rechargements et disparaît à la fermeture de l'onglet. Il se limite aux fiches encore publiées, permet l'ajout ou le retrait direct des favoris, le retrait individuel d'une fiche de l'historique et l'effacement complet en une action. Si le stockage de session est indisponible, l'historique reste disponible en mémoire tant que la page est ouverte et cette limite est signalée. Seuls les slugs sont conservés ; les contenus des fiches sont relus depuis le catalogue publié.
