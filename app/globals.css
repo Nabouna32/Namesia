@@ -347,6 +347,10 @@ input {
   padding: 4px 0;
 }
 
+.navigation-rail .navigation-item-indicator {
+  width: 56px;
+}
+
 .app-content {
   min-width: 0;
   min-height: calc(100svh - 64px);
