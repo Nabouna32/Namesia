@@ -19,7 +19,7 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
   if (!erreur && slugs.length === 0) return null;
 
   return (
-    <section className={`section ${styles.section}`} aria-labelledby="historique-title">
+    <section className={styles.section} aria-labelledby="historique-title">
       <div className="container">
         <div className={styles.heading}>
           <div>
