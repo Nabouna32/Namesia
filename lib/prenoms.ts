@@ -1,6 +1,7 @@
 import { cache } from "react";
 import { parseContenuFiche, type AssociationSymbolique, type ContenuFichePrenom } from "@/lib/fiche-prenom";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { lireToutesLesPages } from "@/lib/pagination";
 
 export type Prenom = {
   id: string;
@@ -114,39 +115,31 @@ function convertirIndex(row: JoinedNameIndex): PrenomIndex {
   };
 }
 
+const TAILLE_PAGE_INDEX = 500;
+
 export const getPrenomsIndex = cache(async (): Promise<PrenomIndex[]> => {
   const supabase = createSupabaseServerClient();
-  const { data, error } = await supabase
-    .from("names")
-    .select("id, slug, display_name, gender, name_profiles!inner(status, published_at)")
-    .eq("name_profiles.status", "publie")
-    .not("name_profiles.published_at", "is", null)
-    .order("display_name", { ascending: true });
 
-  if (error) {
+  try {
+    const lignes = await lireToutesLesPages<JoinedNameIndex>(async (debut, fin) => {
+      const { data, error } = await supabase
+        .from("names")
+        .select("id, slug, display_name, gender, name_profiles!inner(status, published_at)")
+        .eq("name_profiles.status", "publie")
+        .not("name_profiles.published_at", "is", null)
+        .order("display_name", { ascending: true })
+        .order("id", { ascending: true })
+        .range(debut, fin);
+
+      return { data: data as unknown as JoinedNameIndex[] | null, error };
+    }, TAILLE_PAGE_INDEX);
+
+    return lignes.map(convertirIndex);
+  } catch (error) {
     console.error("Échec du chargement de l’index des prénoms Namesia :", error);
     throw new Error("Le catalogue des prénoms est momentanément indisponible.");
   }
-
-  return (data as unknown as JoinedNameIndex[]).map(convertirIndex);
 });
-
-export async function getPrenoms(): Promise<Prenom[]> {
-  const supabase = createSupabaseServerClient();
-  const { data, error } = await supabase
-    .from("names")
-    .select(selection)
-    .eq("name_profiles.status", "publie")
-    .not("name_profiles.published_at", "is", null)
-    .order("display_name", { ascending: true });
-
-  if (error) {
-    console.error("Échec du chargement du catalogue Namesia :", error);
-    throw new Error("Le catalogue des prénoms est momentanément indisponible.");
-  }
-
-  return (data as unknown as JoinedName[]).map(convertir);
-}
 
 export async function getPrenomsParSlugs(slugs: string[]): Promise<Prenom[]> {
   if (slugs.length === 0) return [];
@@ -192,23 +185,11 @@ export const getAutresPrenomsIndexDuGenre = cache(async (genre: string, slug: st
   const [codeGenre] = entreeGenre;
   if (codeGenre === "inconnu") return [];
 
-  const supabase = createSupabaseServerClient();
-  const { data, error } = await supabase
-    .from("names")
-    .select("id, slug, display_name, gender, name_profiles!inner(status, published_at)")
-    .eq("gender", codeGenre)
-    .neq("slug", slug)
-    .eq("name_profiles.status", "publie")
-    .not("name_profiles.published_at", "is", null);
+  const prenoms = await getPrenomsIndex();
 
-  if (error) {
-    console.error(`Échec du chargement des suggestions de prénoms du genre "${genre}" :`, error);
-    throw new Error("Les suggestions de prénoms sont momentanément indisponibles.");
-  }
-
-  return (data as unknown as JoinedNameIndex[])
+  return prenoms
+    .filter((prenom) => prenom.genre === genre && prenom.slug !== slug)
     .sort((a, b) => scoreSuggestion(slug, a.slug) - scoreSuggestion(slug, b.slug)
       || a.slug.localeCompare(b.slug, "fr"))
-    .slice(0, 3)
-    .map(convertirIndex);
+    .slice(0, 3);
 });
