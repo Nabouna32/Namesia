@@ -1,14 +1,14 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 2.8
+- **Version :** 2.9
 - **Mis à jour :** 2026-11-23
 
 ## Intention
 
 Une interface éditoriale contemporaine, calme et précise. La priorité est donnée à la lecture, à la navigation évidente et à une hiérarchie nette. Les références de qualité sont les grandes interfaces produit sobres : peu d'effets, des surfaces bien séparées, des composants prévisibles et des états explicites.
 
-La direction précédente « arc-en-ciel, chaleureuse et compacte » est abandonnée : elle multipliait les accents, les dégradés et les contrastes décoratifs sans aider à comprendre le contenu. Namesia conserve une personnalité par la qualité de sa typographie, ses compositions et son ton, pas par une palette multicolore.
+La direction précédente « arc-en-ciel, chaleureuse et compacte » est abandonnée : elle multipliait les accents, les dégradés et les contrastes décoratifs sans aider à comprendre le contenu. Namesia conserve une personnalité par la qualité de sa typographie, ses compositions et son ton, pas par une palette multicolore. Les pages privilégient des surfaces neutres et une hiérarchie typographique ; les halos, ornements géométriques et glyphes décoratifs superposés au contenu sont écartés lorsqu'ils n'apportent aucune information.
 
 ## Couleurs sémantiques
 
