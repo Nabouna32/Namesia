@@ -14,16 +14,26 @@ padding: 0 16px;
   font-size: var(--md-sys-typescale-body-medium-size);
   font-weight: 500;
   cursor: pointer;
-  transition: border-color 160ms var(--md-sys-motion-standard), background-color 160ms var(--md-sys-motion-standard), color 160ms var(--md-sys-motion-standard);
+  transition: border-color var(--md-sys-motion-duration-short) var(--md-sys-motion-standard), background-color var(--md-sys-motion-duration-short) var(--md-sys-motion-standard), color var(--md-sys-motion-duration-short) var(--md-sys-motion-standard);
 }
 
 .chip svg {
   flex: 0 0 auto;
 }
 
-.chip:hover {
-  border-color: var(--md-sys-color-on-surface);
-  background: var(--md-sys-color-surface-container-high);
+.chip:active {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, var(--md-sys-color-surface));
+}
+
+.chip[aria-pressed="true"]:active {
+  background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 12%, var(--md-sys-color-secondary-container));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover {
+    border-color: var(--md-sys-color-on-surface);
+    background: var(--md-sys-color-surface-container-high);
+  }
 }
 
 .chip[aria-pressed="true"] {
