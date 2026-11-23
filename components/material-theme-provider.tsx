@@ -9,7 +9,7 @@ import {
   Variant
 } from "@material/material-color-utilities";
 
-const sourceColor = Hct.fromInt(argbFromHex("#6750A4"));
+const sourceColor = Hct.fromInt(argbFromHex("#005AC1"));
 
 const materialRoles = [
   "primaryPaletteKeyColor", "secondaryPaletteKeyColor", "tertiaryPaletteKeyColor",
