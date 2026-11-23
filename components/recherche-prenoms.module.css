@@ -19,8 +19,8 @@
 .favoriteError {
   margin: 0 0 14px;
   color: var(--color-error);
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .compareToggle {
