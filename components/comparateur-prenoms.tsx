@@ -5,7 +5,7 @@ import type { Prenom, PrenomIndex } from "@/lib/prenoms";
 import { PartagerLien } from "@/components/partager-fiche";
 import { BoutonFavori } from "@/components/bouton-favori";
 import { useFavoris } from "@/components/favoris-provider";
-import { comparerPertinence, normaliserRecherche } from "@/lib/recherche-prenoms";
+import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { categoryTone } from "@/lib/category-color";
 import { ChampRecherche } from "@/components/ui/champ-recherche";
 import { ListeSelectionComparaison } from "@/components/ui/liste-selection-comparaison";
@@ -76,6 +76,10 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
       .filter((prenom) => !terme || normaliserRecherche(prenom.nom).includes(terme))
       .sort((a, b) => comparerPertinence(a, b, terme));
   }, [prenoms, recherche]);
+  const suggestions = useMemo(
+    () => resultats.length > 0 ? [] : suggererPrenomsProches(prenoms, recherche),
+    [prenoms, recherche, resultats.length]
+  );
   const prenomsSelectionnes = selection.flatMap((slug) => {
     const prenom = prenoms.find((candidat) => candidat.slug === slug);
     return prenom ? [prenom] : [];
@@ -123,13 +127,15 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
 
         <fieldset className="compare-options">
           <legend id="compare-selector-title">Choisissez jusqu’à trois prénoms</legend>
-          {resultats.length > 0 ? (
+          {resultats.length > 0 || suggestions.length > 0 ? (
             <>
               <p className="results-meta" role="status">
-                {resultats.length} {resultats.length > 1 ? "prénoms disponibles" : "prénom disponible"} · {Math.min(resultats.length, nombreVisible)} affichés
+                {resultats.length > 0
+                  ? `${resultats.length} ${resultats.length > 1 ? "prénoms disponibles" : "prénom disponible"} · ${Math.min(resultats.length, nombreVisible)} affichés`
+                  : `Aucun résultat exact pour « ${recherche.trim()} ». Voici les prénoms les plus proches :`}
               </p>
               <div className="compare-options-grid">
-                {resultats.slice(0, nombreVisible).map((prenom) => {
+                {(resultats.length > 0 ? resultats.slice(0, nombreVisible) : suggestions).map((prenom) => {
                   const coche = selection.includes(prenom.slug);
                   return (
                     <label className="compare-option" key={prenom.slug}>
@@ -159,7 +165,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
               )}
             </>
           ) : (
-            <p className="compare-status">{prenoms.length === 0 ? "Aucun prénom n’est encore publié." : "Aucun prénom ne correspond à cette recherche."}</p>
+            <p className="compare-status">{prenoms.length === 0 ? "Aucun prénom n’est encore publié." : "Aucun prénom ne correspond à cette recherche. Essayez une autre orthographe."}</p>
           )}
         </fieldset>
 
