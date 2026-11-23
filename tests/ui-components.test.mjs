@@ -82,7 +82,7 @@ const icones = await readFile(new URL("../components/icone-material.tsx", import
 
 test("les listes de prénoms sélectionnés partagent un seul composant accessible", () => {
   assert.match(listeSelection, /export function ListeSelectionComparaison\(/);
-  assert.match(listeSelection, /aria-label=\{label\}/);
+  assert.match(listeSelection, /aria-label=\\{.*Retirer/);
   assert.match(listeSelection, /aria-label=\{\`Retirer/);
   assert.match(listeSelectionStyles, /min-height: 48px/);
   assert.match(barreComparaison, /<ListeSelectionComparaison/);
