@@ -858,11 +858,6 @@ h2 em {
   color: var(--ink);
 }
 
-.compare-search input:focus-visible {
-  outline: 3px solid var(--color-focus);
-  outline-offset: 3px;
-}
-
 .compare-options {
   min-width: 0;
   margin: 0;
@@ -978,6 +973,7 @@ h2 em {
   border-radius: 999px;
   background: var(--color-surface-muted);
   color: var(--color-text);
+  cursor: pointer;
   text-decoration: none;
 }
 
@@ -992,7 +988,10 @@ h2 em {
 }
 
 .compare-selection-footer > button {
-  padding: 7px 0;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 0 4px;
   border: 0;
   background: transparent;
   color: var(--color-accent);
