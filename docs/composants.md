@@ -18,7 +18,7 @@ Ce document est le point d'entrée pour les composants d'interface réutilisable
 
 | Composant | Emplacement | Responsabilité |
 |---|---|---|
-| `Bouton` | `components/ui/bouton.tsx` | Action native avec variantes filled, tonal, outlined et text ; tailles standard et icône |
+| `Bouton` | `components/ui/bouton.tsx` | Action native avec variantes filled, tonal, outlined et text ; tailles standard et icône, utilisée aussi par l'administration |
 | `LienBouton` | `components/ui/lien-bouton.tsx` | Navigation Next.js présentée comme une action, sous forme de composant serveur |
 | `ChampRecherche` | `components/ui/champ-recherche.tsx` | Champ de recherche contrôlé, libellé accessible, icône, effacement et états Material partagés |
 | `BoutonComparaison` | `components/ui/bouton-comparaison.tsx` | Sélection comparative accessible, état sélectionné, limite désactivée et adaptation mobile |
