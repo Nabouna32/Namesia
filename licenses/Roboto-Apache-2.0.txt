@@ -1,5 +1,13 @@
+Roboto — police Regular
+Copyright 2011 The Roboto Project Authors.
 
-                                 Apache License
+Fichier source distribué dans le dépôt openmaptiles/fonts, répertoire roboto :
+https://github.com/openmaptiles/fonts/tree/master/roboto
+
+La police est distribuée sous licence Apache 2.0. Le texte intégral de cette
+licence est reproduit ci-dessous.
+
+Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
 
