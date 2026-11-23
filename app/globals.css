@@ -1056,7 +1056,7 @@ h2 em {
 .compare-field p {
   margin: 0;
   color: var(--color-text);
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.75;
   white-space: pre-line;
 }
@@ -1089,7 +1089,7 @@ h2 em {
 .compare-association p {
   margin: 6px 0 0;
   color: var(--color-text);
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.65;
 }
 
@@ -1097,7 +1097,7 @@ h2 em {
   grid-column: 1 / -1;
   margin: 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
