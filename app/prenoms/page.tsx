@@ -28,11 +28,20 @@ type Props = {
     q?: string | string[];
     genre?: string | string[];
     lettre?: string | string[];
+    limite?: string | string[];
   }>;
 };
 
 function premierParametre(value: string | string[] | undefined): string {
   return Array.isArray(value) ? value[0] ?? "" : value ?? "";
+}
+
+function lireNombreVisible(value: string, total: number): number {
+  const nombre = Number(value);
+  const maximum = Math.max(24, Math.ceil(total / 24) * 24);
+  return Number.isSafeInteger(nombre) && nombre >= 24
+    ? Math.min(maximum, Math.floor(nombre / 24) * 24)
+    : 24;
 }
 
 function normaliserFiltre(value: string): string {
@@ -42,6 +51,7 @@ function normaliserFiltre(value: string): string {
 export default async function Catalogue({ searchParams }: Props) {
   const [parametres, prenoms] = await Promise.all([searchParams, getPrenomsIndex()]);
   const rechercheInitiale = premierParametre(parametres.q);
+  const nombreVisibleInitial = lireNombreVisible(premierParametre(parametres.limite), prenoms.length);
   const genreDemande = premierParametre(parametres.genre);
   const lettreDemandee = normaliserFiltre(premierParametre(parametres.lettre));
 
@@ -85,6 +95,7 @@ export default async function Catalogue({ searchParams }: Props) {
           initialRecherche={rechercheInitiale}
           initialGenre={genreInitial}
           initialLettre={lettreInitiale}
+          initialNombreVisible={nombreVisibleInitial}
         />
       </div>
     </main>
