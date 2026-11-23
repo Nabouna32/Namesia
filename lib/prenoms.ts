@@ -81,6 +81,17 @@ type JoinedNameIndex = {
   name_profiles: { status: string; published_at: string | null }[];
 };
 
+function scoreSuggestion(slugFiche: string, slugCandidat: string): number {
+  let hash = 2166136261;
+
+  for (const caractere of `${slugFiche}:${slugCandidat}`) {
+    hash ^= caractere.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+
+  return hash >>> 0;
+}
+
 function convertirIndex(row: JoinedNameIndex): PrenomIndex {
   return {
     id: row.id,
@@ -174,14 +185,16 @@ export const getAutresPrenomsIndexDuGenre = cache(async (genre: string, slug: st
     .eq("gender", codeGenre)
     .neq("slug", slug)
     .eq("name_profiles.status", "publie")
-    .not("name_profiles.published_at", "is", null)
-    .order("display_name", { ascending: true })
-    .limit(3);
+    .not("name_profiles.published_at", "is", null);
 
   if (error) {
     console.error(`Échec du chargement des suggestions de prénoms du genre "${genre}" :`, error);
     throw new Error("Les suggestions de prénoms sont momentanément indisponibles.");
   }
 
-  return (data as unknown as JoinedNameIndex[]).map(convertirIndex);
+  return (data as unknown as JoinedNameIndex[])
+    .sort((a, b) => scoreSuggestion(slug, a.slug) - scoreSuggestion(slug, b.slug)
+      || a.slug.localeCompare(b.slug, "fr"))
+    .slice(0, 3)
+    .map(convertirIndex);
 });
