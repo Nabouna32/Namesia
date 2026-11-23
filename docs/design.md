@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 2.9
+- **Version :** 3.0
 - **Mis à jour :** 2026-11-23
 
 ## Intention
@@ -64,7 +64,7 @@ Rayons : 8 px (petit), 12 px (standard), 16 px (grand), 24 px (mise en avant), p
 
 Le thème suit `prefers-color-scheme` sans réglage applicatif supplémentaire. Les composants utilisent les mêmes tokens sémantiques dans les deux thèmes. La mise en page est conçue d'abord pour les écrans étroits, puis s'étend ; le contenu ne doit pas déborder à 320 px et reste lisible à 200 % de zoom. Les adaptations des écrans les plus étroits sont déclarées après les règles des seuils plus larges afin de conserver leur priorité dans la cascade CSS.
 
-Les zones tactiles interactives visent au moins 44 × 44 px, y compris les filtres du catalogue, les actions d'effacement, le bouton de découverte aléatoire et les liens de navigation. La navigation principale passe sur plusieurs lignes sous 360 px afin de rester utilisable lorsque le zoom réduit fortement la largeur du viewport ; le logo et les liens ne doivent ni se chevaucher ni provoquer de défilement horizontal. Les libellés peuvent rester visuellement compacts, mais la zone cliquable ne doit pas être réduite pour gagner quelques pixels. Les boutons de partage et les filtres du catalogue conservent également cette hauteur minimale sur mobile. La réduction des animations respecte `prefers-reduced-motion`.
+Les zones tactiles interactives visent au moins 44 × 44 px, y compris les filtres du catalogue, les actions d'effacement, le bouton de découverte aléatoire et les liens de navigation. La navigation principale conserve un espacement horizontal explicite entre ses liens sur les écrans étroits (12 px), et peut passer sur plusieurs lignes lorsque la largeur disponible ne suffit plus, notamment sous 360 px ou lorsque le zoom est élevé. Le logo ne se contracte pas ; les liens ne doivent ni se toucher, ni se chevaucher, ni provoquer de défilement horizontal. Les libellés peuvent rester visuellement compacts, mais la zone cliquable ne doit pas être réduite pour gagner quelques pixels. Les boutons de partage et les filtres du catalogue conservent également cette hauteur minimale sur mobile. La réduction des animations respecte `prefers-reduced-motion`.
 
 ## Architecture CSS et dépendances
 
