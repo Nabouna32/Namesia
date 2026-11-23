@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.22
+- **Version :** 4.23
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -136,7 +136,7 @@ La navigation, les icônes et les surfaces du site sont des implémentations Web
 La fidélité ne se limite pas aux couleurs. Les interactions doivent reproduire les conventions observables de Material 3 sur Android :
 
 - Les actions primaires utilisent les boutons filled ; les actions secondaires utilisent tonal, outlined ou text selon leur importance.
-- Les états hover, focus-visible, pressed, disabled, selected, loading et error sont cohérents entre les contrôles. Toute règle `:hover` est réservée à `@media (hover: hover) and (pointer: fine)` ; les états tactiles reposent sur `:active` et ne dépendent jamais du hover. Les puces de filtre réservent le survol aux pointeurs fins et conservent un état pressé tactile.
+- Les états hover, focus-visible, pressed, disabled, selected, loading et error sont cohérents entre les contrôles. Les changements de couleur au survol des liens de navigation et de pied de fiche sont réservés aux pointeurs fins ; le tactile conserve ses états de pression et le clavier son focus visible. Toute règle `:hover` est réservée à `@media (hover: hover) and (pointer: fine)` ; les états tactiles reposent sur `:active` et ne dépendent jamais du hover. Les puces de filtre réservent le survol aux pointeurs fins et conservent un état pressé tactile.
 - Les transitions utilisent les tokens de mouvement communs. Les éléments de navigation animent l'indicateur, pas la position des libellés ; les actions ne déclenchent pas de zoom agressif.
 - Les composants interactifs gardent une cible tactile de 48 × 48 px au minimum. La taille visuelle de l'icône ne détermine pas celle de la cible.
 - Les surfaces suivent les niveaux Material : fond, surface basse, surface, surface haute et surface la plus haute. Les dégradés et ombres ne remplacent pas cette hiérarchie.
