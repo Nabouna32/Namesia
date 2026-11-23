@@ -16,7 +16,7 @@ padding: 0 20px;
   line-height: 1.25;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color var(--motion-duration-short) var(--motion-standard), border-color var(--motion-duration-short) var(--motion-standard), color var(--motion-duration-short) var(--motion-standard), box-shadow var(--motion-duration-short) var(--motion-standard);
+  transition: background-color var(--md-sys-motion-duration-short) var(--md-sys-motion-standard), border-color var(--md-sys-motion-duration-short) var(--md-sys-motion-standard), color var(--md-sys-motion-duration-short) var(--md-sys-motion-standard), box-shadow var(--md-sys-motion-duration-short) var(--md-sys-motion-standard);
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -29,7 +29,7 @@ padding: 0 20px;
   content: "";
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--motion-duration-short) var(--motion-standard);
+  transition: opacity var(--md-sys-motion-duration-short) var(--md-sys-motion-standard);
 }
 
 @media (hover: hover) and (pointer: fine) {
