@@ -4,7 +4,7 @@ Namesia est une plateforme française de découverte des prénoms. Les fiches so
 
 ## Application web
 
-Le site utilise Next.js App Router, React, TypeScript et Supabase (PostgreSQL). L'interface suit Material 3 Expressive avec des couleurs calculées par `@material/material-color-utilities`, une navigation basse sur téléphone et un rail latéral sur tablette et écrans larges.
+Le site utilise Next.js App Router, React, TypeScript et Supabase (PostgreSQL). L'interface suit Material 3 Fidelity pour le thème général et utilise une palette Material 3 Rainbow pour les catégories éditoriales. Les deux schémas sont calculés par `@material/material-color-utilities`. La navigation est basse sur téléphone et latérale sur tablette et écrans larges.
 
 ### Démarrage local
 

@@ -50,6 +50,15 @@
   --color-error: var(--md-sys-color-error);
   --color-info: #005b9a;
   --color-focus: var(--md-sys-color-primary);
+  --md-category-1: #6750a4;
+  --md-category-1-container: #eaddff;
+  --md-category-1-on-container: #21005d;
+  --md-category-2: #006874;
+  --md-category-2-container: #9eeffd;
+  --md-category-2-on-container: #001f24;
+  --md-category-3: #386a20;
+  --md-category-3-container: #b7f397;
+  --md-category-3-on-container: #0b2000;
   --color-rainbow: linear-gradient(105deg, #ef568b 0%, #f29a42 19%, #e8c94c 36%, #55b987 54%, #49a9d5 72%, #8669d4 88%, #d76bb5 100%);
   --color-rainbow-text: linear-gradient(105deg, #b4235a 0%, #a34f10 19%, #806000 36%, #176b4b 54%, #23659a 72%, #65439b 88%, #a03b83 100%);
   --font-sans: "Roboto", "Arial", sans-serif;
@@ -115,6 +124,15 @@
     --md-sys-color-inverse-surface: #e6e0e9;
     --md-sys-color-inverse-on-surface: #322f35;
     --md-sys-color-surface-tint: #d0bcff;
+    --md-category-1: #d0bcff;
+    --md-category-1-container: #4f378b;
+    --md-category-1-on-container: #eaddff;
+    --md-category-2: #4fd8eb;
+    --md-category-2-container: #004f58;
+    --md-category-2-on-container: #9eeffd;
+    --md-category-3: #9cd67d;
+    --md-category-3-container: #204f0d;
+    --md-category-3-on-container: #b7f397;
     --color-success: #b5f397;
     --color-warning: #f1d28b;
     --color-info: #9ecaff;
@@ -1489,6 +1507,39 @@ h2 em {
   gap: 10px;
 }
 
+.symbolic-card[data-category-tone="1"],
+.compare-association[data-category-tone="1"] { --category: var(--md-category-1); --category-container: var(--md-category-1-container); --category-on-container: var(--md-category-1-on-container); }
+.symbolic-card[data-category-tone="2"],
+.compare-association[data-category-tone="2"] { --category: var(--md-category-2); --category-container: var(--md-category-2-container); --category-on-container: var(--md-category-2-on-container); }
+.symbolic-card[data-category-tone="3"],
+.compare-association[data-category-tone="3"] { --category: var(--md-category-3); --category-container: var(--md-category-3-container); --category-on-container: var(--md-category-3-on-container); }
+
+.symbolic-card > span,
+.compare-association span {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--category-container, var(--md-sys-color-secondary-container));
+  color: var(--category-on-container, var(--md-sys-color-on-secondary-container));
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.symbolic-card {
+  border-color: color-mix(in srgb, var(--category, var(--md-sys-color-outline)) 24%, var(--color-border));
+}
+
+.compare-association {
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--category, var(--md-sys-color-outline)) 24%, var(--color-border));
+  border-radius: var(--md-sys-shape-corner-medium);
+  background: color-mix(in srgb, var(--category-container, var(--md-sys-color-surface-container)) 28%, var(--color-surface));
+}
+
 .symbolic-card {
   padding: 17px;
   border: 1px solid var(--color-surface-muted);
@@ -2024,4 +2075,27 @@ h1 em, h2 em {
   :root {
     --motion-emphasized: linear(0, 0.08 12%, 0.28 28%, 0.68 52%, 0.96 78%, 1.025 91%, 1 100%);
   }
+}
+
+/* Les libellés de catégorie utilisent les rôles Rainbow, jamais la palette d'action Fidelity. */
+.compare-association[data-category-tone] > span {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  padding: 4px 9px;
+  border-radius: var(--md-sys-shape-corner-full);
+  background: var(--category-container);
+  color: var(--category-on-container);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.symbolic-card[data-category-tone] {
+  border-color: color-mix(in srgb, var(--category) 24%, var(--color-border));
+}
+.symbolic-card[data-category-tone] > span {
+  background: var(--category-container);
+  color: var(--category-on-container);
 }

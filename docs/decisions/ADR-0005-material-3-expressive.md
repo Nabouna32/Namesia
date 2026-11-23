@@ -1,6 +1,6 @@
 # ADR-0005 — Adopter Material 3 Expressive comme référence d'interface
 
-- **Statut :** acceptée
+- **Statut :** supersédée par [ADR-0006](ADR-0006-material-fidelity-rainbow.md)
 - **Date :** 2026-11-23
 
 ## Contexte
