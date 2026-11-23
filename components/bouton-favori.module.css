@@ -14,7 +14,7 @@
 
 .button {
   display: inline-flex;
-  min-height: 42px;
+  min-height: 44px;
   align-items: center;
   justify-content: center;
   gap: 9px;
@@ -47,4 +47,20 @@
 .button:disabled {
   cursor: wait;
   opacity: 0.7;
+}
+
+.compactContainer {
+  align-self: center;
+}
+
+.button.compact {
+  width: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.button.compact span {
+  font-size: 20px;
 }
