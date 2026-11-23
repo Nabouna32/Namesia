@@ -72,6 +72,10 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
       .filter((prenom) => !terme || normaliserRecherche(prenom.nom).includes(terme))
       .sort((a, b) => comparerPertinence(a, b, terme));
   }, [prenoms, recherche]);
+  const prenomsSelectionnes = selection.flatMap((slug) => {
+    const prenom = prenoms.find((candidat) => candidat.slug === slug);
+    return prenom ? [prenom] : [];
+  });
   const selectionnes = selection.flatMap((slug) => fiches[slug] ? [fiches[slug]] : []);
   const selectionComplete = selectionnes.length === selection.length;
 
@@ -158,6 +162,22 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
         </fieldset>
 
         <div className="compare-selection-footer">
+          {prenomsSelectionnes.length > 0 && (
+            <ul className="compare-selected-list" aria-label="Prénoms sélectionnés">
+              {prenomsSelectionnes.map((prenom) => (
+                <li key={prenom.slug}>
+                  <button
+                    className="compare-selected-item"
+                    type="button"
+                    aria-label={`Retirer ${prenom.nom} de la comparaison`}
+                    onClick={() => changerSelection(prenom.slug, false)}
+                  >
+                    {prenom.nom}<span aria-hidden="true">×</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
           <span role="status" aria-live="polite">{selection.length} / 3 prénoms sélectionnés</span>
           <button type="button" disabled={selection.length === 0} onClick={effacerSelection}>
             Effacer la sélection

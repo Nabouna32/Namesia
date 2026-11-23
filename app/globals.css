@@ -946,6 +946,7 @@ h2 em {
 
 .compare-selection-footer {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
@@ -954,7 +955,44 @@ h2 em {
   font-size: 13px;
 }
 
-.compare-selection-footer button {
+.compare-selected-list {
+  display: flex;
+  flex: 1 0 100%;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.compare-selected-list li {
+  display: flex;
+}
+
+.compare-selected-item {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.compare-selected-item:hover {
+  border-color: var(--color-accent);
+}
+
+.compare-selected-item span {
+  color: var(--color-accent);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.compare-selection-footer > button {
   padding: 7px 0;
   border: 0;
   background: transparent;
@@ -966,7 +1004,7 @@ h2 em {
   text-underline-offset: 4px;
 }
 
-.compare-selection-footer button:disabled {
+.compare-selection-footer > button:disabled {
   cursor: default;
   opacity: 0.45;
   text-decoration: none;
