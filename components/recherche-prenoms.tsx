@@ -288,7 +288,8 @@ export function RecherchePrenoms({
                         disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
                         onClick={() => basculerComparaison(prenom.slug)}
                       >
-                        {selectionComparaison.includes(prenom.slug) ? "Ajouté" : "Comparer"}
+                        <span className={styles.compareLabel}>{selectionComparaison.includes(prenom.slug) ? "Ajouté" : "Comparer"}</span>
+                        <span className={styles.compareIcon} aria-hidden="true">{selectionComparaison.includes(prenom.slug) ? "✓" : "⇄"}</span>
                       </button>
                     )}
                     <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
@@ -327,7 +328,8 @@ export function RecherchePrenoms({
                         disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
                         onClick={() => basculerComparaison(prenom.slug)}
                       >
-                        {selectionComparaison.includes(prenom.slug) ? "Ajouté" : "Comparer"}
+                        <span className={styles.compareLabel}>{selectionComparaison.includes(prenom.slug) ? "Ajouté" : "Comparer"}</span>
+                        <span className={styles.compareIcon} aria-hidden="true">{selectionComparaison.includes(prenom.slug) ? "✓" : "⇄"}</span>
                       </button>
                     )}
                     <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />

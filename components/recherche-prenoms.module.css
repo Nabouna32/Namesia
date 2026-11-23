@@ -45,6 +45,10 @@
   color: var(--color-accent);
 }
 
+.compareIcon {
+  display: none;
+}
+
 .compareToggle:disabled {
   cursor: not-allowed;
   opacity: 0.5;
@@ -63,7 +67,19 @@
   }
 
   .compareToggle {
-    padding-inline: 8px;
-    font-size: 13px;
+    width: 44px;
+    min-width: 44px;
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  .compareLabel {
+    display: none;
+  }
+
+  .compareIcon {
+    display: inline-flex;
+    font-size: 18px;
+    line-height: 1;
   }
 }
