@@ -6,17 +6,18 @@
 
 ## 1. Direction
 
-Namesia adopte **Material 3 Expressive**, le langage visuel moderne d'Android, comme système d'interface de référence. L'objectif est de retrouver sur le Web la sensation d'une application Pixel : composants familiers, surfaces tonales, formes expressives, interactions réactives, navigation adaptative et cohérence entre les écrans.
+Namesia adopte **Material 3**, avec une palette générale **Fidelity** et une palette complémentaire **Rainbow** réservée aux éléments éditoriaux qui bénéficient d'une différenciation chromatique. L'interface vise la sensation d'une application Pixel : composants familiers, surfaces tonales, formes cohérentes, interactions réactives et navigation adaptative.
 
 Ce choix est une référence de conception et de comportement, pas une prétention à reproduire le système Android natif ou ses barres système. Le navigateur conserve ses conventions, ses capacités et ses limites.
 
-La personnalité Namesia reste présente à travers le dégradé rainbow, utilisé comme signature de marque, et quelques accents éditoriaux. Il ne remplace jamais les rôles de couleur Material ni les états sémantiques.
+La personnalité Namesia reste présente à travers son dégradé de marque. Les couleurs Rainbow générées par Material Color Utilities servent aux catégories éditoriales (notamment les associations symboliques) et à d'autres repères qui gagnent à être distingués. Elles ne remplacent jamais les rôles fonctionnels du thème ni les états sémantiques.
 
 ## 2. Source de vérité des couleurs
 
 La palette d'interface est calculée avec la bibliothèque officielle Google **`@material/material-color-utilities`**. Le thème est construit avec :
 - couleur source primaire : `#6750A4`, violet Material de référence ;
-- variante : `Variant.EXPRESSIVE` ;
+- variante du thème d'interface : `Variant.FIDELITY` ;
+- variante complémentaire des catégories : `Variant.RAINBOW`, calculée séparément avec la même couleur source ;
 - spécification : `2025` ;
 - plateforme de calcul : `phone` ;
 - niveau de contraste standard : `0` ;
@@ -40,7 +41,7 @@ Les tokens applicatifs historiques `--color-*` restent des alias de compatibilit
 
 ### Signature rainbow
 
-Le dégradé Namesia est défini une seule fois par `--color-rainbow`. Il sert aux détails de marque, au monogramme, aux petits filets décoratifs et à quelques accents de titres. Les longs textes, surfaces de formulaire, contrôles, états de validation et indicateurs de sélection utilisent toujours les rôles Material.
+Le dégradé de marque `--color-rainbow` reste un accent décoratif limité au monogramme et à quelques détails éditoriaux. Les catégories utilisent trois familles de rôles tonals issues du schéma `Variant.RAINBOW` (`--md-category-1` à `--md-category-3`, avec leurs conteneurs et couleurs de premier plan). Une catégorie reçoit toujours la même teinte, quelle que soit la fiche ou l'ordre d'affichage. Les surfaces, actions, navigation, formulaires et états fonctionnels restent pilotés par `Variant.FIDELITY` et ses rôles sémantiques.
 
 ## 3. Formes, typographie et élévation
 
@@ -104,6 +105,6 @@ Les SVG d'interface sont des icônes vectorielles monochromes à `currentColor`,
 
 ## 8. Références et limites de fidélité
 
-La référence est Material 3 Expressive pour Android, notamment ses principes de navigation adaptative, ses rôles de couleur et ses composants. La bibliothèque officielle Material Web est en mode maintenance en attente de nouveaux mainteneurs ; elle n'est pas retenue comme fondation UI. Material Color Utilities est la dépendance officielle retenue pour les algorithmes de couleur, pas une bibliothèque de composants.
+La référence est Material 3 pour Android, notamment ses principes de navigation adaptative, ses rôles de couleur et ses composants. La palette principale suit Fidelity ; Rainbow est un système d'accents catégoriels distinct. La bibliothèque officielle Material Web est en mode maintenance en attente de nouveaux mainteneurs ; elle n'est pas retenue comme fondation UI. Material Color Utilities est la dépendance officielle retenue pour les algorithmes de couleur, pas une bibliothèque de composants.
 
 La navigation, les icônes et les surfaces du site sont des implémentations Web accessibles des modèles Material. Le Web ne peut pas reproduire les gestes système, les barres système transparentes, le retour prédictif Android, les animations natives exactes ni l'extraction du fond d'écran. Ces éléments ne doivent pas être simulés de manière trompeuse.
