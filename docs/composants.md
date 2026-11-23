@@ -24,8 +24,9 @@ Ce document est le point d'entrée pour les composants d'interface réutilisable
 | `BoutonComparaison` | `components/ui/bouton-comparaison.tsx` | Sélection comparative accessible, état sélectionné, limite désactivée et adaptation mobile |
 | `ListeSelectionComparaison` | `components/ui/liste-selection-comparaison.tsx` | Liste sémantique des prénoms retenus, retrait individuel et puces tonales |
 | `ChipFiltre` | `components/ui/chip-filtre.tsx` | Filtre sélectionnable avec état pressé, indicateur de sélection et variante initiale |
+| `ChampSelect` | `components/ui/champ-select.tsx` | Sélecteur natif contrôlé, libellé associé et options typées |
 
-Les contrôles partagés reposent sur les tokens Fidelity et conservent les éléments natifs. Les composants métier gardent leurs règles de recherche, de synchronisation d'URL et de sélection ; les contrôles de comparaison ne connaissent ni la limite métier ni la synchronisation d'URL. La liste partagée reçoit les identités à afficher et un callback de retrait.
+Les contrôles partagés reposent sur les tokens Fidelity et conservent les éléments natifs. `ChampSelect` garde le comportement natif du sélecteur : il ne simule pas un menu personnalisé. Les composants métier gardent leurs règles de recherche, de synchronisation d'URL et de sélection ; les contrôles de comparaison ne connaissent ni la limite métier ni la synchronisation d'URL. La liste partagée reçoit les identités à afficher et un callback de retrait.
 
 ## Composants métier
 
