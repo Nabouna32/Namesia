@@ -13,6 +13,7 @@ import { IconeMaterial } from "./icone-material";
 import { ChampRecherche } from "@/components/ui/champ-recherche";
 import { BoutonComparaison } from "@/components/ui/bouton-comparaison";
 import { Bouton } from "@/components/ui/bouton";
+import { PartagerLien } from "@/components/partager-fiche";
 import { ChipFiltre } from "@/components/ui/chip-filtre";
 
 type Props = {
@@ -197,6 +198,15 @@ export function RecherchePrenoms({
             </Bouton>
           )}
         </div>
+      )}
+
+      {!compact && synchroniserUrl && (filtresActifs || nombreVisible > 24) && (
+        <PartagerLien
+          titre="Recherche de prénoms · Namesia"
+          texte="Retrouvez cette sélection de prénoms sur Namesia."
+          label="Partager cette recherche"
+          parametres={["q", "genre", "lettre", "limite"]}
+        />
       )}
 
       {!compact && (
