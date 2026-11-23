@@ -1,7 +1,11 @@
 # ADR-0023 — Définir les surfaces Fidelity dans leurs règles canoniques
 
-- **Statut :** acceptée
+- **Statut :** remplacée par ADR-0024
 - **Date :** 2026-11-23
+
+## Réexamen
+
+Cette décision intermédiaire est remplacée par [ADR-0024 — Contrat design Material 3 sans alias ni overrides](ADR-0024-contrat-design-m3.md). La couche finale n'est plus conservée, même pour les familles non migrées : toutes les règles sont regroupées à leur emplacement canonique.
 
 ## Contexte
 
