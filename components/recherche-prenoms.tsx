@@ -101,18 +101,19 @@ export function RecherchePrenoms({
 
     const limite = terme.length >= 8 ? 2 : 1;
     return prenoms
-      .filter((prenom) => {
+      .flatMap((prenom) => {
         const nom = normaliserRecherche(prenom.nom);
-        return (!genreActif || prenom.genre === genreActif)
-          && (!lettreActive || normaliserRecherche(prenom.lettre) === lettreActive)
-          && distanceEdition(terme, nom, limite) <= limite;
+        if ((genreActif && prenom.genre !== genreActif)
+          || (lettreActive && normaliserRecherche(prenom.lettre) !== lettreActive)) {
+          return [];
+        }
+
+        const distance = distanceEdition(terme, nom, limite);
+        return distance <= limite ? [{ prenom, distance }] : [];
       })
-      .sort((a, b) => {
-        const distanceA = distanceEdition(terme, normaliserRecherche(a.nom), limite);
-        const distanceB = distanceEdition(terme, normaliserRecherche(b.nom), limite);
-        return distanceA - distanceB || a.nom.localeCompare(b.nom, "fr");
-      })
-      .slice(0, 5);
+      .sort((a, b) => a.distance - b.distance || a.prenom.nom.localeCompare(b.prenom.nom, "fr"))
+      .slice(0, 5)
+      .map(({ prenom }) => prenom);
   }, [genreActif, lettreActive, prenoms, recherche, resultats.length]);
 
   const filtresActifs = Boolean(recherche.trim() || genreActif || lettreActive);
