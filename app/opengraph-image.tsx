@@ -1,32 +1,73 @@
 import { ImageResponse } from "next/og";
+import { chargerPolicesOpenGraph } from "@/lib/polices-open-graph";
 
 export const runtime = "nodejs";
 export const alt = "Namesia — Le sens derrière chaque prénom";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function Image() {
+export default async function Image() {
   return new ImageResponse(
     <div style={{
-      width: "100%", height: "100%", display: "flex", flexDirection: "column",
-      justifyContent: "space-between", padding: "72px 82px", position: "relative",
-      overflow: "hidden",
-      background: "linear-gradient(115deg, #fff0f5 0%, #fff8e9 30%, #f0fff5 58%, #eef8ff 78%, #f8efff 100%)",
-      color: "#30243b"
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      padding: "52px 64px",
+      background: "#f2f3fa",
+      color: "#191b20",
+      fontFamily: "Roboto"
     }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-        <div style={{ width: 58, height: 58, borderRadius: 20, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #ff5d8f, #ff9f43 28%, #62c88a 54%, #48b8e8 76%, #9870e8)", color: "#fff", fontFamily: "Georgia, serif", fontSize: 38 }}>n.</div>
-        <div style={{ fontSize: 30, fontWeight: 700, letterSpacing: 2 }}>NAMESIA</div>
+      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        <div style={{
+          width: 48,
+          height: 48,
+          borderRadius: 16,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "linear-gradient(105deg, #ef568b 0%, #f29a42 19%, #e8c94c 36%, #55b987 54%, #49a9d5 72%, #8669d4 88%, #d76bb5 100%)",
+          color: "#ffffff",
+          fontSize: 25
+        }}>n.</div>
+        <div style={{ fontSize: 25, letterSpacing: 0.2 }}>namesia</div>
       </div>
-      <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: 20 }}>
-        <div style={{ color: "#9253a1", fontSize: 22, fontWeight: 700, letterSpacing: 4 }}>L’UNIVERS DES PRÉNOMS</div>
-        <div style={{ display: "flex", flexDirection: "column", fontFamily: "Georgia, serif", fontSize: 92, lineHeight: 1.05, letterSpacing: -3 }}><div style={{ display: "flex" }}>Chaque prénom</div><div style={{ display: "flex" }}>a son histoire.</div></div>
-        <div style={{ maxWidth: 760, color: "#65586c", fontSize: 27, lineHeight: 1.4 }}>Découvrez les origines, les histoires et les traditions qui se cachent derrière les prénoms.</div>
+      <div style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 18,
+        padding: 38,
+        borderRadius: 28,
+        background: "#f9f9ff"
+      }}>
+        <div style={{
+          alignSelf: "flex-start",
+          padding: "8px 14px",
+          borderRadius: 18,
+          background: "#dbe2f9",
+          color: "#131b2c",
+          fontSize: 18
+        }}>L’univers des prénoms</div>
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          fontSize: 82,
+          lineHeight: 1.04,
+          letterSpacing: -2
+        }}>
+          <div>Chaque prénom</div>
+          <div style={{ color: "#005ac1" }}>a son histoire.</div>
+        </div>
+        <div style={{
+          maxWidth: 850,
+          color: "#44474f",
+          fontSize: 24,
+          lineHeight: 1.4
+        }}>Découvrez les origines, les histoires et les traditions qui se cachent derrière les prénoms.</div>
       </div>
-      <div style={{ position: "absolute", right: -110, bottom: -240, width: 600, height: 600, borderRadius: 300, border: "2px solid rgba(164, 99, 181, 0.18)" }} />
-      <div style={{ position: "absolute", right: 20, bottom: -160, width: 430, height: 430, borderRadius: 215, border: "2px solid rgba(164, 99, 181, 0.14)" }} />
-      <div style={{ color: "#8a7b91", fontSize: 18, letterSpacing: 2 }}>NAMESIA · DÉCOUVRIR AUTREMENT</div>
+      <div style={{ color: "#44474f", fontSize: 16 }}>NAMESIA · DÉCOUVRIR AUTREMENT</div>
     </div>,
-    size
+    { ...size, fonts: await chargerPolicesOpenGraph() }
   );
 }
