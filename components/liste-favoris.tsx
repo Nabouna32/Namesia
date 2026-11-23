@@ -89,7 +89,7 @@ export function ListeFavoris({ prenoms }: Props) {
 
       {messageImport && <p className={styles.success} role="status">{messageImport}</p>}
       {erreurImport && <p className={styles.error} role="alert">{erreurImport}</p>}
-      {erreur && (
+      {erreur && favoris.length > 0 && (
         <p className={styles.error} role="alert">
           Le stockage des favoris est indisponible ou contient des données illisibles. Vos modifications ne sont pas enregistrées.
         </p>
@@ -97,7 +97,7 @@ export function ListeFavoris({ prenoms }: Props) {
 
       {favoris.length === 0 ? (
         <div className={styles.empty}>
-          <p>{erreur
+          <p className={erreur ? styles.error : undefined} role={erreur ? "alert" : undefined}>{erreur
             ? "Vos favoris ne peuvent pas être lus pour le moment."
             : slugs.length === 0
               ? "Vous n’avez pas encore enregistré de prénom."
@@ -118,8 +118,8 @@ export function ListeFavoris({ prenoms }: Props) {
           </div>
           <p className={styles.count} role="status" aria-live="polite">
             {termeNormalise
-              ? `${favorisFiltres.length} ${favorisFiltres.length > 1 ? "favoris affichés" : "favori affiché"} sur ${favoris.length}`
-              : `${favoris.length} ${favoris.length > 1 ? "favoris enregistrés" : "favori enregistré"}`}
+              ? `${favorisFiltres.length} ${favorisFiltres.length === 1 ? "favori affiché" : "favoris affichés"} sur ${favoris.length}`
+              : `${favoris.length} ${favoris.length === 1 ? "favori enregistré" : "favoris enregistrés"}`}
           </p>
           {favorisFiltres.length === 0 ? (
             <div className={styles.empty}>
