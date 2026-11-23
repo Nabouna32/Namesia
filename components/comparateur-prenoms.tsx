@@ -155,7 +155,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
                   onClick={() => setNombreVisible((visible) => visible + 24)}
                 >
                   Afficher les {Math.min(24, resultats.length - nombreVisible)} prénoms suivants
-                </button>
+                </Bouton>
               )}
             </>
           ) : (
@@ -170,7 +170,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
             onRetirer={(slug) => changerSelection(slug, false)}
           />
           <span role="status" aria-live="polite">{selection.length} / 3 prénoms sélectionnés</span>
-          <button type="button" disabled={selection.length === 0} onClick={effacerSelection}>
+          <Bouton variante="text" type="button" disabled={selection.length === 0} onClick={effacerSelection}>
             Effacer la sélection
           </button>
         </div>
