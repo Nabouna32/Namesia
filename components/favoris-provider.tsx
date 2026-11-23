@@ -18,6 +18,7 @@ type ContexteFavoris = {
   erreur: boolean;
   basculer: (slug: string) => void;
   retirerPlusieurs: (slugs: string[]) => void;
+  ajouterPlusieurs: (slugs: string[]) => number | null;
 };
 
 const FavorisContext = createContext<ContexteFavoris | null>(null);
@@ -86,9 +87,33 @@ export function FavorisProvider({ children }: { children: ReactNode }) {
     }
   }, [slugs]);
 
+  const ajouterPlusieurs = useCallback((slugsImportes: string[]): number | null => {
+    const prochainsSlugs = [...slugs];
+    const presents = new Set(slugs);
+    let nombreAjoute = 0;
+
+    for (const slug of slugsImportes) {
+      if (!presents.has(slug)) {
+        presents.add(slug);
+        prochainsSlugs.push(slug);
+        nombreAjoute += 1;
+      }
+    }
+
+    try {
+      window.localStorage.setItem(CLE_FAVORIS, JSON.stringify(prochainsSlugs));
+      setSlugs(prochainsSlugs);
+      setErreur(false);
+      return nombreAjoute;
+    } catch {
+      setErreur(true);
+      return null;
+    }
+  }, [slugs]);
+
   const valeur = useMemo(
-    () => ({ slugs, pret, erreur, basculer, retirerPlusieurs }),
-    [slugs, pret, erreur, basculer, retirerPlusieurs]
+    () => ({ slugs, pret, erreur, basculer, retirerPlusieurs, ajouterPlusieurs }),
+    [slugs, pret, erreur, basculer, retirerPlusieurs, ajouterPlusieurs]
   );
 
   return (
