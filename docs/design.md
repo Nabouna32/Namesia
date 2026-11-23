@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 3.5
+- **Version :** 4.0
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -15,7 +15,7 @@ La personnalité Namesia reste présente à travers son dégradé de marque. Les
 ## 2. Source de vérité des couleurs
 
 La palette d'interface est calculée avec la bibliothèque officielle Google **`@material/material-color-utilities`**. Le thème est construit avec :
-- couleur source primaire : `#6750A4`, violet Material de référence ;
+- couleur source primaire : `#005AC1`, bleu Pixel choisi pour Namesia ;
 - variante du thème d'interface : `Variant.FIDELITY` ;
 - variante complémentaire des catégories : `Variant.RAINBOW`, calculée séparément avec la même couleur source ;
 - spécification : `2025` ;
@@ -45,7 +45,7 @@ Le dégradé de marque `--color-rainbow` reste un accent décoratif limité au m
 
 ## 3. Formes, typographie et élévation
 
-- Typographie : Roboto en priorité, puis Google Sans si disponible sur la plateforme, avec une pile système sans téléchargement distant. Le corps reste à 16 px minimum pour les contrôles et la lecture courante.
+- Typographie : Roboto en priorité, puis la pile système native (`system-ui`, sans-serif). Google Sans n’est utilisé que s’il est déjà installé ; aucune police distante n’est téléchargée. Le corps reste à 16 px minimum pour les contrôles et la lecture courante.
 - Échelle : display, headline, title, body et label selon la hiérarchie Material ; les titres utilisent des graisses modérées et un interlettrage resserré, pas une serif éditoriale étrangère à Android.
 - Formes : extra-small 4 px, small 8 px, medium 12 px, large 16 px, extra-large 28 px et full/pill.
 - Élévation : surfaces tonales en premier ; ombres discrètes uniquement pour les éléments flottants et les plans qui doivent se détacher.
@@ -56,13 +56,13 @@ Le dégradé de marque `--color-rainbow` reste un accent décoratif limité au m
 Les destinations de premier niveau sont Accueil, Explorer, Comparer et Favoris. Elles restent identiques sur toutes les tailles d'écran.
 
 - **Compact, moins de 600 px :** navigation bar fixe en bas, quatre destinations avec icône et libellé, prise en compte de `safe-area-inset-bottom`.
-- **Medium et plus, à partir de 600 px :** navigation rail fixe sur le bord de départ, largeur de 96 px, icône et libellé empilés. Le rail s'étend temporairement à 280 px et le contenu suit son déplacement.
+- **Medium et plus, à partir de 600 px :** navigation rail fixe sur le bord de départ, largeur de 80 px, icône et libellé empilés. Le rail reste à 80 px : le modèle Android du rail est conservé, sans tiroir latéral propriétaire qui réduirait inutilement l’espace de lecture.
 - **Hauteur compacte, jusqu'à 480 px :** la navigation revient en bas même si la largeur dépasse 600 px, pour les fenêtres paysage peu hautes. Les éléments passent alors en disposition horizontale.
 - La barre supérieure reste présente, avec la marque Namesia et une hauteur de 64 px.
 - La destination courante utilise l'indicateur tonal en pilule et `aria-current="page"`.
 - La navigation est une navigation de pages, pas un tablist ARIA : les liens natifs conservent l'historique, les ouvertures dans un nouvel onglet et les usages clavier du navigateur.
 
-Ces seuils suivent la logique des window size classes Android : la barre convient aux fenêtres compactes en largeur ou en hauteur et le rail aux fenêtres plus larges. Les adaptations sont pilotées par l'espace disponible, pas par la détection d'une marque d'appareil.
+Ces seuils suivent la logique des window size classes Android : la barre convient aux fenêtres compactes en largeur ou en hauteur et le rail aux fenêtres plus larges. Les adaptations sont pilotées par l'espace disponible, pas par la détection d'une marque d'appareil. Le rail ne possède pas de bouton d'extension artificiel : une navigation de premier niveau reste stable et prévisible.
 
 ## 5. Bibliothèque de composants
 
@@ -83,7 +83,7 @@ Les composants doivent partager les mêmes rôles, formes et interactions :
 
 États attendus : repos, survol, focus clavier, pressé, sélectionné, désactivé, chargement, erreur et succès. Les états sont explicites et ne reposent jamais sur la couleur seule.
 
-Les interactions utilisent des transitions courtes et des courbes d'accélération expressives. Le mouvement doit rendre l'action compréhensible : indicateur qui s'étend, surface qui réagit à la pression, changement d'état animé. Les animations décoratives restent secondaires. `prefers-reduced-motion: reduce` supprime les mouvements non essentiels.
+Les interactions utilisent les courbes Material de standard, d'accélération et de décélération, avec des durées courtes, moyennes et longues centralisées. Les surfaces réagissent au survol lorsque le périphérique le permet et à l'état pressé sur écran tactile, sans déplacer le contenu à chaque clic. Le mouvement doit rendre l'action compréhensible : indicateur qui s'étend, surface qui réagit à la pression, changement d'état animé. Les animations décoratives restent secondaires. `prefers-reduced-motion: reduce` supprime les mouvements non essentiels.
 
 Les SVG d'interface sont des icônes vectorielles monochromes à `currentColor`, généralement sur une grille de 24 × 24 ; leur dessin reste cohérent d'une destination à l'autre. Les SVG de marque peuvent être colorés.
 
@@ -115,3 +115,18 @@ Les SVG d'interface sont des icônes vectorielles monochromes à `currentColor`,
 La référence est Material 3 pour Android, notamment ses principes de navigation adaptative, ses rôles de couleur et ses composants. La palette principale suit Fidelity ; Rainbow est un système d'accents catégoriels distinct. La bibliothèque officielle Material Web est en mode maintenance en attente de nouveaux mainteneurs ; elle n'est pas retenue comme fondation UI. Material Color Utilities est la dépendance officielle retenue pour les algorithmes de couleur, pas une bibliothèque de composants.
 
 La navigation, les icônes et les surfaces du site sont des implémentations Web accessibles des modèles Material. Le Web ne peut pas reproduire les gestes système, les barres système transparentes, le retour prédictif Android, les animations natives exactes ni l'extraction du fond d'écran. Ces éléments ne doivent pas être simulés de manière trompeuse.
+
+
+## 10. Fidélité d'interaction Pixel
+
+La fidélité ne se limite pas aux couleurs. Les interactions doivent reproduire les conventions observables de Material 3 sur Android :
+
+- Les actions primaires utilisent les boutons filled ; les actions secondaires utilisent tonal, outlined ou text selon leur importance.
+- Les états hover, focus-visible, pressed, disabled, selected, loading et error sont cohérents entre les contrôles. Les états tactiles ne dépendent pas du hover.
+- Les transitions utilisent les tokens de mouvement communs. Les éléments de navigation animent l'indicateur, pas la position des libellés ; les actions ne déclenchent pas de zoom agressif.
+- Les composants interactifs gardent une cible tactile de 48 × 48 px au minimum. La taille visuelle de l'icône ne détermine pas celle de la cible.
+- Les surfaces suivent les niveaux Material : fond, surface basse, surface, surface haute et surface la plus haute. Les dégradés et ombres ne remplacent pas cette hiérarchie.
+- Les icônes restent cohérentes : SVG local, grille 24 px, épaisseur et remplissage harmonisés, couleur héritée. Les pictogrammes de marque ne sont pas mélangés aux icônes fonctionnelles.
+- Les barres de navigation compactes et les rails medium/expanded sont des modèles de navigation de page ; ce ne sont ni des onglets ni une imitation des barres système Android.
+
+La fidélité est évaluée sur l'ensemble des parcours (accueil, catalogue, fiche, comparateur, favoris et administration), en clair/sombre, à 320 px, 600 px, 840 px et sur grand écran. Une simple conformité des tokens ne suffit pas si les composants visibles conservent des styles concurrents.
