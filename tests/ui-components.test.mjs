@@ -32,7 +32,7 @@ test("les composants métier réutilisent les primitives au lieu de redéfinir l
   assert.match(notFound, /<LienBouton/);
 });
 
-test("la page d'erreur décrit honnêtement le signalement et les recours disponibles", () => {
+test("la page d'erreur ne prétend pas transmettre une erreur journalisée localement", () => {
   assert.match(errorBoundary, /console\.error/);
   assert.match(errorBoundary, /Vous pouvez réessayer ou revenir à l’accueil/);
   assert.doesNotMatch(errorBoundary, /problème a été signalé/);
