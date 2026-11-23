@@ -99,6 +99,11 @@ export function RecherchePrenoms({
       .map(({ prenom }) => prenom);
   }, [genreActif, lettreActive, prenoms, recherche, resultats.length]);
 
+  const prenomsSelectionnes = selectionComparaison.flatMap((slug) => {
+    const prenom = prenoms.find((candidat) => candidat.slug === slug);
+    return prenom ? [prenom] : [];
+  });
+
   const filtresActifs = Boolean(recherche.trim() || genreActif || lettreActive);
 
   function basculerComparaison(slug: string) {
@@ -240,6 +245,20 @@ export function RecherchePrenoms({
 
       {!compact && selectionComparaison.length > 0 && (
         <div className={styles.compareBar}>
+          <ul className="compare-selected-list" aria-label="Prénoms sélectionnés pour la comparaison">
+            {prenomsSelectionnes.map((prenom) => (
+              <li key={prenom.slug}>
+                <button
+                  className="compare-selected-item"
+                  type="button"
+                  aria-label={`Retirer ${prenom.nom} de la comparaison`}
+                  onClick={() => basculerComparaison(prenom.slug)}
+                >
+                  {prenom.nom}<span aria-hidden="true">×</span>
+                </button>
+              </li>
+            ))}
+          </ul>
           <span role="status" aria-live="polite">{selectionComparaison.length} / 3 prénoms pour la comparaison</span>
           <div className={styles.compareActions}>
             <button type="button" onClick={() => setSelectionComparaison([])}>
