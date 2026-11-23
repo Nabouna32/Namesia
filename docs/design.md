@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.7
+- **Version :** 4.8
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -72,7 +72,7 @@ Les primitives communes portent les interactions et états transversaux ; les co
 
 ## 6. Composants et états
 
-Les composants doivent partager les mêmes rôles, formes et interactions :
+Les composants doivent partager les mêmes rôles, formes et interactions. Les surfaces de l'accueil, des cartes vedettes, des fiches et du pied de page sont définies dans leurs règles canoniques, sans seconde couche de redéfinition tardive :
 - boutons filled, tonal, outlined et text ;
 - champs de saisie, recherche et sélection ;
 - cartes élevées, remplies ou avec contour ;
