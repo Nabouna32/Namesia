@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BoutonFavori } from "@/components/bouton-favori";
+import { categoryTone } from "@/lib/category-color";
 import { EnregistrerConsultation } from "@/components/enregistrer-consultation";
 import { SuggestionsPrenoms } from "@/components/suggestions-prenoms";
 import { PartagerFiche } from "@/components/partager-fiche";
@@ -180,7 +181,7 @@ export default async function FichePrenom({ params, searchParams }: Props) {
                   </div>
                   <div className="symbolic-grid">
                     {prenom.symbolic_associations.map((symbol) => (
-                      <article className="symbolic-card" key={`${symbol.category}-${symbol.value}`}>
+                      <article className="symbolic-card" data-category-tone={categoryTone(symbol.category)} key={`${symbol.category}-${symbol.value}`}>
                         <span>{symbol.category}</span>
                         <h3>{symbol.value}</h3>
                         <p>{symbol.context_note}</p>
