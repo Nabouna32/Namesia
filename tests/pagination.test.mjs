@@ -4,7 +4,7 @@ import { lireToutesLesPages } from "../lib/pagination.ts";
 
 test("la pagination rassemble toutes les pages jusqu'à la dernière page partielle", async () => {
   const lignes = Array.from({ length: 7 }, (_, index) => index + 1);
-  const plages: [number, number][] = [];
+  const plages = [];
 
   const resultat = await lireToutesLesPages(async (debut, fin) => {
     plages.push([debut, fin]);
