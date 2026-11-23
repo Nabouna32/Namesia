@@ -12,6 +12,7 @@ import { creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
 import { IconeMaterial } from "./icone-material";
 import { ChampRecherche } from "@/components/ui/champ-recherche";
 import { BoutonComparaison } from "@/components/ui/bouton-comparaison";
+import { ChipFiltre } from "@/components/ui/chip-filtre";
 
 type Props = {
   prenoms: PrenomIndex[];
@@ -195,24 +196,14 @@ export function RecherchePrenoms({
             <fieldset className="filter-group">
               <legend>Explorer par genre</legend>
               <div className="filter-options">
-                <button
-                  className="filter-chip"
-                  type="button"
-                  aria-pressed={genreActif === null}
-                  onClick={() => changerGenre(null)}
-                >
-                  Tous
-                </button>
+                <ChipFiltre label="Tous" selectionne={genreActif === null} onClick={() => changerGenre(null)} />
                 {genres.map((genre) => (
-                  <button
-                    className="filter-chip"
-                    type="button"
+                  <ChipFiltre
                     key={genre}
-                    aria-pressed={genreActif === genre}
+                    label={genre}
+                    selectionne={genreActif === genre}
                     onClick={() => changerGenre(genre)}
-                  >
-                    {genre}
-                  </button>
+                  />
                 ))}
               </div>
             </fieldset>
@@ -222,24 +213,15 @@ export function RecherchePrenoms({
             <fieldset className="filter-group">
               <legend>Explorer par initiale</legend>
               <div className="filter-options filter-letters">
-                <button
-                  className="filter-chip"
-                  type="button"
-                  aria-pressed={lettreActive === null}
-                  onClick={() => changerLettre(null)}
-                >
-                  Toutes
-                </button>
+                <ChipFiltre label="Toutes" selectionne={lettreActive === null} onClick={() => changerLettre(null)} />
                 {lettres.map((lettre) => (
-                  <button
-                    className="filter-chip filter-letter"
-                    type="button"
+                  <ChipFiltre
                     key={lettre}
-                    aria-pressed={lettreActive === lettre}
+                    label={lettre.toLocaleUpperCase("fr")}
+                    selectionne={lettreActive === lettre}
+                    initiale
                     onClick={() => changerLettre(lettre)}
-                  >
-                    {lettre.toLocaleUpperCase("fr")}
-                  </button>
+                  />
                 ))}
               </div>
             </fieldset>
