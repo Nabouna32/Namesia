@@ -555,11 +555,13 @@ h2 em {
   transition: background-color var(--motion-duration-short) var(--motion-standard), border-color var(--motion-duration-short) var(--motion-standard);
 }
 
-.name-card:hover {
-  border-color: var(--md-sys-color-outline);
-  background: var(--md-sys-color-surface-container-high);
-  box-shadow: none;
-  transform: none;
+@media (hover: hover) and (pointer: fine) {
+  .name-card:hover {
+    border-color: var(--md-sys-color-outline);
+    background: var(--md-sys-color-surface-container-high);
+    box-shadow: none;
+    transform: none;
+  }
 }
 
 .name-card:active {
@@ -672,11 +674,13 @@ h2 em {
   transition: background-color var(--motion-duration-short) var(--motion-standard), border-color var(--motion-duration-short) var(--motion-standard);
 }
 
-.featured-card:hover {
-  border-color: var(--md-sys-color-outline);
-  background: var(--md-sys-color-surface-container-high);
-  box-shadow: none;
-  transform: none;
+@media (hover: hover) and (pointer: fine) {
+  .featured-card:hover {
+    border-color: var(--md-sys-color-outline);
+    background: var(--md-sys-color-surface-container-high);
+    box-shadow: none;
+    transform: none;
+  }
 }
 
 .featured-card:active {
