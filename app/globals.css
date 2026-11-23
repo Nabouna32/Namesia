@@ -908,9 +908,11 @@ margin-right: 8px;
   text-decoration: none;
 }
 
-.breadcrumb a:hover,
-.profile-footer a:hover {
-  color: var(--md-sys-color-primary);
+@media (hover: hover) and (pointer: fine) {
+  .breadcrumb a:hover,
+  .profile-footer a:hover {
+    color: var(--md-sys-color-primary);
+  }
 }
 
 .breadcrumb [aria-current="page"] {
@@ -1674,7 +1676,6 @@ padding: 12px 8px 24px;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .featured-card:hover, .name-card:hover { transform: none; }
 }
 
 @media (min-width: 900px) {
