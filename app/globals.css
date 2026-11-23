@@ -946,12 +946,43 @@ h2 em {
 
 .compare-selection-footer {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   margin-top: 18px;
   color: var(--muted);
   font-size: 13px;
+}
+
+.compare-selected-list {
+  display: flex;
+  flex: 1 0 100%;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.compare-selected-item {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 999px;
+  background: var(--color-surface-muted) !important;
+  color: var(--color-text) !important;
+  text-decoration: none !important;
+}
+
+.compare-selected-item:hover {
+  border-color: var(--color-accent) !important;
+}
+
+.compare-selected-item span {
+  color: var(--color-accent);
+  font-size: 18px;
+  line-height: 1;
 }
 
 .compare-selection-footer button {
