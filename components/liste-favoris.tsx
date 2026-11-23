@@ -4,6 +4,7 @@ import { useState, type ChangeEvent } from "react";
 import Link from "next/link";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
+import { normaliserRecherche } from "@/lib/recherche-prenoms";
 import { BoutonFavori } from "./bouton-favori";
 import { useFavoris } from "./favoris-provider";
 import styles from "./liste-favoris.module.css";
@@ -16,6 +17,7 @@ export function ListeFavoris({ prenoms }: Props) {
   const { slugs, pret, erreur, retirerPlusieurs, ajouterPlusieurs } = useFavoris();
   const [messageImport, setMessageImport] = useState("");
   const [erreurImport, setErreurImport] = useState("");
+  const [recherche, setRecherche] = useState("");
 
   if (!pret) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
 
@@ -25,6 +27,10 @@ export function ListeFavoris({ prenoms }: Props) {
     return prenom ? [prenom] : [];
   });
   const slugsIndisponibles = slugs.filter((slug) => !parSlug.has(slug));
+  const termeNormalise = normaliserRecherche(recherche);
+  const favorisFiltres = termeNormalise
+    ? favoris.filter((prenom) => normaliserRecherche(prenom.nom).includes(termeNormalise))
+    : favoris;
 
   function exporterFavoris() {
     const fichier = new Blob([creerSauvegardeFavoris(slugs)], { type: "application/json;charset=utf-8" });
@@ -96,48 +102,63 @@ export function ListeFavoris({ prenoms }: Props) {
             : slugs.length === 0
               ? "Vous n’avez pas encore enregistré de prénom."
               : "Aucun de vos favoris n’est actuellement publié."}</p>
-          {slugsIndisponibles.length > 0 && !erreur && (
-            <button
-              className="filter-reset"
-              type="button"
-              onClick={() => retirerPlusieurs(slugsIndisponibles)}
-            >
-              Retirer les {slugsIndisponibles.length} favoris indisponibles
-            </button>
-          )}
           <Link className="button button-dark" href="/prenoms">Explorer les prénoms</Link>
         </div>
       ) : (
-        <div className="name-grid">
-          {favoris.map((prenom) => (
-            <article className={styles.row} key={prenom.slug}>
-              <Link className="name-card" href={`/prenoms/${prenom.slug}`}>
-                <span className="name-initial">{prenom.lettre}</span>
-                <span>
-                  <strong>{prenom.nom}</strong>
-                  <small>{prenom.genre}</small>
-                </span>
-                <span className="card-arrow" aria-hidden="true">↗</span>
-              </Link>
-              <BoutonFavori slug={prenom.slug} afficherErreur={false} />
-            </article>
-          ))}
-          {slugsIndisponibles.length > 0 && (
-            <>
-              <p className={styles.note} role="status">
-                {slugsIndisponibles.length} {slugsIndisponibles.length > 1 ? "favoris ne sont plus" : "favori n’est plus"} publiés.
-              </p>
-              {!erreur && (
-                <button
-                  className="filter-reset"
-                  type="button"
-                  onClick={() => retirerPlusieurs(slugsIndisponibles)}
-                >
-                  Retirer les favoris indisponibles
-                </button>
-              )}
-            </>
+        <>
+          <div className={styles.search}>
+            <label htmlFor="recherche-favoris">Rechercher dans mes favoris</label>
+            <input
+              id="recherche-favoris"
+              type="search"
+              value={recherche}
+              onChange={(event) => setRecherche(event.target.value)}
+              placeholder="Saisissez un prénom..."
+            />
+          </div>
+          <p className={styles.count} role="status" aria-live="polite">
+            {termeNormalise
+              ? `${favorisFiltres.length} ${favorisFiltres.length > 1 ? "favoris affichés" : "favori affiché"} sur ${favoris.length}`
+              : `${favoris.length} ${favoris.length > 1 ? "favoris enregistrés" : "favori enregistré"}`}
+          </p>
+          {favorisFiltres.length === 0 ? (
+            <div className={styles.empty}>
+              <p>Aucun favori ne correspond à « {recherche.trim()} ».</p>
+              <button className="filter-reset" type="button" onClick={() => setRecherche("")}>
+                Effacer la recherche
+              </button>
+            </div>
+          ) : (
+            <div className="name-grid">
+              {favorisFiltres.map((prenom) => (
+                <article className={styles.row} key={prenom.slug}>
+                  <Link className="name-card" href={`/prenoms/${prenom.slug}`}>
+                    <span className="name-initial">{prenom.lettre}</span>
+                    <span>
+                      <strong>{prenom.nom}</strong>
+                      <small>{prenom.genre}</small>
+                    </span>
+                    <span className="card-arrow" aria-hidden="true">↗</span>
+                  </Link>
+                  <BoutonFavori slug={prenom.slug} afficherErreur={false} />
+                </article>
+              ))}
+            </div>
           )}
+        </>
+      )}
+      {slugsIndisponibles.length > 0 && !erreur && (
+        <div className={styles.stale}>
+          <p className={styles.note} role="status">
+            {slugsIndisponibles.length} {slugsIndisponibles.length > 1 ? "favoris ne sont plus" : "favori n’est plus"} publiés.
+          </p>
+          <button
+            className="filter-reset"
+            type="button"
+            onClick={() => retirerPlusieurs(slugsIndisponibles)}
+          >
+            Retirer les favoris indisponibles
+          </button>
         </div>
       )}
     </div>
