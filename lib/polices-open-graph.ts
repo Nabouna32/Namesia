@@ -1,7 +1,14 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-let policesEnCache: Promise<NonNullable<ConstructorParameters<typeof import("next/og").ImageResponse>[1]>["fonts"]> | undefined;
+type PoliceOpenGraph = {
+  name: string;
+  data: Buffer;
+  weight: 400;
+  style: "normal";
+};
+
+let policesEnCache: Promise<PoliceOpenGraph[]> | undefined;
 
 export function chargerPolicesOpenGraph() {
   policesEnCache ??= readFile(
