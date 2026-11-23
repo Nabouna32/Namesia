@@ -267,7 +267,8 @@ export function ListeFavoris({ prenoms }: Props) {
                     disabled={!selectionValide.includes(prenom.slug) && selectionValide.length >= 3}
                     onClick={() => basculerComparaison(prenom.slug)}
                   >
-                    {selectionValide.includes(prenom.slug) ? "Ajouté" : "Comparer"}
+                    <span className={styles.compareLabel}>{selectionValide.includes(prenom.slug) ? "Ajouté" : "Comparer"}</span>
+                    <span className={styles.compareIcon} aria-hidden="true">{selectionValide.includes(prenom.slug) ? "✓" : "⇄"}</span>
                   </button>
                   <BoutonFavori slug={prenom.slug} afficherErreur={false} />
                 </article>
