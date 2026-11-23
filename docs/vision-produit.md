@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.19
+- **Version :** 3.20
 - **Mis à jour :** 2026-11-23
 
 ## 1. Positionnement
@@ -43,7 +43,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 - Découverte aléatoire d'un prénom publié depuis l'accueil, sans répétition immédiate tant qu'un autre choix est disponible.
 - Favoris locaux : enregistrer ou retirer un prénom depuis sa fiche ou directement depuis les résultats du catalogue et de la recherche, puis retrouver la sélection dans une liste dédiée, sans compte ni synchronisation entre appareils. Les actions compactes des résultats restent distinctes du lien vers la fiche. La liste utilise uniquement les informations d'index nécessaires à son affichage, pas les textes complets des fiches. Une sauvegarde JSON des seuls identifiants peut être exportée puis importée dans un autre navigateur ; l'import fusionne la sélection sans effacer les favoris déjà présents. La liste peut aussi être filtrée par nom, sans distinction d'accents, de casse ou de séparateurs. Elle affiche 24 favoris au départ puis les suivants par lots de 24 ; une nouvelle recherche revient au premier lot. La sélection peut aussi être filtrée par genre lorsque plusieurs genres sont présents dans les favoris.
 - Accès direct au comparateur depuis une fiche, avec le prénom déjà sélectionné et la possibilité d'en ajouter jusqu'à deux autres. Depuis les résultats et suggestions du catalogue, sélection de deux ou trois prénoms puis ouverture du comparateur avec cette sélection préremplie. La barre de sélection garde les prénoms retenus visibles et individuellement supprimables même si un filtre ou une recherche les masque.
-- Fiches de découverte avec introduction, origine, histoire, usages, associations symboliques facultatives ; suggestions de trois autres prénoms publiés du même genre, diversifiées selon la fiche consultée et stables dans le temps. Ce critère ne prétend pas établir une proximité d'origine ou de signification ; partage natif de la fiche.
+- Fiches de découverte avec introduction, origine, histoire, usages, associations symboliques facultatives ; suggestions de trois autres prénoms publiés du même genre, diversifiées selon la fiche consultée et stables dans le temps. Ce critère ne prétend pas établir une proximité d'origine ou de signification ; partage natif de la fiche. Les suggestions permettent aussi d'ajouter ou de retirer un prénom des favoris sans ouvrir sa fiche.
 - Comparaison partageable de deux ou trois fiches sur leurs informations éditoriales publiées, via l'URL de la sélection. Le catalogue de choix ne charge que l'index léger ; les contenus complets sont demandés uniquement pour les fiches sélectionnées. La recherche sans distinction d'accents, de casse ni de séparateurs internes (espaces, tirets, apostrophes) classe les correspondances exactes avant les préfixes, puis les occurrences plus éloignées, comme dans le catalogue. Chaque fiche comparée peut être enregistrée dans les favoris locaux directement depuis sa carte. Les prénoms sélectionnés restent affichés avec une action de retrait individuelle, indépendamment de la pagination et du filtre de recherche. Le sélecteur présente 24 prénoms au départ et permet d'en afficher 24 de plus à chaque étape ; la recherche revient au premier lot.
 - Aperçus de partage visuels avec une carte dédiée à chaque fiche.
 - Génération hors du site, par API ou conversation, puis import d'un JSON.
