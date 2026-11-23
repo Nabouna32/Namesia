@@ -997,6 +997,11 @@ h2 em {
   color: var(--md-sys-color-on-primary-container);
 }
 
+.compare-option:has(input:checked) .compare-option-initial {
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+
 .compare-option:has(input:checked):active {
   background: color-mix(in srgb, var(--md-sys-color-on-primary-container) 12%, var(--md-sys-color-primary-container));
 }
