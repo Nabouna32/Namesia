@@ -193,7 +193,8 @@ export function ListeFavoris({
         <Bouton disabled={slugs.length === 0} onClick={exporterFavoris}>
           Exporter mes favoris
         </Bouton>
-        <button
+        <Bouton
+          variante="tonal"
           className={styles.copyButton}
           type="button"
           disabled={favorisFiltres.length === 0}
@@ -286,8 +287,8 @@ export function ListeFavoris({
           {favorisFiltres.length === 0 ? (
             <div className={styles.empty}>
               <p>Aucun favori ne correspond à ces critères.</p>
-              <button
-                className="filter-reset"
+              <Bouton variante="text"
+                className="filter-action"
                 type="button"
                 onClick={() => {
                   setRecherche("");
@@ -331,8 +332,8 @@ export function ListeFavoris({
             </div>
           )}
           {favorisFiltres.length > nombreVisible && (
-            <button
-              className="filter-reset"
+            <Bouton variante="text"
+              className="filter-action"
               type="button"
               onClick={chargerPlus}
             >
@@ -346,8 +347,8 @@ export function ListeFavoris({
           <p className={styles.note} role="status">
             {slugsIndisponibles.length} {slugsIndisponibles.length > 1 ? "favoris ne sont plus" : "favori n’est plus"} publiés.
           </p>
-          <button
-            className="filter-reset"
+          <Bouton variante="text"
+            className="filter-action"
             type="button"
             onClick={() => retirerPlusieurs(slugsIndisponibles)}
           >
