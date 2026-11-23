@@ -280,3 +280,16 @@ test("les cartes Rainbow utilisent la couleur de premier plan de leur propre cat
   assert.doesNotMatch(globalStyles, /\.symbolic-card > span \{[^}]*on-tertiary-container/);
   assert.doesNotMatch(symbolicCard, /linear-gradient/);
 });
+
+
+test("les surfaces principales Material sont définies à leur emplacement canonique", () => {
+  const fidelityLayer = globalStyles.slice(globalStyles.indexOf("/* Couche Material 3 Fidelity"));
+  const fidelityBase = fidelityLayer.slice(0, fidelityLayer.indexOf("@media (max-width: 599px)"));
+  assert.match(globalStyles, /\.hero \{[^}]*surface-container-low/s);
+  assert.match(globalStyles, /\.featured-card \{[^}]*surface-container-low/s);
+  assert.match(globalStyles, /\.profile-hero \{[^}]*surface-container-low/s);
+  assert.match(globalStyles, /\.site-footer \{[^}]*surface-container/s);
+  assert.doesNotMatch(fidelityBase, /\.hero \{|\.hero-content \{|\.eyebrow \{|\.eyebrow-dot \{|\.featured-card \{|\.featured-card:hover \{|\.profile-hero \{|\.profile-hero h1 span \{|\.site-footer \{/);
+  assert.doesNotMatch(globalStyles, /radial-gradient\(ellipse at 88% 15%/);
+  assert.doesNotMatch(globalStyles, /linear-gradient\(118deg/);
+});
