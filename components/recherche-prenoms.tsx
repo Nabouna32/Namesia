@@ -8,8 +8,6 @@ import styles from "./recherche-prenoms.module.css";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { comparerPertinence, normaliserRecherche } from "@/lib/recherche-prenoms";
 
-
-
 type Props = {
   prenoms: PrenomIndex[];
   compact?: boolean;
@@ -18,8 +16,6 @@ type Props = {
   initialGenre?: string | null;
   initialLettre?: string | null;
 };
-
-
 
 function distanceEdition(a: string, b: string, limite: number): number {
   if (Math.abs(a.length - b.length) > limite) return limite + 1;
