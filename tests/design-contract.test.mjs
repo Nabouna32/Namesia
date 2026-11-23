@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const globalCss = await readFile(join(root, "app/globals.css"), "utf8");
 const provider = await readFile(join(root, "components/material-theme-provider.tsx"), "utf8");
+const layout = await readFile(join(root, "app/layout.tsx"), "utf8");
 const prenoms = await readFile(join(root, "lib/prenoms.ts"), "utf8");
 const fiche = await readFile(join(root, "lib/fiche-prenom.ts"), "utf8");
 const schema = await readFile(join(root, "schemas/fiche-prenom.schema.json"), "utf8");
@@ -81,11 +82,23 @@ test("aucun sélecteur n'est déclaré plusieurs fois dans un même contexte CSS
   for (const { path, content } of styles) {
     const seen = new Set();
     for (const rule of collectRules(content)) {
-      const key = `${rule.context} :: ${rule.selector}`;
-      assert.equal(seen.has(key), false, `${path} redéfinit ${rule.selector} dans ${rule.context || "la portée globale"}`);
-      seen.add(key);
+      for (const selector of rule.selector.split(",").map((part) => part.trim())) {
+        const key = `${rule.context} :: ${selector}`;
+        assert.equal(seen.has(key), false, `${path} redéfinit ${selector} dans ${rule.context || "la portée globale"}`);
+        seen.add(key);
+      }
     }
   }
+});
+
+test("Roboto est chargée une fois, auto-hébergée et sans police de substitution", () => {
+  assert.match(layout, /import \\{ Roboto \\} from "next\\/font\\/google"/);
+  assert.match(layout, /weight: \\[ "400", "500" \\]/);
+  assert.match(layout, /subsets: \\[ "latin", "latin-ext" \\]/);
+  assert.match(layout, /variable: "--font-roboto"/);
+  assert.match(layout, /className=\\{roboto\\.variable\\}/);
+  assert.match(globalCss, /--md-sys-typescale-body-large-font: var\\(--font-roboto\\);/);
+  assert.doesNotMatch(globalCss, /-font: Roboto;/);
 });
 
 test("l'échelle typographique Material 3 est complète et limitée aux graisses 400/500", () => {
