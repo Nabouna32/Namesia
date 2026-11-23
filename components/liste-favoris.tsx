@@ -18,6 +18,7 @@ export function ListeFavoris({ prenoms }: Props) {
   const [messageImport, setMessageImport] = useState("");
   const [erreurImport, setErreurImport] = useState("");
   const [recherche, setRecherche] = useState("");
+  const [genreActif, setGenreActif] = useState("");
   const [nombreVisible, setNombreVisible] = useState(24);
 
   if (!pret) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
@@ -29,9 +30,13 @@ export function ListeFavoris({ prenoms }: Props) {
   });
   const slugsIndisponibles = slugs.filter((slug) => !parSlug.has(slug));
   const termeNormalise = normaliserRecherche(recherche);
-  const favorisFiltres = termeNormalise
-    ? favoris.filter((prenom) => normaliserRecherche(prenom.nom).includes(termeNormalise))
-    : favoris;
+  const genres = [...new Set(favoris.map((prenom) => prenom.genre))]
+    .sort((a, b) => a.localeCompare(b, "fr"));
+  const favorisFiltres = favoris.filter((prenom) => (
+    (!termeNormalise || normaliserRecherche(prenom.nom).includes(termeNormalise))
+    && (!genreActif || prenom.genre === genreActif)
+  ));
+  const filtresActifs = Boolean(termeNormalise || genreActif);
   const nombreAffiche = Math.min(favorisFiltres.length, nombreVisible);
 
   function exporterFavoris() {
@@ -108,29 +113,55 @@ export function ListeFavoris({ prenoms }: Props) {
         </div>
       ) : (
         <>
-          <div className={styles.search}>
-            <label htmlFor="recherche-favoris">Rechercher dans mes favoris</label>
-            <input
-              id="recherche-favoris"
-              type="search"
-              value={recherche}
-              onChange={(event) => {
-                setNombreVisible(24);
-                setRecherche(event.target.value);
-              }}
-              placeholder="Saisissez un prénom..."
-            />
+          <div className={styles.filters}>
+            <div className={styles.search}>
+              <label htmlFor="recherche-favoris">Rechercher dans mes favoris</label>
+              <input
+                id="recherche-favoris"
+                type="search"
+                value={recherche}
+                onChange={(event) => {
+                  setNombreVisible(24);
+                  setRecherche(event.target.value);
+                }}
+                placeholder="Saisissez un prénom..."
+              />
+            </div>
+            {genres.length > 1 && (
+              <div className={styles.genre}>
+                <label htmlFor="genre-favoris">Filtrer par genre</label>
+                <select
+                  id="genre-favoris"
+                  value={genreActif}
+                  onChange={(event) => {
+                    setNombreVisible(24);
+                    setGenreActif(event.target.value);
+                  }}
+                >
+                  <option value="">Tous les genres</option>
+                  {genres.map((genre) => <option key={genre} value={genre}>{genre}</option>)}
+                </select>
+              </div>
+            )}
           </div>
           <p className={styles.count} role="status" aria-live="polite">
-            {termeNormalise
+            {filtresActifs
               ? nombreAffiche + " " + (nombreAffiche === 1 ? "favori affiché" : "favoris affichés") + " sur " + favorisFiltres.length + (favorisFiltres.length === 1 ? " résultat" : " résultats")
               : nombreAffiche + " " + (nombreAffiche === 1 ? "favori affiché" : "favoris affichés") + " sur " + favoris.length + (favoris.length === 1 ? " favori enregistré" : " favoris enregistrés")}
           </p>
           {favorisFiltres.length === 0 ? (
             <div className={styles.empty}>
-              <p>Aucun favori ne correspond à « {recherche.trim()} ».</p>
-              <button className="filter-reset" type="button" onClick={() => setRecherche("")}>
-                Effacer la recherche
+              <p>Aucun favori ne correspond à ces critères.</p>
+              <button
+                className="filter-reset"
+                type="button"
+                onClick={() => {
+                  setRecherche("");
+                  setGenreActif("");
+                  setNombreVisible(24);
+                }}
+              >
+                Effacer les filtres
               </button>
             </div>
           ) : (
