@@ -258,6 +258,8 @@ test("la typographie suit une échelle Material 3 unique sans surcharges respons
   assert.match(globalStyles, /\.hero h1 \{[^}]*var\(--md-sys-typescale-display-small-size\)/s);
   assert.match(globalStyles, /\.profile-hero h1 \{[^}]*var\(--md-sys-typescale-headline-large-size\)/s);
   assert.match(globalStyles, /\.section-heading h2 \{[^}]*var\(--md-sys-typescale-headline-medium-size\)/s);
+  assert.match(globalStyles, /\.profile-lead \{[^}]*var\(--md-sys-typescale-body-large-size\)/s);
+  assert.doesNotMatch(globalStyles, /\.profile-lead \{[^}]*1\.125rem/);
   assert.equal((globalStyles.match(/\.hero h1\s*\{/g) ?? []).length, 1);
   assert.equal((globalStyles.match(/\.profile-hero h1\s*\{/g) ?? []).length, 1);
   assert.equal((globalStyles.match(/\.section-heading h2\s*\{/g) ?? []).length, 1);
