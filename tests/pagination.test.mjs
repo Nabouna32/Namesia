@@ -52,3 +52,15 @@ test("une taille de page invalide est rejetée avant tout appel", async () => {
   );
   assert.equal(appels, 0);
 });
+
+test("un catalogue dépassant mille lignes est entièrement parcouru", async () => {
+  const lignes = Array.from({ length: 1201 }, (_, index) => index);
+  const plages = [];
+  const resultat = await lireToutesLesPages(async (debut, fin) => {
+    plages.push([debut, fin]);
+    return { data: lignes.slice(debut, fin + 1), error: null };
+  });
+
+  assert.deepEqual(resultat, lignes);
+  assert.deepEqual(plages, [[0, 499], [500, 999], [1000, 1499]]);
+});
