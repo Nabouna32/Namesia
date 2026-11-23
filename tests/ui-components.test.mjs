@@ -183,7 +183,8 @@ test("Rainbow ne colore plus les titres ou les surfaces générales", () => {
 
 
 test("les boutons et cartes utilisent les state layers Material plutôt que des zooms ou élévations", () => {
-  const nomHover = globalStyles.slice(globalStyles.lastIndexOf(".name-card:hover {"));
+  const nomBase = globalStyles.indexOf(".name-card { min-height: 76px;");
+  const nomHover = globalStyles.slice(globalStyles.indexOf(".name-card:hover {", nomBase));
   const vedetteHover = globalStyles.slice(globalStyles.lastIndexOf(".featured-card:hover {"));
   assert.match(styles, /\.button::after/);
   assert.match(styles, /opacity: 0\.08/);
