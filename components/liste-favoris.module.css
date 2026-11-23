@@ -57,28 +57,31 @@
 
 .filters {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(190px, 240px);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
   align-items: end;
   gap: 16px;
-  max-width: 820px;
+  max-width: 960px;
 }
 
 .search,
-.genre {
+.genre,
+.sort {
   display: grid;
   min-width: 0;
   gap: 8px;
 }
 
 .search label,
-.genre label {
+.genre label,
+.sort label {
   color: var(--color-text);
   font-size: 14px;
   font-weight: 600;
 }
 
 .search input,
-.genre select {
+.genre select,
+.sort select {
   width: 100%;
   min-width: 0;
   min-height: 48px;
@@ -91,7 +94,8 @@
   font-size: 16px;
 }
 
-.genre select {
+.genre select,
+.sort select {
   cursor: pointer;
 }
 

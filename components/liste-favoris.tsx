@@ -20,6 +20,7 @@ export function ListeFavoris({ prenoms }: Props) {
   const [erreurImport, setErreurImport] = useState("");
   const [recherche, setRecherche] = useState("");
   const [genreActif, setGenreActif] = useState("");
+  const [triActif, setTriActif] = useState<"enregistrement" | "nom-asc" | "nom-desc">("enregistrement");
   const [nombreVisible, setNombreVisible] = useState(24);
   const [selectionComparaison, setSelectionComparaison] = useState<string[]>([]);
 
@@ -44,6 +45,13 @@ export function ListeFavoris({ prenoms }: Props) {
 
   if (!pret) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
 
+  function changerTri(value: string) {
+    if (value === "enregistrement" || value === "nom-asc" || value === "nom-desc") {
+      setNombreVisible(24);
+      setTriActif(value);
+    }
+  }
+
   function basculerComparaison(slug: string) {
     setSelectionComparaison((selection) => {
       const selectionCourante = selection.filter((element) => favorisDisponibles.has(element));
@@ -59,6 +67,12 @@ export function ListeFavoris({ prenoms }: Props) {
     (!termeNormalise || normaliserRecherche(prenom.nom).includes(termeNormalise))
     && (!genreActif || prenom.genre === genreActif)
   ));
+  if (triActif !== "enregistrement") {
+    favorisFiltres.sort((a, b) => {
+      const ordre = a.nom.localeCompare(b.nom, "fr") || a.slug.localeCompare(b.slug, "fr");
+      return triActif === "nom-asc" ? ordre : -ordre;
+    });
+  }
   const filtresActifs = Boolean(termeNormalise || genreActif);
   const nombreAffiche = Math.min(favorisFiltres.length, nombreVisible);
 
@@ -166,6 +180,14 @@ export function ListeFavoris({ prenoms }: Props) {
                 </select>
               </div>
             )}
+            <div className={styles.sort}>
+              <label htmlFor="tri-favoris">Trier les favoris</label>
+              <select id="tri-favoris" value={triActif} onChange={(event) => changerTri(event.target.value)}>
+                <option value="enregistrement">Ordre d’enregistrement</option>
+                <option value="nom-asc">Nom · A à Z</option>
+                <option value="nom-desc">Nom · Z à A</option>
+              </select>
+            </div>
           </div>
           <BarreComparaison
             prenoms={prenomsSelectionnes}
