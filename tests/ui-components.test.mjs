@@ -113,6 +113,11 @@ test("les filtres de genre et d'initiale partagent des puces Fidelity", () => {
   assert.match(chipFiltre, /selectionne && <IconeMaterial name="check"/);
   assert.match(chipFiltreStyles, /secondary-container/);
   assert.match(chipFiltreStyles, /:focus-visible/);
+  assert.match(chipFiltreStyles, /transition: border-color var\(--md-sys-motion-duration-short\)/);
+  assert.match(chipFiltreStyles, /\.chip:active/);
+  const mediaSurvol = chipFiltreStyles.indexOf("@media (hover: hover) and (pointer: fine)");
+  const regleSurvol = chipFiltreStyles.indexOf(".chip:hover");
+  assert.ok(mediaSurvol >= 0 && regleSurvol > mediaSurvol, "Le survol des filtres doit être réservé aux pointeurs fins");
   assert.match(rechercheFiltres, /<ChipFiltre/);
   assert.doesNotMatch(globalStyles, /filter-chip|filter-letter|Expressive/);
 });
