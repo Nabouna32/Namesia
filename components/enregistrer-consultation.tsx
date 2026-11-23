@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import { useHistorique } from "@/components/historique-provider";
 
 export function EnregistrerConsultation({ slug }: { slug: string }) {
-  const { pret, enregistrer } = useHistorique();
+  const { enregistrer } = useHistorique();
 
   useEffect(() => {
-    if (pret) enregistrer(slug);
-  }, [pret, slug, enregistrer]);
+    enregistrer(slug);
+  }, [slug, enregistrer]);
 
   return null;
 }
