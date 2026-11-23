@@ -51,6 +51,7 @@
 
 .form input[type="file"] {
   max-width: 100%;
+  min-height: 44px;
   color: var(--color-text-muted);
   font: inherit;
   font-size: 14px;
