@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.14
+- **Version :** 4.15
 - **Mis à jour :** 2026-11-23
 
 ## 1. Direction
@@ -107,6 +107,8 @@ Les icônes fonctionnelles utilisent les tracés officiels Google Material Symbo
 - Les barres système, gestes de retour Android et indicateur de geste restent la responsabilité du navigateur et de l'OS ; Namesia ne dessine pas de fausses barres système.
 
 ## 8. Architecture
+
+- Les cartes Open Graph du site et des fiches utilisent la même famille Roboto que l’interface, chargée depuis un fichier TTF local au runtime Node de `ImageResponse`. Le poids 400 suffit à cette surface de partage ; aucun appel Google Fonts, aucune police de substitution et aucune seconde famille ne sont utilisés. Les fonds, textes et accents reprennent les rôles clairs Fidelity ; le dégradé de marque reste limité au monogramme.
 
 - `@material/material-color-utilities` génère les rôles de couleurs ; aucun autre moteur de thème n'est ajouté.
 - `components/material-theme-provider.tsx` synchronise le schéma avec la préférence système.
