@@ -39,10 +39,14 @@ padding: 8px 12px;
   flex: 0 0 auto;
 }
 
-.chip:hover {
-  border-color: var(--md-sys-color-primary);
-  background: var(--md-sys-color-primary-container);
-  color: var(--md-sys-color-on-primary-container);
+.chip:active {
+  background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 12%, var(--md-sys-color-secondary-container));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover {
+    background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 8%, var(--md-sys-color-secondary-container));
+  }
 }
 
 .chip:focus-visible {
