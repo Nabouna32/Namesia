@@ -14,7 +14,7 @@ padding: 0 16px;
   font-size: var(--md-sys-typescale-body-medium-size);
   font-weight: 500;
   cursor: pointer;
-  transition: border-color 160ms var(--motion-standard), background-color 160ms var(--motion-standard), color 160ms var(--motion-standard);
+  transition: border-color 160ms var(--md-sys-motion-standard), background-color 160ms var(--md-sys-motion-standard), color 160ms var(--md-sys-motion-standard);
 }
 
 .chip svg {
