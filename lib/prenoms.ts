@@ -45,8 +45,20 @@ const selection = `
   )
 `;
 
+function obtenirInitiale(displayName: string): string {
+  const initiale = Array.from(displayName.trim())[0];
+  if (!initiale) throw new Error("Un prénom publié ne peut pas avoir un nom vide.");
+  return initiale.toLocaleUpperCase("fr");
+}
+
+function obtenirLibelleGenre(genre: string): string {
+  const libelle = libellesGenres[genre];
+  if (!libelle) throw new Error(`Genre de prénom non pris en charge : "${genre}".`);
+  return libelle;
+}
+
 function convertir(row: JoinedName): Prenom {
-  const profiles = row.name_profiles ?? [];
+  const profiles = row.name_profiles;
   if (profiles.length !== 1) {
     throw new Error(`Le prénom "${row.slug}" doit avoir exactement une version publiée.`);
   }
@@ -57,7 +69,7 @@ function convertir(row: JoinedName): Prenom {
     ...(profile.origin_text ? { origin: profile.origin_text } : {}),
     ...(profile.history_text ? { history: profile.history_text } : {}),
     ...(profile.usage_text ? { usage: profile.usage_text } : {}),
-    symbolic_associations: [...(profile.name_profile_associations ?? [])]
+    symbolic_associations: [...profile.name_profile_associations]
       .sort((a, b) => a.position - b.position)
       .map(({ category, value, context_note }) => ({ category, value, context_note }))
   };
@@ -66,8 +78,8 @@ function convertir(row: JoinedName): Prenom {
     id: row.id,
     slug: row.slug,
     nom: row.display_name,
-    lettre: Array.from(row.display_name.trim())[0]?.toLocaleUpperCase("fr") ?? "",
-    genre: libellesGenres[row.gender] ?? "Genre non renseigné",
+    lettre: obtenirInitiale(row.display_name),
+    genre: obtenirLibelleGenre(row.gender),
     ...parseContenuFiche(content)
   };
 }
@@ -175,8 +187,10 @@ export const getPrenom = cache(async (slug: string): Promise<Prenom | null> => {
 });
 
 export const getAutresPrenomsIndexDuGenre = cache(async (genre: string, slug: string): Promise<PrenomIndex[]> => {
-  const codeGenre = Object.entries(libellesGenres).find(([, libelle]) => libelle === genre)?.[0];
-  if (!codeGenre || codeGenre === "inconnu") return [];
+  const entreeGenre = Object.entries(libellesGenres).find(([, libelle]) => libelle === genre);
+  if (!entreeGenre) throw new Error(`Libellé de genre non pris en charge : "${genre}".`);
+  const [codeGenre] = entreeGenre;
+  if (codeGenre === "inconnu") return [];
 
   const supabase = createSupabaseServerClient();
   const { data, error } = await supabase
