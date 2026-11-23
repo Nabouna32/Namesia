@@ -7,7 +7,7 @@
   margin: 16px 0;
   padding: 12px 14px;
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: var(--md-sys-shape-corner-medium);
   background: var(--color-surface-muted);
   color: var(--color-text);
   font-size: 14px;
@@ -27,7 +27,7 @@
   align-items: center;
   justify-content: center;
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--md-sys-shape-corner-small);
   padding: 0 12px;
   background: var(--color-surface);
   color: var(--color-text);
