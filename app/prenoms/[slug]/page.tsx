@@ -127,7 +127,7 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
                 <span className="profile-tag">Lettre {prenom.lettre}</span>
               </div>
               <div className={styles.actions}>
-                <FavoriteButton slug={prenom.slug} />
+                <FavoriteButton slug={prenom.slug} name={prenom.nom} />
                 <Button href={`/comparer?prenoms=${encodeURIComponent(prenom.slug)}`} variant="outlined">
                   <Icon name="compare-arrows" size={18} />
                   Comparer ce prénom
