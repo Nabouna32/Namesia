@@ -99,7 +99,7 @@ Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques 
 | Composant | Fichier | Responsabilité |
 |---|---|---|
 | `FavoritesProvider` | `features/favorites/FavoritesProvider.tsx` | État partagé des favoris et synchronisation inter-onglets. |
-| `FavoritesList` | `features/favorites/FavoritesList.tsx` | Recherche, filtres natifs, tri, import/export et composition des favoris. |
+| `FavoritesList` | `features/favorites/FavoritesList.tsx` | Recherche, FilterChip icon-only pour le genre, tri natif, import/export et liste des favoris. |
 | `HistoryProvider` | `features/history/HistoryProvider.tsx` | Historique de navigation conservé dans la session. |
 | `RecentNames` | `features/history/RecentNames.tsx` | Liste des fiches récemment consultées. |
 | `RecordVisit` | `features/history/RecordVisit.tsx` | Enregistre une consultation dans l'historique de session. |
