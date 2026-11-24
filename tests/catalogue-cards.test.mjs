@@ -29,7 +29,7 @@ test("les actions restent dans la carte sans être imbriquées dans le lien", ()
   assert.equal((catalogue.match(/<Card as=\{Link\}/g) ?? []).length, 2);
   assert.equal((catalogue.match(/<\/Card>\s*<div className=\{styles\.resultActions\}>/g) ?? []).length, 2);
   assert.match(catalogueStyles, /\.resultActions\s*\{[^}]*position:\s*absolute/s);
-  assert.match(catalogueStyles, /\.resultLink\s*\{[^}]*padding-top:\s*60px/s);
+  assert.match(catalogueStyles, /\.resultLink\.resultLink\s*\{[^}]*padding-top:\s*60px/s);
   assert.match(favorite, /<IconButton label=\{label\}/);
   assert.match(comparison, /aria-pressed=\{selected\}/);
   assert.match(comparison, /className="sr-only"/);
