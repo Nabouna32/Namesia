@@ -3,6 +3,7 @@ import { FavoriteButton } from "@/components/FavoriteButton";
 import type { PrenomIndex } from "@/lib/prenoms";
 import styles from "./FeaturedNames.module.css";
 import { Icon } from "@/components/ui/Icon";
+import { Card } from "@/components/ui/Card";
 
 type Props = { prenoms: PrenomIndex[] };
 
