@@ -5,7 +5,7 @@ export type CardVariant = "elevated" | "filled" | "outlined";
 
 type CardOwnProps = {
   children?: ReactNode;
-  variant?: CardVariant;
+  variant: CardVariant;
   interactive?: boolean;
   className?: string;
 };
@@ -16,7 +16,7 @@ type CardProps<T extends ElementType> = CardOwnProps & {
 
 export function Card<T extends ElementType = "div">({
   as,
-  variant = "elevated",
+  variant,
   interactive = false,
   className,
   children,
