@@ -122,7 +122,7 @@ export default async function FichePrenom({ params, searchParams }: Props) {
                 <span className="profile-tag">Lettre {prenom.lettre}</span>
               </div>
               <div className={styles.actions}>
-                <BoutonFavori slug={prenom.slug} />
+                <ButtonFavori slug={prenom.slug} />
                 <Link className="text-link" href={`/comparer?prenoms=${encodeURIComponent(prenom.slug)}`}>
                   Comparer ce prénom <span aria-hidden="true">↗</span>
                 </Link>
