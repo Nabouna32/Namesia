@@ -3,6 +3,7 @@ import { parseContenuFiche, type AssociationSymbolique, type ContenuFichePrenom 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { lireToutesLesPages } from "@/lib/pagination";
 import { calculerFenetreSuggestions } from "@/lib/suggestions-prenoms";
+import { obtenirDatePublicationUnique, type ProfilPublication } from "@/lib/publication-prenom";
 
 export type GenrePrenom = "Féminin" | "Masculin" | "Mixte" | "Genre non renseigné";
 
@@ -94,7 +95,7 @@ type JoinedNameIndex = {
   slug: string;
   display_name: string;
   gender: string;
-  name_profiles: { status: string; published_at: string | null }[];
+  name_profiles: ProfilPublication[];
 };
 
 function scoreSuggestion(slugFiche: string, slugCandidat: string): number {
@@ -109,6 +110,7 @@ function scoreSuggestion(slugFiche: string, slugCandidat: string): number {
 }
 
 function convertirIndex(row: JoinedNameIndex): PrenomIndex {
+  obtenirDatePublicationUnique(row.slug, row.name_profiles);
   return {
     id: row.id,
     slug: row.slug,
@@ -147,7 +149,7 @@ export const getPrenomsIndex = cache(async (): Promise<PrenomIndex[]> => {
 type JoinedNameSitemap = {
   id: string;
   slug: string;
-  name_profiles: { published_at: string | null }[];
+  name_profiles: ProfilPublication[];
 };
 
 export const getPrenomsSitemap = cache(async (): Promise<{ slug: string; publishedAt: Date }[]> => {
@@ -157,7 +159,7 @@ export const getPrenomsSitemap = cache(async (): Promise<{ slug: string; publish
     const lignes = await lireToutesLesPages<JoinedNameSitemap>(async (debut, fin, compter) => {
       const { data, error, count } = await supabase
         .from("names")
-        .select("id, slug, name_profiles!inner(published_at)", compter ? { count: "exact" } : undefined)
+        .select("id, slug, name_profiles!inner(status, published_at)", compter ? { count: "exact" } : undefined)
         .eq("name_profiles.status", "publie")
         .not("name_profiles.published_at", "is", null)
         .order("slug", { ascending: true })
@@ -167,23 +169,10 @@ export const getPrenomsSitemap = cache(async (): Promise<{ slug: string; publish
       return { data: data as unknown as JoinedNameSitemap[] | null, error, count };
     }, TAILLE_PAGE_INDEX);
 
-    return lignes.map((ligne) => {
-      if (ligne.name_profiles.length !== 1) {
-        throw new Error(`Le prénom "${ligne.slug}" doit avoir exactement une version publiée pour le sitemap.`);
-      }
-
-      const datePublication = ligne.name_profiles[0].published_at;
-      if (!datePublication) {
-        throw new Error(`La date de publication du prénom "${ligne.slug}" est absente.`);
-      }
-
-      const publishedAt = new Date(datePublication);
-      if (Number.isNaN(publishedAt.getTime())) {
-        throw new Error(`La date de publication du prénom "${ligne.slug}" est invalide.`);
-      }
-
-      return { slug: ligne.slug, publishedAt };
-    });
+    return lignes.map((ligne) => ({
+      slug: ligne.slug,
+      publishedAt: obtenirDatePublicationUnique(ligne.slug, ligne.name_profiles)
+    }));
   } catch (error) {
     console.error("Échec du chargement des dates de publication du sitemap Namesia :", error);
     throw new Error("Le sitemap des prénoms est momentanément indisponible.");
