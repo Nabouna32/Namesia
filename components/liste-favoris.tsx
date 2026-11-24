@@ -329,9 +329,9 @@ export function ListeFavoris({
                     <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
                   </Link>
                   <ButtonComparaison
-                    prenom={prenom.nom}
+                    name={prenom.nom}
                     selected={selectionValide.includes(prenom.slug)}
-                    desactive={!selectionValide.includes(prenom.slug) && selectionValide.length >= 3}
+                    disabled={!selectionValide.includes(prenom.slug) && selectionValide.length >= 3}
                     onClick={() => basculerComparaison(prenom.slug)}
                   />
                   <ButtonFavori slug={prenom.slug} afficherErreur={false} />
