@@ -24,12 +24,12 @@ test("les références de code du contrat M3 pointent vers des révisions immuab
 });
 
 test("le registre M3 et le tableau AndroidX restent complets et lisibles", () => {
-  assert.doesNotMatch(components, /\\n\\|/);
+  assert.equal(components.includes("\\n|"), false);
   for (const name of ["Button", "Card", "Checkbox", "IconButton", "SearchBar", "TextField", "FilterChip", "InputChip", "Snackbar", "TopAppBar", "NavigationBar", "NavigationRail"]) {
+    assert.ok(components.includes("| `" + name + "` |"), "Composant absent du registre : " + name);
     assert.match(verification, new RegExp("\\| " + name + " \\|"));
   }
 });
-
 test("les versions des bibliothèques de calcul et des sources AndroidX restent explicites", () => {
   assert.equal(packageJson.dependencies["@material/material-color-utilities"], "0.4.0");
   assert.equal(lock.packages["node_modules/@material/material-color-utilities"].version, "0.4.0");
