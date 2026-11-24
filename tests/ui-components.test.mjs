@@ -107,9 +107,20 @@ test("les fonctions de comparaison sont dans la couche métier et composent les 
   assert.match(comparatorSelection, /<ComparisonSelection/);
 });
 
+const inputChip = await readFile(new URL("../components/material3/InputChip.tsx", import.meta.url), "utf8");
+const inputChipStyles = await readFile(new URL("../components/material3/InputChip.module.css", import.meta.url), "utf8");
 const filterChip = await readFile(new URL("../components/material3/FilterChip.tsx", import.meta.url), "utf8");
 const filterChipStyles = await readFile(new URL("../components/material3/FilterChip.module.css", import.meta.url), "utf8");
 const searchFilters = await readFile(new URL("../components/recherche-prenoms.tsx", import.meta.url), "utf8");
+
+test("InputChip fournit le retrait individuel de la sélection avec la géométrie AndroidX", () => {
+  assert.match(inputChip, /export function InputChip\(/);
+  assert.match(inputChip, /aria-label=/);
+  assert.match(inputChipStyles, /min-height: 48px/);
+  assert.match(inputChipStyles, /inset: 8px 0/);
+  assert.match(inputChipStyles, /outline-variant/);
+  assert.match(inputChipStyles, /--md-sys-state-pressed-state-layer-opacity/);
+});
 
 test("FilterChip suit la géométrie et les états AndroidX", () => {
   assert.match(filterChip, /export function FilterChip\(/);
