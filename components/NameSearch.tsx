@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ComparisonBar } from "@/components/ComparisonBar";
 import { FavoriteButton } from "@/components/FavoriteButton";
-import { useFavoris } from "@/components/FavoritesProvider";
+import { useFavorites } from "@/components/FavoritesProvider";
 import styles from "./NameSearch.module.css";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
@@ -35,7 +35,7 @@ export function NameSearch({
   initialLettre = null,
   initialNombreVisible = 24
 }: Props) {
-  const { erreur: erreurFavoris } = useFavoris();
+  const { erreur: erreurFavoris } = useFavorites();
   const [recherche, setRecherche] = useState(initialRecherche);
   const [genreActif, setGenreActif] = useState(initialGenre);
   const [lettreActive, setLettreActive] = useState(initialLettre);
