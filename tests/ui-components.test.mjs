@@ -134,9 +134,8 @@ test("les sélecteurs des favoris utilisent les contrôles HTML natifs avec les 
   assert.match(favorites, /<select id="genre-favoris"/);
   assert.match(favorites, /<label htmlFor="tri-favoris">/);
   assert.match(favorites, /<select id="tri-favoris"/);
-  const styles = await readFile(new URL("../components/liste-favoris.module.css", import.meta.url), "utf8");
-  assert.match(styles, /\.selectField select\s*\{[^}]*surface-container-low/s);
-  assert.match(styles, /\.selectField select:focus-visible/);
+  assert.match(favoritesStyles, /\.selectField select\s*\{[^}]*surface-container-low/s);
+  assert.match(favoritesStyles, /\.selectField select:focus-visible/);
 });
 
 const adminActions = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
