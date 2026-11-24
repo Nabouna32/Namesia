@@ -15,6 +15,7 @@ export function normaliserRecherche(value: string): string {
     ? normalisee.replace(/^[\s\p{P}\p{Z}]+|[\s\p{P}\p{Z}]+$/gu, "")
     : normalisee;
 }
+
 export function comparerPertinence(a: PrenomIndex, b: PrenomIndex, terme: string): number {
   if (!terme) return a.nom.localeCompare(b.nom, "fr");
   const nomA = normaliserRecherche(a.nom);
