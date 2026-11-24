@@ -44,6 +44,8 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Autorisation permanente : supprimer des données, effectuer les migrations nécessaires et faire évoluer ou refondre la base de données lorsque cela sert l'objectif du projet. Préserver l'intégrité des données et documenter les opérations structurantes.
 - La CI GitHub Actions est l'unique mécanisme de vérification : ne pas exécuter de commandes de test, de build ou de contrôle localement.
 - Consulter l'état de la CI GitHub Actions une fois pour chaque PR. Si elle est en échec, corriger avant de fusionner. Si elle est encore en cours, ne pas l'attendre et fusionner. Si la CI de main est rouge au passage suivant, la corriger en priorité.
+- Pour consulter un run, utiliser l'API REST GitHub Actions par SHA : `GET /repos/{owner}/{repo}/actions/runs?head_sha={sha}&per_page=10`. Si aucun résultat n'est retourné, recouper une seule fois avec `GET /repos/{owner}/{repo}/actions/runs?per_page=10` et filtrer le SHA exact ; certaines vues spécialisées peuvent retourner une liste vide alors qu'un run existe. Une liste vide ne prouve donc pas que la CI n'a pas démarré.
+- Pour un run en échec, lire les jobs puis les logs du job en échec avant toute correction. Ne pas se limiter au résumé du statut : les logs distinguent une régression de code d'un contrat de test devenu obsolète.
 - Ne jamais déclarer un test, build ou contrôle réussi sans que la CI GitHub Actions l'ait confirmé.
 
 ### Politique Vercel et quota
