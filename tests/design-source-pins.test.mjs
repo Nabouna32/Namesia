@@ -71,3 +71,10 @@ test("la décision Material Web repose uniquement sur les snapshots officiels v�
   assert.match(sourceVerifier, /Material Web README — état de maintenance/);
   assert.match(sourceVerifier, /Material Web roadmap — couverture stable/);
 });
+
+test("aucune source Material Web non vérifiée ne reste dans le contrat canonique", () => {
+  assert.doesNotMatch(verification, /material-components\/material-web\/blob\/b4de401eb665ec63474f39319a4ba8f2145974cc/);
+  assert.doesNotMatch(verification, /b4de401eb665ec63474f39319a4ba8f2145974cc/);
+  assert.match(verification, /d4f63c567f73b16717f4c04b57fa6390d0b2312d/);
+  assert.match(verification, /Material Web est documenté uniquement par les snapshots README et roadmap/);
+});
