@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getPrenom } from "@/lib/prenoms";
 import { chargerPolicesOpenGraph } from "@/lib/polices-open-graph";
+import { getMaterialThemeTokens } from "@/lib/material-theme";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -20,6 +21,8 @@ export default async function Image({ params }: Props) {
     : prenom.introduction;
   const tailleNom = Math.min(108, Math.max(48, Math.floor(1050 / (prenom.nom.length * 0.58))));
 
+  const theme = getMaterialThemeTokens(false);
+
   return new ImageResponse(
     <div style={{
       width: "100%",
@@ -28,8 +31,8 @@ export default async function Image({ params }: Props) {
       flexDirection: "column",
       justifyContent: "space-between",
       padding: "48px 64px",
-      background: "#f2f3fa",
-      color: "#191b20",
+      background: theme["--md-sys-color-background"],
+      color: theme["--md-sys-color-on-background"],
       fontFamily: "Roboto"
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
@@ -40,8 +43,8 @@ export default async function Image({ params }: Props) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(105deg, #ef568b 0%, #f29a42 19%, #e8c94c 36%, #55b987 54%, #49a9d5 72%, #8669d4 88%, #d76bb5 100%)",
-          color: "#ffffff",
+          background: theme["--md-sys-color-primary"],
+          color: theme["--md-sys-color-on-primary"],
           fontSize: 25
         }}>n.</div>
         <div style={{ fontSize: 25, letterSpacing: 0.2 }}>namesia</div>
@@ -52,14 +55,14 @@ export default async function Image({ params }: Props) {
         gap: 16,
         padding: 36,
         borderRadius: 28,
-        background: "#f9f9ff"
+        background: theme["--md-sys-color-surface-container-lowest"]
       }}>
         <div style={{
           alignSelf: "flex-start",
           padding: "8px 14px",
           borderRadius: 18,
-          background: "#dbe2f9",
-          color: "#131b2c",
+          background: theme["--md-sys-color-secondary-container"],
+          color: theme["--md-sys-color-on-secondary-container"],
           fontSize: 18
         }}>Découvrir un prénom</div>
         <div style={{
@@ -68,10 +71,10 @@ export default async function Image({ params }: Props) {
           fontSize: tailleNom,
           lineHeight: 1.04,
           letterSpacing: -2
-        }}>{prenom.nom}<span style={{ color: "#005ac1" }}>.</span></div>
+        }}>{prenom.nom}<span style={{ color: theme["--md-sys-color-primary"] }}>.</span></div>
         <div style={{
           maxWidth: 1000,
-          color: "#44474f",
+          color: theme["--md-sys-color-on-surface-variant"],
           fontSize: 23,
           lineHeight: 1.35
         }}>{extrait}</div>
@@ -79,20 +82,20 @@ export default async function Image({ params }: Props) {
           <div style={{
             padding: "8px 16px",
             borderRadius: 20,
-            background: "#dbe2f9",
-            color: "#131b2c",
+            background: theme["--md-sys-color-secondary-container"],
+            color: theme["--md-sys-color-on-secondary-container"],
             fontSize: 17
           }}>{prenom.genre}</div>
           <div style={{
             padding: "8px 16px",
             borderRadius: 20,
-            background: "#dbe2f9",
-            color: "#131b2c",
+            background: theme["--md-sys-color-secondary-container"],
+            color: theme["--md-sys-color-on-secondary-container"],
             fontSize: 17
           }}>Lettre {prenom.lettre}</div>
         </div>
       </div>
-      <div style={{ color: "#44474f", fontSize: 16 }}>ORIGINE · HISTOIRE · USAGES</div>
+      <div style={{ color: theme["--md-sys-color-on-surface-variant"], fontSize: 16 }}>ORIGINE · HISTOIRE · USAGES</div>
     </div>,
     { ...size, fonts: await chargerPolicesOpenGraph() }
   );
