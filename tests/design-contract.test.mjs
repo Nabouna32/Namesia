@@ -141,6 +141,14 @@ test("un seul indicateur global matérialise le focus clavier", () => {
   assert.doesNotMatch(allCss, /\.container:focus-within\s*\{[^}]*outline/s);
 });
 
+test("TopAppBar suit la barre small M3 sans séparateur ajouté", () => {
+  const topAppBar = globalCss.match(/\.top-app-bar\s*\{([^}]*)\}/s)?.[1] ?? "";
+  assert.match(topAppBar, /height:\s*64px/);
+  assert.match(topAppBar, /background:\s*var\(--md-sys-color-surface\)/);
+  assert.doesNotMatch(topAppBar, /border-bottom/);
+  assert.match(globalCss, /@media \(max-width: 599px\) \{[^]*?\.top-app-bar-caption \{\s*display: none;/);
+});
+
 test("les contrôles des favoris conservent l'indicateur global de focus", () => {
   const favorisStyles = styles.find(({ path }) => path === "components/features/favorites/FavoritesList.module.css")?.content ?? "";
   assert.doesNotMatch(favorisStyles, /:focus-visible[^{}]*\{[^}]*outline\s*:/s);

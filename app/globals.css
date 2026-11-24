@@ -91,7 +91,6 @@ padding: 12px 16px;
   top: 0;
   z-index: 30;
   height: 64px;
-  border-bottom: 1px solid var(--md-sys-color-outline-variant);
   background: var(--md-sys-color-surface);
 }
 
@@ -100,15 +99,15 @@ padding: 12px 16px;
   width: min(1240px, calc(100% - 48px));
   height: 100%;
   align-items: center;
-gap: 24px;
-margin-inline: auto;
+  gap: 24px;
+  margin-inline: auto;
 }
 
 .brand {
   display: inline-flex;
   min-height: 48px;
   align-items: center;
-gap: 12px;
+  gap: 12px;
   color: var(--md-sys-color-on-surface);
   font-size: var(--md-sys-typescale-title-large-size);
   font-weight: 500;
@@ -140,8 +139,8 @@ gap: 12px;
 
 .navigation-items {
   display: flex;
-margin: 0;
-padding: 0;
+  margin: 0;
+  padding: 0;
   list-style: none;
 }
 
