@@ -21,7 +21,7 @@ export function PrenomsVedette({ prenoms }: Props) {
               <span className="featured-action">Découvrir <b><IconeMaterial name="arrow-up-right" size={18} /></b></span>
             </span>
           </Link>
-          <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
+          <ButtonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
         </article>
       ))}
     </div>
