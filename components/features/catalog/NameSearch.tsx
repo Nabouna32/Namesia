@@ -249,7 +249,7 @@ export function NameSearch({
                         <span className={styles.gender}>
                           <Icon name={genderIcons[prenom.genre]} size={18} />
                           <span className="sr-only">{prenom.genre}</span>
-                        </small>
+                        </span>
                       </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Card>
@@ -294,10 +294,10 @@ export function NameSearch({
                       <span className="name-initial">{prenom.lettre}</span>
                       <span>
                         <strong>{prenom.nom}</strong>
-                        <small className={styles.gender}>
+                        <span className={styles.gender}>
                           <Icon name={genderIcons[prenom.genre]} size={18} />
                           <span className="sr-only">{prenom.genre}</span>
-                        </small>
+                        </span>
                       </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Card>
