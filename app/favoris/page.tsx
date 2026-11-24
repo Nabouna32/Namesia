@@ -29,7 +29,7 @@ function lireTri(value: string): TriFavoris {
   return value === "nom-asc" || value === "nom-desc" ? value : "enregistrement";
 }
 
-export default async function FavorisPage({ searchParams }: Props) {
+export default async function FavoritesPage({ searchParams }: Props) {
   const [parametres, prenoms] = await Promise.all([searchParams, getPrenomsIndex()]);
 
   return (
