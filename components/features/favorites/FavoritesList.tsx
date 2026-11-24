@@ -37,6 +37,7 @@ export function FavoritesList({
   const { slugs, pret, erreur, retirerPlusieurs, ajouterPlusieurs } = useFavorites();
   const [messageImport, setMessageImport] = useState("");
   const [erreurImport, setErreurImport] = useState("");
+  const [importPartiel, setImportPartiel] = useState(false);
   const [messageCopie, setMessageCopie] = useState("");
   const [erreurCopie, setErreurCopie] = useState("");
   const generationCopie = useRef(0);
@@ -170,8 +171,10 @@ export function FavoritesList({
     champ.value = "";
     if (!fichier) return;
 
+    effacerFeedbackCopie();
     setMessageImport("");
     setErreurImport("");
+    setImportPartiel(false);
 
     if (fichier.size > TAILLE_MAX_SAUVEGARDE) {
       setErreurImport("Le fichier dépasse la taille maximale de 1 Mo.");
@@ -183,6 +186,7 @@ export function FavoritesList({
       const slugsImportes = lireSauvegardeFavoris(contenu);
       const resultat = ajouterPlusieurs(slugsImportes);
       if (resultat === null) return;
+      setImportPartiel(resultat.nombreIgnoreLimite > 0);
 
       const messages = resultat.nombreAjoute > 0
         ? [`${resultat.nombreAjoute} ${resultat.nombreAjoute > 1 ? "favoris ajoutés" : "favori ajouté"} à votre sélection.`]
@@ -194,6 +198,7 @@ export function FavoritesList({
       }
       setMessageImport(messages.join(" "));
     } catch (cause) {
+      setImportPartiel(false);
       setErreurImport(cause instanceof Error
         ? cause.message
         : "Le fichier n’a pas pu être lu.");
@@ -227,7 +232,7 @@ export function FavoritesList({
       {messageCopie && <Snackbar severity="success">{messageCopie}</Snackbar>}
       {erreurCopie && <Snackbar severity="error">{erreurCopie}</Snackbar>}
 
-      {messageImport && <Snackbar severity="success">{messageImport}</Snackbar>}
+      {messageImport && <Snackbar severity={importPartiel ? "warning" : "success"}>{messageImport}</Snackbar>}
       {erreurImport && <Snackbar severity="error">{erreurImport}</Snackbar>}
       {erreur && favoris.length > 0 && (
         <Snackbar severity="error">
