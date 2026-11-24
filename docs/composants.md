@@ -15,6 +15,7 @@ components/
   material3/                 # Implémentations React/HTML des composants M3
     Button.tsx
     Card.tsx
+    Checkbox.tsx
     IconButton.tsx
     SearchBar.tsx
     TextField.tsx
@@ -29,6 +30,7 @@ components/
     NavigationDestinations.tsx
     Button.module.css
     Card.module.css
+    Checkbox.module.css
     SearchBar.module.css
     TextField.module.css
     FilterChip.module.css
