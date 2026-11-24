@@ -6,11 +6,11 @@ import type { PrenomIndex } from "@/lib/prenoms";
 import { creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
 import { normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
-import { BarreComparaison } from "@/components/features/comparison/ComparisonBar";
+import { ComparisonBar } from "@/components/features/comparison/ComparisonBar";
 import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
 import styles from "./FavoritesList.module.css";
-import { IconeMaterial } from "@/components/material3/Icon";
+import { Icon } from "@/components/material3/Icon";
 import { SearchBar } from "@/components/material3/SearchBar";
 import { ComparisonToggle } from "@/components/features/comparison/ComparisonToggle";
 import { Button } from "@/components/material3/Button";
@@ -274,7 +274,7 @@ export function FavoritesList({
               </select>
             </div>
           </div>
-          <BarreComparaison
+          <ComparisonBar
             prenoms={prenomsSelectionnes}
             onRetirer={basculerComparaison}
             onEffacer={() => setSelectionComparaison([])}
