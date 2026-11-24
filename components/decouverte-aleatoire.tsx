@@ -32,7 +32,7 @@ export function DecouverteAleatoire({ prenoms }: Props) {
         {selection ? (
           <span className={styles.resultLine}>
             <span>Votre prochaine découverte : <Link className={styles.result} href={`/prenoms/${selection.slug}`}>{selection.nom}</Link></span>
-            <ButtonFavori slug={selection.slug} nom={selection.nom} compact showError={false} />
+            <FavoriteButton slug={selection.slug} name={selection.nom} compact showError={false} />
           </span>
         ) : (
           "Pas d’idée précise ? Laissez-vous guider par le hasard."
