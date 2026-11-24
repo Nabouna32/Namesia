@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BoutonFavori } from "@/components/bouton-favori";
+import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import { categoryTone } from "@/lib/category-color";
 import { EnregistrerConsultation } from "@/components/enregistrer-consultation";
 import { SuggestionsPrenoms } from "@/components/suggestions-prenoms";
@@ -122,7 +122,7 @@ export default async function FichePrenom({ params, searchParams }: Props) {
                 <span className="profile-tag">Lettre {prenom.lettre}</span>
               </div>
               <div className={styles.actions}>
-                <BoutonFavori slug={prenom.slug} />
+                <FavoriteButton slug={prenom.slug} />
                 <Link className="text-link" href={`/comparer?prenoms=${encodeURIComponent(prenom.slug)}`}>
                   Comparer ce prénom <span aria-hidden="true">↗</span>
                 </Link>
