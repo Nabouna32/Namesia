@@ -14,8 +14,10 @@ styles/
 components/
   material3/                 # Implémentations React/HTML des composants M3
     Button.tsx
+    Card.tsx
     IconButton.tsx
     SearchBar.tsx
+    TextField.tsx
     FilterChip.tsx
     InputChip.tsx
     Snackbar.tsx
@@ -26,7 +28,9 @@ components/
     NavigationRail.tsx
     NavigationDestinations.tsx
     Button.module.css
+    Card.module.css
     SearchBar.module.css
+    TextField.module.css
     FilterChip.module.css
     InputChip.module.css
     Snackbar.module.css
@@ -66,8 +70,10 @@ Material Web 2.5.0 a été évalué. Le [README officiel](https://github.com/mat
 | Nom officiel | Fichier | Contrat et périmètre Web |
 |---|---|---|
 | `Button` | `material3/Button.tsx` | Variantes `filled`, `tonal`, `outlined`, `text`. Élément natif `button` pour une action ; la prop `href` rend un lien Next.js avec la même apparence pour préserver la navigation Web. Cible 48 px, `ButtonSmallTokens.ContainerHeight = 40.dp`, largeur minimale 58 dp, typographie `label-large`, dimensions et états AndroidX. |
+| `Card` | `material3/Card.tsx` | Surfaces AndroidX `elevated`, `filled` et `outlined`, avec élément HTML racine explicite et états interactifs centralisés. |
 | `IconButton` | `material3/IconButton.tsx` | Action iconique distincte de Button : cible 48 dp, glyphe 24 dp, couleur et état désactivé AndroidX. Le nom accessible est obligatoire. |
 | `SearchBar` | `material3/SearchBar.tsx` | Champ replié de SearchBar AndroidX : `SearchBarTokens.ContainerHeight = 56.dp`, forme `full`, surface `surface-container-high`, saisie `body-large`, icônes et effacement accessibles. Les résultats restent dans le flux de la page ; aucune fausse fenêtre d'expansion n'est dessinée. |
+| `TextField` | `material3/TextField.tsx` | Champ `filled` ou `outlined`, label flottant, supporting text, erreur, désactivation et focus selon l'anatomie AndroidX. |
 | `FilterChip` | `material3/FilterChip.tsx` | Filtre sélectionnable avec `aria-pressed`, coche, `FilterChipTokens.ContainerHeight = 32 dp (32.dp)` dans une cible de 48 dp, contour et couches d'état AndroidX. |
 | `InputChip` | `material3/InputChip.tsx` | Puce de saisie avec action de retrait, `InputChipTokens.ContainerHeight = 32.dp`, contour `outline-variant` au repos, `secondary-container` à l'état sélectionné et cible de 48 px. |
 | `Snackbar` | `material3/Snackbar.tsx` | Présentation de retours d'action avec rôles accessibles. Les sévérités produit `success`, `warning`, `info` utilisent les extensions tonales Namesia ; `error` utilise les rôles système M3. Le placement est laissé au contexte de l'écran. |
@@ -108,7 +114,7 @@ Les composants métier peuvent être propres à Namesia, mais ils ne redéfiniss
 
 ## Conventions d'implémentation
 
-- Employer exactement les noms Material 3 pour les composants correspondants : `Button`, `IconButton`, `SearchBar`, `FilterChip`, `InputChip`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`, `Icon`.
+- Employer exactement les noms Material 3 pour les composants correspondants : `Button`, `IconButton`, `SearchBar`, `FilterChip`, `InputChip`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`, `Icon`, `Card`, `TextField`.
 - Ne pas créer de traduction, alias, wrapper ou fallback parallèle pour ces composants.
 - Garder les éléments HTML natifs adaptés : `button`, `a`, `input`, `select`, `nav`, `header`, titres et listes sémantiques. Ne pas remplacer leur sémantique par des `div` et des rôles ARIA redondants.
 - Les CSS Modules de `components/material3/` consomment directement les tokens `--md-sys-*` et les seules extensions `--namesia-*` déclarées dans [le système de design](design.md).
