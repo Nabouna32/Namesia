@@ -7,16 +7,16 @@ import { creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-
 import { normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
 import { BarreComparaison } from "./barre-comparaison";
-import { BoutonFavori } from "./bouton-favori";
+import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import { useFavoris } from "./favoris-provider";
 import styles from "./liste-favoris.module.css";
 import { IconeMaterial } from "./icone-material";
-import { ChampRecherche } from "@/components/ui/champ-recherche";
-import { ChampSelect } from "@/components/ui/champ-select";
-import { BoutonComparaison } from "@/components/ui/bouton-comparaison";
-import { Bouton } from "@/components/ui/bouton";
-import { LienBouton } from "@/components/ui/lien-bouton";
-import { MessageStatut } from "@/components/ui/message-statut";
+import { SearchBar } from "@/components/material3/SearchBar";
+
+import { ComparisonToggle } from "@/components/features/comparison/ComparisonToggle";
+import { Button } from "@/components/material3/Button";
+import { Button } from "@/components/material3/Button";
+import { Snackbar } from "@/components/material3/Snackbar";
 
 type Props = {
   prenoms: PrenomIndex[];
@@ -198,11 +198,11 @@ export function ListeFavoris({
   return (
     <div className={styles.content}>
       <div className={styles.tools}>
-        <Bouton disabled={slugs.length === 0} onClick={exporterFavoris}>
+        <Button disabled={slugs.length === 0} onClick={exporterFavoris}>
           Exporter mes favoris
-        </Bouton>
-        <Bouton
-          variante="tonal"
+        </Button>
+        <Button
+          variant="tonal"
           type="button"
           disabled={favorisFiltres.length === 0}
           onClick={copierFavorisFiltres}
@@ -212,22 +212,22 @@ export function ListeFavoris({
             : favorisFiltres.length > 1
               ? `Copier les ${favorisFiltres.length} prénoms`
               : "Copier la liste filtrée"}
-        </Bouton>
+        </Button>
         <label className={styles.importButton}>
           Importer une sauvegarde
           <input type="file" accept=".json,application/json" onChange={importerFavoris} />
         </label>
       </div>
       <p className={styles.help}>La sauvegarde contient uniquement les identifiants de vos favoris. L’import les ajoute à votre sélection actuelle, sans remplacer vos favoris existants. La copie reprend les noms de tous les résultats correspondant aux filtres, même au-delà des 24 premiers affichés.</p>
-      {messageCopie && <MessageStatut type="success">{messageCopie}</MessageStatut>}
-      {erreurCopie && <MessageStatut type="error">{erreurCopie}</MessageStatut>}
+      {messageCopie && <Snackbar severity="success">{messageCopie}</Snackbar>}
+      {erreurCopie && <Snackbar severity="error">{erreurCopie}</Snackbar>}
 
-      {messageImport && <MessageStatut type="success">{messageImport}</MessageStatut>}
-      {erreurImport && <MessageStatut type="error">{erreurImport}</MessageStatut>}
+      {messageImport && <Snackbar severity="success">{messageImport}</Snackbar>}
+      {erreurImport && <Snackbar severity="error">{erreurImport}</Snackbar>}
       {erreur && favoris.length > 0 && (
-        <MessageStatut type="error">
+        <Snackbar severity="error">
           Le stockage des favoris est indisponible ou contient des données illisibles. Vos modifications ne sont pas enregistrées.
-        </MessageStatut>
+        </Snackbar>
       )}
 
       {favoris.length === 0 ? (
@@ -237,12 +237,12 @@ export function ListeFavoris({
             : slugs.length === 0
               ? "Vous n’avez pas encore enregistré de prénom."
               : "Aucun de vos favoris n’est actuellement publié."}</p>
-          <LienBouton href="/prenoms">Explorer les prénoms</LienBouton>
+          <Button href="/prenoms">Explorer les prénoms</Button>
         </div>
       ) : (
         <>
           <div className={styles.filters}>
-            <ChampRecherche
+            <SearchBar
               id="recherche-favoris"
               label="Rechercher dans mes favoris"
               placeholder="Saisissez un prénom..."
@@ -296,7 +296,7 @@ export function ListeFavoris({
           {favorisFiltres.length === 0 && favorisProches.length === 0 ? (
             <div className={styles.empty}>
               <p>Aucun favori ne correspond à ces critères.</p>
-              <Bouton variante="text"
+              <Button variant="text"
                 className="filter-action"
                 type="button"
                 onClick={() => {
@@ -307,7 +307,7 @@ export function ListeFavoris({
                 }}
               >
                 Effacer les filtres
-              </Bouton>
+              </Button>
             </div>
           ) : (
             <>
@@ -333,26 +333,26 @@ export function ListeFavoris({
                     </span>
                     <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
                   </Link>
-                  <BoutonComparaison
-                    prenom={prenom.nom}
-                    selectionne={selectionValide.includes(prenom.slug)}
-                    desactive={!selectionValide.includes(prenom.slug) && selectionValide.length >= 3}
+                  <ButtonComparaison
+                    name={prenom.nom}
+                    selected={selectionValide.includes(prenom.slug)}
+                    disabled={!selectionValide.includes(prenom.slug) && selectionValide.length >= 3}
                     onClick={() => basculerComparaison(prenom.slug)}
                   />
-                  <BoutonFavori slug={prenom.slug} afficherErreur={false} />
+                  <ButtonFavori slug={prenom.slug} showError={false} />
                 </article>
               ))}
               </div>
             </>
           )}
           {favorisFiltres.length > nombreVisible && (
-            <Bouton variante="text"
+            <Button variant="text"
               className="filter-action"
               type="button"
               onClick={chargerPlus}
             >
               Afficher les {Math.min(24, favorisFiltres.length - nombreVisible)} favoris suivants
-            </Bouton>
+            </Button>
           )}
         </>
       )}
@@ -361,13 +361,13 @@ export function ListeFavoris({
           <p className={styles.note} role="status">
             {slugsIndisponibles.length} {slugsIndisponibles.length > 1 ? "favoris ne sont plus" : "favori n’est plus"} publiés.
           </p>
-          <Bouton variante="text"
+          <Button variant="text"
             className="filter-action"
             type="button"
             onClick={() => retirerPlusieurs(slugsIndisponibles)}
           >
             Retirer les favoris indisponibles
-          </Bouton>
+          </Button>
         </div>
       )}
     </div>
