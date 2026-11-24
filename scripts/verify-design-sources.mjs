@@ -102,6 +102,16 @@ const sources = [
     base64: true,
     markers: ["baseline_primary_600", "0B57D0"],
   },
+  {
+    name: "Material Web README — état de maintenance",
+    url: "https://raw.githubusercontent.com/material-components/material-web/d4f63c567f73b16717f4c04b57fa6390d0b2312d/README.md",
+    markers: ["@material/web", "MWC is in maintenance mode pending new maintainers"],
+  },
+  {
+    name: "Material Web roadmap — couverture stable",
+    url: "https://raw.githubusercontent.com/material-components/material-web/d4f63c567f73b16717f4c04b57fa6390d0b2312d/docs/roadmap.md",
+    markers: ["There is no current work planned for new features or components.", "Card", "Navigation bar", "Navigation rail", "Search", "Snackbar", "Top app bar"],
+  },
 ];
 
 const additionalAndroidxSources = [
