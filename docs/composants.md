@@ -44,6 +44,8 @@ components/
       RandomDiscovery.tsx
     sharing/
       ShareLink.tsx
+    profile/
+      ProfileActions.module.css
     comparison/
       ComparisonBar.tsx
       NameComparator.tsx
