@@ -249,6 +249,10 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.match(composantsDoc, /TopAppBar/);
   assert.match(composantsDoc, /NavigationBar/);
   assert.match(composantsDoc, /FilterChip/);
+  assert.match(composantsDoc, /SearchBar/);
+  assert.match(composantsDoc, /SearchBarTokens/);
+  assert.match(materialVerificationDoc, /SearchBarTokens\.ContainerHeight/);
+  assert.match(materialVerificationDoc, /56\.dp/);
   assert.ok(composantsDoc.includes("github.com/androidx/androidx"));
   assert.ok(composantsDoc.includes("919e948eaa351c590e7e6fc89d4014fad7a6e78c"));
   assert.doesNotMatch(composantsDoc, /androidx-main/);
