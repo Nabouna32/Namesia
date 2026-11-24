@@ -80,7 +80,8 @@ test("SearchBar applique le champ replié AndroidX et reste accessible dans les 
   assert.match(searchBarStyles, /surface-container-high/);
   assert.match(searchBarStyles, /body-large-(?:font|size|weight|line-height|tracking)/);
   assert.match(searchBarStyles, /leadingIcon/);
-  assert.match(searchBarStyles, /:focus-within/);
+  assert.doesNotMatch(searchBarStyles, /:focus-within|outline:/);
+  assert.match(globalStyles, /input:focus-visible/);
   assert.match(catalogue, /<SearchBar/);
   assert.match(comparator, /<SearchBar/);
   assert.match(favorites, /<SearchBar/);
