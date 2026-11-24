@@ -9,6 +9,7 @@ import { ShareLink } from "@/components/features/sharing/ShareLink";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { categoryTone } from "@/lib/category-color";
 import { SearchBar } from "@/components/material3/SearchBar";
+import { Checkbox } from "@/components/material3/Checkbox";
 import { ComparisonSelection } from "@/components/features/comparison/ComparisonSelection";
 import { Button } from "@/components/material3/Button";
 
@@ -138,11 +139,10 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
                   const coche = selection.includes(prenom.slug);
                   return (
                     <label className="compare-option" key={prenom.slug}>
-                      <input
-                        type="checkbox"
+                      <Checkbox
                         checked={coche}
                         disabled={!coche && selection.length >= 3}
-                        onChange={(event) => changerSelection(prenom.slug, event.target.checked)}
+                        onChange={(checked) => changerSelection(prenom.slug, checked)}
                       />
                       <span className="compare-option-initial" aria-hidden="true">{prenom.lettre}</span>
                       <span className="compare-option-name">
