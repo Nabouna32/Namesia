@@ -111,14 +111,14 @@ test("le pied de page reste en bas sur les pages courtes sans hauteur artificiel
 });
 
 test("les animations globales utilisent les tokens de mouvement", () => {
-  assert.match(globalCss, /--md-sys-motion-easing-standard:/);
-  assert.match(globalCss, /--md-sys-motion-easing-emphasized:/);
-  assert.match(globalCss, /--md-sys-motion-duration-short3:/);
-  assert.match(globalCss, /--md-sys-motion-duration-medium1:/);
-  assert.match(globalCss, /--md-sys-motion-duration-medium4:/);
-  assert.match(globalCss, /--md-sys-state-hover-state-layer-opacity:/);
-  assert.match(globalCss, /--md-sys-state-focus-state-layer-opacity:/);
-  assert.match(globalCss, /--md-sys-state-pressed-state-layer-opacity:/);
+  assert.match(tokensCss, /--md-sys-motion-easing-standard:/);
+  assert.match(tokensCss, /--md-sys-motion-easing-emphasized:/);
+  assert.match(tokensCss, /--md-sys-motion-duration-short3:/);
+  assert.match(tokensCss, /--md-sys-motion-duration-medium1:/);
+  assert.match(tokensCss, /--md-sys-motion-duration-medium4:/);
+  assert.match(tokensCss, /--md-sys-state-hover-state-layer-opacity:/);
+  assert.match(tokensCss, /--md-sys-state-focus-state-layer-opacity:/);
+  assert.match(tokensCss, /--md-sys-state-pressed-state-layer-opacity:/);
   assert.doesNotMatch(allCss, /--md-sys-motion-(?:standard|emphasized|duration-short|duration-medium|duration-long)\b/);
   assert.doesNotMatch(allCss, /--md-sys-elevation-(?:sm|md)\b/);
   assert.doesNotMatch(allCss, /#[0-9a-f]{3,8}\b/i);

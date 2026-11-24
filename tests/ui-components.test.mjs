@@ -387,7 +387,6 @@ const card = await readFile(new URL("../components/material3/Card.tsx", import.m
 const cardStyles = await readFile(new URL("../components/material3/Card.module.css", import.meta.url), "utf8");
 const textField = await readFile(new URL("../components/material3/TextField.tsx", import.meta.url), "utf8");
 const textFieldStyles = await readFile(new URL("../components/material3/TextField.module.css", import.meta.url), "utf8");
-const adminClient = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
 
 test("Card centralise les surfaces AndroidX et préserve l’élément HTML choisi", () => {
   assert.match(card, /export function Card</);

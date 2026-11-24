@@ -65,6 +65,10 @@ Les composants Material 3 sont implémentés en React et HTML, mais leurs noms, 
 
 Material Web 2.5.0 a été évalué. Le [README officiel](https://github.com/material-components/material-web/blob/b4de401eb665ec63474f39319a4ba8f2145974cc/README.md) le place en maintenance en attente de nouveaux mainteneurs et la [discussion de maintenance](https://github.com/material-components/material-web/discussions/5642) confirme l'absence de feuille de route de nouvelles fonctionnalités ; il ne devient donc pas la dépendance structurante du site. Son API et ses comportements ne sont pas interchangeables avec AndroidX Compose. La décision et ses compromis sont consignés dans ADR-0037.
 
+## Correspondance avec les composants Material 3
+
+Les primitives de présentation sont implémentées une seule fois dans `components/material3/` sous leur nom AndroidX officiel. Les compositions propres au produit résident dans `components/features/` et utilisent ces primitives sans recréer leur surface, leur typographie ou leurs états. Les éléments HTML natifs restent utilisés lorsqu'AndroidX ne définit pas de composant Web équivalent.
+
 ## Composants Material 3 disponibles
 
 | Nom officiel | Fichier | Contrat et périmètre Web |
