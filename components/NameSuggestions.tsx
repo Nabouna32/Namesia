@@ -5,6 +5,7 @@ import type { ContexteRetourNavigation } from "@/lib/navigation-prenoms";
 import { creerUrlFicheDepuisContexte } from "@/lib/navigation-prenoms";
 import styles from "./NameSuggestions.module.css";
 import { Icon } from "@/components/ui/Icon";
+import { Card } from "@/components/ui/Card";
 
 type Props = { prenoms: PrenomIndex[]; contexteRetour?: ContexteRetourNavigation | null };
 
