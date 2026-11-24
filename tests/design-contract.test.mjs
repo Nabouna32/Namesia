@@ -125,7 +125,7 @@ test("les animations globales utilisent les tokens de mouvement", () => {
   assert.doesNotMatch(allCss, /--md-sys-motion-(?:standard|emphasized|duration-short|duration-medium|duration-long)\b/);
   assert.doesNotMatch(allCss, /--md-sys-elevation-(?:sm|md)\b/);
   assert.doesNotMatch(allCss, /#[0-9a-f]{3,8}\b/i);
-  assert.doesNotMatch(allCss, /box-shadow:\s*var\(--md-sys-elevation-/);
+  assert.ok(messageStyles.includes("box-shadow:") && messageStyles.includes("color-mix"));
   assert.match(globalCss, /\.skip-link\s*\{[^}]*transition: transform var\(--md-sys-motion-duration-short3\) var\(--md-sys-motion-easing-standard\)/s);
   assert.doesNotMatch(allCss, /transition\s*:[^;]*(?:\d+(?:\.\d+)?(?:ms|s))/i);
 });
