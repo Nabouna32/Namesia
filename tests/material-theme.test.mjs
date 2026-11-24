@@ -11,6 +11,8 @@ test("Fidelity et Rainbow utilisent explicitement leur spécification M3", () =>
   assert.match(theme, /Variant\.FIDELITY/);
   assert.match(theme, /Variant\.RAINBOW/);
   assert.match(theme, /specVersion: "2021"/);
+  assert.match(theme, /platform: "phone"/);
+  assert.match(theme, /argbFromHex\("#6750A4"\)/);
   assert.doesNotMatch(theme, /specVersion: "2025"/);
   assert.match(theme, /rôle Material 3/);
   assert.match(theme, /rôle Rainbow/);
@@ -50,7 +52,15 @@ test("les extensions Namesia ne se font pas passer pour des rôles M3", () => {
   assert.doesNotMatch(theme, /--md-sys-color-(?:success|warning|info|category|brand|on-brand)/);
   assert.doesNotMatch(styles, /--md-sys-color-(?:success|warning|info|category|brand|on-brand)/);
   assert.match(theme, /--namesia-color-category-/);
-  assert.doesNotMatch(theme, /--namesia-color-(?:success|warning|info|brand)/);
+  assert.match(theme, /const semanticColorSources = \{[\s\S]*success: "#386A20"[\s\S]*warning: "#795900"[\s\S]*info: "#005B9A"/);
+  assert.match(theme, /customColor\(sourceColorArgb/);
+  assert.match(theme, /blend: false/);
+  for (const role of ["success", "warning", "info"]) {
+    assert.match(theme, new RegExp("--namesia-color-" + role));
+    assert.match(theme, new RegExp("--namesia-color-on-" + role));
+    assert.match(theme, new RegExp("--namesia-color-" + role + "-container"));
+    assert.match(theme, new RegExp("--namesia-color-on-" + role + "-container"));
+  }
 });
 
 test("le rendu initial et les changements de préférence utilisent le même générateur", () => {
