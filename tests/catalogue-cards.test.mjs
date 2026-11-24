@@ -60,8 +60,9 @@ test("les cartes de découverte ne portent plus d'actions de favori ou de compar
     assert.doesNotMatch(source, /<ComparisonToggle/);
     assert.doesNotMatch(source, /<ComparisonBar/);
   }
-  assert.match(profile, /<FavoriteButton slug=\{prenom\.slug\}/);
+  assert.match(profile, /<FavoriteButton slug=\{prenom\.slug\} name=\{prenom\.nom\}/);
   assert.match(profile, /Comparer ce prénom/);
   assert.match(comparator, /type="checkbox"/);
-  assert.match(favoriteButton, /<IconButton label=\{label\}/);
+  assert.match(favoriteButton, /<Button/);
+  assert.match(favoriteButton, /aria-label=\{label\}/);
 });
