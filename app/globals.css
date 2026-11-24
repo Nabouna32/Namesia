@@ -927,6 +927,7 @@ margin-top: 28px;
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-sys-shape-corner-extra-large);
   background: var(--md-sys-color-surface-container-low);
+  color: var(--md-sys-color-on-surface);
 }
 
 .compare-search {
