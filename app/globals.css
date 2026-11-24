@@ -440,21 +440,11 @@ gap: 8px;
   align-items: center;
 gap: 16px;
 padding: 12px 12px;
-  border: 1px solid var(--md-sys-color-outline-variant);
-  border-radius: var(--md-sys-shape-corner-large);
-  background: var(--md-sys-color-surface-container-low);
   color: var(--md-sys-color-on-surface);
-  box-shadow: none;
-  transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard), border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .name-card:hover {
-    border-color: var(--md-sys-color-outline);
-    background: var(--md-sys-color-surface-container-high);
-    box-shadow: none;
-    transform: none;
-  }
+  
 }
 
 .name-card:active {
@@ -563,20 +553,11 @@ gap: 12px;
   justify-content: space-between;
   overflow: hidden;
 padding: 20px;
-  border: 1px solid var(--md-sys-color-outline-variant);
-  border-radius: var(--md-sys-shape-corner-extra-large);
-  background: var(--md-sys-color-surface-container-low);
   color: var(--md-sys-color-on-surface);
-  transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard), border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .featured-card:hover {
-    border-color: var(--md-sys-color-outline);
-    background: var(--md-sys-color-surface-container-high);
-    box-shadow: none;
-    transform: none;
-  }
+  
 }
 
 .featured-card:active {
@@ -823,9 +804,6 @@ margin-top: 28px;
 
 .compare-card {
   padding: clamp(20px, 3vw, 24px);
-  border: 1px solid var(--md-sys-color-outline-variant);
-  border-radius: var(--md-sys-shape-corner-large);
-  background: var(--md-sys-color-surface-container-low);
   color: var(--md-sys-color-on-surface);
 }
 
