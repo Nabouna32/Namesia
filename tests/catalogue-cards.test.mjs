@@ -2,41 +2,66 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
-const catalogue = await readFile(new URL("../components/features/catalog/NameSearch.tsx", import.meta.url), "utf8");
-const catalogueStyles = await readFile(new URL("../components/features/catalog/NameSearch.module.css", import.meta.url), "utf8");
-const icons = await readFile(new URL("../components/material3/Icon.tsx", import.meta.url), "utf8");
-const comparison = await readFile(new URL("../components/features/comparison/ComparisonToggle.tsx", import.meta.url), "utf8");
-const comparisonStyles = await readFile(new URL("../components/features/comparison/ComparisonToggle.module.css", import.meta.url), "utf8");
-const favorite = await readFile(new URL("../components/features/favorites/FavoriteButton.tsx", import.meta.url), "utf8");
-const prenomModel = await readFile(new URL("../lib/prenoms.ts", import.meta.url), "utf8");
+const read = async (path) => readFile(new URL(path, import.meta.url), "utf8");
+const icon = await read("../components/material3/Icon.tsx");
+const genreMap = await read("../lib/genre-icons.ts");
+const genreIcon = await read("../components/features/names/GenreIcon.tsx");
+const genreStyles = await read("../components/features/names/GenreIcon.module.css");
+const filterChip = await read("../components/material3/FilterChip.tsx");
+const catalogue = await read("../components/features/catalog/NameSearch.tsx");
+const featured = await read("../components/features/catalog/FeaturedNames.tsx");
+const related = await read("../components/features/catalog/RelatedNames.tsx");
+const history = await read("../components/features/history/RecentNames.tsx");
+const favorites = await read("../components/features/favorites/FavoritesList.tsx");
+const discovery = await read("../components/features/discovery/RandomDiscovery.tsx");
+const comparator = await read("../components/features/comparison/NameComparator.tsx");
+const profile = await read("../app/prenoms/[slug]/page.tsx");
+const openGraph = await read("../app/prenoms/[slug]/opengraph-image.tsx");
+const favoriteButton = await read("../components/features/favorites/FavoriteButton.tsx");
 
-test("les cartes du catalogue représentent explicitement les quatre genres connus", () => {
-  for (const [label, icon] of [
+test("les quatre genres ont une correspondance SVG exhaustive et centralisée", () => {
+  for (const [label, name] of [
     ["Féminin", "gender-female"],
     ["Masculin", "gender-male"],
     ["Mixte", "gender-mixed"],
     ["Genre non renseigné", "gender-unknown"]
   ]) {
-    assert.match(catalogue, new RegExp(`"${label}": "${icon}"`));
-    assert.match(icons, new RegExp(`"${icon}":`));
+    assert.match(genreMap, new RegExp(`"${label}": "${name}"`));
+    assert.match(icon, new RegExp(`"${name}":`));
   }
-  assert.match(prenomModel, /export type GenrePrenom = "Féminin" \| "Masculin" \| "Mixte" \| "Genre non renseigné"/);
-  assert.match(catalogue, /Record<GenrePrenom, IconName>/);
-  assert.match(catalogue, /className="sr-only">\{prenom\.genre\}/);
-  assert.doesNotMatch(catalogue, /\{prenom\.genre\}\s*·/);
-  assert.doesNotMatch(catalogue, /Découvrir la fiche/);
-  assert.equal((catalogue.match(/<Icon name=\{genderIcons\[prenom\.genre\]\}/g) ?? []).length, 2);
-  assert.equal((catalogue.match(/<ComparisonToggle\s+iconOnly/g) ?? []).length, 2);
+  assert.match(genreMap, /Record<GenrePrenom, IconName>/);
+  assert.match(genreIcon, /role="img" aria-label=\{genre\}/);
+  assert.match(genreStyles, /width: 24px/);
+  assert.match(icon, /viewBox="0 -960 960 960"/);
 });
 
-test("les actions restent dans la carte sans être imbriquées dans le lien", () => {
-  assert.equal((catalogue.match(/<Card as=\{Link\}/g) ?? []).length, 2);
-  assert.equal((catalogue.match(/<\/Card>\s*<div className=\{styles\.resultActions\}>/g) ?? []).length, 2);
-  assert.match(catalogueStyles, /\.resultActions\s*\{[^}]*position:\s*absolute/s);
-  assert.match(catalogueStyles, /\.resultLink\.resultLink\s*\{[^}]*padding-top:\s*60px/s);
-  assert.match(favorite, /<IconButton label=\{label\}/);
-  assert.match(comparison, /aria-pressed=\{selected\}/);
-  assert.match(comparison, /className="sr-only"/);
-  assert.match(comparisonStyles, /width:\s*48px/);
-  assert.match(comparisonStyles, /min-height:\s*48px/);
+test("les vues de prénoms affichent le pictogramme sans libellé visible", () => {
+  for (const source of [catalogue, featured, related, history, favorites, comparator, profile]) {
+    assert.match(source, /<GenreIcon[^>]*genre=\{prenom\.genre\}/);
+    assert.doesNotMatch(source, /<small>\{prenom\.genre\}<\/small>/);
+    assert.doesNotMatch(source, /className="profile-tag">\{prenom\.genre\}/);
+  }
+  assert.match(openGraph, /GENRE_ICONS\[prenom\.genre\]/);
+  assert.doesNotMatch(openGraph, /\{prenom\.genre\}/);
+});
+
+test("les filtres de genre utilisent les pictogrammes et conservent un nom accessible", () => {
+  for (const source of [catalogue, favorites]) {
+    assert.match(source, /leadingIcon=\{<Icon name=\{GENRE_ICONS\[genre\]\}/);
+    assert.match(source, /iconOnly/);
+  }
+  assert.match(filterChip, /aria-label=\{iconOnly \? label : undefined\}/);
+  assert.match(filterChip, /title=\{iconOnly \? label : undefined\}/);
+});
+
+test("les cartes de découverte ne portent plus d'actions de favori ou de comparaison", () => {
+  for (const source of [catalogue, featured, related, history, favorites, discovery, comparator]) {
+    assert.doesNotMatch(source, /<FavoriteButton/);
+    assert.doesNotMatch(source, /<ComparisonToggle/);
+    assert.doesNotMatch(source, /<ComparisonBar/);
+  }
+  assert.match(profile, /<FavoriteButton slug=\{prenom\.slug\}/);
+  assert.match(profile, /Comparer ce prénom/);
+  assert.match(comparator, /type="checkbox"/);
+  assert.match(favoriteButton, /<IconButton label=\{label\}/);
 });

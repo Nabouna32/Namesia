@@ -1,21 +1,20 @@
 "use client";
 
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent } from "react";
 import Link from "next/link";
-import type { PrenomIndex } from "@/lib/prenoms";
+import type { GenrePrenom, PrenomIndex } from "@/lib/prenoms";
+import { GenreIcon, GENRE_ICONS } from "@/components/features/names/GenreIcon";
 import { creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
 import { normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
-import { ComparisonBar } from "@/components/features/comparison/ComparisonBar";
-import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
 import styles from "./FavoritesList.module.css";
 import { Icon } from "@/components/material3/Icon";
 import { SearchBar } from "@/components/material3/SearchBar";
-import { ComparisonToggle } from "@/components/features/comparison/ComparisonToggle";
 import { Button } from "@/components/material3/Button";
 import { Snackbar } from "@/components/material3/Snackbar";
 import { Card } from "@/components/material3/Card";
+import { FilterChip } from "@/components/material3/FilterChip";
 
 type Props = {
   prenoms: PrenomIndex[];
@@ -43,7 +42,6 @@ export function FavoritesList({
   const [genreActif, setGenreActif] = useState(initialGenre);
   const [triActif, setTriActif] = useState<TriFavoris>(initialTri);
   const [nombreVisible, setNombreVisible] = useState(initialNombreVisible);
-  const [selectionComparaison, setSelectionComparaison] = useState<string[]>([]);
 
   const parSlug = new Map(prenoms.map((prenom) => [prenom.slug, prenom]));
   const favoris = slugs.flatMap((slug) => {
@@ -51,31 +49,10 @@ export function FavoritesList({
     return prenom ? [prenom] : [];
   });
   const slugsIndisponibles = slugs.filter((slug) => !parSlug.has(slug));
-  const favorisDisponibles = new Set(favoris.map((prenom) => prenom.slug));
-  const favorisDisponiblesKey = favoris.map((prenom) => prenom.slug).join(",");
-  const selectionValide = selectionComparaison.filter((slug) => favorisDisponibles.has(slug));
-  const prenomsSelectionnes = selectionValide.flatMap((slug) => {
-    const prenom = parSlug.get(slug);
-    return prenom ? [prenom] : [];
-  });
-
-  useEffect(() => {
-    const disponibles = new Set(favorisDisponiblesKey ? favorisDisponiblesKey.split(",") : []);
-    setSelectionComparaison((selection) => selection.filter((slug) => disponibles.has(slug)));
-  }, [favorisDisponiblesKey]);
-
   if (!pret) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
 
-  function basculerComparaison(slug: string) {
-    setSelectionComparaison((selection) => {
-      const selectionCourante = selection.filter((element) => favorisDisponibles.has(element));
-      return selectionCourante.includes(slug)
-        ? selectionCourante.filter((element) => element !== slug)
-        : selectionCourante.length < 3 ? [...selectionCourante, slug] : selectionCourante;
-    });
-  }
   const termeNormalise = normaliserRecherche(recherche);
-  const genres = [...new Set(favoris.map((prenom) => prenom.genre))]
+  const genres: GenrePrenom[] = [...new Set(favoris.map((prenom) => prenom.genre))]
     .sort((a, b) => a.localeCompare(b, "fr"));
   const genreActifValide = genres.includes(genreActif) ? genreActif : "";
 
@@ -99,6 +76,12 @@ export function FavoritesList({
     }
 
     window.history.replaceState(null, "", url.toString());
+  }
+
+  function changerGenre(value: string) {
+    setNombreVisible(24);
+    setGenreActif(value);
+    mettreAJourUrl(recherche, value, triActif);
   }
 
   function changerTri(value: string) {
@@ -253,18 +236,22 @@ export function FavoritesList({
               }}
             />
             {genres.length > 1 && (
-              <div className={styles.selectField}>
-                <label htmlFor="genre-favoris">Filtrer par genre</label>
-                <select id="genre-favoris" value={genreActifValide} onChange={(event) => {
-                  const value = event.currentTarget.value;
-                  setNombreVisible(24);
-                  setGenreActif(value);
-                  mettreAJourUrl(recherche, value, triActif);
-                }}>
-                  <option value="">Tous les genres</option>
-                  {genres.map((genre) => <option key={genre} value={genre}>{genre}</option>)}
-                </select>
-              </div>
+              <fieldset className="filter-group">
+                <legend>Filtrer par genre</legend>
+                <div className="filter-options">
+                  <FilterChip label="Tous" selected={!genreActifValide} onClick={() => changerGenre("")} />
+                  {genres.map((genre) => (
+                    <FilterChip
+                      key={genre}
+                      label={genre}
+                      leadingIcon={<Icon name={GENRE_ICONS[genre]} size={18} />}
+                      iconOnly
+                      selected={genreActifValide === genre}
+                      onClick={() => changerGenre(genre)}
+                    />
+                  ))}
+                </div>
+              </fieldset>
             )}
             <div className={styles.selectField}>
               <label htmlFor="tri-favoris">Trier les favoris</label>
@@ -275,11 +262,6 @@ export function FavoritesList({
               </select>
             </div>
           </div>
-          <ComparisonBar
-            names={prenomsSelectionnes.map((prenom) => ({ slug: prenom.slug, name: prenom.nom }))}
-            onRemove={basculerComparaison}
-            onClear={() => setSelectionComparaison([])}
-          />
           <p className={styles.count} role="status" aria-live="polite">
             {favorisFiltres.length === 0 && favorisProches.length > 0
               ? `Aucun résultat exact · ${favorisProches.length} ${favorisProches.length > 1 ? "suggestions proches" : "suggestion proche"} parmi vos favoris`
@@ -323,17 +305,10 @@ export function FavoritesList({
                     <span className="name-initial">{prenom.lettre}</span>
                     <span>
                       <strong>{prenom.nom}</strong>
-                      <small>{prenom.genre}</small>
+                      <GenreIcon genre={prenom.genre} />
                     </span>
                     <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                   </Card>
-                  <ComparisonToggle
-                    name={prenom.nom}
-                    selected={selectionValide.includes(prenom.slug)}
-                    disabled={!selectionValide.includes(prenom.slug) && selectionValide.length >= 3}
-                    onClick={() => basculerComparaison(prenom.slug)}
-                  />
-                  <FavoriteButton slug={prenom.slug} showError={false} />
                 </article>
               ))}
               </div>

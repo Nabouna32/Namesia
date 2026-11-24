@@ -87,25 +87,15 @@ test("SearchBar applique le champ replié AndroidX et reste accessible dans les 
   assert.doesNotMatch(globalStyles, /\.compare-search input\s*\{/);
 });
 
-const comparisonToggle = await readFile(new URL("../components/features/comparison/ComparisonToggle.tsx", import.meta.url), "utf8");
-const comparisonToggleStyles = await readFile(new URL("../components/features/comparison/ComparisonToggle.module.css", import.meta.url), "utf8");
 const comparisonSelection = await readFile(new URL("../components/features/comparison/ComparisonSelection.tsx", import.meta.url), "utf8");
 const comparisonSelectionStyles = await readFile(new URL("../components/features/comparison/ComparisonSelection.module.css", import.meta.url), "utf8");
-const comparisonBar = await readFile(new URL("../components/features/comparison/ComparisonBar.tsx", import.meta.url), "utf8");
 const comparatorSelection = await readFile(new URL("../components/features/comparison/NameComparator.tsx", import.meta.url), "utf8");
 
-test("les fonctions de comparaison sont dans la couche métier et composent les primitives M3", () => {
-  assert.match(comparisonToggle, /export function ComparisonToggle\(/);
-  assert.match(comparisonToggle, /aria-pressed=\{selected\}/);
-  assert.match(comparisonToggle, /aria-label=/);
-  assert.match(comparisonToggle, /variant=\{selected \? "tonal" : "outlined"\}/);
-  assert.match(comparisonToggleStyles, /@media \(max-width: 420px\)/);
-  assert.match(comparisonToggleStyles, /min-width: 48px/);
+test("la sélection du comparateur utilise InputChip et les composants Material 3", () => {
   assert.match(comparisonSelection, /export function ComparisonSelection\(/);
   assert.match(comparisonSelection, /<InputChip/);
   assert.match(comparisonSelection, /onRemove=/);
   assert.match(comparisonSelectionStyles, /list-style: none/);
-  assert.match(comparisonBar, /<ComparisonSelection/);
   assert.match(comparatorSelection, /<ComparisonSelection/);
 });
 

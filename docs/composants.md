@@ -50,10 +50,11 @@ components/
       ShareLink.tsx
     profile/
       ProfileActions.module.css
+    names/
+      GenreIcon.tsx
+      GenreIcon.module.css
     comparison/
-      ComparisonBar.tsx
       NameComparator.tsx
-      ComparisonToggle.tsx
       ComparisonSelection.tsx
     favorites/
       FavoritesProvider.tsx
@@ -103,18 +104,17 @@ Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques 
 | `RecentNames` | `features/history/RecentNames.tsx` | Liste des fiches récemment consultées. |
 | `RecordVisit` | `features/history/RecordVisit.tsx` | Enregistre une consultation dans l'historique de session. |
 | `NameSearch` | `features/catalog/NameSearch.tsx` | Recherche, filtres et pagination du catalogue. |
+| `GenreIcon` | `features/names/GenreIcon.tsx` | Pictogramme SVG exhaustif des quatre genres, avec nom accessible ; la correspondance est centralisée dans `lib/genre-icons.ts`. |
 | `FeaturedNames` | `features/catalog/FeaturedNames.tsx` | Présentation des prénoms mis en avant. |
 | `RelatedNames` | `features/catalog/RelatedNames.tsx` | Suggestions liées depuis une fiche. |
 | `RandomDiscovery` | `features/discovery/RandomDiscovery.tsx` | Découverte aléatoire d'un prénom. |
 | `NameComparator` | `features/comparison/NameComparator.tsx` | Recherche et comparaison de deux ou trois fiches. |
 | `ShareProfile` | `features/sharing/ShareLink.tsx` | Composition du partage d'une fiche de prénom. |
 | `FavoriteButton` | `features/favorites/FavoriteButton.tsx` | Ajout/retrait d'un favori, état de chargement et erreur du stockage ; compose Button et IconButton. |
-| `ComparisonToggle` | `features/comparison/ComparisonToggle.tsx` | Sélection d'un prénom pour le comparateur ; compose Button et porte la limite métier fournie par l'écran. |
 | `ComparisonSelection` | `features/comparison/ComparisonSelection.tsx` | Liste des prénoms retenus ; compose InputChip pour le retrait individuel. |
 | `ShareLink` | `features/sharing/ShareLink.tsx` | Partage natif ou copie d'une URL reconstruite avec une liste explicite de paramètres autorisés. |
-| `ComparisonBar` | `features/comparison/ComparisonBar.tsx` | Composition métier de ComparisonSelection, Button et URL du comparateur. |
 
-Les cartes de résultats et de suggestions utilisent le lien `Card` comme surface de navigation. Le genre est rendu par un pictogramme SVG du registre `Icon` avec un libellé masqué visuellement mais accessible : `gender-female`, `gender-male`, `gender-mixed` ou `gender-unknown`. La flèche suffit à signaler l'ouverture de la fiche ; aucun texte « Découvrir » n'est ajouté. `ComparisonToggle` (variante `iconOnly`) et `FavoriteButton` sont positionnés dans l'angle supérieur de la carte, comme contrôles frères du lien (jamais imbriqués dans un lien), avec une cible tactile de 48 px. Le modèle `GenrePrenom` borne les quatre valeurs prises en charge et impose leur correspondance iconographique.
+Les cartes de résultats, de suggestions, de favoris, d'historique et de découverte utilisent le lien `Card` comme surface de navigation. Le genre est représenté exclusivement par `GenreIcon`, dont la correspondance exhaustive est centralisée dans `lib/genre-icons.ts` : `gender-female`, `gender-male`, `gender-mixed` et `gender-unknown`. Le nom du genre est fourni à l'arbre d'accessibilité par le pictogramme, sans libellé visible redondant. Les filtres de genre utilisent la même iconographie dans des `FilterChip` icon-only, avec nom accessible et état sélectionné. La flèche suffit à signaler l'ouverture de la fiche ; aucun texte « Découvrir » n'est ajouté au catalogue. Les cartes de découverte ne portent ni action de favori ni action de comparaison : ces deux actions sont regroupées sur la fiche du prénom. Le comparateur conserve sa sélection native par cases à cocher, nécessaire à son usage propre.
 
 
 Les composants métier peuvent être propres à Namesia, mais ils ne redéfinissent jamais les styles, états ou interactions d'un composant Material 3 générique. Les règles de disposition restent dans leurs CSS Modules ; les variantes et états M3 restent dans `components/material3/`.
@@ -139,10 +139,10 @@ Toute nouvelle page doit composer le shell partagé, les primitives officielles 
 | Écran | Composition |
 |---|---|
 | Accueil | TopAppBar, NavigationBar/NavigationRail, SearchBar, Button, Card sémantique et FavoriteButton |
-| Catalogue | Shell, SearchBar, FilterChip, cartes de résultats, ComparisonToggle et FavoriteButton |
-| Fiche | Shell, titres et corps typographiques M3, liens natifs, Button/IconButton et cartes éditoriales sémantiques |
+| Catalogue | Shell, SearchBar, FilterChip icon-only pour le genre et cartes de résultats navigables |
+| Fiche | Shell, titres et corps typographiques M3, GenreIcon, FavoriteButton, Button de comparaison, partage et cartes éditoriales sémantiques |
 | Comparateur | Shell, SearchBar, ComparisonSelection, ComparisonToggle, Button et cartes de comparaison |
-| Favoris | Shell, SearchBar, `select` natifs, Snackbar, ComparisonToggle et FavoriteButton |
+| Favoris | Shell, SearchBar, FilterChip icon-only pour le genre, `select` natif pour le tri, Snackbar et cartes navigables |
 | Administration | Shell, champs natifs, Button, Snackbar et cartes de prévisualisation |
 
 ## Ajouter un composant

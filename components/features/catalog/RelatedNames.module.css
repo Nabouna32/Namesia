@@ -5,22 +5,6 @@
   max-width: 780px;
 }
 
-.card {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 8px;
-}
-
-.card > a {
-  min-width: 0;
-  flex: 1;
-}
-
-.card > div {
-  flex: 0 0 auto;
-}
-
 @media (max-width: 760px) {
   .grid {
     grid-template-columns: minmax(0, 1fr);
