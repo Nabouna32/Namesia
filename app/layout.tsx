@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Roboto } from "next/font/google";
 import { FavoritesProvider } from "@/components/FavoritesProvider";
 import { HistoryProvider } from "@/components/HistoryProvider";
-import { MaterialThemeProvider } from "@/components/material-theme-provider";
+import { MaterialThemeProvider } from "@/components/MaterialThemeProvider";
 import { NavigationBar } from "@/components/ui/NavigationBar";
 import { NavigationRail } from "@/components/ui/NavigationRail";
 import { TopAppBar } from "@/components/ui/TopAppBar";
