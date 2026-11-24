@@ -6,7 +6,7 @@
 
 ## Contexte
 
-La primitive `Bouton` partageait bien ses variantes entre les parcours, mais son conteneur visuel occupait toute la cible tactile de 48 px. Son apparence divergeait ainsi du Button AndroidX : la capsule standard mesure 40 dp. Les variantes Outlined et Text utilisaient aussi `outline` et `primary`, alors qu'AndroidX définit `outline-variant` et `on-surface-variant`. Enfin, l'état désactivé appliquait une opacité globale de 38 %, ce qui atténuait aussi le conteneur au lieu de séparer les opacités des tokens.
+La primitive `Bouton` partageait bien ses variantes entre les parcours, mais son conteneur visuel occupait toute la cible tactile de 48 px. Son apparence divergeait ainsi du Button AndroidX : la capsule standard mesure 40 dp. La variante Outlined utilisait `outline` et `primary`, alors qu'AndroidX définit `outline-variant` et `on-surface-variant`. TextButton reste `primary` dans l'implémentation AndroidX, malgré un token contradictoire. Enfin, l'état désactivé appliquait une opacité globale de 38 %, ce qui atténuait aussi le conteneur au lieu de séparer les opacités des tokens.
 
 ## Challenge
 
@@ -34,7 +34,7 @@ Les boutons iconiques gardent une cible de 48 px et dessinent un conteneur de 40
 ## Conséquences
 
 - La taille visuelle ne sacrifie plus l'accessibilité tactile.
-- Les variantes Outlined et Text utilisent les rôles système AndroidX.
+- Outlined utilise les rôles `outline-variant` et `on-surface-variant` ; TextButton suit la couleur `primary` effectivement appliquée par AndroidX.
 - Les états désactivés distinguent le conteneur, le contour et le contenu.
 - Les états pressés et survolés reproduisent la forme et l'élévation définies par AndroidX.
 
