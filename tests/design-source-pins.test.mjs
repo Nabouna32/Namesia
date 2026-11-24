@@ -60,3 +60,14 @@ test("les versions des bibliothèques de calcul et des sources AndroidX restent 
   assert.match(verification, /maintenance sans nouvelles fonctionnalités planifiées/);
   assert.match(components, /AndroidX Compose Material 3 1\.5\.0 stable/);
 });
+
+test("la décision Material Web repose uniquement sur les snapshots officiels vérifiés", () => {
+  const revision = "d4f63c567f73b16717f4c04b57fa6390d0b2312d";
+  assert.ok(components.includes(`https://github.com/material-components/material-web/blob/${revision}/README.md`));
+  assert.ok(components.includes(`https://github.com/material-components/material-web/blob/${revision}/docs/roadmap.md`));
+  assert.doesNotMatch(components, /material-components\/material-web\/discussions\//);
+  assert.match(components, /aucune nouvelle fonctionnalité ni aucun nouveau composant ne sont planifiés/);
+  assert.match(components, /scripts\/verify-design-sources\.mjs/);
+  assert.match(sourceVerifier, /Material Web README — état de maintenance/);
+  assert.match(sourceVerifier, /Material Web roadmap — couverture stable/);
+});
