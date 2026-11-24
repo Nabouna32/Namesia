@@ -270,7 +270,7 @@ test("les textes utilisent les interlignes de leur rôle Material 3", () => {
   }
 });
 
-test("les rayons sont tokenisés et les espacements suivent la grille de 4 px", () => {
+test("les rayons suivent les tokens ou les valeurs AndroidX source-vérifiées", () => {
   assert.doesNotMatch(allCss.replace(checkboxStyles, ""), /border-radius:\s*(?:\d+(?:\.\d+)?px|\d+%)/);
   assert.match(checkboxStyles, /border-radius:\s*2px/);
   const spacingPattern = /^\s*((?:margin|padding)(?:-(?:top|right|bottom|left|block|inline))?|gap|row-gap|column-gap)\s*:\s*([^;]+);/gm;
