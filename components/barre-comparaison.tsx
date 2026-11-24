@@ -23,7 +23,7 @@ export function BarreComparaison({ prenoms, onRetirer, onEffacer }: Props) {
       <ComparisonSelection
         names={prenoms.map((prenom) => ({ slug: prenom.slug, name: prenom.nom }))}
         label="Prénoms sélectionnés pour la comparaison"
-        onRetirer={onRetirer}
+        onRemove={onRetirer}
       />
       <span role="status" aria-live="polite">{prenoms.length} / 3 prénoms pour la comparaison</span>
       <div className={styles.actions}>
