@@ -326,7 +326,7 @@ test("la navigation paysage réserve les 80 dp réellement affichés", () => {
 
 test("NavigationBar reproduit les 80 dp de TallContainerHeight de Compose Material 3 1.5.0", () => {
   const navigationBar = globalCss.match(/\.navigation-bar\s*\{([^}]*)\}/s)?.[1] ?? "";
-  assert.match(navigationBar, /padding:\s*8px 8px env\(safe-area-inset-bottom\)/);
+  assert.match(navigationBar, /padding:\s*8px 8px calc\(8px \+ env\(safe-area-inset-bottom\)\)/);
   assert.doesNotMatch(navigationBar, /border-top:/);
   assert.match(globalCss, /\.navigation-bar \.navigation-item \{\s*min-height:\s*64px/);
   assert.match(globalCss, /\.app-content \{\s*padding-bottom:\s*calc\(80px \+ env\(safe-area-inset-bottom\)\)/);
