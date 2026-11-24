@@ -1,10 +1,12 @@
 export { Button } from "./Button";
 export type { ButtonVariant } from "./Button";
 export { FilterChip } from "./FilterChip";
+export { Icon } from "./Icon";
 export { IconButton } from "./IconButton";
 export { InputChip } from "./InputChip";
 export { NavigationBar } from "./NavigationBar";
 export { NavigationRail } from "./NavigationRail";
+export { MaterialThemeProvider } from "./MaterialThemeProvider";
 export { SearchBar } from "./SearchBar";
 export { Snackbar } from "./Snackbar";
 export type { SnackbarSeverity } from "./Snackbar";
