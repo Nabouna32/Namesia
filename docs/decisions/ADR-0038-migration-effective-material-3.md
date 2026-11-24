@@ -12,7 +12,7 @@ Le contrat documentaire précédent ne suffisait pas : le code conservait encore
 ## Décision
 
 - Migrer les usages vers les primitives React portant les noms Material 3 : `Button`, `IconButton`, `SearchBar`, `FilterChip` et `InputChip`.
-- Séparer `Button` et `IconButton) : la taille iconique n'est pas une variante de Button dans Material 3.
+- Séparer `Button` et `IconButton` : la taille iconique n'est pas une variante de Button dans Material 3.
 - Utiliser directement `Link` de Next.js pour les navigations, avec les classes visuelles de Button ; aucune primitive `ButtonLink` n'est créée.
 - Utiliser directement le `select` HTML pour les filtres natifs ; aucune abstraction locale de select n'est conservée.
 - Conserver `StatusMessage` comme composition sémantique accessible, non comme primitive M3.
@@ -21,7 +21,16 @@ Le contrat documentaire précédent ne suffisait pas : le code conservait encore
 
 ## Conséquences
 
-Les noms techniques des primitives sont alignés sur Material 3. Les textes du site restent en français. Le code continue d'utiliser React, CSS Modules et HTML natif ; seuls les contrats visuels, les variantes, les états et les noms sont repris de la référence AndroidX. Les composants de navigation et de shell restent une prochaine zone de migration explicite, car ils ont une portée structurelle supérieure à celle des primitives locales.
+Les noms techniques des primitives sont alignés sur Material 3. Les textes du site restent en français. Le code continue d'utiliser React, CSS Modules et HTML natif ; seuls les contrats visuels, les variantes, les états et les noms sont repris de la référence AndroidX. Au moment de cette décision, les composants de navigation et de shell restaient une prochaine zone de migration explicite ; cette étape a depuis été réalisée par ADR-0039.
+
+## État actuel
+
+Cette ADR conserve la décision de migration initiale ; elle ne remplace pas l'inventaire courant des composants.
+
+- Le shell a été migré en `TopAppBar`, `NavigationBar` et `NavigationRail` par [ADR-0039](ADR-0039-shell-material-3.md).
+- La nomenclature des compositions métier et des hooks a été finalisée par [ADR-0040](ADR-0040-nomenclature-composants.md).
+- Les noms intermédiaires `StatusMessage` et `ComparisonButton` cités dans le périmètre initial ne sont pas des primitives de présentation à réintroduire. Le registre actuel et les usages autorisés sont définis dans [Bibliothèque Material 3](../composants.md).
+- Les ports React/HTML restent des implémentations Web des contrats AndroidX ; ils ne sont pas des composants Compose importés dans Next.js.
 
 ## Validation
 
