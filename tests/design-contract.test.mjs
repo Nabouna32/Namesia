@@ -248,6 +248,8 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.match(composantsDoc, /NavigationBar/);
   assert.match(composantsDoc, /FilterChip/);
   assert.ok(composantsDoc.includes("github.com/androidx/androidx"));
+  assert.ok(composantsDoc.includes("919e948eaa351c590e7e6fc89d4014fad7a6e78c"));
+  assert.doesNotMatch(composantsDoc, /androidx-main/);
   assert.match(agents, /Avant de créer ou refondre une page, lire/);
 });
 
@@ -296,7 +298,7 @@ test("NavigationBar et NavigationRail utilisent le rôle M3 label-medium à tout
 });
 
 
-test("NavigationBar respecte les 64 dp Material 3 et réserve uniquement la zone sûre", () => {
+test("NavigationBar reproduit les 80 dp de TallContainerHeight de Compose Material 3 1.5.0", () => {
   const navigationBar = globalCss.match(/\.navigation-bar\s*\{([^}]*)\}/s)?.[1] ?? "";
   assert.match(navigationBar, /padding:\s*0 8px env\(safe-area-inset-bottom\)/);
   assert.doesNotMatch(navigationBar, /border-top:/);
