@@ -87,7 +87,7 @@ Les pages de filtres, recherches internes et combinaisons sans contenu éditoria
 
 ## 7. Direction visuelle
 
-La direction visuelle canonique est **Material 3 Fidelity** pour l'interface générale, avec **Material 3 Rainbow** comme palette complémentaire pour les catégories éditoriales et les repères qui bénéficient d'une variation de couleur. Les deux schémas sont calculés par Material Color Utilities à partir d'une couleur source maîtrisée par Namesia. La navigation, les actions et les états fonctionnels restent pilotés par Fidelity et les rôles sémantiques. Le dégradé de marque reste décoratif. Les règles détaillées et les limites Web sont définies dans [docs/design.md](design.md).
+La direction visuelle canonique est **Material 3 Fidelity** pour l'interface générale, avec **Material 3 Rainbow** comme palette complémentaire pour les catégories éditoriales et les repères qui bénéficient d'une variation de couleur. Les deux schémas sont calculés par Material Color Utilities à partir du violet de baseline M3 `#6750A4`. La navigation et les actions restent pilotées par Fidelity. Les états success/warning/info utilisent des couleurs personnalisées sémantiques M3, distinctes des rôles système. Aucun dégradé de marque hors M3 n'est conservé. Les règles détaillées et les limites Web sont définies dans [docs/design.md](design.md).
 
 
 ## 8. Indicateurs
