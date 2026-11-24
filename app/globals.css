@@ -894,7 +894,7 @@ padding: 8px 12px;
   position: absolute;
   right: 5%;
   bottom: -0.25em;
-  color: color-mix(in srgb, var(--md-sys-color-primary) var(--md-sys-state-pressed-state-layer-opacity), transparent);
+  color: color-mix(in srgb, var(--md-sys-color-primary) 12%, transparent);
   font-family: var(--md-sys-typescale-body-large-font);
   font-size: clamp(14.375rem, 34vw, 25.625rem);
   line-height: 0.95;
