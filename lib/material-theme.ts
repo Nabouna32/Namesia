@@ -7,6 +7,7 @@ import {
   Variant
 } from "@material/material-color-utilities";
 
+// Primary40 de la baseline Material 3 AndroidX ; utilisé comme entrée de Fidelity.
 const sourceColorArgb = argbFromHex("#6750A4");
 const sourceColor = Hct.fromInt(sourceColorArgb);
 
@@ -122,6 +123,7 @@ export function getMaterialThemeTokens(isDark: boolean): Record<string, string> 
     const group = customColor(sourceColorArgb, {
       name: role,
       value: argbFromHex(sourceHex),
+      // Les teintes sémantiques ne doivent pas dériver vers le violet primaire.
       blend: false
     });
     const colors = isDark ? group.dark : group.light;
@@ -130,8 +132,6 @@ export function getMaterialThemeTokens(isDark: boolean): Record<string, string> 
     tokens["--namesia-color-" + role + "-container"] = hexFromArgb(colors.colorContainer);
     tokens["--namesia-color-on-" + role + "-container"] = hexFromArgb(colors.onColorContainer);
   }
-
-
 
   return tokens;
 }
