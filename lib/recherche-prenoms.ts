@@ -1,15 +1,20 @@
 import type { PrenomIndex } from "@/lib/prenoms";
 
 export function normaliserRecherche(value: string): string {
-  return value.trim()
+  const normalisee = value.trim()
     .normalize("NFD")
     .replace(/\p{Diacritic}/gu, "")
     .toLocaleLowerCase("fr")
     .replace(/œ/g, "oe")
     .replace(/æ/g, "ae")
     .replace(/(?<=[\p{L}\p{N}])[\s\p{P}\p{Z}]+(?=[\p{L}\p{N}])/gu, "");
-}
 
+  // Un séparateur tapé après un préfixe ne doit pas bloquer l'autocomplétion.
+  // Un terme composé uniquement de ponctuation reste toutefois une recherche distincte.
+  return /[\p{L}\p{N}]/u.test(normalisee)
+    ? normalisee.replace(/^[\s\p{P}\p{Z}]+|[\s\p{P}\p{Z}]+$/gu, "")
+    : normalisee;
+}
 export function comparerPertinence(a: PrenomIndex, b: PrenomIndex, terme: string): number {
   if (!terme) return a.nom.localeCompare(b.nom, "fr");
   const nomA = normaliserRecherche(a.nom);
