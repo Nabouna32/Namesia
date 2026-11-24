@@ -220,7 +220,7 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
                         <span className="profile-tag">Lettre {prenom.lettre}</span>
                       </span>
                       <Link
-                        className="compare-card-link"
+                        className="compare-profile-link"
                         href={creerUrlFicheDepuisComparateur(prenom.slug, selection)}
                         aria-label={`Lire la fiche complète de ${prenom.nom}`}
                       >
