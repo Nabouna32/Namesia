@@ -1,8 +1,8 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.26
-- **Mis à jour :** 2026-11-23
+- **Version :** 4.27
+- **Mis à jour :** 2026-11-24
 
 ## 1. Direction
 
@@ -18,12 +18,12 @@ La palette d'interface est calculée avec la bibliothèque officielle Google **`
 - couleur source primaire : `#005AC1`, bleu Pixel choisi pour Namesia ;
 - variante du thème d'interface : `Variant.FIDELITY` ;
 - variante complémentaire des catégories : `Variant.RAINBOW`, calculée séparément avec la même couleur source ;
-- spécification : `2025` ;
+- spécification : `2021`, car les variantes `Fidelity` et `Rainbow` sont définies dans cette version ; demander `2025` ferait retomber implicitement ces variantes sur leurs définitions antérieures ;
 - plateforme de calcul : `phone` ;
 - niveau de contraste standard : `0` ;
 - schémas clair et sombre recalculés selon `prefers-color-scheme`.
 
-Le fournisseur `MaterialThemeProvider` applique les rôles calculés sous forme de variables CSS `--md-sys-color-*`. Les valeurs de la feuille globale sont des valeurs initiales SSR ; la bibliothèque est la source de vérité du thème actif après hydratation. Le thème suit les changements de préférence système sans rechargement.
+Le générateur expose les rôles système sous leurs noms M3 exacts `--md-sys-color-*`. Les rôles absents provoquent une erreur explicite : aucun rôle n’est silencieusement ignoré. Le rendu initial et le thème après hydratation proviennent du même calcul, sans palette statique approximative ni bascule visuelle vers une autre variante.
 
 La couleur source est fixe et maîtrisée par Namesia : le navigateur n'a pas accès au fond d'écran Android et le site ne prétend donc pas récupérer la couleur dynamique du téléphone. Une future personnalisation de la couleur source doit rester une décision explicite, pas une collecte implicite.
 
@@ -37,11 +37,11 @@ Les composants consomment les rôles du schéma, jamais des couleurs arbitraires
 - `on-surface`, `on-surface-variant`, `outline`, `outline-variant` : texte et contours ;
 - `error` et ses conteneurs : erreurs.
 
-Les composants consomment directement les rôles `--md-sys-color-*`. Aucun alias applicatif `--color-*`, `--ink`, `--muted` ou `--line` n'est admis. Les rôles `success`, `warning` et `info` sont des extensions sémantiques explicites, calculées par le fournisseur de thème pour les deux modes. Aucune valeur de secours n'est autorisée dans `var()` : une donnée de thème absente doit rester visible comme défaut de contrat.
+Les composants consomment directement les rôles `--md-sys-color-*`. Aucun alias applicatif `--color-*`, `--ink`, `--muted` ou `--line` n'est admis. Les extensions Namesia `success`, `warning` et `info` ne sont pas des rôles Material 3 ; elles portent le préfixe distinct `--namesia-color-*` et sont explicitement limitées aux états qui en ont besoin. Aucune valeur de secours n'est autorisée dans `var()` : une donnée de thème absente doit rester visible comme défaut de contrat.
 
 ### Signature Rainbow
 
-Le dégradé de marque `--md-sys-color-brand-gradient` reste réservé au monogramme Namesia. Les catégories utilisent trois familles de rôles tonals issues du schéma `Variant.RAINBOW` (`--md-sys-color-category-1` à `--md-sys-color-category-3`, avec leurs conteneurs et couleurs de premier plan). Une catégorie reçoit toujours la même teinte, quelle que soit la fiche ou l'ordre d'affichage. Une carte de prénom, un bouton ou une surface fonctionnelle ne constitue pas une catégorie : elle utilise les rôles Fidelity neutres ou sémantiques. Les titres, les accents typographiques et les fonds de page ne reçoivent pas de dégradé Rainbow. Les cartes d'associations peuvent recevoir une légère teinte stable issue de la catégorie, sur une surface Fidelity ; leur contour et leur badge utilisent respectivement la teinte et le rôle `on-container` de cette même catégorie, jamais un rôle tertiary générique. La vitrine « Les prénoms à découvrir » applique une surface neutre identique à ses cartes ; aucune carte ne reçoit primary, secondary ou tertiary selon sa position. Les variations de mise en page suivent la largeur disponible : trois colonnes sur grand écran, deux sur fenêtre intermédiaire et une sur écran compact.
+Le dégradé de marque `--namesia-color-brand-gradient` reste réservé au monogramme Namesia. Les catégories utilisent trois familles de rôles tonals issues du schéma `Variant.RAINBOW` (`--namesia-color-category-1` à `--namesia-color-category-3`, avec leurs conteneurs et couleurs de premier plan). Une catégorie reçoit toujours la même teinte, quelle que soit la fiche ou l'ordre d'affichage. Une carte de prénom, un bouton ou une surface fonctionnelle ne constitue pas une catégorie : elle utilise les rôles Fidelity neutres ou sémantiques. Les titres, les accents typographiques et les fonds de page ne reçoivent pas de dégradé Rainbow. Les cartes d'associations peuvent recevoir une légère teinte stable issue de la catégorie, sur une surface Fidelity ; leur contour et leur badge utilisent respectivement la teinte et le rôle `on-container` de cette même catégorie, jamais un rôle tertiary générique. La vitrine « Les prénoms à découvrir » applique une surface neutre identique à ses cartes ; aucune carte ne reçoit primary, secondary ou tertiary selon sa position. Les variations de mise en page suivent la largeur disponible : trois colonnes sur grand écran, deux sur fenêtre intermédiaire et une sur écran compact.
 
 ## 3. Formes, typographie et élévation
 
@@ -136,7 +136,7 @@ L'application occupe au minimum la hauteur de la fenêtre avec une colonne flex.
 
 La référence est Material 3 pour Android, notamment ses principes de navigation adaptative, ses rôles de couleur, ses composants et son échelle typographique officielle : [Material 3 — Type scale tokens](https://m3.material.io/styles/typography/type-scale-tokens). Les tailles et interlignes suivent la baseline publiée ; les graisses retenues sont 400 et 500. La référence de mise en œuvre Android est également consultable dans [la documentation Material 3 de Jetpack Compose](https://developer.android.com/develop/ui/compose/designsystems/material3). La palette principale suit Fidelity ; Rainbow est un système d'accents catégoriels distinct. La bibliothèque officielle Material Web est en mode maintenance en attente de nouveaux mainteneurs ; elle n'est pas retenue comme fondation UI. Material Color Utilities est la dépendance officielle retenue pour les algorithmes de couleur, pas une bibliothèque de composants.
 
-La navigation, les icônes et les surfaces du site sont des implémentations Web accessibles des modèles Material. Le Web ne peut pas reproduire les gestes système, les barres système transparentes, le retour prédictif Android, les animations natives exactes ni l'extraction du fond d'écran. Ces éléments ne doivent pas être simulés de manière trompeuse.
+Le registre des rôles, les sources officielles, les vérifications automatisées et les exceptions Web sont détaillés dans [Vérification Material 3](material-3-verification.md). La navigation, les icônes et les surfaces du site sont des implémentations Web accessibles des modèles Material. Le Web ne peut pas reproduire les gestes système, les barres système transparentes, le retour prédictif Android, les animations natives exactes ni l'extraction du fond d'écran. Ces éléments ne doivent pas être simulés de manière trompeuse.
 
 
 ## 10. Fidélité d'interaction Pixel
