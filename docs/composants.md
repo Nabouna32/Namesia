@@ -110,7 +110,7 @@ Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques 
 | `RandomDiscovery` | `features/discovery/RandomDiscovery.tsx` | Découverte aléatoire d'un prénom. |
 | `NameComparator` | `features/comparison/NameComparator.tsx` | Recherche et comparaison de deux ou trois fiches. |
 | `ShareProfile` | `features/sharing/ShareLink.tsx` | Composition du partage d'une fiche de prénom. |
-| `FavoriteButton` | `features/favorites/FavoriteButton.tsx` | Ajout/retrait d'un favori, état de chargement et erreur du stockage ; compose Button et IconButton. |
+| `FavoriteButton` | `features/favorites/FavoriteButton.tsx` | Ajout/retrait d'un favori depuis la fiche, état de chargement et erreur du stockage ; compose Button. |
 | `ComparisonSelection` | `features/comparison/ComparisonSelection.tsx` | Liste des prénoms retenus ; compose InputChip pour le retrait individuel. |
 | `ShareLink` | `features/sharing/ShareLink.tsx` | Partage natif ou copie d'une URL reconstruite avec une liste explicite de paramètres autorisés. |
 
