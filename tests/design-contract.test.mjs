@@ -227,6 +227,16 @@ test("l'échelle typographique Material 3 est complète et limitée aux graisses
   assert.doesNotMatch(allCss, /text-transform:\s*uppercase/i);
 });
 
+test("les textes utilisent les interlignes de leur rôle Material 3", () => {
+  const ratios = [...allCss.matchAll(/line-height:\\s*(\\d+(?:\\.\\d+)?);/g)].map((match) => match[1]);
+  assert.deepEqual(ratios, ["0.95", "0.95"], "Seuls les deux glyphes décoratifs surdimensionnés peuvent conserver un ratio local");
+  assert.match(globalCss, /\\.featured-letter\\s*\\{[^}]*line-height:\\s*0\\.95;/s);
+  assert.match(globalCss, /\\.profile-monogram\\s*\\{[^}]*line-height:\\s*0\\.95;/s);
+  for (const role of ["body-large", "body-medium", "body-small", "headline-large"]) {
+    assert.match(allCss, new RegExp("line-height:\\\\s*var\\\\(--md-sys-typescale-" + role + "-line-height\\\\)"));
+  }
+});
+
 test("les rayons sont tokenisés et les espacements suivent la grille de 4 px", () => {
   assert.doesNotMatch(allCss, /border-radius:\s*(?:\d+(?:\.\d+)?px|\d+%)/);
   const spacingPattern = /^\s*((?:margin|padding)(?:-(?:top|right|bottom|left|block|inline))?|gap|row-gap|column-gap)\s*:\s*([^;]+);/gm;
