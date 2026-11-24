@@ -429,6 +429,7 @@ test("Card centralise les surfaces AndroidX et préserve l’élément HTML choi
   assert.match(cardStyles, /--md-sys-state-pressed-state-layer-opacity/);
   assert.match(checkboxStyles, /\.input:checked:not\(:disabled\):active \+ \.indicator\s*\{[^}]*md-sys-color-primary[^}]*pressed-state-layer-opacity/s);
   assert.match(checkboxStyles, /\.input:not\(:disabled\):hover \+ \.indicator\s*\{[^}]*border-color: var\(--md-sys-color-on-surface\)/s);
+  assert.match(checkboxStyles, /\.input:focus-visible \+ \.indicator\s*\{[^}]*md-sys-color-on-surface[^}]*md-sys-color-secondary/s);
 });
 
 test("TextField reprend l’anatomie et les états AndroidX sans style local concurrent", () => {
