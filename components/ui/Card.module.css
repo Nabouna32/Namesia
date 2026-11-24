@@ -54,6 +54,7 @@
 
 .interactive.filled:active {
   background: color-mix(in srgb, var(--md-sys-color-primary) var(--md-sys-state-pressed-state-layer-opacity), var(--md-sys-color-surface-container-highest));
+  box-shadow: none;
 }
 
 .interactive.outlined:active {
@@ -61,9 +62,6 @@
   box-shadow: none;
 }
 
-.interactive.filled:active {
-  box-shadow: none;
-}
 
 @media (prefers-reduced-motion: reduce) {
   .card {
