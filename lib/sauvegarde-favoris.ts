@@ -1,5 +1,11 @@
 const VERSION_SAUVEGARDE = 1;
 export const LIMITE_FAVORIS = 10_000;
+
+export type ResultatFusionFavoris = {
+  slugs: string[];
+  nombreAjoute: number;
+  nombreIgnoreLimite: number;
+};
 const FORMAT_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 export function normaliserSlugsFavoris(value: unknown): string[] | null {
@@ -8,6 +14,30 @@ export function normaliserSlugsFavoris(value: unknown): string[] | null {
     typeof slug === "string" && FORMAT_SLUG.test(slug)
   )) return null;
   return [...new Set(value)];
+}
+
+export function fusionnerFavoris(slugsExistants: string[], slugsImportes: string[]): ResultatFusionFavoris {
+  const existants = normaliserSlugsFavoris(slugsExistants);
+  const importes = normaliserSlugsFavoris(slugsImportes);
+  if (!existants || !importes) throw new Error("La fusion contient des identifiants de prénoms invalides.");
+
+  const slugs = [...existants];
+  const presents = new Set(slugs);
+  let nombreAjoute = 0;
+  let nombreIgnoreLimite = 0;
+
+  for (const slug of importes) {
+    if (presents.has(slug)) continue;
+    if (slugs.length >= LIMITE_FAVORIS) {
+      nombreIgnoreLimite += 1;
+      continue;
+    }
+    presents.add(slug);
+    slugs.push(slug);
+    nombreAjoute += 1;
+  }
+
+  return { slugs, nombreAjoute, nombreIgnoreLimite };
 }
 
 export function creerSauvegardeFavoris(slugs: string[]): string {
