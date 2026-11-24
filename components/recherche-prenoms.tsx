@@ -10,11 +10,11 @@ import type { PrenomIndex } from "@/lib/prenoms";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
 import { IconeMaterial } from "./icone-material";
-import { ChampRecherche } from "@/components/ui/champ-recherche";
+import { SearchBar } from "@/components/ui/SearchBar";
 import { BoutonComparaison } from "@/components/ui/bouton-comparaison";
-import { Bouton } from "@/components/ui/bouton";
+import { Button } from "@/components/ui/Button";
 import { PartagerLien } from "@/components/partager-fiche";
-import { ChipFiltre } from "@/components/ui/chip-filtre";
+import { FilterChip } from "@/components/ui/FilterChip";
 
 type Props = {
   prenoms: PrenomIndex[];
@@ -146,7 +146,7 @@ export function RecherchePrenoms({
 
   return (
     <div className={compact ? "search search-compact" : "search"}>
-      <ChampRecherche
+      <SearchBar
         id={compact ? "recherche-accueil" : "recherche-catalogue"}
         label="Rechercher un prénom"
         placeholder="Quel prénom cherchez-vous ?"
@@ -160,12 +160,12 @@ export function RecherchePrenoms({
             <fieldset className="filter-group">
               <legend>Explorer par genre</legend>
               <div className="filter-options">
-                <ChipFiltre label="Tous" selectionne={genreActif === null} onClick={() => changerGenre(null)} />
+                <FilterChip label="Tous" selected={genreActif === null} onClick={() => changerGenre(null)} />
                 {genres.map((genre) => (
-                  <ChipFiltre
+                  <FilterChip
                     key={genre}
                     label={genre}
-                    selectionne={genreActif === genre}
+                    selected={genreActif === genre}
                     onClick={() => changerGenre(genre)}
                   />
                 ))}
@@ -175,15 +175,15 @@ export function RecherchePrenoms({
 
           {lettres.length > 1 && (
             <fieldset className="filter-group">
-              <legend>Explorer par initiale</legend>
+              <legend>Explorer par initial</legend>
               <div className="filter-options filter-letters">
-                <ChipFiltre label="Toutes" selectionne={lettreActive === null} onClick={() => changerLettre(null)} />
+                <FilterChip label="Toutes" selected={lettreActive === null} onClick={() => changerLettre(null)} />
                 {lettres.map((lettre) => (
-                  <ChipFiltre
+                  <FilterChip
                     key={lettre}
                     label={lettre.toLocaleUpperCase("fr")}
-                    selectionne={lettreActive === lettre}
-                    initiale
+                    selected={lettreActive === lettre}
+                    initial
                     onClick={() => changerLettre(lettre)}
                   />
                 ))}
@@ -192,9 +192,9 @@ export function RecherchePrenoms({
           )}
 
           {filtresActifs && (
-            <Bouton variante="text" className="filter-action" type="button" onClick={effacerFiltres}>
+            <Button variant="text" className="filter-action" type="button" onClick={effacerFiltres}>
               Réinitialiser les filtres
-            </Bouton>
+            </Button>
           )}
         </div>
       )}
@@ -244,14 +244,14 @@ export function RecherchePrenoms({
                       <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
                     </Link>
                     {!compact && (
-                      <BoutonComparaison
+                      <ButtonComparaison
                         prenom={prenom.nom}
-                        selectionne={selectionComparaison.includes(prenom.slug)}
+                        selected={selectionComparaison.includes(prenom.slug)}
                         desactive={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
                         onClick={() => basculerComparaison(prenom.slug)}
                       />
                     )}
-                    <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
+                    <ButtonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
                   </article>
                 ))}
               </div>
@@ -261,13 +261,13 @@ export function RecherchePrenoms({
               </Link>
             )}
             {!compact && resultats.length > nombreVisible && (
-              <Bouton variante="text"
+              <Button variant="text"
                 className="filter-action"
                 type="button"
                 onClick={chargerPlus}
               >
                 Afficher les {Math.min(24, resultats.length - nombreVisible)} prénoms suivants
-              </Bouton>
+              </Button>
             )}
             </>
           ) : suggestions.length > 0 ? (
@@ -284,14 +284,14 @@ export function RecherchePrenoms({
                       <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
                     </Link>
                     {!compact && (
-                      <BoutonComparaison
+                      <ButtonComparaison
                         prenom={prenom.nom}
-                        selectionne={selectionComparaison.includes(prenom.slug)}
+                        selected={selectionComparaison.includes(prenom.slug)}
                         desactive={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
                         onClick={() => basculerComparaison(prenom.slug)}
                       />
                     )}
-                    <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
+                    <ButtonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
                   </article>
                 ))}
               </div>
@@ -304,9 +304,9 @@ export function RecherchePrenoms({
                   : "Aucun prénom n’est encore publié."}
               </p>
               {filtresActifs && (
-                <Bouton variante="text" className="filter-action" type="button" onClick={effacerFiltres}>
+                <Button variant="text" className="filter-action" type="button" onClick={effacerFiltres}>
                   Voir tous les prénoms
-                </Bouton>
+                </Button>
               )}
             </div>
           )}
