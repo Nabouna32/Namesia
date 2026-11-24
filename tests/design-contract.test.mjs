@@ -244,6 +244,11 @@ test("l'approche typographique utilise exclusivement les tokens de rôle Materia
   );
   assert.match(globalCss, /\.section-heading h2\s*\{[^}]*letter-spacing:\s*var\(--md-sys-typescale-headline-medium-tracking\)/s);
   assert.match(globalCss, /\.profile-section-heading h2\s*\{[^}]*letter-spacing:\s*var\(--md-sys-typescale-headline-small-tracking\)/s);
+  assert.match(globalCss, /\.eyebrow\s*\{[^}]*font-size:\s*var\(--md-sys-typescale-label-medium-size\)[^}]*line-height:\s*var\(--md-sys-typescale-label-medium-line-height\)/s);
+  assert.match(globalCss, /\.profile-section-kicker\s*\{[^}]*font-size:\s*var\(--md-sys-typescale-label-medium-size\)/s);
+  assert.match(globalCss, /\.symbolic-card > span,[^}]*font-size:\s*var\(--md-sys-typescale-label-small-size\)/s);
+  const adminStyles = styles.find(({ path }) => path === "app/admin/admin.module.css")?.content ?? "";
+  assert.match(adminStyles, /\.previewLabel\s*\{[^}]*font-size:\s*var\(--md-sys-typescale-label-medium-size\)[^}]*letter-spacing:\s*var\(--md-sys-typescale-label-medium-tracking\)/s);
 });
 
 test("les textes utilisent les interlignes de leur rôle Material 3", () => {
