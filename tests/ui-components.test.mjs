@@ -19,9 +19,7 @@ test("Button suit l’anatomie AndroidX et conserve les éléments HTML natifs",
   assert.match(button, /export function Button\(/);
   assert.match(button, /<button/);
   assert.match(button, /<Link/);
-  for (const variant of ["filled", "tonal", "outlined", "text"]) {
-    assert.match(buttonStyles, new RegExp(`\.${variant} \\{`));
-  }
+  assert.ok(["filled", "tonal", "outlined", "text"].every((variant) => buttonStyles.includes("." + variant + " {")));
   assert.match(buttonStyles, /min-height: 48px/);
   assert.match(buttonStyles, /min-width: 58px/);
   assert.match(buttonStyles, /inset: 4px 0/);
