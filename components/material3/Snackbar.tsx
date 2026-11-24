@@ -7,15 +7,16 @@ const severityClass: Record<SnackbarSeverity, string> = {
   success: styles.success,
   warning: styles.warning,
   info: styles.info,
-  error: styles.error
+  error: styles.error,
+  neutral: styles.neutral
 };
 
 export function Snackbar({
-  severity,
+  severity = "neutral",
   children,
   className
 }: Readonly<{
-  severity: SnackbarSeverity;
+  severity?: SnackbarSeverity | "neutral";
   children: ReactNode;
   className?: string;
 }>) {
