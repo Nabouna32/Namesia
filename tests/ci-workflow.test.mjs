@@ -13,4 +13,5 @@ test("les actions GitHub sont épinglées sur des commits immuables", () => {
     assert.match(version ?? "", /^v\d+(?:\.\d+(?:\.\d+)?)?$/, `Version amont absente pour ${action}`);
   }
   assert.match(agents, /Toutes les actions GitHub.*SHA de commit complet à 40 caractères/);
+  assert.match(workflow, /persist-credentials: false/);
 });

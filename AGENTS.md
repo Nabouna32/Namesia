@@ -48,7 +48,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Pour un run en échec, lire les jobs puis les logs du job en échec avant toute correction. Ne pas se limiter au résumé du statut : les logs distinguent une régression de code d'un contrat de test devenu obsolète.
 - Le job `quality` exécute les tests, le contrôle TypeScript et le build même si l'un échoue, puis produit une synthèse finale. Sur un run rouge, lire les trois `outcome` et leurs logs avant de corriger afin de traiter toutes les causes indépendantes dans la même boucle.
 - Ne jamais déclarer un test, build ou contrôle réussi sans que la CI GitHub Actions l'ait confirmé.
-- Toutes les actions GitHub (`uses`) sont épinglées sur un SHA de commit complet à 40 caractères, avec le tag de version conservé en commentaire. Avant une mise à jour, vérifier que le SHA correspond au tag officiel et relire les changements amont ; ne jamais revenir à une référence de tag mutable.
+- Toutes les actions GitHub (`uses`) sont épinglées sur un SHA de commit complet à 40 caractères, avec le tag de version conservé en commentaire. Avant une mise à jour, vérifier que le SHA correspond au tag officiel et relire les changements amont ; ne jamais revenir à une référence de tag mutable. Le checkout désactive `persist-credentials` sauf besoin Git en écriture explicitement justifié.
 
 ### Politique Vercel et quota
 
