@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.45
+- **Version :** 4.46
 - **Mis à jour :** 2026-11-24
 
 ## 1. Direction
@@ -158,3 +158,8 @@ La fidélité ne se limite pas aux couleurs. Les interactions doivent reproduire
 - Les barres de navigation compactes et les rails medium/expanded sont des modèles de navigation de page ; ce ne sont ni des onglets ni une imitation des barres système Android.
 
 La fidélité est évaluée sur l'ensemble des parcours (accueil, catalogue, fiche, comparateur, favoris et administration), en clair/sombre, à 320 px, 600 px, 840 px et sur grand écran. Une simple conformité des tokens ne suffit pas si les composants visibles conservent des styles concurrents.
+
+
+## Tableau comparatif
+
+Le comparateur utilise un tableau HTML natif : les critères sont des en-têtes de ligne et les prénoms des en-têtes de colonne. Le conteneur de défilement horizontal est focalisable au clavier ; sur petit écran, la colonne des critères reste fixe pendant le défilement. Les cellules conservent les surfaces, séparateurs, typographies et contrastes des rôles Fidelity. Ne pas remplacer ce tableau par des cartes indépendantes : l'alignement des critères est la fonction principale de cette vue.

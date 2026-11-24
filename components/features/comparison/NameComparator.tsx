@@ -11,7 +11,6 @@ import { categoryTone } from "@/lib/category-color";
 import { SearchBar } from "@/components/material3/SearchBar";
 import { ComparisonSelection } from "@/components/features/comparison/ComparisonSelection";
 import { Button } from "@/components/material3/Button";
-import { Card } from "@/components/material3/Card";
 
 type Props = { prenoms: PrenomIndex[]; selectionInitiale: string[] };
 
@@ -200,53 +199,94 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
       ) : !selectionComplete ? (
         <p className="compare-status" role="status">Une des fiches sélectionnées n’est plus publiée. Modifiez votre sélection pour continuer.</p>
       ) : (
-        <section aria-label="Comparaison des prénoms" className="compare-grid">
-          {selectionnes.map((prenom) => (
-            <Card as="article" variant="elevated" className="compare-card" key={prenom.slug}>
-              <header>
-                <h2>{prenom.nom}</h2>
-                <span className="profile-tag"><GenreIcon genre={prenom.genre} /></span>
-                <span className="profile-tag">Lettre {prenom.lettre}</span>
-                <Link
-                  className="compare-card-link"
-                  href={creerUrlFicheDepuisComparateur(prenom.slug, selection)}
-                  aria-label={`Lire la fiche complète de ${prenom.nom}`}
-                >
-                  Voir la fiche complète
-                </Link>
-              </header>
-              <div className="compare-field">
-                <h3>Introduction</h3>
-                <p>{prenom.introduction}</p>
-              </div>
-              <div className="compare-field">
-                <h3>Origine & signification</h3>
-                <p className={prenom.origin ? "" : "compare-missing"}>{prenom.origin ?? "Non renseignée dans cette fiche."}</p>
-              </div>
-              <div className="compare-field">
-                <h3>Histoire</h3>
-                <p className={prenom.history ? "" : "compare-missing"}>{prenom.history ?? "Non renseignée dans cette fiche."}</p>
-              </div>
-              <div className="compare-field">
-                <h3>Variantes & usages</h3>
-                <p className={prenom.usage ? "" : "compare-missing"}>{prenom.usage ?? "Non renseignés dans cette fiche."}</p>
-              </div>
-              <div className="compare-field">
-                <h3>Associations symboliques</h3>
-                {prenom.symbolic_associations.length > 0 ? (
-                  <div className="compare-associations">
-                    {prenom.symbolic_associations.map((association) => (
-                      <div className="compare-association" data-category-tone={categoryTone(association.category)} key={`${association.category}-${association.value}`}>
-                        <strong>{association.value}</strong>
-                        <span>{association.category}</span>
-                        <p>{association.context_note}</p>
-                      </div>
-                    ))}
-                  </div>
-                ) : <p className="compare-missing">Aucune association publiée.</p>}
-              </div>
-            </Card>
-          ))}
+        <section aria-label="Comparaison des prénoms" className="compare-table-section">
+          <div
+            className="compare-table-scroll"
+            role="region"
+            tabIndex={0}
+            aria-label="Tableau comparatif. Faites défiler horizontalement pour consulter toutes les colonnes."
+          >
+            <table className="compare-table">
+              <caption className="sr-only">
+                Comparaison de {selectionnes.map((prenom) => prenom.nom).join(", ")}
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col" className="compare-criterion-heading">Critères</th>
+                  {selectionnes.map((prenom) => (
+                    <th scope="col" key={prenom.slug}>
+                      <strong className="compare-name">{prenom.nom}</strong>
+                      <span className="compare-header-meta">
+                        <span className="profile-tag"><GenreIcon genre={prenom.genre} /></span>
+                        <span className="profile-tag">Lettre {prenom.lettre}</span>
+                      </span>
+                      <Link
+                        className="compare-profile-link"
+                        href={creerUrlFicheDepuisComparateur(prenom.slug, selection)}
+                        aria-label={`Lire la fiche complète de ${prenom.nom}`}
+                      >
+                        Voir la fiche complète
+                      </Link>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Introduction</th>
+                  {selectionnes.map((prenom) => <td key={prenom.slug}><p>{prenom.introduction}</p></td>)}
+                </tr>
+                <tr>
+                  <th scope="row">Origine & signification</th>
+                  {selectionnes.map((prenom) => (
+                    <td key={prenom.slug}>
+                      <p className={prenom.origin ? "" : "compare-missing"}>
+                        {prenom.origin ?? "Non renseignée dans cette fiche."}
+                      </p>
+                    </td>
+                  ))}
+                </tr>
+                <tr>
+                  <th scope="row">Histoire</th>
+                  {selectionnes.map((prenom) => (
+                    <td key={prenom.slug}>
+                      <p className={prenom.history ? "" : "compare-missing"}>
+                        {prenom.history ?? "Non renseignée dans cette fiche."}
+                      </p>
+                    </td>
+                  ))}
+                </tr>
+                <tr>
+                  <th scope="row">Variantes & usages</th>
+                  {selectionnes.map((prenom) => (
+                    <td key={prenom.slug}>
+                      <p className={prenom.usage ? "" : "compare-missing"}>
+                        {prenom.usage ?? "Non renseignés dans cette fiche."}
+                      </p>
+                    </td>
+                  ))}
+                </tr>
+                <tr>
+                  <th scope="row">Associations symboliques</th>
+                  {selectionnes.map((prenom) => (
+                    <td key={prenom.slug}>
+                      {prenom.symbolic_associations.length > 0 ? (
+                        <div className="compare-associations">
+                          {prenom.symbolic_associations.map((association) => (
+                            <div className="compare-association" data-category-tone={categoryTone(association.category)} key={`${association.category}-${association.value}`}>
+                              <strong>{association.value}</strong>
+                              <span>{association.category}</span>
+                              <p>{association.context_note}</p>
+                            </div>
+                          ))}
+                        </div>
+                      ) : <p className="compare-missing">Aucune association publiée.</p>}
+                    </td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <p className="compare-disclaimer">Les associations symboliques sont des représentations culturelles, pas des caractéristiques scientifiques ou prédictives.</p>
         </section>
       )}

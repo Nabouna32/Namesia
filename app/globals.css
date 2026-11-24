@@ -957,19 +957,90 @@ margin: 0;
   font-size: var(--md-sys-typescale-body-medium-size);
 }
 
-.compare-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  align-items: start;
-gap: 16px;
+.compare-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-large);
+  background: var(--md-sys-color-surface-container-low);
+  scrollbar-color: var(--md-sys-color-outline) var(--md-sys-color-surface-container);
 }
 
-.compare-card header {
-padding-bottom: 16px;
+.compare-table-scroll:focus-visible {
+  outline: 3px solid var(--md-sys-color-primary);
+  outline-offset: 3px;
+}
+
+.compare-table {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  color: var(--md-sys-color-on-surface);
+}
+
+.compare-table th,
+.compare-table td {
+  min-width: 260px;
+  padding: 20px;
   border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  border-right: 1px solid var(--md-sys-color-outline-variant);
+  text-align: left;
+  vertical-align: top;
 }
 
-.compare-card-link {
+.compare-table tr > :last-child {
+  border-right: 0;
+}
+
+.compare-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.compare-table thead th {
+  background: var(--md-sys-color-surface-container);
+}
+
+.compare-table .compare-criterion-heading,
+.compare-table tbody th[scope="row"] {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  width: 176px;
+  min-width: 176px;
+  background: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-title-small-size);
+  font-weight: 500;
+}
+
+.compare-table .compare-criterion-heading {
+  z-index: 2;
+  background: var(--md-sys-color-surface-container-highest);
+}
+
+.compare-name {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--md-sys-color-on-surface);
+  font-family: var(--md-sys-typescale-headline-large-font);
+  font-size: var(--md-sys-typescale-headline-small-size);
+  font-weight: 400;
+  line-height: var(--md-sys-typescale-headline-small-line-height);
+}
+
+.compare-header-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.compare-header-meta .profile-tag {
+  background: var(--md-sys-color-surface-container-lowest);
+}
+
+.compare-profile-link {
   display: inline-flex;
   min-height: 48px;
   align-items: center;
@@ -982,41 +1053,24 @@ padding-bottom: 16px;
   text-underline-offset: 4px;
 }
 
-.compare-card h2 {
-margin: 0 0 12px;
-  color: var(--md-sys-color-on-surface);
-  font-family: var(--md-sys-typescale-headline-large-font);
-  font-size: var(--md-sys-typescale-headline-small-size);
-  font-weight: 400;
-  line-height: var(--md-sys-typescale-headline-small-line-height);
-}
-
-.compare-card .profile-tag {
-  background: var(--md-sys-color-surface-container-lowest);
-}
-
-.compare-field {
-  padding: 16px 0;
-  color: var(--md-sys-color-on-surface-variant);
-  border-bottom: 1px solid var(--md-sys-color-surface-container);
-}
-
-.compare-field:last-of-type {
-  border-bottom: 0;
-}
-
-
-.compare-field p {
-margin: 0;
+.compare-table td > p {
+  margin: 0;
   color: var(--md-sys-color-on-surface);
   font-size: var(--md-sys-typescale-body-large-size);
   line-height: 1.75;
   white-space: pre-line;
 }
 
-.compare-field .compare-missing {
+.compare-table td > .compare-missing {
   color: var(--md-sys-color-on-surface-variant);
   font-style: italic;
+}
+
+.compare-disclaimer {
+  margin: 16px 0 0;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-body-medium-size);
+  line-height: 1.6;
 }
 
 .compare-associations {
@@ -1037,14 +1091,6 @@ margin: 8px 0 0;
   color: var(--md-sys-color-on-surface-variant);
   font-size: var(--md-sys-typescale-body-large-size);
   line-height: 1.65;
-}
-
-.compare-disclaimer {
-  grid-column: 1 / -1;
-margin: 0;
-  color: var(--md-sys-color-on-surface-variant);
-  font-size: var(--md-sys-typescale-body-medium-size);
-  line-height: 1.6;
 }
 
 .compare-share {
