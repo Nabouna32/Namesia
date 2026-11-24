@@ -50,7 +50,6 @@ margin: 0;
 
 .success {
 margin: 0;
-  color: var(--namesia-color-success);
   font-size: var(--md-sys-typescale-body-medium-size);
   line-height: 1.5;
 }
