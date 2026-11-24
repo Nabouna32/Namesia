@@ -8,6 +8,7 @@ const icons = await readFile(new URL("../components/material3/Icon.tsx", import.
 const comparison = await readFile(new URL("../components/features/comparison/ComparisonToggle.tsx", import.meta.url), "utf8");
 const comparisonStyles = await readFile(new URL("../components/features/comparison/ComparisonToggle.module.css", import.meta.url), "utf8");
 const favorite = await readFile(new URL("../components/features/favorites/FavoriteButton.tsx", import.meta.url), "utf8");
+const prenomModel = await readFile(new URL("../lib/prenoms.ts", import.meta.url), "utf8");
 
 test("les cartes du catalogue représentent explicitement les quatre genres connus", () => {
   for (const [label, icon] of [
