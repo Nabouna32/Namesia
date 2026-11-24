@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, type ChangeEvent } from "react";
-import Link from "next/link";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
 import { normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
