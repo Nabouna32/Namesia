@@ -99,6 +99,31 @@ const sources = [
   },
 ];
 
+const additionalAndroidxSources = [
+  ["PaletteTokens.kt", "PaletteTokens"],
+  ["BaselineButtonTokens.kt", "BaselineButtonTokens"],
+  ["ButtonSmallTokens.kt", "ButtonSmallTokens"],
+  ["OutlinedButtonTokens.kt", "OutlinedButtonTokens"],
+  ["TextButtonTokens.kt", "TextButtonTokens"],
+  ["IconButton.kt", "IconButton"],
+  ["IconButtonTokens.kt", "StandardIconButtonTokens"],
+  ["ElevatedCardTokens.kt", "ElevatedCardTokens"],
+  ["FilledCardTokens.kt", "FilledCardTokens"],
+  ["OutlinedCardTokens.kt", "OutlinedCardTokens"],
+  ["FilledTextFieldTokens.kt", "FilledTextFieldTokens"],
+  ["OutlinedTextFieldTokens.kt", "OutlinedTextFieldTokens"],
+  ["InputChipTokens.kt", "InputChipTokens"],
+  ["NavigationRailCollapsedTokens.kt", "NavigationRailCollapsedTokens"],
+  ["NavigationRailColorTokens.kt", "NavigationRailColorTokens"],
+  ["NavigationRailBaselineItemTokens.kt", "NavigationRailBaselineItemTokens"],
+  ["NavigationRailVerticalItemTokens.kt", "NavigationRailVerticalItemTokens"],
+  ["SnackbarTokens.kt", "SnackbarTokens"],
+].map(([file, marker]) => ({
+  name: `AndroidX ${file}`,
+  url: `https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/${file === "IconButton.kt" ? file : `tokens/${file}`}`,
+  markers: [marker],
+}));
+
 async function fetchSource(source) {
   let response;
   let lastError;
@@ -145,4 +170,4 @@ async function verifySourcesWithLimit(items, concurrency) {
   await Promise.all(workers);
 }
 
-await verifySourcesWithLimit(sources, 4);
+await verifySourcesWithLimit([...sources, ...additionalAndroidxSources], 4);
