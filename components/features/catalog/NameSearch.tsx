@@ -14,6 +14,7 @@ import { ComparisonToggle } from "@/components/features/comparison/ComparisonTog
 import { Button } from "@/components/material3/Button";
 import { ShareLink } from "@/components/features/sharing/ShareLink";
 import { FilterChip } from "@/components/material3/FilterChip";
+import { Card } from "@/components/material3/Card";
 
 type Props = {
   prenoms: PrenomIndex[];
@@ -233,14 +234,14 @@ export function NameSearch({
               <div className={styles.resultsGrid}>
                 {resultats.slice(0, nombreVisible).map((prenom) => (
                   <article className={styles.resultCard} key={prenom.slug}>
-                    <Link className={`name-card ${styles.resultLink}`} href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
+                    <Card as={Link} variant="elevated" interactive className={`name-card ${styles.resultLink}`} href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
                       <span className="name-initial">{prenom.lettre}</span>
                       <span>
                         <strong>{prenom.nom}</strong>
                         <small>{prenom.genre} · Découvrir la fiche</small>
                       </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
-                    </Link>
+                    </Card>
                     {!compact && (
                       <ComparisonToggle
                         name={prenom.nom}
@@ -276,11 +277,11 @@ export function NameSearch({
               <div className={styles.resultsGrid}>
                 {suggestions.map((prenom) => (
                   <article className={styles.resultCard} key={prenom.slug}>
-                    <Link className={`name-card ${styles.resultLink}`} href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
+                    <Card as={Link} variant="elevated" interactive className={`name-card ${styles.resultLink}`} href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
                       <span className="name-initial">{prenom.lettre}</span>
                       <span><strong>{prenom.nom}</strong><small>{prenom.genre} · Suggestion proche</small></span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
-                    </Link>
+                    </Card>
                     {!compact && (
                       <ComparisonToggle
                         name={prenom.nom}
