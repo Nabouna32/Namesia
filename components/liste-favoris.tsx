@@ -12,11 +12,11 @@ import { useFavoris } from "./favoris-provider";
 import styles from "./liste-favoris.module.css";
 import { IconeMaterial } from "./icone-material";
 import { SearchBar } from "@/components/ui/SearchBar";
-import { ComparisonButton } from "@/components/ui/bouton-comparaison";
+import { ComparisonButton } from "@/components/ui/ComparisonButton";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import buttonStyles from "@/components/ui/Button.module.css";
-import { MessageStatut } from "@/components/ui/message-statut";
+import { StatusMessage } from "@/components/ui/StatusMessage";
 
 type Props = {
   prenoms: PrenomIndex[];
@@ -219,15 +219,15 @@ export function ListeFavoris({
         </label>
       </div>
       <p className={styles.help}>La sauvegarde contient uniquement les identifiants de vos favoris. L’import les ajoute à votre sélection actuelle, sans remplacer vos favoris existants. La copie reprend les noms de tous les résultats correspondant aux filtres, même au-delà des 24 premiers affichés.</p>
-      {messageCopie && <MessageStatut type="success">{messageCopie}</MessageStatut>}
-      {erreurCopie && <MessageStatut type="error">{erreurCopie}</MessageStatut>}
+      {messageCopie && <StatusMessage type="success">{messageCopie}</StatusMessage>}
+      {erreurCopie && <StatusMessage type="error">{erreurCopie}</StatusMessage>}
 
-      {messageImport && <MessageStatut type="success">{messageImport}</MessageStatut>}
-      {erreurImport && <MessageStatut type="error">{erreurImport}</MessageStatut>}
+      {messageImport && <StatusMessage type="success">{messageImport}</StatusMessage>}
+      {erreurImport && <StatusMessage type="error">{erreurImport}</StatusMessage>}
       {erreur && favoris.length > 0 && (
-        <MessageStatut type="error">
+        <StatusMessage type="error">
           Le stockage des favoris est indisponible ou contient des données illisibles. Vos modifications ne sont pas enregistrées.
-        </MessageStatut>
+        </StatusMessage>
       )}
 
       {favoris.length === 0 ? (
