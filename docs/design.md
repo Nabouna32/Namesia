@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.27
+- **Version :** 4.28
 - **Mis à jour :** 2026-11-24
 
 ## 1. Direction
@@ -10,16 +10,16 @@ Namesia adopte **Material 3**, avec une palette générale **Fidelity** et une p
 
 Ce choix est une référence de conception et de comportement, pas une prétention à reproduire le système Android natif ou ses barres système. Le navigateur conserve ses conventions, ses capacités et ses limites.
 
-La marque Namesia utilise les rôles Fidelity, y compris pour son monogramme. Les couleurs Rainbow générées par Material Color Utilities servent aux catégories éditoriales identifiées (notamment les associations symboliques). Elles ne sont jamais attribuées en fonction de l'ordre, de la position, du hasard ou du prénom lui-même sans donnée éditoriale qui le justifie. Elles ne remplacent jamais les rôles fonctionnels du thème ni les états sémantiques. Les titres, les actions, les surfaces générales et les repères de navigation restent Fidelity : Rainbow n'est pas un dégradé décoratif appliqué aux textes ou aux fonds de page.
+La marque Namesia utilise les rôles Fidelity, y compris pour son monogramme. Les couleurs Rainbow générées par Material Color Utilities servent aux catégories éditoriales identifiées (notamment les associations symboliques). Les états de succès, d'avertissement et d'information conservent leurs couleurs sémantiques, comme couleurs personnalisées M3 distinctes des rôles système. Elles ne sont jamais attribuées en fonction de l'ordre, de la position, du hasard ou du prénom lui-même sans donnée éditoriale qui le justifie. Elles ne remplacent jamais les rôles fonctionnels du thème ni les états sémantiques. Les titres, les actions, les surfaces générales et les repères de navigation restent Fidelity : Rainbow n'est pas un dégradé décoratif appliqué aux textes ou aux fonds de page.
 
 ## 2. Source de vérité des couleurs
 
 La palette est calculée avec la bibliothèque officielle Google **`@material/material-color-utilities`**. `lib/material-theme.ts` est l’unique générateur : il calcule les schémas clair et sombre, produit les déclarations CSS intégrées au `<head>` dès le rendu serveur, puis `MaterialThemeProvider` réapplique exactement les mêmes valeurs lorsque la préférence système change. Le CSS des composants ne contient donc aucune palette de secours indépendante. Le thème est construit avec :
-- couleur source primaire : `#005AC1`, couleur source bleue choisie par Namesia (sans prétendre à une couleur officielle Pixel) ;
+- couleur source primaire : `#6750A4`, violet de la palette Material 3 baseline documentée par Android Developers ; ce n'est pas un bleu Google. Fidelity calcule les rôles à partir de cette source, elle n'est pas recopiée telle quelle dans chaque composant ;
 - variante du thème d'interface : `Variant.FIDELITY` ;
 - variante complémentaire des catégories : `Variant.RAINBOW`, calculée séparément avec la même couleur source ;
-- spécification : `2021`, car les variantes `Fidelity` et `Rainbow` sont définies dans cette version ; demander `2025` ferait retomber implicitement ces variantes sur leurs définitions antérieures ;
-- plateforme : non renseignée, car ce paramètre ne s'applique pas à la génération Fidelity/Rainbow 2021 ;
+- version d'algorithme : `specVersion: "2021"`, version de `ColorSpec` dans Material Color Utilities ; ce n'est pas une version de Material Design 3 ni une référence à l'ancien système de composants. Le code de la bibliothèque redirige explicitement Fidelity et Rainbow vers 2021 lorsqu'une spécification 2025 leur est demandée, car ces variantes ne sont pas prises en charge par cette dernière ;
+- plateforme MCU : `phone`, paramètre de calcul du schéma correspondant à la cible Android mobile, sans accès aux API Android depuis le navigateur ;
 - niveau de contraste standard : `0` ;
 - schémas clair et sombre recalculés selon `prefers-color-scheme`.
 
@@ -37,7 +37,7 @@ Les composants consomment les rôles du schéma, jamais des couleurs arbitraires
 - `on-surface`, `on-surface-variant`, `outline`, `outline-variant` : texte et contours ;
 - `error` et ses conteneurs : erreurs.
 
-Les composants consomment directement les rôles `--md-sys-color-*`. Aucun alias applicatif `--color-*`, `--ink`, `--muted` ou `--line` n'est admis. Material 3 ne définit pas de rôles système `success`, `warning` ou `info` : les états non critiques ne reçoivent donc pas de couleurs sémantiques inventées. Les erreurs utilisent `error` ; les autres messages conservent la hiérarchie textuelle Fidelity. Aucune valeur de secours n'est autorisée dans `var()` : une donnée de thème absente doit rester visible comme défaut de contrat.
+Les composants consomment directement les rôles `--md-sys-color-*` et, pour les seules extensions explicitement définies, `--namesia-color-*`. Aucun alias applicatif générique `--color-*`, `--ink`, `--muted` ou `--line` n'est admis. Material 3 ne définit pas `success`, `warning` et `info` parmi ses rôles système de base. Il prévoit toutefois l'extension d'un schéma par des couleurs personnalisées et leurs quatre rôles tonals. Namesia conserve les sources sémantiques éprouvées `success` (`#386A20`), `warning` (`#795900`) et `info` (`#005B9A`) ; `customColor` de Material Color Utilities génère pour chacune `color`, `onColor`, `colorContainer` et `onColorContainer` en clair et sombre. Ces extensions portent exclusivement le préfixe `--namesia-color-*` et ne sont jamais présentées comme des rôles système. Les erreurs utilisent les rôles M3 `error`. Aucune valeur de secours n'est autorisée dans `var()` : une donnée de thème absente doit rester visible comme défaut de contrat.
 
 ### Signature Rainbow
 
@@ -120,9 +120,10 @@ L'application occupe au minimum la hauteur de la fenêtre avec une colonne flex.
 
 ## 8. Architecture
 
-- Les cartes Open Graph du site et des fiches utilisent la même famille Roboto que l’interface, chargée depuis un fichier TTF local au runtime Node de `ImageResponse`. Le poids 400 suffit à cette surface de partage ; aucun appel Google Fonts, aucune police de substitution et aucune seconde famille ne sont utilisés. Les fonds, textes et accents reprennent les rôles clairs Fidelity ; le dégradé de marque reste limité au monogramme.
+- Les cartes Open Graph du site et des fiches utilisent la même famille Roboto que l’interface, chargée depuis un fichier TTF local au runtime Node de `ImageResponse`. Le poids 400 suffit à cette surface de partage ; aucun appel Google Fonts, aucune police de substitution et aucune seconde famille ne sont utilisés. Les fonds, textes et accents reprennent les rôles clairs Fidelity ; aucun dégradé de marque hors M3 n'est conservé.
 
-- `@material/material-color-utilities` génère les rôles de couleurs ; aucun autre moteur de thème n'est ajouté.
+- `@material/material-color-utilities` génère les rôles Fidelity/Rainbow et les quatre rôles des couleurs sémantiques personnalisées ; aucun autre moteur de thème n'est ajouté.
+- Les références de composants sont les guides M3 et les sources AndroidX Compose Material 3 ; les implémentations Web restent natives et centralisées dans `components/ui/`.
 - `lib/material-theme.ts` génère le CSS Fidelity/Rainbow initial et les couleurs de barre navigateur ; `components/material-theme-provider.tsx` synchronise les mêmes valeurs avec les changements de préférence système.
 - `app/layout.tsx` charge Roboto via `next/font/google` et expose `--font-roboto` à tous les rôles typographiques ; les tokens ne désignent jamais une famille non chargée.
 - `components/navigation-adaptative.tsx` porte la navigation de premier niveau.
@@ -134,7 +135,7 @@ L'application occupe au minimum la hauteur de la fenêtre avec une colonne flex.
 
 ## 9. Références et limites de fidélité
 
-La référence est Material 3 pour Android, notamment ses principes de navigation adaptative, ses rôles de couleur, ses composants et son échelle typographique officielle : [Material 3 — Type scale tokens](https://m3.material.io/styles/typography/type-scale-tokens). Les tailles et interlignes suivent la baseline publiée ; les graisses retenues sont 400 et 500. La référence de mise en œuvre Android est également consultable dans [la documentation Material 3 de Jetpack Compose](https://developer.android.com/develop/ui/compose/designsystems/material3). La palette principale suit Fidelity ; Rainbow est un système d'accents catégoriels distinct. La bibliothèque officielle Material Web est en mode maintenance en attente de nouveaux mainteneurs ; elle n'est pas retenue comme fondation UI. Material Color Utilities est la dépendance officielle retenue pour les algorithmes de couleur, pas une bibliothèque de composants.
+La spécification [Material Design 3](https://m3.material.io/) est la référence normative pour les rôles, les composants, l'anatomie, les états et les comportements. Les sources AndroidX Jetpack Compose Material 3 (`androidx/compose/material3`) sont la référence d'implémentation concrète : API `MaterialTheme`/`ColorScheme`, valeurs baseline et implémentation des composants standards. Les sources AndroidX sont consultées pour reproduire les mêmes noms, variantes, dimensions et états ; elles ne sont pas importées dans Next.js, car Compose est une implémentation Kotlin/Android. Le Web traduit ces contrats en React et HTML natif. Material Color Utilities est la source de l'algorithme Fidelity/Rainbow et des couleurs personnalisées. La version `2021` citée plus haut concerne uniquement son algorithme ColorSpec. Le système visuel Namesia reste Material 3 standard, pas Material 3 Expressive.
 
 Le registre des rôles, les sources officielles, les vérifications automatisées et les exceptions Web sont détaillés dans [Vérification Material 3](material-3-verification.md). La navigation, les icônes et les surfaces du site sont des implémentations Web accessibles des modèles Material. Le Web ne peut pas reproduire les gestes système, les barres système transparentes, le retour prédictif Android, les animations natives exactes ni l'extraction du fond d'écran. Ces éléments ne doivent pas être simulés de manière trompeuse.
 
