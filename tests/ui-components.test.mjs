@@ -157,12 +157,14 @@ test("l’administration et les parcours visiteurs utilisent Button et Snackbar"
   assert.doesNotMatch(adminStyles, /\.secondary\s*\{/);
 });
 
-const navigation = await readFile(new URL("../components/navigation-adaptative.tsx", import.meta.url), "utf8");
+const navigationBar = await readFile(new URL("../components/material3/NavigationBar.tsx", import.meta.url), "utf8");
+const navigationRail = await readFile(new URL("../components/material3/NavigationRail.tsx", import.meta.url), "utf8");
+const navigation = await readFile(new URL("../components/material3/NavigationDestinations.tsx", import.meta.url), "utf8");
 const materialTheme = await readFile(new URL("../lib/material-theme.ts", import.meta.url), "utf8");
 
 test("la navigation reprend les modèles Material 3 compacts et rail sans tiroir propriétaire", () => {
-  assert.match(navigation, /className="navigation-bar"/);
-  assert.match(navigation, /className="navigation-rail"/);
+  assert.match(navigationBar, /className="navigation-bar"/);
+  assert.match(navigationRail, /className="navigation-rail"/);
   assert.match(navigation, /aria-current=\{active \? "page" : undefined\}/);
   assert.doesNotMatch(navigation, /navigation-rail-toggle|is-expanded|useState/);
   assert.match(globalStyles, /width: 80px;/);
