@@ -13,7 +13,6 @@ import { SearchBar } from "@/components/ui/SearchBar";
 import { ComparisonSelection } from "@/components/ui/ComparisonSelection";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
 
 type Props = { prenoms: PrenomIndex[]; selectionInitiale: string[] };
 
@@ -217,7 +216,7 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
                   aria-label={`Lire la fiche complète de ${prenom.nom}`}
                 >
                   Voir la fiche complète
-                </Card>
+                </Link>
               </header>
               <div className="compare-field">
                 <h3>Introduction</h3>
