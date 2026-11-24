@@ -5,7 +5,7 @@ import { RecentNames } from "@/components/features/history/RecentNames";
 import { FeaturedNames } from "@/components/features/catalog/FeaturedNames";
 import { NameSearch } from "@/components/features/catalog/NameSearch";
 import { getPrenomsIndex, type PrenomIndex } from "@/lib/prenoms";
-import { IconeMaterial } from "@/components/icone-material";
+import { Icon } from "@/components/material3/Icon";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { alternates: { canonical: "/" } };
@@ -46,7 +46,7 @@ export default async function Accueil() {
         <div className="container">
           <div className="section-heading">
             <div><span className="eyebrow">À explorer</span><h2>Les prénoms à découvrir</h2></div>
-            <Link className="text-link" href="/prenoms">Tous les prénoms <IconeMaterial name="arrow-up-right" size={18} /></Link>
+            <Link className="text-link" href="/prenoms">Tous les prénoms <Icon name="arrow-up-right" size={18} /></Link>
           </div>
           <FeaturedNames prenoms={prenomsMisEnAvant} />
           {prenoms.length === 0 && <p className="empty-state">Le catalogue sera bientôt disponible.</p>}
