@@ -257,7 +257,7 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.ok(materialVerificationDoc.includes("b03ef34bb53a15c3ba41bf963eb3e2c5c353c85f"));
   assert.ok(materialVerificationDoc.includes("5c7b286a7684599f275a0f7b4b77752ae751b6bd"));
   assert.ok(materialVerificationDoc.includes("b4de401eb665ec63474f39319a4ba8f2145974cc"));
-  assert.doesNotMatch(materialVerificationDoc, /\\/(?:blob|tree)\\/main\\//);
+  assert.doesNotMatch(materialVerificationDoc, /(?:blob|tree)[/]main[/]/);
   assert.match(agents, /Avant de créer ou refondre une page, lire/);
 });
 
