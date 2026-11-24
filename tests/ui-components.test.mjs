@@ -360,18 +360,16 @@ test("la fiche prénom applique Material 3 dans ses règles canoniques", () => {
 });
 
 const historiqueActions = await readFile(new URL("../components/features/history/RecentNames.tsx", import.meta.url), "utf8");
-const barreComparaisonActions = await readFile(new URL("../components/features/comparison/ComparisonBar.tsx", import.meta.url), "utf8");
-const historiqueStyles = await readFile(new URL("../components/features/history/RecentNames.module.css", import.meta.url), "utf8");
-const barreComparaisonStyles = await readFile(new URL("../components/features/comparison/ComparisonBar.module.css", import.meta.url), "utf8");
+const comparatorActions = await readFile(new URL("../components/features/comparison/NameComparator.tsx", import.meta.url), "utf8");
+const comparisonSelection = await readFile(new URL("../components/features/comparison/ComparisonSelection.tsx", import.meta.url), "utf8");
 
-test("les actions d'effacement de l'accueil et de comparaison utilisent les primitives communes", () => {
-  assert.match(historiqueActions, /<Button variant="text"[^>]*onClick=\{effacer\}/);
-  assert.match(barreComparaisonActions, /<Button variant="text"[^>]*onClick=\{onClear\}/);
-  assert.match(barreComparaisonActions, /<Button[^>]*variant="filled"/);
-  assert.doesNotMatch(historiqueActions, /<button\b/);
-  assert.doesNotMatch(barreComparaisonActions, /<button\b|<Link\b/);
-  assert.doesNotMatch(historiqueStyles, /\.clear\s*\{/);
-  assert.doesNotMatch(barreComparaisonStyles, /\.actions button|\.link\s*\{/);
+test("les actions de découverte sont concentrées sur la fiche et le comparateur garde sa sélection native", () => {
+  assert.match(historiqueActions, /<Button variant="text"[^>]*onClick=\\{effacer\\}/);
+  assert.doesNotMatch(historiqueActions, /<FavoriteButton/);
+  assert.match(comparatorActions, /<ComparisonSelection/);
+  assert.match(comparatorActions, /type="checkbox"/);
+  assert.doesNotMatch(comparatorActions, /ComparisonBar|ComparisonToggle/);
+  assert.match(comparisonSelection, /<InputChip/);
 });
 
 
