@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BoutonFavori } from "@/components/bouton-favori";
+import { FavoriteButton } from "@/components/FavoriteButton";
 import type { PrenomIndex } from "@/lib/prenoms";
 import type { ContexteRetourNavigation } from "@/lib/navigation-prenoms";
 import { creerUrlFicheDepuisContexte } from "@/lib/navigation-prenoms";
@@ -21,7 +21,7 @@ export function SuggestionsPrenoms({ prenoms, contexteRetour = null }: Props) {
             </span>
             <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
           </Link>
-          <ButtonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
+          <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
         </article>
       ))}
     </div>
