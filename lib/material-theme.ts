@@ -1,12 +1,21 @@
 import {
   argbFromHex,
+  customColor,
   DynamicScheme,
   Hct,
   hexFromArgb,
   Variant
 } from "@material/material-color-utilities";
 
-const sourceColor = Hct.fromInt(argbFromHex("#005AC1"));
+const sourceColorArgb = argbFromHex("#6750A4");
+const sourceColor = Hct.fromInt(sourceColorArgb);
+
+/** Couleurs sémantiques Namesia conservées comme couleurs personnalisées M3. */
+const semanticColorSources = {
+  success: "#386A20",
+  warning: "#795900",
+  info: "#005B9A"
+} as const;
 
 /** Rôles système M3 explicitement autorisés ; les clés de palette internes sont exclues. */
 export const materialColorRoles = [
@@ -72,8 +81,9 @@ function createScheme(isDark: boolean, variant: Variant) {
     sourceColorHct: sourceColor,
     contrastLevel: 0,
     isDark,
-    // Fidelity et Rainbow sont définies dans la spécification Material 3 de 2021.
+    // Version de l’algorithme de couleur MCU, pas version du système de composants M3.
     specVersion: "2021",
+    platform: "phone",
     variant
   });
 }
@@ -107,6 +117,19 @@ export function getMaterialThemeTokens(isDark: boolean): Record<string, string> 
       tokens["--namesia-color-category-" + token + suffix] = hexFromArgb(value);
     }
   });
+
+  for (const [role, sourceHex] of Object.entries(semanticColorSources)) {
+    const group = customColor(sourceColorArgb, {
+      name: role,
+      value: argbFromHex(sourceHex),
+      blend: false
+    });
+    const colors = isDark ? group.dark : group.light;
+    tokens["--namesia-color-" + role] = hexFromArgb(colors.color);
+    tokens["--namesia-color-on-" + role] = hexFromArgb(colors.onColor);
+    tokens["--namesia-color-" + role + "-container"] = hexFromArgb(colors.colorContainer);
+    tokens["--namesia-color-on-" + role + "-container"] = hexFromArgb(colors.onColorContainer);
+  }
 
 
 
