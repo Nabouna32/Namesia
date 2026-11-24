@@ -6,7 +6,7 @@ import type { PrenomIndex } from "@/lib/prenoms";
 import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
 import { useHistory } from "@/components/features/history/HistoryProvider";
 import styles from "./RecentNames.module.css";
-import { IconeMaterial } from "@/components/material3/Icon";
+import { Icon } from "@/components/material3/Icon";
 import { Button } from "@/components/material3/Button";
 import { IconButton } from "@/components/material3/IconButton";
 
