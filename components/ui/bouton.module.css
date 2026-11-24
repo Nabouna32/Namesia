@@ -1,7 +1,6 @@
 .button {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
   display: inline-flex;
   min-width: 58px;
   min-height: 48px;
@@ -48,14 +47,21 @@
 
 @media (hover: hover) and (pointer: fine) {
   .button:hover:not(:disabled)::after { opacity: 0.08; }
-  .filled:hover:not(:disabled)::before,
-  .tonal:hover:not(:disabled)::before {
+  .filled:hover:not(:disabled):not(:focus-visible):not(:active)::before,
+  .tonal:hover:not(:disabled):not(:focus-visible):not(:active)::before {
     box-shadow: 0 1px 2px 0 color-mix(in srgb, var(--md-sys-color-shadow) 30%, transparent), 0 1px 3px 1px color-mix(in srgb, var(--md-sys-color-shadow) 15%, transparent);
   }
 }
 
 .button:focus-visible::after,
 .button:active:not(:disabled)::after { opacity: 0.12; }
+
+.filled:focus-visible::before,
+.tonal:focus-visible::before,
+.filled:active::before,
+.tonal:active::before {
+  box-shadow: none;
+}
 
 .button:not(.icon):active:not(:disabled)::before,
 .button:not(.icon):active:not(:disabled)::after {
