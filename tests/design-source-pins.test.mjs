@@ -25,6 +25,7 @@ test("les références de code du contrat M3 pointent vers des révisions immuab
 
 test("le registre M3 et le tableau AndroidX restent complets et lisibles", () => {
   assert.equal(components.includes("\\n|"), false);
+  assert.equal(verification.includes("\\n|"), false);
   for (const name of ["Button", "Card", "Checkbox", "IconButton", "SearchBar", "TextField", "FilterChip", "InputChip", "Snackbar", "TopAppBar", "NavigationBar", "NavigationRail"]) {
     assert.ok(components.includes("| `" + name + "` |"), "Composant absent du registre : " + name);
     assert.match(verification, new RegExp("\\| " + name + " \\|"));
