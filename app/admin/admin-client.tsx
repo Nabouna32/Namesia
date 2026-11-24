@@ -39,9 +39,9 @@ export function AdminClient() {
   const [email, setEmail] = useState("");
   const [json, setJson] = useState("");
   const [preview, setPreview] = useState<FichePrenomImport | null>(null);
-  const [message, setMessage] = useState<{ text: string; type: TypeStatusMessage } | null>(null);
+  const [message, setMessage] = useState<{ text: string; type: StatusMessageType } | null>(null);
 
-  function afficherMessage(text: string, type: TypeStatusMessage = "info") {
+  function afficherMessage(text: string, type: StatusMessageType = "info") {
     setMessage({ text, type });
   }
   const [busy, setBusy] = useState(false);
