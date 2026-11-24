@@ -62,7 +62,6 @@ export const materialColorRoles = [
 ] as const;
 
 const categoryRoles = ["primary", "secondary", "tertiary"] as const;
-const brandGradient = "linear-gradient(105deg, #ef568b 0%, #f29a42 19%, #e8c94c 36%, #55b987 54%, #49a9d5 72%, #8669d4 88%, #d76bb5 100%)";
 
 function toCssToken(role: string) {
   return role.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
@@ -109,15 +108,7 @@ export function getMaterialThemeTokens(isDark: boolean): Record<string, string> 
     }
   });
 
-  const statusColors = isDark
-    ? { success: "#b5f397", warning: "#f1d28b", info: "#9ecaff" }
-    : { success: "#386a20", warning: "#795900", info: "#005b9a" };
 
-  for (const [role, value] of Object.entries(statusColors)) {
-    tokens["--namesia-color-" + role] = value;
-  }
-  tokens["--namesia-color-on-brand"] = "#ffffff";
-  tokens["--namesia-color-brand-gradient"] = brandGradient;
 
   return tokens;
 }
