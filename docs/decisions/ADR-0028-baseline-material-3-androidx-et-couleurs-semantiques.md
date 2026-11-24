@@ -20,7 +20,7 @@ Les décisions précédentes ont introduit une couleur source `#005AC1` qualifi�
 
 1. **Garder le bleu `#005AC1` et les statuts retirés.** Rejetée : la couleur n'est pas la baseline M3 et la suppression des états sémantiques affaiblit l'interface.
 2. **Utiliser le bleu Google `#4285F4` comme source personnalisée.** Rejetée : cela resterait une couleur de marque choisie, pas la baseline Material 3 demandée.
-3. **Utiliser la source baseline M3 `#6750A4`, conserver Fidelity/Rainbow et réintroduire les statuts comme couleurs personnalisées M3.** Retenue : elle suit les valeurs documentées par Google et sépare clairement rôles système et besoins sémantiques du produit.
+3. **Utiliser la source baseline M3 `#6750A4`, conserver Fidelity/Rainbow et réintroduire les statuts comme couleurs personnalisées M3.** Retenue à l'époque : elle suivait les valeurs documentées par Google et séparait clairement rôles système et besoins sémantiques du produit ; la source de génération Namesia a ensuite été remplacée par ADR-0045.
 
 ## Décision
 
