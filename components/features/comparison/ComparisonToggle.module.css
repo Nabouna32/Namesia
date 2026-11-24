@@ -1,4 +1,8 @@
-.toggle.toggle {
+.toggle.toggle { min-width: 104px; flex: 0 0 auto; padding-inline: 12px; }
+.label { white-space: nowrap; }
+.icon { display: none; flex: 0 0 auto; }
+
+.iconOnly.iconOnly {
   width: 48px;
   min-width: 48px;
   min-height: 48px;
@@ -6,7 +10,12 @@
   padding: 0;
 }
 
-.icon {
+.iconOnly .icon {
   display: inline-flex;
-  flex: 0 0 auto;
+}
+
+@media (max-width: 420px) {
+  .toggle.toggle { width: 48px; min-width: 48px; padding: 0; }
+  .label { display: none; }
+  .icon { display: inline-flex; }
 }
