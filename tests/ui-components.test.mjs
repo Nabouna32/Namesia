@@ -360,9 +360,6 @@ test("la fiche prénom applique Material 3 dans ses règles canoniques", () => {
 });
 
 const historiqueActions = await readFile(new URL("../components/features/history/RecentNames.tsx", import.meta.url), "utf8");
-const comparatorActions = await readFile(new URL("../components/features/comparison/NameComparator.tsx", import.meta.url), "utf8");
-const comparisonSelection = await readFile(new URL("../components/features/comparison/ComparisonSelection.tsx", import.meta.url), "utf8");
-
 test("les actions de découverte sont concentrées sur la fiche et le comparateur garde sa sélection native", () => {
   assert.match(historiqueActions, /<Button variant="text"[^>]*onClick=/);
   assert.doesNotMatch(historiqueActions, /<FavoriteButton/);
