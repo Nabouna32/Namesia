@@ -5,7 +5,7 @@ import { createClient, type Session } from "@supabase/supabase-js";
 import { FICHE_SCHEMA_VERSION, parseFichePrenom, type FichePrenomImport } from "@/lib/fiche-prenom";
 import styles from "./admin.module.css";
 import { Button } from "@/components/ui/Button";
-import { StatusMessage, type TypeStatusMessage } from "@/components/ui/StatusMessage";
+import { StatusMessage, type StatusMessageType } from "@/components/ui/StatusMessage";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
