@@ -43,7 +43,7 @@ padding: 16px;
   color: var(--md-sys-color-on-surface);
   font: inherit;
   font-size: var(--md-sys-typescale-body-large-size);
-  transition: border-color var(--md-sys-motion-duration-short) var(--md-sys-motion-standard), background-color var(--md-sys-motion-duration-short) var(--md-sys-motion-standard);
+  transition: border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard), background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
 }
 
 .form textarea {
