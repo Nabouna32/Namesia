@@ -127,7 +127,7 @@ L'application occupe au minimum la hauteur de la fenêtre avec une colonne flex.
 
 - `@material/material-color-utilities` génère les rôles Fidelity/Rainbow et les quatre rôles des couleurs sémantiques personnalisées ; aucun autre moteur de thème n'est ajouté.
 - Les références de composants sont les guides M3 et les sources AndroidX Compose Material 3 ; les ports React/HTML portent les noms M3 et sont centralisés dans `components/material3/`.
-- `lib/material-theme.ts` génère le CSS Fidelity/Rainbow initial et les couleurs de barre navigateur ; `components/material-theme-provider.tsx` synchronise les mêmes valeurs avec les changements de préférence système.
+- `lib/material-theme.ts` génère le CSS Fidelity/Rainbow initial et les couleurs de barre navigateur ; `components/material3/MaterialThemeProvider.tsx` synchronise les mêmes valeurs avec les changements de préférence système.
 - `app/layout.tsx` charge Roboto via `next/font/google` et expose `--font-roboto` à tous les rôles typographiques ; les tokens ne désignent jamais une famille non chargée.
 - `components/navigation-adaptative.tsx` porte la navigation de premier niveau.
 - `components/material3/` contient les composants de présentation M3 ; `components/features/` contient les compositions propres au produit.
