@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/material3/Button";
-import { IconeMaterial } from "@/components/material3/Icon";
+import { Icon } from "@/components/material3/Icon";
 import styles from "./ComparisonToggle.module.css";
 
 type Props = {
