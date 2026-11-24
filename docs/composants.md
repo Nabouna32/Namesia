@@ -3,7 +3,7 @@
 - **Statut :** contrat canonique de l'interface
 - **Mis à jour :** 2026-11-24
 - **Référence :** AndroidX Compose Material 3 1.5.0 stable, commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c`
-- **Décisions :** [ADR-0037 — Utiliser directement les composants Material 3](decisions/ADR-0037-composants-material-3-directs.md) · [ADR-0038 — Migration effective des primitives](decisions/ADR-0038-migration-effective-material-3.md)
+- **Décisions :** [ADR-0037 — Utiliser directement les composants Material 3](decisions/ADR-0037-composants-material-3-directs.md) · [ADR-0038 — Migration effective des primitives](decisions/ADR-0038-migration-effective-material-3.md) · [ADR-0039 — Shell Material 3](decisions/ADR-0039-shell-material-3.md)
 
 Ce document définit les composants d'interface autorisés et leur composition. Le nom Material 3 est le nom du composant dans le code : il n'existe pas de vocabulaire de primitives parallèle propre à Namesia. L'implémentation React traduit les contrats AndroidX en HTML/CSS accessibles ; elle n'importe pas Compose dans le navigateur.
 
