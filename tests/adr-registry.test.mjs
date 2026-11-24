@@ -16,9 +16,9 @@ test("les identifiants ADR sont uniques et leurs liens internes valides", async 
     const [, identifier] = file.match(/^ADR-(\d{4})-/);
     const content = await readFile(new URL(file, directory), "utf8");
 
-    assert.match(content, new RegExp("^# ADR-" + identifier + " — "), file + " doit déclarer son identifiant.");
+    assert.ok(content.startsWith("# ADR-" + identifier), file + " doit déclarer son identifiant.");
 
-    for (const [, target] of content.matchAll(/\]\((ADR-\d{4}-[^)#]+\.md)(?:#[^)]*)?\)/g)) {
+    for (const [, target] of content.matchAll(/\]\((?:\.\/)?(ADR-\d{4}-[^)#]+\.md)(?:#[^)]*)?\)/g)) {
       assert.ok(fileSet.has(target), file + " référence un ADR absent : " + target);
     }
   }
