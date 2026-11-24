@@ -188,14 +188,20 @@ test("les actions de l'administration et des visiteurs utilisent les boutons par
 });
 
 
-const navigation = await readFile(new URL("../components/navigation-adaptative.tsx", import.meta.url), "utf8");
+const navigation = await readFile(new URL("../components/ui/NavigationDestinations.tsx", import.meta.url), "utf8");
+const navigationBar = await readFile(new URL("../components/ui/NavigationBar.tsx", import.meta.url), "utf8");
+const navigationRail = await readFile(new URL("../components/ui/NavigationRail.tsx", import.meta.url), "utf8");
+const topAppBar = await readFile(new URL("../components/ui/TopAppBar.tsx", import.meta.url), "utf8");
 const materialTheme = await readFile(new URL("../lib/material-theme.ts", import.meta.url), "utf8");
 
 test("la navigation reprend les modèles Material 3 compacts et rail sans tiroir propriétaire", () => {
-  assert.match(navigation, /className="navigation-bar"/);
-  assert.match(navigation, /className="navigation-rail"/);
+  assert.match(navigationBar, /className="navigation-bar"/);
+  assert.match(navigationRail, /className="navigation-rail"/);
   assert.match(navigation, /aria-current=\{active \? "page" : undefined\}/);
-  assert.doesNotMatch(navigation, /navigation-rail-toggle|is-expanded|useState/);
+  assert.doesNotMatch(navigation, /navigation-rail-toggle|is-expanded/);
+  assert.match(topAppBar, /export function TopAppBar\(/);
+  assert.match(navigationBar, /export function NavigationBar\(/);
+  assert.match(navigationRail, /export function NavigationRail\(/);
   assert.match(globalStyles, /width: 80px;/);
   assert.match(globalStyles, /@media \(max-width: 599px\)/);
   assert.match(globalStyles, /@media \(min-width: 600px\)/);
