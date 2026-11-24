@@ -21,6 +21,13 @@ test("les références de code du contrat M3 pointent vers des révisions immuab
   assert.match(verification, /chromium\.googlesource\.com\/chromium\/src\/\+\/6ffe83723d5b4c60a15ae8c356d51e16a4951b24\/docs\/ui\/android\/dynamic_colors\.md/);
   assert.doesNotMatch(verification, /chromium\.googlesource\.com\/chromium\/src\/\+\/refs\/heads\//);
   assert.match(verification, /CheckboxTokens\.kt/);
+  assert.match(verification, /RoundedCornerShape\(2\.0\.dp\)/);
+  assert.match(verification, /NavigationRailCollapsedTokens\.kt/);
+  assert.match(verification, /AppBar\.kt/);
+  assert.match(verification, /AppBarSmallTokens\.kt/);
+  assert.doesNotMatch(verification, /TopAppBar(?:Small)?Tokens?\.kt/);
+  assert.match(verification, /NavigationRailColorTokens\.kt/);
+  assert.doesNotMatch(verification, /NavigationRailTokens\.kt/);
 });
 
 test("le registre M3 et le tableau AndroidX restent complets et lisibles", () => {
