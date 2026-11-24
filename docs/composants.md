@@ -28,7 +28,7 @@ Ce document définit les composants d'interface autorisés et leur composition. 
 | `NavigationBar` | Navigation compacte | Navigation de premier niveau, 80 dp, indicateur et libellés `label-medium` |
 | `NavigationRail` | Navigation medium/expanded | Navigation de premier niveau, rail de 80 dp et libellés `label-medium` |
 | `Button` | Actions textuelles | Filled, Filled Tonal, Outlined et Text ; géométrie et états AndroidX |
-| `IconButton` | Actions iconiques | Icône de 24 dp et cible tactile Web adaptée |\n| `Icon` | Pictogrammes | Material Symbols ; la cible interactive appartient à `IconButton` |
+| `IconButton` | Actions iconiques | Icône de 24 dp et cible tactile Web adaptée |
 | `SearchBar` | Recherche du catalogue et des parcours | Champ replié AndroidX de 56 dp ; pas de faux panneau expansé |
 | `TextField` | Saisie de formulaire | Variantes et états correspondant au besoin |
 | `FilterChip` | Filtres sélectionnables | Capsule de 32 dp, cible tactile de 48 px, sélection explicite |
@@ -52,7 +52,8 @@ Les primitives présentes dans le code sont directement nommées d'après Materi
 | `IconButton` | `components/ui/IconButton.tsx` | Actions iconiques, cible Web de 48 px et conteneur visuel de 40 px |
 | `SearchBar` | `components/ui/SearchBar.tsx` | Recherche repliée de 56 dp et effacement par IconButton |
 | `FilterChip` | `components/ui/FilterChip.tsx` | Filtre sélectionnable, conteneur visuel de 32 dp |
-| `InputChip` | `components/ui/InputChip.tsx` | Élément sélectionné avec action de retrait |\n| `Icon` | `components/ui/Icon.tsx` | Pictogrammes Material Symbols Rounded |
+| `InputChip` | `components/ui/InputChip.tsx` | Élément sélectionné avec action de retrait |
+| `Icon` | `components/ui/Icon.tsx` | Pictogrammes Material Symbols Rounded |
 | `Card` | Composition des éléments sémantiques `article` et `section` | Les cartes de contenu ne sont pas encore centralisées dans un composant React partagé |
 
 `NavigationBar` et `NavigationRail` partagent uniquement le rendu des destinations via `NavigationDestinations` ; les deux composants M3 restent distincts dans le shell. `TopAppBar` porte la barre supérieure. Les composants métier `FavoriteButton`, `ComparisonButton` et `ComparisonSelection` orchestrent les actions de favoris et de comparaison ; ils composent `Button` et `InputChip` sans redéfinir leur anatomie. `StatusMessage` est une composition sémantique de statut accessible (annonce `status` ou `alert`) et des extensions de couleur Namesia ; ce n'est pas un composant Material 3. Les liens de navigation utilisent directement `Link` de Next.js avec les styles de `Button`, sans wrapper. Les filtres de favoris utilisent `select` HTML natif, sans abstraction de formulaire supplémentaire.
