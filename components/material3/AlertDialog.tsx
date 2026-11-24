@@ -37,8 +37,6 @@ export function AlertDialog({
     };
   }, [open]);
 
-  if (!open) return null;
-
   return (
     <dialog
       ref={dialogRef}
