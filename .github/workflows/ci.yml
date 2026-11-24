@@ -51,6 +51,8 @@ jobs:
           verifier_code 0 VERCEL_ENV=preview VERCEL_GIT_COMMIT_REF=main
           verifier_code 0 VERCEL_ENV=preview VERCEL_GIT_COMMIT_REF=feature
           verifier_code 0 VERCEL_ENV=production
+      - name: Vérifier les sources Material 3 épinglées
+        run: node scripts/verify-design-sources.mjs
       - name: Tester les contrats locaux
         id: tests
         run: npm test
