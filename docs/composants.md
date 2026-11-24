@@ -20,6 +20,8 @@ components/
     InputChip.tsx
     Snackbar.tsx
     TopAppBar.tsx
+    MaterialThemeProvider.tsx
+    Icon.tsx
     NavigationBar.tsx
     NavigationRail.tsx
     NavigationDestinations.tsx
@@ -51,8 +53,6 @@ components/
       FavoritesProvider.tsx
       FavoritesList.tsx
       FavoriteButton.tsx
-  icone-material.tsx         # Registre des glyphes Material Symbols
-  material-theme-provider.tsx
 ```
 
 Les composants Material 3 sont implémentés en React et HTML, mais leurs noms, variantes, anatomie, dimensions et états suivent AndroidX Compose Material 3 1.5.0 stable, figé au commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c`. Compose étant une bibliothèque Kotlin/Android, son code ne peut pas être importé dans Next.js : les composants Web sont des ports explicites des contrats AndroidX, pas des composants Compose exécutés dans le navigateur.
