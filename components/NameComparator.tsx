@@ -263,10 +263,10 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
         <div className="compare-share">
           <p>Cette sélection est enregistrée dans l’adresse de la page : vous pouvez partager la comparaison.</p>
           <ShareLink
-            titre={`Comparaison de ${selectionnes.length} prénoms · Namesia`}
-            texte={`Comparez ${selectionnes.map((prenom) => prenom.nom).join(", ")} sur Namesia.`}
+            title={`Comparaison de ${selectionnes.length} prénoms · Namesia`}
+            text={`Comparez ${selectionnes.map((prenom) => prenom.nom).join(", ")} sur Namesia.`}
             label="Partager cette comparaison"
-            parametres={["prenoms"]}
+            parameters={["prenoms"]}
           />
         </div>
       )}
