@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ComparateurPrenoms } from "@/components/comparateur-prenoms";
+import { NameComparator } from "@/components/features/comparison/NameComparator";
 import { getPrenomsIndex } from "@/lib/prenoms";
 
 export const dynamic = "force-dynamic";
@@ -28,7 +28,7 @@ export default async function Comparer({ searchParams }: Props) {
         <span className="eyebrow">Le comparateur</span>
         <h1>Des prénoms,<br /><em>des repères pour choisir.</em></h1>
         <p className="page-intro">Mettez deux ou trois fiches côte à côte pour parcourir leurs origines, leurs histoires et leurs usages. Les contenus sont générés par IA et peuvent comporter des erreurs : ce comparateur organise les informations publiées, il ne les vérifie pas. Les associations symboliques restent des interprétations culturelles.</p>
-        <ComparateurPrenoms prenoms={prenoms} selectionInitiale={selectionInitiale} />
+        <NameComparator prenoms={prenoms} selectionInitiale={selectionInitiale} />
       </div>
     </main>
   );
