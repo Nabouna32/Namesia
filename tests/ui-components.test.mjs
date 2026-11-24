@@ -352,7 +352,7 @@ const rechercheActions = await readFile(new URL("../components/NameSearch.tsx", 
 
 test("Card expose les trois variantes Material 3 et centralise les surfaces", () => {
   assert.match(card, /export function Card</);
-  assert.match(card, /variant\?: CardVariant/);
+  assert.match(card, /variant: CardVariant/);
   assert.match(cardStyles, /\.elevated\s*\{[^}]*surface-container-low/s);
   assert.match(cardStyles, /\.filled\s*\{[^}]*surface-container-highest/s);
   assert.match(cardStyles, /\.outlined\s*\{[^}]*outline-variant/s);
