@@ -246,7 +246,7 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.match(composantsDoc, /Contrat obligatoire pour toute nouvelle page/);
   assert.match(composantsDoc, /TopAppBar/);
   assert.match(composantsDoc, /NavigationBar/);
-  assert.match(composantsDoc, /FilterChip/);\n  assert.match(composantsDoc, /github.com\\/androidx\\/androidx/);
+  assert.match(composantsDoc, /FilterChip/);\n  assert.ok(composantsDoc.includes("github.com/androidx/androidx"));
   assert.match(agents, /Avant de créer ou refondre une page, lire/);
 });
 
