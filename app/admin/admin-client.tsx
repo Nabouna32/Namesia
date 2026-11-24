@@ -7,6 +7,7 @@ import styles from "./admin.module.css";
 import { Button } from "@/components/material3/Button";
 import { TextField } from "@/components/material3/TextField";
 import { Snackbar, type SnackbarSeverity } from "@/components/material3/Snackbar";
+import { parseAdminCatalog, type AdminName, type AdminProfile } from "@/lib/admin-catalog";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -14,18 +15,8 @@ const supabase = createClient(
 );
 
 type ImportResult = { profileId: string; version: number };
-type ProfileRow = {
-  id: string;
-  version: number;
-  status: "brouillon" | "publie" | "archive";
-  created_at: string;
-};
-type NameRow = {
-  id: string;
-  slug: string;
-  display_name: string;
-  name_profiles: ProfileRow[];
-};
+type ProfileRow = AdminProfile;
+type NameRow = AdminName;
 
 const statusLabels: Record<ProfileRow["status"], string> = {
   brouillon: "Brouillon",
@@ -104,17 +95,18 @@ export function AdminClient() {
           headers: { Authorization: `Bearer ${accessToken}` },
           cache: "no-store"
         });
-        const result = await response.json() as {
-          names?: NameRow[];
-          total?: number;
-          nextOffset?: number | null;
-          error?: string;
-        };
-        if (!response.ok) throw new Error(result.error ?? "Chargement du catalogue impossible.");
+        const payload: unknown = await response.json();
+        if (!response.ok) {
+          const errorMessage = typeof payload === "object" && payload !== null && "error" in payload && typeof payload.error === "string"
+            ? payload.error
+            : "Chargement du catalogue impossible.";
+          throw new Error(errorMessage);
+        }
+        const result = parseAdminCatalog(payload);
         if (active) {
-          setCatalog((current) => offset === 0 ? result.names ?? [] : [...current, ...(result.names ?? [])]);
-          setCatalogTotal(result.total ?? 0);
-          setCatalogNextOffset(result.nextOffset ?? null);
+          setCatalog((current) => offset === 0 ? result.names : [...current, ...result.names]);
+          setCatalogTotal(result.total);
+          setCatalogNextOffset(result.nextOffset);
         }
       } catch (error) {
         if (active) afficherMessage(error instanceof Error ? error.message : "Chargement du catalogue impossible.", "error");
