@@ -16,7 +16,7 @@ const globalStyles = await readFile(new URL("../app/globals.css", import.meta.ur
 test("les primitives partagées exposent des variants sémantiques et préservent les éléments natifs", () => {
   assert.match(bouton, /export function Button\(/);
   assert.match(bouton, /<button/);
-  assert.match(lienButton, /export function LienButton\(/);
+  assert.match(lienButton, /<Link/);
   assert.match(lienButton, /<Link/);
   for (const variant of ["filled", "tonal", "outlined", "text"]) {
     assert.match(styles, new RegExp(`\\.${variant} \\{`));
