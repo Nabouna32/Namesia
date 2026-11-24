@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { PrenomIndex } from "@/lib/prenoms";
-import { BoutonFavori } from "@/components/bouton-favori";
+import { FavoriteButton } from "@/components/FavoriteButton";
 import { Button } from "@/components/ui/Button";
 import styles from "./decouverte-aleatoire.module.css";
 import { IconeMaterial } from "./icone-material";
@@ -32,7 +32,7 @@ export function DecouverteAleatoire({ prenoms }: Props) {
         {selection ? (
           <span className={styles.resultLine}>
             <span>Votre prochaine découverte : <Link className={styles.result} href={`/prenoms/${selection.slug}`}>{selection.nom}</Link></span>
-            <ButtonFavori slug={selection.slug} nom={selection.nom} compact afficherErreur={false} />
+            <FavoriteButton slug={selection.slug} nom={selection.nom} compact showError={false} />
           </span>
         ) : (
           "Pas d’idée précise ? Laissez-vous guider par le hasard."
