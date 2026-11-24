@@ -72,6 +72,11 @@ function collectRules(css) {
   return rules;
 }
 
+test("les fichiers de composants React utilisent une nomenclature PascalCase", async () => {
+  const files = await readdir(join(root, "components"));
+  assert.deepEqual(files.filter((file) => file.endsWith(".tsx") && !/^[A-Z]/.test(file)), []);
+});
+
 test("les anciens fichiers de composants métier français ne peuvent pas réapparaître", async () => {
   const files = await readdir(join(root, "components"));
   assert.deepEqual(
