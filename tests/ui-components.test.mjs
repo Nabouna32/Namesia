@@ -409,7 +409,7 @@ test("Card centralise les surfaces AndroidX et préserve l’élément HTML choi
   assert.match(cardStyles, /\.elevated\s*\{[^}]*surface-container-low/s);
   assert.match(cardStyles, /\.filled\s*\{[^}]*surface-container-highest/s);
   assert.match(cardStyles, /\.outlined\s*\{[^}]*outline-variant/s);
-  assert.match(cardStyles, /\.interactive\.elevated:hover/);
+  assert.match(cardStyles, /\.interactive\.elevated:hover\s*\{[^}]*on-surface[^}]*hover-state-layer-opacity/s);
   for (const file of [
     "../components/features/catalog/RelatedNames.tsx",
     "../components/features/catalog/FeaturedNames.tsx",
