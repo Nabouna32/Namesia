@@ -62,6 +62,9 @@ Un contrôle statique ne remplace pas un examen du rendu. Après un changement d
 | Préfixe | Usage | Règle |
 |---|---|---|
 | `--namesia-color-category-*` | Couleurs issues du schéma Rainbow secondaire | Catégorie éditoriale identifiée uniquement |
+| `--namesia-color-success-*` | Couleur personnalisée M3 issue de `#386A20` | État positif, avec `color`, `onColor`, `colorContainer`, `onColorContainer` |
+| `--namesia-color-warning-*` | Couleur personnalisée M3 issue de `#795900` | Avertissement, avec ses quatre rôles tonals |
+| `--namesia-color-info-*` | Couleur personnalisée M3 issue de `#005B9A` | Information, avec ses quatre rôles tonals |
 
 Les variables Rainbow sont un namespace d'adaptation Namesia pour distinguer le schéma catégoriel secondaire du schéma Fidelity principal. Les couleurs success/warning/info sont des couleurs personnalisées sémantiques au sens des extensions M3 ; elles ne sont pas des rôles système. Leurs sources historiques sont générées par `customColor` avec les quatre rôles tonals clairs/sombres. La marque utilise les rôles Fidelity, sans dégradé non-M3. Les familles typographiques, géométriques, de mouvement et d'état utilisent les préfixes système M3 exacts : `--md-sys-typescale-*`, `--md-sys-shape-corner-*`, `--md-sys-motion-easing-*`, `--md-sys-motion-duration-*` et `--md-sys-state-*-state-layer-opacity`.
 
