@@ -127,7 +127,7 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
                   Comparer ce prénom <span aria-hidden="true">↗</span>
                 </Link>
               </div>
-              <ShareProfile nom={prenom.nom} />
+              <ShareProfile name={prenom.nom} />
             </div>
             <div className="profile-monogram" aria-hidden="true">{prenom.lettre}</div>
           </header>
