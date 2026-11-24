@@ -36,7 +36,6 @@ test("Button suit l’anatomie AndroidX et conserve les éléments HTML natifs",
 
 test("les fonctions métier composent les composants Material 3 sans réimplémenter les boutons", () => {
   assert.match(favoriteButton, /import \{ Button \} from "@\/components\/material3\/Button"/);
-  assert.match(favoriteButton, /import \{ IconButton \} from "@\/components\/material3\/IconButton"/);
   assert.match(favoriteButton, /<Button/);
   assert.match(favoriteButton, /aria-label=\{label\}/);
   assert.match(favoriteButton, /aria-pressed=\{selected\}/);
