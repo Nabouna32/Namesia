@@ -2,7 +2,6 @@ export { Button } from "./Button";
 export { Card } from "./Card";
 export { Checkbox } from "./Checkbox";
 export type { CardVariant } from "./Card";
-export { Checkbox } from "./Checkbox";
 export type { ButtonVariant } from "./Button";
 export { FilterChip } from "./FilterChip";
 export { Icon } from "./Icon";
