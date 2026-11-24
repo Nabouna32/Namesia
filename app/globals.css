@@ -269,7 +269,9 @@ padding: 12px 16px;
 /* Structure de l'application et navigation Material 3 Fidelity */
 
 .app-shell {
+  display: flex;
   min-height: 100svh;
+  flex-direction: column;
   background: var(--md-sys-color-background);
 }
 
@@ -416,8 +418,14 @@ padding: 4px 0;
 }
 
 .app-content {
+  display: flex;
   min-width: 0;
-  min-height: calc(100svh - 64px);
+  flex: 1;
+  flex-direction: column;
+}
+
+.app-content > main {
+  flex: 1;
 }
 
 /* Accueil et recherche */
@@ -860,8 +868,7 @@ margin-left: auto;
 /* Catalogue et fiches */
 
 .page-main {
-  min-height: 70vh;
-padding: 48px 0 64px;
+  padding: 48px 0 64px;
 }
 
 .catalogue h1,

@@ -1,8 +1,12 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 3.65
+- **Version :** 3.66
 - **Mis à jour :** 2026-11-23
+
+## Structure de la page
+
+Le layout racine utilise une colonne flex de hauteur minimale égale à la fenêtre. La zone applicative répartit verticalement le contenu principal et le pied de page : le contenu absorbe l'espace libre sur une page courte, tandis que les pages longues conservent leur défilement naturel. La position du pied de page ne dépend ni d'une hauteur arbitraire du contenu ni d'un positionnement fixe.
 
 ## 1. Besoin réel
 

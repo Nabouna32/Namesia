@@ -73,6 +73,14 @@ test("les feuilles consomment les rôles Material sans alias hérités ni fallba
   assert.match(globalCss, /--md-sys-shape-corner-extra-large:/);
 });
 
+test("le pied de page reste en bas sur les pages courtes sans hauteur artificielle", () => {
+  assert.match(globalCss, /\.app-shell\s*\{[^}]*display:\s*flex;[^}]*min-height:\s*100svh;[^}]*flex-direction:\s*column;/s);
+  assert.match(globalCss, /\.app-content\s*\{[^}]*display:\s*flex;[^}]*flex:\s*1;[^}]*flex-direction:\s*column;/s);
+  assert.match(globalCss, /\.app-content > main\s*\{[^}]*flex:\s*1;/s);
+  assert.match(globalCss, /\.site-footer\s*\{[^}]*margin-top:\s*auto;/s);
+  assert.doesNotMatch(globalCss, /\.page-main\s*\{[^}]*min-height:\s*70vh/s);
+});
+
 test("les animations globales utilisent les tokens de mouvement", () => {
   assert.match(globalCss, /\.skip-link\s*\{[^}]*transition: transform var\(--md-sys-motion-duration-short\) var\(--md-sys-motion-standard\)/s);
   assert.doesNotMatch(allCss, /transition\s*:[^;]*(?:\d+(?:\.\d+)?(?:ms|s))/i);
