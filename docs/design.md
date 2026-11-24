@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.30
+- **Version :** 4.31
 - **Mis à jour :** 2026-11-24
 
 ## 1. Direction
@@ -65,11 +65,11 @@ La fiche est un parcours de lecture : son introduction et ses rubriques utilisen
 
 Les destinations de premier niveau sont Accueil, Explorer, Comparer et Favoris. Elles restent identiques sur toutes les tailles d'écran.
 
-- **Compact, moins de 600 px :** navigation bar fixe en bas, quatre destinations avec icône et libellé `label-medium` (12/16 px, graisse 500, approche 0,5 px), prise en compte de `safe-area-inset-bottom`.
+- **Compact, moins de 600 px :** navigation bar fixe en bas de 64 dp, quatre destinations avec icône et libellé `label-medium` (12/16 px, graisse 500, approche 0,5 px), hauteur augmentée uniquement par `safe-area-inset-bottom`.
 - **Medium et plus, à partir de 600 px :** navigation rail fixe sur le bord de départ, largeur de 80 px, icône et libellé `label-medium` (12/16 px, graisse 500, approche 0,5 px) empilés. Le rail reste à 80 px : le modèle Android du rail est conservé, sans tiroir latéral propriétaire qui réduirait inutilement l’espace de lecture.
 - **Hauteur compacte, jusqu'à 480 px :** la navigation revient en bas même si la largeur dépasse 600 px, pour les fenêtres paysage peu hautes. Les éléments passent alors en disposition horizontale.
 - La barre supérieure reste présente, avec la marque Namesia et une hauteur de 64 px.
-- La destination courante utilise l'indicateur tonal en pilule et `aria-current="page"`.
+- Le conteneur de NavigationBar reprend les 64 dp du token AndroidX `ContainerHeight` ; aucune bordure de séparation ni marge verticale additionnelle n'est ajoutée. La zone sûre basse est réservée séparément et le contenu de page reçoit le même dégagement. La destination courante utilise l'indicateur tonal en pilule et `aria-current="page"`.
 - La navigation est une navigation de pages, pas un tablist ARIA : les liens natifs conservent l'historique, les ouvertures dans un nouvel onglet et les usages clavier du navigateur.
 
 Ces seuils suivent la logique des window size classes Android : la barre convient aux fenêtres compactes en largeur ou en hauteur et le rail aux fenêtres plus larges. Les adaptations sont pilotées par l'espace disponible, pas par la détection d'une marque d'appareil. Le rail ne possède pas de bouton d'extension artificiel : une navigation de premier niveau reste stable et prévisible.

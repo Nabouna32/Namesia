@@ -294,3 +294,13 @@ test("NavigationBar et NavigationRail utilisent le rôle M3 label-medium à tout
   assert.match(composantsDoc, /NavigationBar[\s\S]*label-medium/);
   assert.match(composantsDoc, /NavigationRail[\s\S]*label-medium/);
 });
+
+
+test("NavigationBar respecte les 64 dp Material 3 et réserve uniquement la zone sûre", () => {
+  const navigationBar = globalCss.match(/\.navigation-bar\s*\{([^}]*)\}/s)?.[1] ?? "";
+  assert.match(navigationBar, /padding:\s*0 8px env\(safe-area-inset-bottom\)/);
+  assert.doesNotMatch(navigationBar, /border-top:/);
+  assert.match(globalCss, /\.navigation-bar \.navigation-item \{\s*min-height:\s*64px/);
+  assert.match(globalCss, /\.app-content \{\s*padding-bottom:\s*calc\(64px \+ env\(safe-area-inset-bottom\)\)/);
+  assert.doesNotMatch(globalCss, /padding-bottom:\s*calc\(80px \+ env\(safe-area-inset-bottom\)\)/);
+});
