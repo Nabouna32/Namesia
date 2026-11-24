@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { IconeMaterial } from "@/components/material3/Icon";
+import { Icon } from "@/components/material3/Icon";
 
 const destinations = [
   { href: "/", label: "Accueil", icon: "home", activeIcon: "home-filled" },
