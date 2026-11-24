@@ -109,13 +109,13 @@ test("la distance bornée correspond à Levenshtein sur un ensemble exhaustif de
 });
 
 
-test("les suggestions proches sont mutualisées, bornées et classées par distance", () => {
+test("les suggestions proches excluent les préfixes déjà valides et classent par distance", () => {
   const prenoms = ["Alice", "Alix", "Alise", "Aline", "Alina", "Alisa", "Alicia"]
     .map((nom) => ({ id: nom, slug: nom.toLowerCase(), nom, lettre: "A", genre: "Féminin" }));
 
   assert.deepEqual(
     suggererPrenomsProches(prenoms, "Alis").map((prenom) => prenom.nom),
-    ["Alisa", "Alise", "Alix"]
+    ["Alix"]
   );
   assert.deepEqual(suggererPrenomsProches(prenoms, "ali"), []);
   assert.deepEqual(suggererPrenomsProches(prenoms, "Alice"), []);
