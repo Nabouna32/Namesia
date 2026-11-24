@@ -4,7 +4,6 @@ import type { PrenomIndex } from "@/lib/prenoms";
 import styles from "./barre-comparaison.module.css";
 import { ComparisonSelection } from "@/components/features/comparison/ComparisonSelection";
 import { Button } from "@/components/material3/Button";
-import { Button } from "@/components/material3/Button";
 
 type Props = {
   prenoms: Pick<PrenomIndex, "slug" | "nom">[];
@@ -20,9 +19,9 @@ export function BarreComparaison({ prenoms, onRetirer, onEffacer }: Props) {
   return (
     <div className={styles.bar}>
       <ComparisonSelection
-        prenoms={prenoms}
+        names={prenoms.map((prenom) => ({ slug: prenom.slug, name: prenom.nom }))}
         label="Prénoms sélectionnés pour la comparaison"
-        onRetirer={onRetirer}
+        onRemove={onRetirer}
       />
       <span role="status" aria-live="polite">{prenoms.length} / 3 prénoms pour la comparaison</span>
       <div className={styles.actions}>
