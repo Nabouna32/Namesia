@@ -11,3 +11,12 @@ test("la vérification des droits rejette les réponses nulles et les erreurs RP
   await assert.rejects(() => verifyAdminAccess(async () => ({ data: null, error: null })));
   await assert.rejects(() => verifyAdminAccess(async () => ({ data: true, error: new Error("offline") })));
 });
+
+test("la vérification accepte le client RPC Supabase thenable", async () => {
+  const result = {
+    then(resolve) {
+      return Promise.resolve(resolve({ data: true, error: null }));
+    }
+  };
+  assert.equal(await verifyAdminAccess(() => result), true);
+});
