@@ -82,8 +82,8 @@ test("le pied de page reste en bas sur les pages courtes sans hauteur artificiel
   assert.doesNotMatch(globalCss, /\.page-main\s*\{[^}]*min-height:\s*70vh/s);
 });
 
-test("les animations globales utilisent les tokens de mouvement", () => {
-  assert.match(globalCss, /\.skip-link\s*\{[^}]*transition: transform var\(--md-sys-motion-duration-short\) var\(--md-sys-motion-standard\)/s);
+test("les animations globales utilisent les tokens de mouvement", () => {\n  assert.match(globalCss, /--md-sys-motion-easing-standard:/);\n  assert.match(globalCss, /--md-sys-motion-easing-emphasized:/);\n  assert.match(globalCss, /--md-sys-motion-duration-short3:/);\n  assert.match(globalCss, /--md-sys-motion-duration-medium1:/);\n  assert.match(globalCss, /--md-sys-motion-duration-medium4:/);\n  assert.match(globalCss, /--md-sys-state-hover-state-layer-opacity:/);\n  assert.match(globalCss, /--md-sys-state-focus-state-layer-opacity:/);\n  assert.match(globalCss, /--md-sys-state-pressed-state-layer-opacity:/);\n  assert.doesNotMatch(allCss, /--md-sys-motion-(?:standard|emphasized|duration-short|duration-medium|duration-long)\\b/);\n  assert.doesNotMatch(allCss, /--md-sys-elevation-(?:sm|md)\\b/);\n  assert.doesNotMatch(allCss, /#[0-9a-f]{3,8}\\b/i);\n  assert.doesNotMatch(allCss, /box-shadow:\\s*var\\(--md-sys-elevation-/);
+  assert.match(globalCss, /\.skip-link\s*\{[^}]*transition: transform var\(--md-sys-motion-duration-short3\) var\(--md-sys-motion-easing-standard\)/s);
   assert.doesNotMatch(allCss, /transition\s*:[^;]*(?:\d+(?:\.\d+)?(?:ms|s))/i);
 });
 
