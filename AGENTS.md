@@ -78,6 +78,9 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Éviter les doublons et désigner un emplacement canonique par information structurante.
 - Distinguer les faits, hypothèses, propositions, décisions acceptées et décisions obsolètes.
 - Ne pas laisser sciemment une documentation fausse ou contradictoire.
+- Toute référence technique externe de la documentation canonique doit pointer vers un commit immuable, jamais vers `main`, `master` ou une version flottante.
+- Avant d'ajouter une source AndroidX/Material, vérifier que le fichier existe réellement au SHA épinglé (API GitHub `contents?ref=<sha>` ou contenu brut) ; ne jamais déduire le nom d'un fichier de celui du composant. Vérifier dans le contenu les valeurs et états cités, pas seulement l'existence du lien.
+- Le test `tests/design-source-pins.test.mjs` garantit le format immuable et la couverture du registre ; il ne prouve pas à lui seul que chaque chemin distant existe ni que les valeurs ont été correctement interprétées. Cette vérification de contenu reste obligatoire lors d'une mise à jour de source.
 - La documentation canonique décrit l'état actuel et les règles encore applicables, pas le journal des opérations passées.
 - Supprimer régulièrement les procédures terminées, états intermédiaires, inventaires datés, noms de branches/commits, comptes rendus de migration et consignes devenues inutiles.
 - Conserver l'historique uniquement lorsqu'il a une valeur durable : décision structurante dans un ADR, migration versionnée, contrainte de compatibilité ou information nécessaire à l'exploitation.
