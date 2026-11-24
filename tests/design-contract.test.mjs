@@ -19,6 +19,7 @@ const messageStyles = await readFile(join(root, "components/material3/Snackbar.m
 const composantsDoc = await readFile(join(root, "docs/composants.md"), "utf8");
 const materialVerificationDoc = await readFile(join(root, "docs/material-3-verification.md"), "utf8");
 const navigationComponent = await readFile(join(root, "components/material3/NavigationDestinations.tsx"), "utf8");
+const comparisonSelectionComponent = await readFile(join(root, "components/features/comparison/ComparisonSelection.tsx"), "utf8");
 const agents = await readFile(join(root, "AGENTS.md"), "utf8");
 
 async function collectCss(directory) {
@@ -128,7 +129,7 @@ test("les états hover sont réservés aux appareils qui disposent d'un pointeur
     );
   }
 
-  const selection = await readFile(join(root, "components/features/comparison/ComparisonSelection.tsx"), "utf8");
+  const selection = comparisonSelectionComponent;
   const selectionStyles = styles.find(({ path }) => path === "components/features/comparison/ComparisonSelection.module.css")?.content ?? "";
   const buttonStyles = styles.find(({ path }) => path === "components/material3/Button.module.css")?.content ?? "";
   assert.match(selection, /<InputChip/);
