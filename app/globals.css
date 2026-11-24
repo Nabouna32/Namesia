@@ -1011,7 +1011,7 @@ margin: 0;
   font-weight: 500;
 }
 
-.compare-table .compare-criterion-heading {
+.compare-table thead .compare-criterion-heading {
   z-index: 2;
   background: var(--md-sys-color-surface-container-highest);
 }
@@ -1036,7 +1036,8 @@ margin: 0;
   background: var(--md-sys-color-surface-container-lowest);
 }
 
-.compare-profile-link {
+.compare-profile-link,
+.compare-card-link {
   display: inline-flex;
   min-height: 48px;
   align-items: center;
