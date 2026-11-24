@@ -63,4 +63,6 @@ Ces variables ne sont pas des rôles Material. Elles ne remplacent aucun rôle F
 - Le site suit `prefers-color-scheme` et expose une couleur de thème au navigateur, mais ne peut pas imposer le thème des contrôles natifs au-delà des mécanismes CSS et viewport supportés.
 - Les éléments natifs `select`, `input` et les dialogues conservent leurs interactions et limites propres au navigateur ; ils ne sont pas remplacés par des clones décoratifs uniquement pour simuler Android.
 
-Les tokens de mouvement et d'état sont vérifiés contre les sources M3 d'Angular Material : `_md-sys-motion.scss`, `_md-sys-state.scss`, `_md-sys-elevation.scss` et `_md-sys-shape.scss`. Les niveaux d'élévation M3 sont des valeurs numériques en dp ; Namesia n'utilise actuellement pas de `box-shadow` et ne les transforme donc pas en ombres CSS.\n\nAucun autre fallback visuel non-M3 n'est accepté. Toute nouvelle exception doit être liée à une limite vérifiable du navigateur, ciblée, documentée ici et couverte par un contrôle adapté.
+Les tokens de mouvement et d'état sont vérifiés contre les sources M3 d'Angular Material : `_md-sys-motion.scss`, `_md-sys-state.scss`, `_md-sys-elevation.scss` et `_md-sys-shape.scss`. Les niveaux d'élévation M3 sont des valeurs numériques en dp ; Namesia n'utilise actuellement pas de `box-shadow` et ne les transforme donc pas en ombres CSS.
+
+Aucun autre fallback visuel non-M3 n'est accepté. Toute nouvelle exception doit être liée à une limite vérifiable du navigateur, ciblée, documentée ici et couverte par un contrôle adapté.
