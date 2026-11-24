@@ -72,6 +72,11 @@ function collectRules(css) {
   return rules;
 }
 
+test("les anciennes primitives UI françaises ne peuvent pas réapparaître", async () => {
+  const files = await readdir(join(root, "components/ui"));
+  assert.deepEqual(files.filter((file) => /^(bouton|champ-|chip-|lien-bouton|liste-selection|message-statut)/.test(file)), []);
+});
+
 test("les feuilles consomment les rôles Material sans alias hérités ni fallback", () => {
   assert.doesNotMatch(allCss, /--(?:color-[\w-]+|ink|muted|line|paper|surface|accent|sans|font-(?:sans|display)|radius-[\w-]+|space-\d+|motion-[\w-]+|shadow-[\w-]+)\b/);
   assert.doesNotMatch(allCss, /var\(\s*--[\w-]+\s*,/);
