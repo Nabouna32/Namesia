@@ -4,8 +4,8 @@ import { useEffect, useState, type FormEvent } from "react";
 import { createClient, type Session } from "@supabase/supabase-js";
 import { FICHE_SCHEMA_VERSION, parseFichePrenom, type FichePrenomImport } from "@/lib/fiche-prenom";
 import styles from "./admin.module.css";
-import { Bouton } from "@/components/ui/bouton";
-import { MessageStatut, type TypeMessageStatut } from "@/components/ui/message-statut";
+import { Button } from "@/components/material3/Button";
+import { Snackbar, type SnackbarSeverity } from "@/components/material3/Snackbar";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -39,9 +39,9 @@ export function AdminClient() {
   const [email, setEmail] = useState("");
   const [json, setJson] = useState("");
   const [preview, setPreview] = useState<FichePrenomImport | null>(null);
-  const [message, setMessage] = useState<{ text: string; type: TypeMessageStatut } | null>(null);
+  const [message, setMessage] = useState<{ text: string; type: SnackbarSeverity } | null>(null);
 
-  function afficherMessage(text: string, type: TypeMessageStatut = "info") {
+  function afficherMessage(text: string, type: SnackbarSeverity = "info") {
     setMessage({ text, type });
   }
   const [busy, setBusy] = useState(false);
@@ -279,9 +279,9 @@ export function AdminClient() {
       <form className={styles.form} onSubmit={connecter}>
         <label htmlFor="admin-email">Adresse e-mail</label>
         <input id="admin-email" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
-        <Bouton type="submit" disabled={busy}>{busy ? "Envoi…" : "Recevoir un lien de connexion"}</Bouton>
+        <Button type="submit" disabled={busy}>{busy ? "Envoi…" : "Recevoir un lien de connexion"}</Button>
       </form>
-      {message && <MessageStatut type={message.type}>{message.text}</MessageStatut>}
+      {message && <Snackbar type={message.type}>{message.text}</Snackbar>}
     </section>;
   }
 
@@ -289,15 +289,15 @@ export function AdminClient() {
     return <section className={styles.panel}>
       <h2>Accès non autorisé</h2>
       <p>Ce compte est connecté, mais ne figure pas dans la liste des administrateurs Namesia.</p>
-      {message && <MessageStatut type={message.type}>{message.text}</MessageStatut>}
-      <Bouton type="button" onClick={deconnecter}>Se déconnecter</Bouton>
+      {message && <Snackbar type={message.type}>{message.text}</Snackbar>}
+      <Button type="button" onClick={deconnecter}>Se déconnecter</Button>
     </section>;
   }
 
   return <section className={styles.panel}>
     <div className={styles.heading}>
       <div><h2>Importer une fiche</h2><p>Connecté en tant que {session.user.email}</p></div>
-      <Bouton variante="outlined" type="button" onClick={deconnecter}>Déconnexion</Bouton>
+      <Button variant="outlined" type="button" onClick={deconnecter}>Déconnexion</Button>
     </div>
     <form className={styles.form} onSubmit={importer}>
       <label htmlFor="fiche-json">Fiche JSON (version {FICHE_SCHEMA_VERSION})</label>
@@ -316,8 +316,8 @@ export function AdminClient() {
         setImported(null);
       }} placeholder={'{"schema_version":"3.0.0","identity":{...},"content":{...}}'} />
       <div className={styles.actions}>
-        <Bouton variante="outlined" type="button" disabled={busy || !json.trim()} onClick={previsualiser}>Prévisualiser</Bouton>
-        <Bouton type="submit" disabled={busy || !preview}>{busy ? "Import…" : "Enregistrer en brouillon"}</Bouton>
+        <Button variant="outlined" type="button" disabled={busy || !json.trim()} onClick={previsualiser}>Prévisualiser</Button>
+        <Button type="submit" disabled={busy || !preview}>{busy ? "Import…" : "Enregistrer en brouillon"}</Button>
       </div>
     </form>
 
@@ -329,12 +329,12 @@ export function AdminClient() {
       {preview.content.history && <section><h4>Histoire du prénom</h4><p>{preview.content.history}</p></section>}
       {preview.content.usage && <section><h4>Variantes & usages</h4><p>{preview.content.usage}</p></section>}
       {preview.content.symbolic_associations.map((symbol) => <section key={`${symbol.category}-${symbol.value}`}><h4>{symbol.category} · {symbol.value}</h4><p>{symbol.context_note}</p></section>)}
-      <MessageStatut type="warning" className={styles.previewWarning}>La validation porte sur la structure du JSON, pas sur la véracité des contenus générés.</MessageStatut>
+      <Snackbar severity="warning" className={styles.previewWarning}>La validation porte sur la structure du JSON, pas sur la véracité des contenus générés.</Snackbar>
     </article>}
 
     {imported && <div className={styles.publish}>
       <p>La version {imported.version} est enregistrée en brouillon. Après vérification de l'aperçu, tu peux la publier.</p>
-      <Bouton type="button" disabled={busy} onClick={publier}>Publier cette version</Bouton>
+      <Button type="button" disabled={busy} onClick={publier}>Publier cette version</Button>
     </div>}
 
     <section className={styles.library}>
@@ -349,11 +349,11 @@ export function AdminClient() {
         </div>
         {[...name.name_profiles].sort((a, b) => b.version - a.version).map((profile) => <div className={styles.versionRow} key={profile.id}>
           <span>Version {profile.version} · {statusLabels[profile.status]} · {new Date(profile.created_at).toLocaleDateString("fr-FR")}</span>
-          <Bouton variante="outlined" type="button" disabled={busy} onClick={() => void previsualiserVersion(profile)}>Prévisualiser</Bouton>
+          <Button variant="outlined" type="button" disabled={busy} onClick={() => void previsualiserVersion(profile)}>Prévisualiser</Button>
         </div>)}
       </article>)}
-      {catalogNextOffset !== null && <Bouton variante="outlined" type="button" disabled={catalogLoading} onClick={() => setCatalogOffset(catalogNextOffset)}>Charger les fiches suivantes</Bouton>}
+      {catalogNextOffset !== null && <Button variant="outlined" type="button" disabled={catalogLoading} onClick={() => setCatalogOffset(catalogNextOffset)}>Charger les fiches suivantes</Button>}
     </section>
-    {message && <MessageStatut type={message.type}>{message.text}</MessageStatut>}
+    {message && <Snackbar type={message.type}>{message.text}</Snackbar>}
   </section>;
 }
