@@ -282,3 +282,15 @@ test("les boutons et FilterChip utilisent le rôle typographique M3 label-large"
   }
   assert.doesNotMatch(filterChipStyles, /\.initial\s*\{[^}]*font-size:/s, "La variante initiale ne doit pas remplacer la typographie M3");
 });
+
+
+test("NavigationBar et NavigationRail utilisent le rôle M3 label-medium à toutes les largeurs", () => {
+  const navigationRule = globalCss.match(/\\.navigation-item\\s*\\{([^}]*)\\}/s)?.[1] ?? "";
+  assert.match(navigationRule, /font-size:\\s*var\\(--md-sys-typescale-label-medium-size\\)/);
+  assert.match(navigationRule, /font-weight:\\s*var\\(--md-sys-typescale-label-medium-weight\\)/);
+  assert.match(navigationRule, /line-height:\\s*var\\(--md-sys-typescale-label-medium-line-height\\)/);
+  assert.match(navigationRule, /letter-spacing:\\s*var\\(--md-sys-typescale-label-medium-tracking\\)/);
+  assert.doesNotMatch(globalCss, /navigation-item[^}]*font-size:\\s*var\\(--md-sys-typescale-(?:body-small|label-small)-size\\)/s);
+  assert.match(composantsDoc, /NavigationBar[\\s\\S]*label-medium/);
+  assert.match(composantsDoc, /NavigationRail[\\s\\S]*label-medium/);
+});
