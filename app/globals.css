@@ -520,10 +520,10 @@ margin-bottom: 20px;
 
 .section-heading h2 {
 margin: 12px 0 0;
-  font-family: var(--md-sys-typescale-headline-large-font);
+  font-family: var(--md-sys-typescale-headline-medium-font);
   font-size: var(--md-sys-typescale-headline-medium-size);
-  font-weight: 400;
-  letter-spacing: 0;
+  font-weight: var(--md-sys-typescale-headline-medium-weight);
+  letter-spacing: var(--md-sys-typescale-headline-medium-tracking);
   line-height: var(--md-sys-typescale-headline-medium-line-height);
 }
 
@@ -671,9 +671,9 @@ margin-left: auto;
   color: var(--md-sys-color-on-surface);
   font-family: var(--md-sys-typescale-headline-large-font);
   font-size: var(--md-sys-typescale-headline-large-size);
-  font-weight: 400;
+  font-weight: var(--md-sys-typescale-headline-large-weight);
   line-height: var(--md-sys-typescale-headline-large-line-height);
-  letter-spacing: 0;
+  letter-spacing: var(--md-sys-typescale-headline-large-tracking);
 }
 
 .page-intro {
@@ -747,7 +747,7 @@ padding: clamp(28px, 5vw, 60px);
 margin: 12px 0;
   font-size: var(--md-sys-typescale-headline-large-size);
   line-height: var(--md-sys-typescale-headline-large-line-height);
-  letter-spacing: 0;
+  letter-spacing: var(--md-sys-typescale-headline-large-tracking);
   overflow-wrap: anywhere;
 }
 
@@ -1219,10 +1219,10 @@ margin-bottom: 16px;
 
 .profile-section-heading h2 {
 margin: 8px 0 0;
-  font-family: var(--md-sys-typescale-headline-large-font);
+  font-family: var(--md-sys-typescale-headline-small-font);
   font-size: var(--md-sys-typescale-headline-small-size);
-  font-weight: 400;
-  letter-spacing: 0;
+  font-weight: var(--md-sys-typescale-headline-small-weight);
+  letter-spacing: var(--md-sys-typescale-headline-small-tracking);
   line-height: var(--md-sys-typescale-headline-small-line-height);
 }
 
