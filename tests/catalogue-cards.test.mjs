@@ -20,6 +20,8 @@ test("les cartes du catalogue représentent explicitement les quatre genres conn
     assert.match(catalogue, new RegExp(`"${label}": "${icon}"`));
     assert.match(icons, new RegExp(`"${icon}":`));
   }
+  assert.match(prenomModel, /export type GenrePrenom = "Féminin" \| "Masculin" \| "Mixte" \| "Genre non renseigné"/);
+  assert.match(catalogue, /Record<GenrePrenom, IconName>/);
   assert.match(catalogue, /className="sr-only">\{prenom\.genre\}/);
   assert.doesNotMatch(catalogue, /\{prenom\.genre\}\s*·/);
   assert.doesNotMatch(catalogue, /Découvrir la fiche/);
