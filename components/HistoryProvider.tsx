@@ -13,7 +13,7 @@ import { ajouterConsultation, lireHistoriqueSession, retirerConsultation } from 
 
 const CLE_HISTORIQUE = "namesia:historique-session:v1";
 
-type ContexteHistorique = {
+type HistoryContextValue = {
   slugs: string[];
   pret: boolean;
   erreur: boolean;
@@ -22,7 +22,7 @@ type ContexteHistorique = {
   effacer: () => void;
 };
 
-const HistoriqueContext = createContext<ContexteHistorique | null>(null);
+const HistoryContext = createContext<HistoryContextValue | null>(null);
 
 export function HistoryProvider({ children }: { children: ReactNode }) {
   const [slugs, setSlugs] = useState<string[]>([]);
@@ -65,14 +65,14 @@ export function HistoryProvider({ children }: { children: ReactNode }) {
   );
 
   return (
-    <HistoriqueContext.Provider value={valeur}>
+    <HistoryContext.Provider value={valeur}>
       {children}
-    </HistoriqueContext.Provider>
+    </HistoryContext.Provider>
   );
 }
 
-export function useHistorique(): ContexteHistorique {
-  const contexte = useContext(HistoriqueContext);
-  if (!contexte) throw new Error("useHistorique doit être utilisé dans HistoryProvider.");
+export function useHistory(): HistoryContextValue {
+  const contexte = useContext(HistoryContext);
+  if (!contexte) throw new Error("useHistory doit être utilisé dans HistoryProvider.");
   return contexte;
 }
