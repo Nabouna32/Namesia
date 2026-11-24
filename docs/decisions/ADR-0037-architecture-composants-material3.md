@@ -31,7 +31,7 @@ Cette organisation rendait la fidélité difficile à auditer : un nouveau compo
 
 - Le vocabulaire du code suit directement AndroidX et devient vérifiable par recherche.
 - La frontière entre composants M3 et logique métier est explicite.
-- Les CSS Modules de présentation sont regroupés avec leurs composants ; les styles métier restent dans leurs features.
+- Les CSS Modules de présentation sont regroupés avec leurs composants ; les styles métier restent dans leurs features ; les tokens typographiques, de forme, de mouvement et d'état sont centralisés dans `styles/material3/tokens.css`.
 - La parité pixel n'est pas présumée : chaque adaptation Web est confrontée aux sources AndroidX et aux limites réelles du navigateur.
 - Les composants non nécessaires ne sont pas simulés à l'avance. Une nouvelle primitive exige un besoin concret, une référence officielle et un contrat testable.
 
