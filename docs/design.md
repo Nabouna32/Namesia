@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.32
+- **Version :** 4.33
 - **Mis à jour :** 2026-11-24
 
 ## 1. Direction
@@ -18,6 +18,7 @@ La palette est calculée avec la bibliothèque officielle Google **`@material/ma
 - couleur source primaire : `#6750A4`, violet de la palette Material 3 baseline documentée par Android Developers ; ce n'est pas un bleu Google. Fidelity calcule les rôles à partir de cette source, elle n'est pas recopiée telle quelle dans chaque composant. Le résultat Fidelity n'est pas le schéma statique Tonal Spot baseline : il conserve la variante Fidelity demandée ;
 - variante du thème d'interface : `Variant.FIDELITY` ;
 - variante complémentaire des catégories : `Variant.RAINBOW`, calculée séparément avec la même couleur source ;
+- bibliothèque de calcul : `@material/material-color-utilities` version `0.4.0`, épinglée dans `package-lock.json` et dans [Vérification Material 3](material-3-verification.md) ;
 - version d'algorithme : `specVersion: "2021"`, version de `ColorSpec` dans Material Color Utilities ; ce n'est pas une version de Material Design 3 ni une référence à l'ancien système de composants. Le code de la bibliothèque redirige explicitement Fidelity et Rainbow vers 2021 lorsqu'une spécification 2025 leur est demandée, car ces variantes ne sont pas prises en charge par les spécifications 2025 et 2026 ;
 - plateforme MCU : `phone`, paramètre de calcul du schéma correspondant à la cible Android mobile, sans accès aux API Android depuis le navigateur ;
 - niveau de contraste standard : `0` ;
