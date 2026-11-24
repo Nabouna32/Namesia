@@ -302,8 +302,10 @@ padding: 4px 12px;
   border-radius: var(--md-sys-shape-corner-full);
   background: var(--md-sys-color-secondary-container);
   color: var(--md-sys-color-on-secondary-container);
-  font-size: var(--md-sys-typescale-body-small-size);
-  font-weight: 500;
+  font-family: var(--md-sys-typescale-label-medium-font);
+  font-size: var(--md-sys-typescale-label-medium-size);
+  font-weight: var(--md-sys-typescale-label-medium-weight);
+  line-height: var(--md-sys-typescale-label-medium-line-height);
   letter-spacing: var(--md-sys-typescale-label-medium-tracking);
   
 }
@@ -397,8 +399,10 @@ padding: 0;
 .filter-group legend {
 margin-bottom: 12px;
   color: var(--md-sys-color-on-surface-variant);
-  font-size: var(--md-sys-typescale-body-small-size);
-  font-weight: 500;
+  font-family: var(--md-sys-typescale-label-medium-font);
+  font-size: var(--md-sys-typescale-label-medium-size);
+  font-weight: var(--md-sys-typescale-label-medium-weight);
+  line-height: var(--md-sys-typescale-label-medium-line-height);
   letter-spacing: var(--md-sys-typescale-label-medium-tracking);
   
 }
@@ -520,10 +524,10 @@ margin-bottom: 20px;
 
 .section-heading h2 {
 margin: 12px 0 0;
-  font-family: var(--md-sys-typescale-headline-large-font);
+  font-family: var(--md-sys-typescale-headline-medium-font);
   font-size: var(--md-sys-typescale-headline-medium-size);
-  font-weight: 400;
-  letter-spacing: 0;
+  font-weight: var(--md-sys-typescale-headline-medium-weight);
+  letter-spacing: var(--md-sys-typescale-headline-medium-tracking);
   line-height: var(--md-sys-typescale-headline-medium-line-height);
 }
 
@@ -671,9 +675,9 @@ margin-left: auto;
   color: var(--md-sys-color-on-surface);
   font-family: var(--md-sys-typescale-headline-large-font);
   font-size: var(--md-sys-typescale-headline-large-size);
-  font-weight: 400;
+  font-weight: var(--md-sys-typescale-headline-large-weight);
   line-height: var(--md-sys-typescale-headline-large-line-height);
-  letter-spacing: 0;
+  letter-spacing: var(--md-sys-typescale-headline-large-tracking);
 }
 
 .page-intro {
@@ -747,7 +751,7 @@ padding: clamp(28px, 5vw, 60px);
 margin: 12px 0;
   font-size: var(--md-sys-typescale-headline-large-size);
   line-height: var(--md-sys-typescale-headline-large-line-height);
-  letter-spacing: 0;
+  letter-spacing: var(--md-sys-typescale-headline-large-tracking);
   overflow-wrap: anywhere;
 }
 
@@ -821,15 +825,19 @@ margin-bottom: 20px;
 
 .compare-options legend {
   color: var(--md-sys-color-on-surface-variant);
-  font-size: var(--md-sys-typescale-body-small-size);
-  font-weight: 500;
+  font-family: var(--md-sys-typescale-label-medium-font);
+  font-size: var(--md-sys-typescale-label-medium-size);
+  font-weight: var(--md-sys-typescale-label-medium-weight);
+  line-height: var(--md-sys-typescale-label-medium-line-height);
   letter-spacing: var(--md-sys-typescale-label-medium-tracking);
 margin-bottom: 12px;}
 
 .compare-field h3 {
   color: var(--md-sys-color-on-surface);
-  font-size: var(--md-sys-typescale-body-small-size);
-  font-weight: 500;
+  font-family: var(--md-sys-typescale-label-medium-font);
+  font-size: var(--md-sys-typescale-label-medium-size);
+  font-weight: var(--md-sys-typescale-label-medium-weight);
+  line-height: var(--md-sys-typescale-label-medium-line-height);
   letter-spacing: var(--md-sys-typescale-label-medium-tracking);
 margin: 0 0 8px;}
 
@@ -1136,8 +1144,10 @@ padding: 16px 0;
 
 .profile-toc-label {
   color: var(--md-sys-color-on-surface-variant);
-  font-size: var(--md-sys-typescale-body-small-size);
-  font-weight: 500;
+  font-family: var(--md-sys-typescale-label-medium-font);
+  font-size: var(--md-sys-typescale-label-medium-size);
+  font-weight: var(--md-sys-typescale-label-medium-weight);
+  line-height: var(--md-sys-typescale-label-medium-line-height);
   letter-spacing: var(--md-sys-typescale-label-medium-tracking);
   
 }
@@ -1211,18 +1221,20 @@ margin-bottom: 16px;
 
 .profile-section-kicker {
   color: var(--md-sys-color-on-surface-variant);
-  font-size: var(--md-sys-typescale-body-small-size);
-  font-weight: 500;
+  font-family: var(--md-sys-typescale-label-medium-font);
+  font-size: var(--md-sys-typescale-label-medium-size);
+  font-weight: var(--md-sys-typescale-label-medium-weight);
+  line-height: var(--md-sys-typescale-label-medium-line-height);
   letter-spacing: var(--md-sys-typescale-label-medium-tracking);
   
 }
 
 .profile-section-heading h2 {
 margin: 8px 0 0;
-  font-family: var(--md-sys-typescale-headline-large-font);
+  font-family: var(--md-sys-typescale-headline-small-font);
   font-size: var(--md-sys-typescale-headline-small-size);
-  font-weight: 400;
-  letter-spacing: 0;
+  font-weight: var(--md-sys-typescale-headline-small-weight);
+  letter-spacing: var(--md-sys-typescale-headline-small-tracking);
   line-height: var(--md-sys-typescale-headline-small-line-height);
 }
 
@@ -1334,9 +1346,11 @@ padding: 4px 8px;
   border-radius: var(--md-sys-shape-corner-full);
   background: var(--namesia-color-category-container);
   color: var(--namesia-color-category-on-container);
+  font-family: var(--md-sys-typescale-label-small-font);
   font-size: var(--md-sys-typescale-label-small-size);
-  font-weight: 500;
-  letter-spacing: var(--md-sys-typescale-label-medium-tracking);
+  font-weight: var(--md-sys-typescale-label-small-weight);
+  line-height: var(--md-sys-typescale-label-small-line-height);
+  letter-spacing: var(--md-sys-typescale-label-small-tracking);
   
 }
 

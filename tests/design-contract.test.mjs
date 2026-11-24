@@ -236,6 +236,21 @@ test("l'échelle typographique Material 3 est complète et limitée aux graisses
   assert.doesNotMatch(allCss, /text-transform:\s*uppercase/i);
 });
 
+test("l'approche typographique utilise exclusivement les tokens de rôle Material 3", () => {
+  const approches = [...allCss.matchAll(/letter-spacing:\s*([^;]+);/g)].map((match) => match[1].trim());
+  assert.ok(
+    approches.every((valeur) => /^var\(--md-sys-typescale-[\w-]+-tracking\)$/.test(valeur)),
+    "Chaque approche doit provenir du token de tracking de son rôle"
+  );
+  assert.match(globalCss, /\.section-heading h2\s*\{[^}]*letter-spacing:\s*var\(--md-sys-typescale-headline-medium-tracking\)/s);
+  assert.match(globalCss, /\.profile-section-heading h2\s*\{[^}]*letter-spacing:\s*var\(--md-sys-typescale-headline-small-tracking\)/s);
+  assert.match(globalCss, /\.eyebrow\s*\{[^}]*font-size:\s*var\(--md-sys-typescale-label-medium-size\)[^}]*line-height:\s*var\(--md-sys-typescale-label-medium-line-height\)/s);
+  assert.match(globalCss, /\.profile-section-kicker\s*\{[^}]*font-size:\s*var\(--md-sys-typescale-label-medium-size\)/s);
+  assert.match(globalCss, /\.symbolic-card > span,[^}]*font-size:\s*var\(--md-sys-typescale-label-small-size\)/s);
+  const adminStyles = styles.find(({ path }) => path === "app/admin/admin.module.css")?.content ?? "";
+  assert.match(adminStyles, /\.previewLabel\s*\{[^}]*font-size:\s*var\(--md-sys-typescale-label-medium-size\)[^}]*letter-spacing:\s*var\(--md-sys-typescale-label-medium-tracking\)/s);
+});
+
 test("les textes utilisent les interlignes de leur rôle Material 3", () => {
   const ratios = [...allCss.matchAll(/line-height:\s*(\d+(?:\.\d+)?);/g)].map((match) => match[1]);
   assert.deepEqual(ratios, ["0.95", "0.95"], "Seuls les deux glyphes décoratifs surdimensionnés peuvent conserver un ratio local");
