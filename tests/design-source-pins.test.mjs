@@ -23,6 +23,9 @@ test("les références de code du contrat M3 pointent vers des révisions immuab
   assert.match(verification, /CheckboxTokens\.kt/);
   assert.match(verification, /RoundedCornerShape\(2\.0\.dp\)/);
   assert.match(verification, /NavigationRailCollapsedTokens\.kt/);
+  assert.match(verification, /AppBar\.kt/);
+  assert.match(verification, /AppBarSmallTokens\.kt/);
+  assert.doesNotMatch(verification, /TopAppBar(?:Small)?Tokens?\.kt/);
   assert.match(verification, /NavigationRailColorTokens\.kt/);
   assert.doesNotMatch(verification, /NavigationRailTokens\.kt/);
 });
