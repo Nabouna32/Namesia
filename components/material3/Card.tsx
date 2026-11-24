@@ -4,26 +4,24 @@ import styles from "./Card.module.css";
 export type CardVariant = "elevated" | "filled" | "outlined";
 
 type CardOwnProps = {
-  children?: ReactNode;
+  children: ReactNode;
   variant: CardVariant;
-  interactive?: boolean;
+  interactive: boolean;
   className?: string;
 };
 
 type CardProps<T extends ElementType> = CardOwnProps & {
-  as?: T;
+  as: T;
 } & Omit<ComponentPropsWithoutRef<T>, keyof CardOwnProps | "as">;
 
-export function Card<T extends ElementType = "div">({
-  as,
+export function Card<T extends ElementType>({
+  as: Component,
   variant,
-  interactive = false,
+  interactive,
   className,
   children,
   ...props
 }: CardProps<T>) {
-  const Component = as ?? "div";
-
   return (
     <Component
       {...props}
