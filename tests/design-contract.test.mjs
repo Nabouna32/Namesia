@@ -207,7 +207,7 @@ test("les catégories Rainbow utilisent des rôles explicites sans couleur de re
   assert.match(theme, /--namesia-color-category-/);
   assert.match(provider, /--md-sys-color-\$\{role\}/);
   assert.match(allCss, /var\(--namesia-color-category-container\)/);
-  assert.doesNotMatch(allCss, /var\(--namesia-color-category[^)]*,/);
+  assert.doesNotMatch(allCss, /var\(--namesia-color-category[^)]*,/);\n  assert.doesNotMatch(allCss, /--md-sys-color-(?:success|warning|info|category|brand|on-brand)/);
 });
 
 test("le hero d'accueil sépare le récit et les outils dans une composition Fidelity responsive", () => {
