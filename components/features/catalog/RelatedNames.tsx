@@ -13,7 +13,7 @@ export function RelatedNames({ prenoms, contexteRetour = null }: Props) {
   return (
     <div className={styles.grid}>
       {prenoms.map((prenom) => (
-        <Card as={Link} variant="elevated" interactive className="name-card" href={creerUrlFicheDepuisContexte(prenom.slug, contexteRetour)}>
+        <Card as={Link} variant="elevated" interactive className="name-card" href={creerUrlFicheDepuisContexte(prenom.slug, contexteRetour)} key={prenom.slug}>
             <span className="name-initial">{prenom.lettre}</span>
             <span>
               <strong>{prenom.nom}</strong>
