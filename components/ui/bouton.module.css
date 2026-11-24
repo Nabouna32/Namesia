@@ -68,11 +68,6 @@
   border-radius: var(--md-sys-shape-corner-small);
 }
 
-.button:focus-visible {
-  outline: 3px solid var(--md-sys-color-primary);
-  outline-offset: 3px;
-}
-
 .button:disabled {
   cursor: not-allowed;
   color: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 38%, transparent);
