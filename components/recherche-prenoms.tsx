@@ -11,7 +11,7 @@ import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from 
 import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
 import { IconeMaterial } from "./icone-material";
 import { SearchBar } from "@/components/ui/SearchBar";
-import { BoutonComparaison } from "@/components/ui/bouton-comparaison";
+import { ComparisonButton } from "@/components/ui/ComparisonButton";
 import { Button } from "@/components/ui/Button";
 import { PartagerLien } from "@/components/partager-fiche";
 import { FilterChip } from "@/components/ui/FilterChip";
