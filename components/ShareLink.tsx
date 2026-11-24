@@ -46,7 +46,7 @@ export function ShareLink({ titre, texte, label, parametres = [] }: Props) {
   );
 }
 
-export function PartagerFiche({ nom }: { nom: string }) {
+export function ShareName({ nom }: { nom: string }) {
   return (
     <ShareLink
       titre={`${nom} · Namesia`}
