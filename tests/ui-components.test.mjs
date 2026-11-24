@@ -40,8 +40,8 @@ test("les composants métier réutilisent les primitives au lieu de redéfinir l
   assert.match(favoris, /<Bouton/);
   assert.doesNotMatch(favoris, /<button/);
   assert.match(decouverte, /<Bouton/);
-  assert.match(decouverte, /IconeMaterial name="shuffle" size=\{20\}/);
-  assert.match(favoris, /size=\{compact \? 24 : 20\}/);
+  assert.match(decouverte, /IconeMaterial name="shuffle" size=\{18\}/);
+  assert.match(favoris, /size=\{compact ? 24 : 18\}/);
   assert.match(historique, /IconeMaterial name="close" size=\{24\}/);
   assert.doesNotMatch(decouverte, /<button/);
   assert.match(notFound, /<LienBouton/);
