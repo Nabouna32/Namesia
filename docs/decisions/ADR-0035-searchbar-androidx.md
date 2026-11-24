@@ -25,7 +25,7 @@ Conserver le nom métier `ChampRecherche` et son API de valeur contrôlée, mais
 - surface `SurfaceContainerHigh` ;
 - texte de saisie `BodyLarge` ;
 - icône initiale `OnSurface` et action finale `OnSurfaceVariant` ;
-- élévation d'ombre nulle (`Level0`).
+- élévation tonale et ombre nulles (`Level0`).
 
 Le label HTML demeure présent et accessible, mais il n'est plus affiché au-dessus du champ ; le placeholder visible ne devient jamais le seul nom accessible. Le bouton d'effacement reste une action Namesia partagée et restitue le focus au champ. Le bouton de suppression natif du navigateur reste masqué pour éviter une action concurrente.
 
