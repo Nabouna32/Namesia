@@ -315,6 +315,13 @@ test("les couleurs sémantiques sont des extensions M3 avec annonces accessibles
   }
   assert.match(messageStyles, /--md-sys-color-error-container/);
   assert.match(messageStyles, /--md-sys-color-on-error-container/);
+  assert.match(messageStyles, /min-height:\s*48px/);
+  assert.match(messageStyles, /max-width:\s*560px/);
+  assert.match(messageStyles, /corner-extra-small/);
+  assert.match(messageStyles, /md-sys-color-inverse-surface/);
+  assert.match(messageStyles, /md-sys-color-inverse-on-surface/);
+  assert.match(messageStyles, /box-shadow:[\\s\\S]*color-mix/);
+  assert.match(messageComponent, /severity = "neutral"/);
   assert.match(messageComponent, /role={urgent \? "alert" : "status"}/);
   assert.match(messageComponent, /aria-live={urgent \? "assertive" : "polite"}/);
   assert.doesNotMatch(allCss, /--md-sys-color-(?:success|warning|info)\b/);
