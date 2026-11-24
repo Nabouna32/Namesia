@@ -62,7 +62,7 @@ export function RecentNames({ prenoms }: { prenoms: PrenomIndex[] }) {
                     onClick={() => retirer(prenom.slug)}
                   >
                     <span aria-hidden="true"><Icon name="close" size={24} /></span>
-                  </Button>
+                  </IconButton>
                 </article>
               ))}
             </div>
