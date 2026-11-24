@@ -102,8 +102,9 @@ test("les fonctions de comparaison sont dans la couche métier et composent les 
   assert.match(comparisonToggleStyles, /@media \(max-width: 420px\)/);
   assert.match(comparisonToggleStyles, /min-width: 48px/);
   assert.match(comparisonSelection, /export function ComparisonSelection\(/);
-  assert.match(comparisonSelection, /aria-label=\{\`Retirer/);
-  assert.match(comparisonSelectionStyles, /min-height: 48px/);
+  assert.match(comparisonSelection, /<InputChip/);
+  assert.match(comparisonSelection, /onRemove=/);
+  assert.match(comparisonSelectionStyles, /list-style: none/);
   assert.match(comparisonBar, /<ComparisonSelection/);
   assert.match(comparatorSelection, /<ComparisonSelection/);
 });
