@@ -2,7 +2,7 @@
 
 import type { PrenomIndex } from "@/lib/prenoms";
 import styles from "./barre-comparaison.module.css";
-import { ListeSelectionComparaison } from "@/components/ui/liste-selection-comparaison";
+import { ComparisonSelection } from "@/components/ui/ComparisonSelection";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import buttonStyles from "@/components/ui/Button.module.css";
@@ -20,8 +20,8 @@ export function BarreComparaison({ prenoms, onRetirer, onEffacer }: Props) {
 
   return (
     <div className={styles.bar}>
-      <ListeSelectionComparaison
-        prenoms={prenoms}
+      <ComparisonSelection
+        names={prenoms.map((prenom) => ({ slug: prenom.slug, name: prenom.nom }))}
         label="Prénoms sélectionnés pour la comparaison"
         onRetirer={onRetirer}
       />
