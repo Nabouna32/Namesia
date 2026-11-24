@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import type { PrenomIndex } from "@/lib/prenoms";
 import { ComparisonBar } from "@/components/features/comparison/ComparisonBar";
 import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
