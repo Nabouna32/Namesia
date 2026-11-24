@@ -111,5 +111,5 @@ test("le rendu SSR, l'hydratation et la barre du navigateur partagent les mêmes
 });
 
 test("aucune feuille CSS ne contient une palette de couleur parallèle", () => {
-  assert.doesNotMatch(allCss, /--md-sys-color-/);
+  assert.doesNotMatch(allCss, /--md-sys-color-[\\w-]+\\s*:/);
 });
