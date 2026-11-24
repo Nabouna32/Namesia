@@ -5,11 +5,11 @@ import type { PrenomIndex } from "@/lib/prenoms";
 import { creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
 import { normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
-import { BarreComparaison } from "./barre-comparaison";
+import { ComparisonBar } from "./ComparisonBar";
 import { FavoriteButton } from "./FavoriteButton";
 import { useFavoris } from "./favoris-provider";
 import styles from "./FavoriteList.module.css";
-import { IconeMaterial } from "./icone-material";
+import { Icon } from "@/components/ui/Icon";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { ComparisonButton } from "@/components/ui/ComparisonButton";
 import { Button } from "@/components/ui/Button";
@@ -275,7 +275,7 @@ export function FavoriteList({
               </select>
             </div>
           </div>
-          <BarreComparaison
+          <ComparisonBar
             prenoms={prenomsSelectionnes}
             onRetirer={basculerComparaison}
             onEffacer={() => setSelectionComparaison([])}
@@ -325,7 +325,7 @@ export function FavoriteList({
                       <strong>{prenom.nom}</strong>
                       <small>{prenom.genre}</small>
                     </span>
-                    <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
+                    <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                   </Link>
                   <ButtonComparaison
                     name={prenom.nom}
