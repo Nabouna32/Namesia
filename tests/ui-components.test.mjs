@@ -11,13 +11,16 @@ const notFound = await readFile(new URL("../app/not-found.tsx", import.meta.url)
 const errorBoundary = await readFile(new URL("../app/error.tsx", import.meta.url), "utf8");
 const history = await readFile(new URL("../components/historique-prenoms.tsx", import.meta.url), "utf8");
 const globalStyles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+const styles = buttonStyles;
+const icones = await readFile(new URL("../components/icone-material.tsx", import.meta.url), "utf8");
+const favoritesStyles = await readFile(new URL("../components/liste-favoris.module.css", import.meta.url), "utf8");
 
 test("Button suit l’anatomie AndroidX et conserve les éléments HTML natifs", () => {
   assert.match(button, /export function Button\(/);
   assert.match(button, /<button/);
   assert.match(button, /<Link/);
   for (const variant of ["filled", "tonal", "outlined", "text"]) {
-    assert.match(buttonStyles, new RegExp(`\\.${variant} \\\{`));
+    assert.match(buttonStyles, new RegExp(`\.${variant} \\{`));
   }
   assert.match(buttonStyles, /min-height: 48px/);
   assert.match(buttonStyles, /min-width: 58px/);
@@ -28,7 +31,7 @@ test("Button suit l’anatomie AndroidX et conserve les éléments HTML natifs",
   assert.match(buttonStyles, /--md-sys-state-hover-state-layer-opacity/);
   assert.match(buttonStyles, /--md-sys-state-focus-state-layer-opacity/);
   assert.match(buttonStyles, /--md-sys-state-pressed-state-layer-opacity/);
-  assert.doesNotMatch(buttonStyles, /\.button:disabled\\s*\\{[^}]*opacity:/s);
+  assert.doesNotMatch(buttonStyles, /\.button:disabled\s*\{[^}]*opacity:/s);
   assert.match(buttonStyles, /box-shadow: 0 1px 2px 0 color-mix/);
 });
 
@@ -54,9 +57,9 @@ test("la vitrine n'attribue aucune couleur selon l'index du prénom", () => {
   assert.match(featured, /prenoms\.map\(\(prenom\)/);
   assert.doesNotMatch(featured, /featured-\$\{index/);
   assert.doesNotMatch(featured, /featured-\d/);
-  assert.doesNotMatch(globalStyles, /\.featured-[123]\\b/);
-  assert.match(globalStyles, /\.featured-card\\s*\\{[^}]*surface-container-low/s);
-  assert.match(globalStyles, /\.featured-bottom strong\\s*\\{[^}]*on-surface/s);
+  assert.doesNotMatch(globalStyles, /\.featured-[123]\b/);
+  assert.match(globalStyles, /\.featured-card\s*\{[^}]*surface-container-low/s);
+  assert.match(globalStyles, /\.featured-bottom strong\s*\{[^}]*on-surface/s);
 });
 
 const searchBar = await readFile(new URL("../components/material3/SearchBar.tsx", import.meta.url), "utf8");
@@ -81,8 +84,8 @@ test("SearchBar applique le champ replié AndroidX et reste accessible dans les 
   assert.match(catalogue, /<SearchBar/);
   assert.match(comparator, /<SearchBar/);
   assert.match(favorites, /<SearchBar/);
-  assert.doesNotMatch(globalStyles, /\.search-field\\s*\\{/);
-  assert.doesNotMatch(globalStyles, /\.compare-search input\\s*\\{/);
+  assert.doesNotMatch(globalStyles, /\.search-field\s*\{/);
+  assert.doesNotMatch(globalStyles, /\.compare-search input\s*\{/);
 });
 
 const comparisonToggle = await readFile(new URL("../components/features/comparison/ComparisonToggle.tsx", import.meta.url), "utf8");
@@ -132,7 +135,7 @@ test("les sélecteurs des favoris utilisent les contrôles HTML natifs avec les 
   assert.match(favorites, /<label htmlFor="tri-favoris">/);
   assert.match(favorites, /<select id="tri-favoris"/);
   const styles = await readFile(new URL("../components/liste-favoris.module.css", import.meta.url), "utf8");
-  assert.match(styles, /\.selectField select\\s*\\{[^}]*surface-container-low/s);
+  assert.match(styles, /\.selectField select\s*\{[^}]*surface-container-low/s);
   assert.match(styles, /\.selectField select:focus-visible/);
 });
 
@@ -151,8 +154,8 @@ test("l’administration et les parcours visiteurs utilisent Button et Snackbar"
   assert.doesNotMatch(adminActions, /button-dark|styles\.secondary/);
   assert.doesNotMatch(favoriteActions, /button-dark/);
   assert.doesNotMatch(comparatorActions, /button-dark/);
-  assert.doesNotMatch(globalStyles, /\.button\\s*\\{|\.button-dark/);
-  assert.doesNotMatch(adminStyles, /\.secondary\\s*\\{/);
+  assert.doesNotMatch(globalStyles, /\.button\s*\{|\.button-dark/);
+  assert.doesNotMatch(adminStyles, /\.secondary\s*\{/);
 });
 
 const navigation = await readFile(new URL("../components/navigation-adaptative.tsx", import.meta.url), "utf8");
@@ -200,8 +203,9 @@ test("les cartes évitent les effets décoratifs et les boutons utilisent les co
   const nomHover = globalStyles.slice(globalStyles.indexOf(".name-card:hover {", nomBase));
   const vedetteHover = globalStyles.slice(globalStyles.lastIndexOf(".featured-card:hover {"));
   assert.match(styles, /\.button::after/);
-  assert.match(styles, /opacity: 0\.08/);
-  assert.match(styles, /opacity: 0\.12/);
+  assert.match(styles, /--md-sys-state-hover-state-layer-opacity/);
+  assert.match(styles, /--md-sys-state-focus-state-layer-opacity/);
+  assert.match(styles, /--md-sys-state-pressed-state-layer-opacity/);
   assert.doesNotMatch(styles, /filter:\s*brightness/);
   assert.match(nomHover, /surface-container-high/);
   assert.match(vedetteHover, /surface-container-high/);
