@@ -19,6 +19,27 @@ test("Fidelity et Rainbow utilisent explicitement leur spécification M3", () =>
 test("la liste des rôles système est explicite et exclut les clés internes", () => {
   const block = theme.match(/export const materialColorRoles = \[([\s\S]*?)\] as const;/)?.[1] ?? "";
   assert.ok(block.length > 0);
+  const expected = [
+    "background", "onBackground", "surface", "surfaceDim", "surfaceBright",
+    "surfaceContainerLowest", "surfaceContainerLow", "surfaceContainer",
+    "surfaceContainerHigh", "surfaceContainerHighest", "onSurface", "surfaceVariant",
+    "onSurfaceVariant", "inverseSurface", "inverseOnSurface", "outline",
+    "outlineVariant", "shadow", "scrim", "surfaceTint",
+    "primary", "onPrimary", "primaryContainer", "onPrimaryContainer",
+    "primaryFixed", "primaryFixedDim", "onPrimaryFixed", "onPrimaryFixedVariant",
+    "inversePrimary", "secondary", "onSecondary", "secondaryContainer",
+    "onSecondaryContainer", "secondaryFixed", "secondaryFixedDim",
+    "onSecondaryFixed", "onSecondaryFixedVariant", "tertiary", "onTertiary",
+    "tertiaryContainer", "onTertiaryContainer", "tertiaryFixed", "tertiaryFixedDim",
+    "onTertiaryFixed", "onTertiaryFixedVariant", "error", "onError",
+    "errorContainer", "onErrorContainer"
+  ];
+  const actual = [...block.matchAll(/"([A-Za-z]+)"/g)].map((match) => match[1]);
+  assert.deepEqual(actual, expected);
+  const toToken = (role) => role.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+  const allowed = new Set(expected.map(toToken));
+  const used = [...styles.matchAll(/var\(--md-sys-color-([a-z0-9-]+)/g)].map((match) => match[1]);
+  assert.ok(used.every((role) => allowed.has(role)), "Un rôle CSS ne figure pas dans le registre M3");
   assert.doesNotMatch(block, /PaletteKeyColor|primaryDim|secondaryDim|tertiaryDim|errorDim/);
   assert.match(theme, /--md-sys-color-/);
   assert.match(theme, /typeof value !== "number"/);
