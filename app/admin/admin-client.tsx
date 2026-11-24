@@ -5,7 +5,7 @@ import { createClient, type Session } from "@supabase/supabase-js";
 import { FICHE_SCHEMA_VERSION, parseFichePrenom, type FichePrenomImport } from "@/lib/fiche-prenom";
 import styles from "./admin.module.css";
 import { Button } from "@/components/ui/Button";
-import { MessageStatut, type TypeMessageStatut } from "@/components/ui/message-statut";
+import { StatusMessage, type TypeStatusMessage } from "@/components/ui/StatusMessage";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -39,9 +39,9 @@ export function AdminClient() {
   const [email, setEmail] = useState("");
   const [json, setJson] = useState("");
   const [preview, setPreview] = useState<FichePrenomImport | null>(null);
-  const [message, setMessage] = useState<{ text: string; type: TypeMessageStatut } | null>(null);
+  const [message, setMessage] = useState<{ text: string; type: TypeStatusMessage } | null>(null);
 
-  function afficherMessage(text: string, type: TypeMessageStatut = "info") {
+  function afficherMessage(text: string, type: TypeStatusMessage = "info") {
     setMessage({ text, type });
   }
   const [busy, setBusy] = useState(false);
@@ -281,7 +281,7 @@ export function AdminClient() {
         <input id="admin-email" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
         <Button type="submit" disabled={busy}>{busy ? "Envoi…" : "Recevoir un lien de connexion"}</Button>
       </form>
-      {message && <MessageStatut type={message.type}>{message.text}</MessageStatut>}
+      {message && <StatusMessage type={message.type}>{message.text}</StatusMessage>}
     </section>;
   }
 
@@ -289,7 +289,7 @@ export function AdminClient() {
     return <section className={styles.panel}>
       <h2>Accès non autorisé</h2>
       <p>Ce compte est connecté, mais ne figure pas dans la liste des administrateurs Namesia.</p>
-      {message && <MessageStatut type={message.type}>{message.text}</MessageStatut>}
+      {message && <StatusMessage type={message.type}>{message.text}</StatusMessage>}
       <Button type="button" onClick={deconnecter}>Se déconnecter</Button>
     </section>;
   }
@@ -329,7 +329,7 @@ export function AdminClient() {
       {preview.content.history && <section><h4>Histoire du prénom</h4><p>{preview.content.history}</p></section>}
       {preview.content.usage && <section><h4>Variantes & usages</h4><p>{preview.content.usage}</p></section>}
       {preview.content.symbolic_associations.map((symbol) => <section key={`${symbol.category}-${symbol.value}`}><h4>{symbol.category} · {symbol.value}</h4><p>{symbol.context_note}</p></section>)}
-      <MessageStatut type="warning" className={styles.previewWarning}>La validation porte sur la structure du JSON, pas sur la véracité des contenus générés.</MessageStatut>
+      <StatusMessage type="warning" className={styles.previewWarning}>La validation porte sur la structure du JSON, pas sur la véracité des contenus générés.</StatusMessage>
     </article>}
 
     {imported && <div className={styles.publish}>
@@ -354,6 +354,6 @@ export function AdminClient() {
       </article>)}
       {catalogNextOffset !== null && <Button variant="outlined" type="button" disabled={catalogLoading} onClick={() => setCatalogOffset(catalogNextOffset)}>Charger les fiches suivantes</Button>}
     </section>
-    {message && <MessageStatut type={message.type}>{message.text}</MessageStatut>}
+    {message && <StatusMessage type={message.type}>{message.text}</StatusMessage>}
   </section>;
 }
