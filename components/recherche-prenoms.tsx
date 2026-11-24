@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { BarreComparaison } from "@/components/barre-comparaison";
-import { BoutonFavori } from "@/components/bouton-favori";
+import { FavoriteButton } from "@/components/FavoriteButton";
 import { useFavoris } from "@/components/favoris-provider";
 import styles from "./recherche-prenoms.module.css";
 import type { PrenomIndex } from "@/lib/prenoms";
@@ -251,7 +251,7 @@ export function RecherchePrenoms({
                         onClick={() => basculerComparaison(prenom.slug)}
                       />
                     )}
-                    <ButtonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
+                    <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
                   </article>
                 ))}
               </div>
@@ -291,7 +291,7 @@ export function RecherchePrenoms({
                         onClick={() => basculerComparaison(prenom.slug)}
                       />
                     )}
-                    <ButtonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
+                    <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
                   </article>
                 ))}
               </div>
