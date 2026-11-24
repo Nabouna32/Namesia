@@ -275,7 +275,7 @@ export function ListeFavoris({
             </div>
           </div>
           <BarreComparaison
-            names={prenomsSelectionnes.map((prenom) => ({ slug: prenom.slug, name: prenom.nom }))}
+            prenoms={prenomsSelectionnes}
             onRetirer={basculerComparaison}
             onEffacer={() => setSelectionComparaison([])}
           />
