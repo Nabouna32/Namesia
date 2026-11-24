@@ -25,7 +25,7 @@ Ce document définit les composants d'interface autorisés et leur composition. 
 |---|---|---|
 | `MaterialTheme` / `ColorScheme` | Thème global clair/sombre | Rôles Fidelity calculés et extensions explicites |
 | `TopAppBar` | Barre supérieure commune | Anatomie, hauteur, alignement et couleurs AndroidX |
-| `NavigationBar` | Navigation compacte | Navigation de premier niveau, 80 dp, indicateur et libellés `label-medium` |
+| `NavigationBar` | Navigation compacte | Navigation de premier niveau, `NavigationBarTokens.TallContainerHeight = 80 dp`, indicateur et libellés `label-medium` |
 | `NavigationRail` | Navigation medium/expanded | Navigation de premier niveau, rail de 80 dp et libellés `label-medium` |
 | `Button` | Actions textuelles | Filled, Filled Tonal, Outlined et Text ; géométrie et états AndroidX |
 | `IconButton` | Actions iconiques | Icône de 24 dp et cible tactile Web adaptée |
