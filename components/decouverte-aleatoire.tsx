@@ -26,7 +26,7 @@ export function DecouverteAleatoire({ prenoms }: Props) {
   return (
     <div className={styles.discovery}>
       <Bouton variante="outlined" onClick={decouvrir}>
-        Surprenez-moi <span aria-hidden="true"><IconeMaterial name="shuffle" size={18} /></span>
+        Surprenez-moi <span aria-hidden="true"><IconeMaterial name="shuffle" size={20} /></span>
       </Bouton>
       <div className={styles.copy} aria-live="polite" aria-atomic="true">
         {selection ? (
