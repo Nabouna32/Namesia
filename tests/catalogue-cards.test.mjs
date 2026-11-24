@@ -28,7 +28,14 @@ test("les quatre genres ont une correspondance SVG exhaustive et centralisée", 
     ["Genre non renseigné", "gender-unknown"]
   ]) {
     assert.match(genreMap, new RegExp(`"${label}": "${name}"`));
-    assert.match(icon, new RegExp(`"${name}":`));
+    if (name === "gender-male") {
+      assert.match(icon, /type IconPathName = Exclude<IconName, "gender-male">/);
+      assert.match(icon, /name === "gender-male"/);
+      assert.match(icon, /const maleRing/);
+      assert.match(icon, /const maleArrow/);
+    } else {
+      assert.match(icon, new RegExp(`"${name}":`));
+    }
   }
   assert.match(genreMap, /Record<GenrePrenom, IconName>/);
   assert.match(genreIcon, /role="img" aria-label=\{genre\}/);
