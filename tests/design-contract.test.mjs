@@ -17,7 +17,7 @@ const messageComponent = await readFile(join(root, "components/ui/StatusMessage.
 const messageStyles = await readFile(join(root, "components/ui/StatusMessage.module.css"), "utf8");
 const composantsDoc = await readFile(join(root, "docs/composants.md"), "utf8");
 const materialVerificationDoc = await readFile(join(root, "docs/material-3-verification.md"), "utf8");
-const navigationComponent = await readFile(join(root, "components/navigation-adaptative.tsx"), "utf8");
+const navigationComponent = await readFile(join(root, "components/ui/NavigationDestinations.tsx"), "utf8");
 const agents = await readFile(join(root, "AGENTS.md"), "utf8");
 
 async function collectCss(directory) {
@@ -323,6 +323,13 @@ test("les boutons et FilterChip utilisent le rôle typographique M3 label-large"
   assert.match(composantsDoc, /FilterChipTokens\.ContainerHeight.*32 dp/);
 });
 
+
+test("le layout compose les composants officiels du shell Material 3", () => {
+  assert.match(layout, /<TopAppBar \/>/);
+  assert.match(layout, /<NavigationBar \/>/);
+  assert.match(layout, /<NavigationRail \/>/);
+  assert.doesNotMatch(layout, /NavigationAdaptative/);
+});
 
 test("NavigationBar et NavigationRail utilisent le rôle M3 label-medium à toutes les largeurs", () => {
   const navigationRule = globalCss.match(/\.navigation-item\s*\{([^}]*)\}/s)?.[1] ?? "";
