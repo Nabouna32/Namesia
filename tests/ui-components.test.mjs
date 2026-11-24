@@ -233,8 +233,8 @@ test("les cartes évitent les effets décoratifs et les boutons utilisent les co
   const nomHover = globalStyles.slice(globalStyles.indexOf(".name-card:hover {", nomBase));
   const vedetteHover = globalStyles.slice(globalStyles.lastIndexOf(".featured-card:hover {"));
   assert.match(styles, /\.button::after/);
-  assert.match(styles, /opacity: 0\.08/);
-  assert.match(styles, /opacity: 0\.12/);
+  assert.match(styles, /md-sys-state-hover-state-layer-opacity/);
+  assert.match(styles, /md-sys-state-pressed-state-layer-opacity/);
   assert.doesNotMatch(styles, /filter:\s*brightness/);
   assert.match(nomHover, /surface-container-high/);
   assert.match(vedetteHover, /surface-container-high/);
