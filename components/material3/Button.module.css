@@ -64,7 +64,6 @@
 .button:not(.icon):active:not(:disabled)::before,
 .button:not(.icon):active:not(:disabled)::after { border-radius: var(--md-sys-shape-corner-small); }
 
-.button:disabled,
 .filled { color: var(--md-sys-color-on-primary); }
 .filled::before { background: var(--md-sys-color-primary); }
 .tonal { color: var(--md-sys-color-on-secondary-container); }
@@ -73,7 +72,6 @@
 .outlined::before { border: 1px solid var(--md-sys-color-outline-variant); }
 .text { padding-inline: 12px; color: var(--md-sys-color-primary); }
 .icon { width: 48px; min-width: 48px; padding: 0; color: var(--md-sys-color-on-surface-variant); }
-.icon:disabled { color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent); }
 .icon::before,
 .icon::after { inset: 4px; }
 
