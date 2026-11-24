@@ -65,9 +65,15 @@ test("les trois parcours visiteurs utilisent le même champ de recherche accessi
   assert.match(champ, /champRef\.current\?\.focus\(\)/);
   assert.match(champ, /ref=\{champRef\}/);
   assert.doesNotMatch(champ, /<button/);
+  assert.match(champStyles, /height: 56px/);
+  assert.match(champStyles, /corner-full/);
+  assert.match(champStyles, /surface-container-high/);
+  assert.match(champStyles, /body-large-(?:font|size|weight|line-height|tracking)/);
+  assert.match(champStyles, /on-surface-variant/);
   assert.match(champStyles, /:focus-within/);
   assert.match(champStyles, /::-webkit-search-cancel-button/);
-  assert.match(champStyles, /--md-sys-motion-duration-short/);
+  assert.doesNotMatch(champStyles, /\.compact/);
+  assert.doesNotMatch(champ, /compact\??:/);
   assert.doesNotMatch(champStyles, /\.clear\s*\{/);
   assert.match(styles, /min-height: 48px/);
   assert.match(catalogue, /<ChampRecherche/);
@@ -165,7 +171,7 @@ test("les actions de l'administration et des visiteurs utilisent les boutons par
 
 
 const navigation = await readFile(new URL("../components/navigation-adaptative.tsx", import.meta.url), "utf8");
-const themeProvider = await readFile(new URL("../components/material-theme-provider.tsx", import.meta.url), "utf8");
+const materialTheme = await readFile(new URL("../lib/material-theme.ts", import.meta.url), "utf8");
 
 test("la navigation reprend les modèles Material 3 compacts et rail sans tiroir propriétaire", () => {
   assert.match(navigation, /className="navigation-bar"/);
@@ -179,12 +185,13 @@ test("la navigation reprend les modèles Material 3 compacts et rail sans tiroir
   assert.doesNotMatch(globalStyles, /navigation-rail\.is-expanded|navigation-rail-toggle/);
 });
 
-test("Fidelity et Rainbow sont calculés depuis la source Pixel documentée", () => {
-  assert.match(themeProvider, /argbFromHex\("#005AC1"\)/);
-  assert.match(themeProvider, /variant: Variant\.FIDELITY/);
-  assert.match(themeProvider, /variant: Variant\.RAINBOW/);
-  assert.match(globalStyles, /--md-sys-color-primary: #005ac1/);
-  assert.match(globalStyles, /--md-sys-motion-emphasized-decelerate/);
+test("Fidelity et Rainbow sont calculés depuis la source baseline Material documentée", () => {
+  assert.match(materialTheme, /argbFromHex\("#6750A4"\)/);
+  assert.match(materialTheme, /Variant\.FIDELITY/);
+  assert.match(materialTheme, /Variant\.RAINBOW/);
+  assert.match(materialTheme, /specVersion: "2021"/);
+  assert.match(materialTheme, /--md-sys-color-/);
+  assert.match(globalStyles, /--md-sys-motion-easing-emphasized-decelerate/);
   assert.match(globalStyles, /prefers-reduced-motion: reduce/);
 });
 
