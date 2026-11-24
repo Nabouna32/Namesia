@@ -132,7 +132,7 @@ L'application occupe au minimum la hauteur de la fenêtre avec une colonne flex.
 - `components/navigation-adaptative.tsx` porte la navigation de premier niveau.
 - `components/material3/` contient les composants de présentation M3 ; `components/features/` contient les compositions propres au produit.
 - `app/layout.tsx` compose la barre supérieure, le rail/la barre de navigation, le contenu et le pied de page.
-- `app/globals.css` contient les formes, la typographie et les styles structurels partagés. Les rôles de couleur sont générés par `lib/material-theme.ts` dans le `<head>` dès le rendu serveur ; aucune palette statique parallèle ni fallback CSS n'existe.
+- `styles/material3/tokens.css` centralise les rôles typographiques, formes, mouvements et couches d'état M3. `app/globals.css` porte la structure du shell et les règles sémantiques globales ; les couleurs sont générées par `lib/material-theme.ts` dans le `<head>` dès le rendu serveur. Aucune palette statique parallèle ni fallback CSS n'existe.
 - Les CSS Modules consomment les tokens partagés. Ils gèrent la disposition propre à un composant, sans redéfinir les styles d'un contrôle commun.
 - Les contrats AndroidX sont portés explicitement en React/HTML. Material Web 2.5.0 n'est pas retenu comme dépendance structurante : son projet est en maintenance en attente de nouveaux mainteneurs et son implémentation ne garantit pas la parité AndroidX.
 
