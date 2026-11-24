@@ -1,7 +1,6 @@
 "use client";
 
-import { IconButton } from "@/components/material3/IconButton";
-import { IconeMaterial } from "@/components/icone-material";
+import { InputChip } from "@/components/material3/InputChip";
 import styles from "./ComparisonSelection.module.css";
 
 type SelectedName = { slug: string; name: string };
@@ -19,16 +18,7 @@ export function ComparisonSelection({ names, label, onRemove }: Props) {
     <ul className={styles.list} aria-label={label}>
       {names.map((name) => (
         <li className={styles.item} key={name.slug}>
-          <span className={styles.chip}>
-            <span>{name.name}</span>
-            <IconButton
-              className={styles.remove}
-              label={`Retirer ${name.name} de la comparaison`}
-              onClick={() => onRemove(name.slug)}
-            >
-              <IconeMaterial name="close" size={18} />
-            </IconButton>
-          </span>
+          <InputChip label={name.name} onRemove={() => onRemove(name.slug)} />
         </li>
       ))}
     </ul>
