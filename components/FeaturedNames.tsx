@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import type { PrenomIndex } from "@/lib/prenoms";
 import styles from "./FeaturedNames.module.css";
-import { IconeMaterial } from "./icone-material";
+import { Icon } from "@/components/ui/Icon";
 
 type Props = { prenoms: PrenomIndex[] };
 
@@ -18,7 +18,7 @@ export function FeaturedNames({ prenoms }: Props) {
                 <strong>{prenom.nom}</strong>
                 <small>{prenom.genre}</small>
               </span>
-              <span className="featured-action">Découvrir <b><IconeMaterial name="arrow-up-right" size={18} /></b></span>
+              <span className="featured-action">Découvrir <b><Icon name="arrow-up-right" size={18} /></b></span>
             </span>
           </Link>
           <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
