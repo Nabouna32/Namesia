@@ -21,7 +21,7 @@ export function SuggestionsPrenoms({ prenoms, contexteRetour = null }: Props) {
             </span>
             <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
           </Link>
-          <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
+          <ButtonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
         </article>
       ))}
     </div>
