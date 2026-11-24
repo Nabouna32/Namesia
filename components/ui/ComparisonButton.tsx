@@ -1,0 +1,38 @@
+"use client";
+
+import { Button } from "@/components/ui/Button";
+import { IconeMaterial } from "@/components/icone-material";
+import styles from "./ComparisonButton.module.css";
+
+type Props = {
+  prenom: string;
+  selectionne: boolean;
+  desactive?: boolean;
+  onClick: () => void;
+};
+
+export function ComparisonButton({
+  prenom,
+  selectionne,
+  desactive = false,
+  onClick
+}: Props) {
+  const action = selectionne ? "Retirer" : "Ajouter";
+  const preposition = selectionne ? "de" : "à";
+
+  return (
+    <Button
+      variant={selectionne ? "tonal" : "outlined"}
+      className={styles.toggle}
+      aria-label={`${action} ${prenom} ${preposition} la comparaison`}
+      aria-pressed={selectionne}
+      disabled={desactive}
+      onClick={onClick}
+    >
+      <span className={styles.label}>{selectionne ? "Ajouté" : "Comparer"}</span>
+      <span className={styles.icon} aria-hidden="true">
+        <IconeMaterial name={selectionne ? "check" : "compare-arrows"} size={18} />
+      </span>
+    </Button>
+  );
+}
