@@ -1,0 +1,33 @@
+import type { ReactNode } from "react";
+import styles from "./StatusMessage.module.css";
+
+export type StatusMessageType = "success" | "warning" | "info" | "error";
+
+const roles: Record<TypeStatusMessage, string> = {
+  success: styles.success,
+  warning: styles.warning,
+  info: styles.info,
+  error: styles.error
+};
+
+export function MessageStatut({
+  type,
+  children,
+  className
+}: Readonly<{
+  type: TypeMessageStatut;
+  children: ReactNode;
+  className?: string;
+}>) {
+  const erreur = type === "error";
+
+  return (
+    <p
+      className={[styles.message, roles[type], className].filter(Boolean).join(" ")}
+      role={erreur ? "alert" : "status"}
+      aria-live={erreur ? "assertive" : "polite"}
+    >
+      {children}
+    </p>
+  );
+}
