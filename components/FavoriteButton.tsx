@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
 import styles from "./FavoriteButton.module.css";
 import { Icon } from "@/components/ui/Icon";
-import { useFavoris } from "./favoris-provider";
+import { useFavoris } from "@/components/FavoritesProvider";
 type Props = { slug: string; name?: string; compact?: boolean; showError?: boolean };
 export function FavoriteButton({ slug, name, compact = false, showError = true }: Props) {
  const { slugs, pret, erreur, basculer } = useFavoris();
