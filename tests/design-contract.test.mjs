@@ -287,7 +287,7 @@ test("le hero d'accueil sépare le récit et les outils dans une composition Fid
   assert.match(home, /className="hero-intro"/);
   assert.match(home, /className="hero-tools"/);
   assert.match(home, /<h2>Un prénom en tête\s*\?<\/h2>/);
-  assert.match(home, /<RecherchePrenoms prenoms=\{prenoms\} compact \/>/);
+  assert.match(home, /<NameSearch prenoms=\{prenoms\} compact \/>/);
   assert.match(globalCss, /\.hero-content\s*\{[^}]*display:\s*grid/s);
   assert.match(globalCss, /\.hero-tools\s*\{[^}]*background:\s*var\(--md-sys-color-surface-container-lowest\)/s);
   assert.match(globalCss, /\.hero-copy\s*\{[^}]*color:\s*var\(--md-sys-color-on-surface-variant\)/s);
