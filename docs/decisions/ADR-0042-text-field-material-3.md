@@ -10,6 +10,8 @@ L'administration utilisait des champs email et textarea stylés localement dans 
 
 ## Décision
 
+L’implémentation canonique est `components/material3/TextField.tsx` et `components/material3/TextField.module.css`.
+
 - Créer `TextField` avec les variantes explicites `filled` et `outlined`.
 - Reproduire l'anatomie M3 : conteneur, label flottant, saisie, supporting text, état d'erreur, désactivation et focus.
 - Utiliser les rôles typographiques `body-large`, `label-small` et `body-small` ainsi que les tokens de couleur, forme et mouvement.
