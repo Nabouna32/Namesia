@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { PrenomIndex } from "@/lib/prenoms";
-import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import { Button } from "@/components/material3/Button";
 import styles from "./RandomDiscovery.module.css";
 import { Icon } from "@/components/material3/Icon";
@@ -31,8 +30,7 @@ export function RandomDiscovery({ prenoms }: Props) {
       <div className={styles.copy} aria-live="polite" aria-atomic="true">
         {selection ? (
           <span className={styles.resultLine}>
-            <span>Votre prochaine découverte : <Link className={styles.result} href={`/prenoms/${selection.slug}`}>{selection.nom}</Link></span>
-            <FavoriteButton slug={selection.slug} name={selection.nom} compact showError={false} />
+            Votre prochaine découverte : <Link className={styles.result} href={`/prenoms/${selection.slug}`}>{selection.nom}</Link>
           </span>
         ) : (
           "Pas d’idée précise ? Laissez-vous guider par le hasard."

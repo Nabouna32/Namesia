@@ -4,9 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { creerUrlFicheDepuisComparateur } from "@/lib/navigation-prenoms";
 import type { Prenom, PrenomIndex } from "@/lib/prenoms";
+import { GenreIcon } from "@/components/features/names/GenreIcon";
 import { ShareLink } from "@/components/features/sharing/ShareLink";
-import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
-import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { categoryTone } from "@/lib/category-color";
 import { SearchBar } from "@/components/material3/SearchBar";
@@ -25,7 +24,6 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
   const [chargement, setChargement] = useState(false);
   const [erreur, setErreur] = useState(false);
   const [tentative, setTentative] = useState(0);
-  const { erreur: erreurFavoris } = useFavorites();
   const selectionInitialeKey = selectionInitiale.join(",");
   const selectionKey = selection.join(",");
 
@@ -150,7 +148,7 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
                       <span className="compare-option-initial" aria-hidden="true">{prenom.lettre}</span>
                       <span className="compare-option-name">
                         <strong>{prenom.nom}</strong>
-                        <small>{prenom.genre}</small>
+                        <GenreIcon genre={prenom.genre} />
                       </span>
                     </label>
                   );
@@ -207,9 +205,8 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
             <Card as="article" variant="elevated" className="compare-card" key={prenom.slug}>
               <header>
                 <h2>{prenom.nom}</h2>
-                <span className="profile-tag">{prenom.genre}</span>
+                <span className="profile-tag"><GenreIcon genre={prenom.genre} /></span>
                 <span className="profile-tag">Lettre {prenom.lettre}</span>
-                <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
                 <Link
                   className="compare-card-link"
                   href={creerUrlFicheDepuisComparateur(prenom.slug, selection)}
@@ -252,12 +249,6 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
           ))}
           <p className="compare-disclaimer">Les associations symboliques sont des représentations culturelles, pas des caractéristiques scientifiques ou prédictives.</p>
         </section>
-      )}
-
-      {erreurFavoris && (
-        <p role="alert">
-          Le stockage des favoris est indisponible ou contient des données illisibles. Vos modifications ne sont pas enregistrées.
-        </p>
       )}
 
       {selection.length >= 2 && selectionComplete && !chargement && !erreur && (

@@ -2,27 +2,18 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import type { GenrePrenom, PrenomIndex } from "@/lib/prenoms";
-import { ComparisonBar } from "@/components/features/comparison/ComparisonBar";
-import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
-import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
+import type { PrenomIndex } from "@/lib/prenoms";
+import { GenreIcon } from "@/components/features/names/GenreIcon";
+import { GENRE_ICONS } from "@/lib/genre-icons";
 import styles from "./NameSearch.module.css";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
-import { Icon, type IconName } from "@/components/material3/Icon";
+import { Icon } from "@/components/material3/Icon";
 import { SearchBar } from "@/components/material3/SearchBar";
-import { ComparisonToggle } from "@/components/features/comparison/ComparisonToggle";
 import { Button } from "@/components/material3/Button";
 import { ShareLink } from "@/components/features/sharing/ShareLink";
 import { FilterChip } from "@/components/material3/FilterChip";
 import { Card } from "@/components/material3/Card";
-
-const genderIcons: Record<GenrePrenom, IconName> = {
-  "Féminin": "gender-female",
-  "Masculin": "gender-male",
-  "Mixte": "gender-mixed",
-  "Genre non renseigné": "gender-unknown"
-};
 
 type Props = {
   prenoms: PrenomIndex[];
@@ -43,12 +34,10 @@ export function NameSearch({
   initialLettre = null,
   initialNombreVisible = 24
 }: Props) {
-  const { erreur: erreurFavoris } = useFavorites();
   const [recherche, setRecherche] = useState(initialRecherche);
   const [genreActif, setGenreActif] = useState(initialGenre);
   const [lettreActive, setLettreActive] = useState(initialLettre);
   const [nombreVisible, setNombreVisible] = useState(initialNombreVisible);
-  const [selectionComparaison, setSelectionComparaison] = useState<string[]>([]);
 
   const genres = useMemo(
     () => [...new Set(prenoms.map((prenom) => prenom.genre))].sort((a, b) => a.localeCompare(b, "fr")),
@@ -80,21 +69,10 @@ export function NameSearch({
     return suggererPrenomsProches(candidats, recherche);
   }, [genreActif, lettreActive, prenoms, recherche, resultats.length]);
 
-  const prenomsSelectionnes = selectionComparaison.flatMap((slug) => {
-    const prenom = prenoms.find((candidat) => candidat.slug === slug);
-    return prenom ? [prenom] : [];
-  });
-
   const filtresActifs = Boolean(recherche.trim() || genreActif || lettreActive);
   const contexteRetour = synchroniserUrl
     ? { q: recherche, genre: genreActif, lettre: lettreActive, limite: nombreVisible }
     : null;
-
-  function basculerComparaison(slug: string) {
-    setSelectionComparaison((selection) => selection.includes(slug)
-      ? selection.filter((element) => element !== slug)
-      : selection.length < 3 ? [...selection, slug] : selection);
-  }
 
   function mettreAJourUrl(
     rechercheSuivante: string,
@@ -173,6 +151,8 @@ export function NameSearch({
                   <FilterChip
                     key={genre}
                     label={genre}
+                    leadingIcon={<Icon name={GENRE_ICONS[genre]} size={18} />}
+                    iconOnly
                     selected={genreActif === genre}
                     onClick={() => changerGenre(genre)}
                   />
@@ -215,14 +195,6 @@ export function NameSearch({
         />
       )}
 
-      {!compact && (
-        <ComparisonBar
-          names={prenomsSelectionnes.map((prenom) => ({ slug: prenom.slug, name: prenom.nom }))}
-          onRemove={basculerComparaison}
-          onClear={() => setSelectionComparaison([])}
-        />
-      )}
-
       {(!compact || recherche.trim()) && (
         <div className="search-results">
           <p className={compact ? "results-meta sr-only" : "results-meta"} role="status">
@@ -232,39 +204,20 @@ export function NameSearch({
                 ? `${suggestions.length} suggestions proches`
                 : `0 résultat affiché sur ${prenoms.length}`}
           </p>
-          {erreurFavoris && (
-            <p className={styles.favoriteError} role="alert">
-              Le stockage des favoris est indisponible ou contient des données illisibles. Vos modifications ne sont pas enregistrées.
-            </p>
-          )}
           {resultats.length > 0 ? (
             <>
               <div className={styles.resultsGrid}>
                 {resultats.slice(0, nombreVisible).map((prenom) => (
                   <article className={styles.resultCard} key={prenom.slug}>
-                    <Card as={Link} variant="elevated" interactive className={`name-card ${styles.resultLink}`} href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
+                    <Card as={Link} variant="elevated" interactive className="name-card" href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
                       <span className="name-initial">{prenom.lettre}</span>
                       <span>
                         <strong>{prenom.nom}</strong>
-                        <span className={styles.gender}>
-                          <Icon name={genderIcons[prenom.genre]} size={18} />
-                          <span className="sr-only">{prenom.genre}</span>
-                        </span>
+                        <GenreIcon genre={prenom.genre} />
                       </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Card>
-                    <div className={styles.resultActions}>
-                      {!compact && (
-                        <ComparisonToggle
-                          iconOnly
-                          name={prenom.nom}
-                          selected={selectionComparaison.includes(prenom.slug)}
-                          disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
-                          onClick={() => basculerComparaison(prenom.slug)}
-                        />
-                      )}
-                      <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
-                    </div>
+
                   </article>
                 ))}
               </div>
@@ -291,29 +244,15 @@ export function NameSearch({
               <div className={styles.resultsGrid}>
                 {suggestions.map((prenom) => (
                   <article className={styles.resultCard} key={prenom.slug}>
-                    <Card as={Link} variant="elevated" interactive className={`name-card ${styles.resultLink}`} href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
+                    <Card as={Link} variant="elevated" interactive className="name-card" href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
                       <span className="name-initial">{prenom.lettre}</span>
                       <span>
                         <strong>{prenom.nom}</strong>
-                        <span className={styles.gender}>
-                          <Icon name={genderIcons[prenom.genre]} size={18} />
-                          <span className="sr-only">{prenom.genre}</span>
-                        </span>
+                        <GenreIcon genre={prenom.genre} />
                       </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Card>
-                    <div className={styles.resultActions}>
-                      {!compact && (
-                        <ComparisonToggle
-                          iconOnly
-                          name={prenom.nom}
-                          selected={selectionComparaison.includes(prenom.slug)}
-                          disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
-                          onClick={() => basculerComparaison(prenom.slug)}
-                        />
-                      )}
-                      <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
-                    </div>
+
                   </article>
                 ))}
               </div>

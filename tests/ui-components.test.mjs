@@ -36,11 +36,12 @@ test("Button suit l’anatomie AndroidX et conserve les éléments HTML natifs",
 
 test("les fonctions métier composent les composants Material 3 sans réimplémenter les boutons", () => {
   assert.match(favoriteButton, /import \{ Button \} from "@\/components\/material3\/Button"/);
-  assert.match(favoriteButton, /import \{ IconButton \} from "@\/components\/material3\/IconButton"/);
   assert.match(favoriteButton, /<Button/);
-  assert.match(favoriteButton, /<IconButton/);
+  assert.match(favoriteButton, /aria-label=\{label\}/);
+  assert.match(favoriteButton, /aria-pressed=\{selected\}/);
   assert.match(discovery, /<Button/);
-  assert.match(featured, /<FavoriteButton/);
+  assert.doesNotMatch(featured, /<FavoriteButton/);
+  assert.match(featured, /<GenreIcon/);
   assert.match(history, /<IconButton/);
   assert.match(notFound, /<Button href=/);
   assert.doesNotMatch(discovery, /<button/);
@@ -87,25 +88,15 @@ test("SearchBar applique le champ replié AndroidX et reste accessible dans les 
   assert.doesNotMatch(globalStyles, /\.compare-search input\s*\{/);
 });
 
-const comparisonToggle = await readFile(new URL("../components/features/comparison/ComparisonToggle.tsx", import.meta.url), "utf8");
-const comparisonToggleStyles = await readFile(new URL("../components/features/comparison/ComparisonToggle.module.css", import.meta.url), "utf8");
 const comparisonSelection = await readFile(new URL("../components/features/comparison/ComparisonSelection.tsx", import.meta.url), "utf8");
 const comparisonSelectionStyles = await readFile(new URL("../components/features/comparison/ComparisonSelection.module.css", import.meta.url), "utf8");
-const comparisonBar = await readFile(new URL("../components/features/comparison/ComparisonBar.tsx", import.meta.url), "utf8");
 const comparatorSelection = await readFile(new URL("../components/features/comparison/NameComparator.tsx", import.meta.url), "utf8");
 
-test("les fonctions de comparaison sont dans la couche métier et composent les primitives M3", () => {
-  assert.match(comparisonToggle, /export function ComparisonToggle\(/);
-  assert.match(comparisonToggle, /aria-pressed=\{selected\}/);
-  assert.match(comparisonToggle, /aria-label=/);
-  assert.match(comparisonToggle, /variant=\{selected \? "tonal" : "outlined"\}/);
-  assert.match(comparisonToggleStyles, /@media \(max-width: 420px\)/);
-  assert.match(comparisonToggleStyles, /min-width: 48px/);
+test("la sélection du comparateur utilise InputChip et les composants Material 3", () => {
   assert.match(comparisonSelection, /export function ComparisonSelection\(/);
   assert.match(comparisonSelection, /<InputChip/);
   assert.match(comparisonSelection, /onRemove=/);
   assert.match(comparisonSelectionStyles, /list-style: none/);
-  assert.match(comparisonBar, /<ComparisonSelection/);
   assert.match(comparatorSelection, /<ComparisonSelection/);
 });
 
@@ -142,9 +133,10 @@ test("FilterChip suit la géométrie et les états AndroidX", () => {
   assert.doesNotMatch(globalStyles, /filter-chip|filter-letter|Expressive/);
 });
 
-test("les sélecteurs des favoris utilisent les contrôles HTML natifs avec les tokens M3", () => {
-  assert.match(favorites, /<label htmlFor="genre-favoris">/);
-  assert.match(favorites, /<select id="genre-favoris"/);
+test("les filtres de genre des favoris sont icon-only et le tri reste natif", () => {
+  assert.match(favorites, /leadingIcon=\{<Icon name=\{GENRE_ICONS\[genre\]\}/);
+  assert.match(favorites, /iconOnly/);
+  assert.match(favorites, /<FilterChip label="Tous"/);
   assert.match(favorites, /<label htmlFor="tri-favoris">/);
   assert.match(favorites, /<select id="tri-favoris"/);
   assert.match(favoritesStyles, /\.selectField select\s*\{[^}]*surface-container-low/s);
@@ -368,18 +360,16 @@ test("la fiche prénom applique Material 3 dans ses règles canoniques", () => {
 });
 
 const historiqueActions = await readFile(new URL("../components/features/history/RecentNames.tsx", import.meta.url), "utf8");
-const barreComparaisonActions = await readFile(new URL("../components/features/comparison/ComparisonBar.tsx", import.meta.url), "utf8");
-const historiqueStyles = await readFile(new URL("../components/features/history/RecentNames.module.css", import.meta.url), "utf8");
-const barreComparaisonStyles = await readFile(new URL("../components/features/comparison/ComparisonBar.module.css", import.meta.url), "utf8");
+const comparatorActions = await readFile(new URL("../components/features/comparison/NameComparator.tsx", import.meta.url), "utf8");
+const comparisonSelection = await readFile(new URL("../components/features/comparison/ComparisonSelection.tsx", import.meta.url), "utf8");
 
-test("les actions d'effacement de l'accueil et de comparaison utilisent les primitives communes", () => {
-  assert.match(historiqueActions, /<Button variant="text"[^>]*onClick=\{effacer\}/);
-  assert.match(barreComparaisonActions, /<Button variant="text"[^>]*onClick=\{onClear\}/);
-  assert.match(barreComparaisonActions, /<Button[^>]*variant="filled"/);
-  assert.doesNotMatch(historiqueActions, /<button\b/);
-  assert.doesNotMatch(barreComparaisonActions, /<button\b|<Link\b/);
-  assert.doesNotMatch(historiqueStyles, /\.clear\s*\{/);
-  assert.doesNotMatch(barreComparaisonStyles, /\.actions button|\.link\s*\{/);
+test("les actions de découverte sont concentrées sur la fiche et le comparateur garde sa sélection native", () => {
+  assert.match(historiqueActions, /<Button variant="text"[^>]*onClick=/);
+  assert.doesNotMatch(historiqueActions, /<FavoriteButton/);
+  assert.match(comparatorActions, /<ComparisonSelection/);
+  assert.match(comparatorActions, /type="checkbox"/);
+  assert.doesNotMatch(comparatorActions, /ComparisonBar|ComparisonToggle/);
+  assert.match(comparisonSelection, /<InputChip/);
 });
 
 

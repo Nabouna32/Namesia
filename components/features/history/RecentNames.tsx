@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import type { PrenomIndex } from "@/lib/prenoms";
-import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
 import { useHistory } from "@/components/features/history/HistoryProvider";
 import styles from "./RecentNames.module.css";
+import { GenreIcon } from "@/components/features/names/GenreIcon";
 import { Icon } from "@/components/material3/Icon";
 import { Button } from "@/components/material3/Button";
 import { IconButton } from "@/components/material3/IconButton";
@@ -13,7 +12,6 @@ import { Card } from "@/components/material3/Card";
 
 export function RecentNames({ prenoms }: { prenoms: PrenomIndex[] }) {
   const { slugs, retirer, effacer, erreur } = useHistory();
-  const { erreur: erreurFavoris } = useFavorites();
   if (slugs.length === 0 && !erreur) return null;
 
   const index = new Map(prenoms.map((prenom) => [prenom.slug, prenom] as const));
@@ -50,13 +48,10 @@ export function RecentNames({ prenoms }: { prenoms: PrenomIndex[] }) {
                     <span className="name-initial">{prenom.lettre}</span>
                     <span>
                       <strong>{prenom.nom}</strong>
-                      <small>{prenom.genre}</small>
+                      <GenreIcon genre={prenom.genre} />
                     </span>
                     <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                   </Card>
-                  {!erreurFavoris && (
-                    <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
-                  )}
                   <IconButton
                     label={`Retirer ${prenom.nom} de l’historique`}
                     onClick={() => retirer(prenom.slug)}
@@ -66,11 +61,6 @@ export function RecentNames({ prenoms }: { prenoms: PrenomIndex[] }) {
                 </article>
               ))}
             </div>
-            {erreurFavoris && (
-              <p className={styles.favoriteError} role="alert">
-                Le stockage des favoris est indisponible ou contient des données illisibles. Les actions de sauvegarde sont temporairement masquées.
-              </p>
-            )}
             <p className={styles.note}>Cet historique est propre à cet onglet : il est conservé lors des rechargements et supprimé à sa fermeture.</p>
           </>
         ) : !erreur ? (
