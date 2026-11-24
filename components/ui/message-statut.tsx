@@ -12,16 +12,18 @@ const roles: Record<TypeMessageStatut, string> = {
 
 export function MessageStatut({
   type,
-  children
+  children,
+  className
 }: Readonly<{
   type: TypeMessageStatut;
   children: ReactNode;
+  className?: string;
 }>) {
   const erreur = type === "error";
 
   return (
     <p
-      className={`${styles.message} ${roles[type]}`}
+      className={[styles.message, roles[type], className].filter(Boolean).join(" ")}
       role={erreur ? "alert" : "status"}
       aria-live={erreur ? "assertive" : "polite"}
     >
