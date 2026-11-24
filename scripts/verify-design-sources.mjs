@@ -72,6 +72,11 @@ const sources = [
     markers: ["get() = 32.0.dp", "get() = TypographyKeyTokens.LabelLarge"],
   },
   {
+    name: "AndroidX TextFieldDefaults",
+    url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/TextFieldDefaults.kt",
+    markers: ["TextFieldDefaults"],
+  },
+  {
     name: "Material Color Utilities Fidelity",
     url: "https://raw.githubusercontent.com/material-foundation/material-color-utilities/b03ef34bb53a15c3ba41bf963eb3e2c5c353c85f/typescript/dynamiccolor/dynamic_scheme.ts",
     markers: ["Variant.FIDELITY", "specVersion"],
