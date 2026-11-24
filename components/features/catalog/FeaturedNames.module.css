@@ -1,3 +1,7 @@
+.item {
+  min-width: 0;
+}
+
 .gender {
   display: flex;
   align-items: center;
