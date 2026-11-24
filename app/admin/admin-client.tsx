@@ -309,11 +309,11 @@ export function AdminClient() {
           setImported(null);
         }
       }} />
-      <textarea id="fiche-json" spellCheck={false} required rows={18} value={json} disabled={busy} onChange={(event) => {
+      <TextField id="fiche-json" label={`Fiche JSON (version ${FICHE_SCHEMA_VERSION})`} variant="outlined" multiline rows={18} spellCheck={false} required supportingText="Collez ou importez le JSON de la fiche générée en amont." value={json} disabled={busy} className={styles.jsonField} onChange={(event) => {
         setJson(event.target.value);
         setPreview(null);
         setImported(null);
-      }} placeholder={'{"schema_version":"3.0.0","identity":{...},"content":{...}}'} />
+      }} />
       <div className={styles.actions}>
         <Button variant="outlined" type="button" disabled={busy || !json.trim()} onClick={previsualiser}>Prévisualiser</Button>
         <Button type="submit" disabled={busy || !preview}>{busy ? "Import…" : "Enregistrer en brouillon"}</Button>
