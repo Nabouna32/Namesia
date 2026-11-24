@@ -242,7 +242,7 @@ test("Rainbow ne colore plus les titres ou les surfaces générales", () => {
 
 test("les cartes utilisent les états Material centralisés et les boutons les couches d’état", () => {
   const elevatedHover = cardStyles.slice(cardStyles.indexOf(".interactive.elevated:hover {"));
-  const filledHover = cardStyles.slice(cardStyles.indexOf(".interactive.filled:hover,"));
+  const filledHover = cardStyles.slice(cardStyles.indexOf(".interactive.filled:hover {"));
   assert.match(styles, /\.button::after/);
   assert.match(styles, /md-sys-state-hover-state-layer-opacity/);
   assert.match(styles, /md-sys-state-pressed-state-layer-opacity/);
@@ -354,6 +354,7 @@ test("les surfaces principales Material sont définies à leur emplacement canon
 
 
 const rechercheActions = await readFile(new URL("../components/NameSearch.tsx", import.meta.url), "utf8");
+const historiqueActions = await readFile(new URL("../components/NameHistory.tsx", import.meta.url), "utf8");
 
 test("TextField reprend les variantes, états et la typographie Material 3", () => {
   assert.match(textField, /export function TextField/);
@@ -436,7 +437,6 @@ test("la fiche prénom applique Material 3 dans ses règles canoniques", () => {
   assert.doesNotMatch(globalStyles, /linear-gradient\(125deg, var\(--md-sys-color-surface-container/);
 });
 
-const historiqueActions = await readFile(new URL("../components/NameHistory.tsx", import.meta.url), "utf8");
 const barreComparaisonActions = await readFile(new URL("../components/ComparisonBar.tsx", import.meta.url), "utf8");
 const historiqueStyles = await readFile(new URL("../components/NameHistory.module.css", import.meta.url), "utf8");
 const barreComparaisonStyles = await readFile(new URL("../components/ComparisonBar.module.css", import.meta.url), "utf8");
