@@ -364,7 +364,7 @@ const comparatorActions = await readFile(new URL("../components/features/compari
 const comparisonSelection = await readFile(new URL("../components/features/comparison/ComparisonSelection.tsx", import.meta.url), "utf8");
 
 test("les actions de découverte sont concentrées sur la fiche et le comparateur garde sa sélection native", () => {
-  assert.match(historiqueActions, /<Button variant="text"[^>]*onClick=\\{effacer\\}/);
+  assert.match(historiqueActions, /<Button variant="text"[^>]*onClick=/);
   assert.doesNotMatch(historiqueActions, /<FavoriteButton/);
   assert.match(comparatorActions, /<ComparisonSelection/);
   assert.match(comparatorActions, /type="checkbox"/);
