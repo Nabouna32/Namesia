@@ -180,8 +180,8 @@ test("la navigation reprend les modèles Material 3 compacts et rail sans tiroir
   assert.doesNotMatch(globalStyles, /navigation-rail\.is-expanded|navigation-rail-toggle/);
 });
 
-test("Fidelity et Rainbow sont calculés depuis la source baseline Material documentée", () => {
-  assert.match(materialTheme, /argbFromHex\("#6750A4"\)/);
+test("Fidelity et Rainbow sont calculés depuis la source Google Blue retenue", () => {
+  assert.match(materialTheme, /argbFromHex\("#0B57D0"\)/);
   assert.match(materialTheme, /Variant\.FIDELITY/);
   assert.match(materialTheme, /Variant\.RAINBOW/);
   assert.match(materialTheme, /specVersion: "2021"/);
