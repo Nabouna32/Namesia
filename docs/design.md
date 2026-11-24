@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.37
+- **Version :** 4.38
 - **Mis à jour :** 2026-11-24
 
 ## 1. Direction
@@ -78,7 +78,7 @@ Ces seuils suivent la logique des window size classes Android : la barre convien
 
 ## 5. Bibliothèque de composants
 
-L'inventaire des composants partagés, leurs responsabilités et les règles d'évolution sont centralisés dans [Bibliothèque de composants](composants.md). Les champs de recherche des parcours catalogue, comparateur et favoris utilisent une même primitive `ChampRecherche`, alignée sur le champ replié de `SearchBar` AndroidX : 56 dp, forme pilule, surface `surface-container-high` et typographie `body-large`. Le libellé reste présent dans le HTML pour l’accessibilité ; le bouton iconique d’effacement partage la primitive `Bouton`, et le contrôle natif de suppression du navigateur est masqué pour éviter une action concurrente. Le contrôle d'ajout/retrait à la comparaison partage aussi son état tonal, son libellé accessible et son adaptation compacte entre catalogue et favoris. Les prénoms retenus apparaissent sous forme de puces tonales communes, avec un retrait individuel explicite. Les filtres de genre et d'initiale utilisent une puce commune qui rend la sélection explicite par une coche et une surface secondaire tonale. La surface visible mesure 32 dp comme `FilterChipTokens.ContainerHeight` ; la cible interactive reste de 48 px, distincte de la capsule. Les sélecteurs de genre et de tri des favoris partagent un champ natif avec libellé visible et focus Fidelity, sans remplacer le menu du navigateur.
+L'inventaire canonique est [Bibliothèque Material 3](composants.md). Les contrôles de présentation portent directement les noms AndroidX (`Button`, `IconButton`, `SearchBar`, `FilterChip`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`) et sont implémentés dans `components/material3/`. Les champs de recherche utilisent `SearchBar` replié : 56 dp, forme `full`, surface `surface-container-high` et typographie `body-large`. Le libellé HTML reste présent ; l'effacement utilise `IconButton` et le contrôle natif de suppression du navigateur est masqué pour éviter une action concurrente. Les fonctions métier `FavoriteButton`, `ComparisonToggle` et `ComparisonSelection` résident dans `components/features/` et composent les composants M3 sans les redéfinir. Les filtres de genre et d'initiale utilisent `FilterChip` : surface visuelle 32 dp dans une cible de 48 px. Les sélecteurs de genre et de tri restent des éléments `select` natifs, habillés avec les tokens M3 ; aucun faux menu n'est créé.
 
 Les primitives communes portent les interactions et états transversaux ; les composants métier composent ces primitives et conservent leur logique propre. Les actions de l'administration et des parcours visiteurs utilisent les mêmes variantes de bouton Fidelity ; aucune classe globale de bouton ne constitue une seconde source de style. Les variantes des contrôles utilisent les rôles Fidelity. Une règle de style locale n'est pas une nouvelle primitive.
 
@@ -95,7 +95,7 @@ Les composants doivent partager les mêmes rôles, formes et interactions :
 
 États attendus : repos, survol, focus clavier, pressé, sélectionné, désactivé, chargement, erreur et succès. Les états sont explicites et ne reposent jamais sur la couleur seule.
 
-Les surfaces de l'accueil, des cartes vedettes, des fiches, du catalogue, du comparateur et du pied de page sont définies dans leurs règles canoniques, sans seconde couche de redéfinition tardive. Les actions de réinitialisation, d'effacement et de pagination utilisent la primitive Bouton en variante text ; les options de comparaison appliquent un état tonal sélectionné et des survols réservés aux pointeurs fins.
+Les surfaces de l'accueil, des cartes vedettes, des fiches, du catalogue, du comparateur et du pied de page sont définies dans leurs règles canoniques, sans seconde couche de redéfinition tardive. Les actions de réinitialisation, d'effacement et de pagination utilisent `Button` en variante `text` ; les options de comparaison appliquent un état tonal sélectionné et des survols réservés aux pointeurs fins.
 
 Les interactions utilisent les tokens M3 `--md-sys-motion-easing-*` et `--md-sys-motion-duration-*` ; les valeurs utilisées sont `short3`, `medium1` et `medium4`. Les couches d'état utilisent `--md-sys-state-hover-state-layer-opacity`, `--md-sys-state-focus-state-layer-opacity` et `--md-sys-state-pressed-state-layer-opacity`, selon l'état réel. Les valeurs M3 unitaires 0,08/0,12/0,16 sont exprimées en pourcentages CSS équivalents pour `color-mix`. Aucun pourcentage d'état n'est recopié dans les règles. Le lien d'évitement suit les mêmes tokens : aucune durée ni courbe n'est codée localement. La couche utilise la couleur de premier plan du composant, y compris sur l'indicateur sélectionné. Les cartes réagissent par une surface tonale plus élevée et un état pressé, sans déplacement ni ombre artificielle. Le mouvement doit rendre l'action compréhensible : indicateur qui s'étend, surface qui réagit à la pression, changement d'état animé. Les animations décoratives restent secondaires. `prefers-reduced-motion: reduce` supprime les mouvements non essentiels.
 
@@ -126,15 +126,15 @@ L'application occupe au minimum la hauteur de la fenêtre avec une colonne flex.
 - Les cartes Open Graph du site et des fiches utilisent la même famille Roboto que l’interface, chargée depuis un fichier TTF local au runtime Node de `ImageResponse`. Le poids 400 suffit à cette surface de partage ; aucun appel Google Fonts, aucune police de substitution et aucune seconde famille ne sont utilisés. Les fonds, textes et accents reprennent les rôles clairs Fidelity ; aucun dégradé de marque hors M3 n'est conservé.
 
 - `@material/material-color-utilities` génère les rôles Fidelity/Rainbow et les quatre rôles des couleurs sémantiques personnalisées ; aucun autre moteur de thème n'est ajouté.
-- Les références de composants sont les guides M3 et les sources AndroidX Compose Material 3 ; les implémentations Web restent natives et centralisées dans `components/ui/`.
+- Les références de composants sont les guides M3 et les sources AndroidX Compose Material 3 ; les ports React/HTML portent les noms M3 et sont centralisés dans `components/material3/`.
 - `lib/material-theme.ts` génère le CSS Fidelity/Rainbow initial et les couleurs de barre navigateur ; `components/material-theme-provider.tsx` synchronise les mêmes valeurs avec les changements de préférence système.
 - `app/layout.tsx` charge Roboto via `next/font/google` et expose `--font-roboto` à tous les rôles typographiques ; les tokens ne désignent jamais une famille non chargée.
 - `components/navigation-adaptative.tsx` porte la navigation de premier niveau.
-- `components/ui/` contient les primitives d'interface partagées.
+- `components/material3/` contient les composants de présentation M3 ; `components/features/` contient les compositions propres au produit.
 - `app/layout.tsx` compose la barre supérieure, le rail/la barre de navigation, le contenu et le pied de page.
 - `app/globals.css` contient les formes, la typographie et les styles structurels partagés. Les rôles de couleur sont générés par `lib/material-theme.ts` dans le `<head>` dès le rendu serveur ; aucune palette statique parallèle ni fallback CSS n'existe.
 - Les CSS Modules consomment les tokens partagés. Ils gèrent la disposition propre à un composant, sans redéfinir les styles d'un contrôle commun.
-- Les composants natifs React/HTML sont préférés à une dépendance UI supplémentaire tant qu'une bibliothèque Web officielle maintenue et complète ne répond pas au besoin.
+- Les contrats AndroidX sont portés explicitement en React/HTML. Material Web 2.5.0 n'est pas retenu comme dépendance structurante : son projet est en maintenance en attente de nouveaux mainteneurs et son implémentation ne garantit pas la parité AndroidX.
 
 ## 9. Références et limites de fidélité
 
