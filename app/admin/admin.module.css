@@ -10,9 +10,11 @@ padding: clamp(20px, 3vw, 32px);
 .panel h2 {
 margin: 0 0 8px;
   color: var(--md-sys-color-on-surface);
+  font-family: var(--md-sys-typescale-headline-small-font);
   font-size: var(--md-sys-typescale-headline-small-size);
-  font-weight: 500;
-  letter-spacing: -0.02em;
+  font-weight: var(--md-sys-typescale-headline-small-weight);
+  line-height: var(--md-sys-typescale-headline-small-line-height);
+  letter-spacing: var(--md-sys-typescale-headline-small-tracking);
 }
 
 .panel p {
@@ -128,19 +130,21 @@ padding: 20px;
 
 .previewLabel {
   color: var(--md-sys-color-primary);
+  font-family: var(--md-sys-typescale-body-small-font);
   font-size: var(--md-sys-typescale-body-small-size);
-  font-weight: 500;
-  letter-spacing: .04em;
-  
+  font-weight: var(--md-sys-typescale-body-small-weight);
+  line-height: var(--md-sys-typescale-body-small-line-height);
+  letter-spacing: var(--md-sys-typescale-body-small-tracking);
 }
 
 .preview h3 {
 margin: 8px 0;
   color: var(--md-sys-color-on-surface);
-  font-family: var(--md-sys-typescale-body-large-font);
+  font-family: var(--md-sys-typescale-headline-medium-font);
   font-size: var(--md-sys-typescale-headline-medium-size);
-  font-weight: 500;
-  letter-spacing: -.02em;
+  font-weight: var(--md-sys-typescale-headline-medium-weight);
+  line-height: var(--md-sys-typescale-headline-medium-line-height);
+  letter-spacing: var(--md-sys-typescale-headline-medium-tracking);
 }
 
 .preview h4 {
