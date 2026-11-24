@@ -198,7 +198,7 @@ test("Rainbow ne colore plus les titres ou les surfaces générales", () => {
   assert.doesNotMatch(titre.slice(0, titre.indexOf("\n}")), /color-rainbow/);
   assert.doesNotMatch(profil.slice(0, profil.indexOf("\n}")), /color-rainbow/);
   assert.match(titre, /--md-sys-color-primary/);
-  assert.match(surfaceSymbolique, /var\(--md-sys-color-category-container/);
+  assert.match(surfaceSymbolique, /var\(--namesia-color-category-container/);
   assert.match(surfaceSymbolique, /surface-container-low/);
 });
 
@@ -297,9 +297,9 @@ test("les cartes Rainbow utilisent la couleur de premier plan de leur propre cat
     globalStyles.indexOf(".compare-association {")
   );
   assert.equal((globalStyles.match(/\.symbolic-card\s*\{/g) ?? []).length, 1);
-  assert.match(symbolicCard, /var\(--md-sys-color-category\)/);
-  assert.match(symbolicCard, /var\(--md-sys-color-category-container/);
-  assert.match(categoryBadge, /var\(--md-sys-color-category-on-container/);
+  assert.match(symbolicCard, /var\(--namesia-color-category\)/);
+  assert.match(symbolicCard, /var\(--namesia-color-category-container/);
+  assert.match(categoryBadge, /var\(--namesia-color-category-on-container/);
   assert.doesNotMatch(globalStyles, /\.symbolic-card > span \{[^}]*on-tertiary-container/);
   assert.doesNotMatch(symbolicCard, /linear-gradient/);
 });
