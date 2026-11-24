@@ -15,7 +15,8 @@ import { materialThemeCss, materialThemeViewportColors } from "@/lib/material-th
 const roboto = Roboto({
   weight: ["400", "500"],
   subsets: ["latin", "latin-ext"],
-  display: "swap",
+  display: "block",
+  adjustFontFallback: false,
   variable: "--font-roboto"
 });
 
