@@ -125,7 +125,7 @@ test("les animations globales utilisent les tokens de mouvement", () => {
   assert.doesNotMatch(allCss, /--md-sys-motion-(?:standard|emphasized|duration-short|duration-medium|duration-long)\b/);
   assert.doesNotMatch(allCss, /--md-sys-elevation-(?:sm|md)\b/);
   assert.doesNotMatch(allCss, /#[0-9a-f]{3,8}\b/i);
-  assert.ok(messageStyles.includes("box-shadow:") && messageStyles.includes("color-mix"));
+  assert.doesNotMatch(allCss, /box-shadow:\s*var\(--md-sys-elevation-/);
   assert.match(globalCss, /\.skip-link\s*\{[^}]*transition: transform var\(--md-sys-motion-duration-short3\) var\(--md-sys-motion-easing-standard\)/s);
   assert.doesNotMatch(allCss, /transition\s*:[^;]*(?:\d+(?:\.\d+)?(?:ms|s))/i);
 });
@@ -320,7 +320,7 @@ test("les couleurs sémantiques sont des extensions M3 avec annonces accessibles
   assert.match(messageStyles, /corner-extra-small/);
   assert.match(messageStyles, /md-sys-color-inverse-surface/);
   assert.match(messageStyles, /md-sys-color-inverse-on-surface/);
-  assert.match(messageStyles, /box-shadow:[\\s\\S]*color-mix/);
+  assert.ok(messageStyles.includes("box-shadow:") && messageStyles.includes("color-mix"));
   assert.match(messageComponent, /severity = "neutral"/);
   assert.match(messageComponent, /role={urgent \? "alert" : "status"}/);
   assert.match(messageComponent, /aria-live={urgent \? "assertive" : "polite"}/);
