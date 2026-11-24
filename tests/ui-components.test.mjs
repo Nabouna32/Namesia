@@ -311,7 +311,7 @@ test("les cartes Rainbow utilisent la couleur de premier plan de leur propre cat
 
 test("les surfaces principales Material sont définies à leur emplacement canonique", () => {
   assert.match(globalStyles, /\.hero \{[^}]*surface-container-low/s);
-  assert.match(cardStyles, /\.elevated\s*\{[^}]*surface-container-low/s);
+  assert.doesNotMatch(globalStyles, /\.featured-card\s*\{[^}]*background:/s);
   assert.match(globalStyles, /\.profile-hero \{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.site-footer \{[^}]*surface-container/s);
   assert.doesNotMatch(globalStyles, /Couche Material 3 Fidelity/);
