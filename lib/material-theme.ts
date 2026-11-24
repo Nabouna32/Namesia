@@ -73,7 +73,6 @@ function createScheme(isDark: boolean, variant: Variant) {
     sourceColorHct: sourceColor,
     contrastLevel: 0,
     isDark,
-    platform: "phone",
     // Fidelity et Rainbow sont définies dans la spécification Material 3 de 2021.
     specVersion: "2021",
     variant
