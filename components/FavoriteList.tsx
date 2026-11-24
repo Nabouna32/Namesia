@@ -10,9 +10,11 @@ import { FavoriteButton } from "./FavoriteButton";
 import { useFavorites } from "@/components/FavoritesProvider";
 import styles from "./FavoriteList.module.css";
 import { Icon } from "@/components/ui/Icon";
+import { Card } from "@/components/ui/Card";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { ComparisonButton } from "@/components/ui/ComparisonButton";
 import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
 import Link from "next/link";
 import buttonStyles from "@/components/ui/Button.module.css";
 import { StatusMessage } from "@/components/ui/StatusMessage";
@@ -236,7 +238,7 @@ export function FavoriteList({
             : slugs.length === 0
               ? "Vous n’avez pas encore enregistré de prénom."
               : "Aucun de vos favoris n’est actuellement publié."}</p>
-          <Link className={[buttonStyles.button, buttonStyles.filled].join(" ")} href="/prenoms">Explorer les prénoms</Link>
+          <Link className={[buttonStyles.button, buttonStyles.filled].join(" ")} href="/prenoms">Explorer les prénoms</Card>
         </div>
       ) : (
         <>
@@ -310,7 +312,7 @@ export function FavoriteList({
               )}
               <div className="name-grid">
               {favorisAffiches.slice(0, nombreVisible).map((prenom) => (
-                <article className={styles.row} key={prenom.slug}>
+                <Card as="article" variant="outlined" className={styles.row} key={prenom.slug}>
                   <Link
                     className="name-card"
                     href={creerUrlFicheDepuisFavoris(prenom.slug, {
@@ -334,7 +336,7 @@ export function FavoriteList({
                     onClick={() => basculerComparaison(prenom.slug)}
                   />
                   <FavoriteButton slug={prenom.slug} showError={false} />
-                </article>
+                </Card>
               ))}
               </div>
             </>
