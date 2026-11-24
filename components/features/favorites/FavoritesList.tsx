@@ -3,7 +3,8 @@
 import { useState, type ChangeEvent } from "react";
 import Link from "next/link";
 import type { GenrePrenom, PrenomIndex } from "@/lib/prenoms";
-import { GenreIcon, GENRE_ICONS } from "@/components/features/names/GenreIcon";
+import { GenreIcon } from "@/components/features/names/GenreIcon";
+import { GENRE_ICONS } from "@/lib/genre-icons";
 import { creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
 import { normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";

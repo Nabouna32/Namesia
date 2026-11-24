@@ -3,7 +3,8 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import type { PrenomIndex } from "@/lib/prenoms";
-import { GenreIcon, GENRE_ICONS } from "@/components/features/names/GenreIcon";
+import { GenreIcon } from "@/components/features/names/GenreIcon";
+import { GENRE_ICONS } from "@/lib/genre-icons";
 import styles from "./NameSearch.module.css";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
@@ -247,25 +248,11 @@ export function NameSearch({
                       <span className="name-initial">{prenom.lettre}</span>
                       <span>
                         <strong>{prenom.nom}</strong>
-                        <span className={styles.gender}>
-                          <Icon name={genderIcons[prenom.genre]} size={18} />
-                          <span className="sr-only">{prenom.genre}</span>
-                        </span>
+                        <GenreIcon genre={prenom.genre} />
                       </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Card>
-                    <div className={styles.resultActions}>
-                      {!compact && (
-                        <ComparisonToggle
-                          iconOnly
-                          name={prenom.nom}
-                          selected={selectionComparaison.includes(prenom.slug)}
-                          disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
-                          onClick={() => basculerComparaison(prenom.slug)}
-                        />
-                      )}
-                      <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
-                    </div>
+
                   </article>
                 ))}
               </div>

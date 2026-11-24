@@ -18,7 +18,7 @@ Les libellés visibles de genre répétés n'apportent pas de valeur une fois le
 - Les cartes du catalogue, de l'accueil, des suggestions, de l'historique, des favoris et les résultats du comparateur n'affichent plus de bouton favori ou de comparaison.
 - La fiche du prénom devient l'emplacement unique des actions de mise en favori et d'entrée dans la comparaison.
 - Les vues de prénoms affichent un pictogramme SVG de genre au lieu du libellé visible ; un nom accessible est conservé sur le pictogramme.
-- Le registre des quatre genres et leurs icônes est centralisé dans `GenreIcon`, sans correspondance locale dupliquée.
+- Le registre des quatre genres et leurs icônes est centralisé dans `lib/genre-icons.ts`, sans correspondance locale dupliquée ; `GenreIcon` porte le nom accessible.
 - Les filtres de genre utilisent les mêmes pictogrammes dans des FilterChip icon-only, nommés pour les technologies d'assistance.
 - Le genre reste une donnée textuelle dans le modèle, les URL, les filtres de données et les contenus structurés ; seule sa présentation visuelle change.
 
