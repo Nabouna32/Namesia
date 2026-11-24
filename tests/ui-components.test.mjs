@@ -334,7 +334,7 @@ test("les options de comparaison ont des états tactiles Material sans survol co
   assert.match(globalStyles, /\.compare-option:has\(input:checked\):active/);
   assert.match(globalStyles, /\.compare-option:has\(input:checked\)\s*\{[^}]*primary-container/s);
   assert.match(globalStyles, /\.compare-option:has\(input:checked\) \.compare-option-initial\s*\{[^}]*on-primary/s);
-  assert.match(globalStyles, /\.compare-option input\s*\{[^}]*accent-color: var\(--md-sys-color-primary\)/s);
+  assert.doesNotMatch(globalStyles, /\.compare-option input\s*\{[^}]*accent-color:/s);
 });
 
 
@@ -365,11 +365,34 @@ test("les actions de découverte sont concentrées sur la fiche et le comparateu
   assert.match(historiqueActions, /<Button variant="text"[^>]*onClick=/);
   assert.doesNotMatch(historiqueActions, /<FavoriteButton/);
   assert.match(comparatorActions, /<ComparisonSelection/);
-  assert.match(comparatorActions, /type="checkbox"/);
+  assert.match(comparatorActions, /<Checkbox/);
+  assert.doesNotMatch(comparatorActions, /type="checkbox"/);
   assert.doesNotMatch(comparatorActions, /ComparisonBar|ComparisonToggle/);
   assert.match(comparisonSelection, /<InputChip/);
 });
 
+
+const checkbox = await readFile(new URL("../components/material3/Checkbox.tsx", import.meta.url), "utf8");
+const checkboxStyles = await readFile(new URL("../components/material3/Checkbox.module.css", import.meta.url), "utf8");
+
+test("Checkbox porte le contrat AndroidX dans le comparateur sans contrôle concurrent", () => {
+  assert.match(checkbox, /export function Checkbox/);
+  assert.match(checkbox, /type="checkbox"/);
+  assert.match(checkbox, /checked: boolean/);
+  assert.match(checkbox, /disabled: boolean/);
+  assert.match(checkbox, /onChange: \(checked: boolean\) => void/);
+  assert.match(checkboxStyles, /width: 40px/);
+  assert.match(checkboxStyles, /height: 40px/);
+  assert.match(checkboxStyles, /width: 18px/);
+  assert.match(checkboxStyles, /height: 18px/);
+  assert.match(checkboxStyles, /md-sys-color-primary/);
+  assert.match(checkboxStyles, /md-sys-color-on-primary/);
+  assert.match(checkboxStyles, /md-sys-color-on-surface-variant/);
+  assert.match(checkboxStyles, /focus-visible/);
+  assert.match(comparatorActions, /<Checkbox/);
+  assert.doesNotMatch(comparatorActions, /type="checkbox"/);
+  assert.doesNotMatch(globalStyles, /\.compare-option input\s*\{[^}]*accent-color:/s);
+});
 
 const card = await readFile(new URL("../components/material3/Card.tsx", import.meta.url), "utf8");
 const cardStyles = await readFile(new URL("../components/material3/Card.module.css", import.meta.url), "utf8");
