@@ -202,6 +202,7 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
         <section aria-label="Comparaison des prénoms" className="compare-table-section">
           <div
             className="compare-table-scroll"
+            role="region"
             tabIndex={0}
             aria-label="Tableau comparatif. Faites défiler horizontalement pour consulter toutes les colonnes."
           >
