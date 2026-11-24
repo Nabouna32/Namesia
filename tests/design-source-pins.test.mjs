@@ -20,6 +20,7 @@ test("les références de code du contrat M3 pointent vers des révisions immuab
   }
   assert.match(verification, /chromium\.googlesource\.com\/chromium\/src\/\+\/6ffe83723d5b4c60a15ae8c356d51e16a4951b24\/docs\/ui\/android\/dynamic_colors\.md/);
   assert.doesNotMatch(verification, /chromium\.googlesource\.com\/chromium\/src\/\+\/refs\/heads\//);
+  assert.match(verification, /CheckboxTokens\.kt/);
 });
 
 test("les versions des bibliothèques de calcul et des sources AndroidX restent explicites", () => {
