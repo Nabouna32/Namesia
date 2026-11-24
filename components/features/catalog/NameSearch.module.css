@@ -6,15 +6,11 @@ gap: 8px;
 
 .resultCard {
   position: relative;
-  display: flex;
   min-width: 0;
-  align-items: stretch;
-gap: 8px;
 }
 
 .resultLink.resultLink {
   min-width: 0;
-  flex: 1 1 auto;
   padding-top: 60px;
 }
 
@@ -55,8 +51,3 @@ margin: 0 0 16px;
   }
 }
 
-@media (max-width: 420px) {
-  .resultCard {
-gap: 8px;
-  }
-}
