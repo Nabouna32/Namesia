@@ -75,7 +75,7 @@ Les primitives de présentation sont implémentées une seule fois dans `compone
 | Nom officiel | Fichier | Contrat et périmètre Web |
 |---|---|---|
 | `Button` | `material3/Button.tsx` | Variantes `filled`, `tonal`, `outlined`, `text`. Élément natif `button` pour une action ; la prop `href` rend un lien Next.js avec la même apparence pour préserver la navigation Web. Cible 48 px, `ButtonSmallTokens.ContainerHeight = 40.dp`, largeur minimale 58 dp, typographie `label-large`, dimensions et états AndroidX. |
-| `Card` | `material3/Card.tsx` | Surfaces AndroidX `elevated`, `filled` et `outlined`. La prop `as` est obligatoire : chaque usage choisit explicitement son élément HTML sémantique, sans racine `div` implicite. L'état `interactive` est lui aussi explicite. |
+| `Card` | `material3/Card.tsx` | Surfaces AndroidX `elevated`, `filled` et `outlined`. La prop `as` est obligatoire : chaque usage choisit explicitement son élément HTML sémantique, sans racine `div` implicite. L'état `interactive` est lui aussi explicite. |\n| `Checkbox` | `material3/Checkbox.tsx` | Port Web de Checkbox AndroidX : input natif contrôlé, indicateur de 18 dp, cible interactive de 40 dp, couleurs checked/unchecked/disabled et focus M3. Le parent `label` fournit le nom accessible. |
 | `IconButton` | `material3/IconButton.tsx` | Action iconique distincte de Button : cible 48 dp, glyphe 24 dp, couleur et état désactivé AndroidX. Le nom accessible est obligatoire. |
 | `SearchBar` | `material3/SearchBar.tsx` | Champ replié de SearchBar AndroidX : `SearchBarTokens.ContainerHeight = 56.dp`, forme `full`, surface `surface-container-high`, saisie `body-large`, icônes et effacement accessibles. Les résultats restent dans le flux de la page ; aucune fausse fenêtre d'expansion n'est dessinée. |
 | `TextField` | `material3/TextField.tsx` | Champ `filled` ou `outlined`, label flottant, supporting text, erreur, désactivation et focus selon l'anatomie AndroidX. |
@@ -90,7 +90,7 @@ Les primitives de présentation sont implémentées une seule fois dans `compone
 
 ### Contrôles Web natifs
 
-AndroidX Compose Material 3 ne définit pas un composant nommé `Select`. Pour les filtres de genre et de tri, le site conserve donc l'élément HTML `select` natif avec libellé associé, dimensions, forme, couleurs et focus M3. Ce n'est ni un fallback visuel ni un faux menu personnalisé : c'est le contrôle de sélection du navigateur, choisi pour préserver clavier, lecteur d'écran, ouverture système et comportement attendu sur le Web.
+AndroidX Compose Material 3 ne définit pas un composant nommé `Select`. Pour les filtres de genre et de tri, le site conserve donc l'élément HTML `select` natif avec libellé associé, dimensions, forme, couleurs et focus M3. Ce n'est ni un fallback visuel ni un faux menu personnalisé : c'est le contrôle de sélection du navigateur, choisi pour préserver clavier, lecteur d'écran, ouverture système et comportement attendu sur le Web.\n\nLa sélection du comparateur utilise `Checkbox`, port Web du composant AndroidX correspondant. Il conserve un véritable `input type="checkbox"` pour la sémantique et le clavier, mais centralise l'indicateur, la cible, les couleurs et les états dans `components/material3/Checkbox.module.css` ; les pages ne stylent plus directement `accent-color`. Le sélecteur de fichier JSON des favoris reste le seul contrôle de formulaire spécialisé conservé natif : le navigateur doit ouvrir son sélecteur système et Namesia ne réimplémente pas l'accès aux fichiers locaux.
 
 Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques et les rôles typographiques M3 `--md-sys-typescale-*`. Il n'existe pas de composant React `Typography` parallèle : la typographie est un système de tokens, pas une seconde couche de composants.
 
@@ -114,7 +114,7 @@ Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques 
 | `ComparisonSelection` | `features/comparison/ComparisonSelection.tsx` | Liste des prénoms retenus ; compose InputChip pour le retrait individuel. |
 | `ShareLink` | `features/sharing/ShareLink.tsx` | Partage natif ou copie d'une URL reconstruite avec une liste explicite de paramètres autorisés. |
 
-Les cartes de résultats, de suggestions, de favoris et d'historique utilisent le lien `Card` comme surface de navigation. Le résultat textuel de la découverte aléatoire associe également le nom à `GenreIcon` avant d'ouvrir la fiche. Le genre est représenté exclusivement par `GenreIcon`, dont la correspondance exhaustive est centralisée dans `lib/genre-icons.ts` : `gender-female`, `gender-male`, `gender-mixed` et `gender-unknown`. Le pictogramme masculin sépare le contour circulaire de la flèche diagonale afin de conserver une épaisseur et une lecture équilibrées à 20 px comme à 24 px. Le nom du genre est fourni à l'arbre d'accessibilité par le pictogramme, sans libellé visible redondant. Les filtres de genre utilisent la même iconographie dans des `FilterChip` icon-only, avec nom accessible et état sélectionné. La flèche suffit à signaler l'ouverture de la fiche ; aucun texte « Découvrir » n'est ajouté au catalogue. Les cartes de découverte ne portent ni action de favori ni action de comparaison : ces deux actions sont regroupées sur la fiche du prénom. Le comparateur conserve sa sélection native par cases à cocher, nécessaire à son usage propre.
+Les cartes de résultats, de suggestions, de favoris et d'historique utilisent le lien `Card` comme surface de navigation. Le résultat textuel de la découverte aléatoire associe également le nom à `GenreIcon` avant d'ouvrir la fiche. Le genre est représenté exclusivement par `GenreIcon`, dont la correspondance exhaustive est centralisée dans `lib/genre-icons.ts` : `gender-female`, `gender-male`, `gender-mixed` et `gender-unknown`. Le pictogramme masculin sépare le contour circulaire de la flèche diagonale afin de conserver une épaisseur et une lecture équilibrées à 20 px comme à 24 px. Le nom du genre est fourni à l'arbre d'accessibilité par le pictogramme, sans libellé visible redondant. Les filtres de genre utilisent la même iconographie dans des `FilterChip` icon-only, avec nom accessible et état sélectionné. La flèche suffit à signaler l'ouverture de la fiche ; aucun texte « Découvrir » n'est ajouté au catalogue. Les cartes de découverte ne portent ni action de favori ni action de comparaison : ces deux actions sont regroupées sur la fiche du prénom. Le comparateur compose `Checkbox` pour chaque choix ; la limite de trois éléments est exprimée par son état désactivé.
 
 
 Les composants métier peuvent être propres à Namesia, mais ils ne redéfinissent jamais les styles, états ou interactions d'un composant Material 3 générique. Les règles de disposition restent dans leurs CSS Modules ; les variantes et états M3 restent dans `components/material3/`.
@@ -125,7 +125,7 @@ Toute nouvelle page doit composer le shell partagé, les primitives officielles 
 
 ## Conventions d'implémentation
 
-- Employer exactement les noms Material 3 pour les composants correspondants : `Button`, `IconButton`, `SearchBar`, `FilterChip`, `InputChip`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`, `Icon`, `Card`, `TextField`.
+- Employer exactement les noms Material 3 pour les composants correspondants : `Button`, `IconButton`, `SearchBar`, `FilterChip`, `InputChip`, `Checkbox`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`, `Icon`, `Card`, `TextField`.
 - Ne pas créer de traduction, alias, wrapper ou fallback parallèle pour ces composants.
 - Garder les éléments HTML natifs adaptés : `button`, `a`, `input`, `select`, `nav`, `header`, titres et listes sémantiques. Ne pas remplacer leur sémantique par des `div` et des rôles ARIA redondants.
 - Les CSS Modules de `components/material3/` consomment directement les tokens `--md-sys-*` et les seules extensions `--namesia-*` déclarées dans [le système de design](design.md).
@@ -141,7 +141,7 @@ Toute nouvelle page doit composer le shell partagé, les primitives officielles 
 | Accueil | TopAppBar, NavigationBar/NavigationRail, SearchBar, Button et Card sémantique navigable |
 | Catalogue | Shell, SearchBar, FilterChip icon-only pour le genre et cartes de résultats navigables |
 | Fiche | Shell, titres et corps typographiques M3, GenreIcon, FavoriteButton, Button de comparaison, partage et cartes éditoriales sémantiques |
-| Comparateur | Shell, SearchBar, cases à cocher natives, ComparisonSelection, Button et cartes de comparaison |
+| Comparateur | Shell, SearchBar, Checkbox, ComparisonSelection, Button et cartes de comparaison |
 | Favoris | Shell, SearchBar, FilterChip icon-only pour le genre, `select` natif pour le tri, Snackbar et cartes navigables |
 | Administration | Shell, champs natifs, Button, Snackbar et cartes de prévisualisation |
 
