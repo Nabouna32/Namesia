@@ -50,8 +50,7 @@ test("les extensions Namesia ne se font pas passer pour des rôles M3", () => {
   assert.doesNotMatch(theme, /--md-sys-color-(?:success|warning|info|category|brand|on-brand)/);
   assert.doesNotMatch(styles, /--md-sys-color-(?:success|warning|info|category|brand|on-brand)/);
   assert.match(theme, /--namesia-color-category-/);
-  assert.match(theme, /--namesia-color-success/);
-  assert.match(theme, /--namesia-color-brand-gradient/);
+  assert.doesNotMatch(theme, /--namesia-color-(?:success|warning|info|brand)/);
 });
 
 test("le rendu initial et les changements de préférence utilisent le même générateur", () => {
