@@ -78,9 +78,9 @@ Ces seuils suivent la logique des window size classes Android : la barre convien
 
 ## 5. Bibliothèque de composants
 
-L'inventaire canonique et les règles de composition sont centralisés dans [Bibliothèque de composants](composants.md). Les primitives portent directement les noms Material 3 : `SearchBar`, `Button`, `IconButton`, `FilterChip`, `InputChip`, `TextField`, `Card`, `NavigationBar` et `NavigationRail`. Les anciennes primitives UI françaises sont en cours de suppression ; elles ne constituent pas des API à préserver. Les liens restent des liens natifs Next.js, les sélecteurs restent des éléments `select` natifs et les composants métier ne réimplémentent pas l'anatomie des composants M3. Les détails d'implémentation, dimensions et états sont définis dans `docs/composants.md` et `docs/material-3-verification.md`.
+L'inventaire canonique et les règles de composition sont centralisés dans [Bibliothèque de composants](composants.md). Les primitives portent directement les noms Material 3 : `SearchBar`, `Button`, `IconButton`, `FilterChip`, `InputChip`, `TextField`, `Card`, `NavigationBar` et `NavigationRail`. Les anciennes primitives UI françaises et leurs fichiers ont été supprimés ; les composants Material 3 sont désormais les seules primitives UI. Les liens restent des liens natifs Next.js, les sélecteurs restent des éléments `select` natifs et les composants métier ne réimplémentent pas l'anatomie des composants M3. Les détails d'implémentation, dimensions et états sont définis dans `docs/composants.md` et `docs/material-3-verification.md`.
 
-Les composants Material 3 portent les interactions et états transversaux sous leurs noms officiels (`Button`, `IconButton`, `SearchBar`, `TextField`, `FilterChip`, `InputChip`, `Card`, `TopAppBar`, `NavigationBar`, `NavigationRail`). Les composants métier composent ces composants et conservent leur logique propre. Aucun composant UI spécifique à Namesia, alias, wrapper de compatibilité ou fallback visuel ne double une primitive M3.
+Les composants Material 3 portent les interactions et états transversaux sous leurs noms officiels (`Button`, `IconButton`, `SearchBar`, `FilterChip`, `InputChip`, `NavigationBar`, `NavigationRail`). Les composants métier composent ces composants et conservent leur logique propre. Aucun composant UI spécifique à Namesia, alias, wrapper de compatibilité ou fallback visuel ne double une primitive M3.
 
 ## 6. Composants et états
 
@@ -95,7 +95,7 @@ Les composants doivent partager les mêmes rôles, formes et interactions :
 
 États attendus : repos, survol, focus clavier, pressé, sélectionné, désactivé, chargement, erreur et succès. Les états sont explicites et ne reposent jamais sur la couleur seule.
 
-Les surfaces de l'accueil, des cartes vedettes, des fiches, du catalogue, du comparateur et du pied de page sont définies dans leurs règles canoniques, sans seconde couche de redéfinition tardive. Les actions de réinitialisation, d'effacement et de pagination utilisent la primitive Bouton en variante text ; les options de comparaison appliquent un état tonal sélectionné et des survols réservés aux pointeurs fins.
+Les surfaces de l'accueil, des cartes vedettes, des fiches, du catalogue, du comparateur et du pied de page sont définies dans leurs règles canoniques, sans seconde couche de redéfinition tardive. Les actions de réinitialisation, d'effacement et de pagination utilisent `Button` en variante `text` ; les options de comparaison appliquent un état tonal sélectionné et des survols réservés aux pointeurs fins.
 
 Les interactions utilisent les tokens M3 `--md-sys-motion-easing-*` et `--md-sys-motion-duration-*` ; les valeurs utilisées sont `short3`, `medium1` et `medium4`. Les couches d'état utilisent `--md-sys-state-hover-state-layer-opacity`, `--md-sys-state-focus-state-layer-opacity` et `--md-sys-state-pressed-state-layer-opacity`, selon l'état réel. Les valeurs M3 unitaires 0,08/0,12/0,16 sont exprimées en pourcentages CSS équivalents pour `color-mix`. Aucun pourcentage d'état n'est recopié dans les règles. Le lien d'évitement suit les mêmes tokens : aucune durée ni courbe n'est codée localement. La couche utilise la couleur de premier plan du composant, y compris sur l'indicateur sélectionné. Les cartes réagissent par une surface tonale plus élevée et un état pressé, sans déplacement ni ombre artificielle. Le mouvement doit rendre l'action compréhensible : indicateur qui s'étend, surface qui réagit à la pression, changement d'état animé. Les animations décoratives restent secondaires. `prefers-reduced-motion: reduce` supprime les mouvements non essentiels.
 
@@ -134,7 +134,7 @@ L'application occupe au minimum la hauteur de la fenêtre avec une colonne flex.
 - `app/layout.tsx` compose la barre supérieure, le rail/la barre de navigation, le contenu et le pied de page.
 - `app/globals.css` contient les formes, la typographie et les styles structurels partagés. Les rôles de couleur sont générés par `lib/material-theme.ts` dans le `<head>` dès le rendu serveur ; aucune palette statique parallèle ni fallback CSS n'existe.
 - Les CSS Modules consomment les tokens partagés. Ils gèrent la disposition propre à un composant, sans redéfinir les styles d'un contrôle commun.
-- Les composants natifs React/HTML sont préférés à une dépendance UI supplémentaire tant qu'une bibliothèque Web officielle maintenue et complète ne répond pas au besoin.
+- Les composants React/HTML natifs sont préférés à une dépendance UI supplémentaire tant qu'une bibliothèque Web officielle maintenue et complète ne répond pas au besoin.
 
 ## 9. Références et limites de fidélité
 
