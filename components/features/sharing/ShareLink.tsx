@@ -3,25 +3,25 @@
 import { useState } from "react";
 import { Button } from "@/components/material3/Button";
 
-type Props = { titre: string; texte: string; label: string; parametres?: string[] };
+type Props = { title: string; text: string; label: string; queryParameters?: string[] };
 
-export function ShareLink({ titre, texte, label, parametres = [] }: Props) {
+export function ShareLink({ title, text, label, queryParameters = [] }: Props) {
   const [message, setMessage] = useState("");
 
   async function partager() {
     const url = new URL(window.location.pathname, window.location.origin);
     const recherche = new URL(window.location.href).searchParams;
-    for (const parametre of parametres) {
-      const valeur = recherche.get(parametre);
-      if (valeur) url.searchParams.set(parametre, valeur);
+    for (const parameter of queryParameters) {
+      const value = recherche.get(parameter);
+      if (value) url.searchParams.set(parameter, value);
     }
     const urlPartage = url.toString();
 
     if (typeof navigator.share === "function") {
       try {
         await navigator.share({
-          title: titre,
-          text: texte,
+          title,
+          text,
           url: urlPartage
         });
         return;
@@ -46,11 +46,11 @@ export function ShareLink({ titre, texte, label, parametres = [] }: Props) {
   );
 }
 
-export function ShareProfile({ nom }: { nom: string }) {
+export function ShareProfile({ name }: { name: string }) {
   return (
     <ShareLink
-      titre={`${nom} · Namesia`}
-      texte={`Découvrez le prénom ${nom} sur Namesia.`}
+      title={`${name} · Namesia`}
+      text={`Découvrez le prénom ${name} sur Namesia.`}
       label="Partager la fiche"
     />
   );
