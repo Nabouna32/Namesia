@@ -15,7 +15,8 @@ Créer `components/material3/AlertDialog.tsx` comme port Web du contrat AndroidX
 - Employer l'élément HTML natif `dialog` avec `showModal()` : le navigateur fournit le top layer, le confinement du focus, la sémantique modale et la fermeture clavier.
 - Reprendre `DialogTokens` : `surface-container-high`, `corner-extra-large`, `Level3`, `headline-small`, `body-medium` et actions `label-large`.
 - Utiliser les boutons M3 existants en variante `text` ; le bouton Annuler précède Publier dans l'ordre DOM afin de recevoir le focus initial.
-- Fermer sur Échap, clic sur le scrim ou Annuler ; la confirmation ferme le dialogue puis déclenche la publication.
+- Fermer sur Échap, clic sur le scrim ou Annuler ; conserver le nœud DOM monté quand le dialogue est fermé afin que le navigateur restitue le focus à son déclencheur.
+- La confirmation ferme le dialogue puis déclenche la publication.
 - Garder le composant contrôlé et limité au besoin actuel : titre, description et deux actions. Ne pas créer un système de dialogue générique ni ajouter des variantes non utilisées.
 
 ## Options écartées
