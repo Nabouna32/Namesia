@@ -4,8 +4,8 @@ import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { categoryTone } from "@/lib/category-color";
 import { EnregistrerConsultation } from "@/components/enregistrer-consultation";
-import { SuggestionsPrenoms } from "@/components/suggestions-prenoms";
-import { PartagerFiche } from "@/components/partager-fiche";
+import { NameSuggestions } from "@/components/NameSuggestions";
+import { PartagerFiche } from "@/components/ShareLink";
 import styles from "@/components/actions-fiche.module.css";
 import { getAutresPrenomsIndexDuGenre, getPrenom } from "@/lib/prenoms";
 import { jsonLd } from "@/lib/json-ld";
@@ -211,7 +211,7 @@ export default async function FichePrenom({ params, searchParams }: Props) {
                 <span className="profile-section-kicker">Pour prolonger la découverte</span>
                 <h2 id="profile-discovery-title">D'autres prénoms {genreAuPluriel[prenom.genre] ?? "à découvrir"}</h2>
               </div>
-              <SuggestionsPrenoms prenoms={autresPrenoms} contexteRetour={contexteRetour} />
+              <NameSuggestions prenoms={autresPrenoms} contexteRetour={contexteRetour} />
               <Link className="text-link" href="/prenoms">Explorer tout le catalogue <span aria-hidden="true">↗</span></Link>
             </section>
           )}
