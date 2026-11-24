@@ -38,7 +38,7 @@ function getClassName(variant: ButtonVariant, className?: string) {
 export function Button(props: Props) {
   const classes = getClassName(props.variant ?? "filled", props.className);
 
-  if (props.href) {
+  if (props.href !== undefined) {
     return (
       <Link className={classes} href={props.href} aria-label={props["aria-label"]}>
         {props.children}
