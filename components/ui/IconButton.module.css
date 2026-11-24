@@ -23,6 +23,7 @@
   border-radius: var(--md-sys-shape-corner-full);
   background: transparent;
   content: "";
+  pointer-events: none;
 }
 .iconButton::after {
   position: absolute;
@@ -37,13 +38,18 @@
 .iconButton > * { position: relative; z-index: 1; }
 .iconButton svg { width: 24px; height: 24px; }
 .standard { color: var(--md-sys-color-on-surface-variant); }
-.filled { background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
-.tonal { background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
-.outlined { border: 1px solid var(--md-sys-color-outline); color: var(--md-sys-color-on-surface-variant); }
+.filled { color: var(--md-sys-color-on-primary); }
+.filled::before { background: var(--md-sys-color-primary); }
+.tonal { color: var(--md-sys-color-on-secondary-container); }
+.tonal::before { background: var(--md-sys-color-secondary-container); }
+.outlined { color: var(--md-sys-color-on-surface-variant); }
+.outlined::before { border: 1px solid var(--md-sys-color-outline); }
 @media (hover: hover) and (pointer: fine) {
-  .iconButton:hover::after { opacity: var(--md-sys-state-hover-state-layer-opacity); }
+  .iconButton:hover:not(:disabled)::after { opacity: var(--md-sys-state-hover-state-layer-opacity); }
 }
 .iconButton:focus-visible::after { opacity: var(--md-sys-state-focus-state-layer-opacity); }
-.iconButton:active::after { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
+.iconButton:active:not(:disabled)::after { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
 .iconButton:disabled { color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent); cursor: not-allowed; }
+.filled:disabled::before, .tonal:disabled::before { background: color-mix(in srgb, var(--md-sys-color-on-surface) 10%, transparent); }
+.outlined:disabled::before { border-color: color-mix(in srgb, var(--md-sys-color-outline) 10%, transparent); }
 @media (prefers-reduced-motion: reduce) { .iconButton::before, .iconButton::after { transition: none; } }
