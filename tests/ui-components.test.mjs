@@ -40,7 +40,8 @@ test("les fonctions métier composent les composants Material 3 sans réimpléme
   assert.match(favoriteButton, /<Button/);
   assert.match(favoriteButton, /<IconButton/);
   assert.match(discovery, /<Button/);
-  assert.match(featured, /<FavoriteButton/);
+  assert.doesNotMatch(featured, /<FavoriteButton/);
+  assert.match(featured, /<GenreIcon/);
   assert.match(history, /<IconButton/);
   assert.match(notFound, /<Button href=/);
   assert.doesNotMatch(discovery, /<button/);
@@ -132,9 +133,10 @@ test("FilterChip suit la géométrie et les états AndroidX", () => {
   assert.doesNotMatch(globalStyles, /filter-chip|filter-letter|Expressive/);
 });
 
-test("les sélecteurs des favoris utilisent les contrôles HTML natifs avec les tokens M3", () => {
-  assert.match(favorites, /<label htmlFor="genre-favoris">/);
-  assert.match(favorites, /<select id="genre-favoris"/);
+test("les filtres de genre des favoris sont icon-only et le tri reste natif", () => {
+  assert.match(favorites, /leadingIcon=\{<Icon name=\{GENRE_ICONS\[genre\]\}/);
+  assert.match(favorites, /iconOnly/);
+  assert.match(favorites, /<FilterChip label="Tous"/);
   assert.match(favorites, /<label htmlFor="tri-favoris">/);
   assert.match(favorites, /<select id="tri-favoris"/);
   assert.match(favoritesStyles, /\.selectField select\s*\{[^}]*surface-container-low/s);
