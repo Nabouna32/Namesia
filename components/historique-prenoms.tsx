@@ -54,7 +54,7 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
                     <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
                   </Link>
                   {!erreurFavoris && (
-                    <ButtonFavori slug={prenom.slug} nom={prenom.nom} compact showError={false} />
+                    <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
                   )}
                   <IconButton
                     label={`Retirer ${prenom.nom} de l’historique`}
