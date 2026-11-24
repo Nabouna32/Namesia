@@ -11,6 +11,7 @@ const notFound = await readFile(new URL("../app/not-found.tsx", import.meta.url)
 const errorBoundary = await readFile(new URL("../app/error.tsx", import.meta.url), "utf8");
 const history = await readFile(new URL("../components/historique-prenoms.tsx", import.meta.url), "utf8");
 const globalStyles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+const materialTokens = await readFile(new URL("../styles/material3/tokens.css", import.meta.url), "utf8");
 const styles = buttonStyles;
 const icones = await readFile(new URL("../components/icone-material.tsx", import.meta.url), "utf8");
 const favoritesStyles = await readFile(new URL("../components/liste-favoris.module.css", import.meta.url), "utf8");
@@ -277,10 +278,10 @@ test("la navigation applique des couches d'état Material, pas des surfaces opaq
 
 
 test("la typographie suit une échelle Material 3 unique sans surcharges responsives concurrentes", () => {
-  assert.match(globalStyles, /--md-sys-typescale-display-small-size: 36px/);
-  assert.match(globalStyles, /--md-sys-typescale-headline-large-size: 32px/);
-  assert.match(globalStyles, /--md-sys-typescale-headline-medium-size: 28px/);
-  assert.match(globalStyles, /--md-sys-typescale-headline-small-size: 24px/);
+  assert.match(materialTokens, /--md-sys-typescale-display-small-size: 36px/);
+  assert.match(materialTokens, /--md-sys-typescale-headline-large-size: 32px/);
+  assert.match(materialTokens, /--md-sys-typescale-headline-medium-size: 28px/);
+  assert.match(materialTokens, /--md-sys-typescale-headline-small-size: 24px/);
   assert.match(globalStyles, /\.hero h1 \{[^}]*var\(--md-sys-typescale-display-small-size\)/s);
   assert.match(globalStyles, /\.profile-hero h1 \{[^}]*var\(--md-sys-typescale-headline-large-size\)/s);
   assert.match(globalStyles, /\.section-heading h2 \{[^}]*var\(--md-sys-typescale-headline-medium-size\)/s);
@@ -290,8 +291,8 @@ test("la typographie suit une échelle Material 3 unique sans surcharges respons
   assert.equal((globalStyles.match(/\.profile-hero h1\s*\{/g) ?? []).length, 1);
   assert.equal((globalStyles.match(/\.section-heading h2\s*\{/g) ?? []).length, 1);
   assert.doesNotMatch(globalStyles, /--font-serif|var\(--serif\)/);
-  assert.match(globalStyles, /--md-sys-typescale-body-large-font: var\(--font-roboto\);/);
-  assert.match(globalStyles, /--md-sys-typescale-headline-large-font: var\(--font-roboto\);/);
+  assert.match(materialTokens, /--md-sys-typescale-body-large-font: var\(--font-roboto\);/);
+  assert.match(materialTokens, /--md-sys-typescale-headline-large-font: var\(--font-roboto\);/);
   assert.doesNotMatch(globalStyles, /Google Sans|--font-(?:sans|display):[^;]*(?:Arial|system-ui|sans-serif)/);
 });
 
