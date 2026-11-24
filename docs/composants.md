@@ -138,7 +138,7 @@ Toute nouvelle page doit composer le shell partagé, les primitives officielles 
 
 | Écran | Composition |
 |---|---|
-| Accueil | TopAppBar, NavigationBar/NavigationRail, SearchBar, Button, Card sémantique et FavoriteButton |
+| Accueil | TopAppBar, NavigationBar/NavigationRail, SearchBar, Button et Card sémantique navigable |
 | Catalogue | Shell, SearchBar, FilterChip icon-only pour le genre et cartes de résultats navigables |
 | Fiche | Shell, titres et corps typographiques M3, GenreIcon, FavoriteButton, Button de comparaison, partage et cartes éditoriales sémantiques |
 | Comparateur | Shell, SearchBar, cases à cocher natives, ComparisonSelection, Button et cartes de comparaison |
