@@ -10,11 +10,10 @@ import type { PrenomIndex } from "@/lib/prenoms";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
 import { Icon } from "@/components/ui/Icon";
-import { Card } from "@/components/ui/Card";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { ComparisonButton } from "@/components/ui/ComparisonButton";
-import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 import { ShareLink } from "@/components/ShareLink";
 import { FilterChip } from "@/components/ui/FilterChip";
 
@@ -244,7 +243,7 @@ export function NameSearch({
                         <small>{prenom.genre} · Découvrir la fiche</small>
                       </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
-                    </Card>
+                    </Link>
                     {!compact && (
                       <ComparisonButton
                         name={prenom.nom}
@@ -279,7 +278,7 @@ export function NameSearch({
               </p>
               <div className={styles.resultsGrid}>
                 {suggestions.map((prenom) => (
-                  <article className={styles.resultCard} key={prenom.slug}>
+                  <Card as="article" variant="outlined" className={styles.resultCard} key={prenom.slug}>
                     <Link className={`name-card ${styles.resultLink}`} href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
                       <span className="name-initial">{prenom.lettre}</span>
                       <span><strong>{prenom.nom}</strong><small>{prenom.genre} · Suggestion proche</small></span>
@@ -294,7 +293,7 @@ export function NameSearch({
                       />
                     )}
                     <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
-                  </article>
+                  </Card>
                 ))}
               </div>
             </div>
