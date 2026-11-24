@@ -39,8 +39,7 @@ La documentation officielle de Material Color Utilities distingue les variantes 
 
 ## Références
 
-- [Guide officiel Material Color Utilities — création d'un schéma de couleurs](https://github.com/material-foundation/material-color-utilities/blob/main/dev_guide/creating_color_scheme.md)
-- [Concept officiel Material — Dynamic Color Scheme](https://github.com/material-foundation/material-color-utilities/blob/main/concepts/dynamic_color_scheme.md)
+- [Vérification Material 3 — sources, versions et paramètres épinglés](../material-3-verification.md)
 
 ## Validation
 

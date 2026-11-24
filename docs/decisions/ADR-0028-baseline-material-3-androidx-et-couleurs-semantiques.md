@@ -1,6 +1,6 @@
 # ADR-0028 — Baseline Material 3, couleurs sémantiques et référence AndroidX
 
-- **Statut :** acceptée
+- **Statut :** acceptée, partiellement remplacée par [ADR-0045](ADR-0045-source-google-blue-material-3.md) pour la couleur source uniquement
 - **Date :** 2026-11-24
 - **Remplace :** les choix de couleur source et de génération des ADR-0006, ADR-0015 et ADR-0027
 
@@ -20,11 +20,11 @@ Les décisions précédentes ont introduit une couleur source `#005AC1` qualifi�
 
 1. **Garder le bleu `#005AC1` et les statuts retirés.** Rejetée : la couleur n'est pas la baseline M3 et la suppression des états sémantiques affaiblit l'interface.
 2. **Utiliser le bleu Google `#4285F4` comme source personnalisée.** Rejetée : cela resterait une couleur de marque choisie, pas la baseline Material 3 demandée.
-3. **Utiliser la source baseline M3 `#6750A4`, conserver Fidelity/Rainbow et réintroduire les statuts comme couleurs personnalisées M3.** Retenue : elle suit les valeurs documentées par Google et sépare clairement rôles système et besoins sémantiques du produit.
+3. **Utiliser la source baseline M3 `#6750A4`, conserver Fidelity/Rainbow et réintroduire les statuts comme couleurs personnalisées M3.** Retenue à l'époque : elle suivait les valeurs documentées par Google et séparait clairement rôles système et besoins sémantiques du produit ; la source de génération Namesia a ensuite été remplacée par ADR-0045.
 
 ## Décision
 
-- Fixer la source Fidelity/Rainbow à `#6750A4`, violet de baseline M3 publié par Android Developers. Ce code est la source de génération Fidelity ; les composants consomment les rôles calculés, pas le code source brut.
+- Documenter `#6750A4` comme couleur source de la baseline AndroidX Material 3 par défaut. Ce n'est plus la source de génération de Namesia : [ADR-0045](ADR-0045-source-google-blue-material-3.md) lui substitue `#0B57D0` pour Fidelity/Rainbow. Les composants continuent à consommer les rôles calculés, pas le code source brut.
 - Conserver `Variant.FIDELITY` pour l'interface et `Variant.RAINBOW` pour les catégories éditoriales seulement.
 - Fixer `specVersion: "2021"` explicitement. Il s'agit de la version ColorSpec de Material Color Utilities, pas de la version de Material Design 3. La bibliothèque redirige actuellement Fidelity/Rainbow vers cette version lorsque 2025 ou 2026 est demandé.
 - Déclarer `platform: "phone"` explicitement pour la génération MCU.
@@ -36,11 +36,11 @@ Les décisions précédentes ont introduit une couleur source `#005AC1` qualifi�
 
 ## Conséquences
 
-Le thème de base se rapproche de la baseline Material 3 réelle au lieu d'une couleur Pixel inventée. Les statuts restent compréhensibles et disposent de paires de contraste claires/sombres générées par les outils M3. Les composants du site sont implémentés en Web natif mais leur contrat est vérifié à partir de M3 et AndroidX. La fidélité visuelle doit encore être vérifiée page par page ; la conformité des tokens ne prouve pas à elle seule l'équivalence visuelle.
+Cette décision a aligné le thème sur la baseline Material 3 avant le choix Google Blue de Namesia consigné dans l'ADR-0045. Les statuts restent compréhensibles et disposent de paires de contraste claires/sombres générées par les outils M3. Les composants du site sont implémentés en Web natif mais leur contrat est vérifié à partir de M3 et AndroidX. La fidélité visuelle doit encore être vérifiée page par page ; la conformité des tokens ne prouve pas à elle seule l'équivalence visuelle.
 
 ## Vérification
 
-- CI : source `#6750A4`, variantes Fidelity/Rainbow, version ColorSpec 2021, plateforme phone et rôles sémantiques `--namesia-*`.
+- CI : baseline AndroidX documentée `#6750A4`, source Namesia actuelle `#0B57D0` selon l'ADR-0045, variantes Fidelity/Rainbow, version ColorSpec 2021, plateforme phone et rôles sémantiques `--namesia-*`.
 - CI : aucun rôle success/warning/info sous `--md-sys-color-*`, aucun fallback CSS et aucune couleur hexadécimale codée dans les feuilles de style.
 - CI : `MessageStatut` expose success/warning/info/error avec les bons rôles et les annonces accessibles.
 - Revue : vérifier les modes clair/sombre, les contrastes des quatre rôles personnalisés, les composants M3 et les pages aux largeurs 320/600/840 px et grand écran.

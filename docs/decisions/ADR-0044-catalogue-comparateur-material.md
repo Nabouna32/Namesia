@@ -1,6 +1,7 @@
-# ADR-0024 — Unifier les surfaces et actions du catalogue et du comparateur
+# ADR-0044 — Historique des surfaces et actions du catalogue et du comparateur
 
-- **Statut :** acceptée
+- **Statut :** remplacée par [ADR-0037](ADR-0037-architecture-composants-material3.md), [ADR-0041](ADR-0041-card-material-3.md) et [ADR-0043](ADR-0043-actions-et-pictogrammes-de-genre.md)
+- **Portée historique :** cette décision décrit les anciennes primitives et surfaces du catalogue/comparateur. Les composants et états actuels sont définis par les ADR référencés et les documents canoniques `docs/design.md`, `docs/composants.md` et `docs/material-3-verification.md`.
 - **Date :** 2026-11-23
 
 ## Contexte

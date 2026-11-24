@@ -1,8 +1,8 @@
-# ADR-0030 — Source Google Blue pour le thème Material 3 Fidelity
+# ADR-0045 — Source Google Blue pour le thème Material 3 Fidelity
 
 - **Statut :** acceptée
 - **Date :** 2026-11-24
-- **Remplace :** uniquement le choix de couleur source de l'ADR-0028 ; ses autres décisions (Fidelity/Rainbow, ColorSpec, rôles sémantiques et référence AndroidX) restent applicables.
+- **Remplace :** uniquement le choix de couleur source de l'[ADR-0028](ADR-0028-baseline-material-3-androidx-et-couleurs-semantiques.md) ; ses autres décisions (Fidelity/Rainbow, ColorSpec, rôles sémantiques et référence AndroidX) restent applicables.
 
 ## Contexte
 
@@ -28,5 +28,5 @@ Les actions primaires, les sélections, les accents Fidelity et les états assoc
 
 ## Référence
 
-- Chromium UI Platform — How to Develop With Dynamic Colors : https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/ui/android/dynamic_colors.md ; colorPrimary utilise baseline_primary_600 (#0B57D0) avant l'application éventuelle des couleurs dynamiques.
+- Chromium UI Platform — How to Develop With Dynamic Colors : https://chromium.googlesource.com/chromium/src/+/6ffe83723d5b4c60a15ae8c356d51e16a4951b24/docs/ui/android/dynamic_colors.md ; colorPrimary utilise baseline_primary_600 (#0B57D0) avant l'application éventuelle des couleurs dynamiques.
 - Android Developers — Material 3 theming : https://developer.android.com/codelabs/m3-design-theming ; les couleurs source servent à générer les rôles et peuvent être choisies pour refléter une marque.
