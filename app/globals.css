@@ -80,7 +80,7 @@
   --md-sys-shape-corner-medium: 12px;
   --md-sys-shape-corner-large: 16px;
   --md-sys-shape-corner-extra-large: 28px;
-  --md-sys-shape-corner-full: 999px;
+  --md-sys-shape-corner-full: 9999px;
   --md-sys-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
   --md-sys-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
   --md-sys-motion-easing-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
