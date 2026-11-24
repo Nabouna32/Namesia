@@ -2,6 +2,7 @@ export { Button } from "./Button";
 export type { ButtonVariant } from "./Button";
 export { FilterChip } from "./FilterChip";
 export { IconButton } from "./IconButton";
+export { InputChip } from "./InputChip";
 export { NavigationBar } from "./NavigationBar";
 export { NavigationRail } from "./NavigationRail";
 export { SearchBar } from "./SearchBar";
