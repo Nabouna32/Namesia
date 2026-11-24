@@ -6,7 +6,7 @@ import type { PrenomIndex } from "@/lib/prenoms";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { Button } from "@/components/ui/Button";
 import styles from "./RandomDiscovery.module.css";
-import { IconeMaterial } from "./icone-material";
+import { Icon } from "@/components/ui/Icon";
 
 type Props = { prenoms: PrenomIndex[] };
 
@@ -26,7 +26,7 @@ export function RandomDiscovery({ prenoms }: Props) {
   return (
     <div className={styles.discovery}>
       <Button variant="outlined" onClick={decouvrir}>
-        Surprenez-moi <span aria-hidden="true"><IconeMaterial name="shuffle" size={18} /></span>
+        Surprenez-moi <span aria-hidden="true"><Icon name="shuffle" size={18} /></span>
       </Button>
       <div className={styles.copy} aria-live="polite" aria-atomic="true">
         {selection ? (
