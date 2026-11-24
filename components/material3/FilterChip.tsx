@@ -1,6 +1,6 @@
 "use client";
 
-import { IconeMaterial } from "@/components/icone-material";
+import { IconeMaterial } from "@/components/material3/Icon";
 import styles from "./FilterChip.module.css";
 
 type Props = {
@@ -17,7 +17,7 @@ export function FilterChip({ label, selected, onClick }: Props) {
       aria-pressed={selected}
       onClick={onClick}
     >
-      {selected && <IconeMaterial name="check" size={18} />}
+      {selected && <Icon name="check" size={18} />}
       <span>{label}</span>
     </button>
   );
