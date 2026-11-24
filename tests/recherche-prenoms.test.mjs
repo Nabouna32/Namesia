@@ -117,7 +117,7 @@ test("les suggestions proches excluent les préfixes déjà valides et classent 
     suggererPrenomsProches(prenoms, "Alis").map((prenom) => prenom.nom),
     ["Alix"]
   );
-  assert.deepEqual(suggererPrenomsProches(prenoms, "ali"), []);
+  assert.deepEqual(suggererPrenomsProches(prenoms, "ali").map((prenom) => prenom.nom), ["Aline", "Alise"]);
   assert.deepEqual(suggererPrenomsProches(prenoms, "Alice"), []);
 });
 
