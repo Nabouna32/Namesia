@@ -27,7 +27,7 @@ Les sources sont les spécifications Material 3 et le code source officiel Googl
 | Variante d'interface | `Variant.FIDELITY` | Conserve le caractère de la couleur source selon la variante M3 |
 | Variante catégorielle | `Variant.RAINBOW` | Schéma distinct réservé aux catégories éditoriales |
 | Spécification | `2021` | Le code source de `DynamicScheme.maybeFallbackSpecVersion` force les variantes non prises en charge par 2025 vers 2021 ; le choix est donc déclaré explicitement |
-| Plateforme | `phone` | Plateforme de génération retenue |
+| Plateforme | non renseignée | Paramètre utilisé par les spécifications ultérieures, sans effet sur Fidelity/Rainbow 2021 |
 | Contraste | `0` | Contraste standard M3 |
 | Modes | clair et sombre | Deux schémas issus de la même source et des mêmes paramètres |
 
@@ -41,7 +41,8 @@ La CI doit garantir les points suivants via `tests/material-theme.test.mjs` et `
 4. Un rôle Fidelity ou Rainbow absent provoque une erreur explicite ; il n'est ni ignoré ni remplacé.
 5. Le CSS initial du document est calculé depuis les mêmes schémas que ceux réappliqués après hydratation. Il n'existe pas de seconde palette statique dans `globals.css`.
 6. Les couleurs de la barre du navigateur utilisent les rôles de fond calculés pour les deux modes.
-7. Les CSS ne contiennent aucun `var(..., ...)` de secours ni couleur hexadécimale codée en dur.\n8. Motion, état et forme utilisent les noms système M3 ; aucun alias Namesia n'usurpe ces familles. Les ombres non nécessaires sont retirées au lieu de simuler des niveaux d'élévation.
+7. Les CSS ne contiennent aucun `var(..., ...)` de secours ni couleur hexadécimale codée en dur.
+8. Motion, état et forme utilisent les noms système M3 ; aucun alias Namesia n'usurpe ces familles. Les ombres non nécessaires sont retirées au lieu de simuler des niveaux d'élévation.
 
 Un contrôle statique ne remplace pas un examen du rendu. Après un changement de source, de version de bibliothèque ou de paramètres, comparer les modes clair/sombre avec Material Theme Builder et vérifier les contrastes de chaque paire réellement utilisée.
 
@@ -62,4 +63,4 @@ Ces variables ne sont pas des rôles Material. Elles ne remplacent aucun rôle F
 - Le site suit `prefers-color-scheme` et expose une couleur de thème au navigateur, mais ne peut pas imposer le thème des contrôles natifs au-delà des mécanismes CSS et viewport supportés.
 - Les éléments natifs `select`, `input` et les dialogues conservent leurs interactions et limites propres au navigateur ; ils ne sont pas remplacés par des clones décoratifs uniquement pour simuler Android.
 
-Les tokens de mouvement et d'état sont vérifiés contre les sources M3 d'Angular Material : `_md-sys-motion.scss`, `_md-sys-state.scss`, `_md-sys-elevation.scss` et `_md-sys-shape.scss`. Les niveaux d'élévation M3 sont des valeurs numériques en dp ; Namesia n'utilise actuellement pas de box-shadow et ne les transforme donc pas en ombres CSS.\n\nAucun autre fallback visuel non-M3 n'est accepté. Toute nouvelle exception doit être liée à une limite vérifiable du navigateur, ciblée, documentée ici et couverte par un contrôle adapté.
+Les tokens de mouvement et d'état sont vérifiés contre les sources M3 d'Angular Material : `_md-sys-motion.scss`, `_md-sys-state.scss`, `_md-sys-elevation.scss` et `_md-sys-shape.scss`. Les niveaux d'élévation M3 sont des valeurs numériques en dp ; Namesia n'utilise actuellement pas de `box-shadow` et ne les transforme donc pas en ombres CSS.\n\nAucun autre fallback visuel non-M3 n'est accepté. Toute nouvelle exception doit être liée à une limite vérifiable du navigateur, ciblée, documentée ici et couverte par un contrôle adapté.
