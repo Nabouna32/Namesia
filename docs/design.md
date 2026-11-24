@@ -1,8 +1,8 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.55
-- **Mis à jour :** 2026-11-24
+- **Version :** 4.56
+- **Mis à jour :** 2026-11-25
 
 ## 1. Direction
 
@@ -92,8 +92,8 @@ Les composants doivent partager les mêmes rôles, formes et interactions :
 - cartes élevées, remplies ou avec contour ;
 - chips de filtre et de suggestion ;
 - navigation bar, navigation rail et barre supérieure ;
-- dialogues, menus, feuilles et notifications ;
-- boutons flottants uniquement lorsqu'une action principale persistante existe réellement.
+- notifications via `Snackbar` ;
+- dialogues, menus, feuilles et boutons flottants uniquement lorsqu'un parcours utilisateur réel les justifie. Ils ne font pas partie de la bibliothèque actuelle et ne doivent pas être créés par anticipation : le besoin produit, le contrat AndroidX et les états nécessaires doivent être établis avant leur ajout.
 
 États attendus : repos, survol, focus clavier, pressé, sélectionné, désactivé, chargement, erreur et succès. Les états sont explicites et ne reposent jamais sur la couleur seule.
 
