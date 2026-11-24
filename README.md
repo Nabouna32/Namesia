@@ -4,7 +4,7 @@ Namesia est une plateforme française de découverte des prénoms. Les fiches so
 
 ## Application web
 
-Le site utilise Next.js App Router, React, TypeScript et Supabase (PostgreSQL). L'interface suit Material 3 Fidelity pour le thème général et utilise une palette Material 3 Rainbow pour les catégories éditoriales. Les deux schémas sont calculés par `@material/material-color-utilities`. La navigation est basse sur téléphone et latérale (rail de 80 px) sur tablette et écrans larges. La couleur source Fidelity est le bleu Pixel `#005AC1` ; Rainbow reste réservé aux accents de marque et catégories éditoriales.
+Le site utilise Next.js App Router, React, TypeScript et Supabase (PostgreSQL). L'interface suit Material 3 Fidelity pour le thème général et utilise une palette Material 3 Rainbow pour les catégories éditoriales. Les deux schémas sont calculés par `@material/material-color-utilities`. La navigation est basse sur téléphone et latérale (rail de 80 px) sur tablette et écrans larges. La source de génération Fidelity/Rainbow est la couleur primaire baseline Material 3 `#6750A4` ; Rainbow est réservé aux catégories éditoriales. Les aperçus Open Graph consomment les rôles Fidelity clairs, sans palette ni dégradé parallèle.
 
 ### Démarrage local
 
