@@ -41,16 +41,16 @@ Les noms M3 ci-dessous sont les noms de référence. Les noms de code français 
 
 | Nom Material 3 | Implémentation Namesia | Contrat à respecter |
 |---|---|---|
-| `MaterialTheme` / `ColorScheme` | `lib/material-theme.ts` + `MaterialThemeProvider` | Source M3 baseline, rôles Fidelity, modes clair/sombre et extensions déclarées uniquement |
-| `TopAppBar` | Barre supérieure du shell dans `app/layout.tsx` et `app/globals.css` | Hauteur, alignement, rôles et comportement M3 ; pas de barre propriétaire par page |
-| `NavigationBar` | `NavigationAdaptative` sur fenêtre compacte | Destinations de premier niveau, icône, libellé et indicateur sélectionné |
-| `NavigationRail` | `NavigationAdaptative` sur fenêtre medium/expanded | Même destinations et état que la NavigationBar |
-| `Button` | `Bouton` | Variantes Filled, Filled Tonal, Outlined et Text ; une seule implémentation partagée |
-| `TextField` | `ChampRecherche`, `ChampSelect` et champs natifs de formulaire | Libellé visible ou accessible, hauteur, contour, focus, erreur et comportement natif |
-| `FilterChip` | `ChipFiltre` | Sélection explicite, coche, état pressé et cible tactile |
+| [`MaterialTheme` / `ColorScheme`](https://github.com/androidx/androidx/blob/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/ColorScheme.kt) | `lib/material-theme.ts` + `MaterialThemeProvider` | Source M3 baseline, rôles Fidelity, modes clair/sombre et extensions déclarées uniquement |
+| [`TopAppBar`](https://github.com/androidx/androidx/blob/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/TopAppBar.kt) | Barre supérieure du shell dans `app/layout.tsx` et `app/globals.css` | Hauteur, alignement, rôles et comportement M3 ; pas de barre propriétaire par page |
+| [`NavigationBar`](https://github.com/androidx/androidx/blob/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/NavigationBar.kt) | `NavigationAdaptative` sur fenêtre compacte | Destinations de premier niveau, icône, libellé et indicateur sélectionné |
+| [`NavigationRail`](https://github.com/androidx/androidx/blob/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/NavigationRail.kt) | `NavigationAdaptative` sur fenêtre medium/expanded | Même destinations et état que la NavigationBar |
+| [`Button`](https://github.com/androidx/androidx/blob/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/Button.kt) | `Bouton` | Variantes Filled, Filled Tonal, Outlined et Text ; une seule implémentation partagée |
+| [`TextField`](https://github.com/androidx/androidx/blob/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/TextField.kt) | `ChampRecherche`, `ChampSelect` et champs natifs de formulaire | Libellé visible ou accessible, hauteur, contour, focus, erreur et comportement natif |
+| [`FilterChip`](https://github.com/androidx/androidx/blob/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/Chip.kt) | `ChipFiltre` | Sélection explicite, coche, état pressé et cible tactile |
 | `InputChip` | `ListeSelectionComparaison` | Élément sélectionné avec action de retrait explicite |
 | `Icon` / `IconButton` | `IconeMaterial` + variante iconique de `Bouton` | Glyphe Material Symbols Rounded, cible interactive portée par le bouton |
-| `Card` | Cartes métier `name-card`, cartes vedettes et cartes d'association | Sémantique `article`, rôles de surface/contour, densité et états cohérents ; ne pas créer un nouveau style de carte par page |
+| [`Card`](https://github.com/androidx/androidx/blob/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/Card.kt) | Cartes métier `name-card`, cartes vedettes et cartes d'association | Sémantique `article`, rôles de surface/contour, densité et états cohérents ; ne pas créer un nouveau style de carte par page |
 | Couleurs personnalisées M3 | `MessageStatut` | `success`, `warning`, `info` sont des extensions sémantiques Namesia avec quatre rôles tonals ; `error` utilise le ColorScheme M3 |
 | `Select` natif | `ChampSelect` | Exception de frontière navigateur : conserver le menu natif, ne pas le remplacer par un faux menu inaccessible |
 
