@@ -13,7 +13,7 @@ import { IconeMaterial } from "@/components/material3/Icon";
 import { SearchBar } from "@/components/material3/SearchBar";
 import { ComparisonToggle } from "@/components/features/comparison/ComparisonToggle";
 import { Button } from "@/components/material3/Button";
-import { PartagerLien } from "@/components/features/sharing/ShareLink";
+import { ShareLink } from "@/components/features/sharing/ShareLink";
 import { FilterChip } from "@/components/material3/FilterChip";
 
 type Props = {
@@ -199,7 +199,7 @@ export function NameSearch({
       )}
 
       {!compact && synchroniserUrl && (filtresActifs || nombreVisible > 24) && (
-        <PartagerLien
+        <ShareLink
           titre="Recherche de prénoms · Namesia"
           texte="Retrouvez cette sélection de prénoms sur Namesia."
           label="Partager cette recherche"
