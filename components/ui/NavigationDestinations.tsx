@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { IconeMaterial } from "@/components/icone-material";
+import { Icon } from "@/components/ui/Icon";
 
 const destinations = [
   { href: "/", label: "Accueil", icon: "home", activeIcon: "home-filled" },
@@ -33,7 +33,7 @@ export function NavigationDestinations() {
               aria-current={active ? "page" : undefined}
             >
               <span className="navigation-item-indicator">
-                <IconeMaterial name={icon} size={24} />
+                <Icon name={icon} size={24} />
               </span>
               <span className="navigation-item-label">{destination.label}</span>
             </Link>
