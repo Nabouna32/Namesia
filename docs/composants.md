@@ -30,10 +30,26 @@ components/
     Snackbar.module.css
     index.ts
   features/                  # Composition métier, jamais une seconde bibliothèque UI
+    history/
+      HistoryProvider.tsx
+      RecentNames.tsx
+      RecordVisit.tsx
+    catalog/
+      NameSearch.tsx
+      FeaturedNames.tsx
+      RelatedNames.tsx
+    discovery/
+      RandomDiscovery.tsx
+    sharing/
+      ShareLink.tsx
     comparison/
+      ComparisonBar.tsx
+      NameComparator.tsx
       ComparisonToggle.tsx
       ComparisonSelection.tsx
     favorites/
+      FavoritesProvider.tsx
+      FavoritesList.tsx
       FavoriteButton.tsx
   icone-material.tsx         # Registre des glyphes Material Symbols
   material-theme-provider.tsx
@@ -56,8 +72,8 @@ Material Web 2.5.0 a été évalué. Son dépôt indique être en maintenance en
 | `TopAppBar` | `material3/TopAppBar.tsx` | Barre supérieure du shell, marque et titre secondaire ; dimensions et couleurs centralisées dans le système M3. |
 | `NavigationBar` | `material3/NavigationBar.tsx` | Navigation de premier niveau compacte, `NavigationBarTokens.TallContainerHeight = 80.dp`, destinations, indicateur et libellés `label-medium`. |
 | `NavigationRail` | `material3/NavigationRail.tsx` | Même navigation de premier niveau sur fenêtres medium/expanded, `NavigationRail` de 80 dp et libellés `label-medium`. |
-| `MaterialThemeProvider` | `components/material-theme-provider.tsx` | Synchronise les schémas Fidelity/Rainbow calculés côté serveur et les changements de préférence système. |
-| `Icon` | `components/icone-material.tsx` | Registre local des tracés Google Material Symbols Rounded 400 ; les contrôles interactifs restent portés par Button ou IconButton. |
+| `MaterialThemeProvider` | `components/material3/MaterialThemeProvider.tsx` | Synchronise les schémas Fidelity/Rainbow calculés côté serveur et les changements de préférence système. |
+| `Icon` | `components/material3/Icon.tsx` | Registre local des tracés Google Material Symbols Rounded 400 ; les contrôles interactifs restent portés par Button ou IconButton. |
 
 ### Contrôles Web natifs
 
@@ -69,11 +85,22 @@ Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques 
 
 | Composant | Fichier | Responsabilité |
 |---|---|---|
+| `FavoritesProvider` | `features/favorites/FavoritesProvider.tsx` | État partagé des favoris et synchronisation inter-onglets. |
+| `FavoritesList` | `features/favorites/FavoritesList.tsx` | Recherche, filtres natifs, tri, import/export et composition des favoris. |
+| `HistoryProvider` | `features/history/HistoryProvider.tsx` | Historique de navigation conservé dans la session. |
+| `RecentNames` | `features/history/RecentNames.tsx` | Liste des fiches récemment consultées. |
+| `RecordVisit` | `features/history/RecordVisit.tsx` | Enregistre une consultation dans l'historique de session. |
+| `NameSearch` | `features/catalog/NameSearch.tsx` | Recherche, filtres et pagination du catalogue. |
+| `FeaturedNames` | `features/catalog/FeaturedNames.tsx` | Présentation des prénoms mis en avant. |
+| `RelatedNames` | `features/catalog/RelatedNames.tsx` | Suggestions liées depuis une fiche. |
+| `RandomDiscovery` | `features/discovery/RandomDiscovery.tsx` | Découverte aléatoire d'un prénom. |
+| `NameComparator` | `features/comparison/NameComparator.tsx` | Recherche et comparaison de deux ou trois fiches. |
+| `ShareProfile` | `features/sharing/ShareLink.tsx` | Composition du partage d'une fiche de prénom. |
 | `FavoriteButton` | `features/favorites/FavoriteButton.tsx` | Ajout/retrait d'un favori, état de chargement et erreur du stockage ; compose Button et IconButton. |
 | `ComparisonToggle` | `features/comparison/ComparisonToggle.tsx` | Sélection d'un prénom pour le comparateur ; compose Button et porte la limite métier fournie par l'écran. |
 | `ComparisonSelection` | `features/comparison/ComparisonSelection.tsx` | Liste des prénoms retenus ; compose InputChip pour le retrait individuel. |
-| `PartagerLien` | `components/partager-fiche.tsx` | Partage natif ou copie d'une URL reconstruite avec une liste explicite de paramètres autorisés. |
-| `BarreComparaison` | `components/barre-comparaison.tsx` | Composition métier de ComparisonSelection, Button et URL du comparateur. |
+| `ShareLink` | `features/sharing/ShareLink.tsx` | Partage natif ou copie d'une URL reconstruite avec une liste explicite de paramètres autorisés. |
+| `ComparisonBar` | `features/comparison/ComparisonBar.tsx` | Composition métier de ComparisonSelection, Button et URL du comparateur. |
 
 Les composants métier peuvent être propres à Namesia, mais ils ne redéfinissent jamais les styles, états ou interactions d'un composant Material 3 générique. Les règles de disposition restent dans leurs CSS Modules ; les variantes et états M3 restent dans `components/material3/`.
 
