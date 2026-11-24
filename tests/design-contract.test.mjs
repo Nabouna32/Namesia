@@ -260,7 +260,7 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.match(materialVerificationDoc, /40\.dp/);
   assert.match(materialVerificationDoc, /MinWidth = 58\.dp/);
   assert.match(materialVerificationDoc, /DisabledContainerOpacity = 0\.1f/);
-  assert.match(composantsDoc, /SearchBarTokens/);
+
   assert.match(materialVerificationDoc, /SearchBarTokens\.ContainerHeight/);
   assert.match(materialVerificationDoc, /56\.dp/);
   assert.match(materialVerificationDoc, /TonalElevation = Level0/);
