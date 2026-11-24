@@ -141,7 +141,8 @@ test("les filtres de genre des favoris sont icon-only et le tri reste natif", ()
   assert.match(favorites, /<label htmlFor="tri-favoris">/);
   assert.match(favorites, /<select id="tri-favoris"/);
   assert.match(favoritesStyles, /\.selectField select\s*\{[^}]*surface-container-low/s);
-  assert.match(favoritesStyles, /\.selectField select:focus-visible/);
+  assert.doesNotMatch(favoritesStyles, /\.selectField select:focus-visible/);
+  assert.match(globalStyles, /select:focus-visible/);
 });
 
 const adminActions = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
