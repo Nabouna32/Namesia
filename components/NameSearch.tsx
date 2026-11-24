@@ -244,7 +244,7 @@ export function NameSearch({
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Link>
                     {!compact && (
-                      <ButtonComparaison
+                      <ComparisonButton
                         name={prenom.nom}
                         selected={selectionComparaison.includes(prenom.slug)}
                         disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
@@ -284,7 +284,7 @@ export function NameSearch({
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Link>
                     {!compact && (
-                      <ButtonComparaison
+                      <ComparisonButton
                         name={prenom.nom}
                         selected={selectionComparaison.includes(prenom.slug)}
                         disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
