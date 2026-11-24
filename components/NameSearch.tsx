@@ -12,6 +12,7 @@ import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "
 import { Icon } from "@/components/ui/Icon";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { ComparisonButton } from "@/components/ui/ComparisonButton";
+import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { ShareLink } from "@/components/ShareLink";
 import { FilterChip } from "@/components/ui/FilterChip";
@@ -234,7 +235,7 @@ export function NameSearch({
             <>
               <div className={styles.resultsGrid}>
                 {resultats.slice(0, nombreVisible).map((prenom) => (
-                  <article className={styles.resultCard} key={prenom.slug}>
+                  <Card as="article" variant="outlined" className={styles.resultCard} key={prenom.slug}>
                     <Link className={`name-card ${styles.resultLink}`} href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
                       <span className="name-initial">{prenom.lettre}</span>
                       <span>
@@ -252,7 +253,7 @@ export function NameSearch({
                       />
                     )}
                     <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
-                  </article>
+                  </Card>
                 ))}
               </div>
             {compact && resultats.length > nombreVisible && (
@@ -277,7 +278,7 @@ export function NameSearch({
               </p>
               <div className={styles.resultsGrid}>
                 {suggestions.map((prenom) => (
-                  <article className={styles.resultCard} key={prenom.slug}>
+                  <Card as="article" variant="outlined" className={styles.resultCard} key={prenom.slug}>
                     <Link className={`name-card ${styles.resultLink}`} href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
                       <span className="name-initial">{prenom.lettre}</span>
                       <span><strong>{prenom.nom}</strong><small>{prenom.genre} · Suggestion proche</small></span>
@@ -292,7 +293,7 @@ export function NameSearch({
                       />
                     )}
                     <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
-                  </article>
+                  </Card>
                 ))}
               </div>
             </div>

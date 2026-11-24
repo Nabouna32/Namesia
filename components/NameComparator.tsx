@@ -11,6 +11,7 @@ import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from 
 import { categoryTone } from "@/lib/category-color";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { ComparisonSelection } from "@/components/ui/ComparisonSelection";
+import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 
 type Props = { prenoms: PrenomIndex[]; selectionInitiale: string[] };
@@ -203,7 +204,7 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
       ) : (
         <section aria-label="Comparaison des prénoms" className="compare-grid">
           {selectionnes.map((prenom) => (
-            <article className="compare-card" key={prenom.slug}>
+            <Card as="article" variant="outlined" className="compare-card" key={prenom.slug}>
               <header>
                 <h2>{prenom.nom}</h2>
                 <span className="profile-tag">{prenom.genre}</span>
@@ -247,7 +248,7 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
                   </div>
                 ) : <p className="compare-missing">Aucune association publiée.</p>}
               </div>
-            </article>
+            </Card>
           ))}
           <p className="compare-disclaimer">Les associations symboliques sont des représentations culturelles, pas des caractéristiques scientifiques ou prédictives.</p>
         </section>

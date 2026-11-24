@@ -530,28 +530,24 @@ gap: 8px;
 .name-card {
   display: flex;
   min-height: 76px;
+  min-width: 0;
   align-items: center;
-gap: 16px;
-padding: 12px 12px;
-  border: 1px solid var(--md-sys-color-outline-variant);
-  border-radius: var(--md-sys-shape-corner-large);
-  background: var(--md-sys-color-surface-container-low);
+  gap: 16px;
+  padding: 12px;
+  border-radius: inherit;
   color: var(--md-sys-color-on-surface);
-  box-shadow: none;
-  transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard), border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+  text-decoration: none;
+  transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .name-card:hover {
-    border-color: var(--md-sys-color-outline);
-    background: var(--md-sys-color-surface-container-high);
-    box-shadow: none;
-    transform: none;
+    background: color-mix(in srgb, var(--md-sys-color-on-surface) var(--md-sys-state-hover-state-layer-opacity), transparent);
   }
 }
 
 .name-card:active {
-  background: color-mix(in srgb, var(--md-sys-color-primary) var(--md-sys-state-pressed-state-layer-opacity), var(--md-sys-color-surface-container-low));
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) var(--md-sys-state-pressed-state-layer-opacity), transparent);
 }
 
 .name-initial {
@@ -655,25 +651,7 @@ gap: 12px;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-padding: 20px;
-  border: 1px solid var(--md-sys-color-outline-variant);
-  border-radius: var(--md-sys-shape-corner-extra-large);
-  background: var(--md-sys-color-surface-container-low);
-  color: var(--md-sys-color-on-surface);
-  transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard), border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .featured-card:hover {
-    border-color: var(--md-sys-color-outline);
-    background: var(--md-sys-color-surface-container-high);
-    box-shadow: none;
-    transform: none;
-  }
-}
-
-.featured-card:active {
-  background: color-mix(in srgb, var(--md-sys-color-primary) var(--md-sys-state-pressed-state-layer-opacity), var(--md-sys-color-surface-container-low));
+  padding: 20px;
 }
 
 .featured-letter {
@@ -916,10 +894,6 @@ margin-top: 28px;
 
 .compare-card {
   padding: clamp(20px, 3vw, 24px);
-  border: 1px solid var(--md-sys-color-outline-variant);
-  border-radius: var(--md-sys-shape-corner-large);
-  background: var(--md-sys-color-surface-container-low);
-  color: var(--md-sys-color-on-surface);
 }
 
 .compare-selector {

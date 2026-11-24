@@ -5,6 +5,7 @@ import type { ContexteRetourNavigation } from "@/lib/navigation-prenoms";
 import { creerUrlFicheDepuisContexte } from "@/lib/navigation-prenoms";
 import styles from "./NameSuggestions.module.css";
 import { Icon } from "@/components/ui/Icon";
+import { Card } from "@/components/ui/Card";
 
 type Props = { prenoms: PrenomIndex[]; contexteRetour?: ContexteRetourNavigation | null };
 
@@ -12,7 +13,7 @@ export function NameSuggestions({ prenoms, contexteRetour = null }: Props) {
   return (
     <div className={styles.grid}>
       {prenoms.map((prenom) => (
-        <article className={styles.card} key={prenom.slug}>
+        <Card as="article" variant="outlined" className={styles.card} key={prenom.slug}>
           <Link className="name-card" href={creerUrlFicheDepuisContexte(prenom.slug, contexteRetour)}>
             <span className="name-initial">{prenom.lettre}</span>
             <span>
@@ -22,7 +23,7 @@ export function NameSuggestions({ prenoms, contexteRetour = null }: Props) {
             <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
           </Link>
           <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
-        </article>
+        </Card>
       ))}
     </div>
   );

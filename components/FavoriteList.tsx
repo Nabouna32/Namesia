@@ -12,6 +12,7 @@ import styles from "./FavoriteList.module.css";
 import { Icon } from "@/components/ui/Icon";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { ComparisonButton } from "@/components/ui/ComparisonButton";
+import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import buttonStyles from "@/components/ui/Button.module.css";
@@ -310,7 +311,7 @@ export function FavoriteList({
               )}
               <div className="name-grid">
               {favorisAffiches.slice(0, nombreVisible).map((prenom) => (
-                <article className={styles.row} key={prenom.slug}>
+                <Card as="article" variant="outlined" className={styles.row} key={prenom.slug}>
                   <Link
                     className="name-card"
                     href={creerUrlFicheDepuisFavoris(prenom.slug, {
@@ -334,7 +335,7 @@ export function FavoriteList({
                     onClick={() => basculerComparaison(prenom.slug)}
                   />
                   <FavoriteButton slug={prenom.slug} showError={false} />
-                </article>
+                </Card>
               ))}
               </div>
             </>
