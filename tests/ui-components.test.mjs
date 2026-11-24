@@ -9,6 +9,7 @@ const iconButtonStyles = await readFile(new URL("../components/ui/IconButton.mod
 const favoris = await readFile(new URL("../components/FavoriteButton.tsx", import.meta.url), "utf8");
 const decouverte = await readFile(new URL("../components/RandomDiscovery.tsx", import.meta.url), "utf8");
 const vitrine = await readFile(new URL("../components/FeaturedNames.tsx", import.meta.url), "utf8");
+const suggestions = await readFile(new URL("../components/NameSuggestions.tsx", import.meta.url), "utf8");
 const notFound = await readFile(new URL("../app/not-found.tsx", import.meta.url), "utf8");
 const errorBoundary = await readFile(new URL("../app/error.tsx", import.meta.url), "utf8");
 const historique = await readFile(new URL("../components/NameHistory.tsx", import.meta.url), "utf8");
@@ -357,7 +358,7 @@ test("Card expose les trois variantes Material 3 et centralise les surfaces", ()
   assert.match(cardStyles, /\.filled\s*\{[^}]*surface-container-highest/s);
   assert.match(cardStyles, /\.outlined\s*\{[^}]*outline-variant/s);
   assert.match(cardStyles, /corner-medium/);
-  for (const source of [catalogue, favorisActions, historiqueActions, comparateur, vitrine]) {
+  for (const source of [catalogue, favorisActions, historiqueActions, comparateur, vitrine, suggestions]) {
     assert.match(source, /<Card/);
   }
 });
