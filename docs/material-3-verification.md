@@ -3,7 +3,7 @@
 - **Statut :** contrat de vérification actif
 - **Mis à jour :** 2026-11-24
 - **Référence d'implémentation AndroidX :** Compose Material 3 `1.5.0` stable, arbre source figé au commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c` (borne de fin de la plage de commits de la release du 18 novembre 2026).
-- **Portée :** fondations de couleur et nomenclature des tokens ; ce document ne certifie pas à lui seul la conformité visuelle de chaque composant.
+- **Portée :** couleurs, tokens système et preuves d'implémentation des composants ; ce document ne certifie pas à lui seul la conformité visuelle de chaque écran.
 
 ## Sources de référence
 
