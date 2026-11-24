@@ -72,6 +72,7 @@ test("les feuilles consomment les rôles Material sans alias hérités ni fallba
   assert.match(theme, /--md-sys-color-/);
   assert.match(globalCss, /--md-sys-typescale-title-large-size:/);
   assert.match(globalCss, /--md-sys-shape-corner-extra-large:/);
+  assert.match(globalCss, /--md-sys-shape-corner-full: 9999px;/);
 });
 
 test("le pied de page reste en bas sur les pages courtes sans hauteur artificielle", () => {
