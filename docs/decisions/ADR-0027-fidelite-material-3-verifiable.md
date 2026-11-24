@@ -1,6 +1,6 @@
 # ADR-0027 — Génération et vérification stricte des rôles Material 3 Fidelity
 
-- **Statut :** acceptée
+- **Statut :** remplacée par [ADR-0028](ADR-0028-baseline-material-3-androidx-et-couleurs-semantiques.md)
 - **Date :** 2026-11-24
 
 ## Contexte

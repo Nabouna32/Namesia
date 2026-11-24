@@ -1,6 +1,6 @@
 # ADR-0006 — Séparer le thème Material Fidelity des accents Rainbow
 
-- **Statut :** acceptée
+- **Statut :** remplacée par [ADR-0028](ADR-0028-baseline-material-3-androidx-et-couleurs-semantiques.md)
 - **Date :** 2026-11-23
 - **Remplace :** [ADR-0005](ADR-0005-material-3-expressive.md)
 

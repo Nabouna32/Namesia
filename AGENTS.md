@@ -100,10 +100,11 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 ## Contrat design
 
 - `docs/design.md` définit les rôles Material 3, les formes, la typographie et la grille d'espacement applicables.
-- Les feuilles CSS consomment directement `--md-sys-*` ; aucun alias hérité ni fallback `var()` n'est admis.
+- Les feuilles CSS consomment directement `--md-sys-*` et uniquement les extensions `--namesia-*` explicitement documentées pour Rainbow et les couleurs sémantiques ; aucun alias hérité ni fallback `var()` n'est admis.
 - Les règles restent dans leur emplacement canonique : pas de couche d'overrides finale ni de sélecteurs dupliqués dans un même contexte.
 - Les graisses autorisées sont 400/500, les labels ne sont pas en capitales et les espacements suivent la grille de 4 px.
 - `tests/design-contract.test.mjs` fait respecter ce contrat dans la CI ; toute exception doit être décidée et documentée ici.
+- Avant de créer ou refondre une page, lire `docs/design.md` et `docs/composants.md`, choisir les composants Material 3 par leur nom officiel, puis composer les adaptateurs Namesia déjà disponibles. Ne pas créer de boutons, champs, cartes, messages ou navigations locaux concurrents. Toute nouvelle primitive doit être ajoutée au registre avec son mapping M3, ses variantes, ses états et ses usages. Toute exception Web doit correspondre à une limite réelle du navigateur et être documentée.
 
 ## 7. Exigences propres à Namesia
 

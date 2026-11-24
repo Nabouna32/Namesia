@@ -175,12 +175,7 @@ margin: 4px 0;
 }
 
 .previewWarning {
-margin-top: 20px !important;
-padding-top: 16px;
-  border-top: 1px solid var(--md-sys-color-outline-variant);
-  color: var(--md-sys-color-on-surface-variant) !important;
-  font-size: var(--md-sys-typescale-body-medium-size);
-  line-height: 1.6;
+  margin-top: 20px;
 }
 
 .library {

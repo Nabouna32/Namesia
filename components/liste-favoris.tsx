@@ -16,6 +16,7 @@ import { ChampSelect } from "@/components/ui/champ-select";
 import { BoutonComparaison } from "@/components/ui/bouton-comparaison";
 import { Bouton } from "@/components/ui/bouton";
 import { LienBouton } from "@/components/ui/lien-bouton";
+import { MessageStatut } from "@/components/ui/message-statut";
 
 type Props = {
   prenoms: PrenomIndex[];
@@ -218,15 +219,15 @@ export function ListeFavoris({
         </label>
       </div>
       <p className={styles.help}>La sauvegarde contient uniquement les identifiants de vos favoris. L’import les ajoute à votre sélection actuelle, sans remplacer vos favoris existants. La copie reprend les noms de tous les résultats correspondant aux filtres, même au-delà des 24 premiers affichés.</p>
-      {messageCopie && <p className={styles.success} role="status">{messageCopie}</p>}
-      {erreurCopie && <p className={styles.error} role="alert">{erreurCopie}</p>}
+      {messageCopie && <MessageStatut type="success">{messageCopie}</MessageStatut>}
+      {erreurCopie && <MessageStatut type="error">{erreurCopie}</MessageStatut>}
 
-      {messageImport && <p className={styles.success} role="status">{messageImport}</p>}
-      {erreurImport && <p className={styles.error} role="alert">{erreurImport}</p>}
+      {messageImport && <MessageStatut type="success">{messageImport}</MessageStatut>}
+      {erreurImport && <MessageStatut type="error">{erreurImport}</MessageStatut>}
       {erreur && favoris.length > 0 && (
-        <p className={styles.error} role="alert">
+        <MessageStatut type="error">
           Le stockage des favoris est indisponible ou contient des données illisibles. Vos modifications ne sont pas enregistrées.
-        </p>
+        </MessageStatut>
       )}
 
       {favoris.length === 0 ? (

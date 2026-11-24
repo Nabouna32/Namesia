@@ -5,6 +5,7 @@ import { createClient, type Session } from "@supabase/supabase-js";
 import { FICHE_SCHEMA_VERSION, parseFichePrenom, type FichePrenomImport } from "@/lib/fiche-prenom";
 import styles from "./admin.module.css";
 import { Bouton } from "@/components/ui/bouton";
+import { MessageStatut, type TypeMessageStatut } from "@/components/ui/message-statut";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -38,7 +39,11 @@ export function AdminClient() {
   const [email, setEmail] = useState("");
   const [json, setJson] = useState("");
   const [preview, setPreview] = useState<FichePrenomImport | null>(null);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<{ text: string; type: TypeMessageStatut } | null>(null);
+
+  function afficherMessage(text: string, type: TypeMessageStatut = "info") {
+    setMessage({ text, type });
+  }
   const [busy, setBusy] = useState(false);
   const [catalog, setCatalog] = useState<NameRow[]>([]);
   const [catalogLoading, setCatalogLoading] = useState(false);
@@ -69,7 +74,7 @@ export function AdminClient() {
       const { data, error } = await supabase.rpc("is_namesia_admin");
       if (active) {
         setAuthorized(data === true && !error);
-        setMessage(error ? "Impossible de vérifier les droits de ce compte." : "");
+        setMessage(error ? { text: "Impossible de vérifier les droits de ce compte.", type: "error" } : null);
         setChecking(false);
       }
     }
@@ -111,7 +116,7 @@ export function AdminClient() {
           setCatalogNextOffset(result.nextOffset ?? null);
         }
       } catch (error) {
-        if (active) setMessage(error instanceof Error ? error.message : "Chargement du catalogue impossible.");
+        if (active) afficherMessage(error instanceof Error ? error.message : "Chargement du catalogue impossible.", "error");
       } finally {
         if (active) setCatalogLoading(false);
       }
@@ -126,15 +131,15 @@ export function AdminClient() {
   async function connecter(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setBusy(true);
-    setMessage("");
+    setMessage(null);
     try {
       const { error } = await supabase.auth.signInWithOtp({
         email: email.trim(),
         options: { emailRedirectTo: `${window.location.origin}/admin`, shouldCreateUser: false }
       });
-      setMessage(error ? "Le lien de connexion n'a pas pu être envoyé." : "Un lien de connexion vient d'être envoyé si cette adresse existe et est autorisée.");
+      afficherMessage(error ? "Le lien de connexion n'a pas pu être envoyé." : "Un lien de connexion vient d'être envoyé si cette adresse existe et est autorisée.", error ? "error" : "info");
     } catch {
-      setMessage("Le service de connexion est momentanément indisponible.");
+      afficherMessage("Le service de connexion est momentanément indisponible.", "error");
     } finally {
       setBusy(false);
     }
@@ -144,10 +149,10 @@ export function AdminClient() {
     try {
       setPreview(parseFichePrenom(JSON.parse(json)));
       setImported(null);
-      setMessage("Structure valide. Cette vérification ne confirme pas l'exactitude des informations.");
+      afficherMessage("Structure valide. Cette vérification ne confirme pas l'exactitude des informations.", "success");
     } catch (error) {
       setPreview(null);
-      setMessage(error instanceof Error ? error.message : "Le JSON ne respecte pas le contrat Namesia.");
+      afficherMessage(error instanceof Error ? error.message : "Le JSON ne respecte pas le contrat Namesia.", "error");
     }
   }
 
@@ -155,7 +160,7 @@ export function AdminClient() {
     if (!session) return;
     const accessToken = session.access_token;
     setBusy(true);
-    setMessage("");
+    setMessage(null);
     try {
       const response = await fetch(`/api/admin/prenoms/${profile.id}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -175,13 +180,13 @@ export function AdminClient() {
       setImported(result.status === "brouillon"
         ? { profileId: profile.id, version: result.version ?? profile.version }
         : null);
-      setMessage(result.status === "brouillon"
+      afficherMessage(result.status === "brouillon"
         ? "Brouillon chargé. Tu peux le corriger en important une nouvelle version ou le publier."
-        : `Version ${profile.version} en lecture seule.`);
+        : `Version ${profile.version} en lecture seule.`, "info");
     } catch (error) {
       setPreview(null);
       setImported(null);
-      setMessage(error instanceof Error ? error.message : "Prévisualisation impossible.");
+      afficherMessage(error instanceof Error ? error.message : "Prévisualisation impossible.", "error");
     } finally {
       setBusy(false);
     }
@@ -205,12 +210,12 @@ export function AdminClient() {
       setPreview(fiche);
     } catch (error) {
       setPreview(null);
-      setMessage(error instanceof Error ? error.message : "Le format de la fiche est invalide.");
+      afficherMessage(error instanceof Error ? error.message : "Le format de la fiche est invalide.", "error");
       return;
     }
 
     setBusy(true);
-    setMessage("");
+    setMessage(null);
     setImported(null);
     try {
       const response = await fetch("/api/admin/prenoms", {
@@ -225,9 +230,9 @@ export function AdminClient() {
       if (!response.ok) throw new Error(result.error ?? "Import impossible.");
       setImported({ profileId: result.profileId, version: result.version });
       rechargerCatalogue();
-      setMessage(`La version ${result.version} est enregistrée en brouillon. Elle n'est pas publique.`);
+      afficherMessage(`La version ${result.version} est enregistrée en brouillon. Elle n'est pas publique.`, "success");
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Import impossible.");
+      afficherMessage(error instanceof Error ? error.message : "Import impossible.", "error");
     } finally {
       setBusy(false);
     }
@@ -236,7 +241,7 @@ export function AdminClient() {
   async function publier() {
     if (!session || !imported) return;
     setBusy(true);
-    setMessage("");
+    setMessage(null);
     try {
       const response = await fetch(`/api/admin/prenoms/${imported.profileId}/publication`, {
         method: "POST",
@@ -244,11 +249,11 @@ export function AdminClient() {
       });
       const result = await response.json() as { error?: string };
       if (!response.ok) throw new Error(result.error ?? "Publication impossible.");
-      setMessage("La fiche est publiée. La version précédente, si elle existait, est archivée.");
+      afficherMessage("La fiche est publiée. La version précédente, si elle existait, est archivée.", "success");
       setImported(null);
       rechargerCatalogue();
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Publication impossible.");
+      afficherMessage(error instanceof Error ? error.message : "Publication impossible.", "error");
     } finally {
       setBusy(false);
     }
@@ -262,7 +267,7 @@ export function AdminClient() {
     setCatalogTotal(0);
     setCatalogOffset(0);
     setCatalogNextOffset(null);
-    setMessage("Déconnexion effectuée.");
+    afficherMessage("Déconnexion effectuée.", "info");
   }
 
   if (checking) return <p className={styles.notice}>Vérification de la session…</p>;
@@ -276,7 +281,7 @@ export function AdminClient() {
         <input id="admin-email" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
         <Bouton type="submit" disabled={busy}>{busy ? "Envoi…" : "Recevoir un lien de connexion"}</Bouton>
       </form>
-      {message && <p className={styles.notice} role="status">{message}</p>}
+      {message && <MessageStatut type={message.type}>{message.text}</MessageStatut>}
     </section>;
   }
 
@@ -284,7 +289,7 @@ export function AdminClient() {
     return <section className={styles.panel}>
       <h2>Accès non autorisé</h2>
       <p>Ce compte est connecté, mais ne figure pas dans la liste des administrateurs Namesia.</p>
-      {message && <p className={styles.notice} role="status">{message}</p>}
+      {message && <MessageStatut type={message.type}>{message.text}</MessageStatut>}
       <Bouton type="button" onClick={deconnecter}>Se déconnecter</Bouton>
     </section>;
   }
@@ -324,7 +329,7 @@ export function AdminClient() {
       {preview.content.history && <section><h4>Histoire du prénom</h4><p>{preview.content.history}</p></section>}
       {preview.content.usage && <section><h4>Variantes & usages</h4><p>{preview.content.usage}</p></section>}
       {preview.content.symbolic_associations.map((symbol) => <section key={`${symbol.category}-${symbol.value}`}><h4>{symbol.category} · {symbol.value}</h4><p>{symbol.context_note}</p></section>)}
-      <p className={styles.previewWarning}>La validation porte sur la structure du JSON, pas sur la véracité des contenus générés.</p>
+      <MessageStatut type="warning" className={styles.previewWarning}>La validation porte sur la structure du JSON, pas sur la véracité des contenus générés.</MessageStatut>
     </article>}
 
     {imported && <div className={styles.publish}>
@@ -349,6 +354,6 @@ export function AdminClient() {
       </article>)}
       {catalogNextOffset !== null && <Bouton variante="outlined" type="button" disabled={catalogLoading} onClick={() => setCatalogOffset(catalogNextOffset)}>Charger les fiches suivantes</Bouton>}
     </section>
-    {message && <p className={styles.notice} role="status">{message}</p>}
+    {message && <MessageStatut type={message.type}>{message.text}</MessageStatut>}
   </section>;
 }

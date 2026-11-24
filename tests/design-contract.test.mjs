@@ -13,6 +13,10 @@ const home = await readFile(join(root, "app/page.tsx"), "utf8");
 const prenoms = await readFile(join(root, "lib/prenoms.ts"), "utf8");
 const fiche = await readFile(join(root, "lib/fiche-prenom.ts"), "utf8");
 const schema = await readFile(join(root, "schemas/fiche-prenom.schema.json"), "utf8");
+const messageComponent = await readFile(join(root, "components/ui/message-statut.tsx"), "utf8");
+const messageStyles = await readFile(join(root, "components/ui/message-statut.module.css"), "utf8");
+const composantsDoc = await readFile(join(root, "docs/composants.md"), "utf8");
+const agents = await readFile(join(root, "AGENTS.md"), "utf8");
 
 async function collectCss(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -221,6 +225,30 @@ test("les catégories Rainbow utilisent des rôles explicites sans couleur de re
   assert.match(allCss, /var\(--namesia-color-category-container\)/);
   assert.doesNotMatch(allCss, /var\(--namesia-color-category[^)]*,/);
   assert.doesNotMatch(allCss, /--md-sys-color-(?:success|warning|info|category|brand|on-brand)/);
+});
+
+
+test("les couleurs sémantiques sont des extensions M3 avec annonces accessibles", () => {
+  for (const role of ["success", "warning", "info"]) {
+    assert.match(theme, new RegExp("--namesia-color-" + role));
+    assert.match(messageStyles, new RegExp("--namesia-color-" + role + "-container"));
+    assert.match(messageStyles, new RegExp("--namesia-color-on-" + role + "-container"));
+  }
+  assert.match(messageStyles, /--md-sys-color-error-container/);
+  assert.match(messageStyles, /--md-sys-color-on-error-container/);
+  assert.match(messageComponent, /role={erreur \? "alert" : "status"}/);
+  assert.match(messageComponent, /aria-live={erreur \? "assertive" : "polite"}/);
+  assert.doesNotMatch(allCss, /--md-sys-color-(?:success|warning|info)\b/);
+});
+
+test("toute nouvelle page doit suivre le registre de composants Material 3", () => {
+  assert.match(composantsDoc, /Correspondance avec les composants Material 3/);
+  assert.match(composantsDoc, /Contrat obligatoire pour toute nouvelle page/);
+  assert.match(composantsDoc, /TopAppBar/);
+  assert.match(composantsDoc, /NavigationBar/);
+  assert.match(composantsDoc, /FilterChip/);
+  assert.ok(composantsDoc.includes("github.com/androidx/androidx"));
+  assert.match(agents, /Avant de créer ou refondre une page, lire/);
 });
 
 test("le hero d'accueil sépare le récit et les outils dans une composition Fidelity responsive", () => {

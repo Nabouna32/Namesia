@@ -48,12 +48,6 @@ margin: 0;
   line-height: 1.6;
 }
 
-.success {
-margin: 0;
-  font-size: var(--md-sys-typescale-body-medium-size);
-  line-height: 1.5;
-}
-
 .filters {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
