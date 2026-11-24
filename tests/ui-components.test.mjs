@@ -27,6 +27,7 @@ test("les primitives partagées exposent des variantes sémantiques et préserve
   assert.match(styles, /corner-small/);
   assert.match(styles, /outline-variant/);
   assert.match(styles, /on-surface-variant/);
+  assert.match(styles, /\.text\s*\{[^}]*md-sys-color-primary/s);
   assert.match(styles, /color-mix\(in srgb, var\(--md-sys-color-on-surface\) 10%, transparent\)/);
   assert.match(styles, /color-mix\(in srgb, var\(--md-sys-color-on-surface-variant\) 38%, transparent\)/);
   assert.match(styles, /box-shadow: 0 1px 2px 0 color-mix/);
