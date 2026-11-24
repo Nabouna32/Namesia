@@ -50,9 +50,3 @@
   justify-content: flex-end;
   gap: 8px;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .dialog {
-    scroll-behavior: auto;
-  }
-}
