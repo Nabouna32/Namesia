@@ -43,6 +43,9 @@ test("le registre M3 et le tableau AndroidX restent complets et lisibles", () =>
   for (const source of ["AndroidX Button", "AndroidX Checkbox", "AndroidX Card", "AndroidX SearchBar", "AndroidX TextField", "AndroidX NavigationBar", "AndroidX NavigationRail", "AndroidX Chips", "AndroidX TopAppBar", "AndroidX Snackbar"]) {
     assert.ok(sourceVerifier.includes(source), "Source AndroidX non vérifiée : " + source);
   }
+  for (const file of ["PaletteTokens.kt", "BaselineButtonTokens.kt", "ButtonSmallTokens.kt", "OutlinedButtonTokens.kt", "TextButtonTokens.kt", "IconButton.kt", "IconButtonTokens.kt", "ElevatedCardTokens.kt", "FilledCardTokens.kt", "OutlinedCardTokens.kt", "TextFieldDefaults.kt", "FilledTextFieldTokens.kt", "OutlinedTextFieldTokens.kt", "InputChipTokens.kt", "NavigationRailCollapsedTokens.kt", "NavigationRailColorTokens.kt", "NavigationRailBaselineItemTokens.kt", "NavigationRailVerticalItemTokens.kt", "SnackbarTokens.kt"]) {
+    assert.ok(sourceVerifier.includes(file), "Source AndroidX documentée non vérifiée : " + file);
+  }
   for (const name of ["Button", "Card", "Checkbox", "IconButton", "SearchBar", "TextField", "FilterChip", "InputChip", "Snackbar", "TopAppBar", "NavigationBar", "NavigationRail"]) {
     assert.ok(components.includes("| `" + name + "` |"), "Composant absent du registre : " + name);
     assert.match(verification, new RegExp("\\| " + name + " \\|"));
