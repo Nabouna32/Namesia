@@ -7,13 +7,13 @@ const theme = await readFile(new URL("../lib/material-theme.ts", import.meta.url
 const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 const layout = await readFile(new URL("../app/layout.tsx", import.meta.url), "utf8");
 
-test("Fidelity et Rainbow utilisent explicitement leur spécification M3", () => {
+test("Fidelity et Rainbow épinglent la version ColorSpec de Material Color Utilities", () => {
   assert.match(theme, /Variant\.FIDELITY/);
   assert.match(theme, /Variant\.RAINBOW/);
   assert.match(theme, /specVersion: "2021"/);
   assert.match(theme, /platform: "phone"/);
   assert.match(theme, /argbFromHex\("#6750A4"\)/);
-  assert.doesNotMatch(theme, /specVersion: "2025"/);
+  assert.doesNotMatch(theme, /specVersion: "(?:2025|2026)"/);\n  assert.doesNotMatch(theme, /005AC1/);
   assert.match(theme, /rôle Material 3/);
   assert.match(theme, /rôle Rainbow/);
 });
