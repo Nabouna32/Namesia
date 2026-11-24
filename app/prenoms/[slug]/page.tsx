@@ -6,7 +6,7 @@ import { categoryTone } from "@/lib/category-color";
 import { RecordVisit } from "@/components/features/history/RecordVisit";
 import { RelatedNames } from "@/components/features/catalog/RelatedNames";
 import { ShareProfile } from "@/components/features/sharing/ShareLink";
-import styles from "@/components/actions-fiche.module.css";
+import styles from "@/components/features/profile/ProfileActions.module.css";
 import { getAutresPrenomsIndexDuGenre, getPrenom } from "@/lib/prenoms";
 import { jsonLd } from "@/lib/json-ld";
 import { siteUrl } from "@/lib/site-url";
