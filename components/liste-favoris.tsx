@@ -12,9 +12,7 @@ import { useFavoris } from "./favoris-provider";
 import styles from "./liste-favoris.module.css";
 import { IconeMaterial } from "./icone-material";
 import { SearchBar } from "@/components/material3/SearchBar";
-
 import { ComparisonToggle } from "@/components/features/comparison/ComparisonToggle";
-import { Button } from "@/components/material3/Button";
 import { Button } from "@/components/material3/Button";
 import { Snackbar } from "@/components/material3/Snackbar";
 
@@ -254,35 +252,30 @@ export function ListeFavoris({
               }}
             />
             {genres.length > 1 && (
-              <ChampSelect
-                id="genre-favoris"
-                label="Filtrer par genre"
-                value={genreActifValide}
-                options={[
-                  { value: "", label: "Tous les genres" },
-                  ...genres.map((genre) => ({ value: genre, label: genre }))
-                ]}
-                onChange={(value) => {
+              <div className={styles.selectField}>
+                <label htmlFor="genre-favoris">Filtrer par genre</label>
+                <select id="genre-favoris" value={genreActifValide} onChange={(event) => {
+                  const value = event.currentTarget.value;
                   setNombreVisible(24);
                   setGenreActif(value);
                   mettreAJourUrl(recherche, value, triActif);
-                }}
-              />
+                }}>
+                  <option value="">Tous les genres</option>
+                  {genres.map((genre) => <option key={genre} value={genre}>{genre}</option>)}
+                </select>
+              </div>
             )}
-            <ChampSelect
-              id="tri-favoris"
-              label="Trier les favoris"
-              value={triActif}
-              options={[
-                { value: "enregistrement", label: "Ordre d’enregistrement" },
-                { value: "nom-asc", label: "Nom · A à Z" },
-                { value: "nom-desc", label: "Nom · Z à A" }
-              ]}
-              onChange={changerTri}
-            />
+            <div className={styles.selectField}>
+              <label htmlFor="tri-favoris">Trier les favoris</label>
+              <select id="tri-favoris" value={triActif} onChange={(event) => changerTri(event.currentTarget.value)}>
+                <option value="enregistrement">Ordre d’enregistrement</option>
+                <option value="nom-asc">Nom · A à Z</option>
+                <option value="nom-desc">Nom · Z à A</option>
+              </select>
+            </div>
           </div>
           <BarreComparaison
-            prenoms={prenomsSelectionnes}
+            names={prenomsSelectionnes.map((prenom) => ({ slug: prenom.slug, name: prenom.nom }))}
             onRetirer={basculerComparaison}
             onEffacer={() => setSelectionComparaison([])}
           />
@@ -339,7 +332,7 @@ export function ListeFavoris({
                     disabled={!selectionValide.includes(prenom.slug) && selectionValide.length >= 3}
                     onClick={() => basculerComparaison(prenom.slug)}
                   />
-                  <ButtonFavori slug={prenom.slug} showError={false} />
+                  <FavoriteButton slug={prenom.slug} showError={false} />
                 </article>
               ))}
               </div>
