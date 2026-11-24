@@ -100,7 +100,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 ## Contrat design
 
 - `docs/design.md` définit les rôles Material 3, les formes, la typographie et la grille d'espacement applicables.
-- Les feuilles CSS consomment directement `--md-sys-*` ; aucun alias hérité ni fallback `var()` n'est admis.
+- Les feuilles CSS consomment directement `--md-sys-*` et uniquement les extensions `--namesia-*` explicitement documentées pour Rainbow et les couleurs sémantiques ; aucun alias hérité ni fallback `var()` n'est admis.
 - Les règles restent dans leur emplacement canonique : pas de couche d'overrides finale ni de sélecteurs dupliqués dans un même contexte.
 - Les graisses autorisées sont 400/500, les labels ne sont pas en capitales et les espacements suivent la grille de 4 px.
 - `tests/design-contract.test.mjs` fait respecter ce contrat dans la CI ; toute exception doit être décidée et documentée ici.
