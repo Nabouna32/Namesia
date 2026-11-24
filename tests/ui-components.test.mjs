@@ -243,7 +243,7 @@ test("les formulaires administratifs utilisent les surfaces, formes et dimension
 });
 
 test("le partage réutilise le bouton commun et ne garde pas un style concurrent", () => {
-  assert.match(partage, /import \{ Bouton \} from "@\/components\/ui\/bouton"/);
+  assert.match(partage, /import \{ Button \} from "@\/components\/material3\/Button"/);
   assert.match(partage, /<Button variant="tonal"/);
   assert.doesNotMatch(partage, /share-button/);
   assert.doesNotMatch(globalStyles, /\.share-button\s*\{/);
