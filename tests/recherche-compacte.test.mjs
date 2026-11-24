@@ -11,7 +11,7 @@ test("la recherche compacte dirige les résultats supplémentaires vers le catal
   assert.match(source, /creerUrlCatalogueDepuisRecherche\(recherche\)/);
   assert.match(
     source,
-    /\{!compact && resultats\.length > nombreVisible && \(\s*<Bouton[\s\S]*?Afficher les \{/,
+    /\{!compact && resultats\.length > nombreVisible && \(\s*<Button[\s\S]*?Afficher les \{/,
     "la pagination par lots doit rester réservée au catalogue"
   );
 });
