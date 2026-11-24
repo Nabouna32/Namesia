@@ -13,7 +13,8 @@ Les résultats, favoris, historique, suggestions, comparateur et prénoms mis en
 L’implémentation canonique est `components/material3/Card.tsx` et `components/material3/Card.module.css`.
 
 - Introduire le composant `Card` avec les variantes M3 `elevated`, `filled` et `outlined`.
-- Autoriser le choix d'un élément HTML sémantique via `as`, sans créer une API métier parallèle.
+- Exiger le choix d'un élément HTML sémantique via `as` à chaque usage ; aucune racine `div` implicite n'est autorisée.
+- Exiger l'état `interactive` à chaque usage au lieu de le déduire ou de le masquer derrière une valeur par défaut.
 - Déplacer la surface, la forme, la bordure et l'élévation dans `Card.module.css`.
 - Garder dans les CSS Modules des pages uniquement les règles de disposition et de contenu.
 - Migrer les cartes de résultats, favoris, historique, suggestions, comparateur et vedette vers `Card`.
@@ -22,7 +23,7 @@ L’implémentation canonique est `components/material3/Card.tsx` et `components
 
 ## Conséquences
 
-Les variantes de surface sont cohérentes entre les pages, les décisions de surface sont visibles dans l'API M3 et les pages ne peuvent plus redéfinir localement les couleurs ou formes des cartes. Les CSS Modules gardent le contrôle de la mise en page et de la densité propre à chaque contenu.
+Les variantes de surface sont cohérentes entre les pages, les décisions de surface sont visibles dans l'API M3 et les pages ne peuvent plus redéfinir localement les couleurs ou formes des cartes. Chaque composition doit déclarer son élément HTML et son comportement interactif ; une omission devient une erreur TypeScript au lieu d'un rendu `div` implicite. Les CSS Modules gardent le contrôle de la mise en page et de la densité propre à chaque contenu.
 
 ## Validation
 

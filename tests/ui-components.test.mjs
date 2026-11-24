@@ -379,11 +379,24 @@ const textFieldStyles = await readFile(new URL("../components/material3/TextFiel
 test("Card centralise les surfaces AndroidX et préserve l’élément HTML choisi", () => {
   assert.match(card, /export function Card</);
   assert.match(card, /variant: CardVariant/);
-  assert.match(card, /const Component = as \?\? "div"/);
+  assert.match(card, /as: T;/);
+  assert.match(card, /as: Component/);
+  assert.match(card, /interactive: boolean/);
+  assert.doesNotMatch(card, /as\?:|\?\?\s*["']div["']|interactive = false/);
   assert.match(cardStyles, /\.elevated\s*\{[^}]*surface-container-low/s);
   assert.match(cardStyles, /\.filled\s*\{[^}]*surface-container-highest/s);
   assert.match(cardStyles, /\.outlined\s*\{[^}]*outline-variant/s);
   assert.match(cardStyles, /\.interactive\.elevated:hover/);
+  for (const file of [
+    "../components/features/catalog/RelatedNames.tsx",
+    "../components/features/catalog/FeaturedNames.tsx",
+    "../components/features/catalog/NameSearch.tsx",
+    "../components/features/history/RecentNames.tsx",
+    "../components/features/favorites/FavoritesList.tsx"
+  ]) {
+    const source = await readFile(new URL(file, import.meta.url), "utf8");
+    assert.match(source, /<Card\s+as=\{Link\}\s+variant="elevated"\s+interactive/);
+  }
   assert.match(cardStyles, /--md-sys-state-pressed-state-layer-opacity/);
 });
 

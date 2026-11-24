@@ -1,0 +1,31 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+
+const verification = await readFile(new URL("../docs/material-3-verification.md", import.meta.url), "utf8");
+const design = await readFile(new URL("../docs/design.md", import.meta.url), "utf8");
+const components = await readFile(new URL("../docs/composants.md", import.meta.url), "utf8");
+const packageJson = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
+const lock = JSON.parse(await readFile(new URL("../package-lock.json", import.meta.url), "utf8"));
+
+test("les références de code du contrat M3 pointent vers des révisions immuables", () => {
+  const documents = [verification, design, components];
+  const links = documents.flatMap((document) =>
+    [...document.matchAll(/https:\/\/(?:github\.com|chromium\.googlesource\.com)\/[^\s)]+/g)].map(([url]) => url)
+  );
+  const sourceLinks = links.filter((url) => /\/blob\/|\/tree\/|\/\+\//.test(url));
+  assert.ok(sourceLinks.length > 0, "Les références sources versionnées doivent rester présentes");
+  for (const url of sourceLinks) {
+    assert.match(url, /(?:\/blob\/|\/tree\/|\/\+\/)[0-9a-f]{40}\//, "Référence mutable ou non épinglée : " + url);
+  }
+  assert.match(verification, /chromium\.googlesource\.com\/chromium\/src\/\+\/6ffe83723d5b4c60a15ae8c356d51e16a4951b24\/docs\/ui\/android\/dynamic_colors\.md/);
+  assert.doesNotMatch(verification, /chromium\.googlesource\.com\/chromium\/src\/\+\/refs\/heads\//);
+});
+
+test("les versions des bibliothèques de calcul et des sources AndroidX restent explicites", () => {
+  assert.equal(packageJson.dependencies["@material/material-color-utilities"], "0.4.0");
+  assert.equal(lock.packages["node_modules/@material/material-color-utilities"].version, "0.4.0");
+  assert.match(verification, /Compose Material 3 `1\.5\.0` stable/);
+  assert.match(verification, /919e948eaa351c590e7e6fc89d4014fad7a6e78c/);
+  assert.match(components, /AndroidX Compose Material 3 1\.5\.0 stable/);
+});
