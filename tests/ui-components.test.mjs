@@ -385,6 +385,8 @@ test("Checkbox porte le contrat AndroidX dans le comparateur sans contrôle conc
   assert.match(checkboxStyles, /height: 40px/);
   assert.match(checkboxStyles, /width: 18px/);
   assert.match(checkboxStyles, /height: 18px/);
+  assert.match(checkboxStyles, /md-sys-shape-corner-extra-small/);
+  assert.doesNotMatch(checkboxStyles, /border-radius:\\s*(?:\\d+(?:\\.\\d+)?px|\\d+%)/);
   assert.match(checkboxStyles, /md-sys-color-primary/);
   assert.match(checkboxStyles, /md-sys-color-on-primary/);
   assert.match(checkboxStyles, /md-sys-color-on-surface-variant/);
@@ -399,7 +401,7 @@ const cardStyles = await readFile(new URL("../components/material3/Card.module.c
 const textField = await readFile(new URL("../components/material3/TextField.tsx", import.meta.url), "utf8");
 const textFieldStyles = await readFile(new URL("../components/material3/TextField.module.css", import.meta.url), "utf8");
 
-test("Card centralise les surfaces AndroidX et préserve l’élément HTML choisi", () => {
+test("Card centralise les surfaces AndroidX et préserve l’élément HTML choisi", async () => {
   assert.match(card, /export function Card</);
   assert.match(card, /variant: CardVariant/);
   assert.match(card, /as: T;/);
