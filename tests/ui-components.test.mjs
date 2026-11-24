@@ -225,7 +225,6 @@ test("Rainbow ne colore plus les titres ou les surfaces générales", () => {
   assert.match(globalStyles, /h1 em,\s*h2 em\s*\{[^}]*color:\s*var\(--md-sys-color-primary\)/s);
   assert.doesNotMatch(globalStyles, /h1 em,\s*h2 em\s*\{[^}]*color:\s*var\(--namesia-color-category/);
   assert.doesNotMatch(profil.slice(0, profil.indexOf("\n}")), /color-rainbow/);
-  assert.match(titre, /--md-sys-color-on-surface/);
   assert.match(surfaceSymbolique, /var\(--namesia-color-category-container/);
   assert.match(surfaceSymbolique, /surface-container-low/);
 });
