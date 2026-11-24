@@ -14,3 +14,15 @@
   }
 }
 
+
+.resultActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-block: 16px;
+}
+
+.resultActions > p {
+  margin: 0;
+}

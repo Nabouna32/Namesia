@@ -13,6 +13,7 @@ import { SearchBar } from "@/components/material3/SearchBar";
 import { Button } from "@/components/material3/Button";
 import { ShareLink } from "@/components/features/sharing/ShareLink";
 import { FilterChip } from "@/components/material3/FilterChip";
+import { Snackbar } from "@/components/material3/Snackbar";
 import { Card } from "@/components/material3/Card";
 
 type Props = {
@@ -38,6 +39,8 @@ export function NameSearch({
   const [genreActif, setGenreActif] = useState(initialGenre);
   const [lettreActive, setLettreActive] = useState(initialLettre);
   const [nombreVisible, setNombreVisible] = useState(initialNombreVisible);
+  const [messageCopie, setMessageCopie] = useState("");
+  const [erreurCopie, setErreurCopie] = useState("");
 
   const genres = useMemo(
     () => [...new Set(prenoms.map((prenom) => prenom.genre))].sort((a, b) => a.localeCompare(b, "fr")),
@@ -129,6 +132,23 @@ export function NameSearch({
     setNombreVisible(suivant);
     mettreAJourUrl(recherche, genreActif, lettreActive, suivant);
   }
+  async function copierResultats() {
+    setMessageCopie("");
+    setErreurCopie("");
+
+    if (!navigator.clipboard?.writeText) {
+      setErreurCopie("La copie n’est pas disponible sur cet appareil ou a été refusée.");
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(resultats.map((prenom) => prenom.nom).join("\n"));
+      setMessageCopie(`${resultats.length} ${resultats.length > 1 ? "prénoms copiés" : "prénom copié"} dans le presse-papiers.`);
+    } catch {
+      setErreurCopie("La copie n’est pas disponible sur cet appareil ou a été refusée.");
+    }
+  }
+
 
   return (
     <div className={compact ? "search search-compact" : "search"}>
@@ -204,6 +224,15 @@ export function NameSearch({
                 ? `${suggestions.length} suggestions proches`
                 : `0 résultat affiché sur ${prenoms.length}`}
           </p>
+          {!compact && resultats.length > 0 && (
+            <div className={styles.resultActions}>
+              <Button variant="tonal" type="button" onClick={copierResultats}>
+                {resultats.length > 1 ? `Copier les ${resultats.length} prénoms` : "Copier le prénom"}
+              </Button>
+              {messageCopie && <Snackbar severity="success">{messageCopie}</Snackbar>}
+              {erreurCopie && <Snackbar severity="error">{erreurCopie}</Snackbar>}
+            </div>
+          )}
           {resultats.length > 0 ? (
             <>
               <div className={styles.resultsGrid}>

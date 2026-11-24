@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.45
+- **Version :** 3.46
 - **Mis à jour :** 2026-11-24
 
 ## 1. Positionnement
@@ -37,7 +37,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 
 - Catalogue de prénoms utilisé en France.
 - Page dédiée par prénom avec URL stable.
-- Recherche de prénoms avec prise en compte des accents, des variantes de casse et des séparateurs des prénoms composés (espace, tiret, apostrophe), y compris lorsqu'un séparateur est saisi en fin de préfixe ; classement des résultats par pertinence (correspondance exacte, puis préfixe, puis occurrence la plus proche du début du prénom), avec filtres combinables par genre et initiale. Depuis la recherche compacte de l'accueil, un lien permet d'ouvrir le catalogue avec le terme déjà saisi lorsque plus de 24 résultats existent. En l'absence de résultat normal, proposer jusqu'à cinq suggestions proches pour les recherches d'au moins quatre caractères, avec une tolérance d'une ou deux modifications selon la longueur et en respectant les filtres actifs. Les résultats et suggestions affichent aussi le genre associé à chaque fiche. Le catalogue présente 24 résultats au départ et révèle les suivants par lots de 24 pour garder une liste facile à parcourir.
+- Recherche de prénoms avec prise en compte des accents, des variantes de casse et des séparateurs des prénoms composés (espace, tiret, apostrophe), y compris lorsqu'un séparateur est saisi en fin de préfixe ; classement des résultats par pertinence (correspondance exacte, puis préfixe, puis occurrence la plus proche du début du prénom), avec filtres combinables par genre et initiale. Depuis la recherche compacte de l'accueil, un lien permet d'ouvrir le catalogue avec le terme déjà saisi lorsque plus de 24 résultats existent. En l'absence de résultat normal, proposer jusqu'à cinq suggestions proches pour les recherches d'au moins quatre caractères, avec une tolérance d'une ou deux modifications selon la longueur et en respectant les filtres actifs. Les résultats et suggestions affichent aussi le genre associé à chaque fiche. Le catalogue présente 24 résultats au départ et révèle les suivants par lots de 24 pour garder une liste facile à parcourir. Les résultats filtrés du catalogue peuvent être copiés sous forme de liste de noms, y compris ceux qui ne sont pas encore visibles dans les lots de 24.
 - URL partageable du catalogue : la recherche, les filtres actifs et le nombre de résultats déjà révélés (paramètre limite) sont conservés dans l'URL. Lorsque ces critères sont actifs, une action partage le lien avec uniquement q, genre, lettre et limite. Le retour depuis une fiche et ses suggestions restaure ces critères et le lot visible, sans les intégrer à l'URL canonique de la fiche. Modifier la recherche ou un filtre repart du premier lot.
 - Vitrine d'accueil de trois prénoms répartis sur le catalogue et renouvelés quotidiennement en UTC, plutôt que trois entrées alphabétiques consécutives ; chaque carte affiche l'initiale, le prénom, le pictogramme de genre et un accès à la fiche. La sélection s'adapte si le catalogue contient moins de trois fiches. Les actions de favori et de comparaison sont réservées à la fiche.
 - Découverte aléatoire d'un prénom publié depuis l'accueil, sans répétition immédiate tant qu'un autre choix est disponible. Le résultat affiche le pictogramme de genre accessible et un lien vers la fiche ; les actions de favori et de comparaison restent sur cette fiche.
