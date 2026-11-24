@@ -274,9 +274,9 @@ export function FavoritesList({
             </div>
           </div>
           <ComparisonBar
-            prenoms={prenomsSelectionnes}
-            onRetirer={basculerComparaison}
-            onEffacer={() => setSelectionComparaison([])}
+            names={prenomsSelectionnes.map((prenom) => ({ slug: prenom.slug, name: prenom.nom }))}
+            onRemove={basculerComparaison}
+            onClear={() => setSelectionComparaison([])}
           />
           <p className={styles.count} role="status" aria-live="polite">
             {favorisFiltres.length === 0 && favorisProches.length > 0
