@@ -1,6 +1,6 @@
 "use client";
 
-import { Bouton } from "@/components/ui/bouton";
+import { Button } from "@/components/ui/Button";
 import styles from "./bouton-favori.module.css";
 import { IconeMaterial } from "./icone-material";
 import { useFavoris } from "./favoris-provider";
@@ -15,17 +15,17 @@ export function BoutonFavori({ slug, nom, compact = false, afficherErreur = true
 
   return (
     <div className={compact ? `${styles.container} ${styles.compactContainer}` : styles.container}>
-      <Bouton
-        variante="outlined"
-        taille={compact ? "icon" : "standard"}
-        ariaLabel={compact ? pret ? `${action} : ${nomAccessible}` : `Chargement des favoris pour ${nomAccessible}` : undefined}
-        ariaPressed={actif}
+      <Button
+        variant="outlined"
+        size={compact ? "icon" : "standard"}
+        aria-label={compact ? pret ? `${action} : ${nomAccessible}` : `Chargement des favoris pour ${nomAccessible}` : undefined}
+        aria-pressed={actif}
         disabled={!pret}
         onClick={() => basculer(slug)}
       >
         <span aria-hidden="true"><IconeMaterial name={actif ? "favorite-filled" : "favorite"} size={compact ? 24 : 18} /></span>
         {!compact && (pret ? action : "Chargement…")}
-      </Bouton>
+      </Button>
       {erreur && afficherErreur && (
         <p className={styles.error} role="alert">
           Le stockage des favoris est indisponible ou contient des données illisibles. Vérifiez les paramètres de votre navigateur.
