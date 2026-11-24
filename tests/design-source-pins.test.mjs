@@ -35,6 +35,11 @@ test("les références de code du contrat M3 pointent vers des révisions immuab
 test("le registre M3 et le tableau AndroidX restent complets et lisibles", () => {
   assert.equal(components.includes("\\n|"), false);
   assert.equal(verification.includes("\\n|"), false);
+  assert.match(sourceVerifier, /verifySourcesWithLimit\(sources, 4\)/);
+  assert.match(sourceVerifier, /attempt < 3/);
+  assert.match(sourceVerifier, /AbortSignal\.timeout\(15_000\)/);
+  assert.match(sourceVerifier, /lastError = error/);
+  assert.match(sourceVerifier, /\[429, 500, 502, 503, 504\]/);
   for (const source of ["AndroidX Button", "AndroidX Checkbox", "AndroidX Card", "AndroidX SearchBar", "AndroidX TextField", "AndroidX NavigationBar", "AndroidX NavigationRail", "AndroidX Chips", "AndroidX TopAppBar", "AndroidX Snackbar"]) {
     assert.ok(sourceVerifier.includes(source), "Source AndroidX non vérifiée : " + source);
   }

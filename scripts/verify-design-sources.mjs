@@ -101,13 +101,28 @@ const sources = [
 
 async function fetchSource(source) {
   let response;
+  let lastError;
+
   for (let attempt = 0; attempt < 3; attempt += 1) {
-    response = await fetch(source.url, { signal: AbortSignal.timeout(15_000) });
-    if (response.ok) break;
-    if (![429, 500, 502, 503, 504].includes(response.status) || attempt === 2) {
-      throw new Error(`${source.name}: HTTP ${response.status} pour ${source.url}`);
+    try {
+      response = await fetch(source.url, { signal: AbortSignal.timeout(15_000) });
+      if (response.ok) break;
+      if (![429, 500, 502, 503, 504].includes(response.status)) {
+        throw new Error(`${source.name}: HTTP ${response.status} pour ${source.url}`);
+      }
+      lastError = new Error(`${source.name}: HTTP ${response.status}`);
+    } catch (error) {
+      if (error instanceof Error && error.message.startsWith(`${source.name}: HTTP `)) throw error;
+      lastError = error;
     }
-    await new Promise((resolve) => setTimeout(resolve, 1_000 * (attempt + 1)));
+
+    if (attempt < 2) {
+      await new Promise((resolve) => setTimeout(resolve, 1_000 * 2 ** attempt));
+    }
+  }
+
+  if (!response?.ok) {
+    throw new Error(`${source.name}: échec après 3 tentatives (${lastError instanceof Error ? lastError.message : "erreur réseau inconnue"})`);
   }
 
   const payload = await response.text();
@@ -118,4 +133,16 @@ async function fetchSource(source) {
   process.stdout.write(`Source vérifiée : ${source.name}\n`);
 }
 
-await Promise.all(sources.map(fetchSource));
+async function verifySourcesWithLimit(items, concurrency) {
+  let nextIndex = 0;
+  const workers = Array.from({ length: Math.min(concurrency, items.length) }, async () => {
+    while (nextIndex < items.length) {
+      const index = nextIndex;
+      nextIndex += 1;
+      await fetchSource(items[index]);
+    }
+  });
+  await Promise.all(workers);
+}
+
+await verifySourcesWithLimit(sources, 4);
