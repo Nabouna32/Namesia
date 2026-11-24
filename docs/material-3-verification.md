@@ -10,12 +10,14 @@
 |---|---|---|
 | Rôles et associations de couleurs | [Material 3 — Color roles](https://m3.material.io/styles/color/roles) | Noms des rôles `--md-sys-color-*` et associations premier plan / conteneur |
 | Système de couleur dynamique | [Material 3 — Color system](https://m3.material.io/styles/color) | Génération des palettes tonales et hiérarchie des surfaces |
+| Recommandations d'application des couleurs | [Android Developers — Material 3 theming](https://developer.android.com/codelabs/m3-design-theming) | Affectation de Surface au fond d'application et des rôles de conteneur aux composants |
+| API ColorScheme actuelle | [Android Developers — ColorScheme](https://developer.android.com/reference/kotlin/androidx/compose/material3/ColorScheme) | Noms officiels des propriétés, rôles de fond, surfaces et conteneurs |
+| Système de tokens Web | [Material Web — Theming](https://github.com/material-components/material-web/blob/main/docs/theming/README.md) | Préfixes officiels `--md-sys-color`, `--md-sys-typescale` et `--md-sys-shape` |
 | Variantes et rôles calculés | [Google Material Color Utilities — DynamicScheme](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/dynamiccolor/dynamic_scheme.ts) | Comportement réel de Fidelity/Rainbow et propriétés accessibles |
 | Définitions des couleurs M3 | [Google Material Color Utilities — MaterialDynamicColors](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/dynamiccolor/material_dynamic_colors.ts) | Rôles calculables et distinction des clés de palette |
 | Variantes disponibles | [Google Material Color Utilities — Variant](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/dynamiccolor/variant.ts) | Noms officiels des variantes |
 | Définition de la variante Fidelity | [Google Material Color Utilities — ColorSpec 2021](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/dynamiccolor/color_spec_2021.ts) | Règles de couleur associées à Fidelity |
 | Baseline de couleur M3 | [Android Developers — Color](https://developer.android.com/design/ui/mobile/guides/styles/color) et [AndroidX — PaletteTokens.kt](https://github.com/androidx/androidx/blob/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/tokens/PaletteTokens.kt) | Valeurs baseline M3 ; `#6750A4` est le violet primary documenté, pas un bleu Google |
-| Contrat d'implémentation des couleurs | [AndroidX — ColorScheme.kt](https://github.com/androidx/androidx/blob/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/ColorScheme.kt) | Noms et responsabilités des rôles de `ColorScheme` |
 | Contrat des composants | [AndroidX Compose Material 3](https://github.com/androidx/androidx/tree/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3) | Implémentation source des composants standards, états, dimensions et variantes |
 | Couleurs personnalisées | [Material 3 — Define new colors](https://m3.material.io/styles/color/advanced/define-new-colors) et [MCU — theme_utils.ts](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/utils/theme_utils.ts) | Génération des quatre rôles tonals de couleurs sémantiques additionnelles |
 | Version de calcul | [Google Material Color Utilities — DynamicScheme](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/dynamiccolor/dynamic_scheme.ts) | Repli explicite des variantes Fidelity/Rainbow vers ColorSpec 2021 |
@@ -25,7 +27,7 @@
 | Formes | [Angular Material — _md-sys-shape.scss](https://github.com/angular/components/blob/main/src/material/core/tokens/m3/_md-sys-shape.scss) | Échelle de coins M3 |
 | Export et aperçu de thème | [Material Theme Builder](https://material-foundation.github.io/material-theme-builder/) | Contrôle visuel indépendant du thème calculé |
 
-Les sources sont les spécifications Material 3 et le code source officiel Google. Les pages et la bibliothèque peuvent évoluer ; toute mise à jour de dépendance ou de spécification déclenche une nouvelle vérification avant modification des rôles.
+Les sources sont les spécifications Material 3 et le code source officiel Google. Les pages et la bibliothèque peuvent évoluer ; toute mise à jour de dépendance ou de spécification déclenche une nouvelle vérification avant modification des rôles. Les références AndroidX décrivent l'API de composants ; Material Web documente la convention de tokens CSS. Ces implémentations ne sont pas interchangeables, mais leurs noms de rôles M3 doivent rester cohérents.
 
 ## Paramètres retenus
 
@@ -42,20 +44,29 @@ Les sources sont les spécifications Material 3 et le code source officiel Googl
 | Couleurs sémantiques | `success #386A20`, `warning #795900`, `info #005B9A` | Sources historiques conservées et étendues via `customColor` en quatre rôles clairs/sombres ; namespace `--namesia-color-*` |
 | Modes | clair et sombre | Deux schémas issus de la même source et des mêmes paramètres |
 
+### Affectation des couleurs de fond
+
+- Le fond de la page et du shell utilise le rôle M3 `background`, avec son premier plan associé `on-background` pour le texte global.
+- Les conteneurs et composants utilisent les rôles `surface`, `surface-container-low`, `surface-container`, `surface-container-high` et `surface-container-highest` selon leur hiérarchie ; les contenus reposent sur le rôle `on-surface` ou `on-surface-variant`.
+- Les surfaces d'accent utilisent les paires prévues : `primary/on-primary`, `primary-container/on-primary-container`, etc. Un conteneur n'est jamais associé à un premier plan d'une autre famille.
+- Le mode sombre recalcule le schéma complet ; il ne se contente pas d'inverser les couleurs claires.
+- Le bleu Google de marque (par exemple `#4285F4`) n'est pas la couleur source de la baseline Material 3. Ne pas remplacer la source M3 par le bleu Google par simple assimilation de marque.
+
 ## Contrôles automatisés
 
 La CI doit garantir les points suivants via `tests/material-theme.test.mjs` et `tests/design-contract.test.mjs` :
 
 1. La liste des rôles système est explicite, fermée et comparée à une liste attendue ; aucune clé de palette interne ni propriété non M3 ne reçoit le préfixe `--md-sys-color-*`.
-2. Les rôles consommés par les CSS appartiennent à cette liste fermée.
+2. **Toutes les feuilles CSS Modules et la feuille globale** sont parcourues : chaque rôle couleur `--md-sys-color-*` utilisé doit appartenir au registre officiel fermé. Une faute de nom ou un rôle absent fait échouer la CI.
 3. Les extensions de catégories Rainbow et les couleurs sémantiques success/warning/info portent `--namesia-*`, jamais `--md-sys-*` ; chacune possède ses rôles de premier plan et de conteneur en clair et sombre.
 4. Un rôle Fidelity ou Rainbow absent provoque une erreur explicite ; il n'est ni ignoré ni remplacé.
 5. Le CSS initial du document est calculé depuis les mêmes schémas que ceux réappliqués après hydratation. Il n'existe pas de seconde palette statique dans `globals.css`.
 6. Les couleurs de la barre du navigateur utilisent les rôles de fond calculés pour les deux modes.
-7. Les CSS ne contiennent aucun `var(..., ...)` de secours ni couleur hexadécimale codée en dur.
+7. **Aucun CSS ne peut définir de couleur hexadécimale, redéfinir un rôle système ou fournir un fallback dans `var()`.** Un défaut de token doit être visible et corrigé à sa source.
 8. Motion, état et forme utilisent les noms système M3 ; aucun alias Namesia n'usurpe ces familles. Les ombres non nécessaires sont retirées au lieu de simuler des niveaux d'élévation.
+9. La version de `@material/material-color-utilities`, la couleur source, la variante et la version ColorSpec sont épinglées par les tests. Une mise à jour de bibliothèque exige une revue explicite des rôles et du comportement des variantes.
 
-Un contrôle statique ne remplace pas un examen du rendu. Après un changement de source, de version de bibliothèque ou de paramètres, comparer les modes clair/sombre avec Material Theme Builder et vérifier les contrastes de chaque paire réellement utilisée.
+Un contrôle statique ne remplace pas un examen du rendu. Après un changement de source, de version de bibliothèque ou de paramètres, comparer les modes clair/sombre avec Material Theme Builder et vérifier les contrastes de chaque paire réellement utilisée. La CI ne peut pas certifier à elle seule la ressemblance pixel à pixel, la qualité de la composition ou les états interactifs réellement rendus.
 
 ## Extensions Namesia, hors nomenclature M3
 
@@ -74,6 +85,7 @@ Les variables Rainbow sont un namespace d'adaptation Namesia pour distinguer le 
 - Les barres système, gestes de retour et animations système Android sont gérés par l'OS et le navigateur. Namesia ne dessine pas de substituts.
 - Le site suit `prefers-color-scheme` et expose une couleur de thème au navigateur, mais ne peut pas imposer le thème des contrôles natifs au-delà des mécanismes CSS et viewport supportés.
 - Les éléments natifs `select`, `input` et les dialogues conservent leurs interactions et limites propres au navigateur ; ils ne sont pas remplacés par des clones décoratifs uniquement pour simuler Android.
+- Les seules exceptions non-M3 sont les extensions `--namesia-*` déclarées dans ce document et les comportements impossibles à reproduire parce qu'ils appartiennent au navigateur ou à l'OS. Une exception doit nommer la limite réelle, rester ciblée et être couverte par un contrôle adapté.
 
 Les tokens de mouvement et d'état sont vérifiés contre les sources M3 d'Angular Material : `_md-sys-motion.scss`, `_md-sys-state.scss`, `_md-sys-elevation.scss` et `_md-sys-shape.scss`. Les rôles et les composants standards sont confrontés aux sources AndroidX Compose Material 3 ; les noms de composants M3 sont repris dans le registre `docs/composants.md`. Les niveaux d'élévation M3 sont des valeurs numériques en dp ; Namesia n'utilise actuellement pas de `box-shadow` et ne les transforme donc pas en ombres CSS.
 
