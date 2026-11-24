@@ -1,6 +1,6 @@
 "use client";
 
-import { Bouton } from "@/components/ui/bouton";
+import { Button } from "@/components/ui/Button";
 import { IconeMaterial } from "@/components/icone-material";
 import styles from "./bouton-comparaison.module.css";
 
@@ -11,7 +11,7 @@ type Props = {
   onClick: () => void;
 };
 
-export function BoutonComparaison({
+export function ComparisonButton({
   prenom,
   selectionne,
   desactive = false,
@@ -21,11 +21,11 @@ export function BoutonComparaison({
   const preposition = selectionne ? "de" : "à";
 
   return (
-    <Bouton
-      variante={selectionne ? "tonal" : "outlined"}
+    <Button
+      variant={selectionne ? "tonal" : "outlined"}
       className={styles.toggle}
-      ariaLabel={`${action} ${prenom} ${preposition} la comparaison`}
-      ariaPressed={selectionne}
+      aria-label={`${action} ${prenom} ${preposition} la comparaison`}
+      aria-pressed={selectionne}
       disabled={desactive}
       onClick={onClick}
     >
@@ -33,6 +33,6 @@ export function BoutonComparaison({
       <span className={styles.icon} aria-hidden="true">
         <IconeMaterial name={selectionne ? "check" : "compare-arrows"} size={18} />
       </span>
-    </Bouton>
+    </Button>
   );
 }
