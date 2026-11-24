@@ -8,8 +8,7 @@ import { useHistory } from "@/components/HistoryProvider";
 import styles from "./NameHistory.module.css";
 import { Icon } from "@/components/ui/Icon";
 import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
+import { IconButton } from "@/components/ui/IconButton";
 
 export function NameHistory({ prenoms }: { prenoms: PrenomIndex[] }) {
   const { slugs, retirer, effacer, erreur } = useHistory();
@@ -33,7 +32,7 @@ export function NameHistory({ prenoms }: { prenoms: PrenomIndex[] }) {
           {slugs.length > 0 && (
             <Button variant="text" type="button" onClick={effacer}>
               Effacer l’historique
-            </Button>
+            </IconButton>
           )}
         </div>
         {erreur && (
@@ -53,13 +52,12 @@ export function NameHistory({ prenoms }: { prenoms: PrenomIndex[] }) {
                       <small>{prenom.genre}</small>
                     </span>
                     <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
-                  </Card>
+                  </Link>
                   {!erreurFavoris && (
                     <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
                   )}
-                  <Button
-                    variant="text"
-                    size="icon"
+                  <IconButton
+                    variant="standard"
                     aria-label={`Retirer ${prenom.nom} de l’historique`}
                     onClick={() => retirer(prenom.slug)}
                   >
