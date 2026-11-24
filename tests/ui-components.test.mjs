@@ -339,7 +339,7 @@ test("les cartes Rainbow utilisent la couleur de premier plan de leur propre cat
 
 test("les surfaces principales Material sont définies à leur emplacement canonique", () => {
   assert.match(globalStyles, /\.hero \{[^}]*surface-container-low/s);
-  assert.match(globalStyles, /\.featured-card \{[^}]*surface-container-low/s);
+  assert.match(cardStyles, /\.elevated \{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.profile-hero \{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.site-footer \{[^}]*surface-container/s);
   assert.doesNotMatch(globalStyles, /Couche Material 3 Fidelity/);
@@ -349,6 +349,18 @@ test("les surfaces principales Material sont définies à leur emplacement canon
 
 
 const rechercheActions = await readFile(new URL("../components/NameSearch.tsx", import.meta.url), "utf8");
+
+test("Card expose les trois variantes Material 3 et centralise les surfaces", () => {
+  assert.match(card, /export function Card</);
+  assert.match(card, /variant\?: CardVariant/);
+  assert.match(cardStyles, /\.elevated\s*\{[^}]*surface-container-low/s);
+  assert.match(cardStyles, /\.filled\s*\{[^}]*surface-container-highest/s);
+  assert.match(cardStyles, /\.outlined\s*\{[^}]*outline-variant/s);
+  assert.match(cardStyles, /corner-medium/);
+  for (const source of [catalogue, favorisActions, historiqueActions, comparateur, vitrine]) {
+    assert.match(source, /<Card/);
+  }
+});
 
 test("les actions de catalogue, favoris et comparaison utilisent le bouton commun", () => {
   for (const source of [rechercheActions, favorisActions, comparateurActions]) {
@@ -364,8 +376,8 @@ test("les actions de catalogue, favoris et comparaison utilisent le bouton commu
 
 test("les options de comparaison ont des états tactiles Material sans survol collant", () => {
   assert.match(globalStyles, /@media \(hover: hover\) and \(pointer: fine\) \{\s*\.compare-option:hover/);
-  assert.match(globalStyles, /@media \(hover: hover\) and \(pointer: fine\) \{\s*\.name-card:hover/);
-  assert.match(globalStyles, /@media \(hover: hover\) and \(pointer: fine\) \{\s*\.featured-card:hover/);
+  assert.match(cardStyles, /@media \(hover: hover\) and \(pointer: fine\) \{\s*\.interactive\.elevated:hover/);
+  assert.match(cardStyles, /\.interactive\.filled:hover,\s*\.interactive\.outlined:hover/);
   assert.match(globalStyles, /\.compare-option:active:not\(:has\(input:disabled\)\)/);
   assert.match(globalStyles, /\.compare-option:has\(input:checked\):active/);
   assert.match(globalStyles, /\.compare-option:has\(input:checked\)\s*\{[^}]*primary-container/s);
