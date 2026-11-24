@@ -10,6 +10,7 @@ const decouverte = await readFile(new URL("../components/decouverte-aleatoire.ts
 const vitrine = await readFile(new URL("../components/prenoms-vedette.tsx", import.meta.url), "utf8");
 const notFound = await readFile(new URL("../app/not-found.tsx", import.meta.url), "utf8");
 const errorBoundary = await readFile(new URL("../app/error.tsx", import.meta.url), "utf8");
+const historique = await readFile(new URL("../components/historique-prenoms.tsx", import.meta.url), "utf8");
 
 test("les primitives partagées exposent des variantes sémantiques et préservent les éléments natifs", () => {
   assert.match(bouton, /export function Bouton\(/);
@@ -20,7 +21,15 @@ test("les primitives partagées exposent des variantes sémantiques et préserve
     assert.match(styles, new RegExp(`\\.${variante} \\{`));
   }
   assert.match(styles, /min-height: 48px/);
+  assert.match(styles, /min-width: 58px/);
   assert.match(styles, /width: 48px/);
+  assert.match(styles, /inset: 4px 0/);
+  assert.match(styles, /corner-small/);
+  assert.match(styles, /outline-variant/);
+  assert.match(styles, /on-surface-variant/);
+  assert.match(styles, /color-mix\(in srgb, var\(--md-sys-color-on-surface\) 10%, transparent\)/);
+  assert.match(styles, /color-mix\(in srgb, var\(--md-sys-color-on-surface-variant\) 38%, transparent\)/);
+  assert.match(styles, /box-shadow: 0 1px 2px 0 color-mix/);
 });
 
 test("les composants métier réutilisent les primitives au lieu de redéfinir leurs boutons", () => {
@@ -28,6 +37,9 @@ test("les composants métier réutilisent les primitives au lieu de redéfinir l
   assert.match(favoris, /<Bouton/);
   assert.doesNotMatch(favoris, /<button/);
   assert.match(decouverte, /<Bouton/);
+  assert.match(decouverte, /IconeMaterial name="shuffle" size=\{20\}/);
+  assert.match(favoris, /size=\{compact \? 24 : 20\}/);
+  assert.match(historique, /IconeMaterial name="close" size=\{24\}/);
   assert.doesNotMatch(decouverte, /<button/);
   assert.match(notFound, /<LienBouton/);
 });
@@ -211,7 +223,7 @@ test("Rainbow ne colore plus les titres ou les surfaces générales", () => {
 });
 
 
-test("les boutons et cartes utilisent les state layers Material plutôt que des zooms ou élévations", () => {
+test("les cartes évitent les effets décoratifs et les boutons utilisent les couches d’état Material", () => {
   const nomBase = globalStyles.indexOf(".name-card { min-height: 76px;");
   const nomHover = globalStyles.slice(globalStyles.indexOf(".name-card:hover {", nomBase));
   const vedetteHover = globalStyles.slice(globalStyles.lastIndexOf(".featured-card:hover {"));
