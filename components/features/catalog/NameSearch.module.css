@@ -1,7 +1,7 @@
 .resultsGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-gap: 8px;
+  gap: 8px;
 }
 
 .resultCard {
@@ -11,37 +11,6 @@ gap: 8px;
 .resultLink.resultLink {
   min-width: 0;
   padding-top: 60px;
-}
-
-
-.gender {
-  display: flex;
-  min-height: 24px;
-  align-items: center;
-  margin-top: 6px;
-  color: var(--md-sys-color-on-surface-variant);
-}
-
-.gender :global(.material-icon) {
-  width: 20px;
-  height: 20px;
-}
-
-.resultActions {
-  position: absolute;
-  z-index: 1;
-  top: 4px;
-  right: 4px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.favoriteError {
-margin: 0 0 16px;
-  color: var(--md-sys-color-error);
-  font-size: var(--md-sys-typescale-body-medium-size);
-  line-height: 1.6;
 }
 
 @media (max-width: 760px) {
