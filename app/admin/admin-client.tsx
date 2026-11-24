@@ -4,7 +4,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { createClient, type Session } from "@supabase/supabase-js";
 import { FICHE_SCHEMA_VERSION, parseFichePrenom, type FichePrenomImport } from "@/lib/fiche-prenom";
 import styles from "./admin.module.css";
-import { Bouton } from "@/components/ui/bouton";
+import { Button } from "@/components/ui/Button";
 import { MessageStatut, type TypeMessageStatut } from "@/components/ui/message-statut";
 
 const supabase = createClient(
@@ -279,7 +279,7 @@ export function AdminClient() {
       <form className={styles.form} onSubmit={connecter}>
         <label htmlFor="admin-email">Adresse e-mail</label>
         <input id="admin-email" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
-        <Bouton type="submit" disabled={busy}>{busy ? "Envoi…" : "Recevoir un lien de connexion"}</Bouton>
+        <Button type="submit" disabled={busy}>{busy ? "Envoi…" : "Recevoir un lien de connexion"}</Button>
       </form>
       {message && <MessageStatut type={message.type}>{message.text}</MessageStatut>}
     </section>;
@@ -290,14 +290,14 @@ export function AdminClient() {
       <h2>Accès non autorisé</h2>
       <p>Ce compte est connecté, mais ne figure pas dans la liste des administrateurs Namesia.</p>
       {message && <MessageStatut type={message.type}>{message.text}</MessageStatut>}
-      <Bouton type="button" onClick={deconnecter}>Se déconnecter</Bouton>
+      <Button type="button" onClick={deconnecter}>Se déconnecter</Button>
     </section>;
   }
 
   return <section className={styles.panel}>
     <div className={styles.heading}>
       <div><h2>Importer une fiche</h2><p>Connecté en tant que {session.user.email}</p></div>
-      <Bouton variante="outlined" type="button" onClick={deconnecter}>Déconnexion</Bouton>
+      <Button variant="outlined" type="button" onClick={deconnecter}>Déconnexion</Button>
     </div>
     <form className={styles.form} onSubmit={importer}>
       <label htmlFor="fiche-json">Fiche JSON (version {FICHE_SCHEMA_VERSION})</label>
@@ -316,8 +316,8 @@ export function AdminClient() {
         setImported(null);
       }} placeholder={'{"schema_version":"3.0.0","identity":{...},"content":{...}}'} />
       <div className={styles.actions}>
-        <Bouton variante="outlined" type="button" disabled={busy || !json.trim()} onClick={previsualiser}>Prévisualiser</Bouton>
-        <Bouton type="submit" disabled={busy || !preview}>{busy ? "Import…" : "Enregistrer en brouillon"}</Bouton>
+        <Button variant="outlined" type="button" disabled={busy || !json.trim()} onClick={previsualiser}>Prévisualiser</Button>
+        <Button type="submit" disabled={busy || !preview}>{busy ? "Import…" : "Enregistrer en brouillon"}</Button>
       </div>
     </form>
 
@@ -334,7 +334,7 @@ export function AdminClient() {
 
     {imported && <div className={styles.publish}>
       <p>La version {imported.version} est enregistrée en brouillon. Après vérification de l'aperçu, tu peux la publier.</p>
-      <Bouton type="button" disabled={busy} onClick={publier}>Publier cette version</Bouton>
+      <Button type="button" disabled={busy} onClick={publier}>Publier cette version</Button>
     </div>}
 
     <section className={styles.library}>
@@ -349,10 +349,10 @@ export function AdminClient() {
         </div>
         {[...name.name_profiles].sort((a, b) => b.version - a.version).map((profile) => <div className={styles.versionRow} key={profile.id}>
           <span>Version {profile.version} · {statusLabels[profile.status]} · {new Date(profile.created_at).toLocaleDateString("fr-FR")}</span>
-          <Bouton variante="outlined" type="button" disabled={busy} onClick={() => void previsualiserVersion(profile)}>Prévisualiser</Bouton>
+          <Button variant="outlined" type="button" disabled={busy} onClick={() => void previsualiserVersion(profile)}>Prévisualiser</Button>
         </div>)}
       </article>)}
-      {catalogNextOffset !== null && <Bouton variante="outlined" type="button" disabled={catalogLoading} onClick={() => setCatalogOffset(catalogNextOffset)}>Charger les fiches suivantes</Bouton>}
+      {catalogNextOffset !== null && <Button variant="outlined" type="button" disabled={catalogLoading} onClick={() => setCatalogOffset(catalogNextOffset)}>Charger les fiches suivantes</Button>}
     </section>
     {message && <MessageStatut type={message.type}>{message.text}</MessageStatut>}
   </section>;
