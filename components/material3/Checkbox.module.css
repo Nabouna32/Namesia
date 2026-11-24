@@ -22,7 +22,7 @@
   width: 18px;
   height: 18px;
   border: 2px solid var(--md-sys-color-on-surface-variant);
-  border-radius: var(--md-sys-shape-corner-extra-small);
+  border-radius: 2px;
   background: transparent;
   transition:
     background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
