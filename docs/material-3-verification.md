@@ -14,7 +14,10 @@
 | Définitions des couleurs M3 | [Google Material Color Utilities — MaterialDynamicColors](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/dynamiccolor/material_dynamic_colors.ts) | Rôles calculables et distinction des clés de palette |
 | Variantes disponibles | [Google Material Color Utilities — Variant](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/dynamiccolor/variant.ts) | Noms officiels des variantes |
 | Définition de la variante Fidelity | [Google Material Color Utilities — ColorSpec 2021](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/dynamiccolor/color_spec_2021.ts) | Règles de couleur associées à Fidelity |
-| Motion, état et élévation | [Tokens système M3 d'Angular Material](https://github.com/angular/components/tree/main/src/material/core/tokens/m3) | Noms officiels des tokens de durée, courbe, couche d'état et niveaux d'élévation |
+| Motion | [Angular Material — _md-sys-motion.scss](https://github.com/angular/components/blob/main/src/material/core/tokens/m3/_md-sys-motion.scss) | Noms et valeurs officielles des durées et courbes |
+| État | [Angular Material — _md-sys-state.scss](https://github.com/angular/components/blob/main/src/material/core/tokens/m3/_md-sys-state.scss) | Opacités de survol, focus, pression et déplacement |
+| Élévation | [Angular Material — _md-sys-elevation.scss](https://github.com/angular/components/blob/main/src/material/core/tokens/m3/_md-sys-elevation.scss) | Niveaux d'élévation numériques 0 à 5 |
+| Formes | [Angular Material — _md-sys-shape.scss](https://github.com/angular/components/blob/main/src/material/core/tokens/m3/_md-sys-shape.scss) | Échelle de coins M3 |
 | Export et aperçu de thème | [Material Theme Builder](https://material-foundation.github.io/material-theme-builder/) | Contrôle visuel indépendant du thème calculé |
 
 Les sources sont les spécifications Material 3 et le code source officiel Google. Les pages et la bibliothèque peuvent évoluer ; toute mise à jour de dépendance ou de spécification déclenche une nouvelle vérification avant modification des rôles.
