@@ -3,7 +3,7 @@ import styles from "./StatusMessage.module.css";
 
 export type StatusMessageType = "success" | "warning" | "info" | "error";
 
-const roles: Record<TypeStatusMessage, string> = {
+const roles: Record<StatusMessageType, string> = {
   success: styles.success,
   warning: styles.warning,
   info: styles.info,
@@ -15,7 +15,7 @@ export function StatusMessage({
   children,
   className
 }: Readonly<{
-  type: TypeStatusMessage;
+  type: StatusMessageType;
   children: ReactNode;
   className?: string;
 }>) {
