@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const globalCss = await readFile(join(root, "app/globals.css"), "utf8");
+const tokensCss = await readFile(join(root, "styles/material3/tokens.css"), "utf8");
 const provider = await readFile(join(root, "components/material-theme-provider.tsx"), "utf8");
 const theme = await readFile(join(root, "lib/material-theme.ts"), "utf8");
 const layout = await readFile(join(root, "app/layout.tsx"), "utf8");
@@ -27,7 +28,7 @@ async function collectCss(directory) {
     if (["node_modules", ".next", ".git"].includes(entry.name)) continue;
     const absolute = join(directory, entry.name);
     if (entry.isDirectory()) files.push(...await collectCss(absolute));
-    else if (entry.name.endsWith(".module.css") || relative(root, absolute) === "app/globals.css") files.push(absolute);
+    else if (entry.name.endsWith(".module.css") || ["app/globals.css", "styles/material3/tokens.css"].includes(relative(root, absolute))) files.push(absolute);
   }
   return files;
 }
@@ -76,7 +77,7 @@ test("les feuilles consomment les rôles Material sans alias hérités ni fallba
   assert.doesNotMatch(allCss, /--(?:color-[\w-]+|ink|muted|line|paper|surface|accent|sans|font-(?:sans|display)|radius-[\w-]+|space-\d+|motion-[\w-]+|shadow-[\w-]+)\b/);
   assert.doesNotMatch(allCss, /var\(\s*--[\w-]+\s*,/);
   assert.match(theme, /--md-sys-color-/);
-  assert.match(globalCss, /--md-sys-typescale-title-large-size:/);
+  assert.match(tokensCss, /--md-sys-typescale-title-large-size:/);
   assert.match(globalCss, /--md-sys-shape-corner-extra-large:/);
   assert.match(globalCss, /--md-sys-shape-corner-full: 9999px;/);
 });
@@ -139,7 +140,8 @@ test("les états hover sont réservés aux appareils qui disposent d'un pointeur
 });
 
 test("la feuille globale conserve un seul :root SSR et aucune couche d'overrides finale", () => {
-  assert.equal((globalCss.match(/:root\s*\{/g) ?? []).length, 1);
+  assert.equal((tokensCss.match(/:root\s*\{/g) ?? []).length, 1);
+  assert.equal((globalCss.match(/:root\s*\{/g) ?? []).length, 0);
   assert.doesNotMatch(globalCss, /--md-sys-color-[\w-]+\s*:/);
   assert.doesNotMatch(globalCss, /Couche Material 3 Fidelity/);
 });
@@ -163,7 +165,7 @@ test("Roboto est chargée une fois, auto-hébergée et sans police de substituti
   assert.match(layout, /subsets:\s*\[\s*"latin",\s*"latin-ext"\s*\]/);
   assert.match(layout, /variable: "--font-roboto"/);
   assert.match(layout, /className=\{roboto\.variable\}/);
-  assert.match(globalCss, /--md-sys-typescale-body-large-font: var\(--font-roboto\);/);
+  assert.match(tokensCss, /--md-sys-typescale-body-large-font: var\(--font-roboto\);/);
   assert.doesNotMatch(globalCss, /-font: Roboto;/);
 });
 
@@ -187,12 +189,12 @@ test("l'échelle typographique Material 3 est complète et limitée aux graisses
   };
   for (const [role, [size, lineHeight, weight, tracking]] of Object.entries(roles)) {
     for (const property of ["font", "size", "line-height", "weight", "tracking"]) {
-      assert.match(globalCss, new RegExp("--md-sys-typescale-" + role + "-" + property + ":"), "Token manquant : " + role + "-" + property);
+      assert.match(tokensCss, new RegExp("--md-sys-typescale-" + role + "-" + property + ":"), "Token manquant : " + role + "-" + property);
     }
-    assert.ok(globalCss.includes("--md-sys-typescale-" + role + "-size: " + size + "px;"), "Taille M3 incorrecte : " + role);
-    assert.ok(globalCss.includes("--md-sys-typescale-" + role + "-line-height: " + lineHeight + "px;"), "Interligne M3 incorrect : " + role);
-    assert.ok(globalCss.includes("--md-sys-typescale-" + role + "-weight: " + weight + ";"), "Graisse M3 incorrecte : " + role);
-    assert.ok(globalCss.includes("--md-sys-typescale-" + role + "-tracking: " + tracking + ";"), "Approche M3 incorrecte : " + role);
+    assert.ok(tokensCss.includes("--md-sys-typescale-" + role + "-size: " + size + "px;"), "Taille M3 incorrecte : " + role);
+    assert.ok(tokensCss.includes("--md-sys-typescale-" + role + "-line-height: " + lineHeight + "px;"), "Interligne M3 incorrect : " + role);
+    assert.ok(tokensCss.includes("--md-sys-typescale-" + role + "-weight: " + weight + ";"), "Graisse M3 incorrecte : " + role);
+    assert.ok(tokensCss.includes("--md-sys-typescale-" + role + "-tracking: " + tracking + ";"), "Approche M3 incorrecte : " + role);
   }
   assert.doesNotMatch(allCss, /font-size\s*:[^;]*px/);
   const weights = [...allCss.matchAll(/font-weight:\s*([^;]+);/g)].map((match) => match[1].trim());
