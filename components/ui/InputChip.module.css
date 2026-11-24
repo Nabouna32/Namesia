@@ -1,0 +1,39 @@
+.chip {
+  display: inline-flex;
+  min-width: 0;
+  min-height: 48px;
+  align-items: center;
+gap: 8px;
+padding: 8px 12px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-full);
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  font: inherit;
+  font-size: var(--md-sys-typescale-body-medium-size);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.chip span {
+  overflow-wrap: anywhere;
+}
+
+.chip svg {
+  flex: 0 0 auto;
+}
+
+.chip:active {
+  background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) var(--md-sys-state-pressed-state-layer-opacity), var(--md-sys-color-secondary-container));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover {
+    background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) var(--md-sys-state-hover-state-layer-opacity), var(--md-sys-color-secondary-container));
+  }
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--md-sys-color-primary);
+  outline-offset: 2px;
+}
