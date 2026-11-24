@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const component = await readFile(new URL("../components/NameHistory.tsx", import.meta.url), "utf8");
-const provider = await readFile(new URL("../components/historique-provider.tsx", import.meta.url), "utf8");
+const provider = await readFile(new URL("../components/HistoryProvider.tsx", import.meta.url), "utf8");
 
 test("chaque fiche de l’historique propose un retrait individuel accessible", () => {
   assert.match(component, /ariaLabel=.*Retirer .* de l’historique/);
