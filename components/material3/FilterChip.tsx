@@ -1,6 +1,6 @@
 "use client";
 
-import { IconeMaterial } from "@/components/material3/Icon";
+import { Icon } from "@/components/material3/Icon";
 import styles from "./FilterChip.module.css";
 
 type Props = {
