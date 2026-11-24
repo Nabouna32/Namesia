@@ -87,3 +87,7 @@
 .input:not(:disabled):active + .indicator {
   box-shadow: 0 0 0 11px color-mix(in srgb, var(--md-sys-color-on-surface) var(--md-sys-state-pressed-state-layer-opacity), transparent);
 }
+
+.input:checked:not(:disabled):active + .indicator {
+  box-shadow: 0 0 0 11px color-mix(in srgb, var(--md-sys-color-on-primary) var(--md-sys-state-pressed-state-layer-opacity), transparent);
+}
