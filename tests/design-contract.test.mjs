@@ -258,6 +258,9 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.match(composantsDoc, /NavigationBar/);
   assert.match(composantsDoc, /FilterChip/);
   assert.match(composantsDoc, /SearchBar/);
+  assert.match(composantsDoc, /components\/material3/);
+  assert.match(agents, /composants officiels/);
+  assert.doesNotMatch(composantsDoc, /ChampRecherche|ChipFiltre|MessageStatut/);
   assert.match(composantsDoc, /SearchBarTokens/);
   assert.match(composantsDoc, /ButtonSmallTokens/);
   assert.match(composantsDoc, /IconButton/);
