@@ -3,15 +3,15 @@
 import Link from "next/link";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import type { PrenomIndex } from "@/lib/prenoms";
-import { useFavoris } from "@/components/FavoritesProvider";
-import { useHistorique } from "@/components/HistoryProvider";
+import { useFavorites } from "@/components/FavoritesProvider";
+import { useHistory } from "@/components/HistoryProvider";
 import styles from "./NameHistory.module.css";
 import { Icon } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
 
 export function NameHistory({ prenoms }: { prenoms: PrenomIndex[] }) {
-  const { slugs, retirer, effacer, erreur } = useHistorique();
-  const { erreur: erreurFavoris } = useFavoris();
+  const { slugs, retirer, effacer, erreur } = useHistory();
+  const { erreur: erreurFavoris } = useFavorites();
   if (slugs.length === 0 && !erreur) return null;
 
   const index = new Map(prenoms.map((prenom) => [prenom.slug, prenom] as const));
