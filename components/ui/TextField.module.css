@@ -107,7 +107,7 @@
 
 .disabled.filled {
   border-bottom-color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
-  background: color-mix(in srgb, var(--md-sys-color-on-surface) 4%, transparent);
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 4%, var(--md-sys-color-surface-container-highest));
 }
 
 .disabled .label {
