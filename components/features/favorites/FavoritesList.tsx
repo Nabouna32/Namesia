@@ -14,6 +14,7 @@ import { SearchBar } from "@/components/material3/SearchBar";
 import { ComparisonToggle } from "@/components/features/comparison/ComparisonToggle";
 import { Button } from "@/components/material3/Button";
 import { Snackbar } from "@/components/material3/Snackbar";
+import { Card } from "@/components/material3/Card";
 
 type Props = {
   prenoms: PrenomIndex[];
@@ -309,7 +310,7 @@ export function FavoritesList({
               <div className="name-grid">
               {favorisAffiches.slice(0, nombreVisible).map((prenom) => (
                 <article className={styles.row} key={prenom.slug}>
-                  <Link
+                  <Card as={Link} variant="elevated" interactive
                     className="name-card"
                     href={creerUrlFicheDepuisFavoris(prenom.slug, {
                       q: recherche,
@@ -324,7 +325,7 @@ export function FavoritesList({
                       <small>{prenom.genre}</small>
                     </span>
                     <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
-                  </Link>
+                  </Card>
                   <ComparisonToggle
                     name={prenom.nom}
                     selected={selectionValide.includes(prenom.slug)}
