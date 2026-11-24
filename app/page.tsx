@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { RandomDiscovery } from "@/components/RandomDiscovery";
-import { NameHistory } from "@/components/NameHistory";
-import { FeaturedNames } from "@/components/FeaturedNames";
-import { NameSearch } from "@/components/NameSearch";
+import { RandomDiscovery } from "@/components/features/discovery/RandomDiscovery";
+import { RecentNames } from "@/components/features/history/RecentNames";
+import { FeaturedNames } from "@/components/features/catalog/FeaturedNames";
+import { NameSearch } from "@/components/features/catalog/NameSearch";
 import { getPrenomsIndex, type PrenomIndex } from "@/lib/prenoms";
-import { Icon } from "@/components/ui/Icon";
+import { Icon } from "@/components/material3/Icon";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
-export default async function Accueil() {
+export default async function HomePage() {
   const prenoms = await getPrenomsIndex();
   const decalageDuJour = prenoms.length > 0
     ? Math.floor(Date.now() / 86_400_000) % prenoms.length
@@ -41,7 +41,7 @@ export default async function Accueil() {
           </div>
         </div>
       </section>
-      <NameHistory prenoms={prenoms} />
+      <RecentNames prenoms={prenoms} />
       <section className="section explore-section">
         <div className="container">
           <div className="section-heading">

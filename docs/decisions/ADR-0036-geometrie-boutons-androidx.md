@@ -1,6 +1,7 @@
 # ADR-0036 — Géométrie et états des boutons AndroidX
 
 - **Statut :** acceptée
+- **Évolution de structure :** le composant est désormais `Button` dans `components/material3/`. Les dimensions et états AndroidX décrits ici restent la référence ; la nomenclature et l'architecture sont définies par ADR-0037.
 - **Date :** 2026-11-24
 - **Référence :** Compose Material 3 1.5.0 stable, commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c`
 

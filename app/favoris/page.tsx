@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { FavoriteList } from "@/components/FavoriteList";
+import { FavoritesList } from "@/components/features/favorites/FavoritesList";
 import { lireNombreVisible, type TriFavoris } from "@/lib/navigation-prenoms";
 import { getPrenomsIndex } from "@/lib/prenoms";
 
@@ -29,7 +29,7 @@ function lireTri(value: string): TriFavoris {
   return value === "nom-asc" || value === "nom-desc" ? value : "enregistrement";
 }
 
-export default async function FavorisPage({ searchParams }: Props) {
+export default async function FavoritesPage({ searchParams }: Props) {
   const [parametres, prenoms] = await Promise.all([searchParams, getPrenomsIndex()]);
 
   return (
@@ -38,7 +38,7 @@ export default async function FavorisPage({ searchParams }: Props) {
         <span className="eyebrow">Votre sélection</span>
         <h1>Vos prénoms<br /><em>préférés.</em></h1>
         <p className="page-intro">Retrouvez ici les prénoms enregistrés dans ce navigateur. Votre sélection reste privée, sans compte ni synchronisation entre appareils.</p>
-        <FavoriteList
+        <FavoritesList
           prenoms={prenoms}
           initialRecherche={premierParametre(parametres.q)}
           initialGenre={premierParametre(parametres.genre)}

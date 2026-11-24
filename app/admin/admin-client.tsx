@@ -4,9 +4,9 @@ import { useEffect, useState, type FormEvent } from "react";
 import { createClient, type Session } from "@supabase/supabase-js";
 import { FICHE_SCHEMA_VERSION, parseFichePrenom, type FichePrenomImport } from "@/lib/fiche-prenom";
 import styles from "./admin.module.css";
-import { Button } from "@/components/ui/Button";
-import { TextField } from "@/components/ui/TextField";
-import { StatusMessage, type StatusMessageType } from "@/components/ui/StatusMessage";
+import { Button } from "@/components/material3/Button";
+import { TextField } from "@/components/material3/TextField";
+import { Snackbar, type SnackbarSeverity } from "@/components/material3/Snackbar";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -40,9 +40,9 @@ export function AdminClient() {
   const [email, setEmail] = useState("");
   const [json, setJson] = useState("");
   const [preview, setPreview] = useState<FichePrenomImport | null>(null);
-  const [message, setMessage] = useState<{ text: string; type: StatusMessageType } | null>(null);
+  const [message, setMessage] = useState<{ text: string; type: SnackbarSeverity } | null>(null);
 
-  function afficherMessage(text: string, type: StatusMessageType = "info") {
+  function afficherMessage(text: string, type: SnackbarSeverity = "info") {
     setMessage({ text, type });
   }
   const [busy, setBusy] = useState(false);
@@ -281,7 +281,7 @@ export function AdminClient() {
         <TextField id="admin-email" label="Adresse e-mail" variant="outlined" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
         <Button type="submit" disabled={busy}>{busy ? "Envoi…" : "Recevoir un lien de connexion"}</Button>
       </form>
-      {message && <StatusMessage type={message.type}>{message.text}</StatusMessage>}
+      {message && <Snackbar severity={message.type}>{message.text}</Snackbar>}
     </section>;
   }
 
@@ -289,7 +289,7 @@ export function AdminClient() {
     return <section className={styles.panel}>
       <h2>Accès non autorisé</h2>
       <p>Ce compte est connecté, mais ne figure pas dans la liste des administrateurs Namesia.</p>
-      {message && <StatusMessage type={message.type}>{message.text}</StatusMessage>}
+      {message && <Snackbar severity={message.type}>{message.text}</Snackbar>}
       <Button type="button" onClick={deconnecter}>Se déconnecter</Button>
     </section>;
   }
@@ -328,7 +328,7 @@ export function AdminClient() {
       {preview.content.history && <section><h4>Histoire du prénom</h4><p>{preview.content.history}</p></section>}
       {preview.content.usage && <section><h4>Variantes & usages</h4><p>{preview.content.usage}</p></section>}
       {preview.content.symbolic_associations.map((symbol) => <section key={`${symbol.category}-${symbol.value}`}><h4>{symbol.category} · {symbol.value}</h4><p>{symbol.context_note}</p></section>)}
-      <StatusMessage type="warning" className={styles.previewWarning}>La validation porte sur la structure du JSON, pas sur la véracité des contenus générés.</StatusMessage>
+      <Snackbar severity="warning" className={styles.previewWarning}>La validation porte sur la structure du JSON, pas sur la véracité des contenus générés.</Snackbar>
     </article>}
 
     {imported && <div className={styles.publish}>
@@ -353,6 +353,6 @@ export function AdminClient() {
       </article>)}
       {catalogNextOffset !== null && <Button variant="outlined" type="button" disabled={catalogLoading} onClick={() => setCatalogOffset(catalogNextOffset)}>Charger les fiches suivantes</Button>}
     </section>
-    {message && <StatusMessage type={message.type}>{message.text}</StatusMessage>}
+    {message && <Snackbar severity={message.type}>{message.text}</Snackbar>}
   </section>;
 }

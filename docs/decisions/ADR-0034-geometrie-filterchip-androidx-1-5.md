@@ -1,6 +1,7 @@
 # ADR-0034 — Géométrie et états du FilterChip AndroidX 1.5.0
 
 - **Statut :** acceptée
+- **Évolution de structure :** le composant porte désormais le nom officiel `FilterChip` dans `components/material3/`. La géométrie et les états décrits ici restent applicables ; voir ADR-0037 pour l'organisation actuelle.
 - **Date :** 2026-11-24
 
 ## Contexte

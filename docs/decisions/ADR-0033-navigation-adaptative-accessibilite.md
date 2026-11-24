@@ -1,6 +1,7 @@
 # ADR-0033 — Sémantique et hauteur de la navigation adaptative
 
 - **Statut :** acceptée
+- **Évolution de structure :** la navigation est désormais exposée par les composants officiels `NavigationBar` et `NavigationRail` dans `components/material3/`, avec une liste de destinations partagée.
 - **Date :** 2026-11-24
 
 ## Constat

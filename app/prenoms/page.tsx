@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { NameSearch } from "@/components/NameSearch";
+import { NameSearch } from "@/components/features/catalog/NameSearch";
 import { jsonLd } from "@/lib/json-ld";
 import { getPrenomsIndex } from "@/lib/prenoms";
 import { lireNombreVisible } from "@/lib/navigation-prenoms";
@@ -41,7 +41,7 @@ function normaliserFiltre(value: string): string {
   return value.trim().normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("fr");
 }
 
-export default async function Catalogue({ searchParams }: Props) {
+export default async function NamesPage({ searchParams }: Props) {
   const [parametres, prenoms] = await Promise.all([searchParams, getPrenomsIndex()]);
   const rechercheInitiale = premierParametre(parametres.q);
   const nombreVisibleInitial = lireNombreVisible(parametres.limite, Math.max(24, Math.ceil(prenoms.length / 24) * 24));

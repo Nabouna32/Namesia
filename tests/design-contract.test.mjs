@@ -6,18 +6,21 @@ import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const globalCss = await readFile(join(root, "app/globals.css"), "utf8");
-const provider = await readFile(join(root, "components/MaterialThemeProvider.tsx"), "utf8");
+const layoutSource = await readFile(join(root, "app/layout.tsx"), "utf8");
+const tokensCss = await readFile(join(root, "styles/material3/tokens.css"), "utf8");
+const provider = await readFile(join(root, "components/material3/MaterialThemeProvider.tsx"), "utf8");
 const theme = await readFile(join(root, "lib/material-theme.ts"), "utf8");
 const layout = await readFile(join(root, "app/layout.tsx"), "utf8");
 const home = await readFile(join(root, "app/page.tsx"), "utf8");
 const prenoms = await readFile(join(root, "lib/prenoms.ts"), "utf8");
 const fiche = await readFile(join(root, "lib/fiche-prenom.ts"), "utf8");
 const schema = await readFile(join(root, "schemas/fiche-prenom.schema.json"), "utf8");
-const messageComponent = await readFile(join(root, "components/ui/StatusMessage.tsx"), "utf8");
-const messageStyles = await readFile(join(root, "components/ui/StatusMessage.module.css"), "utf8");
+const messageComponent = await readFile(join(root, "components/material3/Snackbar.tsx"), "utf8");
+const messageStyles = await readFile(join(root, "components/material3/Snackbar.module.css"), "utf8");
 const composantsDoc = await readFile(join(root, "docs/composants.md"), "utf8");
 const materialVerificationDoc = await readFile(join(root, "docs/material-3-verification.md"), "utf8");
-const navigationComponent = await readFile(join(root, "components/ui/NavigationDestinations.tsx"), "utf8");
+const navigationComponent = await readFile(join(root, "components/material3/NavigationDestinations.tsx"), "utf8");
+const comparisonSelectionComponent = await readFile(join(root, "components/features/comparison/ComparisonSelection.tsx"), "utf8");
 const agents = await readFile(join(root, "AGENTS.md"), "utf8");
 
 async function collectCss(directory) {
@@ -27,7 +30,7 @@ async function collectCss(directory) {
     if (["node_modules", ".next", ".git"].includes(entry.name)) continue;
     const absolute = join(directory, entry.name);
     if (entry.isDirectory()) files.push(...await collectCss(absolute));
-    else if (entry.name.endsWith(".module.css") || relative(root, absolute) === "app/globals.css") files.push(absolute);
+    else if (entry.name.endsWith(".module.css") || ["app/globals.css", "styles/material3/tokens.css"].includes(relative(root, absolute))) files.push(absolute);
   }
   return files;
 }
@@ -72,31 +75,31 @@ function collectRules(css) {
   return rules;
 }
 
-test("les fichiers de composants React utilisent une nomenclature PascalCase", async () => {
-  const files = await readdir(join(root, "components"));
-  assert.deepEqual(files.filter((file) => file.endsWith(".tsx") && !/^[A-Z]/.test(file)), []);
+test("Roboto est la seule police de l’interface, sans police de substitution", () => {
+  assert.match(layoutSource, /display: "block"/);
+  assert.match(layoutSource, /adjustFontFallback: false/);
+  assert.doesNotMatch(layoutSource, /display: "swap"/);
+  assert.match(tokensCss, /--md-sys-typescale-body-large-font: var\(--font-roboto\);/);
 });
 
-test("les anciens fichiers de composants métier français ne peuvent pas réapparaître", async () => {
-  const files = await readdir(join(root, "components"));
-  assert.deepEqual(
-    files.filter((file) => /^(barre-comparaison|comparateur-prenoms|decouverte-aleatoire|historique-prenoms|liste-favoris|partager-fiche|prenoms-vedette|recherche-prenoms|suggestions-prenoms|icone-material|favoris-provider|historique-provider|material-theme-provider|enregistrer-consultation)/.test(file)),
-    []
-  );
-});
-
-test("les anciennes primitives UI françaises ne peuvent pas réapparaître", async () => {
-  const files = await readdir(join(root, "components/ui"));
-  assert.deepEqual(files.filter((file) => /^(bouton|champ-|chip-|lien-bouton|liste-selection|message-statut)/.test(file)), []);
+test("les composants sont organisés par domaine et aucune primitive Namesia historique ne subsiste", async () => {
+  const entries = await readdir(join(root, "components"), { withFileTypes: true });
+  const directories = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort();
+  assert.deepEqual(directories, ["features", "material3"]);
+  await assert.rejects(readdir(join(root, "components/ui")), { code: "ENOENT" });
+  const material3 = await readdir(join(root, "components/material3"));
+  for (const name of ["Button.tsx", "Card.tsx", "TextField.tsx", "IconButton.tsx", "SearchBar.tsx", "FilterChip.tsx", "InputChip.tsx", "Snackbar.tsx", "TopAppBar.tsx", "NavigationBar.tsx", "NavigationRail.tsx"]) {
+    assert.ok(material3.includes(name), "Composant Material 3 manquant : " + name);
+  }
 });
 
 test("les feuilles consomment les rôles Material sans alias hérités ni fallback", () => {
   assert.doesNotMatch(allCss, /--(?:color-[\w-]+|ink|muted|line|paper|surface|accent|sans|font-(?:sans|display)|radius-[\w-]+|space-\d+|motion-[\w-]+|shadow-[\w-]+)\b/);
   assert.doesNotMatch(allCss, /var\(\s*--[\w-]+\s*,/);
   assert.match(theme, /--md-sys-color-/);
-  assert.match(globalCss, /--md-sys-typescale-title-large-size:/);
-  assert.match(globalCss, /--md-sys-shape-corner-extra-large:/);
-  assert.match(globalCss, /--md-sys-shape-corner-full: 9999px;/);
+  assert.match(tokensCss, /--md-sys-typescale-title-large-size:/);
+  assert.match(tokensCss, /--md-sys-shape-corner-extra-large:/);
+  assert.match(tokensCss, /--md-sys-shape-corner-full: 9999px;/);
 });
 
 test("le pied de page reste en bas sur les pages courtes sans hauteur artificielle", () => {
@@ -145,16 +148,20 @@ test("les états hover sont réservés aux appareils qui disposent d'un pointeur
     );
   }
 
-  const selectionStyles = styles.find(({ path }) => path === "components/ui/InputChip.module.css")?.content ?? "";
-  assert.ok(selectionStyles.includes(".chip:active"));
-  assert.ok(selectionStyles.includes("var(--md-sys-state-pressed-state-layer-opacity)"));
-  assert.ok(selectionStyles.includes("var(--md-sys-color-on-surface-variant)"));
-  assert.ok(selectionStyles.includes("var(--md-sys-color-outline-variant)"));
-  assert.ok(selectionStyles.includes("var(--md-sys-shape-corner-full)"));
+  const selection = comparisonSelectionComponent;
+  const selectionStyles = styles.find(({ path }) => path === "components/features/comparison/ComparisonSelection.module.css")?.content ?? "";
+  const buttonStyles = styles.find(({ path }) => path === "components/material3/Button.module.css")?.content ?? "";
+  assert.match(selection, /<InputChip/);
+  assert.match(selection, /onRemove=/);
+  const inputChipStyles = styles.find(({ path }) => path === "components/material3/InputChip.module.css")?.content ?? "";
+  assert.ok(inputChipStyles.includes("var(--md-sys-color-outline-variant)"));
+  assert.ok(inputChipStyles.includes("inset: 8px 0"));
+  assert.ok(buttonStyles.includes("var(--md-sys-state-pressed-state-layer-opacity)"));
 });
 
 test("la feuille globale conserve un seul :root SSR et aucune couche d'overrides finale", () => {
-  assert.equal((globalCss.match(/:root\s*\{/g) ?? []).length, 1);
+  assert.equal((tokensCss.match(/:root\s*\{/g) ?? []).length, 1);
+  assert.equal((globalCss.match(/:root\s*\{/g) ?? []).length, 0);
   assert.doesNotMatch(globalCss, /--md-sys-color-[\w-]+\s*:/);
   assert.doesNotMatch(globalCss, /Couche Material 3 Fidelity/);
 });
@@ -178,7 +185,7 @@ test("Roboto est chargée une fois, auto-hébergée et sans police de substituti
   assert.match(layout, /subsets:\s*\[\s*"latin",\s*"latin-ext"\s*\]/);
   assert.match(layout, /variable: "--font-roboto"/);
   assert.match(layout, /className=\{roboto\.variable\}/);
-  assert.match(globalCss, /--md-sys-typescale-body-large-font: var\(--font-roboto\);/);
+  assert.match(tokensCss, /--md-sys-typescale-body-large-font: var\(--font-roboto\);/);
   assert.doesNotMatch(globalCss, /-font: Roboto;/);
 });
 
@@ -202,16 +209,17 @@ test("l'échelle typographique Material 3 est complète et limitée aux graisses
   };
   for (const [role, [size, lineHeight, weight, tracking]] of Object.entries(roles)) {
     for (const property of ["font", "size", "line-height", "weight", "tracking"]) {
-      assert.match(globalCss, new RegExp("--md-sys-typescale-" + role + "-" + property + ":"), "Token manquant : " + role + "-" + property);
+      assert.match(tokensCss, new RegExp("--md-sys-typescale-" + role + "-" + property + ":"), "Token manquant : " + role + "-" + property);
     }
-    assert.ok(globalCss.includes("--md-sys-typescale-" + role + "-size: " + size + "px;"), "Taille M3 incorrecte : " + role);
-    assert.ok(globalCss.includes("--md-sys-typescale-" + role + "-line-height: " + lineHeight + "px;"), "Interligne M3 incorrect : " + role);
-    assert.ok(globalCss.includes("--md-sys-typescale-" + role + "-weight: " + weight + ";"), "Graisse M3 incorrecte : " + role);
-    assert.ok(globalCss.includes("--md-sys-typescale-" + role + "-tracking: " + tracking + ";"), "Approche M3 incorrecte : " + role);
+    assert.ok(tokensCss.includes("--md-sys-typescale-" + role + "-size: " + size + "px;"), "Taille M3 incorrecte : " + role);
+    assert.ok(tokensCss.includes("--md-sys-typescale-" + role + "-line-height: " + lineHeight + "px;"), "Interligne M3 incorrect : " + role);
+    assert.ok(tokensCss.includes("--md-sys-typescale-" + role + "-weight: " + weight + ";"), "Graisse M3 incorrecte : " + role);
+    assert.ok(tokensCss.includes("--md-sys-typescale-" + role + "-tracking: " + tracking + ";"), "Approche M3 incorrecte : " + role);
   }
   assert.doesNotMatch(allCss, /font-size\s*:[^;]*px/);
   const weights = [...allCss.matchAll(/font-weight:\s*([^;]+);/g)].map((match) => match[1].trim());
   assert.ok(weights.every((weight) => weight === "400" || weight === "500" || /^var\(--md-sys-typescale-[\w-]+-weight\)$/.test(weight)), `Graisses interdites : ${weights.join(", ")}`);
+  assert.doesNotMatch(allCss, /font-family:\s*(?:Arial|sans-serif|system-ui)/i);
   assert.doesNotMatch(allCss, /text-transform:\s*uppercase/i);
 });
 
@@ -259,26 +267,25 @@ test("les couleurs sémantiques sont des extensions M3 avec annonces accessibles
   }
   assert.match(messageStyles, /--md-sys-color-error-container/);
   assert.match(messageStyles, /--md-sys-color-on-error-container/);
-  assert.match(messageComponent, /role={erreur \? "alert" : "status"}/);
-  assert.match(messageComponent, /aria-live={erreur \? "assertive" : "polite"}/);
+  assert.match(messageComponent, /role={urgent \? "alert" : "status"}/);
+  assert.match(messageComponent, /aria-live={urgent \? "assertive" : "polite"}/);
   assert.doesNotMatch(allCss, /--md-sys-color-(?:success|warning|info)\b/);
 });
 
 test("toute nouvelle page doit suivre le registre de composants Material 3", () => {
-  assert.match(composantsDoc, /Catalogue Material 3/);
-  assert.match(composantsDoc, /Règles pour toute évolution/);
+  assert.match(composantsDoc, /Correspondance avec les composants Material 3/);
+  assert.match(composantsDoc, /Contrat obligatoire pour toute nouvelle page/);
   assert.match(composantsDoc, /TopAppBar/);
   assert.match(composantsDoc, /NavigationBar/);
   assert.match(composantsDoc, /FilterChip/);
   assert.match(composantsDoc, /SearchBar/);
-  assert.match(composantsDoc, /Button/);
+  assert.match(composantsDoc, /components\/material3/);
+  assert.match(agents, /composants officiels/);
+  assert.doesNotMatch(composantsDoc, /ChampRecherche|ChipFiltre|MessageStatut/);
+  assert.match(composantsDoc, /SearchBarTokens/);
+  assert.match(composantsDoc, /ButtonSmallTokens/);
   assert.match(composantsDoc, /IconButton/);
-  assert.match(composantsDoc, /Card/);
-  assert.match(composantsDoc, /TextField/);
   assert.match(materialVerificationDoc, /ButtonSmallTokens\.ContainerHeight/);
-  assert.match(materialVerificationDoc, /ElevatedCardTokens\.kt/);
-  assert.match(materialVerificationDoc, /FilledTextFieldTokens\.kt/);
-  assert.match(materialVerificationDoc, /OutlinedTextFieldTokens\.kt/);
   assert.match(materialVerificationDoc, /ButtonDefaults\.IconSize = 18\.dp/);
   assert.match(materialVerificationDoc, /40\.dp/);
   assert.match(materialVerificationDoc, /MinWidth = 58\.dp/);
@@ -322,8 +329,8 @@ test("les en-têtes de section restent lisibles et leurs actions accessibles sur
 
 
 test("les boutons et FilterChip utilisent le rôle typographique M3 label-large", () => {
-  const buttonStyles = styles.find(({ path }) => path === "components/ui/Button.module.css")?.content ?? "";
-  const filterChipStyles = styles.find(({ path }) => path === "components/ui/FilterChip.module.css")?.content ?? "";
+  const buttonStyles = styles.find(({ path }) => path === "components/material3/Button.module.css")?.content ?? "";
+  const filterChipStyles = styles.find(({ path }) => path === "components/material3/FilterChip.module.css")?.content ?? "";
   for (const [name, content] of [["Button", buttonStyles], ["FilterChip", filterChipStyles]]) {
     assert.match(content, /font-size:\s*var\(--md-sys-typescale-label-large-size\)/, name + " doit utiliser label-large");
     assert.match(content, /font-weight:\s*var\(--md-sys-typescale-label-large-weight\)/, name + " doit utiliser la graisse du rôle");
@@ -342,13 +349,6 @@ test("les boutons et FilterChip utilisent le rôle typographique M3 label-large"
   assert.match(composantsDoc, /FilterChipTokens\.ContainerHeight.*32 dp/);
 });
 
-
-test("le layout compose les composants officiels du shell Material 3", () => {
-  assert.match(layout, /<TopAppBar \/>/);
-  assert.match(layout, /<NavigationBar \/>/);
-  assert.match(layout, /<NavigationRail \/>/);
-  assert.doesNotMatch(layout, /NavigationAdaptative/);
-});
 
 test("NavigationBar et NavigationRail utilisent le rôle M3 label-medium à toutes les largeurs", () => {
   const navigationRule = globalCss.match(/\.navigation-item\s*\{([^}]*)\}/s)?.[1] ?? "";

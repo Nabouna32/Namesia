@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-const source = await readFile(new URL("../components/FavoriteList.tsx", import.meta.url), "utf8");
+const source = await readFile(new URL("../components/features/favorites/FavoritesList.tsx", import.meta.url), "utf8");
 
 test("les suggestions des favoris réutilisent le moteur commun après le filtre de genre", () => {
   assert.match(source, /normaliserRecherche, suggererPrenomsProches/);
