@@ -26,6 +26,7 @@ test("les cartes du catalogue représentent explicitement les quatre genres conn
   assert.doesNotMatch(catalogue, /\{prenom\.genre\}\s*·/);
   assert.doesNotMatch(catalogue, /Découvrir la fiche/);
   assert.equal((catalogue.match(/<Icon name=\{genderIcons\[prenom\.genre\]\}/g) ?? []).length, 2);
+  assert.equal((catalogue.match(/<ComparisonToggle\\s+iconOnly/g) ?? []).length, 2);
 });
 
 test("les actions restent dans la carte sans être imbriquées dans le lien", () => {
