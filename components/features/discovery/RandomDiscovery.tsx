@@ -6,6 +6,7 @@ import type { PrenomIndex } from "@/lib/prenoms";
 import { Button } from "@/components/material3/Button";
 import styles from "./RandomDiscovery.module.css";
 import { Icon } from "@/components/material3/Icon";
+import { GenreIcon } from "@/components/features/names/GenreIcon";
 
 type Props = { prenoms: PrenomIndex[] };
 
@@ -31,6 +32,7 @@ export function RandomDiscovery({ prenoms }: Props) {
         {selection ? (
           <span className={styles.resultLine}>
             Votre prochaine découverte : <Link className={styles.result} href={`/prenoms/${selection.slug}`}>{selection.nom}</Link>
+            <GenreIcon genre={selection.genre} />
           </span>
         ) : (
           "Pas d’idée précise ? Laissez-vous guider par le hasard."
