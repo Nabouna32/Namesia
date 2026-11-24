@@ -6,7 +6,7 @@ import { creerUrlFicheDepuisComparateur } from "@/lib/navigation-prenoms";
 import type { Prenom, PrenomIndex } from "@/lib/prenoms";
 import { ShareLink } from "@/components/ShareLink";
 import { FavoriteButton } from "@/components/FavoriteButton";
-import { useFavoris } from "@/components/FavoritesProvider";
+import { useFavorites } from "@/components/FavoritesProvider";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { categoryTone } from "@/lib/category-color";
 import { SearchBar } from "@/components/ui/SearchBar";
@@ -24,7 +24,7 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
   const [chargement, setChargement] = useState(false);
   const [erreur, setErreur] = useState(false);
   const [tentative, setTentative] = useState(0);
-  const { erreur: erreurFavoris } = useFavoris();
+  const { erreur: erreurFavoris } = useFavorites();
   const selectionInitialeKey = selectionInitiale.join(",");
   const selectionKey = selection.join(",");
 
