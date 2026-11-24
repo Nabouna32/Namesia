@@ -22,6 +22,7 @@ test("les références de code du contrat M3 pointent vers des révisions immuab
   assert.doesNotMatch(verification, /chromium\.googlesource\.com\/chromium\/src\/\+\/refs\/heads\//);
   assert.match(verification, /CheckboxTokens\.kt/);
   assert.match(verification, /RoundedCornerShape\(2\.0\.dp\)/);
+  assert.match(verification, /couche d'état sélectionnée `Primary`/);
   assert.match(verification, /NavigationRailCollapsedTokens\.kt/);
   assert.match(verification, /AppBar\.kt/);
   assert.match(verification, /AppBarSmallTokens\.kt/);
