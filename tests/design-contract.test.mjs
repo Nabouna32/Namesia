@@ -17,6 +17,7 @@ const messageComponent = await readFile(join(root, "components/ui/message-statut
 const messageStyles = await readFile(join(root, "components/ui/message-statut.module.css"), "utf8");
 const composantsDoc = await readFile(join(root, "docs/composants.md"), "utf8");
 const materialVerificationDoc = await readFile(join(root, "docs/material-3-verification.md"), "utf8");
+const navigationComponent = await readFile(join(root, "components/navigation-adaptative.tsx"), "utf8");
 const agents = await readFile(join(root, "AGENTS.md"), "utf8");
 
 async function collectCss(directory) {
@@ -306,6 +307,22 @@ test("NavigationBar et NavigationRail utilisent le rôle M3 label-medium à tout
   assert.match(composantsDoc, /NavigationRail[\s\S]*label-medium/);
 });
 
+
+
+test("les listes de navigation conservent leur sémantique accessible", () => {
+  const navigationItems = globalCss.match(/\.navigation-items\s*\{([^}]*)\}/s)?.[1] ?? "";
+  assert.match(navigationItems, /display:\s*flex/);
+  assert.doesNotMatch(navigationItems, /display:\s*contents/);
+  assert.match(navigationComponent, /<ul className="navigation-items">/);
+  assert.match(navigationComponent, /<li key=\{destination\.href\}>/);
+});
+
+test("la navigation paysage réserve les 80 dp réellement affichés", () => {
+  const paysage = globalCss.match(/@media \(min-width: 600px\) and \(max-height: 480px\) \{([\s\S]*?)\n\}/)?.[1] ?? "";
+  assert.match(paysage, /\.navigation-bar \.navigation-item \{ min-height: 64px/);
+  assert.match(paysage, /padding-bottom: calc\(80px \+ env\(safe-area-inset-bottom\)\)/);
+  assert.doesNotMatch(paysage, /padding-bottom: calc\(72px/);
+});
 
 test("NavigationBar reproduit les 80 dp de TallContainerHeight de Compose Material 3 1.5.0", () => {
   const navigationBar = globalCss.match(/\.navigation-bar\s*\{([^}]*)\}/s)?.[1] ?? "";

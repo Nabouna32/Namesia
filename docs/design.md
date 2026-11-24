@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.33
+- **Version :** 4.34
 - **Mis à jour :** 2026-11-24
 
 ## 1. Direction
@@ -68,10 +68,10 @@ Les destinations de premier niveau sont Accueil, Explorer, Comparer et Favoris. 
 
 - **Compact, moins de 600 px :** navigation bar fixe en bas de 80 dp (variante haute utilisée par `NavigationBar()`), quatre destinations avec icône et libellé `label-medium` (12/16 px, graisse 500, approche 0,5 px), hauteur augmentée uniquement par `safe-area-inset-bottom`.
 - **Medium et plus, à partir de 600 px :** navigation rail fixe sur le bord de départ, largeur de 80 px, icône et libellé `label-medium` (12/16 px, graisse 500, approche 0,5 px) empilés. Le rail reste à 80 px : le modèle Android du rail est conservé, sans tiroir latéral propriétaire qui réduirait inutilement l’espace de lecture.
-- **Hauteur compacte, jusqu'à 480 px :** la navigation revient en bas même si la largeur dépasse 600 px, pour les fenêtres paysage peu hautes. Les éléments passent alors en disposition horizontale.
+- **Hauteur compacte, jusqu'à 480 px :** la navigation revient en bas même si la largeur dépasse 600 px, pour les fenêtres paysage peu hautes. Les éléments passent alors en disposition horizontale, mais le conteneur conserve les 80 dp de `TallContainerHeight` et le contenu réserve ces mêmes 80 dp, auxquels s'ajoute la zone sûre.
 - La barre supérieure reste présente, avec la marque Namesia et une hauteur de 64 px.
 - Le composable AndroidX `NavigationBar()` utilise `TallContainerHeight` (80 dp), et non le token `ContainerHeight` (64 dp) non retenu par son implémentation par défaut. Namesia reproduit ces 80 dp par 64 dp de zone de destinations et 8 dp de padding vertical, sans bordure ajoutée. La zone sûre basse est réservée séparément et le contenu de page reçoit le même dégagement. La destination courante utilise l'indicateur tonal en pilule et `aria-current="page"`.
-- La navigation est une navigation de pages, pas un tablist ARIA : les liens natifs conservent l'historique, les ouvertures dans un nouvel onglet et les usages clavier du navigateur.
+- La navigation est une navigation de pages, pas un tablist ARIA : les liens natifs conservent l'historique, les ouvertures dans un nouvel onglet et les usages clavier du navigateur. Les destinations restent dans une liste HTML (`ul`/`li`) ; le conteneur ne doit pas utiliser `display: contents`, qui peut retirer la liste de l'arbre d'accessibilité de certains navigateurs.
 
 Ces seuils suivent la logique des window size classes Android : la barre convient aux fenêtres compactes en largeur ou en hauteur et le rail aux fenêtres plus larges. Les adaptations sont pilotées par l'espace disponible, pas par la détection d'une marque d'appareil. Le rail ne possède pas de bouton d'extension artificiel : une navigation de premier niveau reste stable et prévisible.
 

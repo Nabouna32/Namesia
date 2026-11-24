@@ -227,7 +227,7 @@ gap: 12px;
 }
 
 .navigation-items {
-  display: contents;
+  display: flex;
 margin: 0;
 padding: 0;
   list-style: none;
@@ -1609,9 +1609,9 @@ padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
     background: var(--md-sys-color-surface-container);
   }
   .navigation-bar .navigation-items { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; }
-  .navigation-bar .navigation-item { min-height: 60px; flex-direction: row; gap: 8px; }
+  .navigation-bar .navigation-item { min-height: 64px; flex-direction: row; gap: 8px; }
   .navigation-bar .navigation-item-indicator { width: 48px; height: 40px; }
-  .app-content { margin-left: 0; padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
+  .app-content { margin-left: 0; padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
   .top-app-bar { margin-left: 0; }
 }
 
