@@ -1,6 +1,5 @@
 "use client";
 
-import type { PrenomIndex } from "@/lib/prenoms";
 import styles from "./ComparisonBar.module.css";
 import { ComparisonSelection } from "@/components/features/comparison/ComparisonSelection";
 import { Button } from "@/components/material3/Button";
