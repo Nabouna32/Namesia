@@ -7,7 +7,7 @@ import { normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-pre
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
 import { ComparisonBar } from "./ComparisonBar";
 import { FavoriteButton } from "./FavoriteButton";
-import { useFavoris } from "@/components/FavoritesProvider";
+import { useFavorites } from "@/components/FavoritesProvider";
 import styles from "./FavoriteList.module.css";
 import { Icon } from "@/components/ui/Icon";
 import { SearchBar } from "@/components/ui/SearchBar";
@@ -34,7 +34,7 @@ export function FavoriteList({
   initialTri = "enregistrement",
   initialNombreVisible = 24
 }: Props) {
-  const { slugs, pret, erreur, retirerPlusieurs, ajouterPlusieurs } = useFavoris();
+  const { slugs, pret, erreur, retirerPlusieurs, ajouterPlusieurs } = useFavorites();
   const [messageImport, setMessageImport] = useState("");
   const [erreurImport, setErreurImport] = useState("");
   const [messageCopie, setMessageCopie] = useState("");
