@@ -6,7 +6,7 @@ import { creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-
 import { normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
 import { BarreComparaison } from "./barre-comparaison";
-import { BoutonFavori } from "./bouton-favori";
+import { FavoriteButton } from "./FavoriteButton";
 import { useFavoris } from "./favoris-provider";
 import styles from "./liste-favoris.module.css";
 import { IconeMaterial } from "./icone-material";
@@ -333,7 +333,7 @@ export function ListeFavoris({
                     disabled={!selectionValide.includes(prenom.slug) && selectionValide.length >= 3}
                     onClick={() => basculerComparaison(prenom.slug)}
                   />
-                  <ButtonFavori slug={prenom.slug} afficherErreur={false} />
+                  <FavoriteButton slug={prenom.slug} showError={false} />
                 </article>
               ))}
               </div>
