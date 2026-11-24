@@ -409,7 +409,7 @@ test("Card centralise les surfaces AndroidX et préserve l’élément HTML choi
   assert.match(cardStyles, /\.elevated\s*\{[^}]*surface-container-low/s);
   assert.match(cardStyles, /\.filled\s*\{[^}]*surface-container-highest/s);
   assert.match(cardStyles, /\.outlined\s*\{[^}]*outline-variant/s);
-  assert.match(cardStyles, /\.interactive\.elevated:hover/);
+  assert.match(cardStyles, /\.interactive\.elevated:hover\s*\{[^}]*on-surface[^}]*hover-state-layer-opacity/s);
   for (const file of [
     "../components/features/catalog/RelatedNames.tsx",
     "../components/features/catalog/FeaturedNames.tsx",
@@ -420,7 +420,12 @@ test("Card centralise les surfaces AndroidX et préserve l’élément HTML choi
     const source = await readFile(new URL(file, import.meta.url), "utf8");
     assert.match(source, /<Card\s+as=\{Link\}\s+variant="elevated"\s+interactive/);
   }
+  assert.match(cardStyles, /\.interactive\.elevated:active\s*\{[^}]*on-surface[^}]*pressed-state-layer-opacity[^}]*box-shadow: 0 1px 2px 0/s);
+  assert.match(cardStyles, /\.interactive\.filled:active\s*\{[^}]*on-surface[^}]*pressed-state-layer-opacity/s);
+  assert.match(cardStyles, /\.interactive\.outlined:active\s*\{[^}]*on-surface[^}]*pressed-state-layer-opacity/s);
+  assert.doesNotMatch(cardStyles, /\.interactive\.(?:elevated|filled|outlined):active\s*\{[^}]*md-sys-color-primary/s);
   assert.match(cardStyles, /--md-sys-state-pressed-state-layer-opacity/);
+  assert.match(checkboxStyles, /\.input:checked:not\(:disabled\):active \+ \.indicator\s*\{[^}]*md-sys-color-on-primary[^}]*pressed-state-layer-opacity/s);
 });
 
 test("TextField reprend l’anatomie et les états AndroidX sans style local concurrent", () => {

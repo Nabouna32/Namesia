@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.52
+- **Version :** 4.53
 - **Mis à jour :** 2026-11-24
 
 ## 1. Direction
@@ -52,7 +52,7 @@ Les catégories utilisent trois familles de rôles tonals issues du schéma `Var
 - Le champ de recherche (`SearchBar`) utilise un conteneur replié de 56 dp, une forme `full`, la couleur `surface-container-high` et le rôle `body-large` pour la saisie. L’icône initiale utilise `on-surface`, l’action finale `on-surface-variant`. Le champ garde un libellé HTML accessible même si seul le placeholder est visible. L’expansion native de SearchBar n’est pas reproduite : Namesia présente les résultats dans le flux de la page.
 - Les espacements suivent une grille de 4 px, avec les pas de 8 px privilégiés. Les rayons sont exclusivement les tokens `--md-sys-shape-corner-*`.
 - Formes : extra-small 4 px, small 8 px, medium 12 px, large 16 px, extra-large 28 px et full/pill.
-- Élévation : hiérarchie tonale des surfaces en priorité ; aucune ombre CSS décorative n’est conservée. Les ombres ne sont utilisées que lorsqu’un composant AndroidX définit explicitement un niveau : Button et FilledTonalButton appliquent le niveau 1 au survol sur leur capsule visuelle ; ElevatedCard utilise le niveau 1 au repos et le niveau 2 au survol ; FilledCard et OutlinedCard restent au niveau 0 au repos et passent au niveau 1 au survol. Le rôle système `shadow` est utilisé pour la traduction Web. Les niveaux M3 `--md-sys-elevation-level0` à `level5` restent des valeurs dp et ne sont pas directement des valeurs `box-shadow` ; la traduction Web est localisée dans le composant et documentée.
+- Élévation : hiérarchie tonale des surfaces en priorité ; aucune ombre CSS décorative n’est conservée. Les ombres ne sont utilisées que lorsqu’un composant AndroidX définit explicitement un niveau : Button et FilledTonalButton appliquent le niveau 1 au survol sur leur capsule visuelle ; ElevatedCard utilise le niveau 1 au repos, le niveau 2 au survol et revient au niveau 1 à la pression ; FilledCard et OutlinedCard restent au niveau 0 au repos, passent au niveau 1 au survol et reviennent au niveau 0 à la pression. Les couches pressées des cartes utilisent `on-surface`, conformément au contenu AndroidX, jamais `primary`. Le rôle système `shadow` est utilisé pour la traduction Web. Les niveaux M3 `--md-sys-elevation-level0` à `level5` restent des valeurs dp et ne sont pas directement des valeurs `box-shadow` ; la traduction Web est localisée dans le composant et documentée.
 - Densité : cibles tactiles d'au moins 48 × 48 px lorsque l'espace le permet ; les éléments visuels peuvent être plus petits à l'intérieur de leur cible.
 
 ### Accueil
