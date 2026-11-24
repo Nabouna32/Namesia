@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Bouton } from "@/components/ui/bouton";
+import { Button } from "@/components/material3/Button";
 
 type Props = { titre: string; texte: string; label: string; parametres?: string[] };
 
@@ -40,7 +40,7 @@ export function PartagerLien({ titre, texte, label, parametres = [] }: Props) {
 
   return (
     <div className="profile-share">
-      <Bouton variante="tonal" type="button" onClick={partager}>{label}</Bouton>
+      <Button variant="tonal" type="button" onClick={partager}>{label}</Button>
       {message && <span className="share-feedback" role="status">{message}</span>}
     </div>
   );
