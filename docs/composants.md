@@ -106,7 +106,7 @@ Les composants métier peuvent être propres à Namesia, mais ils ne redéfiniss
 
 ## Conventions d'implémentation
 
-- Employer exactement les noms Material 3 pour les composants correspondants : `Button`, `IconButton`, `SearchBar`, `FilterChip`, `InputChip`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`.
+- Employer exactement les noms Material 3 pour les composants correspondants : `Button`, `IconButton`, `SearchBar`, `FilterChip`, `InputChip`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`, `Icon`.
 - Ne pas créer de traduction, alias, wrapper ou fallback parallèle pour ces composants.
 - Garder les éléments HTML natifs adaptés : `button`, `a`, `input`, `select`, `nav`, `header`, titres et listes sémantiques. Ne pas remplacer leur sémantique par des `div` et des rôles ARIA redondants.
 - Les CSS Modules de `components/material3/` consomment directement les tokens `--md-sys-*` et les seules extensions `--namesia-*` déclarées dans [le système de design](design.md).
