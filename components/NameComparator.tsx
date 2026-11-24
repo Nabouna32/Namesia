@@ -4,9 +4,9 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { creerUrlFicheDepuisComparateur } from "@/lib/navigation-prenoms";
 import type { Prenom, PrenomIndex } from "@/lib/prenoms";
-import { PartagerLien } from "@/components/partager-fiche";
+import { ShareLink } from "@/components/ShareLink";
 import { FavoriteButton } from "@/components/FavoriteButton";
-import { useFavoris } from "@/components/favoris-provider";
+import { useFavoris } from "@/components/FavoritesProvider";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { categoryTone } from "@/lib/category-color";
 import { SearchBar } from "@/components/ui/SearchBar";
@@ -262,7 +262,7 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
       {selection.length >= 2 && selectionComplete && !chargement && !erreur && (
         <div className="compare-share">
           <p>Cette sélection est enregistrée dans l’adresse de la page : vous pouvez partager la comparaison.</p>
-          <PartagerLien
+          <ShareLink
             titre={`Comparaison de ${selectionnes.length} prénoms · Namesia`}
             texte={`Comparez ${selectionnes.map((prenom) => prenom.nom).join(", ")} sur Namesia.`}
             label="Partager cette comparaison"
