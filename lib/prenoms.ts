@@ -144,6 +144,52 @@ export const getPrenomsIndex = cache(async (): Promise<PrenomIndex[]> => {
   }
 });
 
+type JoinedNameSitemap = {
+  id: string;
+  slug: string;
+  name_profiles: { published_at: string | null }[];
+};
+
+export const getPrenomsSitemap = cache(async (): Promise<{ slug: string; publishedAt: Date }[]> => {
+  const supabase = createSupabaseServerClient();
+
+  try {
+    const lignes = await lireToutesLesPages<JoinedNameSitemap>(async (debut, fin, compter) => {
+      const { data, error, count } = await supabase
+        .from("names")
+        .select("id, slug, name_profiles!inner(published_at)", compter ? { count: "exact" } : undefined)
+        .eq("name_profiles.status", "publie")
+        .not("name_profiles.published_at", "is", null)
+        .order("slug", { ascending: true })
+        .order("id", { ascending: true })
+        .range(debut, fin);
+
+      return { data: data as unknown as JoinedNameSitemap[] | null, error, count };
+    }, TAILLE_PAGE_INDEX);
+
+    return lignes.map((ligne) => {
+      if (ligne.name_profiles.length !== 1) {
+        throw new Error(`Le prénom "${ligne.slug}" doit avoir exactement une version publiée pour le sitemap.`);
+      }
+
+      const datePublication = ligne.name_profiles[0].published_at;
+      if (!datePublication) {
+        throw new Error(`La date de publication du prénom "${ligne.slug}" est absente.`);
+      }
+
+      const publishedAt = new Date(datePublication);
+      if (Number.isNaN(publishedAt.getTime())) {
+        throw new Error(`La date de publication du prénom "${ligne.slug}" est invalide.`);
+      }
+
+      return { slug: ligne.slug, publishedAt };
+    });
+  } catch (error) {
+    console.error("Échec du chargement des dates de publication du sitemap Namesia :", error);
+    throw new Error("Le sitemap des prénoms est momentanément indisponible.");
+  }
+});
+
 export async function getPrenomsParSlugs(slugs: string[]): Promise<Prenom[]> {
   if (slugs.length === 0) return [];
 
