@@ -123,11 +123,12 @@ const additionalAndroidxSources = [
   ["NavigationRailColorTokens.kt", "NavigationRailColorTokens"],
   ["NavigationRailBaselineItemTokens.kt", "NavigationRailBaselineItemTokens"],
   ["NavigationRailVerticalItemTokens.kt", "NavigationRailVerticalItemTokens"],
-  ["SnackbarTokens.kt", "SnackbarTokens"],
+  ["SnackbarTokens.kt", ["SnackbarTokens", "ContainerElevation", "CornerExtraSmall", "InverseSurface", "InverseOnSurface", "SingleLineContainerHeight", "TwoLinesContainerHeight"]],
+  ["ElevationTokens.kt", ["ElevationTokens", "Level3", "get() = 6.0.dp"]],
 ].map(([file, marker]) => ({
   name: `AndroidX ${file}`,
   url: `https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/${file === "IconButton.kt" ? file : `tokens/${file}`}`,
-  markers: [marker],
+  markers: Array.isArray(marker) ? marker : [marker],
 }));
 
 async function fetchSource(source) {
