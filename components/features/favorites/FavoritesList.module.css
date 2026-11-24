@@ -44,7 +44,7 @@ padding: 0 16px;
 margin: 0;
   color: var(--md-sys-color-on-surface-variant);
   font-size: var(--md-sys-typescale-body-medium-size);
-  line-height: 1.6;
+  line-height: var(--md-sys-typescale-body-medium-line-height);
 }
 
 .selectField {
@@ -103,7 +103,7 @@ gap: 4px;
 margin: 4px 0 0;
   color: var(--md-sys-color-on-surface-variant);
   font-size: var(--md-sys-typescale-body-medium-size);
-  line-height: 1.6;
+  line-height: var(--md-sys-typescale-body-medium-line-height);
 }
 
 .empty {
@@ -125,7 +125,7 @@ margin: 0;
 margin: 0;
   color: var(--md-sys-color-error);
   font-size: var(--md-sys-typescale-body-medium-size);
-  line-height: 1.5;
+  line-height: var(--md-sys-typescale-body-medium-line-height);
 }
 
 @media (max-width: 560px) {
