@@ -152,7 +152,6 @@ export function RecherchePrenoms({
         placeholder="Quel prénom cherchez-vous ?"
         value={recherche}
         onChange={changerRecherche}
-        compact={compact}
       />
 
       {!compact && (
