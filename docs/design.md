@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.37
+- **Version :** 4.38
 - **Mis à jour :** 2026-11-24
 
 ## 1. Direction
@@ -46,7 +46,7 @@ Les catégories utilisent trois familles de rôles tonals issues du schéma `Var
 
 ## 3. Formes, typographie et élévation
 
-- Typographie : Roboto pour tous les rôles, des titres aux contrôles et au corps. La police est chargée au build par `next/font/google`, auto-hébergée sur le domaine Namesia et préchargée ; le navigateur ne contacte pas Google. Les sous-ensembles `latin` et `latin-ext` couvrent les textes français. Les graisses 400 et 500 sont chargées ; aucune police de substitution ni pile générique n’est définie. Le corps courant reste à 16 px.
+- Typographie : Roboto pour tous les rôles, des titres aux contrôles et au corps. La police est chargée au build par `next/font/google`, auto-hébergée sur le domaine Namesia et préchargée ; `display: block` et `adjustFontFallback: false` empêchent l'ajout d'une police de substitution ; le navigateur ne contacte pas Google. Les sous-ensembles `latin` et `latin-ext` couvrent les textes français. Les graisses 400 et 500 sont chargées ; aucune police de substitution ni pile générique n’est définie. Le corps courant reste à 16 px.
 - Échelle Material 3 : display large/medium/small 57/64, 45/52 et 36/44 px ; headline large/medium/small 32/40, 28/36 et 24/32 px ; title large/medium/small 22/28, 16/24 et 14/20 px ; body large/medium/small 16/24, 14/20 et 12/16 px ; label large/medium/small 14/20, 12/16 et 11/16 px. Les graisses sont strictement 400 et 500. Les libellés ne sont pas forcés en capitales. Chaque rôle possède ses tokens `--md-sys-typescale-*` de famille, taille, graisse, interligne et approche. Aucune surcharge de taille par breakpoint ne réintroduit une hiérarchie concurrente.
 - Les boutons (`Button`) et filtres sélectionnables (`FilterChip`) utilisent intégralement le rôle `label-large` : famille, taille, graisse, interligne et approche. La taille seule ne suffit pas à identifier un rôle typographique ; les variantes métier ne doivent pas remplacer ce rôle par un style `body`. Le Button AndroidX 1.5.0 dessine un conteneur de 40 dp (`ButtonSmallTokens.ContainerHeight`) dans une cible Web de 48 px, avec une largeur minimale de 58 dp, 24 dp de padding horizontal et 12 dp pour TextButton. Les icônes de Button font 18 dp (`ButtonDefaults.IconSize`) et celles d’IconButton 24 dp. OutlinedButton utilise `outline-variant` et `on-surface-variant` ; TextButton utilise `primary` conformément à l'implémentation AndroidX. Les états désactivés utilisent 10 % pour le conteneur Filled/Tonal (et pour le contour Outlined) et 38 % pour le contenu. L’état pressé adopte `corner-small`. Le `FilterChip` AndroidX 1.5.0 a un conteneur visuel de 32 dp (`FilterChipTokens.ContainerHeight`) ; sa cible tactile reste de 48 dp. L’adaptateur Web conserve un bouton natif de 48 px et dessine la capsule de 32 px dans cette cible, sans agrandir artificiellement la surface.
 - Le champ de recherche (`SearchBar`) utilise un conteneur replié de 56 dp, une forme `full`, la couleur `surface-container-high` et le rôle `body-large` pour la saisie. L’icône initiale utilise `on-surface`, l’action finale `on-surface-variant`. Le champ garde un libellé HTML accessible même si seul le placeholder est visible. L’expansion native de SearchBar n’est pas reproduite : Namesia présente les résultats dans le flux de la page.
@@ -78,9 +78,9 @@ Ces seuils suivent la logique des window size classes Android : la barre convien
 
 ## 5. Bibliothèque de composants
 
-L'inventaire canonique et les règles de composition sont centralisés dans [Bibliothèque de composants](composants.md). Les primitives portent directement les noms Material 3 : `SearchBar`, `Button`, `IconButton`, `FilterChip`, `InputChip`, `TextField`, `Card`, `NavigationBar` et `NavigationRail`. Les anciennes primitives UI françaises et leurs fichiers ont été supprimés ; les composants Material 3 sont désormais les seules primitives UI. Les liens restent des liens natifs Next.js, les sélecteurs restent des éléments `select` natifs et les composants métier ne réimplémentent pas l'anatomie des composants M3. Les détails d'implémentation, dimensions et états sont définis dans `docs/composants.md` et `docs/material-3-verification.md`.
+L'inventaire canonique est [Bibliothèque Material 3](composants.md). Les contrôles de présentation portent directement les noms AndroidX (`Button`, `IconButton`, `SearchBar`, `FilterChip`, `InputChip`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`, `Icon`) et sont implémentés dans `components/material3/`. Les champs de recherche utilisent `SearchBar` replié : 56 dp, forme `full`, surface `surface-container-high` et typographie `body-large`. Le libellé HTML reste présent ; l'effacement utilise `IconButton` et le contrôle natif de suppression du navigateur est masqué pour éviter une action concurrente. Les fonctions métier `FavoriteButton`, `ComparisonToggle` et `ComparisonSelection` résident dans `components/features/` et composent les composants M3 sans les redéfinir. Les filtres de genre et d'initiale utilisent `FilterChip` : surface visuelle 32 dp dans une cible de 48 px. Les sélecteurs de genre et de tri restent des éléments `select` natifs, habillés avec les tokens M3 ; aucun faux menu n'est créé.
 
-Les composants Material 3 portent les interactions et états transversaux sous leurs noms officiels (`Button`, `IconButton`, `SearchBar`, `FilterChip`, `InputChip`, `Card`, `NavigationBar`, `NavigationRail`). Les surfaces de contenu utilisent `Card` avec ses variantes `elevated`, `filled` et `outlined` ; les CSS Modules locaux ne redéfinissent que la disposition interne. Les saisies de formulaire utilisent `TextField` avec une variante `filled` ou `outlined` explicite ; les contrôles spécialisés (fichier, select) restent natifs. Les composants métier composent ces composants et conservent leur logique propre. Aucun composant UI spécifique à Namesia, alias, wrapper de compatibilité ou fallback visuel ne double une primitive M3.
+Les primitives communes portent les interactions et états transversaux ; les composants métier composent ces primitives et conservent leur logique propre. Les actions de l'administration et des parcours visiteurs utilisent les mêmes variantes de bouton Fidelity ; aucune classe globale de bouton ne constitue une seconde source de style. Les variantes des contrôles utilisent les rôles Fidelity. Une règle de style locale n'est pas une nouvelle primitive.
 
 ## 6. Composants et états
 
@@ -126,17 +126,15 @@ L'application occupe au minimum la hauteur de la fenêtre avec une colonne flex.
 - Les cartes Open Graph du site et des fiches utilisent la même famille Roboto que l’interface, chargée depuis un fichier TTF local au runtime Node de `ImageResponse`. Le poids 400 suffit à cette surface de partage ; aucun appel Google Fonts, aucune police de substitution et aucune seconde famille ne sont utilisés. Les fonds, textes et accents reprennent les rôles clairs Fidelity ; aucun dégradé de marque hors M3 n'est conservé.
 
 - `@material/material-color-utilities` génère les rôles Fidelity/Rainbow et les quatre rôles des couleurs sémantiques personnalisées ; aucun autre moteur de thème n'est ajouté.
-- Les références de composants sont les guides M3 et les sources AndroidX Compose Material 3 ; les implémentations Web restent natives et centralisées dans `components/ui/`.
-- `lib/material-theme.ts` génère le CSS Fidelity/Rainbow initial et les couleurs de barre navigateur ; `components/MaterialThemeProvider.tsx` synchronise les mêmes valeurs avec les changements de préférence système.
+- Les références de composants sont les guides M3 et les sources AndroidX Compose Material 3 ; les ports React/HTML portent les noms M3 et sont centralisés dans `components/material3/`.
+- `lib/material-theme.ts` génère le CSS Fidelity/Rainbow initial et les couleurs de barre navigateur ; `components/material3/MaterialThemeProvider.tsx` synchronise les mêmes valeurs avec les changements de préférence système.
 - `app/layout.tsx` charge Roboto via `next/font/google` et expose `--font-roboto` à tous les rôles typographiques ; les tokens ne désignent jamais une famille non chargée.
-- `components/ui/NavigationBar.tsx` et `NavigationRail.tsx` portent les deux modèles de navigation Material 3 ; `NavigationDestinations.tsx` partage uniquement la liste de liens et leur état actif.
-- `components/ui/TopAppBar.tsx` porte la barre supérieure Material 3.
-- `app/layout.tsx` compose explicitement `TopAppBar`, `NavigationBar` et `NavigationRail`.
-- `components/ui/` contient les primitives d'interface partagées.
-
-- `app/globals.css` contient les formes, la typographie et les styles structurels partagés. Les rôles de couleur sont générés par `lib/material-theme.ts` dans le `<head>` dès le rendu serveur ; aucune palette statique parallèle ni fallback CSS n'existe.
+- `components/navigation-adaptative.tsx` porte la navigation de premier niveau.
+- `components/material3/` contient les composants de présentation M3 ; `components/features/` contient les compositions propres au produit.
+- `app/layout.tsx` compose la barre supérieure, le rail/la barre de navigation, le contenu et le pied de page.
+- `styles/material3/tokens.css` centralise les rôles typographiques, formes, mouvements et couches d'état M3. `app/globals.css` porte la structure du shell et les règles sémantiques globales ; les couleurs sont générées par `lib/material-theme.ts` dans le `<head>` dès le rendu serveur. Aucune palette statique parallèle ni fallback CSS n'existe.
 - Les CSS Modules consomment les tokens partagés. Ils gèrent la disposition propre à un composant, sans redéfinir les styles d'un contrôle commun.
-- Les composants React/HTML natifs sont préférés à une dépendance UI supplémentaire tant qu'une bibliothèque Web officielle maintenue et complète ne répond pas au besoin.
+- Les contrats AndroidX sont portés explicitement en React/HTML. Material Web 2.5.0 n'est pas retenu comme dépendance structurante : son projet est en maintenance en attente de nouveaux mainteneurs et son implémentation ne garantit pas la parité AndroidX.
 
 ## 9. Références et limites de fidélité
 

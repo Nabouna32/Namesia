@@ -1,6 +1,7 @@
 # ADR-0013 — Suppression des boutons globaux historiques
 
-- **Statut :** acceptée
+- **Statut :** remplacée par [ADR-0037](ADR-0037-architecture-composants-material3.md)
+- **Portée historique :** la décision décrit l'ancienne organisation. La nomenclature et l'architecture actuelles sont définies par ADR-0037 et `docs/composants.md`.
 - **Date :** 2026-11-23
 
 ## Contexte

@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { Roboto } from "next/font/google";
-import { FavoritesProvider } from "@/components/FavoritesProvider";
-import { HistoryProvider } from "@/components/HistoryProvider";
-import { MaterialThemeProvider } from "@/components/MaterialThemeProvider";
-import { NavigationBar } from "@/components/ui/NavigationBar";
-import { NavigationRail } from "@/components/ui/NavigationRail";
-import { TopAppBar } from "@/components/ui/TopAppBar";
+import { FavoritesProvider } from "@/components/features/favorites/FavoritesProvider";
+import { HistoryProvider } from "@/components/features/history/HistoryProvider";
+import { MaterialThemeProvider } from "@/components/material3/MaterialThemeProvider";
+import { NavigationBar } from "@/components/material3/NavigationBar";
+import { NavigationRail } from "@/components/material3/NavigationRail";
+import { TopAppBar } from "@/components/material3/TopAppBar";
 import "./globals.css";
 import { jsonLd } from "@/lib/json-ld";
 import { siteUrl } from "@/lib/site-url";
@@ -15,7 +15,8 @@ import { materialThemeCss, materialThemeViewportColors } from "@/lib/material-th
 const roboto = Roboto({
   weight: ["400", "500"],
   subsets: ["latin", "latin-ext"],
-  display: "swap",
+  display: "block",
+  adjustFontFallback: false,
   variable: "--font-roboto"
 });
 

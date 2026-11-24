@@ -1,87 +1,133 @@
-# Bibliothèque de composants — Material 3
+# Bibliothèque Material 3 — Namesia
 
-- **Statut :** contrat canonique de l'interface
+- **Statut :** référence canonique des composants d'interface
 - **Mis à jour :** 2026-11-24
-- **Référence :** AndroidX Compose Material 3 1.5.0 stable, commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c`
-- **Décisions :** [ADR-0037 — Utiliser directement les composants Material 3](decisions/ADR-0037-composants-material-3-directs.md) · [ADR-0038 — Migration effective des primitives](decisions/ADR-0038-migration-effective-material-3.md) · [ADR-0039 — Shell Material 3](decisions/ADR-0039-shell-material-3.md) · [ADR-0040 — Nomenclature des composants](decisions/ADR-0040-nomenclature-composants.md) · [ADR-0041 — Card Material 3](decisions/ADR-0041-card-material-3.md) · [ADR-0042 — TextField Material 3](decisions/ADR-0042-text-field-material-3.md)
 
-Ce document définit les composants d'interface autorisés et leur composition. Le nom Material 3 est le nom du composant dans le code : il n'existe pas de vocabulaire de primitives parallèle propre à Namesia. L'implémentation React traduit les contrats AndroidX en HTML/CSS accessibles ; elle n'importe pas Compose dans le navigateur.
+Ce document est le point d'entrée unique pour composer l'interface. Les composants de présentation portent les noms officiels Material 3 et sont centralisés dans `components/material3/`. Les fonctions propres au produit sont isolées dans `components/features/`. Il n'existe pas de couche parallèle de primitives génériques nommées en français, ni de wrappers de convenance qui masquent le contrat M3.
 
-## 1. Règles d'architecture
+## Architecture
 
-- Les primitives UI, lorsqu'elles sont réellement utilisées, portent leur nom Material 3 officiel : `Button`, `IconButton`, `SearchBar`, `TextField`, `FilterChip`, `InputChip`, `Card`, `TopAppBar`, `NavigationBar`, `NavigationRail`, etc.
-- Les fichiers, exports, props et variantes suivent la nomenclature et les conventions M3. Les identifiants techniques des primitives ne sont pas traduits en français.
-- Les composants métier (favoris, comparaison, catalogue, fiche) restent des composants métier ; ils composent les composants M3 et ne créent pas de primitives UI concurrentes.
-- Un lien de navigation demeure un lien HTML/Next.js, même lorsqu'il reçoit l'apparence d'un `Button`. Un `select` demeure un élément HTML natif.
-- Ne pas implémenter par anticipation des composants M3 sans besoin réel. Ne pas créer de faux équivalents à Dialog, Menu, BottomSheet ou FAB.
-- Aucun alias, export historique, wrapper purement nominal, couche de compatibilité ou fallback visuel. Une migration renomme tous les usages et supprime les anciens fichiers et styles dans la même évolution.
-- Les différences Android/Web sont limitées aux frontières réelles du navigateur : sémantique HTML, navigation, clavier, focus, lecteurs d'écran et cible tactile. Elles sont documentées, pas maquillées.
-- Les CSS Modules des composants métier gèrent leur composition et leur disposition ; ils ne redéfinissent pas l'anatomie d'un composant M3.
-- Les couleurs proviennent des rôles Fidelity et des seules extensions `--namesia-*` documentées dans [le système de design](design.md). Rainbow est réservé aux catégories éditoriales stables. Les couleurs success/warning/info restent des extensions sémantiques personnalisées, pas des rôles système M3.
+```text
+styles/
+  material3/
+    tokens.css               # Échelle typographique, formes, mouvement et états M3
+components/
+  material3/                 # Implémentations React/HTML des composants M3
+    Button.tsx
+    IconButton.tsx
+    SearchBar.tsx
+    FilterChip.tsx
+    InputChip.tsx
+    Snackbar.tsx
+    TopAppBar.tsx
+    MaterialThemeProvider.tsx
+    Icon.tsx
+    NavigationBar.tsx
+    NavigationRail.tsx
+    NavigationDestinations.tsx
+    Button.module.css
+    SearchBar.module.css
+    FilterChip.module.css
+    InputChip.module.css
+    Snackbar.module.css
+    index.ts
+  features/                  # Composition métier, jamais une seconde bibliothèque UI
+    history/
+      HistoryProvider.tsx
+      RecentNames.tsx
+      RecordVisit.tsx
+    catalog/
+      NameSearch.tsx
+      FeaturedNames.tsx
+      RelatedNames.tsx
+    discovery/
+      RandomDiscovery.tsx
+    sharing/
+      ShareLink.tsx
+    profile/
+      ProfileActions.module.css
+    comparison/
+      ComparisonBar.tsx
+      NameComparator.tsx
+      ComparisonToggle.tsx
+      ComparisonSelection.tsx
+    favorites/
+      FavoritesProvider.tsx
+      FavoritesList.tsx
+      FavoriteButton.tsx
+```
 
-## 2. Catalogue Material 3
+Les composants Material 3 sont implémentés en React et HTML, mais leurs noms, variantes, anatomie, dimensions et états suivent AndroidX Compose Material 3 1.5.0 stable, figé au commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c`. Compose étant une bibliothèque Kotlin/Android, son code ne peut pas être importé dans Next.js : les composants Web sont des ports explicites des contrats AndroidX, pas des composants Compose exécutés dans le navigateur.
 
-| Composant | Usage sur le site | Contrat de référence |
+Material Web 2.5.0 a été évalué. Le [README officiel](https://github.com/material-components/material-web/blob/b4de401eb665ec63474f39319a4ba8f2145974cc/README.md) le place en maintenance en attente de nouveaux mainteneurs et la [discussion de maintenance](https://github.com/material-components/material-web/discussions/5642) confirme l'absence de feuille de route de nouvelles fonctionnalités ; il ne devient donc pas la dépendance structurante du site. Son API et ses comportements ne sont pas interchangeables avec AndroidX Compose. La décision et ses compromis sont consignés dans ADR-0037.
+
+## Composants Material 3 disponibles
+
+| Nom officiel | Fichier | Contrat et périmètre Web |
 |---|---|---|
-| `MaterialTheme` / `ColorScheme` | Thème global clair/sombre | Rôles Fidelity calculés et extensions explicites |
-| `TopAppBar` | Barre supérieure commune | Anatomie, hauteur, alignement et couleurs AndroidX |
-| `NavigationBar` | Navigation compacte | Navigation de premier niveau, `NavigationBarTokens.TallContainerHeight = 80 dp`, indicateur et libellés `label-medium` |
-| `NavigationRail` | Navigation medium/expanded | Navigation de premier niveau, rail de 80 dp et libellés `label-medium` |
-| `Button` | Actions textuelles | Filled, Filled Tonal, Outlined et Text ; géométrie et états AndroidX |
-| `IconButton` | Actions iconiques | Icône de 24 dp et cible tactile Web adaptée |
-| `SearchBar` | Recherche du catalogue et des parcours | Champ replié AndroidX de 56 dp ; pas de faux panneau expansé |
-| `TextField` | `components/ui/TextField.tsx` | Variantes Filled et Outlined, label flottant, supporting text et erreur |
-| `FilterChip` | Filtres sélectionnables | `FilterChipTokens.ContainerHeight = 32 dp`, cible tactile de 48 px, sélection explicite |
-| `InputChip` | Éléments sélectionnés et retrait | Anatomie et action de suppression M3 |
-| `Card` | Contenu éditorial et résultats | Variantes Elevated, Filled ou Outlined selon la hiérarchie |
-| `Icon` | Pictogrammes | Material Symbols ; la cible interactive appartient à `IconButton` |
-| `Select` HTML | Choix natif | Conserver le contrôle natif du navigateur |
+| `Button` | `material3/Button.tsx` | Variantes `filled`, `tonal`, `outlined`, `text`. Élément natif `button` pour une action ; la prop `href` rend un lien Next.js avec la même apparence pour préserver la navigation Web. Cible 48 px, `ButtonSmallTokens.ContainerHeight = 40.dp`, largeur minimale 58 dp, typographie `label-large`, dimensions et états AndroidX. |
+| `IconButton` | `material3/IconButton.tsx` | Action iconique distincte de Button : cible 48 dp, glyphe 24 dp, couleur et état désactivé AndroidX. Le nom accessible est obligatoire. |
+| `SearchBar` | `material3/SearchBar.tsx` | Champ replié de SearchBar AndroidX : `SearchBarTokens.ContainerHeight = 56.dp`, forme `full`, surface `surface-container-high`, saisie `body-large`, icônes et effacement accessibles. Les résultats restent dans le flux de la page ; aucune fausse fenêtre d'expansion n'est dessinée. |
+| `FilterChip` | `material3/FilterChip.tsx` | Filtre sélectionnable avec `aria-pressed`, coche, `FilterChipTokens.ContainerHeight = 32 dp (32.dp)` dans une cible de 48 dp, contour et couches d'état AndroidX. |
+| `InputChip` | `material3/InputChip.tsx` | Puce de saisie avec action de retrait, `InputChipTokens.ContainerHeight = 32.dp`, contour `outline-variant` au repos, `secondary-container` à l'état sélectionné et cible de 48 px. |
+| `Snackbar` | `material3/Snackbar.tsx` | Présentation de retours d'action avec rôles accessibles. Les sévérités produit `success`, `warning`, `info` utilisent les extensions tonales Namesia ; `error` utilise les rôles système M3. Le placement est laissé au contexte de l'écran. |
+| `TopAppBar` | `material3/TopAppBar.tsx` | Barre supérieure du shell, marque et titre secondaire ; dimensions et couleurs centralisées dans le système M3. |
+| `NavigationBar` | `material3/NavigationBar.tsx` | Navigation de premier niveau compacte, `NavigationBarTokens.TallContainerHeight = 80.dp`, destinations, indicateur et libellés `label-medium`. |
+| `NavigationRail` | `material3/NavigationRail.tsx` | Même navigation de premier niveau sur fenêtres medium/expanded, `NavigationRail` de 80 dp et libellés `label-medium`. |
+| `MaterialThemeProvider` | `components/material3/MaterialThemeProvider.tsx` | Synchronise les schémas Fidelity/Rainbow calculés côté serveur et les changements de préférence système. |
+| `Icon` | `components/material3/Icon.tsx` | Registre local des tracés Google Material Symbols Rounded 400 ; les contrôles interactifs restent portés par Button ou IconButton. |
 
-Les liens de référence AndroidX et les valeurs vérifiées sont centralisés dans [material-3-verification.md](material-3-verification.md) et la source AndroidX est épinglée [ici](https://github.com/androidx/androidx/blob/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/Button.kt). Les tokens et leur usage visuel sont définis dans [design.md](design.md).
+### Contrôles Web natifs
 
-## 3. Implémentation Web
+AndroidX Compose Material 3 ne définit pas un composant nommé `Select`. Pour les filtres de genre et de tri, le site conserve donc l'élément HTML `select` natif avec libellé associé, dimensions, forme, couleurs et focus M3. Ce n'est ni un fallback visuel ni un faux menu personnalisé : c'est le contrôle de sélection du navigateur, choisi pour préserver clavier, lecteur d'écran, ouverture système et comportement attendu sur le Web.
 
-Les primitives présentes dans le code sont directement nommées d'après Material 3 :
+Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques et les rôles typographiques M3 `--md-sys-typescale-*`. Il n'existe pas de composant React `Typography` parallèle : la typographie est un système de tokens, pas une seconde couche de composants.
+
+## Composants métier
 
 | Composant | Fichier | Responsabilité |
 |---|---|---|
-| `TopAppBar` | `components/ui/TopAppBar.tsx` | Barre supérieure compacte et marque du site |
-| `NavigationBar` | `components/ui/NavigationBar.tsx` | Navigation compacte en bas |
-| `NavigationRail` | `components/ui/NavigationRail.tsx` | Navigation latérale sur fenêtres medium/expanded |
-| `Button` | `components/ui/Button.tsx` | Actions textuelles Filled, Filled Tonal, Outlined et Text |
-| `IconButton` | `components/ui/IconButton.tsx` | Actions iconiques, cible Web de 48 px et conteneur visuel de 40 px |
-| `SearchBar` | `components/ui/SearchBar.tsx` | Recherche repliée de 56 dp et effacement par IconButton |
-| `FilterChip` | `components/ui/FilterChip.tsx` | Filtre sélectionnable, conteneur visuel de 32 dp |
-| `InputChip` | `components/ui/InputChip.tsx` | Élément sélectionné avec action de retrait |
-| `Icon` | `components/ui/Icon.tsx` | Pictogrammes Material Symbols Rounded |
-| `Card` | `components/ui/Card.tsx` | Variantes Elevated, Filled et Outlined, sémantique native via `as` |
+| `FavoritesProvider` | `features/favorites/FavoritesProvider.tsx` | État partagé des favoris et synchronisation inter-onglets. |
+| `FavoritesList` | `features/favorites/FavoritesList.tsx` | Recherche, filtres natifs, tri, import/export et composition des favoris. |
+| `HistoryProvider` | `features/history/HistoryProvider.tsx` | Historique de navigation conservé dans la session. |
+| `RecentNames` | `features/history/RecentNames.tsx` | Liste des fiches récemment consultées. |
+| `RecordVisit` | `features/history/RecordVisit.tsx` | Enregistre une consultation dans l'historique de session. |
+| `NameSearch` | `features/catalog/NameSearch.tsx` | Recherche, filtres et pagination du catalogue. |
+| `FeaturedNames` | `features/catalog/FeaturedNames.tsx` | Présentation des prénoms mis en avant. |
+| `RelatedNames` | `features/catalog/RelatedNames.tsx` | Suggestions liées depuis une fiche. |
+| `RandomDiscovery` | `features/discovery/RandomDiscovery.tsx` | Découverte aléatoire d'un prénom. |
+| `NameComparator` | `features/comparison/NameComparator.tsx` | Recherche et comparaison de deux ou trois fiches. |
+| `ShareProfile` | `features/sharing/ShareLink.tsx` | Composition du partage d'une fiche de prénom. |
+| `FavoriteButton` | `features/favorites/FavoriteButton.tsx` | Ajout/retrait d'un favori, état de chargement et erreur du stockage ; compose Button et IconButton. |
+| `ComparisonToggle` | `features/comparison/ComparisonToggle.tsx` | Sélection d'un prénom pour le comparateur ; compose Button et porte la limite métier fournie par l'écran. |
+| `ComparisonSelection` | `features/comparison/ComparisonSelection.tsx` | Liste des prénoms retenus ; compose InputChip pour le retrait individuel. |
+| `ShareLink` | `features/sharing/ShareLink.tsx` | Partage natif ou copie d'une URL reconstruite avec une liste explicite de paramètres autorisés. |
+| `ComparisonBar` | `features/comparison/ComparisonBar.tsx` | Composition métier de ComparisonSelection, Button et URL du comparateur. |
 
-`NavigationBar` et `NavigationRail` partagent uniquement le rendu des destinations via `NavigationDestinations` ; les deux composants M3 restent distincts dans le shell. `TopAppBar` porte la barre supérieure. `Card` centralise la surface des résultats, favoris, historique, suggestions, comparateur et prénoms mis en avant. Les composants métier `FavoriteButton`, `FavoriteList`, `NameSearch`, `NameComparator`, `ComparisonBar`, `ComparisonButton`, `ComparisonSelection`, `NameHistory`, `RandomDiscovery`, `FeaturedNames`, `NameSuggestions`, `ShareLink` et `ShareName` portent les parcours produit ; ils composent les primitives M3 sans redéfinir leur anatomie. Les context providers sont `FavoritesProvider` et `HistoryProvider`, exposant `useFavorites` et `useHistory`. Les formulaires d'administration utilisent `TextField` ; le sélecteur de fichier reste un contrôle HTML natif. `StatusMessage` est une composition sémantique de statut accessible (annonce `status` ou `alert`) et des extensions de couleur Namesia ; ce n'est pas un composant Material 3. Les liens de navigation utilisent directement `Link` de Next.js avec les styles de `Button`, sans wrapper. Les filtres de favoris utilisent `select` HTML natif, sans abstraction de formulaire supplémentaire.
+Les composants métier peuvent être propres à Namesia, mais ils ne redéfinissent jamais les styles, états ou interactions d'un composant Material 3 générique. Les règles de disposition restent dans leurs CSS Modules ; les variantes et états M3 restent dans `components/material3/`.
 
-Les anciennes primitives françaises, leurs feuilles CSS et leurs exports sont supprimés dans la même migration. Aucun alias de compatibilité ne subsiste. Les noms métier du domaine restent français dans le contenu visible ; les identifiants des primitives UI suivent Material 3.
+## Conventions d'implémentation
 
-## 4. Recettes de composition
+- Employer exactement les noms Material 3 pour les composants correspondants : `Button`, `IconButton`, `SearchBar`, `FilterChip`, `InputChip`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`, `Icon`.
+- Ne pas créer de traduction, alias, wrapper ou fallback parallèle pour ces composants.
+- Garder les éléments HTML natifs adaptés : `button`, `a`, `input`, `select`, `nav`, `header`, titres et listes sémantiques. Ne pas remplacer leur sémantique par des `div` et des rôles ARIA redondants.
+- Les CSS Modules de `components/material3/` consomment directement les tokens `--md-sys-*` et les seules extensions `--namesia-*` déclarées dans [le système de design](design.md).
+- Aucun fallback dans `var()`, alias de tokens, palette CSS parallèle, hex arbitraire ou couche d'overrides finale.
+- Les dimensions visuelles et les cibles tactiles sont distinctes lorsqu'AndroidX les distingue : ne jamais agrandir une capsule pour atteindre 48 dp si la cible native peut porter cette dimension.
+- Les états hover sont limités aux pointeurs fins ; focus, pressed, selected et disabled utilisent les tokens AndroidX et les rôles de premier plan appropriés.
+- Une exception Web doit correspondre à une limite réelle du navigateur et être documentée ; elle ne justifie pas la création d'un faux composant Android.
 
-| Page | Composition attendue |
+## Recettes de composition
+
+| Écran | Composition |
 |---|---|
-| Accueil | Shell commun, hiérarchie typographique M3, `SearchBar`, `Card`, `Button` |
-| Catalogue | Shell commun, `SearchBar`, `FilterChip`, `Card`, `InputChip` |
-| Fiche prénom | Shell commun, hiérarchie de lecture M3, liens natifs, `Card`, `Button` |
-| Comparateur | Shell commun, `SearchBar`, `Card`, `InputChip`, `Button` |
-| Favoris | Shell commun, `SearchBar`, `select` natif, `InputChip`, `Card` |
-| Administration | Shell commun, `TextField`, `Button`, `Card`, couleurs sémantiques personnalisées |
+| Accueil | TopAppBar, NavigationBar/NavigationRail, SearchBar, Button, Card sémantique et FavoriteButton |
+| Catalogue | Shell, SearchBar, FilterChip, cartes de résultats, ComparisonToggle et FavoriteButton |
+| Fiche | Shell, titres et corps typographiques M3, liens natifs, Button/IconButton et cartes éditoriales sémantiques |
+| Comparateur | Shell, SearchBar, ComparisonSelection, ComparisonToggle, Button et cartes de comparaison |
+| Favoris | Shell, SearchBar, `select` natifs, Snackbar, ComparisonToggle et FavoriteButton |
+| Administration | Shell, champs natifs, Button, Snackbar et cartes de prévisualisation |
 
-## 5. Règles pour toute évolution
+## Ajouter un composant
 
-1. Lire `docs/design.md` et `docs/material-3-verification.md` avant de créer ou refondre un écran.
-2. Identifier le composant M3 réel et sa source AndroidX épinglée.
-3. Employer directement son nom officiel dans les fichiers, exports et usages.
-4. Utiliser les éléments HTML natifs adaptés et préserver leur sémantique.
-5. Consommer les tokens `--md-sys-*` et les seules extensions `--namesia-*` documentées. Aucun hex arbitraire, alias, fallback CSS ou couche d'override finale.
-6. Couvrir les états définis par le composant : repos, survol sur pointeur fin, focus visible, pression, sélection, désactivation, chargement et erreur lorsqu'ils s'appliquent.
-7. Vérifier clair/sombre, 320, 600, 840 px et grand écran, clavier, zoom, lecteurs d'écran et réduction des mouvements.
-8. Supprimer les anciennes implémentations, fichiers et styles au moment de la migration ; ne pas maintenir deux systèmes en parallèle.
-
-## 6. Extraction et réutilisation
-
-Une implémentation partagée doit répondre à un besoin concret et récurrent. Ne pas créer de composant générique pour un seul écran, de composant fourre-tout ou d'abstraction fondée uniquement sur une classe CSS. Le composant M3 est la source de vérité ; les règles métier restent dans les composants métier.
+Avant toute création, vérifier le nom officiel, l'anatomie, les tokens, les variantes, les états et la source AndroidX versionnée dans [Vérification Material 3](material-3-verification.md). Si le besoin est métier, placer la composition dans `components/features/` et la construire avec les composants Material 3 existants. Ne jamais créer une nouvelle primitive générique Namesia pour contourner un composant existant.

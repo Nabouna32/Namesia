@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import assert from "node:assert/strict";
 import test from "node:test";
 
-const source = readFileSync(new URL("../components/NameSearch.tsx", import.meta.url), "utf8");
+const source = readFileSync(new URL("../components/features/catalog/NameSearch.tsx", import.meta.url), "utf8");
 
 test("la recherche compacte dirige les résultats supplémentaires vers le catalogue", () => {
   assert.match(source, /\{compact && resultats\.length > nombreVisible && \(/);

@@ -1,6 +1,7 @@
 # ADR-0035 — Fidélité du champ de recherche à SearchBar AndroidX
 
 - **Statut :** acceptée
+- **Évolution de structure :** le champ porte désormais le nom officiel `SearchBar` dans `components/material3/`. Le périmètre Web reste le champ replié, sans panneau expansé simulé ; voir ADR-0037.
 - **Date :** 2026-11-24
 - **Référence :** Compose Material 3 1.5.0 stable, commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c`
 - **Remplace :** uniquement les choix de présentation du champ décrits dans ADR-0008 ; le partage de la primitive et la séparation de la logique métier restent valides.
