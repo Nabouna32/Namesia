@@ -97,6 +97,8 @@ test("les feuilles consomment les rôles Material sans alias hérités ni fallba
   assert.doesNotMatch(allCss, /--(?:color-[\w-]+|ink|muted|line|paper|surface|accent|sans|font-(?:sans|display)|radius-[\w-]+|space-\d+|motion-[\w-]+|shadow-[\w-]+)\b/);
   assert.doesNotMatch(allCss, /var\(\s*--[\w-]+\s*,/);
   assert.match(theme, /--md-sys-color-/);
+  assert.match(theme, /specVersion: "2021"/);
+  assert.doesNotMatch(theme, /maybeFallbackSpecVersion|fallback/i);
   assert.match(tokensCss, /--md-sys-typescale-title-large-size:/);
   assert.match(tokensCss, /--md-sys-shape-corner-extra-large:/);
   assert.match(tokensCss, /--md-sys-shape-corner-full: 9999px;/);
