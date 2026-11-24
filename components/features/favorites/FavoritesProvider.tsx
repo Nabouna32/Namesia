@@ -1,6 +1,6 @@
 "use client";
 
-import { LIMITE_FAVORIS, normaliserSlugsFavoris } from "@/lib/sauvegarde-favoris";
+import { LIMITE_FAVORIS, fusionnerFavoris, normaliserSlugsFavoris, type ResultatFusionFavoris } from "@/lib/sauvegarde-favoris";
 import {
   createContext,
   useCallback,
@@ -19,7 +19,7 @@ type ContexteFavoris = {
   erreur: boolean;
   basculer: (slug: string) => void;
   retirerPlusieurs: (slugs: string[]) => void;
-  ajouterPlusieurs: (slugs: string[]) => number | null;
+  ajouterPlusieurs: (slugs: string[]) => Omit<ResultatFusionFavoris, "slugs"> | null;
 };
 
 const FavorisContext = createContext<ContexteFavoris | null>(null);
@@ -87,24 +87,16 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     }
   }, [slugs]);
 
-  const ajouterPlusieurs = useCallback((slugsImportes: string[]): number | null => {
-    const prochainsSlugs = [...slugs];
-    const presents = new Set(slugs);
-    let nombreAjoute = 0;
-
-    for (const slug of slugsImportes) {
-      if (!presents.has(slug) && prochainsSlugs.length < LIMITE_FAVORIS) {
-        presents.add(slug);
-        prochainsSlugs.push(slug);
-        nombreAjoute += 1;
-      }
-    }
-
+  const ajouterPlusieurs = useCallback((slugsImportes: string[]): Omit<ResultatFusionFavoris, "slugs"> | null => {
     try {
-      window.localStorage.setItem(CLE_FAVORIS, JSON.stringify(prochainsSlugs));
-      setSlugs(prochainsSlugs);
+      const fusion = fusionnerFavoris(slugs, slugsImportes);
+      window.localStorage.setItem(CLE_FAVORIS, JSON.stringify(fusion.slugs));
+      setSlugs(fusion.slugs);
       setErreur(false);
-      return nombreAjoute;
+      return {
+        nombreAjoute: fusion.nombreAjoute,
+        nombreIgnoreLimite: fusion.nombreIgnoreLimite
+      };
     } catch {
       setErreur(true);
       return null;
