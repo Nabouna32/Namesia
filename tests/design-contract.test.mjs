@@ -130,10 +130,11 @@ test("les états hover sont réservés aux appareils qui disposent d'un pointeur
   const selection = await readFile(join(root, "components/features/comparison/ComparisonSelection.tsx"), "utf8");
   const selectionStyles = styles.find(({ path }) => path === "components/features/comparison/ComparisonSelection.module.css")?.content ?? "";
   const buttonStyles = styles.find(({ path }) => path === "components/material3/Button.module.css")?.content ?? "";
-  assert.match(selection, /<IconButton/);
-  assert.match(selection, /aria-label=/);
-  assert.ok(selectionStyles.includes("var(--md-sys-color-on-secondary-container)"));
-  assert.ok(selectionStyles.includes("var(--md-sys-color-secondary-container)"));
+  assert.match(selection, /<InputChip/);
+  assert.match(selection, /onRemove=/);
+  const inputChipStyles = styles.find(({ path }) => path === "components/material3/InputChip.module.css")?.content ?? "";
+  assert.ok(inputChipStyles.includes("var(--md-sys-color-outline-variant)"));
+  assert.ok(inputChipStyles.includes("inset: 8px 0"));
   assert.ok(buttonStyles.includes("var(--md-sys-state-pressed-state-layer-opacity)"));
 });
 
