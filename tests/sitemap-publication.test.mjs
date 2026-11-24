@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const prenoms = await readFile(new URL("../lib/prenoms.ts", import.meta.url), "utf8");
+const publication = await readFile(new URL("../lib/publication-prenom.ts", import.meta.url), "utf8");
 const sitemap = await readFile(new URL("../app/sitemap.ts", import.meta.url), "utf8");
 
 test("le sitemap expose la date réelle de publication de chaque fiche", () => {
