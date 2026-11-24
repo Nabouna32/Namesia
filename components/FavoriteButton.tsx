@@ -3,10 +3,10 @@ import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
 import styles from "./FavoriteButton.module.css";
 import { Icon } from "@/components/ui/Icon";
-import { useFavoris } from "@/components/FavoritesProvider";
+import { useFavorites } from "@/components/FavoritesProvider";
 type Props = { slug: string; name?: string; compact?: boolean; showError?: boolean };
 export function FavoriteButton({ slug, name, compact = false, showError = true }: Props) {
- const { slugs, pret, erreur, basculer } = useFavoris();
+ const { slugs, pret, erreur, basculer } = useFavorites();
  const selected = slugs.includes(slug);
  const action = selected ? "Retirer des favoris" : "Ajouter aux favoris";
  const accessibleName = name ?? "ce prénom";
