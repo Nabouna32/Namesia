@@ -7,7 +7,7 @@ import { normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-pre
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
 import { ComparisonBar } from "./ComparisonBar";
 import { FavoriteButton } from "./FavoriteButton";
-import { useFavoris } from "./favoris-provider";
+import { useFavoris } from "@/components/FavoritesProvider";
 import styles from "./FavoriteList.module.css";
 import { Icon } from "@/components/ui/Icon";
 import { SearchBar } from "@/components/ui/SearchBar";
