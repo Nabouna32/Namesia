@@ -16,7 +16,7 @@ export function Snackbar({
   children,
   className
 }: Readonly<{
-  severity?: SnackbarSeverity | "neutral";
+  severity?: SnackbarSeverity;
   children: ReactNode;
   className?: string;
 }>) {
