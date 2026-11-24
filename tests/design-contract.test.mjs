@@ -219,6 +219,7 @@ test("l'échelle typographique Material 3 est complète et limitée aux graisses
   assert.doesNotMatch(allCss, /font-size\s*:[^;]*px/);
   const weights = [...allCss.matchAll(/font-weight:\s*([^;]+);/g)].map((match) => match[1].trim());
   assert.ok(weights.every((weight) => weight === "400" || weight === "500" || /^var\(--md-sys-typescale-[\w-]+-weight\)$/.test(weight)), `Graisses interdites : ${weights.join(", ")}`);
+  assert.doesNotMatch(allCss, /font-family:\s*(?:Arial|sans-serif|system-ui)/i);
   assert.doesNotMatch(allCss, /text-transform:\s*uppercase/i);
 });
 
