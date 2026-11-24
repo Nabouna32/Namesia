@@ -22,7 +22,7 @@ padding: 0 16px;
   border-radius: var(--md-sys-shape-corner-large);
   background: var(--md-sys-color-surface-container-low);
   color: var(--md-sys-color-on-surface);
-  transition: border-color var(--md-sys-motion-duration-short) var(--md-sys-motion-standard), background-color var(--md-sys-motion-duration-short) var(--md-sys-motion-standard);
+  transition: border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard), background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
 }
 
 .control:focus-within {

@@ -1,8 +1,8 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.26
-- **Mis à jour :** 2026-11-23
+- **Version :** 4.27
+- **Mis à jour :** 2026-11-24
 
 ## 1. Direction
 
@@ -10,20 +10,20 @@ Namesia adopte **Material 3**, avec une palette générale **Fidelity** et une p
 
 Ce choix est une référence de conception et de comportement, pas une prétention à reproduire le système Android natif ou ses barres système. Le navigateur conserve ses conventions, ses capacités et ses limites.
 
-La personnalité Namesia reste présente à travers son dégradé de marque. Les couleurs Rainbow générées par Material Color Utilities servent aux catégories éditoriales identifiées (notamment les associations symboliques). Elles ne sont jamais attribuées en fonction de l'ordre, de la position, du hasard ou du prénom lui-même sans donnée éditoriale qui le justifie. Elles ne remplacent jamais les rôles fonctionnels du thème ni les états sémantiques. Les titres, les actions, les surfaces générales et les repères de navigation restent Fidelity : Rainbow n'est pas un dégradé décoratif appliqué aux textes ou aux fonds de page.
+La marque Namesia utilise les rôles Fidelity, y compris pour son monogramme. Les couleurs Rainbow générées par Material Color Utilities servent aux catégories éditoriales identifiées (notamment les associations symboliques). Elles ne sont jamais attribuées en fonction de l'ordre, de la position, du hasard ou du prénom lui-même sans donnée éditoriale qui le justifie. Elles ne remplacent jamais les rôles fonctionnels du thème ni les états sémantiques. Les titres, les actions, les surfaces générales et les repères de navigation restent Fidelity : Rainbow n'est pas un dégradé décoratif appliqué aux textes ou aux fonds de page.
 
 ## 2. Source de vérité des couleurs
 
-La palette d'interface est calculée avec la bibliothèque officielle Google **`@material/material-color-utilities`**. Le bloc `:root` unique porte les valeurs SSR claires ; une règle `@media (prefers-color-scheme: dark)` applique les valeurs sombres initiales à `html`, sans second bloc racine. `MaterialThemeProvider` recalcule ensuite le thème actif, les catégories Rainbow et les extensions sémantiques selon la préférence système. Le thème est construit avec :
-- couleur source primaire : `#005AC1`, bleu Pixel choisi pour Namesia ;
+La palette est calculée avec la bibliothèque officielle Google **`@material/material-color-utilities`**. `lib/material-theme.ts` est l’unique générateur : il calcule les schémas clair et sombre, produit les déclarations CSS intégrées au `<head>` dès le rendu serveur, puis `MaterialThemeProvider` réapplique exactement les mêmes valeurs lorsque la préférence système change. Le CSS des composants ne contient donc aucune palette de secours indépendante. Le thème est construit avec :
+- couleur source primaire : `#005AC1`, couleur source bleue choisie par Namesia (sans prétendre à une couleur officielle Pixel) ;
 - variante du thème d'interface : `Variant.FIDELITY` ;
 - variante complémentaire des catégories : `Variant.RAINBOW`, calculée séparément avec la même couleur source ;
-- spécification : `2025` ;
-- plateforme de calcul : `phone` ;
+- spécification : `2021`, car les variantes `Fidelity` et `Rainbow` sont définies dans cette version ; demander `2025` ferait retomber implicitement ces variantes sur leurs définitions antérieures ;
+- plateforme : non renseignée, car ce paramètre ne s'applique pas à la génération Fidelity/Rainbow 2021 ;
 - niveau de contraste standard : `0` ;
 - schémas clair et sombre recalculés selon `prefers-color-scheme`.
 
-Le fournisseur `MaterialThemeProvider` applique les rôles calculés sous forme de variables CSS `--md-sys-color-*`. Les valeurs de la feuille globale sont des valeurs initiales SSR ; la bibliothèque est la source de vérité du thème actif après hydratation. Le thème suit les changements de préférence système sans rechargement.
+Le générateur expose les rôles système sous leurs noms M3 exacts `--md-sys-color-*`. Les rôles absents provoquent une erreur explicite : aucun rôle n’est silencieusement ignoré. Le rendu initial et le thème après hydratation proviennent du même calcul, sans palette statique approximative ni bascule visuelle vers une autre variante.
 
 La couleur source est fixe et maîtrisée par Namesia : le navigateur n'a pas accès au fond d'écran Android et le site ne prétend donc pas récupérer la couleur dynamique du téléphone. Une future personnalisation de la couleur source doit rester une décision explicite, pas une collecte implicite.
 
@@ -37,11 +37,11 @@ Les composants consomment les rôles du schéma, jamais des couleurs arbitraires
 - `on-surface`, `on-surface-variant`, `outline`, `outline-variant` : texte et contours ;
 - `error` et ses conteneurs : erreurs.
 
-Les composants consomment directement les rôles `--md-sys-color-*`. Aucun alias applicatif `--color-*`, `--ink`, `--muted` ou `--line` n'est admis. Les rôles `success`, `warning` et `info` sont des extensions sémantiques explicites, calculées par le fournisseur de thème pour les deux modes. Aucune valeur de secours n'est autorisée dans `var()` : une donnée de thème absente doit rester visible comme défaut de contrat.
+Les composants consomment directement les rôles `--md-sys-color-*`. Aucun alias applicatif `--color-*`, `--ink`, `--muted` ou `--line` n'est admis. Material 3 ne définit pas de rôles système `success`, `warning` ou `info` : les états non critiques ne reçoivent donc pas de couleurs sémantiques inventées. Les erreurs utilisent `error` ; les autres messages conservent la hiérarchie textuelle Fidelity. Aucune valeur de secours n'est autorisée dans `var()` : une donnée de thème absente doit rester visible comme défaut de contrat.
 
 ### Signature Rainbow
 
-Le dégradé de marque `--md-sys-color-brand-gradient` reste réservé au monogramme Namesia. Les catégories utilisent trois familles de rôles tonals issues du schéma `Variant.RAINBOW` (`--md-sys-color-category-1` à `--md-sys-color-category-3`, avec leurs conteneurs et couleurs de premier plan). Une catégorie reçoit toujours la même teinte, quelle que soit la fiche ou l'ordre d'affichage. Une carte de prénom, un bouton ou une surface fonctionnelle ne constitue pas une catégorie : elle utilise les rôles Fidelity neutres ou sémantiques. Les titres, les accents typographiques et les fonds de page ne reçoivent pas de dégradé Rainbow. Les cartes d'associations peuvent recevoir une légère teinte stable issue de la catégorie, sur une surface Fidelity ; leur contour et leur badge utilisent respectivement la teinte et le rôle `on-container` de cette même catégorie, jamais un rôle tertiary générique. La vitrine « Les prénoms à découvrir » applique une surface neutre identique à ses cartes ; aucune carte ne reçoit primary, secondary ou tertiary selon sa position. Les variations de mise en page suivent la largeur disponible : trois colonnes sur grand écran, deux sur fenêtre intermédiaire et une sur écran compact.
+Les catégories utilisent trois familles de rôles tonals issues du schéma `Variant.RAINBOW` (`--namesia-color-category-1` à `--namesia-color-category-3`, avec leurs conteneurs et couleurs de premier plan). Une catégorie reçoit toujours la même teinte, quelle que soit la fiche ou l'ordre d'affichage. Une carte de prénom, un bouton ou une surface fonctionnelle ne constitue pas une catégorie : elle utilise les rôles Fidelity neutres ou sémantiques. Les titres, les accents typographiques et les fonds de page ne reçoivent pas de dégradé Rainbow. Les cartes d'associations peuvent recevoir une légère teinte stable issue de la catégorie, sur une surface Fidelity ; leur contour et leur badge utilisent respectivement la teinte et le rôle `on-container` de cette même catégorie, jamais un rôle tertiary générique. La vitrine « Les prénoms à découvrir » applique une surface neutre identique à ses cartes ; aucune carte ne reçoit primary, secondary ou tertiary selon sa position. Les variations de mise en page suivent la largeur disponible : trois colonnes sur grand écran, deux sur fenêtre intermédiaire et une sur écran compact.
 
 ## 3. Formes, typographie et élévation
 
@@ -49,7 +49,7 @@ Le dégradé de marque `--md-sys-color-brand-gradient` reste réservé au monogr
 - Échelle Material 3 : display large/medium/small 57/64, 45/52 et 36/44 px ; headline large/medium/small 32/40, 28/36 et 24/32 px ; title large/medium/small 22/28, 16/24 et 14/20 px ; body large/medium/small 16/24, 14/20 et 12/16 px ; label large/medium/small 14/20, 12/16 et 11/16 px. Les graisses sont strictement 400 et 500. Les libellés ne sont pas forcés en capitales. Chaque rôle possède ses tokens `--md-sys-typescale-*` de famille, taille, graisse, interligne et approche. Aucune surcharge de taille par breakpoint ne réintroduit une hiérarchie concurrente.
 - Les espacements suivent une grille de 4 px, avec les pas de 8 px privilégiés. Les rayons sont exclusivement les tokens `--md-sys-shape-corner-*`.
 - Formes : extra-small 4 px, small 8 px, medium 12 px, large 16 px, extra-large 28 px et full/pill.
-- Élévation : surfaces tonales en premier ; ombres discrètes uniquement pour les éléments flottants et les plans qui doivent se détacher.
+- Élévation : hiérarchie tonale des surfaces en priorité ; aucune ombre CSS décorative n'est conservée. Les niveaux M3 `--md-sys-elevation-level0` à `level5` sont des niveaux d'élévation, pas des valeurs de `box-shadow` ; toute traduction Web future devra être documentée.
 - Densité : cibles tactiles d'au moins 48 × 48 px lorsque l'espace le permet ; les éléments visuels peuvent être plus petits à l'intérieur de leur cible.
 
 ### Accueil
@@ -94,7 +94,7 @@ Les composants doivent partager les mêmes rôles, formes et interactions :
 
 Les surfaces de l'accueil, des cartes vedettes, des fiches, du catalogue, du comparateur et du pied de page sont définies dans leurs règles canoniques, sans seconde couche de redéfinition tardive. Les actions de réinitialisation, d'effacement et de pagination utilisent la primitive Bouton en variante text ; les options de comparaison appliquent un état tonal sélectionné et des survols réservés aux pointeurs fins.
 
-Les interactions utilisent les courbes Material de standard, d'accélération et de décélération, avec des durées courtes, moyennes et longues centralisées. Le lien d'évitement suit lui aussi ces tokens : aucune durée ni courbe de transition n'est codée localement. Les boutons partagés et les indicateurs de navigation emploient des couches d'état translucides (8 % au survol avec un pointeur fin, 12 % au focus et à la pression) plutôt que des filtres de luminosité ou des surfaces opaques. La couche utilise la couleur de premier plan du composant, y compris sur l'indicateur sélectionné. Les cartes réagissent par une surface tonale plus élevée et un état pressé, sans déplacement ni ombre artificielle. Le mouvement doit rendre l'action compréhensible : indicateur qui s'étend, surface qui réagit à la pression, changement d'état animé. Les animations décoratives restent secondaires. `prefers-reduced-motion: reduce` supprime les mouvements non essentiels.
+Les interactions utilisent les tokens M3 `--md-sys-motion-easing-*` et `--md-sys-motion-duration-*` ; les valeurs utilisées sont `short3`, `medium1` et `medium4`. Les couches d'état utilisent `--md-sys-state-hover-state-layer-opacity`, `--md-sys-state-focus-state-layer-opacity` et `--md-sys-state-pressed-state-layer-opacity`, selon l'état réel. Les valeurs M3 unitaires 0,08/0,12/0,16 sont exprimées en pourcentages CSS équivalents pour `color-mix`. Aucun pourcentage d'état n'est recopié dans les règles. Le lien d'évitement suit les mêmes tokens : aucune durée ni courbe n'est codée localement. La couche utilise la couleur de premier plan du composant, y compris sur l'indicateur sélectionné. Les cartes réagissent par une surface tonale plus élevée et un état pressé, sans déplacement ni ombre artificielle. Le mouvement doit rendre l'action compréhensible : indicateur qui s'étend, surface qui réagit à la pression, changement d'état animé. Les animations décoratives restent secondaires. `prefers-reduced-motion: reduce` supprime les mouvements non essentiels.
 
 Les icônes fonctionnelles utilisent les tracés officiels Google Material Symbols Rounded, poids 400, embarqués localement et affichés sur une grille de 24 × 24 avec `currentColor`. Les variantes pleines ne sont utilisées que lorsqu'elles ont une forme réellement distincte : Accueil et Favoris changent de glyphe à l'état actif ; Recherche et Comparer conservent leur dessin officiel, et leur sélection est portée par l'indicateur tonal et le libellé. Les pictogrammes restent décoratifs pour les technologies d'assistance, le nom étant porté par le lien ou le bouton. Les cibles interactives restent d'au moins 48 × 48 px ; le SVG ne porte pas lui-même la cible. Les SVG de marque peuvent être colorés. Source et licence : `licenses/NOTICE-Material-Symbols.md` et `licenses/Apache-2.0-Material-Symbols.txt`.
 
@@ -123,12 +123,12 @@ L'application occupe au minimum la hauteur de la fenêtre avec une colonne flex.
 - Les cartes Open Graph du site et des fiches utilisent la même famille Roboto que l’interface, chargée depuis un fichier TTF local au runtime Node de `ImageResponse`. Le poids 400 suffit à cette surface de partage ; aucun appel Google Fonts, aucune police de substitution et aucune seconde famille ne sont utilisés. Les fonds, textes et accents reprennent les rôles clairs Fidelity ; le dégradé de marque reste limité au monogramme.
 
 - `@material/material-color-utilities` génère les rôles de couleurs ; aucun autre moteur de thème n'est ajouté.
-- `components/material-theme-provider.tsx` synchronise le schéma avec la préférence système.
+- `lib/material-theme.ts` génère le CSS Fidelity/Rainbow initial et les couleurs de barre navigateur ; `components/material-theme-provider.tsx` synchronise les mêmes valeurs avec les changements de préférence système.
 - `app/layout.tsx` charge Roboto via `next/font/google` et expose `--font-roboto` à tous les rôles typographiques ; les tokens ne désignent jamais une famille non chargée.
 - `components/navigation-adaptative.tsx` porte la navigation de premier niveau.
 - `components/ui/` contient les primitives d'interface partagées.
 - `app/layout.tsx` compose la barre supérieure, le rail/la barre de navigation, le contenu et le pied de page.
-- `app/globals.css` contient les rôles initiaux SSR documentés, les formes, la typographie et les styles structurels partagés. Un seul bloc `:root` fournit les valeurs claires initiales avant hydratation ; la préférence sombre est exprimée sur `html`, sans second bloc racine. Il n'existe aucun alias ni fallback CSS.
+- `app/globals.css` contient les formes, la typographie et les styles structurels partagés. Les rôles de couleur sont générés par `lib/material-theme.ts` dans le `<head>` dès le rendu serveur ; aucune palette statique parallèle ni fallback CSS n'existe.
 - Les CSS Modules consomment les tokens partagés. Ils gèrent la disposition propre à un composant, sans redéfinir les styles d'un contrôle commun.
 - Les composants natifs React/HTML sont préférés à une dépendance UI supplémentaire tant qu'une bibliothèque Web officielle maintenue et complète ne répond pas au besoin.
 
@@ -136,7 +136,7 @@ L'application occupe au minimum la hauteur de la fenêtre avec une colonne flex.
 
 La référence est Material 3 pour Android, notamment ses principes de navigation adaptative, ses rôles de couleur, ses composants et son échelle typographique officielle : [Material 3 — Type scale tokens](https://m3.material.io/styles/typography/type-scale-tokens). Les tailles et interlignes suivent la baseline publiée ; les graisses retenues sont 400 et 500. La référence de mise en œuvre Android est également consultable dans [la documentation Material 3 de Jetpack Compose](https://developer.android.com/develop/ui/compose/designsystems/material3). La palette principale suit Fidelity ; Rainbow est un système d'accents catégoriels distinct. La bibliothèque officielle Material Web est en mode maintenance en attente de nouveaux mainteneurs ; elle n'est pas retenue comme fondation UI. Material Color Utilities est la dépendance officielle retenue pour les algorithmes de couleur, pas une bibliothèque de composants.
 
-La navigation, les icônes et les surfaces du site sont des implémentations Web accessibles des modèles Material. Le Web ne peut pas reproduire les gestes système, les barres système transparentes, le retour prédictif Android, les animations natives exactes ni l'extraction du fond d'écran. Ces éléments ne doivent pas être simulés de manière trompeuse.
+Le registre des rôles, les sources officielles, les vérifications automatisées et les exceptions Web sont détaillés dans [Vérification Material 3](material-3-verification.md). La navigation, les icônes et les surfaces du site sont des implémentations Web accessibles des modèles Material. Le Web ne peut pas reproduire les gestes système, les barres système transparentes, le retour prédictif Android, les animations natives exactes ni l'extraction du fond d'écran. Ces éléments ne doivent pas être simulés de manière trompeuse.
 
 
 ## 10. Fidélité d'interaction Pixel

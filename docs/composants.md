@@ -1,14 +1,14 @@
 # Bibliothèque de composants — Namesia
 
 - **Statut :** inventaire des composants partagés réellement disponibles
-- **Mis à jour :** 2026-11-23
+- **Mis à jour :** 2026-11-24
 
 Ce document est le point d'entrée pour les composants d'interface réutilisables. Il distingue les primitives de présentation des composants métier. Il ne constitue pas une obligation de conserver un composant : chaque élément reste soumis au challenge produit et technique.
 
 ## Principes
 
 - Une primitive partagée porte une interaction ou un contrat visuel commun, pas seulement un nom générique.
-- Les variantes sont explicites et reposent sur les rôles Material 3 Fidelity, calculés depuis la couleur source Pixel `#005AC1`.
+- Les variantes sont explicites et reposent sur les rôles système M3 Fidelity, calculés depuis la couleur source Pixel `#005AC1`. Les extensions propres à Namesia utilisent `--namesia-*` et ne sont jamais nommées comme des rôles système.
 - Une couleur ne doit jamais être attribuée selon la position d'un élément dans une liste. Rainbow est réservé à une catégorie éditoriale identifiée.
 - Les CSS Modules des composants métier gèrent leur disposition ; les primitives partagées gèrent leur apparence et leurs états communs. Toute règle `:hover` est réservée aux pointeurs fins ; les interactions tactiles utilisent `:active`. Les composants interactifs suivent les mêmes cibles tactiles, transitions et états pressed/focus ; le mouvement et ses durées viennent des tokens globaux.
 - Préférer les éléments HTML natifs et les liens Next.js. Garder distincts les contrôles interactifs et les liens de navigation.

@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const globalCss = await readFile(join(root, "app/globals.css"), "utf8");
 const provider = await readFile(join(root, "components/material-theme-provider.tsx"), "utf8");
+const theme = await readFile(join(root, "lib/material-theme.ts"), "utf8");
 const layout = await readFile(join(root, "app/layout.tsx"), "utf8");
 const home = await readFile(join(root, "app/page.tsx"), "utf8");
 const prenoms = await readFile(join(root, "lib/prenoms.ts"), "utf8");
@@ -68,9 +69,10 @@ function collectRules(css) {
 test("les feuilles consomment les rôles Material sans alias hérités ni fallback", () => {
   assert.doesNotMatch(allCss, /--(?:color-[\w-]+|ink|muted|line|paper|surface|accent|sans|font-(?:sans|display)|radius-[\w-]+|space-\d+|motion-[\w-]+|shadow-[\w-]+)\b/);
   assert.doesNotMatch(allCss, /var\(\s*--[\w-]+\s*,/);
-  assert.match(globalCss, /--md-sys-color-primary:/);
+  assert.match(theme, /--md-sys-color-/);
   assert.match(globalCss, /--md-sys-typescale-title-large-size:/);
   assert.match(globalCss, /--md-sys-shape-corner-extra-large:/);
+  assert.match(globalCss, /--md-sys-shape-corner-full: 9999px;/);
 });
 
 test("le pied de page reste en bas sur les pages courtes sans hauteur artificielle", () => {
@@ -82,7 +84,19 @@ test("le pied de page reste en bas sur les pages courtes sans hauteur artificiel
 });
 
 test("les animations globales utilisent les tokens de mouvement", () => {
-  assert.match(globalCss, /\.skip-link\s*\{[^}]*transition: transform var\(--md-sys-motion-duration-short\) var\(--md-sys-motion-standard\)/s);
+  assert.match(globalCss, /--md-sys-motion-easing-standard:/);
+  assert.match(globalCss, /--md-sys-motion-easing-emphasized:/);
+  assert.match(globalCss, /--md-sys-motion-duration-short3:/);
+  assert.match(globalCss, /--md-sys-motion-duration-medium1:/);
+  assert.match(globalCss, /--md-sys-motion-duration-medium4:/);
+  assert.match(globalCss, /--md-sys-state-hover-state-layer-opacity:/);
+  assert.match(globalCss, /--md-sys-state-focus-state-layer-opacity:/);
+  assert.match(globalCss, /--md-sys-state-pressed-state-layer-opacity:/);
+  assert.doesNotMatch(allCss, /--md-sys-motion-(?:standard|emphasized|duration-short|duration-medium|duration-long)\b/);
+  assert.doesNotMatch(allCss, /--md-sys-elevation-(?:sm|md)\b/);
+  assert.doesNotMatch(allCss, /#[0-9a-f]{3,8}\b/i);
+  assert.doesNotMatch(allCss, /box-shadow:\s*var\(--md-sys-elevation-/);
+  assert.match(globalCss, /\.skip-link\s*\{[^}]*transition: transform var\(--md-sys-motion-duration-short3\) var\(--md-sys-motion-easing-standard\)/s);
   assert.doesNotMatch(allCss, /transition\s*:[^;]*(?:\d+(?:\.\d+)?(?:ms|s))/i);
 });
 
@@ -114,7 +128,7 @@ test("les états hover sont réservés aux appareils qui disposent d'un pointeur
 
 test("la feuille globale conserve un seul :root SSR et aucune couche d'overrides finale", () => {
   assert.equal((globalCss.match(/:root\s*\{/g) ?? []).length, 1);
-  assert.match(globalCss, /Valeurs initiales SSR/);
+  assert.doesNotMatch(globalCss, /--md-sys-color-/);
   assert.doesNotMatch(globalCss, /Couche Material 3 Fidelity/);
 });
 
@@ -203,10 +217,10 @@ test("les cartes de prénoms acceptent les noms longs sans déborder ni couper l
 });
 
 test("les catégories Rainbow utilisent des rôles explicites sans couleur de repli", () => {
-  assert.match(provider, /--md-sys-color-category-/);
-  assert.match(provider, /--md-sys-color-\$\{role\}/);
-  assert.match(allCss, /var\(--md-sys-color-category-container\)/);
-  assert.doesNotMatch(allCss, /var\(--md-sys-color-category[^)]*,/);
+  assert.match(theme, /--namesia-color-category-/);
+  assert.match(allCss, /var\(--namesia-color-category-container\)/);
+  assert.doesNotMatch(allCss, /var\(--namesia-color-category[^)]*,/);
+  assert.doesNotMatch(allCss, /--md-sys-color-(?:success|warning|info|category|brand|on-brand)/);
 });
 
 test("le hero d'accueil sépare le récit et les outils dans une composition Fidelity responsive", () => {
