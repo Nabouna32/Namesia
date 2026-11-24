@@ -3,13 +3,13 @@
 - **Statut :** contrat canonique de l'interface
 - **Mis à jour :** 2026-11-24
 - **Référence :** AndroidX Compose Material 3 1.5.0 stable, commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c`
-- **Décision :** [ADR-0037 — Utiliser directement les composants Material 3](decisions/ADR-0037-composants-material-3-directs.md)
+- **Décisions :** [ADR-0037 — Utiliser directement les composants Material 3](decisions/ADR-0037-composants-material-3-directs.md) · [ADR-0038 — Migration effective des primitives](decisions/ADR-0038-migration-effective-material-3.md)
 
 Ce document définit les composants d'interface autorisés et leur composition. Le nom Material 3 est le nom du composant dans le code : il n'existe pas de vocabulaire de primitives parallèle propre à Namesia. L'implémentation React traduit les contrats AndroidX en HTML/CSS accessibles ; elle n'importe pas Compose dans le navigateur.
 
 ## 1. Règles d'architecture
 
-- Les composants UI portent leur nom Material 3 officiel : `Button`, `IconButton`, `SearchBar`, `TextField`, `FilterChip`, `InputChip`, `Card`, `TopAppBar`, `NavigationBar`, `NavigationRail`, etc.
+- Les primitives UI, lorsqu'elles sont réellement utilisées, portent leur nom Material 3 officiel : `Button`, `IconButton`, `SearchBar`, `TextField`, `FilterChip`, `InputChip`, `Card`, `TopAppBar`, `NavigationBar`, `NavigationRail`, etc.
 - Les fichiers, exports, props et variantes suivent la nomenclature et les conventions M3. Les identifiants techniques des primitives ne sont pas traduits en français.
 - Les composants métier (favoris, comparaison, catalogue, fiche) restent des composants métier ; ils composent les composants M3 et ne créent pas de primitives UI concurrentes.
 - Un lien de navigation demeure un lien HTML/Next.js, même lorsqu'il reçoit l'apparence d'un `Button`. Un `select` demeure un élément HTML natif.
@@ -37,22 +37,24 @@ Ce document définit les composants d'interface autorisés et leur composition. 
 | `Icon` | Pictogrammes | Material Symbols ; la cible interactive appartient à `IconButton` |
 | `Select` HTML | Choix natif | Conserver le contrôle natif du navigateur |
 
-Les liens de référence AndroidX et les valeurs vérifiées sont centralisés dans [material-3-verification.md](material-3-verification.md). Les tokens et leur usage visuel sont définis dans [design.md](design.md).
+Les liens de référence AndroidX et les valeurs vérifiées sont centralisés dans [material-3-verification.md](material-3-verification.md) et la source AndroidX est épinglée [ici](https://github.com/androidx/androidx/blob/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/Button.kt). Les tokens et leur usage visuel sont définis dans [design.md](design.md).
 
-## 3. État de migration
+## 3. Implémentation Web
 
-Le code existant contient encore des primitives nommées en français : `Bouton`, `LienBouton`, `ChampRecherche`, `ChipFiltre`, `ChampSelect` et `MessageStatut`. Leur présence décrit un état technique à migrer, pas une architecture à conserver.
+Les primitives présentes dans le code sont directement nommées d'après Material 3 :
 
-| Ancienne primitive | Cible |
-|---|---|
-| `Bouton` | `Button` et `IconButton` selon l'anatomie réelle |
-| `LienBouton` | Lien natif Next.js avec styles du composant `Button`, sans primitive supplémentaire |
-| `ChampRecherche` | `SearchBar` |
-| `ChipFiltre` | `FilterChip` |
-| `ChampSelect` | `select` HTML natif, composé directement |
-| `MessageStatut` | Composition sémantique adaptée au contenu et aux couleurs personnalisées ; ce n'est pas un composant M3 |
+| Composant | Fichier | Responsabilité |
+|---|---|---|
+| `Button` | `components/ui/Button.tsx` | Actions textuelles Filled, Filled Tonal, Outlined et Text |
+| `IconButton` | `components/ui/IconButton.tsx` | Actions iconiques, cible Web de 48 px et conteneur visuel de 40 px |
+| `SearchBar` | `components/ui/SearchBar.tsx` | Recherche repliée de 56 dp et effacement par IconButton |
+| `FilterChip` | `components/ui/FilterChip.tsx` | Filtre sélectionnable, conteneur visuel de 32 dp |
+| `InputChip` | `components/ui/InputChip.tsx` | Élément sélectionné avec action de retrait |
+| `Card` | Composition des éléments sémantiques `article` et `section` | Les cartes de contenu ne sont pas encore centralisées dans un composant React partagé |
 
-Cette table est un inventaire temporaire de migration. Elle ne crée aucune API de transition : les anciens exports doivent être renommés ou supprimés, jamais réexportés sous leur ancien nom. Les composants métier ne sont pas renommés mécaniquement s'ils représentent une fonction produit distincte.
+Les composants métier `FavoriteButton`, `ComparisonButton` et `ComparisonSelection` orchestrent les actions de favoris et de comparaison ; ils composent `Button` et `InputChip` sans redéfinir leur anatomie. `StatusMessage` est une composition sémantique de statut accessible (annonce `status` ou `alert`) et des extensions de couleur Namesia ; ce n'est pas un composant Material 3. Les liens de navigation utilisent directement `Link` de Next.js avec les styles de `Button`, sans wrapper. Les filtres de favoris utilisent `select` HTML natif, sans abstraction de formulaire supplémentaire.
+
+Les anciennes primitives françaises, leurs feuilles CSS et leurs exports sont supprimés dans la même migration. Aucun alias de compatibilité ne subsiste. Les noms métier du domaine restent français dans le contenu visible ; les identifiants des primitives UI suivent Material 3.
 
 ## 4. Recettes de composition
 

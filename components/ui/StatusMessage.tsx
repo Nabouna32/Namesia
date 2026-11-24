@@ -1,21 +1,21 @@
 import type { ReactNode } from "react";
-import styles from "./message-statut.module.css";
+import styles from "./StatusMessage.module.css";
 
-export type TypeMessageStatut = "success" | "warning" | "info" | "error";
+export type StatusMessageType = "success" | "warning" | "info" | "error";
 
-const roles: Record<TypeMessageStatut, string> = {
+const roles: Record<StatusMessageType, string> = {
   success: styles.success,
   warning: styles.warning,
   info: styles.info,
   error: styles.error
 };
 
-export function MessageStatut({
+export function StatusMessage({
   type,
   children,
   className
 }: Readonly<{
-  type: TypeMessageStatut;
+  type: StatusMessageType;
   children: ReactNode;
   className?: string;
 }>) {
