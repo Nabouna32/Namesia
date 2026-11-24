@@ -5,7 +5,7 @@ import { FavoriteButton } from "@/components/FavoriteButton";
 import { categoryTone } from "@/lib/category-color";
 import { EnregistrerConsultation } from "@/components/enregistrer-consultation";
 import { NameSuggestions } from "@/components/NameSuggestions";
-import { PartagerFiche } from "@/components/ShareLink";
+import { ShareName } from "@/components/ShareLink";
 import styles from "@/components/actions-fiche.module.css";
 import { getAutresPrenomsIndexDuGenre, getPrenom } from "@/lib/prenoms";
 import { jsonLd } from "@/lib/json-ld";
@@ -127,7 +127,7 @@ export default async function FichePrenom({ params, searchParams }: Props) {
                   Comparer ce prénom <span aria-hidden="true">↗</span>
                 </Link>
               </div>
-              <PartagerFiche name={prenom.nom} />
+              <ShareName name={prenom.nom} />
             </div>
             <div className="profile-monogram" aria-hidden="true">{prenom.lettre}</div>
           </header>
