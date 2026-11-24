@@ -172,9 +172,9 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
 
         <div className="compare-selection-footer">
           <ComparisonSelection
-            prenoms={prenomsSelectionnes}
+            names={prenomsSelectionnes.map((prenom) => ({ slug: prenom.slug, name: prenom.nom }))}
             label="Prénoms sélectionnés"
-            onRetirer={(slug) => changerSelection(slug, false)}
+            onRemove={(slug) => changerSelection(slug, false)}
           />
           <span role="status" aria-live="polite">{selection.length} / 3 prénoms sélectionnés</span>
           <Button variant="text" type="button" disabled={selection.length === 0} onClick={effacerSelection}>
