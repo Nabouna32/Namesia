@@ -82,7 +82,7 @@ jobs:
           TYPECHECK_OUTCOME: ${{ steps.typecheck.outcome }}
           BUILD_OUTCOME: ${{ steps.build.outcome }}
         run: |
-          printf 'Tests : %s\nTypes : %s\nBuild : %s\n' "$TEST_OUTCOME" "$TYPECHECK_OUTCOME" "$BUILD_OUTCOME"
-          if [[ "$TEST_OUTCOME" != "success" || "$TYPECHECK_OUTCOME" != "success" || "$BUILD_OUTCOME" != "success" ]]; then
+          printf 'Audit production : %s\nTests : %s\nTypes : %s\nBuild : %s\n' "$AUDIT_OUTCOME" "$TEST_OUTCOME" "$TYPECHECK_OUTCOME" "$BUILD_OUTCOME"
+          if [[ "$AUDIT_OUTCOME" != "success" || "$TEST_OUTCOME" != "success" || "$TYPECHECK_OUTCOME" != "success" || "$BUILD_OUTCOME" != "success" ]]; then
             exit 1
           fi
