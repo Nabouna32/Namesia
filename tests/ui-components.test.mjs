@@ -193,7 +193,7 @@ test("Fidelity et Rainbow sont calculés depuis la source baseline Material docu
   assert.match(materialTheme, /Variant\.RAINBOW/);
   assert.match(materialTheme, /specVersion: "2021"/);
   assert.match(materialTheme, /--md-sys-color-/);
-  assert.match(globalStyles, /--md-sys-motion-easing-emphasized-decelerate/);
+  assert.match(materialTokens, /--md-sys-motion-easing-emphasized-decelerate/);
   assert.match(globalStyles, /prefers-reduced-motion: reduce/);
 });
 
@@ -323,12 +323,12 @@ test("les surfaces principales Material sont définies à leur emplacement canon
 const rechercheActions = await readFile(new URL("../components/features/catalog/NameSearch.tsx", import.meta.url), "utf8");
 
 test("les actions de catalogue, favoris et comparaison utilisent le bouton commun", () => {
-  for (const source of [rechercheActions, favorisActions, comparateurActions]) {
+  for (const source of [rechercheActions, favorites, comparator]) {
     assert.doesNotMatch(source, /<button\b/);
     assert.match(source, /<Button\s+variant="text"/);
     assert.match(source, /className="filter-action"/);
   }
-  assert.match(favorisActions, /<Button\s+variant="tonal"/);
+  assert.match(favorites, /<Button\s+variant="tonal"/);
   assert.doesNotMatch(globalStyles, /\.filter-reset|\.compare-selection-footer > button/);
   assert.doesNotMatch(globalStyles, /\.copyButton\s*\{/);
   assert.match(globalStyles, /\.filter-action\s*\{[^}]*width: max-content/s);

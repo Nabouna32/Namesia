@@ -21,22 +21,27 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.button::before,
+.button::before {
+  position: absolute;
+  z-index: -1;
+  inset: 4px 0;
+  border: 0;
+  border-radius: var(--md-sys-shape-corner-full);
+  background: transparent;
+  content: "";
+  pointer-events: none;
+  transition: border-radius var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
 .button::after {
   position: absolute;
   z-index: -1;
   inset: 4px 0;
   border-radius: var(--md-sys-shape-corner-full);
-  content: "";
-  background: transparent;
-  pointer-events: none;
-  transition: border-radius var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
-}
-
-
-.button::after {
   background: currentColor;
+  content: "";
   opacity: 0;
+  pointer-events: none;
   transition: border-radius var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard), opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
 }
 

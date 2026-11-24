@@ -116,6 +116,10 @@ Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques 
 
 Les composants métier peuvent être propres à Namesia, mais ils ne redéfinissent jamais les styles, états ou interactions d'un composant Material 3 générique. Les règles de disposition restent dans leurs CSS Modules ; les variantes et états M3 restent dans `components/material3/`.
 
+## Contrat obligatoire pour toute nouvelle page
+
+Toute nouvelle page doit composer le shell partagé, les primitives officielles de `components/material3/` et les fonctions métier de `components/features/`. Elle doit choisir les rôles typographiques et les variantes M3 explicitement, conserver les éléments HTML sémantiques et documenter toute exception propre au Web. Il est interdit de réintroduire une primitive Namesia, un alias, un wrapper de présentation, une palette parallèle ou un fallback.
+
 ## Conventions d'implémentation
 
 - Employer exactement les noms Material 3 pour les composants correspondants : `Button`, `IconButton`, `SearchBar`, `FilterChip`, `InputChip`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`, `Icon`, `Card`, `TextField`.

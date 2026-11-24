@@ -84,8 +84,8 @@ test("Roboto est la seule police de l’interface, sans police de substitution",
 
 test("les composants sont organisés par domaine et aucune primitive Namesia historique ne subsiste", async () => {
   const entries = await readdir(join(root, "components"), { withFileTypes: true });
-  const directories = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort();
-  assert.deepEqual(directories, ["features", "material3"]);
+  const rootEntries = entries.map((entry) => entry.name).sort();
+  assert.deepEqual(rootEntries, ["features", "material3"], "components/ ne doit contenir que les domaines métier et la bibliothèque Material 3");
   await assert.rejects(readdir(join(root, "components/ui")), { code: "ENOENT" });
   const material3 = await readdir(join(root, "components/material3"));
   for (const name of ["Button.tsx", "Card.tsx", "TextField.tsx", "IconButton.tsx", "SearchBar.tsx", "FilterChip.tsx", "InputChip.tsx", "Snackbar.tsx", "TopAppBar.tsx", "NavigationBar.tsx", "NavigationRail.tsx"]) {
