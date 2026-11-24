@@ -129,7 +129,7 @@ L'application occupe au minimum la hauteur de la fenêtre avec une colonne flex.
 - Les références de composants sont les guides M3 et les sources AndroidX Compose Material 3 ; les implémentations Web restent natives et centralisées dans `components/ui/`.
 - `lib/material-theme.ts` génère le CSS Fidelity/Rainbow initial et les couleurs de barre navigateur ; `components/material-theme-provider.tsx` synchronise les mêmes valeurs avec les changements de préférence système.
 - `app/layout.tsx` charge Roboto via `next/font/google` et expose `--font-roboto` à tous les rôles typographiques ; les tokens ne désignent jamais une famille non chargée.
-- `components/navigation-adaptative.tsx` porte la navigation de premier niveau.
+- `components/ui/NavigationBar.tsx` et `NavigationRail.tsx` portent les deux modèles de navigation Material 3 ; `NavigationDestinations.tsx` partage uniquement la liste de liens et leur état actif.\n- `components/ui/TopAppBar.tsx` porte la barre supérieure Material 3.\n- `app/layout.tsx` compose explicitement `TopAppBar`, `NavigationBar` et `NavigationRail`.
 - `components/ui/` contient les primitives d'interface partagées.
 - `app/layout.tsx` compose la barre supérieure, le rail/la barre de navigation, le contenu et le pied de page.
 - `app/globals.css` contient les formes, la typographie et les styles structurels partagés. Les rôles de couleur sont générés par `lib/material-theme.ts` dans le `<head>` dès le rendu serveur ; aucune palette statique parallèle ni fallback CSS n'existe.
