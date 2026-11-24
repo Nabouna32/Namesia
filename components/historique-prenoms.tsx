@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { BoutonFavori } from "@/components/bouton-favori";
+import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { useFavoris } from "@/components/favoris-provider";
 import { useHistorique } from "@/components/historique-provider";
 import styles from "./historique-prenoms.module.css";
 import { IconeMaterial } from "./icone-material";
-import { Bouton } from "@/components/ui/bouton";
+import { Button } from "@/components/material3/Button";
+import { IconButton } from "@/components/material3/IconButton";
 
 export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
   const { slugs, retirer, effacer, erreur } = useHistorique();
@@ -29,9 +30,9 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
             <h2 id="historique-title">Vos dernières fiches</h2>
           </div>
           {slugs.length > 0 && (
-            <Bouton variante="text" type="button" onClick={effacer}>
+            <Button variant="text" type="button" onClick={effacer}>
               Effacer l’historique
-            </Bouton>
+            </Button>
           )}
         </div>
         {erreur && (
@@ -53,16 +54,14 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
                     <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
                   </Link>
                   {!erreurFavoris && (
-                    <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
+                    <ButtonFavori slug={prenom.slug} nom={prenom.nom} compact showError={false} />
                   )}
-                  <Bouton
-                    variante="text"
-                    taille="icon"
-                    ariaLabel={`Retirer ${prenom.nom} de l’historique`}
+                  <IconButton
+                    label={`Retirer ${prenom.nom} de l’historique`}
                     onClick={() => retirer(prenom.slug)}
                   >
                     <span aria-hidden="true"><IconeMaterial name="close" size={24} /></span>
-                  </Bouton>
+                  </Button>
                 </article>
               ))}
             </div>
