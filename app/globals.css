@@ -966,11 +966,6 @@ margin: 0;
   scrollbar-color: var(--md-sys-color-outline) var(--md-sys-color-surface-container);
 }
 
-.compare-table-scroll:focus-visible {
-  outline: 3px solid var(--md-sys-color-primary);
-  outline-offset: 3px;
-}
-
 .compare-table {
   width: 100%;
   min-width: 700px;
@@ -1414,7 +1409,7 @@ button:disabled {
   cursor: not-allowed;
 }
 
-a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, [tabindex="0"]:focus-visible {
   outline: 3px solid var(--md-sys-color-primary);
   outline-offset: 3px;
 }
