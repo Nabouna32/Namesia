@@ -7,7 +7,8 @@ const styles = await readFile(new URL("../app/globals.css", import.meta.url), "u
 
 test("chaque carte comparée donne accès à la fiche complète du prénom correspondant", () => {
   assert.match(source, /import Link from "next\/link"/);
-  assert.match(source, /href=\{`\/prenoms\/\$\{encodeURIComponent\(prenom\.slug\)\}`\}/);
+  assert.match(source, /import \{ creerUrlFicheDepuisComparateur \} from "@\/lib\/navigation-prenoms"/);
+  assert.match(source, /href=\{creerUrlFicheDepuisComparateur\(prenom\.slug, selection\)\}/);
   assert.match(source, /aria-label=\{`Lire la fiche complète de \$\{prenom\.nom\}`\}/);
   assert.match(source, /Voir la fiche complète/);
 });
