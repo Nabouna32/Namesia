@@ -15,6 +15,8 @@ export function InputChip({ label, selected, onRemove }: Props) {
       className={styles.chip}
       type="button"
       aria-label={`Retirer ${label} de la sélection`}
+      data-selected={selected}
+      aria-pressed={selected}
       onClick={onRemove}
     >
       <span>{label}</span>
