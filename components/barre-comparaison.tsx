@@ -4,7 +4,8 @@ import type { PrenomIndex } from "@/lib/prenoms";
 import styles from "./barre-comparaison.module.css";
 import { ListeSelectionComparaison } from "@/components/ui/liste-selection-comparaison";
 import { Button } from "@/components/ui/Button";
-import { LienBouton } from "@/components/ui/lien-bouton";
+import Link from "next/link";
+import buttonStyles from "@/components/ui/Button.module.css";
 
 type Props = {
   prenoms: Pick<PrenomIndex, "slug" | "nom">[];
@@ -28,9 +29,9 @@ export function BarreComparaison({ prenoms, onRetirer, onEffacer }: Props) {
       <div className={styles.actions}>
         <Button variant="text" type="button" onClick={onEffacer}>Effacer</Button>
         {prenoms.length >= 2 && (
-          <LienBouton href={`/comparer?prenoms=${slugs.map(encodeURIComponent).join(",")}`} variant="filled">
+          <Link className={[buttonStyles.button, buttonStyles.filled].join(" ")} href={`/comparer?prenoms=${slugs.map(encodeURIComponent).join(",")}`}>
             Comparer les {prenoms.length} prénoms
-          </LienBouton>
+          </Link>
         )}
       </div>
     </div>
