@@ -201,10 +201,10 @@ export function NameSearch({
 
       {!compact && synchroniserUrl && (filtresActifs || nombreVisible > 24) && (
         <ShareLink
-          titre="Recherche de prénoms · Namesia"
-          texte="Retrouvez cette sélection de prénoms sur Namesia."
+          title="Recherche de prénoms · Namesia"
+          text="Retrouvez cette sélection de prénoms sur Namesia."
           label="Partager cette recherche"
-          parametres={["q", "genre", "lettre", "limite"]}
+          parameters={["q", "genre", "lettre", "limite"]}
         />
       )}
 
