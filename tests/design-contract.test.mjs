@@ -130,8 +130,8 @@ test("les animations globales utilisent les tokens de mouvement", () => {
 test("un seul indicateur global matérialise le focus clavier", () => {
   assert.equal((allCss.match(/outline:\s*3px solid var\(--md-sys-color-primary\)/g) ?? []).length, 1);
   assert.match(globalCss, /\.skip-link:focus-visible/);
-  assert.match(globalCss, /\.skip-link\\s*\\{[^}]*z-index:\\s*50;/s);
-  assert.match(globalCss, /\.top-app-bar\\s*\\{[^}]*z-index:\\s*30;/s);
+  assert.match(globalCss, /\.skip-link\s*\{[^}]*z-index:\s*50;/s);
+  assert.match(globalCss, /\.top-app-bar\s*\{[^}]*z-index:\s*30;/s);
   assert.doesNotMatch(globalCss, /\.navigation-item:focus-visible\s*\{[^}]*outline/s);
   assert.doesNotMatch(globalCss, /\.profile-toc a:focus-visible\s*\{[^}]*outline/s);
 });
