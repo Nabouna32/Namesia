@@ -11,7 +11,7 @@ export function FeaturedNames({ prenoms }: Props) {
   return (
     <div className="featured-grid">
       {prenoms.map((prenom) => (
-        <article key={prenom.slug}>
+        <article className={styles.item} key={prenom.slug}>
           <Card as={Link} variant="elevated" interactive className="featured-card" href={`/prenoms/${prenom.slug}`}>
             <span className="featured-letter">{prenom.lettre}</span>
             <span className="featured-bottom">
