@@ -2,7 +2,7 @@
 
 - **Statut :** acceptée
 - **Date :** 2026-11-24
-- **Remplace :** uniquement le choix de couleur source de l'ADR-0028 ; ses autres décisions (Fidelity/Rainbow, ColorSpec, rôles sémantiques et référence AndroidX) restent applicables.
+- **Remplace :** uniquement le choix de couleur source de l'[ADR-0028](ADR-0028-baseline-material-3-androidx-et-couleurs-semantiques.md) ; ses autres décisions (Fidelity/Rainbow, ColorSpec, rôles sémantiques et référence AndroidX) restent applicables.
 
 ## Contexte
 
