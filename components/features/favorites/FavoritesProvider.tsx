@@ -1,6 +1,6 @@
 "use client";
 
-import { LIMITE_FAVORIS, fusionnerFavoris, normaliserSlugsFavoris, type ResultatFusionFavoris } from "@/lib/sauvegarde-favoris";
+import { fusionnerFavoris, modifierFavori, normaliserSlugsFavoris, type ResultatFusionFavoris } from "@/lib/sauvegarde-favoris";
 import {
   createContext,
   useCallback,
@@ -17,7 +17,7 @@ type ContexteFavoris = {
   slugs: string[];
   pret: boolean;
   erreur: boolean;
-  basculer: (slug: string) => void;
+  basculer: (slug: string) => "ajoute" | "retire" | "limite" | "erreur";
   retirerPlusieurs: (slugs: string[]) => void;
   ajouterPlusieurs: (slugs: string[]) => Omit<ResultatFusionFavoris, "slugs"> | null;
 };
@@ -59,17 +59,18 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("storage", synchroniser);
   }, []);
 
-  const basculer = useCallback((slug: string) => {
-    const prochain = slugs.includes(slug)
-      ? slugs.filter((favori) => favori !== slug)
-      : slugs.length < LIMITE_FAVORIS ? [...slugs, slug] : slugs;
-
+  const basculer = useCallback((slug: string): "ajoute" | "retire" | "limite" | "erreur" => {
     try {
-      window.localStorage.setItem(CLE_FAVORIS, JSON.stringify(prochain));
-      setSlugs(prochain);
+      const modification = modifierFavori(slugs, slug);
+      if (modification.action === "limite") return "limite";
+
+      window.localStorage.setItem(CLE_FAVORIS, JSON.stringify(modification.slugs));
+      setSlugs(modification.slugs);
       setErreur(false);
+      return modification.action;
     } catch {
       setErreur(true);
+      return "erreur";
     }
   }, [slugs]);
 

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { creerSauvegardeFavoris, fusionnerFavoris, lireSauvegardeFavoris, normaliserSlugsFavoris, LIMITE_FAVORIS } from "../lib/sauvegarde-favoris.ts";
+import { creerSauvegardeFavoris, fusionnerFavoris, modifierFavori, lireSauvegardeFavoris, normaliserSlugsFavoris, LIMITE_FAVORIS } from "../lib/sauvegarde-favoris.ts";
 
 test("la sauvegarde exportée est versionnée et dédupliquée", () => {
   const sauvegarde = JSON.parse(creerSauvegardeFavoris(["alice", "jean-luc", "alice"]));
@@ -80,4 +80,22 @@ test("une sauvegarde déjà présente n'est pas présentée comme un dépassemen
 
   assert.equal(resultat.nombreAjoute, 0);
   assert.equal(resultat.nombreIgnoreLimite, 0);
+});
+
+test("l'ajout individuel au plafond est refusé explicitement sans modifier les favoris", () => {
+  const existants = Array.from({ length: LIMITE_FAVORIS }, (_, index) => `prenom-${index}`);
+  const resultat = modifierFavori(existants, "nouveau-prenom");
+
+  assert.equal(resultat.action, "limite");
+  assert.deepEqual(resultat.slugs, existants);
+});
+
+test("l'ajout et le retrait individuels préservent l'ordre et la limite", () => {
+  const ajout = modifierFavori(["alice"], "jean-luc");
+  assert.equal(ajout.action, "ajoute");
+  assert.deepEqual(ajout.slugs, ["alice", "jean-luc"]);
+
+  const retrait = modifierFavori(ajout.slugs, "alice");
+  assert.equal(retrait.action, "retire");
+  assert.deepEqual(retrait.slugs, ["jean-luc"]);
 });
