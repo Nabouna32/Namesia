@@ -17,6 +17,14 @@ test("un séparateur isolé ne devient pas une recherche vide", () => {
   assert.equal(normaliserRecherche("-"), "-");
 });
 
+test("les séparateurs en bord de préfixe ne bloquent pas les prénoms composés", () => {
+  assert.equal(normaliserRecherche("Jean-"), "jean");
+  assert.equal(normaliserRecherche("Jean - "), "jean");
+  assert.equal(normaliserRecherche("-Jean"), "jean");
+  assert.equal(normaliserRecherche("O’"), "o");
+  assert.equal(normaliserRecherche("--"), "--");
+});
+
 test("la recherche développe les ligatures françaises et latines", () => {
   assert.equal(normaliserRecherche("CŒLIA"), "coelia");
   assert.equal(normaliserRecherche("ÆLIA"), "aelia");
