@@ -1,6 +1,6 @@
 "use client";
 
-import { IconeMaterial } from "@/components/icone-material";
+import { Icon } from "@/components/material3/Icon";
 import styles from "./InputChip.module.css";
 
 type Props = {
@@ -17,7 +17,7 @@ export function InputChip({ label, onRemove }: Props) {
       onClick={onRemove}
     >
       <span>{label}</span>
-      <IconeMaterial name="close" size={18} />
+      <Icon name="close" size={18} />
     </button>
   );
 }
