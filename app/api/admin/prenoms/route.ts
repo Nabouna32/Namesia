@@ -32,13 +32,18 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Le catalogue administrateur est momentanément indisponible." }, { status: 503 });
   }
 
-  const names = data ?? [];
-  const nextOffset = count !== null && names.length > 0 && offset + names.length < count
+  if (data === null || count === null) {
+    console.error("Réponse incomplète du catalogue administrateur : données ou décompte absents.");
+    return NextResponse.json({ error: "Le catalogue administrateur a retourné une réponse incomplète." }, { status: 500 });
+  }
+
+  const names = data;
+  const nextOffset = names.length > 0 && offset + names.length < count
     ? offset + names.length
     : null;
 
   return NextResponse.json(
-    { names, total: count ?? 0, nextOffset },
+    { names, total: count, nextOffset },
     { headers: { "Cache-Control": "private, no-store" } }
   );
 }
