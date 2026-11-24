@@ -6,39 +6,42 @@ import styles from "./Button.module.css";
 
 export type ButtonVariant = "filled" | "tonal" | "outlined" | "text";
 
-type Props = {
+type SharedProps = {
   children: ReactNode;
   variant?: ButtonVariant;
+  className?: string;
+  "aria-label"?: string;
+};
+
+type LinkProps = SharedProps & {
+  href: string;
+  type?: never;
+  disabled?: never;
+  onClick?: never;
+  "aria-pressed"?: never;
+};
+
+type ActionProps = SharedProps & {
+  href?: never;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
-  className?: string;
-  href?: string;
-  "aria-label"?: string;
-  "aria-pressed"?: boolean;
   onClick?: () => void;
+  "aria-pressed"?: boolean;
 };
+
+type Props = LinkProps | ActionProps;
 
 function getClassName(variant: ButtonVariant, className?: string) {
   return [styles.button, styles[variant], className].filter(Boolean).join(" ");
 }
 
-export function Button({
-  children,
-  variant = "filled",
-  type = "button",
-  disabled = false,
-  className,
-  href,
-  "aria-label": ariaLabel,
-  "aria-pressed": ariaPressed,
-  onClick
-}: Props) {
-  const classes = getClassName(variant, className);
+export function Button(props: Props) {
+  const classes = getClassName(props.variant ?? "filled", props.className);
 
-  if (href) {
+  if (props.href) {
     return (
-      <Link className={classes} href={href} aria-label={ariaLabel} aria-disabled={disabled || undefined}>
-        {children}
+      <Link className={classes} href={props.href} aria-label={props["aria-label"]}>
+        {props.children}
       </Link>
     );
   }
@@ -46,13 +49,13 @@ export function Button({
   return (
     <button
       className={classes}
-      type={type}
-      disabled={disabled}
-      aria-label={ariaLabel}
-      aria-pressed={ariaPressed}
-      onClick={onClick}
+      type={props.type ?? "button"}
+      disabled={props.disabled ?? false}
+      aria-label={props["aria-label"]}
+      aria-pressed={props["aria-pressed"]}
+      onClick={props.onClick}
     >
-      {children}
+      {props.children}
     </button>
   );
 }
