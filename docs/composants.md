@@ -8,6 +8,9 @@ Ce document est le point d'entrée unique pour composer l'interface. Les composa
 ## Architecture
 
 ```text
+styles/
+  material3/
+    tokens.css               # Échelle typographique, formes, mouvement et états M3
 components/
   material3/                 # Implémentations React/HTML des composants M3
     Button.tsx
