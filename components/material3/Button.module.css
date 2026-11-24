@@ -65,7 +65,7 @@
 .button:disabled,
 .button[aria-disabled="true"] {
   cursor: not-allowed;
-  color: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 38%, transparent);
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
 }
 
 .filled { color: var(--md-sys-color-on-primary); }
