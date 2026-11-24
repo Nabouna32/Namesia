@@ -2,7 +2,7 @@
 
 import { useRef, type ChangeEvent } from "react";
 import { IconButton } from "./IconButton";
-import { IconeMaterial } from "@/components/icone-material";
+import { IconeMaterial } from "@/components/material3/Icon";
 import styles from "./SearchBar.module.css";
 
 type Props = {
@@ -31,7 +31,7 @@ export function SearchBar({ id, label, value, placeholder, onChange, className }
       <label className="sr-only" htmlFor={id}>{label}</label>
       <div className={styles.container}>
         <span className={styles.leadingIcon} aria-hidden="true">
-          <IconeMaterial name="search" size={24} />
+          <Icon name="search" size={24} />
         </span>
         <input
           ref={inputRef}
@@ -48,7 +48,7 @@ export function SearchBar({ id, label, value, placeholder, onChange, className }
             label={`Effacer : ${label.toLocaleLowerCase("fr")}`}
             onClick={clear}
           >
-            <IconeMaterial name="close" size={24} />
+            <Icon name="close" size={24} />
           </IconButton>
         )}
       </div>
