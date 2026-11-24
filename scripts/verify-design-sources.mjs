@@ -105,6 +105,7 @@ const sources = [
 ];
 
 const additionalAndroidxSources = [
+  ["AppBarSmallTokens.kt", "AppBarSmallTokens"],
   ["PaletteTokens.kt", "PaletteTokens"],
   ["BaselineButtonTokens.kt", "BaselineButtonTokens"],
   ["ButtonSmallTokens.kt", "ButtonSmallTokens"],
