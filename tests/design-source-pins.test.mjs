@@ -32,7 +32,7 @@ test("les références de code du contrat M3 pointent vers des révisions immuab
   assert.doesNotMatch(verification, /NavigationRailTokens\.kt/);
 });
 
-test("le registre M3 et le tableau AndroidX restent complets et lisibles", () => {
+test("le registre M3 et ses sources de référence restent complets et lisibles", () => {
   assert.equal(components.includes("\\n|"), false);
   assert.equal(verification.includes("\\n|"), false);
   assert.match(sourceVerifier, /verifySourcesWithLimit\(\[\.\.\.sources, \.\.\.additionalAndroidxSources\], 4\)/);
@@ -40,8 +40,8 @@ test("le registre M3 et le tableau AndroidX restent complets et lisibles", () =>
   assert.match(sourceVerifier, /AbortSignal\.timeout\(15_000\)/);
   assert.match(sourceVerifier, /lastError = error/);
   assert.match(sourceVerifier, /\[429, 500, 502, 503, 504\]/);
-  for (const source of ["AndroidX Button", "AndroidX Checkbox", "AndroidX Card", "AndroidX SearchBar", "AndroidX TextField", "AndroidX NavigationBar", "AndroidX NavigationRail", "AndroidX Chips", "AndroidX TopAppBar", "AndroidX Snackbar"]) {
-    assert.ok(sourceVerifier.includes(source), "Source AndroidX non vérifiée : " + source);
+  for (const source of ["AndroidX Button", "AndroidX Checkbox", "AndroidX Card", "AndroidX SearchBar", "AndroidX TextField", "AndroidX NavigationBar", "AndroidX NavigationRail", "AndroidX Chips", "AndroidX TopAppBar", "AndroidX Snackbar", "Material Web README — état de maintenance", "Material Web roadmap — couverture stable"]) {
+    assert.ok(sourceVerifier.includes(source), "Source de référence non vérifiée : " + source);
   }
   for (const file of ["AppBarSmallTokens.kt", "ElevationTokens.kt", "PaletteTokens.kt", "BaselineButtonTokens.kt", "ButtonSmallTokens.kt", "OutlinedButtonTokens.kt", "TextButtonTokens.kt", "IconButton.kt", "IconButtonTokens.kt", "ElevatedCardTokens.kt", "FilledCardTokens.kt", "OutlinedCardTokens.kt", "TextFieldDefaults.kt", "FilledTextFieldTokens.kt", "OutlinedTextFieldTokens.kt", "InputChipTokens.kt", "NavigationRailCollapsedTokens.kt", "NavigationRailColorTokens.kt", "NavigationRailBaselineItemTokens.kt", "NavigationRailVerticalItemTokens.kt", "SnackbarTokens.kt"]) {
     assert.ok(sourceVerifier.includes(file), "Source AndroidX documentée non vérifiée : " + file);
@@ -56,5 +56,7 @@ test("les versions des bibliothèques de calcul et des sources AndroidX restent 
   assert.equal(lock.packages["node_modules/@material/material-color-utilities"].version, "0.4.0");
   assert.match(verification, /Compose Material 3 `1\.5\.0` stable/);
   assert.match(verification, /919e948eaa351c590e7e6fc89d4014fad7a6e78c/);
+  assert.match(sourceVerifier, /d4f63c567f73b16717f4c04b57fa6390d0b2312d/);
+  assert.match(verification, /maintenance sans nouvelles fonctionnalités planifiées/);
   assert.match(components, /AndroidX Compose Material 3 1\.5\.0 stable/);
 });

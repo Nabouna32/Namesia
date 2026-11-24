@@ -3,7 +3,7 @@
 - **Statut :** acceptée
 - **Date :** 2026-11-24
 - **Référence Android :** Compose Material 3 1.5.0 stable, commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c`
-- **Référence Web évaluée :** Material Web 2.5.0, commit `b4de401eb665ec63474f39319a4ba8f2145974cc`
+- **Référence Web évaluée :** Material Web 2.5.0, publié le 14 juillet 2026 au commit `b4de401eb665ec63474f39319a4ba8f2145974cc` ; état du dépôt revérifié le 24 novembre 2026 au commit `d4f63c567f73b16717f4c04b57fa6390d0b2312d`
 - **Remplace :** les décisions antérieures qui imposent des noms de composants UI Namesia (notamment ADR-0007, ADR-0008, ADR-0011, ADR-0012, ADR-0013, ADR-0034, ADR-0035 et ADR-0036) pour la nomenclature et l'architecture des primitives. Les exigences métier et d'accessibilité restent à réévaluer composant par composant.
 
 ## Contexte
@@ -15,7 +15,7 @@ Cette organisation rendait la fidélité difficile à auditer : un nouveau compo
 ## Challenge
 
 - **Garder les wrappers français et documenter le mapping :** améliore la traçabilité mais conserve deux nomenclatures et autorise l'écart d'API.
-- **Installer Material Web :** sa bibliothèque propose des composants M3 pour le navigateur, mais son [README officiel](https://github.com/material-components/material-web/blob/b4de401eb665ec63474f39319a4ba8f2145974cc/README.md) indique une maintenance en attente de nouveaux mainteneurs. Elle ne garantit pas la parité avec AndroidX Compose 1.5.0 et son contrat d'implémentation diffère. La dépendance ne devient donc pas la source de vérité du site.
+- **Adopter Material Web (`@material/web`) :** c'est la bibliothèque officielle M3 pour le navigateur et son API stable couvre certains contrôles utiles. Cependant, le [README au snapshot du 24 novembre 2026](https://github.com/material-components/material-web/blob/d4f63c567f73b16717f4c04b57fa6390d0b2312d/README.md) confirme la maintenance en attente de nouveaux mainteneurs. Sa [roadmap au même commit](https://github.com/material-components/material-web/blob/d4f63c567f73b16717f4c04b57fa6390d0b2312d/docs/roadmap.md) précise qu'aucune nouvelle fonctionnalité ni aucun nouveau composant ne sont planifiés et liste encore Card, Navigation bar, Navigation rail, Search, Snackbar et Top app bar parmi les composants non construits. Les ajouts observés dans `labs` ne constituent pas un contrat stable. N'utiliser que les composants déjà disponibles créerait deux piles de composants (Lit/Web Components et React) sans couvrir le shell ni le catalogue. Cette option est écartée pour le produit, tout en conservant ses tokens comme référence secondaire.
 - **Importer AndroidX Compose dans Next.js :** impossible directement, car Compose est une bibliothèque Kotlin/Android.
 - **Porter les contrats AndroidX en React/HTML sous les noms M3 :** garde une seule nomenclature, conserve la sémantique Web native et permet de vérifier les dimensions, états et rôles contre une source AndroidX immuable.
 
