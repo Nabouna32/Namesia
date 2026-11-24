@@ -16,6 +16,7 @@ const schema = await readFile(join(root, "schemas/fiche-prenom.schema.json"), "u
 const messageComponent = await readFile(join(root, "components/ui/message-statut.tsx"), "utf8");
 const messageStyles = await readFile(join(root, "components/ui/message-statut.module.css"), "utf8");
 const composantsDoc = await readFile(join(root, "docs/composants.md"), "utf8");
+const materialVerificationDoc = await readFile(join(root, "docs/material-3-verification.md"), "utf8");
 const agents = await readFile(join(root, "AGENTS.md"), "utf8");
 
 async function collectCss(directory) {
@@ -250,6 +251,9 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.ok(composantsDoc.includes("github.com/androidx/androidx"));
   assert.ok(composantsDoc.includes("919e948eaa351c590e7e6fc89d4014fad7a6e78c"));
   assert.doesNotMatch(composantsDoc, /androidx-main/);
+  assert.ok(materialVerificationDoc.includes("Compose Material 3 `1.5.0` stable"));
+  assert.ok(materialVerificationDoc.includes("919e948eaa351c590e7e6fc89d4014fad7a6e78c"));
+  assert.doesNotMatch(materialVerificationDoc, /androidx-main/);
   assert.match(agents, /Avant de créer ou refondre une page, lire/);
 });
 
@@ -299,10 +303,11 @@ test("NavigationBar et NavigationRail utilisent le rôle M3 label-medium à tout
 
 
 test("NavigationBar reproduit les 80 dp de TallContainerHeight de Compose Material 3 1.5.0", () => {
-  const navigationBar = globalCss.match(/\.navigation-bar\s*\{([^}]*)\}/s)?.[1] ?? "";
-  assert.match(navigationBar, /padding:\s*0 8px env\(safe-area-inset-bottom\)/);
+  const navigationBar = globalCss.match(/\\.navigation-bar\\s*\\{([^}]*)\\}/s)?.[1] ?? "";
+  assert.match(navigationBar, /padding:\\s*8px 8px env\\(safe-area-inset-bottom\\)/);
   assert.doesNotMatch(navigationBar, /border-top:/);
-  assert.match(globalCss, /\.navigation-bar \.navigation-item \{\s*min-height:\s*64px/);
-  assert.match(globalCss, /\.app-content \{\s*padding-bottom:\s*calc\(64px \+ env\(safe-area-inset-bottom\)\)/);
-  assert.doesNotMatch(globalCss, /padding-bottom:\s*calc\(80px \+ env\(safe-area-inset-bottom\)\)/);
+  assert.match(globalCss, /\\.navigation-bar \\.navigation-item \\{\\s*min-height:\\s*64px/);
+  assert.match(globalCss, /\\.app-content \\{\\s*padding-bottom:\\s*calc\\(80px \\+ env\\(safe-area-inset-bottom\\)\\)/);
+  assert.doesNotMatch(globalCss, /padding-bottom:\\s*calc\\(64px \\+ env\\(safe-area-inset-bottom\\)\\)/);
+  assert.match(composantsDoc, /TallContainerHeight/);
 });
