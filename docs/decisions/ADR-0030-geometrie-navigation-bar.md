@@ -1,6 +1,6 @@
 # ADR-0030 — Géométrie du conteneur NavigationBar
 
-- **Statut :** acceptée
+- **Statut :** remplacée par [ADR-0031](ADR-0031-hauteur-navigation-bar-compose-1-5.md)
 - **Date :** 2026-11-24
 
 ## Contexte
