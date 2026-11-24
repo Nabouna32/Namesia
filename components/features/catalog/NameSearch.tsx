@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { GenreIcon } from "@/components/features/names/GenreIcon";
@@ -41,6 +41,7 @@ export function NameSearch({
   const [nombreVisible, setNombreVisible] = useState(initialNombreVisible);
   const [messageCopie, setMessageCopie] = useState("");
   const [erreurCopie, setErreurCopie] = useState("");
+  const generationCopie = useRef(0);
 
   const genres = useMemo(
     () => [...new Set(prenoms.map((prenom) => prenom.genre))].sort((a, b) => a.localeCompare(b, "fr")),
@@ -101,25 +102,35 @@ export function NameSearch({
     window.history.replaceState(null, "", url.toString());
   }
 
+  function effacerFeedbackCopie() {
+    generationCopie.current += 1;
+    setMessageCopie("");
+    setErreurCopie("");
+  }
+
   function changerRecherche(value: string) {
+    effacerFeedbackCopie();
     setNombreVisible(24);
     setRecherche(value);
     mettreAJourUrl(value, genreActif, lettreActive);
   }
 
   function changerGenre(value: string | null) {
+    effacerFeedbackCopie();
     setNombreVisible(24);
     setGenreActif(value);
     mettreAJourUrl(recherche, value, lettreActive);
   }
 
   function changerLettre(value: string | null) {
+    effacerFeedbackCopie();
     setNombreVisible(24);
     setLettreActive(value);
     mettreAJourUrl(recherche, genreActif, value);
   }
 
   function effacerFiltres() {
+    effacerFeedbackCopie();
     setNombreVisible(24);
     setRecherche("");
     setGenreActif(null);
@@ -133,19 +144,26 @@ export function NameSearch({
     mettreAJourUrl(recherche, genreActif, lettreActive, suivant);
   }
   async function copierResultats() {
+    const generation = ++generationCopie.current;
     setMessageCopie("");
     setErreurCopie("");
 
     if (!navigator.clipboard?.writeText) {
-      setErreurCopie("La copie n’est pas disponible sur cet appareil ou a été refusée.");
+      if (generation === generationCopie.current) {
+        setErreurCopie("La copie n’est pas disponible sur cet appareil ou a été refusée.");
+      }
       return;
     }
 
     try {
       await navigator.clipboard.writeText(resultats.map((prenom) => prenom.nom).join("\n"));
-      setMessageCopie(`${resultats.length} ${resultats.length > 1 ? "prénoms copiés" : "prénom copié"} dans le presse-papiers.`);
+      if (generation === generationCopie.current) {
+        setMessageCopie(`${resultats.length} ${resultats.length > 1 ? "prénoms copiés" : "prénom copié"} dans le presse-papiers.`);
+      }
     } catch {
-      setErreurCopie("La copie n’est pas disponible sur cet appareil ou a été refusée.");
+      if (generation === generationCopie.current) {
+        setErreurCopie("La copie n’est pas disponible sur cet appareil ou a été refusée.");
+      }
     }
   }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ChangeEvent } from "react";
+import { useRef, useState, type ChangeEvent } from "react";
 import Link from "next/link";
 import type { GenrePrenom, PrenomIndex } from "@/lib/prenoms";
 import { GenreIcon } from "@/components/features/names/GenreIcon";
@@ -39,6 +39,7 @@ export function FavoritesList({
   const [erreurImport, setErreurImport] = useState("");
   const [messageCopie, setMessageCopie] = useState("");
   const [erreurCopie, setErreurCopie] = useState("");
+  const generationCopie = useRef(0);
   const [recherche, setRecherche] = useState(initialRecherche);
   const [genreActif, setGenreActif] = useState(initialGenre);
   const [triActif, setTriActif] = useState<TriFavoris>(initialTri);
@@ -56,6 +57,12 @@ export function FavoritesList({
   const genres: GenrePrenom[] = [...new Set(favoris.map((prenom) => prenom.genre))]
     .sort((a, b) => a.localeCompare(b, "fr"));
   const genreActifValide = genres.find((genre) => genre === genreActif) ?? "";
+
+  function effacerFeedbackCopie() {
+    generationCopie.current += 1;
+    setMessageCopie("");
+    setErreurCopie("");
+  }
 
   function mettreAJourUrl(
     rechercheSuivante: string,
@@ -80,6 +87,7 @@ export function FavoritesList({
   }
 
   function changerGenre(value: string) {
+    effacerFeedbackCopie();
     setNombreVisible(24);
     setGenreActif(value);
     mettreAJourUrl(recherche, value, triActif);
@@ -87,6 +95,7 @@ export function FavoritesList({
 
   function changerTri(value: string) {
     if (value === "enregistrement" || value === "nom-asc" || value === "nom-desc") {
+      effacerFeedbackCopie();
       setNombreVisible(24);
       setTriActif(value);
       mettreAJourUrl(recherche, genreActifValide, value);
@@ -120,19 +129,26 @@ export function FavoritesList({
   }
 
   async function copierFavorisFiltres() {
+    const generation = ++generationCopie.current;
     setMessageCopie("");
     setErreurCopie("");
 
     if (!navigator.clipboard?.writeText) {
-      setErreurCopie("La copie n’est pas disponible sur cet appareil ou a été refusée.");
+      if (generation === generationCopie.current) {
+        setErreurCopie("La copie n’est pas disponible sur cet appareil ou a été refusée.");
+      }
       return;
     }
 
     try {
       await navigator.clipboard.writeText(favorisFiltres.map((prenom) => prenom.nom).join("\n"));
-      setMessageCopie(`${favorisFiltres.length} ${favorisFiltres.length > 1 ? "prénoms copiés" : "prénom copié"} dans le presse-papiers.`);
+      if (generation === generationCopie.current) {
+        setMessageCopie(`${favorisFiltres.length} ${favorisFiltres.length > 1 ? "prénoms copiés" : "prénom copié"} dans le presse-papiers.`);
+      }
     } catch {
-      setErreurCopie("La copie n’est pas disponible sur cet appareil ou a été refusée.");
+      if (generation === generationCopie.current) {
+        setErreurCopie("La copie n’est pas disponible sur cet appareil ou a été refusée.");
+      }
     }
   }
 
@@ -231,6 +247,7 @@ export function FavoritesList({
               placeholder="Saisissez un prénom..."
               value={recherche}
               onChange={(value) => {
+                effacerFeedbackCopie();
                 setNombreVisible(24);
                 setRecherche(value);
                 mettreAJourUrl(value, genreActifValide, triActif);
@@ -277,6 +294,7 @@ export function FavoritesList({
                 className="filter-action"
                 type="button"
                 onClick={() => {
+                  effacerFeedbackCopie();
                   setRecherche("");
                   setGenreActif("");
                   setNombreVisible(24);
