@@ -71,8 +71,6 @@
 
 .container:focus-within.outlined {
   border-color: var(--md-sys-color-primary);
-  outline: 1px solid var(--md-sys-color-primary);
-  outline-offset: -2px;
 }
 
 .container:focus-within.filled {
