@@ -5,7 +5,7 @@ import Link from "next/link";
 import { creerUrlFicheDepuisComparateur } from "@/lib/navigation-prenoms";
 import type { Prenom, PrenomIndex } from "@/lib/prenoms";
 import { PartagerLien } from "@/components/partager-fiche";
-import { BoutonFavori } from "@/components/bouton-favori";
+import { FavoriteButton } from "@/components/FavoriteButton";
 import { useFavoris } from "@/components/favoris-provider";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { categoryTone } from "@/lib/category-color";
@@ -208,7 +208,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
                 <h2>{prenom.nom}</h2>
                 <span className="profile-tag">{prenom.genre}</span>
                 <span className="profile-tag">Lettre {prenom.lettre}</span>
-                <ButtonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
+                <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
                 <Link
                   className="compare-card-link"
                   href={creerUrlFicheDepuisComparateur(prenom.slug, selection)}
