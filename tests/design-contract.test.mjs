@@ -202,6 +202,12 @@ test("Roboto est chargée une fois, auto-hébergée et sans police de substituti
   assert.doesNotMatch(globalCss, /-font: Roboto;/);
 });
 
+test("tous les champs, y compris l'éditeur JSON, restent en Roboto Material 3", () => {
+  assert.doesNotMatch(allCss, /ui-monospace|SFMono-Regular|Consolas|font-family:\s*monospace/i);
+  const adminStyles = styles.find(({ path }) => path === "app/admin/admin.module.css")?.content ?? "";
+  assert.match(adminStyles, /\.jsonField textarea\s*\{[^}]*font-family:\s*var\(--md-sys-typescale-body-medium-font\)[^}]*font-size:\s*var\(--md-sys-typescale-body-medium-size\)/s);
+});
+
 test("l'échelle typographique Material 3 est complète et limitée aux graisses 400/500", () => {
   const roles = {
     "display-large": [57, 64, 400, "-0.25px"],
