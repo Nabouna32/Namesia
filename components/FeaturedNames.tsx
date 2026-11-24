@@ -3,7 +3,6 @@ import { FavoriteButton } from "@/components/FavoriteButton";
 import type { PrenomIndex } from "@/lib/prenoms";
 import styles from "./FeaturedNames.module.css";
 import { Icon } from "@/components/ui/Icon";
-import { Card } from "@/components/ui/Card";
 
 type Props = { prenoms: PrenomIndex[] };
 
@@ -23,7 +22,7 @@ export function FeaturedNames({ prenoms }: Props) {
             </span>
           </Card>
           <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
-        </Card>
+        </article>
       ))}
     </div>
   );
