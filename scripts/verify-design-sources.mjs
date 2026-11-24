@@ -27,6 +27,31 @@ const sources = [
     markers: ["OutlinedTextField", "TextFieldDefaults"],
   },
   {
+    name: "AndroidX NavigationBar implementation",
+    url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/NavigationBar.kt",
+    markers: ["NavigationBarTokens", "TallContainerHeight"],
+  },
+  {
+    name: "AndroidX NavigationRail implementation",
+    url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/NavigationRail.kt",
+    markers: ["NavigationRailCollapsedTokens", "NavigationRail"],
+  },
+  {
+    name: "AndroidX Chips implementation",
+    url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/Chip.kt",
+    markers: ["FilterChip", "InputChip", "FilterChipTokens"],
+  },
+  {
+    name: "AndroidX TopAppBar implementation",
+    url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/AppBar.kt",
+    markers: ["TopAppBar", "AppBarSmallTokens"],
+  },
+  {
+    name: "AndroidX Snackbar implementation",
+    url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/Snackbar.kt",
+    markers: ["Snackbar", "SnackbarTokens"],
+  },
+  {
     name: "AndroidX Checkbox tokens",
     url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/tokens/CheckboxTokens.kt",
     markers: ["get() = 18.0.dp", "get() = 40.0.dp", "UnselectedDisabledContainerOpacity = 0.38f"],

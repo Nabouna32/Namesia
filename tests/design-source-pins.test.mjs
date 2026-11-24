@@ -5,6 +5,7 @@ import { readFile } from "node:fs/promises";
 const verification = await readFile(new URL("../docs/material-3-verification.md", import.meta.url), "utf8");
 const design = await readFile(new URL("../docs/design.md", import.meta.url), "utf8");
 const components = await readFile(new URL("../docs/composants.md", import.meta.url), "utf8");
+const sourceVerifier = await readFile(new URL("../scripts/verify-design-sources.mjs", import.meta.url), "utf8");
 const packageJson = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
 const lock = JSON.parse(await readFile(new URL("../package-lock.json", import.meta.url), "utf8"));
 
@@ -34,6 +35,9 @@ test("les références de code du contrat M3 pointent vers des révisions immuab
 test("le registre M3 et le tableau AndroidX restent complets et lisibles", () => {
   assert.equal(components.includes("\\n|"), false);
   assert.equal(verification.includes("\\n|"), false);
+  for (const source of ["AndroidX Button", "AndroidX Checkbox", "AndroidX Card", "AndroidX SearchBar", "AndroidX TextField", "AndroidX NavigationBar", "AndroidX NavigationRail", "AndroidX Chips", "AndroidX TopAppBar", "AndroidX Snackbar"]) {
+    assert.ok(sourceVerifier.includes(source), "Source AndroidX non vérifiée : " + source);
+  }
   for (const name of ["Button", "Card", "Checkbox", "IconButton", "SearchBar", "TextField", "FilterChip", "InputChip", "Snackbar", "TopAppBar", "NavigationBar", "NavigationRail"]) {
     assert.ok(components.includes("| `" + name + "` |"), "Composant absent du registre : " + name);
     assert.match(verification, new RegExp("\\| " + name + " \\|"));
