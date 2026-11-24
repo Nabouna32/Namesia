@@ -13,3 +13,9 @@ test("le navigateur peut réutiliser une réponse de comparaison identique", () 
   assert.doesNotMatch(comparateur, /cache:\s*"no-store"/);
   assert.match(comparateur, /fetch\(`\/api\/prenoms\?\$\{parametres\.toString\(\)\}`/);
 });
+
+test("la route du comparateur refuse une fiche isolée et borne la sélection à trois", () => {
+  assert.match(route, /slugs\.length < 2/);
+  assert.match(route, /slugs\.length > 3/);
+  assert.match(route, /choisissez deux ou trois prénoms publiés/);
+});
