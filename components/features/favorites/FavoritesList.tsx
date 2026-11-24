@@ -55,7 +55,7 @@ export function FavoritesList({
   const termeNormalise = normaliserRecherche(recherche);
   const genres: GenrePrenom[] = [...new Set(favoris.map((prenom) => prenom.genre))]
     .sort((a, b) => a.localeCompare(b, "fr"));
-  const genreActifValide = genres.includes(genreActif) ? genreActif : "";
+  const genreActifValide = genres.find((genre) => genre === genreActif) ?? "";
 
   function mettreAJourUrl(
     rechercheSuivante: string,
