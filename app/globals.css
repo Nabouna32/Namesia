@@ -1147,7 +1147,7 @@ gap: 12px;
   font-weight: 500;
 }
 
-remove duplicate association span.compare-association p {
+.compare-association p {
 margin: 8px 0 0;
   color: var(--md-sys-color-on-surface-variant);
   font-size: var(--md-sys-typescale-body-large-size);
@@ -1479,7 +1479,7 @@ padding: 0;
   white-space: nowrap;
 }
 
-remove duplicate buttonbutton:disabled {
+button:disabled {
   cursor: not-allowed;
 }
 
