@@ -20,14 +20,14 @@ Cette organisation rendait la fidélité difficile à auditer : un nouveau compo
 
 ## Décision
 
-1. Les composants de présentation M3 vivent dans `components/material3/` et portent leur nom officiel : `Button`, `IconButton`, `SearchBar`, `FilterChip`, `InputChip`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail` et `Icon`.
+1. Les composants de présentation M3 vivent dans `components/material3/` et portent leur nom officiel : `Button`, `IconButton`, `Checkbox`, `SearchBar`, `FilterChip`, `InputChip`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail` et `Icon`.
 2. Les composants propres au produit vivent dans `components/features/` et portent un nom métier anglais explicite. Ils composent les composants Material 3 ; ils ne redéfinissent pas leurs états ni leur apparence.
 3. Les sélecteurs de formulaire conservent le `select` HTML natif : AndroidX Compose Material 3 n'a pas de composant nommé Select et le menu du navigateur apporte clavier et accessibilité natifs. Aucun faux menu ni fallback visuel n'est ajouté.
 4. Les éléments de texte restent les éléments HTML sémantiques ; les tokens typographiques M3 sont appliqués directement. Aucun wrapper `Typography` sans contrat supplémentaire n'est introduit.
 5. Les liens d'action utilisent la sémantique `a`/Next Link ; Button accepte `href` comme adaptation Web et rend un vrai lien, sans remplacer sa sémantique par un bouton.
 6. Aucun alias de compatibilité ou ancienne primitive Namesia n'est conservé après migration.
 
-## Conséquences
+- Le composant `Checkbox` est un port explicite d'AndroidX : input natif contrôlé pour l'accessibilité, indicateur et états M3 centralisés ; le comparateur ne conserve plus de style de case à cocher propre à sa page.\n\n## Conséquences
 
 - Le vocabulaire du code suit directement AndroidX et devient vérifiable par recherche.
 - La frontière entre composants M3 et logique métier est explicite.
