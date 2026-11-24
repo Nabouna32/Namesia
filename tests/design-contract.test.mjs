@@ -236,6 +236,12 @@ test("l'échelle typographique Material 3 est complète et limitée aux graisses
   assert.doesNotMatch(allCss, /text-transform:\s*uppercase/i);
 });
 
+test("l'approche typographique utilise exclusivement les tokens de rôle Material 3", () => {
+  assert.doesNotMatch(allCss, /letter-spacing:\\s*(?!var\\(--md-sys-typescale-[\\w-]+-tracking\\))[^;]+;/);
+  assert.match(globalCss, /\\.section-heading h2\\s*\\{[^}]*letter-spacing:\\s*var\\(--md-sys-typescale-headline-medium-tracking\\)/s);
+  assert.match(globalCss, /\\.profile-section-heading h2\\s*\\{[^}]*letter-spacing:\\s*var\\(--md-sys-typescale-headline-small-tracking\\)/s);
+});
+
 test("les textes utilisent les interlignes de leur rôle Material 3", () => {
   const ratios = [...allCss.matchAll(/line-height:\s*(\d+(?:\.\d+)?);/g)].map((match) => match[1]);
   assert.deepEqual(ratios, ["0.95", "0.95"], "Seuls les deux glyphes décoratifs surdimensionnés peuvent conserver un ratio local");
