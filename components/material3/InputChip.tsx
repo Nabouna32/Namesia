@@ -5,10 +5,11 @@ import styles from "./InputChip.module.css";
 
 type Props = {
   label: string;
+  selected: boolean;
   onRemove: () => void;
 };
 
-export function InputChip({ label, onRemove }: Props) {
+export function InputChip({ label, selected, onRemove }: Props) {
   return (
     <button
       className={styles.chip}
