@@ -118,9 +118,11 @@ const searchFilters = await readFile(new URL("../components/features/catalog/Nam
 test("InputChip fournit le retrait individuel de la sélection avec la géométrie AndroidX", () => {
   assert.match(inputChip, /export function InputChip\(/);
   assert.match(inputChip, /aria-label=/);
+  assert.match(inputChip, /data-selected=\{selected\}/);
   assert.match(inputChipStyles, /min-height: 48px/);
   assert.match(inputChipStyles, /inset: 8px 0/);
   assert.match(inputChipStyles, /outline-variant/);
+  assert.match(inputChipStyles, /secondary-container/);
   assert.match(inputChipStyles, /--md-sys-state-pressed-state-layer-opacity/);
 });
 
