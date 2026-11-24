@@ -103,6 +103,8 @@ Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques 
 | `RecentNames` | `features/history/RecentNames.tsx` | Liste des fiches récemment consultées. |
 | `RecordVisit` | `features/history/RecordVisit.tsx` | Enregistre une consultation dans l'historique de session. |
 | `NameSearch` | `features/catalog/NameSearch.tsx` | Recherche, filtres et pagination du catalogue. |
+
+Les cartes de résultats et de suggestions utilisent le lien `Card` comme surface de navigation. Le genre est rendu par un pictogramme SVG Material du registre `Icon` avec un libellé masqué visuellement mais accessible : `gender-female`, `gender-male`, `gender-mixed` ou `gender-unknown`. La flèche suffit à signaler l'ouverture de la fiche ; aucun texte « Découvrir » n'est ajouté. `ComparisonToggle` et `FavoriteButton` sont positionnés dans l'angle supérieur de la carte, comme contrôles frères du lien (jamais imbriqués dans un lien), avec une cible tactile de 48 px.
 | `FeaturedNames` | `features/catalog/FeaturedNames.tsx` | Présentation des prénoms mis en avant. |
 | `RelatedNames` | `features/catalog/RelatedNames.tsx` | Suggestions liées depuis une fiche. |
 | `RandomDiscovery` | `features/discovery/RandomDiscovery.tsx` | Découverte aléatoire d'un prénom. |
