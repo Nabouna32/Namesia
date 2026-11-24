@@ -14,6 +14,7 @@ components/
     IconButton.tsx
     SearchBar.tsx
     FilterChip.tsx
+    InputChip.tsx
     Snackbar.tsx
     TopAppBar.tsx
     NavigationBar.tsx
@@ -22,6 +23,7 @@ components/
     Button.module.css
     SearchBar.module.css
     FilterChip.module.css
+    InputChip.module.css
     Snackbar.module.css
     index.ts
   features/                  # Composition métier, jamais une seconde bibliothèque UI
@@ -46,6 +48,7 @@ Material Web 2.5.0 a été évalué. Son dépôt indique être en maintenance en
 | `IconButton` | `material3/IconButton.tsx` | Action iconique distincte de Button : cible 48 dp, glyphe 24 dp, couleur et état désactivé AndroidX. Le nom accessible est obligatoire. |
 | `SearchBar` | `material3/SearchBar.tsx` | Champ replié de SearchBar AndroidX : hauteur 56 dp, forme `full`, surface `surface-container-high`, saisie `body-large`, icônes et effacement accessibles. Les résultats restent dans le flux de la page ; aucune fausse fenêtre d'expansion n'est dessinée. |
 | `FilterChip` | `material3/FilterChip.tsx` | Filtre sélectionnable avec `aria-pressed`, coche, conteneur de 32 dp dans une cible de 48 dp, contour et couches d'état AndroidX. |
+| `InputChip` | `material3/InputChip.tsx` | Puce de saisie avec action de retrait, contour `outline-variant`, cible de 48 px et capsule de 32 dp. |
 | `Snackbar` | `material3/Snackbar.tsx` | Présentation de retours d'action avec rôles accessibles. Les sévérités produit `success`, `warning`, `info` utilisent les extensions tonales Namesia ; `error` utilise les rôles système M3. Le placement est laissé au contexte de l'écran. |
 | `TopAppBar` | `material3/TopAppBar.tsx` | Barre supérieure du shell, marque et titre secondaire ; dimensions et couleurs centralisées dans le système M3. |
 | `NavigationBar` | `material3/NavigationBar.tsx` | Navigation de premier niveau compacte, conteneur AndroidX de 80 dp, destinations, indicateur et libellés `label-medium`. |
@@ -65,7 +68,7 @@ Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques 
 |---|---|---|
 | `FavoriteButton` | `features/favorites/FavoriteButton.tsx` | Ajout/retrait d'un favori, état de chargement et erreur du stockage ; compose Button et IconButton. |
 | `ComparisonToggle` | `features/comparison/ComparisonToggle.tsx` | Sélection d'un prénom pour le comparateur ; compose Button et porte la limite métier fournie par l'écran. |
-| `ComparisonSelection` | `features/comparison/ComparisonSelection.tsx` | Liste des prénoms retenus et actions de retrait ; compose IconButton. |
+| `ComparisonSelection` | `features/comparison/ComparisonSelection.tsx` | Liste des prénoms retenus ; compose InputChip pour le retrait individuel. |
 | `PartagerLien` | `components/partager-fiche.tsx` | Partage natif ou copie d'une URL reconstruite avec une liste explicite de paramètres autorisés. |
 | `BarreComparaison` | `components/barre-comparaison.tsx` | Composition métier de ComparisonSelection, Button et URL du comparateur. |
 
@@ -73,7 +76,7 @@ Les composants métier peuvent être propres à Namesia, mais ils ne redéfiniss
 
 ## Conventions d'implémentation
 
-- Employer exactement les noms Material 3 pour les composants correspondants : `Button`, `IconButton`, `SearchBar`, `FilterChip`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`.
+- Employer exactement les noms Material 3 pour les composants correspondants : `Button`, `IconButton`, `SearchBar`, `FilterChip`, `InputChip`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`.
 - Ne pas créer de traduction, alias, wrapper ou fallback parallèle pour ces composants.
 - Garder les éléments HTML natifs adaptés : `button`, `a`, `input`, `select`, `nav`, `header`, titres et listes sémantiques. Ne pas remplacer leur sémantique par des `div` et des rôles ARIA redondants.
 - Les CSS Modules de `components/material3/` consomment directement les tokens `--md-sys-*` et les seules extensions `--namesia-*` déclarées dans [le système de design](design.md).
