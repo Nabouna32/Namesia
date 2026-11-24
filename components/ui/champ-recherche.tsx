@@ -11,7 +11,6 @@ type Props = {
   value: string;
   placeholder: string;
   onChange: (value: string) => void;
-  compact?: boolean;
   className?: string;
 };
 
@@ -21,7 +20,6 @@ export function ChampRecherche({
   value,
   placeholder,
   onChange,
-  compact = false,
   className
 }: Props) {
   const champRef = useRef<HTMLInputElement>(null);
@@ -36,8 +34,8 @@ export function ChampRecherche({
   }
 
   return (
-    <div className={[compact ? styles.compact : styles.field, className].filter(Boolean).join(" ")}>
-      <label className={compact ? "sr-only" : undefined} htmlFor={id}>{label}</label>
+    <div className={[styles.field, className].filter(Boolean).join(" ")}>
+      <label className="sr-only" htmlFor={id}>{label}</label>
       <div className={styles.control}>
         <span className={styles.icon} aria-hidden="true">
           <IconeMaterial name="search" size={24} />
@@ -55,10 +53,11 @@ export function ChampRecherche({
           <Bouton
             variante="text"
             taille="icon"
+            className={styles.clearButton}
             ariaLabel={`Effacer : ${label.toLocaleLowerCase("fr")}`}
             onClick={effacer}
           >
-            <IconeMaterial name="close" size={20} />
+            <IconeMaterial name="close" size={24} />
           </Bouton>
         )}
       </div>

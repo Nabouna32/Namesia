@@ -381,10 +381,6 @@ padding: 4px 0;
   max-width: none;
 }
 
-.hero-tools .search-compact .control {
-  background: var(--md-sys-color-surface-container-low);
-}
-
 .eyebrow {
   display: inline-flex;
   min-height: 32px;
