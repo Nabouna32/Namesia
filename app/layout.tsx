@@ -8,6 +8,7 @@ import { NavigationAdaptative } from "@/components/navigation-adaptative";
 import "./globals.css";
 import { jsonLd } from "@/lib/json-ld";
 import { siteUrl } from "@/lib/site-url";
+import { materialThemeCss, materialThemeViewportColors } from "@/lib/material-theme";
 
 const roboto = Roboto({
   weight: ["400", "500"],
@@ -34,8 +35,8 @@ export const viewport: Viewport = {
   viewportFit: "cover",
   colorScheme: "light dark",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f9f9ff" },
-    { media: "(prefers-color-scheme: dark)", color: "#111318" }
+    { media: "(prefers-color-scheme: light)", color: materialThemeViewportColors.light },
+    { media: "(prefers-color-scheme: dark)", color: materialThemeViewportColors.dark }
   ]
 };
 
@@ -56,7 +57,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="fr" className={roboto.variable} data-scroll-behavior="smooth"><body>
+  return <html lang="fr" className={roboto.variable} data-scroll-behavior="smooth"><head><style dangerouslySetInnerHTML={{ __html: materialThemeCss }} /></head><body>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(siteWebData) }} />
     <a className="skip-link" href="#contenu">Aller au contenu</a>
     <MaterialThemeProvider>
