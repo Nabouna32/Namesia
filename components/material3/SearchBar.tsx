@@ -2,7 +2,7 @@
 
 import { useRef, type ChangeEvent } from "react";
 import { IconButton } from "./IconButton";
-import { IconeMaterial } from "@/components/material3/Icon";
+import { Icon } from "@/components/material3/Icon";
 import styles from "./SearchBar.module.css";
 
 type Props = {
