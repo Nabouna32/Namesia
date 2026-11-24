@@ -31,6 +31,10 @@ jobs:
         run: test "$(node --version)" = "v$(tr -d '\r\n' < .nvmrc)"
       - name: Installer les dépendances
         run: npm ci --no-audit --no-fund
+      - name: Auditer les dépendances de production
+        id: audit
+        run: npm audit --omit=dev --audit-level=high
+        continue-on-error: true
       - name: Vérifier la politique de déploiement Vercel
         shell: bash
         run: |
@@ -73,6 +77,7 @@ jobs:
       - name: Résumer les contrôles
         if: always()
         env:
+          AUDIT_OUTCOME: ${{ steps.audit.outcome }}
           TEST_OUTCOME: ${{ steps.tests.outcome }}
           TYPECHECK_OUTCOME: ${{ steps.typecheck.outcome }}
           BUILD_OUTCOME: ${{ steps.build.outcome }}
