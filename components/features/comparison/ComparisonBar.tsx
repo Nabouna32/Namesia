@@ -22,7 +22,7 @@ export function ComparisonBar({ names, onRemove, onClear }: Props) {
         label="Prénoms sélectionnés pour la comparaison"
         onRemove={onRemove}
       />
-      <span role="status" aria-live="polite">{names.length} / 3 prénoms pour la comparaison}</span>
+      <span role="status" aria-live="polite">{names.length} / 3 prénoms pour la comparaison</span>
       <div className={styles.actions}>
         <Button variant="text" type="button" onClick={onClear}>Effacer</Button>
         {names.length >= 2 && (
