@@ -5,6 +5,7 @@ gap: 8px;
 }
 
 .resultCard {
+  position: relative;
   display: flex;
   min-width: 0;
   align-items: stretch;
@@ -14,19 +15,12 @@ gap: 8px;
 .resultLink {
   min-width: 0;
   flex: 1 1 auto;
-}
-
-
-.resultCard {
-  position: relative;
-}
-
-.resultLink {
   padding-top: 60px;
 }
 
+
 .gender {
-  display: flex !important;
+  display: flex;
   min-height: 24px;
   align-items: center;
   margin-top: 6px !important;
