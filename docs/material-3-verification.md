@@ -4,7 +4,7 @@
 - **Mis à jour :** 2026-11-24
 - **Référence d'implémentation AndroidX :** Compose Material 3 `1.5.0` stable, arbre source figé au commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c` (borne de fin de la plage de commits de la release du 18 novembre 2026).
 - **Portée :** couleurs, tokens système et preuves d'implémentation des composants ; ce document ne certifie pas à lui seul la conformité visuelle de chaque écran.
-- **Vérification des sources :** `scripts/verify-design-sources.mjs` télécharge des fichiers depuis les commits épinglés, vérifie leur contenu et s'exécute dans la CI. Le contrôle statique des liens reste complémentaire ; il ne remplace pas cette vérification distante.
+- **Vérification des sources :** `scripts/verify-design-sources.mjs` télécharge des fichiers depuis les commits épinglés, vérifie leur contenu ainsi que les dimensions et rôles de tokens cités (hauteurs, icônes, couches d'état, formes et typographie), puis s'exécute dans la CI. Le contrôle statique des liens reste complémentaire ; il ne remplace pas cette vérification distante.
 
 ## Sources de référence
 

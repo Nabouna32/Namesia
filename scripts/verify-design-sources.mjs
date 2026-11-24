@@ -4,7 +4,7 @@ const sources = [
   {
     name: "AndroidX Button",
     url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/Button.kt",
-    markers: ["FilledTonalButton", "OutlinedButton", "ButtonDefaults"],
+    markers: ["FilledTonalButton", "OutlinedButton", "ButtonDefaults", "public val IconSize: Dp = 18.dp"],
   },
   {
     name: "AndroidX Checkbox",
@@ -25,6 +25,26 @@ const sources = [
     name: "AndroidX TextField",
     url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/TextField.kt",
     markers: ["OutlinedTextField", "TextFieldDefaults"],
+  },
+  {
+    name: "AndroidX Checkbox tokens",
+    url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/tokens/CheckboxTokens.kt",
+    markers: ["get() = 18.0.dp", "get() = 40.0.dp", "UnselectedDisabledContainerOpacity = 0.38f"],
+  },
+  {
+    name: "AndroidX SearchBar tokens",
+    url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/tokens/SearchBarTokens.kt",
+    markers: ["get() = 56.0.dp", "get() = ShapeKeyTokens.CornerFull", "get() = ColorSchemeKeyTokens.SurfaceContainerHigh"],
+  },
+  {
+    name: "AndroidX NavigationBar tokens",
+    url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/tokens/NavigationBarTokens.kt",
+    markers: ["get() = 80.0.dp", "get() = TypographyKeyTokens.LabelMedium"],
+  },
+  {
+    name: "AndroidX FilterChip tokens",
+    url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/tokens/FilterChipTokens.kt",
+    markers: ["get() = 32.0.dp", "get() = TypographyKeyTokens.LabelLarge"],
   },
   {
     name: "Material Color Utilities Fidelity",
