@@ -32,6 +32,8 @@ test("les primitives partagées exposent des variantes sémantiques et préserve
   assert.match(styles, /button:not\(\.icon\):active/);
   assert.match(styles, /color-mix\(in srgb, var\(--md-sys-color-on-surface\) 10%, transparent\)/);
   assert.match(styles, /color-mix\(in srgb, var\(--md-sys-color-on-surface-variant\) 38%, transparent\)/);
+  assert.match(styles, /\.icon:disabled\s*\{[^}]*on-surface\) 38%/s);
+  assert.doesNotMatch(styles, /\.button:disabled\s*\{[^}]*opacity:/s);
   assert.match(styles, /box-shadow: 0 1px 2px 0 color-mix/);
   assert.doesNotMatch(styles, /overflow:\s*hidden/);
   assert.match(styles, /filled:active::before[\s\S]*?box-shadow: none/);
