@@ -243,7 +243,7 @@ export function RecherchePrenoms({
                       <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
                     </Link>
                     {!compact && (
-                      <ButtonComparaison
+                      <ComparisonToggle
                         name={prenom.nom}
                         selected={selectionComparaison.includes(prenom.slug)}
                         disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
@@ -283,7 +283,7 @@ export function RecherchePrenoms({
                       <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
                     </Link>
                     {!compact && (
-                      <ButtonComparaison
+                      <ComparisonToggle
                         name={prenom.nom}
                         selected={selectionComparaison.includes(prenom.slug)}
                         disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
