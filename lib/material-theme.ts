@@ -7,8 +7,8 @@ import {
   Variant
 } from "@material/material-color-utilities";
 
-// Primary40 de la baseline Material 3 AndroidX ; utilisé comme entrée de Fidelity.
-const sourceColorArgb = argbFromHex("#6750A4");
+// Bleu Google baseline_primary_600 utilisé par Chromium Android ; source personnalisée des schémas Fidelity/Rainbow.
+const sourceColorArgb = argbFromHex("#0B57D0");
 const sourceColor = Hct.fromInt(sourceColorArgb);
 
 /** Couleurs sémantiques Namesia conservées comme couleurs personnalisées M3. */
