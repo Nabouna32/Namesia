@@ -5,13 +5,13 @@ import Link from "next/link";
 import { creerUrlFicheDepuisComparateur } from "@/lib/navigation-prenoms";
 import type { Prenom, PrenomIndex } from "@/lib/prenoms";
 import { PartagerLien } from "@/components/partager-fiche";
-import { BoutonFavori } from "@/components/bouton-favori";
+import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import { useFavoris } from "@/components/favoris-provider";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { categoryTone } from "@/lib/category-color";
-import { ChampRecherche } from "@/components/ui/champ-recherche";
-import { ListeSelectionComparaison } from "@/components/ui/liste-selection-comparaison";
-import { Bouton } from "@/components/ui/bouton";
+import { SearchBar } from "@/components/material3/SearchBar";
+import { ComparisonSelection } from "@/components/features/comparison/ComparisonSelection";
+import { Button } from "@/components/material3/Button";
 
 type Props = { prenoms: PrenomIndex[]; selectionInitiale: string[] };
 
@@ -114,7 +114,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
   return (
     <div className="comparator">
       <section className="compare-selector" aria-labelledby="compare-selector-title">
-        <ChampRecherche
+        <SearchBar
           id="compare-search"
           className="compare-search"
           label="Rechercher un prénom"
@@ -156,13 +156,13 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
                 })}
               </div>
               {resultats.length > nombreVisible && (
-                <Bouton variante="text"
+                <Button variant="text"
                   className="filter-action"
                   type="button"
                   onClick={() => setNombreVisible((visible) => visible + 24)}
                 >
                   Afficher les {Math.min(24, resultats.length - nombreVisible)} prénoms suivants
-                </Bouton>
+                </Button>
               )}
             </>
           ) : (
@@ -171,15 +171,15 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
         </fieldset>
 
         <div className="compare-selection-footer">
-          <ListeSelectionComparaison
+          <ComparisonSelection
             prenoms={prenomsSelectionnes}
             label="Prénoms sélectionnés"
             onRetirer={(slug) => changerSelection(slug, false)}
           />
           <span role="status" aria-live="polite">{selection.length} / 3 prénoms sélectionnés</span>
-          <Bouton variante="text" type="button" disabled={selection.length === 0} onClick={effacerSelection}>
+          <Button variant="text" type="button" disabled={selection.length === 0} onClick={effacerSelection}>
             Effacer la sélection
-          </Bouton>
+          </Button>
         </div>
       </section>
 
@@ -194,9 +194,9 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
       ) : erreur ? (
         <div className="compare-status" role="alert">
           <p>Les fiches sélectionnées n’ont pas pu être chargées.</p>
-          <Bouton onClick={() => setTentative((value) => value + 1)}>
+          <Button onClick={() => setTentative((value) => value + 1)}>
             Réessayer
-          </Bouton>
+          </Button>
         </div>
       ) : !selectionComplete ? (
         <p className="compare-status" role="status">Une des fiches sélectionnées n’est plus publiée. Modifiez votre sélection pour continuer.</p>
@@ -208,7 +208,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
                 <h2>{prenom.nom}</h2>
                 <span className="profile-tag">{prenom.genre}</span>
                 <span className="profile-tag">Lettre {prenom.lettre}</span>
-                <BoutonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
+                <ButtonFavori slug={prenom.slug} nom={prenom.nom} compact showError={false} />
                 <Link
                   className="compare-card-link"
                   href={creerUrlFicheDepuisComparateur(prenom.slug, selection)}
