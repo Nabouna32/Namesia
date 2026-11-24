@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import styles from "./Snackbar.module.css";
 
-export type SnackbarSeverity = "success" | "warning" | "info" | "error";
+export type SnackbarSeverity = "neutral" | "success" | "warning" | "info" | "error";
 
 const severityClass: Record<SnackbarSeverity, string> = {
   success: styles.success,
