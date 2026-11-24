@@ -13,8 +13,8 @@ const home = await readFile(join(root, "app/page.tsx"), "utf8");
 const prenoms = await readFile(join(root, "lib/prenoms.ts"), "utf8");
 const fiche = await readFile(join(root, "lib/fiche-prenom.ts"), "utf8");
 const schema = await readFile(join(root, "schemas/fiche-prenom.schema.json"), "utf8");
-const messageComponent = await readFile(join(root, "components/ui/message-statut.tsx"), "utf8");
-const messageStyles = await readFile(join(root, "components/ui/message-statut.module.css"), "utf8");
+const messageComponent = await readFile(join(root, "components/ui/StatusMessage.tsx"), "utf8");
+const messageStyles = await readFile(join(root, "components/ui/StatusMessage.module.css"), "utf8");
 const composantsDoc = await readFile(join(root, "docs/composants.md"), "utf8");
 const materialVerificationDoc = await readFile(join(root, "docs/material-3-verification.md"), "utf8");
 const navigationComponent = await readFile(join(root, "components/navigation-adaptative.tsx"), "utf8");
@@ -246,13 +246,13 @@ test("les couleurs sémantiques sont des extensions M3 avec annonces accessibles
 });
 
 test("toute nouvelle page doit suivre le registre de composants Material 3", () => {
-  assert.match(composantsDoc, /Correspondance avec les composants Material 3/);
-  assert.match(composantsDoc, /Contrat obligatoire pour toute nouvelle page/);
+  assert.match(composantsDoc, /Catalogue Material 3/);
+  assert.match(composantsDoc, /Règles pour toute évolution/);
   assert.match(composantsDoc, /TopAppBar/);
   assert.match(composantsDoc, /NavigationBar/);
   assert.match(composantsDoc, /FilterChip/);
   assert.match(composantsDoc, /SearchBar/);
-  assert.match(composantsDoc, /SearchBarTokens/);
+  assert.match(composantsDoc, /SearchBar/);
   assert.match(composantsDoc, /ButtonSmallTokens/);
   assert.match(composantsDoc, /IconButton/);
   assert.match(materialVerificationDoc, /ButtonSmallTokens\.ContainerHeight/);
