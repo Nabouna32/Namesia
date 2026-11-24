@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.40
+- **Version :** 4.41
 - **Mis à jour :** 2026-11-24
 
 ## 1. Direction
@@ -103,7 +103,7 @@ Les icônes fonctionnelles utilisent les tracés officiels Google Material Symbo
 
 ### Focus clavier
 
-Un seul sélecteur global applique l'indicateur de focus visible (contour primaire de 3 px avec décalage de 3 px) aux liens, boutons et champs natifs. Les composants peuvent enrichir leur état sélectionné ou pressé, mais ne redéfinissent pas le contour de focus. Le lien d'évitement apparaît sur `:focus-visible`, comme les autres liens : la navigation au clavier est mise en évidence sans afficher un contour au simple toucher.
+Un seul sélecteur global applique l'indicateur de focus visible (contour primaire de 3 px avec décalage de 3 px) aux liens, boutons et champs natifs. Les composants peuvent enrichir leur état sélectionné ou pressé, mais ne redéfinissent pas le contour de focus. Le lien d'évitement apparaît sur `:focus-visible`, comme les autres liens : la navigation au clavier est mise en évidence sans afficher un contour au simple toucher. Son calque reste au-dessus de la barre supérieure et des navigations fixes afin que le lien ne soit jamais masqué lorsqu'il reçoit le focus.
 
 ### Structure verticale et pied de page
 
