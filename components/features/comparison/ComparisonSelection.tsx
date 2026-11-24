@@ -18,7 +18,7 @@ export function ComparisonSelection({ names, label, onRemove }: Props) {
     <ul className={styles.list} aria-label={label}>
       {names.map((name) => (
         <li className={styles.item} key={name.slug}>
-          <InputChip label={name.name} onRemove={() => onRemove(name.slug)} />
+          <InputChip label={name.name} selected onRemove={() => onRemove(name.slug)} />
         </li>
       ))}
     </ul>
