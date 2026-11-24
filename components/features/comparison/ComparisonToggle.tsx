@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/material3/Button";
-import { IconeMaterial } from "@/components/icone-material";
+import { IconeMaterial } from "@/components/material3/Icon";
 import styles from "./ComparisonToggle.module.css";
 
 type Props = {
@@ -23,7 +23,7 @@ export function ComparisonToggle({ name, selected, disabled = false, onClick }: 
     >
       <span className={styles.label}>{selected ? "Ajouté" : "Comparer"}</span>
       <span className={styles.icon} aria-hidden="true">
-        <IconeMaterial name={selected ? "check" : "compare-arrows"} size={18} />
+        <Icon name={selected ? "check" : "compare-arrows"} size={18} />
       </span>
     </Button>
   );
