@@ -14,6 +14,7 @@ const related = await read("../components/features/catalog/RelatedNames.tsx");
 const history = await read("../components/features/history/RecentNames.tsx");
 const favorites = await read("../components/features/favorites/FavoritesList.tsx");
 const discovery = await read("../components/features/discovery/RandomDiscovery.tsx");
+const discoveryStyles = await read("../components/features/discovery/RandomDiscovery.module.css");
 const comparator = await read("../components/features/comparison/NameComparator.tsx");
 const profile = await read("../app/prenoms/[slug]/page.tsx");
 const openGraph = await read("../app/prenoms/[slug]/opengraph-image.tsx");
@@ -47,6 +48,7 @@ test("les vues de prénoms affichent le pictogramme sans libellé visible", () =
 
 test("la découverte aléatoire affiche le pictogramme du prénom sélectionné", () => {
   assert.match(discovery, /<GenreIcon genre=\{selection\.genre\}/);
+  assert.match(discoveryStyles, /\.resultLine \{[^}]*display: inline-flex;[^}]*align-items: center;[^}]*flex-wrap: wrap;[^}]*gap: 8px 12px;/s);
 });
 
 test("les filtres de genre utilisent les pictogrammes et conservent un nom accessible", () => {
