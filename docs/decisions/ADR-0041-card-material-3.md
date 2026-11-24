@@ -10,6 +10,8 @@ Les résultats, favoris, historique, suggestions, comparateur et prénoms mis en
 
 ## Décision
 
+L’implémentation canonique est `components/material3/Card.tsx` et `components/material3/Card.module.css`.
+
 - Introduire le composant `Card` avec les variantes M3 `elevated`, `filled` et `outlined`.
 - Autoriser le choix d'un élément HTML sémantique via `as`, sans créer une API métier parallèle.
 - Déplacer la surface, la forme, la bordure et l'élévation dans `Card.module.css`.
