@@ -78,7 +78,7 @@ test("les trois parcours visiteurs utilisent le même champ de recherche accessi
   assert.match(champ, /<label[^>]+htmlFor=\{id\}/);
   assert.match(champ, /type="search"/);
   assert.match(champ, /aria-label=\{`Effacer/);
-  assert.match(champ, /<Button[\s\S]*?size="icon"/);
+  assert.match(champ, /<IconButton/);
   assert.match(champ, /IconeMaterial name="close"/);
   assert.match(champ, /useRef<HTMLInputElement>\(null\)/);
   assert.match(champ, /champRef\.current\?\.focus\(\)/);
