@@ -7,6 +7,8 @@ const genreIcon = await readFile(new URL("../components/features/names/GenreIcon
 const genreMap = await readFile(new URL("../lib/genre-icons.ts", import.meta.url), "utf8");
 
 test("le pictogramme masculin sépare son anneau et sa flèche pour rester lisible à petite taille", () => {
+  assert.match(icon, /type IconPathName = Exclude<IconName, "gender-male">/);
+  assert.doesNotMatch(icon, /"gender-male": ""/);
   assert.match(icon, /const maleRing = "M360-660a260 260/);
   assert.match(icon, /const maleArrow = "M505-550 690-735/);
   assert.match(icon, /name === "gender-male"/);
