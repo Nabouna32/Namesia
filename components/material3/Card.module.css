@@ -49,7 +49,9 @@
 }
 
 .interactive.elevated:active {
-  background: color-mix(in srgb, var(--md-sys-color-primary) var(--md-sys-state-pressed-state-layer-opacity), var(--md-sys-color-surface-container-low));
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) var(--md-sys-state-pressed-state-layer-opacity), var(--md-sys-color-surface-container-low));
+  box-shadow: 0 1px 2px 0 color-mix(in srgb, var(--md-sys-color-shadow) 30%, transparent),
+    0 1px 3px 1px color-mix(in srgb, var(--md-sys-color-shadow) 15%, transparent);
 }
 
 .interactive.filled:active {
