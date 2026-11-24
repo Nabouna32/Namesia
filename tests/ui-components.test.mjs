@@ -479,6 +479,7 @@ test("AlertDialog reprend le contrat AndroidX et sécurise la publication publiq
   assert.match(alertDialog, /event\.target === event\.currentTarget/);
   assert.match(alertDialog, /aria-labelledby=\{titleId\}/);
   assert.match(alertDialog, /useId/);
+  assert.doesNotMatch(alertDialog, /if \(!open\) return null/);
   assert.match(alertDialogStyles, /surface-container-high/);
   assert.match(alertDialogStyles, /corner-extra-large/);
   assert.match(alertDialogStyles, /--md-sys-color-scrim/);
