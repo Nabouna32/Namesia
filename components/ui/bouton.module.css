@@ -98,7 +98,7 @@
 
 .text {
   padding-inline: 12px;
-  color: var(--md-sys-color-on-surface-variant);
+  color: var(--md-sys-color-primary);
 }
 
 .filled:disabled::before,
