@@ -324,6 +324,13 @@ test("les boutons et FilterChip utilisent le rôle typographique M3 label-large"
 });
 
 
+test("le layout compose les composants officiels du shell Material 3", () => {
+  assert.match(layout, /<TopAppBar \/>/);
+  assert.match(layout, /<NavigationBar \/>/);
+  assert.match(layout, /<NavigationRail \/>/);
+  assert.doesNotMatch(layout, /NavigationAdaptative/);
+});
+
 test("NavigationBar et NavigationRail utilisent le rôle M3 label-medium à toutes les largeurs", () => {
   const navigationRule = globalCss.match(/\.navigation-item\s*\{([^}]*)\}/s)?.[1] ?? "";
   assert.match(navigationRule, /font-size:\s*var\(--md-sys-typescale-label-medium-size\)/);
