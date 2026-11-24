@@ -38,7 +38,8 @@ test("les fonctions métier composent les composants Material 3 sans réimpléme
   assert.match(favoriteButton, /import \{ Button \} from "@\/components\/material3\/Button"/);
   assert.match(favoriteButton, /import \{ IconButton \} from "@\/components\/material3\/IconButton"/);
   assert.match(favoriteButton, /<Button/);
-  assert.match(favoriteButton, /<IconButton/);
+  assert.match(favoriteButton, /aria-label=\{label\}/);
+  assert.match(favoriteButton, /aria-pressed=\{selected\}/);
   assert.match(discovery, /<Button/);
   assert.doesNotMatch(featured, /<FavoriteButton/);
   assert.match(featured, /<GenreIcon/);
