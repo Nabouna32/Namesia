@@ -52,7 +52,7 @@ Les primitives présentes dans le code sont directement nommées d'après Materi
 | `InputChip` | `components/ui/InputChip.tsx` | Élément sélectionné avec action de retrait |
 | `Card` | Composition des éléments sémantiques `article` et `section` | Les cartes de contenu ne sont pas encore centralisées dans un composant React partagé |
 
-Les composants métier `ComparisonButton` et `ComparisonSelection` orchestrent les actions de comparaison ; ils composent `Button` et `InputChip` sans redéfinir leur anatomie. `StatusMessage` est une composition sémantique de statut accessible (annonce `status` ou `alert`) et des extensions de couleur Namesia ; ce n'est pas un composant Material 3. Les liens de navigation utilisent directement `Link` de Next.js avec les styles de `Button`, sans wrapper. Les filtres de favoris utilisent `select` HTML natif, sans abstraction de formulaire supplémentaire.
+Les composants métier `FavoriteButton`, `ComparisonButton` et `ComparisonSelection` orchestrent les actions de favoris et de comparaison ; ils composent `Button` et `InputChip` sans redéfinir leur anatomie. `StatusMessage` est une composition sémantique de statut accessible (annonce `status` ou `alert`) et des extensions de couleur Namesia ; ce n'est pas un composant Material 3. Les liens de navigation utilisent directement `Link` de Next.js avec les styles de `Button`, sans wrapper. Les filtres de favoris utilisent `select` HTML natif, sans abstraction de formulaire supplémentaire.
 
 Les anciennes primitives françaises, leurs feuilles CSS et leurs exports sont supprimés dans la même migration. Aucun alias de compatibilité ne subsiste. Les noms métier du domaine restent français dans le contenu visible ; les identifiants des primitives UI suivent Material 3.
 
