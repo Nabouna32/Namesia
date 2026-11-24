@@ -4,7 +4,9 @@ import { Roboto } from "next/font/google";
 import { FavorisProvider } from "@/components/favoris-provider";
 import { HistoriqueProvider } from "@/components/historique-provider";
 import { MaterialThemeProvider } from "@/components/material-theme-provider";
-import { NavigationAdaptative } from "@/components/navigation-adaptative";
+import { NavigationBar } from "@/components/material3/NavigationBar";
+import { NavigationRail } from "@/components/material3/NavigationRail";
+import { TopAppBar } from "@/components/material3/TopAppBar";
 import "./globals.css";
 import { jsonLd } from "@/lib/json-ld";
 import { siteUrl } from "@/lib/site-url";
@@ -64,16 +66,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <FavorisProvider>
         <HistoriqueProvider>
           <div className="app-shell">
-            <header className="top-app-bar">
-              <div className="top-app-bar-inner">
-                <Link className="brand" href="/" aria-label="Namesia, accueil">
-                  <span className="brand-mark">n.</span>
-                  <span>namesia</span>
-                </Link>
-                <span className="top-app-bar-caption">Le sens derrière chaque prénom</span>
-              </div>
-            </header>
-            <NavigationAdaptative />
+            <TopAppBar />
+            <NavigationBar />
+            <NavigationRail />
             <div className="app-content">
               {children}
               <footer className="site-footer">
