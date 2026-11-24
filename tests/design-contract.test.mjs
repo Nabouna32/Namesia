@@ -13,11 +13,11 @@ const home = await readFile(join(root, "app/page.tsx"), "utf8");
 const prenoms = await readFile(join(root, "lib/prenoms.ts"), "utf8");
 const fiche = await readFile(join(root, "lib/fiche-prenom.ts"), "utf8");
 const schema = await readFile(join(root, "schemas/fiche-prenom.schema.json"), "utf8");
-const messageComponent = await readFile(join(root, "components/ui/message-statut.tsx"), "utf8");
-const messageStyles = await readFile(join(root, "components/ui/message-statut.module.css"), "utf8");
+const messageComponent = await readFile(join(root, "components/material3/Snackbar.tsx"), "utf8");
+const messageStyles = await readFile(join(root, "components/material3/Snackbar.module.css"), "utf8");
 const composantsDoc = await readFile(join(root, "docs/composants.md"), "utf8");
 const materialVerificationDoc = await readFile(join(root, "docs/material-3-verification.md"), "utf8");
-const navigationComponent = await readFile(join(root, "components/navigation-adaptative.tsx"), "utf8");
+const navigationComponent = await readFile(join(root, "components/material3/NavigationDestinations.tsx"), "utf8");
 const agents = await readFile(join(root, "AGENTS.md"), "utf8");
 
 async function collectCss(directory) {
@@ -127,11 +127,14 @@ test("les états hover sont réservés aux appareils qui disposent d'un pointeur
     );
   }
 
-  const selectionStyles = styles.find(({ path }) => path === "components/ui/liste-selection-comparaison.module.css")?.content ?? "";
-  assert.ok(selectionStyles.includes(".chip:active"));
-  assert.ok(selectionStyles.includes("var(--md-sys-state-pressed-state-layer-opacity)"));
+  const selection = await readFile(join(root, "components/features/comparison/ComparisonSelection.tsx"), "utf8");
+  const selectionStyles = styles.find(({ path }) => path === "components/features/comparison/ComparisonSelection.module.css")?.content ?? "";
+  const buttonStyles = styles.find(({ path }) => path === "components/material3/Button.module.css")?.content ?? "";
+  assert.match(selection, /<IconButton/);
+  assert.match(selection, /aria-label=/);
   assert.ok(selectionStyles.includes("var(--md-sys-color-on-secondary-container)"));
   assert.ok(selectionStyles.includes("var(--md-sys-color-secondary-container)"));
+  assert.ok(buttonStyles.includes("var(--md-sys-state-pressed-state-layer-opacity)"));
 });
 
 test("la feuille globale conserve un seul :root SSR et aucune couche d'overrides finale", () => {
@@ -240,8 +243,8 @@ test("les couleurs sémantiques sont des extensions M3 avec annonces accessibles
   }
   assert.match(messageStyles, /--md-sys-color-error-container/);
   assert.match(messageStyles, /--md-sys-color-on-error-container/);
-  assert.match(messageComponent, /role={erreur \? "alert" : "status"}/);
-  assert.match(messageComponent, /aria-live={erreur \? "assertive" : "polite"}/);
+  assert.match(messageComponent, /role={urgent \? "alert" : "status"}/);
+  assert.match(messageComponent, /aria-live={urgent \? "assertive" : "polite"}/);
   assert.doesNotMatch(allCss, /--md-sys-color-(?:success|warning|info)\b/);
 });
 
@@ -299,8 +302,8 @@ test("les en-têtes de section restent lisibles et leurs actions accessibles sur
 
 
 test("les boutons et FilterChip utilisent le rôle typographique M3 label-large", () => {
-  const buttonStyles = styles.find(({ path }) => path === "components/ui/bouton.module.css")?.content ?? "";
-  const filterChipStyles = styles.find(({ path }) => path === "components/ui/chip-filtre.module.css")?.content ?? "";
+  const buttonStyles = styles.find(({ path }) => path === "components/material3/Button.module.css")?.content ?? "";
+  const filterChipStyles = styles.find(({ path }) => path === "components/material3/FilterChip.module.css")?.content ?? "";
   for (const [name, content] of [["Button", buttonStyles], ["FilterChip", filterChipStyles]]) {
     assert.match(content, /font-size:\s*var\(--md-sys-typescale-label-large-size\)/, name + " doit utiliser label-large");
     assert.match(content, /font-weight:\s*var\(--md-sys-typescale-label-large-weight\)/, name + " doit utiliser la graisse du rôle");
