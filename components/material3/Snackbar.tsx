@@ -1,21 +1,22 @@
 import type { ReactNode } from "react";
 import styles from "./Snackbar.module.css";
 
-export type SnackbarSeverity = "success" | "warning" | "info" | "error";
+export type SnackbarSeverity = "neutral" | "success" | "warning" | "info" | "error";
 
 const severityClass: Record<SnackbarSeverity, string> = {
   success: styles.success,
   warning: styles.warning,
   info: styles.info,
-  error: styles.error
+  error: styles.error,
+  neutral: styles.neutral
 };
 
 export function Snackbar({
-  severity,
+  severity = "neutral",
   children,
   className
 }: Readonly<{
-  severity: SnackbarSeverity;
+  severity?: SnackbarSeverity;
   children: ReactNode;
   className?: string;
 }>) {
