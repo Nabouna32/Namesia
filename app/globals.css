@@ -244,9 +244,10 @@ padding: 0;
 gap: 4px;
   border-radius: var(--md-sys-shape-corner-large);
   color: var(--md-sys-color-on-surface-variant);
-  font-size: var(--md-sys-typescale-body-small-size);
-  font-weight: 500;
-  line-height: 16px;
+  font-size: var(--md-sys-typescale-label-medium-size);
+  font-weight: var(--md-sys-typescale-label-medium-weight);
+  line-height: var(--md-sys-typescale-label-medium-line-height);
+  letter-spacing: var(--md-sys-typescale-label-medium-tracking);
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
   transition: color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
@@ -1576,7 +1577,6 @@ padding: 12px 8px 24px;
 @media (max-width: 360px) {
   .brand { font-size: var(--md-sys-typescale-title-large-size); }
   .navigation-bar { padding-inline: 4px; }
-  .navigation-bar .navigation-item { font-size: var(--md-sys-typescale-label-small-size); }
   .navigation-bar .navigation-item-indicator { width: 56px; }
 }
 
