@@ -53,8 +53,13 @@
 }
 
 .input:focus-visible + .indicator {
+  border-color: var(--md-sys-color-on-surface);
   outline: 3px solid var(--md-sys-color-secondary);
   outline-offset: 2px;
+}
+
+.input:checked:focus-visible + .indicator {
+  border-color: var(--md-sys-color-primary);
 }
 
 .input:disabled {
