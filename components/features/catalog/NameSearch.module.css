@@ -5,15 +5,37 @@ gap: 8px;
 }
 
 .resultCard {
-  display: flex;
+  position: relative;
   min-width: 0;
-  align-items: stretch;
-gap: 8px;
 }
 
-.resultLink {
+.resultLink.resultLink {
   min-width: 0;
-  flex: 1 1 auto;
+  padding-top: 60px;
+}
+
+
+.gender {
+  display: flex;
+  min-height: 24px;
+  align-items: center;
+  margin-top: 6px;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.gender :global(.material-icon) {
+  width: 20px;
+  height: 20px;
+}
+
+.resultActions {
+  position: absolute;
+  z-index: 1;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .favoriteError {
@@ -29,8 +51,3 @@ margin: 0 0 16px;
   }
 }
 
-@media (max-width: 420px) {
-  .resultCard {
-gap: 8px;
-  }
-}

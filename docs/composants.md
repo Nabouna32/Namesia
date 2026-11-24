@@ -114,6 +114,9 @@ Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques 
 | `ShareLink` | `features/sharing/ShareLink.tsx` | Partage natif ou copie d'une URL reconstruite avec une liste explicite de paramètres autorisés. |
 | `ComparisonBar` | `features/comparison/ComparisonBar.tsx` | Composition métier de ComparisonSelection, Button et URL du comparateur. |
 
+Les cartes de résultats et de suggestions utilisent le lien `Card` comme surface de navigation. Le genre est rendu par un pictogramme SVG du registre `Icon` avec un libellé masqué visuellement mais accessible : `gender-female`, `gender-male`, `gender-mixed` ou `gender-unknown`. La flèche suffit à signaler l'ouverture de la fiche ; aucun texte « Découvrir » n'est ajouté. `ComparisonToggle` (variante `iconOnly`) et `FavoriteButton` sont positionnés dans l'angle supérieur de la carte, comme contrôles frères du lien (jamais imbriqués dans un lien), avec une cible tactile de 48 px. Le modèle `GenrePrenom` borne les quatre valeurs prises en charge et impose leur correspondance iconographique.
+
+
 Les composants métier peuvent être propres à Namesia, mais ils ne redéfinissent jamais les styles, états ou interactions d'un composant Material 3 générique. Les règles de disposition restent dans leurs CSS Modules ; les variantes et états M3 restent dans `components/material3/`.
 
 ## Contrat obligatoire pour toute nouvelle page

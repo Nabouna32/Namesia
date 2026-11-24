@@ -2,20 +2,27 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import type { PrenomIndex } from "@/lib/prenoms";
+import type { GenrePrenom, PrenomIndex } from "@/lib/prenoms";
 import { ComparisonBar } from "@/components/features/comparison/ComparisonBar";
 import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
 import styles from "./NameSearch.module.css";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
-import { Icon } from "@/components/material3/Icon";
+import { Icon, type IconName } from "@/components/material3/Icon";
 import { SearchBar } from "@/components/material3/SearchBar";
 import { ComparisonToggle } from "@/components/features/comparison/ComparisonToggle";
 import { Button } from "@/components/material3/Button";
 import { ShareLink } from "@/components/features/sharing/ShareLink";
 import { FilterChip } from "@/components/material3/FilterChip";
 import { Card } from "@/components/material3/Card";
+
+const genderIcons: Record<GenrePrenom, IconName> = {
+  "Féminin": "gender-female",
+  "Masculin": "gender-male",
+  "Mixte": "gender-mixed",
+  "Genre non renseigné": "gender-unknown"
+};
 
 type Props = {
   prenoms: PrenomIndex[];
@@ -239,19 +246,25 @@ export function NameSearch({
                       <span className="name-initial">{prenom.lettre}</span>
                       <span>
                         <strong>{prenom.nom}</strong>
-                        <small>{prenom.genre} · Découvrir la fiche</small>
+                        <span className={styles.gender}>
+                          <Icon name={genderIcons[prenom.genre]} size={18} />
+                          <span className="sr-only">{prenom.genre}</span>
+                        </span>
                       </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Card>
-                    {!compact && (
-                      <ComparisonToggle
-                        name={prenom.nom}
-                        selected={selectionComparaison.includes(prenom.slug)}
-                        disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
-                        onClick={() => basculerComparaison(prenom.slug)}
-                      />
-                    )}
-                    <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
+                    <div className={styles.resultActions}>
+                      {!compact && (
+                        <ComparisonToggle
+                          iconOnly
+                          name={prenom.nom}
+                          selected={selectionComparaison.includes(prenom.slug)}
+                          disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
+                          onClick={() => basculerComparaison(prenom.slug)}
+                        />
+                      )}
+                      <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
+                    </div>
                   </article>
                 ))}
               </div>
@@ -280,18 +293,27 @@ export function NameSearch({
                   <article className={styles.resultCard} key={prenom.slug}>
                     <Card as={Link} variant="elevated" interactive className={`name-card ${styles.resultLink}`} href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
                       <span className="name-initial">{prenom.lettre}</span>
-                      <span><strong>{prenom.nom}</strong><small>{prenom.genre} · Suggestion proche</small></span>
+                      <span>
+                        <strong>{prenom.nom}</strong>
+                        <span className={styles.gender}>
+                          <Icon name={genderIcons[prenom.genre]} size={18} />
+                          <span className="sr-only">{prenom.genre}</span>
+                        </span>
+                      </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Card>
-                    {!compact && (
-                      <ComparisonToggle
-                        name={prenom.nom}
-                        selected={selectionComparaison.includes(prenom.slug)}
-                        disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
-                        onClick={() => basculerComparaison(prenom.slug)}
-                      />
-                    )}
-                    <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
+                    <div className={styles.resultActions}>
+                      {!compact && (
+                        <ComparisonToggle
+                          iconOnly
+                          name={prenom.nom}
+                          selected={selectionComparaison.includes(prenom.slug)}
+                          disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
+                          onClick={() => basculerComparaison(prenom.slug)}
+                        />
+                      )}
+                      <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
+                    </div>
                   </article>
                 ))}
               </div>
