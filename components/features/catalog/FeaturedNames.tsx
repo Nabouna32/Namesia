@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import type { PrenomIndex } from "@/lib/prenoms";
 import styles from "./FeaturedNames.module.css";
-import { IconeMaterial } from "@/components/material3/Icon";
+import { Icon } from "@/components/material3/Icon";
 
 type Props = { prenoms: PrenomIndex[] };
 
