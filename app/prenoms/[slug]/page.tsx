@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { categoryTone } from "@/lib/category-color";
-import { EnregistrerConsultation } from "@/components/enregistrer-consultation";
+import { RecordConsultation } from "@/components/RecordConsultation";
 import { NameSuggestions } from "@/components/NameSuggestions";
 import { ShareName } from "@/components/ShareLink";
 import styles from "@/components/actions-fiche.module.css";
@@ -101,7 +101,7 @@ export default async function FichePrenom({ params, searchParams }: Props) {
   return (
     <main id="contenu" tabIndex={-1} className="page-main profile-main">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ficheData) }} />
-      <EnregistrerConsultation slug={prenom.slug} />
+      <RecordConsultation slug={prenom.slug} />
       <div className="container profile">
         <nav className="breadcrumb" aria-label="Fil d’Ariane">
           <ol>
