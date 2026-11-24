@@ -245,9 +245,9 @@ export function RecherchePrenoms({
                     </Link>
                     {!compact && (
                       <ButtonComparaison
-                        prenom={prenom.nom}
+                        name={prenom.nom}
                         selected={selectionComparaison.includes(prenom.slug)}
-                        desactive={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
+                        disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
                         onClick={() => basculerComparaison(prenom.slug)}
                       />
                     )}
@@ -285,9 +285,9 @@ export function RecherchePrenoms({
                     </Link>
                     {!compact && (
                       <ButtonComparaison
-                        prenom={prenom.nom}
+                        name={prenom.nom}
                         selected={selectionComparaison.includes(prenom.slug)}
-                        desactive={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
+                        disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
                         onClick={() => basculerComparaison(prenom.slug)}
                       />
                     )}
