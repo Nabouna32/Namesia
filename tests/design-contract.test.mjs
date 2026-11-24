@@ -74,6 +74,17 @@ function collectRules(css) {
   return rules;
 }
 
+test("les composants sont organisés par domaine et aucune primitive Namesia historique ne subsiste", async () => {
+  const entries = await readdir(join(root, "components"), { withFileTypes: true });
+  const directories = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort();
+  assert.deepEqual(directories, ["features", "material3"]);
+  await assert.rejects(readdir(join(root, "components/ui")), { code: "ENOENT" });
+  const material3 = await readdir(join(root, "components/material3"));
+  for (const name of ["Button.tsx", "IconButton.tsx", "SearchBar.tsx", "FilterChip.tsx", "InputChip.tsx", "Snackbar.tsx", "TopAppBar.tsx", "NavigationBar.tsx", "NavigationRail.tsx"]) {
+    assert.ok(material3.includes(name), "Composant Material 3 manquant : " + name);
+  }
+});
+
 test("les feuilles consomment les rôles Material sans alias hérités ni fallback", () => {
   assert.doesNotMatch(allCss, /--(?:color-[\w-]+|ink|muted|line|paper|surface|accent|sans|font-(?:sans|display)|radius-[\w-]+|space-\d+|motion-[\w-]+|shadow-[\w-]+)\b/);
   assert.doesNotMatch(allCss, /var\(\s*--[\w-]+\s*,/);
