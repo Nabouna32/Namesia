@@ -18,7 +18,7 @@ export function FilterChip({ label, selected, initial = false, onClick }: Props)
       aria-pressed={selected}
       onClick={onClick}
     >
-      {selectionne && <IconeMaterial name="check" size={18} />}
+      {selected && <IconeMaterial name="check" size={18} />}
       <span>{label}</span>
     </button>
   );
