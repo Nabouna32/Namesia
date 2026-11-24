@@ -19,7 +19,7 @@ La palette est calculée avec la bibliothèque officielle Google **`@material/ma
 - variante du thème d'interface : `Variant.FIDELITY` ;
 - variante complémentaire des catégories : `Variant.RAINBOW`, calculée séparément avec la même couleur source ;
 - spécification : `2021`, car les variantes `Fidelity` et `Rainbow` sont définies dans cette version ; demander `2025` ferait retomber implicitement ces variantes sur leurs définitions antérieures ;
-- plateforme de calcul : `phone` ;
+- plateforme : non renseignée, car ce paramètre ne s'applique pas à la génération Fidelity/Rainbow 2021 ;
 - niveau de contraste standard : `0` ;
 - schémas clair et sombre recalculés selon `prefers-color-scheme`.
 
