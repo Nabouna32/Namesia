@@ -300,7 +300,7 @@ export function AdminClient() {
       <Button variant="outlined" type="button" onClick={deconnecter}>Déconnexion</Button>
     </div>
     <form className={styles.form} onSubmit={importer}>
-            <label htmlFor="fiche-fichier">Importer un fichier JSON</label>
+      <label htmlFor="fiche-fichier">Importer un fichier JSON</label>
       <input id="fiche-fichier" type="file" accept="application/json,.json" disabled={busy} onChange={async (event) => {
         const file = event.target.files?.[0];
         if (file) {
