@@ -21,6 +21,6 @@ test("le tableau reste consultable au clavier et horizontalement sur petit écra
   assert.match(styles, /\.compare-table-scroll\s*\{[^}]*overflow-x:\s*auto/s);
   assert.match(styles, /\.compare-table tbody th\[scope="row"\]\s*\{[^}]*position:\s*sticky;[^}]*left:\s*0;/s);
   assert.match(styles, /\.compare-table\s*\{[^}]*min-width:\s*700px;/s);
-  assert.match(styles, /\\[tabindex="0"\\]:focus-visible/);
-  assert.doesNotMatch(styles, /\\.compare-table-scroll:focus-visible/);
+  assert.ok(styles.includes('[tabindex="0"]:focus-visible'));
+  assert.ok(!styles.includes(".compare-table-scroll:focus-visible"));
 });
