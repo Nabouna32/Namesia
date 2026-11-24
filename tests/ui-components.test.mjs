@@ -5,16 +5,16 @@ import { readFile } from "node:fs/promises";
 const button = await readFile(new URL("../components/material3/Button.tsx", import.meta.url), "utf8");
 const buttonStyles = await readFile(new URL("../components/material3/Button.module.css", import.meta.url), "utf8");
 const favoriteButton = await readFile(new URL("../components/features/favorites/FavoriteButton.tsx", import.meta.url), "utf8");
-const discovery = await readFile(new URL("../components/decouverte-aleatoire.tsx", import.meta.url), "utf8");
-const featured = await readFile(new URL("../components/prenoms-vedette.tsx", import.meta.url), "utf8");
+const discovery = await readFile(new URL("../components/features/discovery/RandomDiscovery.tsx", import.meta.url), "utf8");
+const featured = await readFile(new URL("../components/features/catalog/FeaturedNames.tsx", import.meta.url), "utf8");
 const notFound = await readFile(new URL("../app/not-found.tsx", import.meta.url), "utf8");
 const errorBoundary = await readFile(new URL("../app/error.tsx", import.meta.url), "utf8");
-const history = await readFile(new URL("../components/historique-prenoms.tsx", import.meta.url), "utf8");
+const history = await readFile(new URL("../components/features/history/RecentNames.tsx", import.meta.url), "utf8");
 const globalStyles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 const materialTokens = await readFile(new URL("../styles/material3/tokens.css", import.meta.url), "utf8");
 const styles = buttonStyles;
-const icones = await readFile(new URL("../components/icone-material.tsx", import.meta.url), "utf8");
-const favoritesStyles = await readFile(new URL("../components/liste-favoris.module.css", import.meta.url), "utf8");
+const icones = await readFile(new URL("../components/material3/Icon.tsx", import.meta.url), "utf8");
+const favoritesStyles = await readFile(new URL("../components/features/favorites/FavoritesList.module.css", import.meta.url), "utf8");
 
 test("Button suit l’anatomie AndroidX et conserve les éléments HTML natifs", () => {
   assert.match(button, /export function Button\(/);
@@ -63,9 +63,9 @@ test("la vitrine n'attribue aucune couleur selon l'index du prénom", () => {
 
 const searchBar = await readFile(new URL("../components/material3/SearchBar.tsx", import.meta.url), "utf8");
 const searchBarStyles = await readFile(new URL("../components/material3/SearchBar.module.css", import.meta.url), "utf8");
-const catalogue = await readFile(new URL("../components/recherche-prenoms.tsx", import.meta.url), "utf8");
-const comparator = await readFile(new URL("../components/comparateur-prenoms.tsx", import.meta.url), "utf8");
-const favorites = await readFile(new URL("../components/liste-favoris.tsx", import.meta.url), "utf8");
+const catalogue = await readFile(new URL("../components/features/catalog/NameSearch.tsx", import.meta.url), "utf8");
+const comparator = await readFile(new URL("../components/features/comparison/NameComparator.tsx", import.meta.url), "utf8");
+const favorites = await readFile(new URL("../components/features/favorites/FavoritesList.tsx", import.meta.url), "utf8");
 
 test("SearchBar applique le champ replié AndroidX et reste accessible dans les trois parcours", () => {
   assert.match(searchBar, /export function SearchBar\(/);
@@ -91,8 +91,8 @@ const comparisonToggle = await readFile(new URL("../components/features/comparis
 const comparisonToggleStyles = await readFile(new URL("../components/features/comparison/ComparisonToggle.module.css", import.meta.url), "utf8");
 const comparisonSelection = await readFile(new URL("../components/features/comparison/ComparisonSelection.tsx", import.meta.url), "utf8");
 const comparisonSelectionStyles = await readFile(new URL("../components/features/comparison/ComparisonSelection.module.css", import.meta.url), "utf8");
-const comparisonBar = await readFile(new URL("../components/barre-comparaison.tsx", import.meta.url), "utf8");
-const comparatorSelection = await readFile(new URL("../components/comparateur-prenoms.tsx", import.meta.url), "utf8");
+const comparisonBar = await readFile(new URL("../components/features/comparison/ComparisonBar.tsx", import.meta.url), "utf8");
+const comparatorSelection = await readFile(new URL("../components/features/comparison/NameComparator.tsx", import.meta.url), "utf8");
 
 test("les fonctions de comparaison sont dans la couche métier et composent les primitives M3", () => {
   assert.match(comparisonToggle, /export function ComparisonToggle\(/);
@@ -112,7 +112,7 @@ const inputChip = await readFile(new URL("../components/material3/InputChip.tsx"
 const inputChipStyles = await readFile(new URL("../components/material3/InputChip.module.css", import.meta.url), "utf8");
 const filterChip = await readFile(new URL("../components/material3/FilterChip.tsx", import.meta.url), "utf8");
 const filterChipStyles = await readFile(new URL("../components/material3/FilterChip.module.css", import.meta.url), "utf8");
-const searchFilters = await readFile(new URL("../components/recherche-prenoms.tsx", import.meta.url), "utf8");
+const searchFilters = await readFile(new URL("../components/features/catalog/NameSearch.tsx", import.meta.url), "utf8");
 
 test("InputChip fournit le retrait individuel de la sélection avec la géométrie AndroidX", () => {
   assert.match(inputChip, /export function InputChip\(/);
@@ -126,7 +126,7 @@ test("InputChip fournit le retrait individuel de la sélection avec la géométr
 test("FilterChip suit la géométrie et les états AndroidX", () => {
   assert.match(filterChip, /export function FilterChip\(/);
   assert.match(filterChip, /aria-pressed=\{selected\}/);
-  assert.match(filterChip, /selected && <IconeMaterial name="check"/);
+  assert.match(filterChip, /selected && <Icon name="check"/);
   assert.match(filterChipStyles, /secondary-container/);
   assert.match(filterChipStyles, /:focus-visible/);
   assert.match(filterChipStyles, /border-color var\(--md-sys-motion-duration-short3\)/);
@@ -149,8 +149,8 @@ test("les sélecteurs des favoris utilisent les contrôles HTML natifs avec les 
 });
 
 const adminActions = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
-const favoriteActions = await readFile(new URL("../components/liste-favoris.tsx", import.meta.url), "utf8");
-const comparatorActions = await readFile(new URL("../components/comparateur-prenoms.tsx", import.meta.url), "utf8");
+const favoriteActions = await readFile(new URL("../components/features/favorites/FavoritesList.tsx", import.meta.url), "utf8");
+const comparatorActions = await readFile(new URL("../components/features/comparison/NameComparator.tsx", import.meta.url), "utf8");
 const adminStyles = await readFile(new URL("../app/admin/admin.module.css", import.meta.url), "utf8");
 
 test("l’administration et les parcours visiteurs utilisent Button et Snackbar", () => {
@@ -228,7 +228,7 @@ test("les cartes évitent les effets décoratifs et les boutons utilisent les co
 
 const adminClient = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
 const adminFormStyles = await readFile(new URL("../app/admin/admin.module.css", import.meta.url), "utf8");
-const partage = await readFile(new URL("../components/partager-fiche.tsx", import.meta.url), "utf8");
+const partage = await readFile(new URL("../components/features/sharing/ShareLink.tsx", import.meta.url), "utf8");
 
 test("les quatre destinations de navigation utilisent les SVG Material Symbols adaptés", () => {
   assert.match(icones, /viewBox="0 -960 960 960"/);
@@ -323,7 +323,7 @@ test("les surfaces principales Material sont définies à leur emplacement canon
 });
 
 
-const rechercheActions = await readFile(new URL("../components/recherche-prenoms.tsx", import.meta.url), "utf8");
+const rechercheActions = await readFile(new URL("../components/features/catalog/NameSearch.tsx", import.meta.url), "utf8");
 
 test("les actions de catalogue, favoris et comparaison utilisent le bouton commun", () => {
   for (const source of [rechercheActions, favorisActions, comparateurActions]) {
@@ -371,10 +371,10 @@ test("la fiche prénom applique Material 3 dans ses règles canoniques", () => {
   assert.doesNotMatch(globalStyles, /linear-gradient\(125deg, var\(--md-sys-color-surface-container/);
 });
 
-const historiqueActions = await readFile(new URL("../components/historique-prenoms.tsx", import.meta.url), "utf8");
-const barreComparaisonActions = await readFile(new URL("../components/barre-comparaison.tsx", import.meta.url), "utf8");
-const historiqueStyles = await readFile(new URL("../components/historique-prenoms.module.css", import.meta.url), "utf8");
-const barreComparaisonStyles = await readFile(new URL("../components/barre-comparaison.module.css", import.meta.url), "utf8");
+const historiqueActions = await readFile(new URL("../components/features/history/RecentNames.tsx", import.meta.url), "utf8");
+const barreComparaisonActions = await readFile(new URL("../components/features/comparison/ComparisonBar.tsx", import.meta.url), "utf8");
+const historiqueStyles = await readFile(new URL("../components/features/history/RecentNames.module.css", import.meta.url), "utf8");
+const barreComparaisonStyles = await readFile(new URL("../components/features/comparison/ComparisonBar.module.css", import.meta.url), "utf8");
 
 test("les actions d'effacement de l'accueil et de comparaison utilisent les primitives communes", () => {
   assert.match(historiqueActions, /<Button variant="text"[^>]*onClick=\{effacer\}/);
