@@ -28,7 +28,7 @@ Cette organisation rendait la fidélité difficile à auditer : un nouveau compo
 6. Les liens d'action utilisent la sémantique `a`/Next Link ; Button accepte `href` comme adaptation Web et rend un vrai lien, sans remplacer sa sémantique par un bouton.
 7. Aucun alias de compatibilité ou ancienne primitive Namesia n'est conservé après migration.
 
-- Le composant `Checkbox` est un port explicite d'AndroidX : input natif contrôlé pour l'accessibilité, indicateur et états M3 centralisés ; le comparateur ne conserve plus de style de case à cocher propre à sa page.\n\n## Conséquences
+## Conséquences
 
 - Le vocabulaire du code suit directement AndroidX et devient vérifiable par recherche.
 - La frontière entre composants M3 et logique métier est explicite.
