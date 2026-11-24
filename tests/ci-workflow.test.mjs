@@ -14,4 +14,6 @@ test("les actions GitHub sont épinglées sur des commits immuables", () => {
   }
   assert.match(agents, /Toutes les actions GitHub.*SHA de commit complet à 40 caractères/);
   assert.match(workflow, /persist-credentials: false/);
+  assert.match(workflow, /npm audit --omit=dev --audit-level=high/);
+  assert.match(workflow, /AUDIT_OUTCOME/);
 });
