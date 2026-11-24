@@ -49,7 +49,7 @@
 }
 
 .chip[aria-pressed="true"]::before {
-  border-color: transparent;
+  border: 0;
   background: var(--md-sys-color-secondary-container);
 }
 
