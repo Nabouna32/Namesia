@@ -251,6 +251,7 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.ok(composantsDoc.includes("github.com/androidx/androidx"));
   assert.ok(composantsDoc.includes("919e948eaa351c590e7e6fc89d4014fad7a6e78c"));
   assert.doesNotMatch(composantsDoc, /androidx-main/);
+  assert.doesNotMatch(composantsDoc, /(?:blob|tree)[/]main[/]/);
   assert.ok(materialVerificationDoc.includes("Compose Material 3 `1.5.0` stable"));
   assert.ok(materialVerificationDoc.includes("919e948eaa351c590e7e6fc89d4014fad7a6e78c"));
   assert.doesNotMatch(materialVerificationDoc, /androidx-main/);
