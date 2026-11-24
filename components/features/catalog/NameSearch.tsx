@@ -6,7 +6,6 @@ import { ComparisonBar } from "@/components/features/comparison/ComparisonBar";
 import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
 import styles from "./NameSearch.module.css";
-import type { PrenomIndex } from "@/lib/prenoms";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
 import { Icon } from "@/components/material3/Icon";
@@ -209,9 +208,9 @@ export function NameSearch({
 
       {!compact && (
         <ComparisonBar
-          prenoms={prenomsSelectionnes}
-          onRetirer={basculerComparaison}
-          onEffacer={() => setSelectionComparaison([])}
+          names={prenomsSelectionnes.map((prenom) => ({ slug: prenom.slug, name: prenom.nom }))}
+          onRemove={basculerComparaison}
+          onClear={() => setSelectionComparaison([])}
         />
       )}
 
