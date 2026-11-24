@@ -3,9 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import { categoryTone } from "@/lib/category-color";
-import { EnregistrerConsultation } from "@/components/enregistrer-consultation";
-import { SuggestionsPrenoms } from "@/components/suggestions-prenoms";
-import { PartagerFiche } from "@/components/partager-fiche";
+import { RecordVisit } from "@/components/features/history/RecordVisit";
+import { RelatedNames } from "@/components/features/catalog/RelatedNames";
+import { ShareProfile } from "@/components/features/sharing/ShareLink";
 import styles from "@/components/actions-fiche.module.css";
 import { getAutresPrenomsIndexDuGenre, getPrenom } from "@/lib/prenoms";
 import { jsonLd } from "@/lib/json-ld";
@@ -101,7 +101,7 @@ export default async function FichePrenom({ params, searchParams }: Props) {
   return (
     <main id="contenu" tabIndex={-1} className="page-main profile-main">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ficheData) }} />
-      <EnregistrerConsultation slug={prenom.slug} />
+      <RecordVisit slug={prenom.slug} />
       <div className="container profile">
         <nav className="breadcrumb" aria-label="Fil d’Ariane">
           <ol>
@@ -127,7 +127,7 @@ export default async function FichePrenom({ params, searchParams }: Props) {
                   Comparer ce prénom <span aria-hidden="true">↗</span>
                 </Link>
               </div>
-              <PartagerFiche nom={prenom.nom} />
+              <ShareProfile nom={prenom.nom} />
             </div>
             <div className="profile-monogram" aria-hidden="true">{prenom.lettre}</div>
           </header>
@@ -211,7 +211,7 @@ export default async function FichePrenom({ params, searchParams }: Props) {
                 <span className="profile-section-kicker">Pour prolonger la découverte</span>
                 <h2 id="profile-discovery-title">D'autres prénoms {genreAuPluriel[prenom.genre] ?? "à découvrir"}</h2>
               </div>
-              <SuggestionsPrenoms prenoms={autresPrenoms} contexteRetour={contexteRetour} />
+              <RelatedNames prenoms={autresPrenoms} contexteRetour={contexteRetour} />
               <Link className="text-link" href="/prenoms">Explorer tout le catalogue <span aria-hidden="true">↗</span></Link>
             </section>
           )}
