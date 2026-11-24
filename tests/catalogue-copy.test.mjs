@@ -7,7 +7,8 @@ const styles = await readFile(new URL("../components/features/catalog/NameSearch
 
 test("le catalogue copie tous les résultats filtrés, pas uniquement les cartes visibles", () => {
   assert.ok(component.includes("resultats.map((prenom) => prenom.nom).join"));
-  assert.ok(component.includes("Copier les {resultats.length}"));
+  assert.ok(component.includes('"Copier le prénom"'));
+  assert.ok(component.includes("Copier les ${resultats.length} prénoms"));
   assert.ok(component.includes('Snackbar severity="success"'));
   assert.ok(component.includes('Snackbar severity="error"'));
 });
