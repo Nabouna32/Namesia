@@ -14,7 +14,7 @@ Cette organisation rendait la fidélité difficile à auditer : un nouveau compo
 ## Challenge
 
 - **Garder les wrappers français et documenter le mapping :** améliore la traçabilité mais conserve deux nomenclatures et autorise l'écart d'API.
-- **Installer Material Web :** sa bibliothèque propose des composants M3 pour le navigateur, mais son [README officiel](https://github.com/material-components/material-web/blob/main/README.md) indique une maintenance en attente de nouveaux mainteneurs. Elle ne garantit pas la parité avec AndroidX Compose 1.5.0 et son contrat d'implémentation diffère. La dépendance ne devient donc pas la source de vérité du site.
+- **Installer Material Web :** sa bibliothèque propose des composants M3 pour le navigateur, mais son [README officiel](https://github.com/material-components/material-web/blob/b4de401eb665ec63474f39319a4ba8f2145974cc/README.md) indique une maintenance en attente de nouveaux mainteneurs. Elle ne garantit pas la parité avec AndroidX Compose 1.5.0 et son contrat d'implémentation diffère. La dépendance ne devient donc pas la source de vérité du site.
 - **Importer AndroidX Compose dans Next.js :** impossible directement, car Compose est une bibliothèque Kotlin/Android.
 - **Porter les contrats AndroidX en React/HTML sous les noms M3 :** garde une seule nomenclature, conserve la sémantique Web native et permet de vérifier les dimensions, états et rôles contre une source AndroidX immuable.
 
