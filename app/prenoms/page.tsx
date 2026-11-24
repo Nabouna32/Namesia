@@ -48,9 +48,8 @@ export default async function NamesPage({ searchParams }: Props) {
   const genreDemande = premierParametre(parametres.genre);
   const lettreDemandee = normaliserFiltre(premierParametre(parametres.lettre));
 
-  const genresDisponibles = new Set(prenoms.map((prenom) => prenom.genre));
   const lettresDisponibles = new Set(prenoms.map((prenom) => normaliserFiltre(prenom.lettre)));
-  const genreInitial = genresDisponibles.has(genreDemande) ? genreDemande : null;
+  const genreInitial = prenoms.find((prenom) => prenom.genre === genreDemande)?.genre ?? null;
   const lettreInitiale = lettresDisponibles.has(lettreDemandee) ? lettreDemandee : null;
 
   const catalogueData = {
