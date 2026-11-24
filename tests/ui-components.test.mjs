@@ -21,6 +21,7 @@ test("Button suit l’anatomie AndroidX et conserve les éléments HTML natifs",
   assert.match(button, /export function Button\(/);
   assert.match(button, /<button/);
   assert.match(button, /<Link/);
+  assert.match(button, /if \(props\.href !== undefined\)/);
   assert.match(button, /type LinkProps = SharedProps/);
   assert.match(button, /disabled\?: never/);
   assert.match(button, /onClick\?: never/);
