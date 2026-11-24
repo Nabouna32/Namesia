@@ -16,7 +16,7 @@ const globalStyles = await readFile(new URL("../app/globals.css", import.meta.ur
 test("les primitives partagées exposent des variants sémantiques et préservent les éléments natifs", () => {
   assert.match(bouton, /export function Button\(/);
   assert.match(bouton, /<button/);
-  assert.match(lienButton, /<Link/);
+  assert.match(lienButton, /buttonStyles\.button/);
   assert.match(lienButton, /<Link/);
   for (const variant of ["filled", "tonal", "outlined", "text"]) {
     assert.match(styles, new RegExp(`\\.${variant} \\{`));
@@ -174,8 +174,7 @@ test("les actions de l'administration et des visiteurs utilisent les boutons par
   assert.match(adminActions, /import \{ Button \} from "@\/components\/ui\/bouton"/);
   assert.match(adminActions, /<Button/);
   assert.match(favorisActions, /<Button/);
-  assert.match(favorisActions, /<LienButton/);
-  assert.match(lienButton, /^"use client";/);
+  assert.match(favorisActions, /<Link/);
   assert.match(comparateurActions, /<Button/);
   assert.doesNotMatch(adminActions, /button-dark|styles\.secondary/);
   assert.doesNotMatch(favorisActions, /button-dark/);
@@ -394,7 +393,7 @@ const barreComparaisonStyles = await readFile(new URL("../components/barre-compa
 test("les actions d'effacement de l'accueil et de comparaison utilisent les primitives communes", () => {
   assert.match(historiqueActions, /<Button variant="text"[^>]*onClick=\{effacer\}/);
   assert.match(barreComparaisonActions, /<Button variant="text"[^>]*onClick=\{onEffacer\}/);
-  assert.match(barreComparaisonActions, /<LienButton[^>]*variant="filled"/);
+  assert.match(barreComparaisonActions, /<Link[^>]*className=/);
   assert.doesNotMatch(historiqueActions, /<button\b/);
   assert.doesNotMatch(barreComparaisonActions, /<button\b|<Link\b/);
   assert.doesNotMatch(historiqueStyles, /\.clear\s*\{/);
