@@ -281,7 +281,7 @@ export function AdminClient() {
         <input id="admin-email" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
         <Button type="submit" disabled={busy}>{busy ? "Envoi…" : "Recevoir un lien de connexion"}</Button>
       </form>
-      {message && <Snackbar type={message.type}>{message.text}</Snackbar>}
+      {message && <Snackbar severity={message.type}>{message.text}</Snackbar>}
     </section>;
   }
 
@@ -289,7 +289,7 @@ export function AdminClient() {
     return <section className={styles.panel}>
       <h2>Accès non autorisé</h2>
       <p>Ce compte est connecté, mais ne figure pas dans la liste des administrateurs Namesia.</p>
-      {message && <Snackbar type={message.type}>{message.text}</Snackbar>}
+      {message && <Snackbar severity={message.type}>{message.text}</Snackbar>}
       <Button type="button" onClick={deconnecter}>Se déconnecter</Button>
     </section>;
   }
@@ -354,6 +354,6 @@ export function AdminClient() {
       </article>)}
       {catalogNextOffset !== null && <Button variant="outlined" type="button" disabled={catalogLoading} onClick={() => setCatalogOffset(catalogNextOffset)}>Charger les fiches suivantes</Button>}
     </section>
-    {message && <Snackbar type={message.type}>{message.text}</Snackbar>}
+    {message && <Snackbar severity={message.type}>{message.text}</Snackbar>}
   </section>;
 }
