@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const globalCss = await readFile(join(root, "app/globals.css"), "utf8");
 const tokensCss = await readFile(join(root, "styles/material3/tokens.css"), "utf8");
-const provider = await readFile(join(root, "components/material-theme-provider.tsx"), "utf8");
+const provider = await readFile(join(root, "components/material3/MaterialThemeProvider.tsx"), "utf8");
 const theme = await readFile(join(root, "lib/material-theme.ts"), "utf8");
 const layout = await readFile(join(root, "app/layout.tsx"), "utf8");
 const home = await readFile(join(root, "app/page.tsx"), "utf8");
