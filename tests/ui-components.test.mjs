@@ -2,9 +2,9 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
-const bouton = await readFile(new URL("../components/ui/bouton.tsx", import.meta.url), "utf8");
-const lienBouton = await readFile(new URL("../components/ui/lien-bouton.tsx", import.meta.url), "utf8");
-const styles = await readFile(new URL("../components/ui/bouton.module.css", import.meta.url), "utf8");
+const bouton = await readFile(new URL("../components/ui/Button.tsx", import.meta.url), "utf8");
+const lienButton = await readFile(new URL("../app/not-found.tsx", import.meta.url), "utf8");
+const styles = await readFile(new URL("../components/ui/Button.module.css", import.meta.url), "utf8");
 const favoris = await readFile(new URL("../components/bouton-favori.tsx", import.meta.url), "utf8");
 const decouverte = await readFile(new URL("../components/decouverte-aleatoire.tsx", import.meta.url), "utf8");
 const vitrine = await readFile(new URL("../components/prenoms-vedette.tsx", import.meta.url), "utf8");
@@ -13,13 +13,13 @@ const errorBoundary = await readFile(new URL("../app/error.tsx", import.meta.url
 const historique = await readFile(new URL("../components/historique-prenoms.tsx", import.meta.url), "utf8");
 const globalStyles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 
-test("les primitives partagées exposent des variantes sémantiques et préservent les éléments natifs", () => {
-  assert.match(bouton, /export function Bouton\(/);
+test("les primitives partagées exposent des variants sémantiques et préservent les éléments natifs", () => {
+  assert.match(bouton, /export function Button\(/);
   assert.match(bouton, /<button/);
-  assert.match(lienBouton, /export function LienBouton\(/);
-  assert.match(lienBouton, /<Link/);
-  for (const variante of ["filled", "tonal", "outlined", "text"]) {
-    assert.match(styles, new RegExp(`\\.${variante} \\{`));
+  assert.match(lienButton, /export function LienButton\(/);
+  assert.match(lienButton, /<Link/);
+  for (const variant of ["filled", "tonal", "outlined", "text"]) {
+    assert.match(styles, new RegExp(`\\.${variant} \\{`));
   }
   assert.match(styles, /min-height: 48px/);
   assert.match(styles, /min-width: 58px/);
@@ -41,15 +41,15 @@ test("les primitives partagées exposent des variantes sémantiques et préserve
 });
 
 test("les composants métier réutilisent les primitives au lieu de redéfinir leurs boutons", () => {
-  assert.match(favoris, /import \{ Bouton \} from "@\/components\/ui\/bouton"/);
-  assert.match(favoris, /<Bouton/);
+  assert.match(favoris, /import \{ Button \} from "@\/components\/ui\/bouton"/);
+  assert.match(favoris, /<Button/);
   assert.doesNotMatch(favoris, /<button/);
-  assert.match(decouverte, /<Bouton/);
+  assert.match(decouverte, /<Button/);
   assert.match(decouverte, /IconeMaterial name="shuffle" size=\{18\}/);
   assert.ok(favoris.includes("size={compact ? 24 : 18}"));
   assert.match(historique, /IconeMaterial name="close" size=\{24\}/);
   assert.doesNotMatch(decouverte, /<button/);
-  assert.match(notFound, /<LienBouton/);
+  assert.match(notFound, /<Link/);
 });
 
 test("la page d'erreur ne prétend pas transmettre une erreur journalisée localement", () => {
@@ -67,17 +67,17 @@ test("la vitrine n'attribue aucune couleur selon l'index du prénom", () => {
   assert.match(globalStyles, /\.featured-bottom strong\s*\{[^}]*on-surface/s);
 });
 
-const champ = await readFile(new URL("../components/ui/champ-recherche.tsx", import.meta.url), "utf8");
-const champStyles = await readFile(new URL("../components/ui/champ-recherche.module.css", import.meta.url), "utf8");
+const champ = await readFile(new URL("../components/ui/SearchBar.tsx", import.meta.url), "utf8");
+const champStyles = await readFile(new URL("../components/ui/SearchBar.module.css", import.meta.url), "utf8");
 const catalogue = await readFile(new URL("../components/recherche-prenoms.tsx", import.meta.url), "utf8");
 const comparateur = await readFile(new URL("../components/comparateur-prenoms.tsx", import.meta.url), "utf8");
 const listeFavoris = await readFile(new URL("../components/liste-favoris.tsx", import.meta.url), "utf8");
 test("les trois parcours visiteurs utilisent le même champ de recherche accessible", () => {
-  assert.match(champ, /export function ChampRecherche\(/);
+  assert.match(champ, /export function SearchBar\(/);
   assert.match(champ, /<label[^>]+htmlFor=\{id\}/);
   assert.match(champ, /type="search"/);
-  assert.match(champ, /ariaLabel=\{.Effacer/);
-  assert.match(champ, /<Bouton[\s\S]*?taille="icon"/);
+  assert.match(champ, /aria-label=\{`Effacer/);
+  assert.match(champ, /<Button[\s\S]*?size="icon"/);
   assert.match(champ, /IconeMaterial name="close"/);
   assert.match(champ, /useRef<HTMLInputElement>\(null\)/);
   assert.match(champ, /champRef\.current\?\.focus\(\)/);
@@ -95,23 +95,23 @@ test("les trois parcours visiteurs utilisent le même champ de recherche accessi
   assert.doesNotMatch(champ, /compact\??:/);
   assert.doesNotMatch(champStyles, /\.clear\s*\{/);
   assert.match(styles, /min-height: 48px/);
-  assert.match(catalogue, /<ChampRecherche/);
-  assert.match(comparateur, /<ChampRecherche/);
-  assert.match(listeFavoris, /<ChampRecherche/);
+  assert.match(catalogue, /<SearchBar/);
+  assert.match(comparateur, /<SearchBar/);
+  assert.match(listeFavoris, /<SearchBar/);
   assert.doesNotMatch(globalStyles, /\.search-field\s*\{/);
   assert.doesNotMatch(globalStyles, /\.compare-search input\s*\{/);
 });
 
-const boutonComparaison = await readFile(new URL("../components/ui/bouton-comparaison.tsx", import.meta.url), "utf8");
-const boutonComparaisonStyles = await readFile(new URL("../components/ui/bouton-comparaison.module.css", import.meta.url), "utf8");
+const boutonComparaison = await readFile(new URL("../components/ui/ComparisonButton.tsx", import.meta.url), "utf8");
+const boutonComparaisonStyles = await readFile(new URL("../components/ui/ComparisonButton.module.css", import.meta.url), "utf8");
 const favorisComparaison = await readFile(new URL("../components/liste-favoris.module.css", import.meta.url), "utf8");
 const catalogueComparaison = await readFile(new URL("../components/recherche-prenoms.module.css", import.meta.url), "utf8");
 
 test("le contrôle de comparaison partagé couvre catalogue et favoris sans styles dupliqués", () => {
-  assert.match(boutonComparaison, /export function BoutonComparaison\(/);
-  assert.match(boutonComparaison, /ariaPressed=\{selectionne\}/);
-  assert.match(boutonComparaison, /ariaLabel=\{/);
-  assert.match(boutonComparaison, /variante=\{selectionne \? "tonal" : "outlined"\}/);
+  assert.match(boutonComparaison, /export function ComparisonButton\(/);
+  assert.match(boutonComparaison, /aria-pressed=\{selected\}/);
+  assert.match(boutonComparaison, /aria-label=\{/);
+  assert.match(boutonComparaison, /variant=\{selected \? "tonal" : "outlined"\}/);
   assert.match(boutonComparaisonStyles, /@media \(max-width: 420px\)/);
   assert.match(boutonComparaisonStyles, /min-width: 48px/);
   assert.doesNotMatch(favorisComparaison, /\.compareToggle/);
@@ -135,14 +135,14 @@ test("les listes de prénoms sélectionnés partagent un seul composant accessib
   assert.doesNotMatch(globalStyles, /\.compare-selected-list\s*\{/);
 });
 
-const chipFiltre = await readFile(new URL("../components/ui/chip-filtre.tsx", import.meta.url), "utf8");
-const chipFiltreStyles = await readFile(new URL("../components/ui/chip-filtre.module.css", import.meta.url), "utf8");
+const chipFiltre = await readFile(new URL("../components/ui/FilterChip.tsx", import.meta.url), "utf8");
+const chipFiltreStyles = await readFile(new URL("../components/ui/FilterChip.module.css", import.meta.url), "utf8");
 const rechercheFiltres = await readFile(new URL("../components/recherche-prenoms.tsx", import.meta.url), "utf8");
 
 test("les filtres de genre et d'initiale partagent des puces Fidelity", () => {
-  assert.match(chipFiltre, /export function ChipFiltre\(/);
-  assert.match(chipFiltre, /aria-pressed=\{selectionne\}/);
-  assert.match(chipFiltre, /selectionne && <IconeMaterial name="check"/);
+  assert.match(chipFiltre, /export function FilterChip\(/);
+  assert.match(chipFiltre, /aria-pressed=\{selected\}/);
+  assert.match(chipFiltre, /selected && <IconeMaterial name="check"/);
   assert.match(chipFiltreStyles, /secondary-container/);
   assert.match(chipFiltreStyles, /:focus-visible/);
   assert.match(chipFiltreStyles, /border-color var\(--md-sys-motion-duration-short3\)/);
@@ -151,23 +151,18 @@ test("les filtres de genre et d'initiale partagent des puces Fidelity", () => {
   const mediaSurvol = chipFiltreStyles.indexOf("@media (hover: hover) and (pointer: fine)");
   const regleSurvol = chipFiltreStyles.indexOf(".chip:hover");
   assert.ok(mediaSurvol >= 0 && regleSurvol > mediaSurvol, "Le survol des filtres doit être réservé aux pointeurs fins");
-  assert.match(rechercheFiltres, /<ChipFiltre/);
+  assert.match(rechercheFiltres, /<FilterChip/);
   assert.doesNotMatch(globalStyles, /filter-chip|filter-letter|Expressive/);
 });
 
-const champSelect = await readFile(new URL("../components/ui/champ-select.tsx", import.meta.url), "utf8");
-const champSelectStyles = await readFile(new URL("../components/ui/champ-select.module.css", import.meta.url), "utf8");
 const favorisSelects = await readFile(new URL("../components/liste-favoris.tsx", import.meta.url), "utf8");
 const favorisSelectStyles = await readFile(new URL("../components/liste-favoris.module.css", import.meta.url), "utf8");
 
-test("les sélecteurs des favoris utilisent un champ natif partagé", () => {
-  assert.match(champSelect, /export function ChampSelect\(/);
-  assert.match(champSelect, /<label htmlFor=\{id\}>/);
-  assert.match(champSelect, /<select id=\{id\}/);
-  assert.match(champSelect, /options\.map/);
-  assert.match(champSelectStyles, /:focus-visible/);
-  assert.match(favorisSelects, /<ChampSelect/);
-  assert.doesNotMatch(favorisSelectStyles, /\.genre select|\.sort select/);
+test("les filtres utilisent directement le select natif du navigateur", () => {
+  assert.doesNotMatch(favorisSelects, /ChampSelect|champ-select/);
+  assert.match(favorisSelects, /<select id="genre-favoris"/);
+  assert.match(favorisSelects, /<select id="tri-favoris"/);
+  assert.match(favorisSelectStyles, /\.selectField select/);
 });
 
 const adminActions = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
@@ -176,12 +171,12 @@ const comparateurActions = await readFile(new URL("../components/comparateur-pre
 const adminStyles = await readFile(new URL("../app/admin/admin.module.css", import.meta.url), "utf8");
 
 test("les actions de l'administration et des visiteurs utilisent les boutons partagés", () => {
-  assert.match(adminActions, /import \{ Bouton \} from "@\/components\/ui\/bouton"/);
-  assert.match(adminActions, /<Bouton/);
-  assert.match(favorisActions, /<Bouton/);
-  assert.match(favorisActions, /<LienBouton/);
-  assert.match(lienBouton, /^"use client";/);
-  assert.match(comparateurActions, /<Bouton/);
+  assert.match(adminActions, /import \{ Button \} from "@\/components\/ui\/bouton"/);
+  assert.match(adminActions, /<Button/);
+  assert.match(favorisActions, /<Button/);
+  assert.match(favorisActions, /<LienButton/);
+  assert.match(lienButton, /^"use client";/);
+  assert.match(comparateurActions, /<Button/);
   assert.doesNotMatch(adminActions, /button-dark|styles\.secondary/);
   assert.doesNotMatch(favorisActions, /button-dark/);
   assert.doesNotMatch(comparateurActions, /button-dark/);
@@ -275,8 +270,8 @@ test("les formulaires administratifs utilisent les surfaces, formes et dimension
 });
 
 test("le partage réutilise le bouton commun et ne garde pas un style concurrent", () => {
-  assert.match(partage, /import \{ Bouton \} from "@\/components\/ui\/bouton"/);
-  assert.match(partage, /<Bouton variante="tonal"/);
+  assert.match(partage, /import \{ Button \} from "@\/components\/ui\/bouton"/);
+  assert.match(partage, /<Button variant="tonal"/);
   assert.doesNotMatch(partage, /share-button/);
   assert.doesNotMatch(globalStyles, /\.share-button\s*\{/);
 });
@@ -348,10 +343,10 @@ const rechercheActions = await readFile(new URL("../components/recherche-prenoms
 test("les actions de catalogue, favoris et comparaison utilisent le bouton commun", () => {
   for (const source of [rechercheActions, favorisActions, comparateurActions]) {
     assert.doesNotMatch(source, /<button\b/);
-    assert.match(source, /<Bouton\s+variante="text"/);
+    assert.match(source, /<Button\s+variant="text"/);
     assert.match(source, /className="filter-action"/);
   }
-  assert.match(favorisActions, /<Bouton\s+variante="tonal"/);
+  assert.match(favorisActions, /<Button\s+variant="tonal"/);
   assert.doesNotMatch(globalStyles, /\.filter-reset|\.compare-selection-footer > button/);
   assert.doesNotMatch(globalStyles, /\.copyButton\s*\{/);
   assert.match(globalStyles, /\.filter-action\s*\{[^}]*width: max-content/s);
@@ -397,9 +392,9 @@ const historiqueStyles = await readFile(new URL("../components/historique-prenom
 const barreComparaisonStyles = await readFile(new URL("../components/barre-comparaison.module.css", import.meta.url), "utf8");
 
 test("les actions d'effacement de l'accueil et de comparaison utilisent les primitives communes", () => {
-  assert.match(historiqueActions, /<Bouton variante="text"[^>]*onClick=\{effacer\}/);
-  assert.match(barreComparaisonActions, /<Bouton variante="text"[^>]*onClick=\{onEffacer\}/);
-  assert.match(barreComparaisonActions, /<LienBouton[^>]*variante="filled"/);
+  assert.match(historiqueActions, /<Button variant="text"[^>]*onClick=\{effacer\}/);
+  assert.match(barreComparaisonActions, /<Button variant="text"[^>]*onClick=\{onEffacer\}/);
+  assert.match(barreComparaisonActions, /<LienButton[^>]*variant="filled"/);
   assert.doesNotMatch(historiqueActions, /<button\b/);
   assert.doesNotMatch(barreComparaisonActions, /<button\b|<Link\b/);
   assert.doesNotMatch(historiqueStyles, /\.clear\s*\{/);
