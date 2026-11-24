@@ -326,7 +326,7 @@ export function ListeFavoris({
                     </span>
                     <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
                   </Link>
-                  <ButtonComparaison
+                  <ComparisonToggle
                     name={prenom.nom}
                     selected={selectionValide.includes(prenom.slug)}
                     disabled={!selectionValide.includes(prenom.slug) && selectionValide.length >= 3}
