@@ -32,7 +32,7 @@ export function NameHistory({ prenoms }: { prenoms: PrenomIndex[] }) {
           {slugs.length > 0 && (
             <Button variant="text" type="button" onClick={effacer}>
               Effacer l’historique
-            </IconButton>
+            </Button>
           )}
         </div>
         {erreur && (
@@ -62,7 +62,7 @@ export function NameHistory({ prenoms }: { prenoms: PrenomIndex[] }) {
                     onClick={() => retirer(prenom.slug)}
                   >
                     <span aria-hidden="true"><Icon name="close" size={24} /></span>
-                  </Button>
+                  </IconButton>
                 </Card>
               ))}
             </div>
