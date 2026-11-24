@@ -45,6 +45,10 @@ test("les vues de prénoms affichent le pictogramme sans libellé visible", () =
   assert.doesNotMatch(openGraph, /\{prenom\.genre\}/);
 });
 
+test("la découverte aléatoire affiche le pictogramme du prénom sélectionné", () => {
+  assert.match(discovery, /<GenreIcon genre=\{selection\.genre\}/);
+});
+
 test("les filtres de genre utilisent les pictogrammes et conservent un nom accessible", () => {
   for (const source of [catalogue, favorites]) {
     assert.match(source, /leadingIcon=\{<Icon name=\{GENRE_ICONS\[genre\]\}/);
