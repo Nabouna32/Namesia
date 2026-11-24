@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const globalCss = await readFile(join(root, "app/globals.css"), "utf8");
+const layoutSource = await readFile(join(root, "app/layout.tsx"), "utf8");
 const tokensCss = await readFile(join(root, "styles/material3/tokens.css"), "utf8");
 const provider = await readFile(join(root, "components/material3/MaterialThemeProvider.tsx"), "utf8");
 const theme = await readFile(join(root, "lib/material-theme.ts"), "utf8");
@@ -73,6 +74,13 @@ function collectRules(css) {
   scan(0, css.length, []);
   return rules;
 }
+
+test("Roboto est la seule police de l’interface, sans police de substitution", () => {
+  assert.match(layoutSource, /display: "block"/);
+  assert.match(layoutSource, /adjustFontFallback: false/);
+  assert.doesNotMatch(layoutSource, /display: "swap"/);
+  assert.match(tokensCss, /--md-sys-typescale-body-large-font: var\(--font-roboto\);/);
+});
 
 test("les composants sont organisés par domaine et aucune primitive Namesia historique ne subsiste", async () => {
   const entries = await readdir(join(root, "components"), { withFileTypes: true });
