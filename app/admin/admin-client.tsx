@@ -5,6 +5,7 @@ import { createClient, type Session } from "@supabase/supabase-js";
 import { FICHE_SCHEMA_VERSION, parseFichePrenom, type FichePrenomImport } from "@/lib/fiche-prenom";
 import styles from "./admin.module.css";
 import { Button } from "@/components/ui/Button";
+import { TextField } from "@/components/ui/TextField";
 import { StatusMessage, type StatusMessageType } from "@/components/ui/StatusMessage";
 
 const supabase = createClient(
@@ -277,8 +278,7 @@ export function AdminClient() {
       <h2>Connexion administrateur</h2>
       <p>Recevez un lien de connexion par e-mail. Seuls les comptes autorisés dans Namesia peuvent administrer le catalogue.</p>
       <form className={styles.form} onSubmit={connecter}>
-        <label htmlFor="admin-email">Adresse e-mail</label>
-        <input id="admin-email" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
+        <TextField id="admin-email" label="Adresse e-mail" variant="outlined" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
         <Button type="submit" disabled={busy}>{busy ? "Envoi…" : "Recevoir un lien de connexion"}</Button>
       </form>
       {message && <StatusMessage type={message.type}>{message.text}</StatusMessage>}
@@ -300,8 +300,7 @@ export function AdminClient() {
       <Button variant="outlined" type="button" onClick={deconnecter}>Déconnexion</Button>
     </div>
     <form className={styles.form} onSubmit={importer}>
-      <label htmlFor="fiche-json">Fiche JSON (version {FICHE_SCHEMA_VERSION})</label>
-      <label htmlFor="fiche-fichier">Importer un fichier JSON</label>
+            <label htmlFor="fiche-fichier">Importer un fichier JSON</label>
       <input id="fiche-fichier" type="file" accept="application/json,.json" disabled={busy} onChange={async (event) => {
         const file = event.target.files?.[0];
         if (file) {
