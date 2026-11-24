@@ -1,6 +1,6 @@
 # ADR-0015 — Direction Pixel Material 3 Fidelity
 
-- **Statut :** acceptée
+- **Statut :** remplacée par [ADR-0028](ADR-0028-baseline-material-3-androidx-et-couleurs-semantiques.md)
 - **Date :** 2026-11-23
 
 ## Contexte
