@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/material3/Button";
 import { IconButton } from "@/components/material3/IconButton";
-import { IconeMaterial } from "@/components/material3/Icon";
+import { Icon } from "@/components/material3/Icon";
 import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
 import styles from "./FavoriteButton.module.css";
 
