@@ -156,7 +156,18 @@ La dette technique est suivie avec honnêteté. Une dette acceptée doit être v
 Une dérogation est acceptable si elle est plus simple, plus sûre ou mieux adaptée au besoin réel. Elle doit être localisée et justifiée dans le code ou la PR : contrainte, alternative écartée, coût et condition de réexamen. Une dérogation temporaire doit avoir un critère de sortie. L'absence de temps ne transforme pas une rustine en solution durable.
 
 
-## 10. Environnement d'exécution et dépendances
+## 10. En-têtes HTTP et sécurité du navigateur
+
+Next.js applique les en-têtes de sécurité communs à toutes les routes dans `next.config.ts` :
+
+- `X-Content-Type-Options: nosniff` empêche le navigateur de deviner un type MIME différent de celui annoncé.
+- `X-Frame-Options: DENY` interdit l'intégration de Namesia dans une frame, qui n'est pas un parcours produit pris en charge.
+- `Referrer-Policy: strict-origin-when-cross-origin` limite les informations de navigation transmises aux autres origines sans supprimer le référent sur les liens internes.
+- `Permissions-Policy` désactive caméra, microphone et géolocalisation, fonctionnalités que l'application ne demande pas.
+
+Les en-têtes sont appliqués au niveau Next.js à l'ensemble des routes, y compris les routes API. Ne pas ajouter de politique CSP restrictive sans inventorier d'abord les scripts et styles inline produits par Next.js et les intégrations réellement utilisées. HSTS relève du domaine HTTPS et de sa configuration d'hébergement ; ne pas activer `includeSubDomains` ou `preload` sans maîtriser tous les sous-domaines concernés.
+
+## 11. Environnement d'exécution et dépendances
 
 - La version de référence de Node.js est définie une seule fois dans `.nvmrc` (26.13.1), sur la branche majeure 26.x ; le paramètre de runtime Vercel doit être réglé sur 26.x.
 - `package.json` et `package-lock.json` expriment la contrainte compatible `26.x` ; `.npmrc` active `engine-strict=true` pour refuser un runtime incompatible dès l'installation.
