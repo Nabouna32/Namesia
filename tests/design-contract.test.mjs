@@ -237,9 +237,13 @@ test("l'échelle typographique Material 3 est complète et limitée aux graisses
 });
 
 test("l'approche typographique utilise exclusivement les tokens de rôle Material 3", () => {
-  assert.doesNotMatch(allCss, /letter-spacing:\\s*(?!var\\(--md-sys-typescale-[\\w-]+-tracking\\))[^;]+;/);
-  assert.match(globalCss, /\\.section-heading h2\\s*\\{[^}]*letter-spacing:\\s*var\\(--md-sys-typescale-headline-medium-tracking\\)/s);
-  assert.match(globalCss, /\\.profile-section-heading h2\\s*\\{[^}]*letter-spacing:\\s*var\\(--md-sys-typescale-headline-small-tracking\\)/s);
+  const approches = [...allCss.matchAll(/letter-spacing:\s*([^;]+);/g)].map((match) => match[1].trim());
+  assert.ok(
+    approches.every((valeur) => /^var\(--md-sys-typescale-[\w-]+-tracking\)$/.test(valeur)),
+    "Chaque approche doit provenir du token de tracking de son rôle"
+  );
+  assert.match(globalCss, /\.section-heading h2\s*\{[^}]*letter-spacing:\s*var\(--md-sys-typescale-headline-medium-tracking\)/s);
+  assert.match(globalCss, /\.profile-section-heading h2\s*\{[^}]*letter-spacing:\s*var\(--md-sys-typescale-headline-small-tracking\)/s);
 });
 
 test("les textes utilisent les interlignes de leur rôle Material 3", () => {
