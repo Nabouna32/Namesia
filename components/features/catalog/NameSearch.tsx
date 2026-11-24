@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import type { PrenomIndex } from "@/lib/prenoms";
+import type { GenrePrenom, PrenomIndex } from "@/lib/prenoms";
 import { ComparisonBar } from "@/components/features/comparison/ComparisonBar";
 import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
@@ -17,10 +17,10 @@ import { ShareLink } from "@/components/features/sharing/ShareLink";
 import { FilterChip } from "@/components/material3/FilterChip";
 import { Card } from "@/components/material3/Card";
 
-const genderIcons: Record<string, IconName> = {
-  Féminin: "gender-female",
-  Masculin: "gender-male",
-  Mixte: "gender-mixed",
+const genderIcons: Record<GenrePrenom, IconName> = {
+  "Féminin": "gender-female",
+  "Masculin": "gender-male",
+  "Mixte": "gender-mixed",
   "Genre non renseigné": "gender-unknown"
 };
 
