@@ -1521,13 +1521,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     bottom: 0;
     left: 0;
     display: block;
-    padding: 0 8px env(safe-area-inset-bottom);
+    padding: 8px 8px env(safe-area-inset-bottom);
     background: var(--md-sys-color-surface-container);
   }
   .navigation-bar .navigation-items { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; }
   .navigation-bar .navigation-item { min-height: 64px; padding: 4px 0; }
   .navigation-bar .navigation-item-label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .app-content { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+  .app-content { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
   .hero-content { padding-block: 52px 60px; }
   .section-heading {
     align-items: flex-start;
