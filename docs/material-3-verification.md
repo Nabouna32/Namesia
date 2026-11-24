@@ -50,7 +50,7 @@ Les sources normatives sont les spécifications Material 3. Pour l'implémentati
 
 | Paramètre | Valeur | Justification |
 |---|---|---|
-| Couleur source | `#6750A4` | Violet de la baseline Material 3 documentée par Android Developers ; ce n'est pas un bleu Google |
+| Couleur source Namesia | `#0B57D0` | Google Blue `baseline_primary_600` du thème Android Chromium, utilisé comme source personnalisée de génération Fidelity/Rainbow |
 | Variante d'interface | `Variant.FIDELITY` | Conserve le caractère de la couleur source selon la variante M3 |
 | Variante catégorielle | `Variant.RAINBOW` | Schéma distinct réservé aux catégories éditoriales |
 | Version ColorSpec | `2021` | Version de l'algorithme de génération des couleurs, pas version de Material Design 3. `DynamicScheme.maybeFallbackSpecVersion` force Fidelity/Rainbow vers 2021 car les spécifications 2025 et 2026 ne les prennent pas en charge |
@@ -65,7 +65,7 @@ Les sources normatives sont les spécifications Material 3. Pour l'implémentati
 - Les conteneurs et composants utilisent les rôles `surface`, `surface-container-low`, `surface-container`, `surface-container-high` et `surface-container-highest` selon leur hiérarchie ; les contenus reposent sur le rôle `on-surface` ou `on-surface-variant`.
 - Les surfaces d'accent utilisent les paires prévues : `primary/on-primary`, `primary-container/on-primary-container`, etc. Un conteneur n'est jamais associé à un premier plan d'une autre famille.
 - Le mode sombre recalcule le schéma complet ; il ne se contente pas d'inverser les couleurs claires.
-- Le bleu Google de marque (par exemple `#4285F4`) n'est pas la couleur source de la baseline Material 3. Ne pas remplacer la source M3 par le bleu Google par simple assimilation de marque.
+- La source Google Blue `#0B57D0` n'est pas un rôle système M3 : elle sert uniquement d'entrée au générateur Fidelity/Rainbow. Les composants continuent de consommer les rôles calculés, jamais cette valeur brute.
 
 ## Contrôles automatisés
 
