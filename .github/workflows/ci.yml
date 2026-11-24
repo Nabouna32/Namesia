@@ -52,11 +52,28 @@ jobs:
           verifier_code 0 VERCEL_ENV=preview VERCEL_GIT_COMMIT_REF=feature
           verifier_code 0 VERCEL_ENV=production
       - name: Tester les contrats locaux
+        id: tests
         run: npm test
+        continue-on-error: true
       - name: Vérifier les types
+        id: typecheck
         run: npm run typecheck
+        continue-on-error: true
       - name: Construire le site
+        id: build
         run: npm run build
+        continue-on-error: true
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://ftiikxwjaduecvuexlkk.supabase.co
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_QMGPd9f06uaubb8QpCTF9A_jH4y0fwA
+      - name: Résumer les contrôles
+        if: always()
+        env:
+          TEST_OUTCOME: ${{ steps.tests.outcome }}
+          TYPECHECK_OUTCOME: ${{ steps.typecheck.outcome }}
+          BUILD_OUTCOME: ${{ steps.build.outcome }}
+        run: |
+          printf 'Tests : %s\nTypes : %s\nBuild : %s\n' "$TEST_OUTCOME" "$TYPECHECK_OUTCOME" "$BUILD_OUTCOME"
+          if [[ "$TEST_OUTCOME" != "success" || "$TYPECHECK_OUTCOME" != "success" || "$BUILD_OUTCOME" != "success" ]]; then
+            exit 1
+          fi
