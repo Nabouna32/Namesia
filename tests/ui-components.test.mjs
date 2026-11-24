@@ -64,7 +64,7 @@ test("la vitrine n'attribue aucune couleur selon l'index du prénom", () => {
   assert.doesNotMatch(vitrine, /featured-\$\{index/);
   assert.doesNotMatch(vitrine, /featured-\d/);
   assert.doesNotMatch(globalStyles, /\.featured-[123]\b/);
-  assert.match(globalStyles, /\.featured-card\s*\{[^}]*surface-container-low/s);
+  assert.match(cardStyles, /\.elevated\s*\{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.featured-bottom strong\s*\{[^}]*on-surface/s);
 });
 
@@ -235,18 +235,17 @@ test("Rainbow ne colore plus les titres ou les surfaces générales", () => {
 });
 
 
-test("les cartes évitent les effets décoratifs et les boutons utilisent les couches d’état Material", () => {
-  const nomBase = globalStyles.indexOf(".name-card { min-height: 76px;");
-  const nomHover = globalStyles.slice(globalStyles.indexOf(".name-card:hover {", nomBase));
-  const vedetteHover = globalStyles.slice(globalStyles.lastIndexOf(".featured-card:hover {"));
+test("les cartes utilisent les états Material centralisés et les boutons les couches d’état", () => {
+  const elevatedHover = cardStyles.slice(cardStyles.indexOf(".interactive.elevated:hover {"));
+  const filledHover = cardStyles.slice(cardStyles.indexOf(".interactive.filled:hover,"));
   assert.match(styles, /\.button::after/);
   assert.match(styles, /md-sys-state-hover-state-layer-opacity/);
   assert.match(styles, /md-sys-state-pressed-state-layer-opacity/);
   assert.doesNotMatch(styles, /filter:\s*brightness/);
-  assert.match(nomHover, /surface-container-high/);
-  assert.match(vedetteHover, /surface-container-high/);
-  assert.doesNotMatch(nomHover.slice(0, nomHover.indexOf("\n}")), /translateY|box-shadow:\s*var/);
-  assert.doesNotMatch(vedetteHover.slice(0, vedetteHover.indexOf("\n}")), /translateY|box-shadow:\s*var/);
+  assert.match(elevatedHover, /surface-container/);
+  assert.match(filledHover, /surface-container-highest/);
+  assert.doesNotMatch(elevatedHover.slice(0, elevatedHover.indexOf("\n}")), /translateY/);
+  assert.doesNotMatch(filledHover.slice(0, filledHover.indexOf("\n}")), /translateY/);
   assert.doesNotMatch(globalStyles, /button:active[^}]*scale\(/);
 });
 
