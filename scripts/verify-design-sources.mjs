@@ -72,6 +72,11 @@ const sources = [
     markers: ["get() = 32.0.dp", "get() = TypographyKeyTokens.LabelLarge"],
   },
   {
+    name: "AndroidX TextFieldDefaults",
+    url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/TextFieldDefaults.kt",
+    markers: ["TextFieldDefaults"],
+  },
+  {
     name: "Material Color Utilities Fidelity",
     url: "https://raw.githubusercontent.com/material-foundation/material-color-utilities/b03ef34bb53a15c3ba41bf963eb3e2c5c353c85f/typescript/dynamiccolor/dynamic_scheme.ts",
     markers: ["Variant.FIDELITY", "specVersion"],
@@ -98,6 +103,32 @@ const sources = [
     markers: ["baseline_primary_600", "0B57D0"],
   },
 ];
+
+const additionalAndroidxSources = [
+  ["AppBarSmallTokens.kt", "AppBarSmallTokens"],
+  ["PaletteTokens.kt", "PaletteTokens"],
+  ["BaselineButtonTokens.kt", "BaselineButtonTokens"],
+  ["ButtonSmallTokens.kt", "ButtonSmallTokens"],
+  ["OutlinedButtonTokens.kt", "OutlinedButtonTokens"],
+  ["TextButtonTokens.kt", "TextButtonTokens"],
+  ["IconButton.kt", "IconButton"],
+  ["IconButtonTokens.kt", "StandardIconButtonTokens"],
+  ["ElevatedCardTokens.kt", "ElevatedCardTokens"],
+  ["FilledCardTokens.kt", "FilledCardTokens"],
+  ["OutlinedCardTokens.kt", "OutlinedCardTokens"],
+  ["FilledTextFieldTokens.kt", "FilledTextFieldTokens"],
+  ["OutlinedTextFieldTokens.kt", "OutlinedTextFieldTokens"],
+  ["InputChipTokens.kt", "InputChipTokens"],
+  ["NavigationRailCollapsedTokens.kt", "NavigationRailCollapsedTokens"],
+  ["NavigationRailColorTokens.kt", "NavigationRailColorTokens"],
+  ["NavigationRailBaselineItemTokens.kt", "NavigationRailBaselineItemTokens"],
+  ["NavigationRailVerticalItemTokens.kt", "NavigationRailVerticalItemTokens"],
+  ["SnackbarTokens.kt", "SnackbarTokens"],
+].map(([file, marker]) => ({
+  name: `AndroidX ${file}`,
+  url: `https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/${file === "IconButton.kt" ? file : `tokens/${file}`}`,
+  markers: [marker],
+}));
 
 async function fetchSource(source) {
   let response;
@@ -145,4 +176,4 @@ async function verifySourcesWithLimit(items, concurrency) {
   await Promise.all(workers);
 }
 
-await verifySourcesWithLimit(sources, 4);
+await verifySourcesWithLimit([...sources, ...additionalAndroidxSources], 4);

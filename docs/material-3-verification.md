@@ -4,7 +4,7 @@
 - **Mis à jour :** 2026-11-24
 - **Référence d'implémentation AndroidX :** Compose Material 3 `1.5.0` stable, arbre source figé au commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c` (borne de fin de la plage de commits de la release du 18 novembre 2026).
 - **Portée :** couleurs, tokens système et preuves d'implémentation des composants ; ce document ne certifie pas à lui seul la conformité visuelle de chaque écran.
-- **Vérification des sources :** `scripts/verify-design-sources.mjs` télécharge avec une concurrence plafonnée à quatre requêtes, trois tentatives et un délai maximal par source depuis les commits épinglés les implémentations AndroidX Button, Checkbox, Card, SearchBar, TextField, NavigationBar, NavigationRail, Chips, TopAppBar et Snackbar, ainsi que leurs tokens dimensionnels. Il vérifie aussi Material Color Utilities, Angular Material et la source Chromium du bleu Google. Les marqueurs de contenu contrôlent les dimensions, rôles, formes et typographies cités ; le contrôle statique des liens reste complémentaire.
+- **Vérification des sources :** `scripts/verify-design-sources.mjs` télécharge avec une concurrence plafonnée à quatre requêtes, trois tentatives et un délai maximal par source depuis les commits épinglés les 33 fichiers AndroidX cités dans le registre, dont les implémentations Button, Checkbox, Card, SearchBar, TextField, IconButton, NavigationBar, NavigationRail, Chips, TopAppBar et Snackbar, ainsi que leurs fichiers de tokens associés. Il vérifie aussi Material Color Utilities, Angular Material et la source Chromium du bleu Google. Les marqueurs de contenu contrôlent les dimensions, rôles, formes et typographies cités ; le contrôle statique des liens reste complémentaire.
 
 ## Sources de référence
 
