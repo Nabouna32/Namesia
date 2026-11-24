@@ -7,9 +7,9 @@ const catalogue = await readFile(new URL("../components/features/catalog/NameSea
 const comparateur = await readFile(new URL("../components/features/comparison/NameComparator.tsx", import.meta.url), "utf8");
 
 test("le partage ne transmet que les paramètres explicitement autorisés", () => {
-  assert.match(partage, /parametres\?: string\[\]/);
-  assert.match(partage, /for \(const parametre of parametres\)/);
-  assert.match(partage, /recherche\.get\(parametre\)/);
+  assert.match(partage, /queryParameters\?: string\[\]/);
+  assert.match(partage, /for \(const parameter of queryParameters\)/);
+  assert.match(partage, /recherche\.get\(parameter\)/);
   assert.doesNotMatch(partage, /searchParams\.forEach|searchParams\.entries/);
 });
 
