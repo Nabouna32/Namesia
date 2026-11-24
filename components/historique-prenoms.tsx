@@ -61,7 +61,7 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
                     ariaLabel={`Retirer ${prenom.nom} de l’historique`}
                     onClick={() => retirer(prenom.slug)}
                   >
-                    <span aria-hidden="true"><IconeMaterial name="close" size={20} /></span>
+                    <span aria-hidden="true"><IconeMaterial name="close" size={24} /></span>
                   </Bouton>
                 </article>
               ))}

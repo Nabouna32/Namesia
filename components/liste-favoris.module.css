@@ -37,8 +37,7 @@ padding: 0 16px;
 }
 
 .importButton:focus-within {
-  outline: 3px solid var(--md-sys-color-primary);
-  outline-offset: 3px;
+  border-color: var(--md-sys-color-primary);
 }
 
 .help {

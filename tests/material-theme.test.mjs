@@ -90,10 +90,10 @@ test("les extensions Namesia ne se font pas passer pour des rôles M3", () => {
   assert.match(theme, /customColor\(sourceColorArgb/);
   assert.match(theme, /blend: false/);
   for (const role of ["success", "warning", "info"]) {
-    assert.match(theme, new RegExp("--namesia-color-" + role));
-    assert.match(theme, new RegExp("--namesia-color-on-" + role));
-    assert.match(theme, new RegExp("--namesia-color-" + role + "-container"));
-    assert.match(theme, new RegExp("--namesia-color-on-" + role + "-container"));
+    assert.ok(theme.includes('tokens["--namesia-color-" + role]'));
+    assert.ok(theme.includes('tokens["--namesia-color-on-" + role]'));
+    assert.ok(theme.includes('tokens["--namesia-color-" + role + "-container"]'));
+    assert.ok(theme.includes('tokens["--namesia-color-on-" + role + "-container"]'));
   }
 });
 

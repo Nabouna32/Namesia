@@ -19,7 +19,7 @@
 
 .control:focus-within {
   border: 2px solid var(--md-sys-color-primary);
-  padding-inline: 14px;
+  padding-inline: 16px;
 }
 
 .control:focus-within:has(button:focus-visible) {

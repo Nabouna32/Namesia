@@ -10,6 +10,7 @@ const decouverte = await readFile(new URL("../components/decouverte-aleatoire.ts
 const vitrine = await readFile(new URL("../components/prenoms-vedette.tsx", import.meta.url), "utf8");
 const notFound = await readFile(new URL("../app/not-found.tsx", import.meta.url), "utf8");
 const errorBoundary = await readFile(new URL("../app/error.tsx", import.meta.url), "utf8");
+const historique = await readFile(new URL("../components/historique-prenoms.tsx", import.meta.url), "utf8");
 
 test("les primitives partagées exposent des variantes sémantiques et préservent les éléments natifs", () => {
   assert.match(bouton, /export function Bouton\(/);
@@ -20,7 +21,22 @@ test("les primitives partagées exposent des variantes sémantiques et préserve
     assert.match(styles, new RegExp(`\\.${variante} \\{`));
   }
   assert.match(styles, /min-height: 48px/);
+  assert.match(styles, /min-width: 58px/);
   assert.match(styles, /width: 48px/);
+  assert.match(styles, /inset: 4px 0/);
+  assert.match(styles, /corner-small/);
+  assert.match(styles, /outline-variant/);
+  assert.match(styles, /on-surface-variant/);
+  assert.match(styles, /\.text\s*\{[^}]*md-sys-color-primary/s);
+  assert.match(styles, /\.text\.icon\s*\{[^}]*on-surface-variant/s);
+  assert.match(styles, /button:not\(\.icon\):active/);
+  assert.match(styles, /color-mix\(in srgb, var\(--md-sys-color-on-surface\) 10%, transparent\)/);
+  assert.match(styles, /color-mix\(in srgb, var\(--md-sys-color-on-surface-variant\) 38%, transparent\)/);
+  assert.match(styles, /\.icon:disabled\s*\{[^}]*on-surface\) 38%/s);
+  assert.doesNotMatch(styles, /\.button:disabled\s*\{[^}]*opacity:/s);
+  assert.match(styles, /box-shadow: 0 1px 2px 0 color-mix/);
+  assert.doesNotMatch(styles, /overflow:\s*hidden/);
+  assert.match(styles, /filled:active::before[\s\S]*?box-shadow: none/);
 });
 
 test("les composants métier réutilisent les primitives au lieu de redéfinir leurs boutons", () => {
@@ -28,6 +44,9 @@ test("les composants métier réutilisent les primitives au lieu de redéfinir l
   assert.match(favoris, /<Bouton/);
   assert.doesNotMatch(favoris, /<button/);
   assert.match(decouverte, /<Bouton/);
+  assert.match(decouverte, /IconeMaterial name="shuffle" size=\{18\}/);
+  assert.ok(favoris.includes("size={compact ? 24 : 18}"));
+  assert.match(historique, /IconeMaterial name="close" size=\{24\}/);
   assert.doesNotMatch(decouverte, /<button/);
   assert.match(notFound, /<LienBouton/);
 });
@@ -69,7 +88,7 @@ test("les trois parcours visiteurs utilisent le même champ de recherche accessi
   assert.match(champStyles, /corner-full/);
   assert.match(champStyles, /surface-container-high/);
   assert.match(champStyles, /body-large-(?:font|size|weight|line-height|tracking)/);
-  assert.match(champStyles, /\.icon\s*\{[^}]*on-surface\s*\}/s);
+  assert.match(champStyles, /\.icon\s*\{[^}]*on-surface\)/s);
   assert.match(champStyles, /\.control \.clearButton\s*\{[^}]*on-surface-variant/s);
   assert.match(champStyles, /:focus-within/);
   assert.match(champStyles, /::-webkit-search-cancel-button/);
@@ -127,7 +146,8 @@ test("les filtres de genre et d'initiale partagent des puces Fidelity", () => {
   assert.match(chipFiltre, /selectionne && <IconeMaterial name="check"/);
   assert.match(chipFiltreStyles, /secondary-container/);
   assert.match(chipFiltreStyles, /:focus-visible/);
-  assert.match(chipFiltreStyles, /transition: border-color var\(--md-sys-motion-duration-short\)/);
+  assert.match(chipFiltreStyles, /border-color var\(--md-sys-motion-duration-short3\)/);
+  assert.match(chipFiltreStyles, /var\(--md-sys-state-pressed-state-layer-opacity\)/);
   assert.match(chipFiltreStyles, /\.chip:active/);
   const mediaSurvol = chipFiltreStyles.indexOf("@media (hover: hover) and (pointer: fine)");
   const regleSurvol = chipFiltreStyles.indexOf(".chip:hover");
@@ -205,13 +225,13 @@ test("Rainbow ne colore plus les titres ou les surfaces générales", () => {
   assert.doesNotMatch(globalStyles, /var\(--rainbow\)|color-rainbow-text/);
   assert.doesNotMatch(titre.slice(0, titre.indexOf("\n}")), /color-rainbow/);
   assert.doesNotMatch(profil.slice(0, profil.indexOf("\n}")), /color-rainbow/);
-  assert.match(titre, /--md-sys-color-primary/);
+  assert.match(titre, /--md-sys-color-on-surface/);
   assert.match(surfaceSymbolique, /var\(--namesia-color-category-container/);
   assert.match(surfaceSymbolique, /surface-container-low/);
 });
 
 
-test("les boutons et cartes utilisent les state layers Material plutôt que des zooms ou élévations", () => {
+test("les cartes évitent les effets décoratifs et les boutons utilisent les couches d’état Material", () => {
   const nomBase = globalStyles.indexOf(".name-card { min-height: 76px;");
   const nomHover = globalStyles.slice(globalStyles.indexOf(".name-card:hover {", nomBase));
   const vedetteHover = globalStyles.slice(globalStyles.lastIndexOf(".featured-card:hover {"));
@@ -269,10 +289,10 @@ test("la navigation applique des couches d'état Material, pas des surfaces opaq
     globalStyles.indexOf(".navigation-rail .navigation-items")
   );
   assert.match(navigationStyles, /@media \(hover: hover\) and \(pointer: fine\)/);
-  assert.match(navigationStyles, /on-surface-variant\) 8%, transparent/);
-  assert.match(navigationStyles, /on-secondary-container\) 8%, var\(--md-sys-color-secondary-container\)/);
-  assert.match(navigationStyles, /on-surface-variant\) 12%, transparent/);
-  assert.match(navigationStyles, /on-secondary-container\) 12%, var\(--md-sys-color-secondary-container\)/);
+  assert.match(navigationStyles, /on-surface-variant\) var\(--md-sys-state-hover-state-layer-opacity\), transparent/);
+  assert.match(navigationStyles, /on-secondary-container\) var\(--md-sys-state-hover-state-layer-opacity\), var\(--md-sys-color-secondary-container\)/);
+  assert.match(navigationStyles, /on-surface-variant\) var\(--md-sys-state-focus-state-layer-opacity\), transparent/);
+  assert.match(navigationStyles, /on-secondary-container\) var\(--md-sys-state-pressed-state-layer-opacity\), var\(--md-sys-color-secondary-container\)/);
   assert.doesNotMatch(navigationStyles, /\.navigation-item:hover[^}]*surface-container-high/);
   assert.doesNotMatch(navigationStyles, /transition:[^;]*(?:180|250)ms/);
 });
@@ -292,8 +312,8 @@ test("la typographie suit une échelle Material 3 unique sans surcharges respons
   assert.equal((globalStyles.match(/\.profile-hero h1\s*\{/g) ?? []).length, 1);
   assert.equal((globalStyles.match(/\.section-heading h2\s*\{/g) ?? []).length, 1);
   assert.doesNotMatch(globalStyles, /--font-serif|var\(--serif\)/);
-  assert.match(globalStyles, /--md-sys-typescale-body-large-font: Roboto;/);
-  assert.match(globalStyles, /--md-sys-typescale-headline-large-font: Roboto;/);
+  assert.match(globalStyles, /--md-sys-typescale-body-large-font: var\(--font-roboto\);/);
+  assert.match(globalStyles, /--md-sys-typescale-headline-large-font: var\(--font-roboto\);/);
   assert.doesNotMatch(globalStyles, /Google Sans|--font-(?:sans|display):[^;]*(?:Arial|system-ui|sans-serif)/);
 });
 
@@ -325,8 +345,6 @@ test("les surfaces principales Material sont définies à leur emplacement canon
 
 
 const rechercheActions = await readFile(new URL("../components/recherche-prenoms.tsx", import.meta.url), "utf8");
-const favorisActions = await readFile(new URL("../components/liste-favoris.tsx", import.meta.url), "utf8");
-const comparateurActions = await readFile(new URL("../components/comparateur-prenoms.tsx", import.meta.url), "utf8");
 
 test("les actions de catalogue, favoris et comparaison utilisent le bouton commun", () => {
   for (const source of [rechercheActions, favorisActions, comparateurActions]) {
@@ -366,7 +384,7 @@ test("les surfaces du catalogue et du comparateur ne dépendent plus de la couch
 
 test("la fiche prénom applique Material 3 dans ses règles canoniques", () => {
   assert.match(globalStyles, /\.profile-toc a\s*\{[^}]*min-height: 48px/s);
-  assert.match(globalStyles, /\.profile-toc a:focus-visible\s*\{[^}]*outline: 3px solid var\(--md-sys-color-primary\)/s);
+  assert.match(globalStyles, /a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible\s*\{[^}]*outline: 3px solid var\(--md-sys-color-primary\)/s);
   assert.match(globalStyles, /\.profile-section\s*\{[^}]*scroll-margin-top: 88px/s);
   assert.match(globalStyles, /\.profile-copy\s*\{[^}]*color: var\(--md-sys-color-on-surface\)/s);
   assert.match(globalStyles, /\.profile-section \+ \.profile-section\s*\{[^}]*outline-variant/s);
