@@ -31,16 +31,20 @@
 @media (hover: hover) and (pointer: fine) {
   .interactive.elevated:hover {
     background: var(--md-sys-color-surface-container);
-    box-shadow: 0 2px 4px 0 color-mix(in srgb, var(--md-sys-color-shadow) 30%, transparent),
-      0 1px 5px 1px color-mix(in srgb, var(--md-sys-color-shadow) 15%, transparent);
+    box-shadow: 0 1px 2px 0 color-mix(in srgb, var(--md-sys-color-shadow) 30%, transparent),
+      0 2px 6px 2px color-mix(in srgb, var(--md-sys-color-shadow) 15%, transparent);
   }
 
   .interactive.filled:hover {
     background: color-mix(in srgb, var(--md-sys-color-on-surface) var(--md-sys-state-hover-state-layer-opacity), var(--md-sys-color-surface-container-highest));
+    box-shadow: 0 1px 2px 0 color-mix(in srgb, var(--md-sys-color-shadow) 30%, transparent),
+      0 1px 3px 1px color-mix(in srgb, var(--md-sys-color-shadow) 15%, transparent);
   }
 
   .interactive.outlined:hover {
     background: color-mix(in srgb, var(--md-sys-color-on-surface) var(--md-sys-state-hover-state-layer-opacity), var(--md-sys-color-surface));
+    box-shadow: 0 1px 2px 0 color-mix(in srgb, var(--md-sys-color-shadow) 30%, transparent),
+      0 1px 3px 1px color-mix(in srgb, var(--md-sys-color-shadow) 15%, transparent);
   }
 }
 
@@ -54,6 +58,11 @@
 
 .interactive.outlined:active {
   background: color-mix(in srgb, var(--md-sys-color-primary) var(--md-sys-state-pressed-state-layer-opacity), var(--md-sys-color-surface));
+  box-shadow: none;
+}
+
+.interactive.filled:active {
+  box-shadow: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -273,7 +273,12 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.match(composantsDoc, /SearchBar/);
   assert.match(composantsDoc, /Button/);
   assert.match(composantsDoc, /IconButton/);
+  assert.match(composantsDoc, /Card/);
+  assert.match(composantsDoc, /TextField/);
   assert.match(materialVerificationDoc, /ButtonSmallTokens\.ContainerHeight/);
+  assert.match(materialVerificationDoc, /ElevatedCardTokens\.kt/);
+  assert.match(materialVerificationDoc, /FilledTextFieldTokens\.kt/);
+  assert.match(materialVerificationDoc, /OutlinedTextFieldTokens\.kt/);
   assert.match(materialVerificationDoc, /ButtonDefaults\.IconSize = 18\.dp/);
   assert.match(materialVerificationDoc, /40\.dp/);
   assert.match(materialVerificationDoc, /MinWidth = 58\.dp/);

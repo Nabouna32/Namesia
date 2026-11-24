@@ -26,27 +26,13 @@ gap: 12px;
 margin-top: 24px;
 }
 
-.form label {
+.form > label {
   color: var(--md-sys-color-on-surface);
   font-size: var(--md-sys-typescale-body-medium-size);
   font-weight: 500;
 }
 
-.form :is(input[type="email"], textarea) {
-  width: 100%;
-  min-width: 0;
-  min-height: 56px;
-padding: 16px;
-  border: 1px solid var(--md-sys-color-outline);
-  border-radius: var(--md-sys-shape-corner-extra-small);
-  background: var(--md-sys-color-surface);
-  color: var(--md-sys-color-on-surface);
-  font: inherit;
-  font-size: var(--md-sys-typescale-body-large-size);
-  transition: border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard), background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
-}
-
-.form textarea {
+.jsonField textarea {
   min-height: 320px;
   resize: vertical;
   font: 14px/1.6 ui-monospace, SFMono-Regular, Consolas, monospace;
@@ -78,13 +64,11 @@ padding: 0 16px;
   cursor: pointer;
 }
 
-.form input[type="email"]:focus-visible,
-.form textarea:focus-visible,
 .form input[type="file"]:focus-visible {
   border-color: var(--md-sys-color-primary);
 }
 
-.form :is(input, textarea):disabled {
+.form input[type="file"]:disabled {
   cursor: not-allowed;
   opacity: .55;
 }

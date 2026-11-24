@@ -8,6 +8,8 @@ const styles = await readFile(new URL("../components/ui/Button.module.css", impo
 const iconButtonStyles = await readFile(new URL("../components/ui/IconButton.module.css", import.meta.url), "utf8");
 const card = await readFile(new URL("../components/ui/Card.tsx", import.meta.url), "utf8");
 const cardStyles = await readFile(new URL("../components/ui/Card.module.css", import.meta.url), "utf8");
+const textField = await readFile(new URL("../components/ui/TextField.tsx", import.meta.url), "utf8");
+const textFieldStyles = await readFile(new URL("../components/ui/TextField.module.css", import.meta.url), "utf8");
 const favoris = await readFile(new URL("../components/FavoriteButton.tsx", import.meta.url), "utf8");
 const decouverte = await readFile(new URL("../components/RandomDiscovery.tsx", import.meta.url), "utf8");
 const vitrine = await readFile(new URL("../components/FeaturedNames.tsx", import.meta.url), "utf8");
@@ -353,6 +355,27 @@ test("les surfaces principales Material sont définies à leur emplacement canon
 
 const rechercheActions = await readFile(new URL("../components/NameSearch.tsx", import.meta.url), "utf8");
 
+test("TextField reprend les variantes, états et la typographie Material 3", () => {
+  assert.match(textField, /export function TextField/);
+  assert.match(textField, /variant: TextFieldVariant/);
+  assert.match(textField, /aria-describedby/);
+  assert.match(textField, /aria-invalid/);
+  assert.match(textFieldStyles, /md-sys-typescale-body-large-size/);
+  assert.match(textFieldStyles, /md-sys-typescale-label-small-size/);
+  assert.match(textFieldStyles, /placeholder-shown/);
+  assert.match(textFieldStyles, /\.outlined\s*\{[^}]*surface/s);
+  assert.match(textFieldStyles, /\.filled\s*\{[^}]*surface-container-highest/s);
+  assert.match(textFieldStyles, /focus-within\.outlined/);
+  assert.match(textFieldStyles, /border-bottom: 2px/);
+  assert.match(textFieldStyles, /md-sys-color-error/);
+  assert.match(textFieldStyles, /38%, transparent/);
+  assert.match(textFieldStyles, /4%, var\(--md-sys-color-surface-container-highest\)/);
+  assert.match(adminClient, /<TextField id="admin-email"/);
+  assert.match(adminClient, /<TextField id="fiche-json"/);
+  assert.doesNotMatch(adminClient, /<input id="admin-email"|<textarea id="fiche-json"/);
+  assert.doesNotMatch(adminFormStyles, /\.form :is\(input\[type="email"\], textarea\)/);
+});
+
 test("Card expose les trois variantes Material 3 et centralise les surfaces", () => {
   assert.match(card, /export function Card</);
   assert.match(card, /variant: CardVariant/);
@@ -360,6 +383,7 @@ test("Card expose les trois variantes Material 3 et centralise les surfaces", ()
   assert.match(cardStyles, /\.filled\s*\{[^}]*surface-container-highest/s);
   assert.match(cardStyles, /\.outlined\s*\{[^}]*outline-variant/s);
   assert.match(cardStyles, /corner-medium/);
+  assert.match(cardStyles, /0 2px 6px 2px/);
   for (const source of [catalogue, favorisActions, historiqueActions, comparateur, vitrine, suggestions]) {
     assert.match(source, /<Card/);
   }
