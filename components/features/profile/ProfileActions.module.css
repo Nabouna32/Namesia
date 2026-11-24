@@ -5,7 +5,3 @@
   gap: 8px 16px;
   margin-top: 20px;
 }
-
-.actions :global(.text-link) {
-  padding-bottom: 0;
-}
