@@ -85,6 +85,7 @@
   border-color: color-mix(in srgb, var(--md-sys-color-outline-variant) 10%, transparent);
 }
 .text:disabled::before { background: transparent; }
+.button:disabled { color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent); }
 
 @media (prefers-reduced-motion: reduce) {
   .button::before,
