@@ -36,6 +36,7 @@ test("Button suit l’anatomie AndroidX et conserve les éléments HTML natifs",
   assert.match(buttonStyles, /--md-sys-state-focus-state-layer-opacity/);
   assert.match(buttonStyles, /--md-sys-state-pressed-state-layer-opacity/);
   assert.doesNotMatch(buttonStyles, /\.button:disabled\s*\{[^}]*opacity:/s);
+  assert.match(buttonStyles, /\.button:disabled\s*\{[^}]*color:\s*color-mix\(in srgb, var\(--md-sys-color-on-surface\) 38%, transparent\)/s);
   assert.match(buttonStyles, /box-shadow: 0 1px 2px 0 color-mix/);
 });
 
