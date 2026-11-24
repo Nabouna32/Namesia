@@ -362,7 +362,10 @@ test("TextField reprend les variantes, états et la typographie Material 3", () 
   assert.match(textFieldStyles, /md-sys-typescale-body-large-size/);
   assert.match(textFieldStyles, /md-sys-typescale-label-small-size/);
   assert.match(textFieldStyles, /placeholder-shown/);
+  assert.match(textFieldStyles, /\.outlined\s*\{[^}]*surface/s);
+  assert.match(textFieldStyles, /\.filled\s*\{[^}]*surface-container-highest/s);
   assert.match(textFieldStyles, /focus-within\.outlined/);
+  assert.match(textFieldStyles, /border-bottom: 2px/);
   assert.match(textFieldStyles, /md-sys-color-error/);
   assert.match(adminClient, /<TextField id="admin-email"/);
   assert.match(adminClient, /<TextField id="fiche-json"/);
