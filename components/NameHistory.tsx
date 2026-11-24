@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import type { PrenomIndex } from "@/lib/prenoms";
-import { useFavoris } from "@/components/favoris-provider";
-import { useHistorique } from "@/components/historique-provider";
+import { useFavoris } from "@/components/FavoritesProvider";
+import { useHistorique } from "@/components/HistoryProvider";
 import styles from "./NameHistory.module.css";
-import { IconeMaterial } from "./icone-material";
+import { Icon } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
 
 export function NameHistory({ prenoms }: { prenoms: PrenomIndex[] }) {
@@ -50,7 +50,7 @@ export function NameHistory({ prenoms }: { prenoms: PrenomIndex[] }) {
                       <strong>{prenom.nom}</strong>
                       <small>{prenom.genre}</small>
                     </span>
-                    <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
+                    <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                   </Link>
                   {!erreurFavoris && (
                     <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
@@ -61,7 +61,7 @@ export function NameHistory({ prenoms }: { prenoms: PrenomIndex[] }) {
                     aria-label={`Retirer ${prenom.nom} de l’historique`}
                     onClick={() => retirer(prenom.slug)}
                   >
-                    <span aria-hidden="true"><IconeMaterial name="close" size={24} /></span>
+                    <span aria-hidden="true"><Icon name="close" size={24} /></span>
                   </Button>
                 </article>
               ))}
