@@ -46,13 +46,13 @@ Material Web 2.5.0 a été évalué. Son dépôt indique être en maintenance en
 |---|---|---|
 | `Button` | `material3/Button.tsx` | Variantes `filled`, `tonal`, `outlined`, `text`. Élément natif `button` pour une action ; la prop `href` rend un lien Next.js avec la même apparence pour préserver la navigation Web. Cible 48 px, conteneur visuel 40 dp, largeur minimale 58 dp, typographie `label-large`, dimensions et états AndroidX. |
 | `IconButton` | `material3/IconButton.tsx` | Action iconique distincte de Button : cible 48 dp, glyphe 24 dp, couleur et état désactivé AndroidX. Le nom accessible est obligatoire. |
-| `SearchBar` | `material3/SearchBar.tsx` | Champ replié de SearchBar AndroidX : hauteur 56 dp, forme `full`, surface `surface-container-high`, saisie `body-large`, icônes et effacement accessibles. Les résultats restent dans le flux de la page ; aucune fausse fenêtre d'expansion n'est dessinée. |
-| `FilterChip` | `material3/FilterChip.tsx` | Filtre sélectionnable avec `aria-pressed`, coche, conteneur de 32 dp dans une cible de 48 dp, contour et couches d'état AndroidX. |
-| `InputChip` | `material3/InputChip.tsx` | Puce de saisie avec action de retrait, contour `outline-variant`, cible de 48 px et capsule de 32 dp. |
+| `SearchBar` | `material3/SearchBar.tsx` | Champ replié de SearchBar AndroidX : `SearchBarTokens.ContainerHeight = 56.dp`, forme `full`, surface `surface-container-high`, saisie `body-large`, icônes et effacement accessibles. Les résultats restent dans le flux de la page ; aucune fausse fenêtre d'expansion n'est dessinée. |
+| `FilterChip` | `material3/FilterChip.tsx` | Filtre sélectionnable avec `aria-pressed`, coche, `FilterChipTokens.ContainerHeight = 32.dp` dans une cible de 48 dp, contour et couches d'état AndroidX. |
+| `InputChip` | `material3/InputChip.tsx` | Puce de saisie avec action de retrait, `InputChipTokens.ContainerHeight = 32.dp`, contour `outline-variant` et cible de 48 px. |
 | `Snackbar` | `material3/Snackbar.tsx` | Présentation de retours d'action avec rôles accessibles. Les sévérités produit `success`, `warning`, `info` utilisent les extensions tonales Namesia ; `error` utilise les rôles système M3. Le placement est laissé au contexte de l'écran. |
 | `TopAppBar` | `material3/TopAppBar.tsx` | Barre supérieure du shell, marque et titre secondaire ; dimensions et couleurs centralisées dans le système M3. |
-| `NavigationBar` | `material3/NavigationBar.tsx` | Navigation de premier niveau compacte, conteneur AndroidX de 80 dp, destinations, indicateur et libellés `label-medium`. |
-| `NavigationRail` | `material3/NavigationRail.tsx` | Même navigation de premier niveau sur fenêtres medium/expanded, largeur de 80 dp et libellés `label-medium`. |
+| `NavigationBar` | `material3/NavigationBar.tsx` | Navigation de premier niveau compacte, `NavigationBarTokens.TallContainerHeight = 80.dp`, destinations, indicateur et libellés `label-medium`. |
+| `NavigationRail` | `material3/NavigationRail.tsx` | Même navigation de premier niveau sur fenêtres medium/expanded, `NavigationRail` de 80 dp et libellés `label-medium`. |
 | `MaterialThemeProvider` | `components/material-theme-provider.tsx` | Synchronise les schémas Fidelity/Rainbow calculés côté serveur et les changements de préférence système. |
 | `Icon` | `components/icone-material.tsx` | Registre local des tracés Google Material Symbols Rounded 400 ; les contrôles interactifs restent portés par Button ou IconButton. |
 
