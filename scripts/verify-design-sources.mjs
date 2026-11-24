@@ -4,7 +4,7 @@ const sources = [
   {
     name: "AndroidX Button",
     url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/Button.kt",
-    markers: ["FilledTonalButton", "OutlinedButton", "ButtonDefaults"],
+    markers: ["FilledTonalButton", "OutlinedButton", "ButtonDefaults", "public val IconSize: Dp = 18.dp"],
   },
   {
     name: "AndroidX Checkbox",
@@ -25,11 +25,6 @@ const sources = [
     name: "AndroidX TextField",
     url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/TextField.kt",
     markers: ["OutlinedTextField", "TextFieldDefaults"],
-  },
-  {
-    name: "AndroidX Button dimensions",
-    url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/Button.kt",
-    markers: ["public val IconSize: Dp = 18.dp"],
   },
   {
     name: "AndroidX Checkbox tokens",
