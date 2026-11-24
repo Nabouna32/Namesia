@@ -10,7 +10,7 @@ import { Icon } from "@/components/material3/Icon";
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
-export default async function Accueil() {
+export default async function HomePage() {
   const prenoms = await getPrenomsIndex();
   const decalageDuJour = prenoms.length > 0
     ? Math.floor(Date.now() / 86_400_000) % prenoms.length
