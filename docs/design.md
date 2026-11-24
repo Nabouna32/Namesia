@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.50
+- **Version :** 4.51
 - **Mis à jour :** 2026-11-24
 
 ## 1. Direction
@@ -15,7 +15,7 @@ La marque Namesia utilise les rôles Fidelity, y compris pour son monogramme. Le
 ## 2. Source de vérité des couleurs
 
 La palette est calculée avec la bibliothèque officielle Google **`@material/material-color-utilities`**. `lib/material-theme.ts` est l’unique générateur : il calcule les schémas clair et sombre, produit les déclarations CSS intégrées au `<head>` dès le rendu serveur, puis `MaterialThemeProvider` réapplique exactement les mêmes valeurs lorsque la préférence système change. Le CSS des composants ne contient donc aucune palette de secours indépendante. Le thème est construit avec :
-- couleur source primaire : `#6750A4`, violet de la palette Material 3 baseline documentée par Android Developers ; ce n'est pas un bleu Google. Fidelity calcule les rôles à partir de cette source, elle n'est pas recopiée telle quelle dans chaque composant. Le résultat Fidelity n'est pas le schéma statique Tonal Spot baseline : il conserve la variante Fidelity demandée ;
+- couleur source primaire : `#0B57D0`, bleu Google `baseline_primary_600` documenté dans le thème Android de Chromium. C'est un choix explicite de source Namesia, pas une affirmation selon laquelle le bleu serait la baseline AndroidX Material 3 : celle-ci conserve le violet `#6750A4`. Fidelity calcule les rôles à partir du bleu source, qui n'est jamais recopié directement dans les composants. Le résultat reste la variante Fidelity demandée, pas un schéma statique Tonal Spot ;
 - variante du thème d'interface : `Variant.FIDELITY` ;
 - variante complémentaire des catégories : `Variant.RAINBOW`, calculée séparément avec la même couleur source ;
 - bibliothèque de calcul : `@material/material-color-utilities` version `0.4.0`, épinglée dans `package-lock.json` et dans [Vérification Material 3](material-3-verification.md) ;
