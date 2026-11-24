@@ -45,14 +45,14 @@ Les primitives présentes dans le code sont directement nommées d'après Materi
 
 | Composant | Fichier | Responsabilité |
 |---|---|---|
-| `Button` | `components/ui/Button.tsx` | Actions textuelles Filled, Filled Tonal, Outlined et Text |
+| `TopAppBar` | `components/ui/TopAppBar.tsx` | Barre supérieure compacte et marque du site |\n| `NavigationBar` | `components/ui/NavigationBar.tsx` | Navigation compacte en bas |\n| `NavigationRail` | `components/ui/NavigationRail.tsx` | Navigation latérale sur fenêtres medium/expanded |\n| `Button` | `components/ui/Button.tsx` | Actions textuelles Filled, Filled Tonal, Outlined et Text |
 | `IconButton` | `components/ui/IconButton.tsx` | Actions iconiques, cible Web de 48 px et conteneur visuel de 40 px |
 | `SearchBar` | `components/ui/SearchBar.tsx` | Recherche repliée de 56 dp et effacement par IconButton |
 | `FilterChip` | `components/ui/FilterChip.tsx` | Filtre sélectionnable, conteneur visuel de 32 dp |
 | `InputChip` | `components/ui/InputChip.tsx` | Élément sélectionné avec action de retrait |
 | `Card` | Composition des éléments sémantiques `article` et `section` | Les cartes de contenu ne sont pas encore centralisées dans un composant React partagé |
 
-Les composants métier `FavoriteButton`, `ComparisonButton` et `ComparisonSelection` orchestrent les actions de favoris et de comparaison ; ils composent `Button` et `InputChip` sans redéfinir leur anatomie. `StatusMessage` est une composition sémantique de statut accessible (annonce `status` ou `alert`) et des extensions de couleur Namesia ; ce n'est pas un composant Material 3. Les liens de navigation utilisent directement `Link` de Next.js avec les styles de `Button`, sans wrapper. Les filtres de favoris utilisent `select` HTML natif, sans abstraction de formulaire supplémentaire.
+`NavigationBar` et `NavigationRail` partagent uniquement le rendu des destinations via `NavigationDestinations` ; les deux composants M3 restent distincts dans le shell. `TopAppBar` porte la barre supérieure. Les composants métier `FavoriteButton`, `ComparisonButton` et `ComparisonSelection` orchestrent les actions de favoris et de comparaison ; ils composent `Button` et `InputChip` sans redéfinir leur anatomie. `StatusMessage` est une composition sémantique de statut accessible (annonce `status` ou `alert`) et des extensions de couleur Namesia ; ce n'est pas un composant Material 3. Les liens de navigation utilisent directement `Link` de Next.js avec les styles de `Button`, sans wrapper. Les filtres de favoris utilisent `select` HTML natif, sans abstraction de formulaire supplémentaire.
 
 Les anciennes primitives françaises, leurs feuilles CSS et leurs exports sont supprimés dans la même migration. Aucun alias de compatibilité ne subsiste. Les noms métier du domaine restent français dans le contenu visible ; les identifiants des primitives UI suivent Material 3.
 
