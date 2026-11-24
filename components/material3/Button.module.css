@@ -28,14 +28,11 @@
   inset: 4px 0;
   border-radius: var(--md-sys-shape-corner-full);
   content: "";
+  background: transparent;
   pointer-events: none;
   transition: border-radius var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
 }
 
-.button::before {
-  border: 0;
-  background: transparent;
-}
 
 .button::after {
   background: currentColor;
