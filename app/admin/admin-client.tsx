@@ -4,6 +4,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { createClient, type Session } from "@supabase/supabase-js";
 import { FICHE_SCHEMA_VERSION, parseFichePrenom, type FichePrenomImport } from "@/lib/fiche-prenom";
 import styles from "./admin.module.css";
+import { AlertDialog } from "@/components/material3/AlertDialog";
 import { Button } from "@/components/material3/Button";
 import { TextField } from "@/components/material3/TextField";
 import { Snackbar, type SnackbarSeverity } from "@/components/material3/Snackbar";
@@ -45,6 +46,7 @@ export function AdminClient() {
   const [catalogNextOffset, setCatalogNextOffset] = useState<number | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [imported, setImported] = useState<ImportResult | null>(null);
+  const [publicationDialogOpen, setPublicationDialogOpen] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -280,6 +282,7 @@ export function AdminClient() {
   }
 
   async function deconnecter() {
+    setPublicationDialogOpen(false);
     await supabase.auth.signOut();
     setImported(null);
     setPreview(null);
@@ -352,8 +355,23 @@ export function AdminClient() {
 
     {imported && <div className={styles.publish}>
       <p>La version {imported.version} est enregistrée en brouillon. Après vérification de l'aperçu, tu peux la publier.</p>
-      <Button type="button" disabled={busy} onClick={publier}>Publier cette version</Button>
+      <Button type="button" disabled={busy} onClick={() => setPublicationDialogOpen(true)}>Publier cette version</Button>
     </div>}
+
+    {imported && (
+      <AlertDialog
+        open={publicationDialogOpen}
+        title="Publier cette fiche ?"
+        description={"La version " + imported.version + " sera rendue publique. La version publiée précédente sera archivée."}
+        dismissLabel="Annuler"
+        confirmLabel="Publier"
+        onDismiss={() => setPublicationDialogOpen(false)}
+        onConfirm={() => {
+          setPublicationDialogOpen(false);
+          void publier();
+        }}
+      />
+    )}
 
     <section className={styles.library}>
       <h3>Fiches et versions enregistrées</h3>
