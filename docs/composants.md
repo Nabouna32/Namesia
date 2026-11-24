@@ -45,7 +45,10 @@ Les primitives présentes dans le code sont directement nommées d'après Materi
 
 | Composant | Fichier | Responsabilité |
 |---|---|---|
-| `TopAppBar` | `components/ui/TopAppBar.tsx` | Barre supérieure compacte et marque du site |\n| `NavigationBar` | `components/ui/NavigationBar.tsx` | Navigation compacte en bas |\n| `NavigationRail` | `components/ui/NavigationRail.tsx` | Navigation latérale sur fenêtres medium/expanded |\n| `Button` | `components/ui/Button.tsx` | Actions textuelles Filled, Filled Tonal, Outlined et Text |
+| `TopAppBar` | `components/ui/TopAppBar.tsx` | Barre supérieure compacte et marque du site |
+| `NavigationBar` | `components/ui/NavigationBar.tsx` | Navigation compacte en bas |
+| `NavigationRail` | `components/ui/NavigationRail.tsx` | Navigation latérale sur fenêtres medium/expanded |
+| `Button` | `components/ui/Button.tsx` | Actions textuelles Filled, Filled Tonal, Outlined et Text |
 | `IconButton` | `components/ui/IconButton.tsx` | Actions iconiques, cible Web de 48 px et conteneur visuel de 40 px |
 | `SearchBar` | `components/ui/SearchBar.tsx` | Recherche repliée de 56 dp et effacement par IconButton |
 | `FilterChip` | `components/ui/FilterChip.tsx` | Filtre sélectionnable, conteneur visuel de 32 dp |
