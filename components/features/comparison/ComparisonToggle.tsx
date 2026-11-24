@@ -21,7 +21,7 @@ export function ComparisonToggle({ name, selected, disabled = false, onClick }: 
       disabled={disabled}
       onClick={onClick}
     >
-      <span className={styles.label}>{selected ? "Ajouté" : "Comparer"}</span>
+      <span className="sr-only">{selected ? "Ajouté à la comparaison" : "Comparer"}</span>
       <span className={styles.icon} aria-hidden="true">
         <Icon name={selected ? "check" : "compare-arrows"} size={18} />
       </span>
