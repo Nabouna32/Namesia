@@ -329,7 +329,7 @@ export function AdminClient() {
       {preview.content.history && <section><h4>Histoire du prénom</h4><p>{preview.content.history}</p></section>}
       {preview.content.usage && <section><h4>Variantes & usages</h4><p>{preview.content.usage}</p></section>}
       {preview.content.symbolic_associations.map((symbol) => <section key={`${symbol.category}-${symbol.value}`}><h4>{symbol.category} · {symbol.value}</h4><p>{symbol.context_note}</p></section>)}
-      <MessageStatut type="warning">La validation porte sur la structure du JSON, pas sur la véracité des contenus générés.</MessageStatut>
+      <MessageStatut type="warning" className={styles.previewWarning}>La validation porte sur la structure du JSON, pas sur la véracité des contenus générés.</MessageStatut>
     </article>}
 
     {imported && <div className={styles.publish}>
