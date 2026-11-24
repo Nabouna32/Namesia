@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BoutonFavori } from "@/components/bouton-favori";
+import { FavoriteButton } from "@/components/FavoriteButton";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { useFavoris } from "@/components/favoris-provider";
 import { useHistorique } from "@/components/historique-provider";
@@ -53,7 +53,7 @@ export function HistoriquePrenoms({ prenoms }: { prenoms: PrenomIndex[] }) {
                     <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
                   </Link>
                   {!erreurFavoris && (
-                    <ButtonFavori slug={prenom.slug} nom={prenom.nom} compact afficherErreur={false} />
+                    <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
                   )}
                   <Button
                     variant="text"
