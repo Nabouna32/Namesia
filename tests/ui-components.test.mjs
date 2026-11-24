@@ -69,7 +69,8 @@ test("les trois parcours visiteurs utilisent le même champ de recherche accessi
   assert.match(champStyles, /corner-full/);
   assert.match(champStyles, /surface-container-high/);
   assert.match(champStyles, /body-large-(?:font|size|weight|line-height|tracking)/);
-  assert.match(champStyles, /on-surface-variant/);
+  assert.match(champStyles, /\.icon\s*\{[^}]*on-surface\s*\}/s);
+  assert.match(champStyles, /\.control \.clearButton\s*\{[^}]*on-surface-variant/s);
   assert.match(champStyles, /:focus-within/);
   assert.match(champStyles, /::-webkit-search-cancel-button/);
   assert.doesNotMatch(champStyles, /\.compact/);
