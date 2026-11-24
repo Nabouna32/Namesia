@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   } : {};
 }
 
-export default async function FichePrenom({ params, searchParams }: Props) {
+export default async function NameProfilePage({ params, searchParams }: Props) {
   const { slug } = await params;
   const prenom = await getPrenom(slug);
   if (!prenom) notFound();
