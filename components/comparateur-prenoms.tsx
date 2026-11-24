@@ -172,9 +172,9 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
 
         <div className="compare-selection-footer">
           <ComparisonSelection
-            prenoms={prenomsSelectionnes}
+            names={prenomsSelectionnes.map((prenom) => ({ slug: prenom.slug, name: prenom.nom }))}
             label="Prénoms sélectionnés"
-            onRetirer={(slug) => changerSelection(slug, false)}
+            onRemove={(slug) => changerSelection(slug, false)}
           />
           <span role="status" aria-live="polite">{selection.length} / 3 prénoms sélectionnés</span>
           <Button variant="text" type="button" disabled={selection.length === 0} onClick={effacerSelection}>
@@ -208,7 +208,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
                 <h2>{prenom.nom}</h2>
                 <span className="profile-tag">{prenom.genre}</span>
                 <span className="profile-tag">Lettre {prenom.lettre}</span>
-                <ButtonFavori slug={prenom.slug} nom={prenom.nom} compact showError={false} />
+                <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
                 <Link
                   className="compare-card-link"
                   href={creerUrlFicheDepuisComparateur(prenom.slug, selection)}
