@@ -37,7 +37,11 @@ margin-top: 24px;
 .jsonField textarea {
   min-height: 320px;
   resize: vertical;
-  font: 14px/1.6 ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-family: var(--md-sys-typescale-body-medium-font);
+  font-size: var(--md-sys-typescale-body-medium-size);
+  font-weight: var(--md-sys-typescale-body-medium-weight);
+  line-height: var(--md-sys-typescale-body-medium-line-height);
+  letter-spacing: var(--md-sys-typescale-body-medium-tracking);
   tab-size: 2;
 }
 
