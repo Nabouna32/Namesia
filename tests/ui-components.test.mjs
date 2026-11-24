@@ -243,6 +243,7 @@ test("les cartes utilisent les états Material centralisés et les boutons les c
   assert.match(styles, /md-sys-state-pressed-state-layer-opacity/);
   assert.doesNotMatch(styles, /filter:\s*brightness/);
   assert.match(elevatedHover, /surface-container/);
+  assert.match(globalStyles, /@media \(hover: hover\) and \(pointer: fine\) \{\s*\.name-card:hover/);
   assert.match(filledHover, /surface-container-highest/);
   assert.doesNotMatch(elevatedHover.slice(0, elevatedHover.indexOf("\n}")), /translateY/);
   assert.doesNotMatch(filledHover.slice(0, filledHover.indexOf("\n}")), /translateY/);
