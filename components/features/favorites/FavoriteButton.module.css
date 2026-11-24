@@ -1,3 +1,3 @@
 .container { display: grid; justify-items: start; gap: 8px; }
-.compactContainer { position: relative; }
+.compactContainer { position: relative; align-self: center; }
 .error { margin: 0; color: var(--md-sys-color-error); font-size: var(--md-sys-typescale-body-small-size); }
