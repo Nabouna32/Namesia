@@ -21,7 +21,7 @@ Ce document est le point d'entrée pour les composants d'interface réutilisable
 | `IconeMaterial` | `components/icone-material.tsx` | Registre unique des tracés Google Material Symbols Rounded 400, SVG locaux 24 px et variantes pleines disponibles |
 | `Bouton` | `components/ui/bouton.tsx` | Adaptateur Namesia des variantes Button : capsule visuelle 40 dp dans une cible tactile de 48 px, label-large, formes et couleurs Fidelity ; variante iconique alignée sur IconButton |
 | `LienBouton` | `components/ui/lien-bouton.tsx` | Navigation Next.js présentée comme une action, notamment pour ouvrir le comparateur depuis la barre de sélection |
-| `ChampRecherche` | `components/ui/champ-recherche.tsx` | Adaptateur Namesia du champ replié de `SearchBar` : saisie contrôlée, libellé accessible, icône, effacement et focus Web |
+| `ChampRecherche` | `components/ui/champ-recherche.tsx` | Adaptateur Namesia du champ replié de `SearchBar` (`SearchBarTokens.ContainerHeight`) : saisie contrôlée, libellé accessible, icône, effacement et focus Web |
 | `BoutonComparaison` | `components/ui/bouton-comparaison.tsx` | Sélection comparative accessible, état sélectionné, limite désactivée et adaptation mobile |
 | `ListeSelectionComparaison` | `components/ui/liste-selection-comparaison.tsx` | Liste sémantique des prénoms retenus, retrait individuel et puces tonales |
 | `ChipFiltre` | `components/ui/chip-filtre.tsx` | Adaptateur `FilterChip` : capsule de 32 dp dans une cible native de 48 px, typographie `label-large`, sélection tonale et coche |
