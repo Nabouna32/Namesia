@@ -227,7 +227,7 @@ export function NameSearch({
           {!compact && resultats.length > 0 && (
             <div className={styles.resultActions}>
               <Button variant="tonal" type="button" onClick={copierResultats}>
-                Copier les {resultats.length} {resultats.length > 1 ? "prénoms" : "prénom"}
+                {resultats.length > 1 ? `Copier les ${resultats.length} prénoms` : "Copier le prénom"}
               </Button>
               {messageCopie && <Snackbar severity="success">{messageCopie}</Snackbar>}
               {erreurCopie && <Snackbar severity="error">{erreurCopie}</Snackbar>}
