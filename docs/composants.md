@@ -57,7 +57,7 @@ components/
 
 Les composants Material 3 sont implémentés en React et HTML, mais leurs noms, variantes, anatomie, dimensions et états suivent AndroidX Compose Material 3 1.5.0 stable, figé au commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c`. Compose étant une bibliothèque Kotlin/Android, son code ne peut pas être importé dans Next.js : les composants Web sont des ports explicites des contrats AndroidX, pas des composants Compose exécutés dans le navigateur.
 
-Material Web 2.5.0 a été évalué. Son dépôt indique être en maintenance en attente de nouveaux mainteneurs ; il ne devient donc pas la dépendance structurante du site. Son API et ses comportements ne sont pas interchangeables avec AndroidX Compose. La décision et ses compromis sont consignés dans ADR-0037.
+Material Web 2.5.0 a été évalué. Le [README officiel](https://github.com/material-components/material-web/blob/main/README.md) le place en maintenance en attente de nouveaux mainteneurs et la [discussion de maintenance](https://github.com/material-components/material-web/discussions/5642) confirme l'absence de feuille de route de nouvelles fonctionnalités ; il ne devient donc pas la dépendance structurante du site. Son API et ses comportements ne sont pas interchangeables avec AndroidX Compose. La décision et ses compromis sont consignés dans ADR-0037.
 
 ## Composants Material 3 disponibles
 
