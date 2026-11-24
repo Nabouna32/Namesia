@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 
 const button = await readFile(new URL("../components/material3/Button.tsx", import.meta.url), "utf8");
 const buttonStyles = await readFile(new URL("../components/material3/Button.module.css", import.meta.url), "utf8");
+const iconButton = await readFile(new URL("../components/material3/IconButton.tsx", import.meta.url), "utf8");
 const favoriteButton = await readFile(new URL("../components/features/favorites/FavoriteButton.tsx", import.meta.url), "utf8");
 const discovery = await readFile(new URL("../components/features/discovery/RandomDiscovery.tsx", import.meta.url), "utf8");
 const featured = await readFile(new URL("../components/features/catalog/FeaturedNames.tsx", import.meta.url), "utf8");
@@ -38,6 +39,14 @@ test("Button suit l’anatomie AndroidX et conserve les éléments HTML natifs",
   assert.doesNotMatch(buttonStyles, /\.button:disabled\s*\{[^}]*opacity:/s);
   assert.match(buttonStyles, /\.button:disabled\s*\{[^}]*color:\s*color-mix\(in srgb, var\(--md-sys-color-on-surface\) 38%, transparent\)/s);
   assert.match(buttonStyles, /box-shadow: 0 1px 2px 0 color-mix/);
+});
+
+
+test("IconButton conserve la sémantique d'une action M3, pas d'un contrôle toggle", () => {
+  assert.match(iconButton, /label: string/);
+  assert.match(iconButton, /<button/);
+  assert.match(iconButton, /aria-label=\{label\}/);
+  assert.doesNotMatch(iconButton, /pressed|aria-pressed/);
 });
 
 test("les fonctions métier composent les composants Material 3 sans réimplémenter les boutons", () => {
