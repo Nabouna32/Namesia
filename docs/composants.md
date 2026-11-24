@@ -3,9 +3,15 @@
 - **Statut :** inventaire des composants partagés réellement disponibles
 - **Mis à jour :** 2026-11-24
 
-Ce document est le point d'entrée pour les composants d'interface réutilisables. Il distingue les primitives de présentation des composants métier. Il ne constitue pas une obligation de conserver un composant : chaque élément reste soumis au challenge produit et technique.
+Ce document définit le contrat canonique des composants d'interface. Il distingue les composants Material 3 (noms et API M3) des composants métier Namesia. Une implémentation React peut adapter le comportement à HTML et au navigateur, mais ne crée pas une nomenclature parallèle. L'inventaire du code est un état de migration, pas une liste de composants à sanctuariser.
 
 ## Principes
+
+- **Nommage canonique :** les primitives d'interface portent le nom officiel du composant Material 3 qu'elles implémentent (`Button`, `IconButton`, `SearchBar`, `TextField`, `FilterChip`, `InputChip`, `Card`, `NavigationBar`, `NavigationRail`, `TopAppBar`, `Dialog`, `Menu`, etc.). Les fichiers, exports, props et variantes suivent autant que possible l'API M3 ; aucune couche de traduction française ou alias `*Namesia` n'est conservée.
+- **Frontière métier :** les composants qui représentent une capacité produit (favori, comparaison, fiche, catalogue) peuvent garder un nom métier. Ils composent les primitives M3 et ne redéfinissent jamais leur apparence.
+- **Pas de compatibilité cosmétique :** pas d'exports alias, de réexport legacy, de wrappers uniquement destinés à préserver un ancien nom, de fallback visuel ou de second système de composants. Une migration renomme les usages et supprime les anciens fichiers/styles dans la même évolution.
+- **Correspondance réelle :** ne pas choisir un composant M3 par simple proximité de nom. Reprendre son anatomie, ses variantes, ses états et ses tokens AndroidX. Si le besoin Web ne correspond pas au composant, utiliser le bon élément HTML natif plutôt que créer un faux composant M3.
+- **Aucune API Android dans le navigateur :** AndroidX Compose est la référence d'implémentation, pas une dépendance exécutable du site. Les traductions Web sont écrites en React/HTML sémantique et documentent uniquement les écarts imposés par la plateforme.
 
 - Une primitive partagée porte une interaction ou un contrat visuel commun, pas seulement un nom générique.
 - Les variantes sont explicites et reposent sur les rôles système M3 Fidelity, calculés depuis la source de baseline M3 `#6750A4`. Les extensions propres à Namesia utilisent `--namesia-*` et ne sont jamais nommées comme des rôles système.
@@ -14,32 +20,41 @@ Ce document est le point d'entrée pour les composants d'interface réutilisable
 - Préférer les éléments HTML natifs et les liens Next.js. Garder distincts les contrôles interactifs et les liens de navigation.
 - Une primitive est extraite après identification d'au moins deux usages concrets ; elle ne doit pas absorber la logique métier des écrans.
 
-## Primitives partagées
+## Primitives Material 3
 
-| Composant | Emplacement | Responsabilité |
-|---|---|---|
-| `IconeMaterial` | `components/icone-material.tsx` | Registre unique des tracés Google Material Symbols Rounded 400, SVG locaux 24 px et variantes pleines disponibles |
-| `Bouton` | `components/ui/bouton.tsx` | Adaptateur Namesia des variantes Button : capsule visuelle 40 dp dans une cible tactile de 48 px, label-large, formes et couleurs Fidelity ; variante iconique alignée sur IconButton |
-| `LienBouton` | `components/ui/lien-bouton.tsx` | Navigation Next.js présentée comme une action, notamment pour ouvrir le comparateur depuis la barre de sélection |
-| `ChampRecherche` | `components/ui/champ-recherche.tsx` | Adaptateur Namesia du champ replié de `SearchBar` (`SearchBarTokens.ContainerHeight`) : saisie contrôlée, libellé accessible, icône, effacement et focus Web |
-| `BoutonComparaison` | `components/ui/bouton-comparaison.tsx` | Sélection comparative accessible, état sélectionné, limite désactivée et adaptation mobile |
-| `ListeSelectionComparaison` | `components/ui/liste-selection-comparaison.tsx` | Liste sémantique des prénoms retenus, retrait individuel et puces tonales |
-| `ChipFiltre` | `components/ui/chip-filtre.tsx` | Adaptateur `FilterChip` : capsule de 32 dp dans une cible native de 48 px, typographie `label-large`, sélection tonale et coche |
-| `ChampSelect` | `components/ui/champ-select.tsx` | Sélecteur natif contrôlé, libellé associé et options typées |
-| `MessageStatut` | `components/ui/message-statut.tsx` | Message inline accessible avec variantes success, warning, info et error ; couleurs sémantiques personnalisées M3 pour les trois premières |
-| `PartagerLien` | `components/partager-fiche.tsx` | Partage natif ou copie d'une URL reconstruite avec une liste explicite de paramètres autorisés |
+Le code cible expose directement les composants M3, dans un espace de noms organisé par composant. Les noms ci-dessous sont normatifs ; le chemin actuel entre parenthèses signale un fichier à migrer, il ne constitue pas un alias autorisé.
 
-Les boutons et FilterChip utilisent le rôle typographique système `label-large` (taille, graisse, interligne et approche), comme les composants Button et FilterChip AndroidX Material 3. Le Button standard conserve une cible native de 48 px mais dessine son conteneur de 40 dp (`ButtonSmallTokens.ContainerHeight`) ; la largeur minimale est de 58 dp, le padding horizontal de 24 dp (12 dp pour TextButton) et l’icône interne de Button de 18 dp. OutlinedButton utilise `outline-variant` et `on-surface-variant`, TextButton utilise `primary` conformément à l'implémentation AndroidX, et les états désactivés séparent l’opacité du conteneur Filled/Tonal (10 %), du contour Outlined (10 %) et du contenu (38 %). Les variantes filled et tonal élèvent leur conteneur au niveau 1 sur les pointeurs fins ; l’état pressé adopte la forme `corner-small`. Les boutons iconiques conservent une cible de 48 px, un conteneur de 40 dp et une icône de 24 dp. `FilterChipTokens.ContainerHeight` fixe le conteneur visuel de `FilterChip` à 32 dp dans AndroidX 1.5.0 ; la cible tactile de 48 dp est une zone interactive distincte. Dans le Web, le bouton natif conserve `min-height: 48px` tandis qu'un pseudo-élément dessine uniquement la capsule de 32 px. Le contour non sélectionné utilise `outline-variant`, le contour sélectionné disparaît, et les états hover/focus/pressed superposent les opacités des tokens système à la couleur du contenu. La variante initiale de FilterChip conserve ce rôle au lieu de lui substituer un style body. Les libellés de `NavigationBar` et `NavigationRail` utilisent `label-medium`, conformément aux tokens AndroidX `NavigationBarTokens.LabelTextFont` et `NavigationRailVerticalItemTokens.LabelTextFont` de Compose Material 3 1.5.0. Les liens du tableau pointent vers l'arbre source figé de cette version. Les contrôles partagés reposent sur les tokens Fidelity et conservent les éléments natifs. La navigation reste une liste HTML `ul`/`li` : ne pas utiliser `display: contents` sur la liste, afin de préserver son exposition dans l'arbre d'accessibilité. `ChipFiltre` et `ListeSelectionComparaison` réservent le survol aux pointeurs fins et exposent un état pressé adapté au tactile. `ChampRecherche` reprend le champ replié de `SearchBar` AndroidX 1.5.0 : 56 dp, forme `full`, surface `surface-container-high`, saisie `body-large`, icône initiale `on-surface` et action trailing `on-surface-variant`. Le champ natif garde un libellé accessible masqué visuellement ; son placeholder ne remplace donc pas son nom accessible. L'action d'effacement réutilise `Bouton` et restitue le focus au champ. Le bouton natif de suppression du navigateur est masqué pour éviter deux affordances concurrentes. Les résultats Namesia restent affichés dans le flux de page : l'adaptateur ne simule pas l'expansion et le panneau de suggestions de `SearchBar`. `ChampSelect` garde le comportement natif du sélecteur : il ne simule pas un menu personnalisé. Les composants métier gardent leurs règles de recherche, de synchronisation d'URL et de sélection ; les contrôles de comparaison ne connaissent ni la limite métier ni la synchronisation d'URL. La liste partagée reçoit les identités à afficher et un callback de retrait.
+| Composant Material 3 | Contrat Web |
+|---|---|
+| `MaterialTheme` / `ColorScheme` | Thème global, rôles Fidelity clair/sombre et extensions de couleurs explicitement documentées |
+| `TopAppBar` | Barre supérieure commune du shell |
+| `NavigationBar` | Navigation de premier niveau sur fenêtre compacte |
+| `NavigationRail` | Navigation de premier niveau sur fenêtre medium/expanded |
+| `Button` | Variantes Filled, Filled Tonal, Outlined et Text |
+| `IconButton` | Action iconique avec cible tactile adaptée |
+| `SearchBar` | Recherche repliée correspondant à l'anatomie AndroidX ; les résultats restent dans le flux de page si le parcours Web ne requiert pas l'expansion |
+| `TextField` | Saisie de formulaire, variantes Filled et Outlined selon le besoin |
+| `FilterChip` | Filtre sélectionnable avec état et géométrie AndroidX |
+| `InputChip` | Élément sélectionné avec action de retrait |
+| `Card` | Surfaces de contenu Filled, Elevated ou Outlined selon la hiérarchie réelle |
+| `Select` HTML | Sélection native lorsque le menu du navigateur est le comportement approprié |
+| `Icon` | Glyphe Material Symbols ; la cible interactive appartient à `IconButton` |
+
+### Migration de l'implémentation existante
+
+Les fichiers ci-dessous sont des reliquats de l'ancienne architecture et doivent disparaître au profit des composants M3 nommés ci-dessus : `components/ui/bouton.tsx` (`Button`), `lien-bouton.tsx` (lien natif Next.js avec présentation `Button`, sans primitive distincte), `champ-recherche.tsx` (`SearchBar`), `chip-filtre.tsx` (`FilterChip`), `champ-select.tsx` (élément HTML `select` directement composé) et `message-statut.tsx` (composition sémantique de `Card`/contenu et couleurs personnalisées, sans prétendre qu'il s'agit d'un composant M3). Les exports et noms français historiques ne sont pas conservés comme compatibilité.
+
+Les styles doivent vivre avec l'implémentation du composant concerné. Les variantes et états sont ceux de M3 ; les dimensions Web supplémentaires ne sont admises que pour garantir les contraintes tactiles et sémantiques du navigateur. Les tokens système restent la source de vérité.
 
 ## Composants métier
 
-Les composants comme `BoutonFavori`, `NavigationAdaptative`, `RecherchePrenoms` et `ComparateurPrenoms` restent propriétaires de leur logique métier. Ils doivent composer les primitives partagées au lieu de redéfinir les styles d'un contrôle générique.
+Les composants métier comme `FavoriteButton`, `NameComparison`, `NameSearch` et `NameComparator` portent exclusivement la logique du produit. Leur nomenclature sera également normalisée en anglais pour les composants React ; les textes visibles restent en français. Ils composent les composants Material 3 sans les encapsuler dans des wrappers de compatibilité.
 
 ## Correspondance avec les composants Material 3
 
-Les noms M3 ci-dessous sont les noms de référence. Les noms de code français sont les adaptateurs Web de Namesia ; ils ne redéfinissent pas le composant Android.
+Les noms M3 sont les seuls noms autorisés pour les primitives. La colonne d'implémentation historique est supprimée : le nom M3 est celui de l'export et du fichier.
 
-| Nom Material 3 | Implémentation Namesia | Contrat à respecter |
+| Composant Material 3 | Contrat à respecter |
 |---|---|---|
 | [`MaterialTheme`](https://github.com/androidx/androidx/blob/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/MaterialTheme.kt) / [`ColorScheme`](https://github.com/androidx/androidx/blob/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/ColorScheme.kt) | `lib/material-theme.ts` + `MaterialThemeProvider` | Source M3 baseline, rôles Fidelity, modes clair/sombre et extensions déclarées uniquement |
 | [`TopAppBar`](https://github.com/androidx/androidx/blob/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/AppBar.kt) | Barre supérieure du shell dans `app/layout.tsx` et `app/globals.css` | Hauteur, alignement, rôles et comportement M3 ; pas de barre propriétaire par page |
@@ -72,13 +87,13 @@ Les composants M3 non encore nécessaires (Dialog, Menu, Bottom Sheet, FAB, Date
 ## Contrat obligatoire pour toute nouvelle page
 
 1. Lire `docs/design.md` et cette bibliothèque avant de créer le JSX ou le CSS.
-2. Identifier le composant M3 correspondant et son nom officiel avant de créer un composant Namesia.
+2. Utiliser directement le nom officiel M3 pour toute primitive d'interface ; ne jamais créer de doublon ou d'alias Namesia.
 3. Composer le shell existant ; ne pas recréer une barre supérieure, une navigation, des boutons ou des champs locaux.
-4. Réutiliser les primitives existantes. Une nouvelle primitive doit correspondre à un composant M3 identifiable et à un besoin réel ; elle est ajoutée ici avec ses variantes et états.
+4. Réutiliser les composants M3 existants. Une nouvelle implémentation doit correspondre à un composant M3 identifiable et à un besoin réel ; elle est ajoutée ici avec ses variantes et états.
 5. Utiliser exclusivement les rôles `--md-sys-*` et les extensions `--namesia-*` documentées. Aucun hex, couleur arbitraire, gradient ou fallback CSS dans une page.
 6. Couvrir repos, hover sur pointeur fin, focus-visible, pressed, selected, disabled, loading et error selon le composant.
 7. Vérifier clair/sombre, largeur 320 px, 600 px, 840 px et grand écran, clavier, zoom et réduction des mouvements.
-8. Si un comportement ne possède pas d'équivalent Web M3, utiliser l'élément natif le plus proche et consigner la limite du navigateur plutôt que fabriquer une imitation Android.
+8. Si un comportement ne possède pas d'équivalent Web M3, utiliser l'élément natif le plus proche et consigner la limite du navigateur plutôt que fabriquer une imitation Android. Aucun fallback, alias ou wrapper de compatibilité n'est ajouté.
 
 ## Ajouter ou faire évoluer un composant
 
