@@ -5,33 +5,33 @@ import { IconeMaterial } from "@/components/icone-material";
 import styles from "./ComparisonButton.module.css";
 
 type Props = {
-  prenom: string;
-  selectionne: boolean;
-  desactive?: boolean;
+  name: string;
+  selected: boolean;
+  disabled?: boolean;
   onClick: () => void;
 };
 
 export function ComparisonButton({
-  prenom,
-  selectionne,
-  desactive = false,
+  name,
+  selected,
+  disabled = false,
   onClick
 }: Props) {
-  const action = selectionne ? "Retirer" : "Ajouter";
-  const preposition = selectionne ? "de" : "à";
+  const action = selected ? "Retirer" : "Ajouter";
+  const preposition = selected ? "de" : "à";
 
   return (
     <Button
-      variant={selectionne ? "tonal" : "outlined"}
+      variant={selected ? "tonal" : "outlined"}
       className={styles.toggle}
-      aria-label={`${action} ${prenom} ${preposition} la comparaison`}
-      aria-pressed={selectionne}
-      disabled={desactive}
+      aria-label={`${action} ${name} ${preposition} la comparaison`}
+      aria-pressed={selected}
+      disabled={disabled}
       onClick={onClick}
     >
-      <span className={styles.label}>{selectionne ? "Ajouté" : "Comparer"}</span>
+      <span className={styles.label}>{selected ? "Ajouté" : "Comparer"}</span>
       <span className={styles.icon} aria-hidden="true">
-        <IconeMaterial name={selectionne ? "check" : "compare-arrows"} size={18} />
+        <IconeMaterial name={selected ? "check" : "compare-arrows"} size={18} />
       </span>
     </Button>
   );
