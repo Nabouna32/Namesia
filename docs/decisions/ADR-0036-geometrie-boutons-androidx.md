@@ -24,7 +24,7 @@ Conserver `Bouton` et ses variantes métier, avec les correspondances AndroidX s
 - padding horizontal 24 dp pour Button/FilledTonalButton/OutlinedButton et 12 dp pour TextButton ;
 - icônes internes Button de 20 dp, IconButton de 24 dp ;
 - OutlinedButton : contour `outline-variant`, contenu `on-surface-variant` ;
-- TextButton : contenu `on-surface-variant` ;
+- TextButton : contenu `primary`, car `Button.kt` sélectionne explicitement cette couleur dans `defaultTextButtonColors` malgré le token `TextButtonTokens.LabelColor = OnSurfaceVariant` (TODO documenté dans la source) ; Fidelity suit le comportement effectif AndroidX ;
 - état désactivé : conteneur `on-surface` à 10 % pour Filled et FilledTonal, contenu `on-surface-variant` à 38 %, contour Outlined à 10 % ;
 - forme `full` au repos et `corner-small` à l'état pressé ;
 - Filled et FilledTonal passent à l'élévation 1 au survol des pointeurs fins. La traduction CSS de ce niveau est appliquée au pseudo-élément qui dessine la capsule, pas à la cible tactile.
