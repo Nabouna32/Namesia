@@ -1,7 +1,7 @@
 # Bibliothèque Material 3 — Namesia
 
 - **Statut :** référence canonique des composants d'interface
-- **Mis à jour :** 2026-11-24
+- **Mis à jour :** 2026-11-25
 
 Ce document est le point d'entrée unique pour composer l'interface. Les composants de présentation portent les noms officiels Material 3 et sont centralisés dans `components/material3/`. Les fonctions propres au produit sont isolées dans `components/features/`. Il n'existe pas de couche parallèle de primitives génériques nommées en français, ni de wrappers de convenance qui masquent le contrat M3.
 
@@ -66,7 +66,7 @@ components/
 
 Les composants Material 3 sont implémentés en React et HTML, mais leurs noms, variantes, anatomie, dimensions et états suivent AndroidX Compose Material 3 1.5.0 stable, figé au commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c` ([arbre source AndroidX figé](https://github.com/androidx/androidx/tree/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3)). Compose étant une bibliothèque Kotlin/Android, son code ne peut pas être importé dans Next.js : les composants Web sont des ports explicites des contrats AndroidX, pas des composants Compose exécutés dans le navigateur.
 
-Material Web 2.5.0 a été évalué. Le [README officiel](https://github.com/material-components/material-web/blob/b4de401eb665ec63474f39319a4ba8f2145974cc/README.md) le place en maintenance en attente de nouveaux mainteneurs et la [discussion de maintenance](https://github.com/material-components/material-web/discussions/5642) confirme l'absence de feuille de route de nouvelles fonctionnalités ; il ne devient donc pas la dépendance structurante du site. Son API et ses comportements ne sont pas interchangeables avec AndroidX Compose. La décision et ses compromis sont consignés dans ADR-0037.
+Material Web 2.5.0 a été évalué comme alternative de composants. Le [README officiel épinglé](https://github.com/material-components/material-web/blob/d4f63c567f73b16717f4c04b57fa6390d0b2312d/README.md) indique que le projet est en maintenance dans l'attente de nouveaux mainteneurs ; la [roadmap officielle épinglée](https://github.com/material-components/material-web/blob/d4f63c567f73b16717f4c04b57fa6390d0b2312d/docs/roadmap.md) précise qu'aucune nouvelle fonctionnalité ni aucun nouveau composant ne sont planifiés et que plusieurs composants nécessaires au shell restent absents de la couverture stable. Ces deux snapshots sont ceux vérifiés par `scripts/verify-design-sources.mjs`. Material Web reste une référence secondaire, pas une dépendance structurante : son API et ses comportements ne sont pas interchangeables avec AndroidX Compose. La décision et ses compromis sont consignés dans ADR-0037.
 
 ## Correspondance avec les composants Material 3
 
