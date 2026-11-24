@@ -10,6 +10,8 @@ Namesia adopte **Material 3**, avec une palette générale **Fidelity** et une p
 
 Ce choix est une référence de conception et de comportement, pas une prétention à reproduire le système Android natif ou ses barres système. Le navigateur conserve ses conventions, ses capacités et ses limites.
 
+Les composants de `components/material3/` sont des ports Web React/HTML des contrats AndroidX, pas des composants Compose importés dans Next.js. Material Web (`@material/web`) a été évalué comme alternative officielle ; son état source épinglé confirme une maintenance sans nouvelles fonctionnalités planifiées et une couverture stable incomplète pour le shell et les composants utilisés par Namesia. Le projet conserve donc une seule pile React/HTML, avec les noms et contrats AndroidX vérifiés ; aucun mélange de bibliothèques ni composant de laboratoire n'est introduit. Voir [ADR-0037](decisions/ADR-0037-architecture-composants-material3.md).
+
 La marque Namesia utilise les rôles Fidelity, y compris pour son monogramme. Les couleurs Rainbow générées par Material Color Utilities servent uniquement aux catégories éditoriales identifiées (notamment les associations symboliques) : elles ne sont jamais attribuées selon l'ordre, la position, le hasard ou le prénom lui-même. Elles ne remplacent ni les rôles fonctionnels Fidelity ni les couleurs sémantiques success/warning/info. Les titres, les actions, les surfaces générales et les repères de navigation restent Fidelity ; Rainbow n'est pas un dégradé décoratif appliqué aux textes ou aux fonds de page. Les états de succès, d'avertissement et d'information conservent leurs couleurs sémantiques comme couleurs personnalisées M3 distinctes des rôles système.
 
 ## 2. Source de vérité des couleurs
