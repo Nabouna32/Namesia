@@ -12,8 +12,8 @@ test("Fidelity et Rainbow utilisent explicitement leur spécification M3", () =>
   assert.match(theme, /Variant\.RAINBOW/);
   assert.match(theme, /specVersion: "2021"/);
   assert.doesNotMatch(theme, /specVersion: "2025"/);
-  assert.match(theme, /Rôle Material 3/);
-  assert.match(theme, /Rôle Rainbow/);
+  assert.match(theme, /rôle Material 3/);
+  assert.match(theme, /rôle Rainbow/);
 });
 
 test("la liste des rôles système est explicite et exclut les clés internes", () => {
