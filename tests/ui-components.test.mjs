@@ -11,6 +11,7 @@ const vitrine = await readFile(new URL("../components/prenoms-vedette.tsx", impo
 const notFound = await readFile(new URL("../app/not-found.tsx", import.meta.url), "utf8");
 const errorBoundary = await readFile(new URL("../app/error.tsx", import.meta.url), "utf8");
 const historique = await readFile(new URL("../components/historique-prenoms.tsx", import.meta.url), "utf8");
+const globalStyles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 
 test("les primitives partagées exposent des variantes sémantiques et préservent les éléments natifs", () => {
   assert.match(bouton, /export function Bouton\(/);
@@ -71,8 +72,6 @@ const champStyles = await readFile(new URL("../components/ui/champ-recherche.mod
 const catalogue = await readFile(new URL("../components/recherche-prenoms.tsx", import.meta.url), "utf8");
 const comparateur = await readFile(new URL("../components/comparateur-prenoms.tsx", import.meta.url), "utf8");
 const listeFavoris = await readFile(new URL("../components/liste-favoris.tsx", import.meta.url), "utf8");
-const globalStyles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
-
 test("les trois parcours visiteurs utilisent le même champ de recherche accessible", () => {
   assert.match(champ, /export function ChampRecherche\(/);
   assert.match(champ, /<label[^>]+htmlFor=\{id\}/);
@@ -218,12 +217,13 @@ test("Fidelity et Rainbow sont calculés depuis la source baseline Material docu
 
 
 test("Rainbow ne colore plus les titres ou les surfaces générales", () => {
-  const titre = globalStyles.slice(globalStyles.lastIndexOf("h1 em, h2 em {"));
+
   const profil = globalStyles.slice(globalStyles.lastIndexOf(".profile-hero h1 span {"));
   const surfaceSymbolique = globalStyles.slice(globalStyles.lastIndexOf(".symbolic-card {"));
   assert.doesNotMatch(globalStyles, /\.hero::after\s*\{/);
   assert.doesNotMatch(globalStyles, /var\(--rainbow\)|color-rainbow-text/);
-  assert.doesNotMatch(titre.slice(0, titre.indexOf("\n}")), /color-rainbow/);
+  assert.match(globalStyles, /h1 em,\s*h2 em\s*\{[^}]*color:\s*var\(--md-sys-color-primary\)/s);
+  assert.doesNotMatch(globalStyles, /h1 em,\s*h2 em\s*\{[^}]*color:\s*var\(--namesia-color-category/);
   assert.doesNotMatch(profil.slice(0, profil.indexOf("\n}")), /color-rainbow/);
   assert.match(titre, /--md-sys-color-on-surface/);
   assert.match(surfaceSymbolique, /var\(--namesia-color-category-container/);
