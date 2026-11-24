@@ -8,6 +8,8 @@ const styles = await readFile(new URL("../components/ui/Button.module.css", impo
 const iconButtonStyles = await readFile(new URL("../components/ui/IconButton.module.css", import.meta.url), "utf8");
 const card = await readFile(new URL("../components/ui/Card.tsx", import.meta.url), "utf8");
 const cardStyles = await readFile(new URL("../components/ui/Card.module.css", import.meta.url), "utf8");
+const textField = await readFile(new URL("../components/ui/TextField.tsx", import.meta.url), "utf8");
+const textFieldStyles = await readFile(new URL("../components/ui/TextField.module.css", import.meta.url), "utf8");
 const favoris = await readFile(new URL("../components/FavoriteButton.tsx", import.meta.url), "utf8");
 const decouverte = await readFile(new URL("../components/RandomDiscovery.tsx", import.meta.url), "utf8");
 const vitrine = await readFile(new URL("../components/FeaturedNames.tsx", import.meta.url), "utf8");
@@ -352,6 +354,21 @@ test("les surfaces principales Material sont définies à leur emplacement canon
 
 
 const rechercheActions = await readFile(new URL("../components/NameSearch.tsx", import.meta.url), "utf8");
+
+test("TextField reprend les variantes, états et la typographie Material 3", () => {
+  assert.match(textField, /export function TextField/);
+  assert.match(textField, /variant: TextFieldVariant/);
+  assert.match(textField, /aria-describedby/);
+  assert.match(textFieldStyles, /md-sys-typescale-body-large-size/);
+  assert.match(textFieldStyles, /md-sys-typescale-label-small-size/);
+  assert.match(textFieldStyles, /placeholder-shown/);
+  assert.match(textFieldStyles, /focus-within\.outlined/);
+  assert.match(textFieldStyles, /md-sys-color-error/);
+  assert.match(adminClient, /<TextField id="admin-email"/);
+  assert.match(adminClient, /<TextField id="fiche-json"/);
+  assert.doesNotMatch(adminClient, /<input id="admin-email"|<textarea id="fiche-json"/);
+  assert.doesNotMatch(adminFormStyles, /\.form :is\(input\[type="email"\], textarea\)/);
+});
 
 test("Card expose les trois variantes Material 3 et centralise les surfaces", () => {
   assert.match(card, /export function Card</);
