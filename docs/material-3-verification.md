@@ -14,7 +14,7 @@
 | Définitions des couleurs M3 | [Google Material Color Utilities — MaterialDynamicColors](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/dynamiccolor/material_dynamic_colors.ts) | Rôles calculables et distinction des clés de palette |
 | Variantes disponibles | [Google Material Color Utilities — Variant](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/dynamiccolor/variant.ts) | Noms officiels des variantes |
 | Définition de la variante Fidelity | [Google Material Color Utilities — ColorSpec 2021](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/dynamiccolor/color_spec_2021.ts) | Règles de couleur associées à Fidelity |
-| Baseline de couleur M3 | [Android Developers — Dynamic colors](https://developer.android.com/develop/ui/views/theming/dynamic-colors) et [AndroidX — ColorLightTokens.kt](https://github.com/androidx/androidx/blob/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/tokens/ColorLightTokens.kt) | Valeurs baseline M3 ; `#6750A4` est le violet primary documenté, pas un bleu Google |
+| Baseline de couleur M3 | [Android Developers — Color](https://developer.android.com/design/ui/mobile/guides/styles/color) et [AndroidX — PaletteTokens.kt](https://github.com/androidx/androidx/blob/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/tokens/PaletteTokens.kt) | Valeurs baseline M3 ; `#6750A4` est le violet primary documenté, pas un bleu Google |
 | Contrat d'implémentation des couleurs | [AndroidX — ColorScheme.kt](https://github.com/androidx/androidx/blob/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/ColorScheme.kt) | Noms et responsabilités des rôles de `ColorScheme` |
 | Contrat des composants | [AndroidX Compose Material 3](https://github.com/androidx/androidx/tree/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3) | Implémentation source des composants standards, états, dimensions et variantes |
 | Couleurs personnalisées | [Material 3 — Define new colors](https://m3.material.io/styles/color/advanced/define-new-colors) et [MCU — theme_utils.ts](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/utils/theme_utils.ts) | Génération des quatre rôles tonals de couleurs sémantiques additionnelles |
@@ -29,14 +29,14 @@ Les sources sont les spécifications Material 3 et le code source officiel Googl
 
 ## Paramètres retenus
 
-`specVersion: "2021"` ne signifie pas que Namesia utilise une ancienne version de Material Design 3. Il s'agit de la version de la spécification algorithmique ColorSpec utilisée par Material Color Utilities pour calculer les rôles. Le système de composants reste Material 3 ; ses références d'implémentation sont les sources AndroidX Compose Material 3. Fidelity et Rainbow sont actuellement redirigées par la bibliothèque vers ColorSpec 2021 même si 2025 est demandé ; le paramètre est fixé explicitement afin de rendre ce comportement vérifiable.
+`specVersion: "2021"` ne signifie pas que Namesia utilise une ancienne version de Material Design 3. Il s'agit de la version de la spécification algorithmique ColorSpec utilisée par Material Color Utilities pour calculer les rôles. Le violet `#6750A4` est le Primary40 de la baseline AndroidX ; Namesia l'utilise comme entrée de la variante Fidelity, et non comme un remplacement direct de tous les rôles. Le système de composants reste Material 3 ; ses références d'implémentation sont les sources AndroidX Compose Material 3. Fidelity et Rainbow sont actuellement redirigées par la bibliothèque vers ColorSpec 2021 même si 2025 ou 2026 est demandé ; le paramètre est fixé explicitement afin de rendre ce comportement vérifiable.
 
 | Paramètre | Valeur | Justification |
 |---|---|---|
 | Couleur source | `#6750A4` | Violet de la baseline Material 3 documentée par Android Developers ; ce n'est pas un bleu Google |
 | Variante d'interface | `Variant.FIDELITY` | Conserve le caractère de la couleur source selon la variante M3 |
 | Variante catégorielle | `Variant.RAINBOW` | Schéma distinct réservé aux catégories éditoriales |
-| Version ColorSpec | `2021` | Version de l'algorithme de génération des couleurs, pas version de Material Design 3. `DynamicScheme.maybeFallbackSpecVersion` force Fidelity/Rainbow vers 2021 car 2025 ne les prend pas en charge |
+| Version ColorSpec | `2021` | Version de l'algorithme de génération des couleurs, pas version de Material Design 3. `DynamicScheme.maybeFallbackSpecVersion` force Fidelity/Rainbow vers 2021 car les spécifications 2025 et 2026 ne les prennent pas en charge |
 | Plateforme MCU | `phone` | Paramètre explicite de génération, cohérent avec la cible Android mobile ; ne donne pas accès aux API natives depuis le Web |
 | Contraste | `0` | Contraste standard M3 |
 | Couleurs sémantiques | `success #386A20`, `warning #795900`, `info #005B9A` | Sources historiques conservées et étendues via `customColor` en quatre rôles clairs/sombres ; namespace `--namesia-color-*` |
