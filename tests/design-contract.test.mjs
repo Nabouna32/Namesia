@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const globalCss = await readFile(join(root, "app/globals.css"), "utf8");
 const provider = await readFile(join(root, "components/material-theme-provider.tsx"), "utf8");
+const theme = await readFile(join(root, "lib/material-theme.ts"), "utf8");
 const layout = await readFile(join(root, "app/layout.tsx"), "utf8");
 const home = await readFile(join(root, "app/page.tsx"), "utf8");
 const prenoms = await readFile(join(root, "lib/prenoms.ts"), "utf8");
@@ -68,7 +69,7 @@ function collectRules(css) {
 test("les feuilles consomment les rôles Material sans alias hérités ni fallback", () => {
   assert.doesNotMatch(allCss, /--(?:color-[\w-]+|ink|muted|line|paper|surface|accent|sans|font-(?:sans|display)|radius-[\w-]+|space-\d+|motion-[\w-]+|shadow-[\w-]+)\b/);
   assert.doesNotMatch(allCss, /var\(\s*--[\w-]+\s*,/);
-  assert.match(globalCss, /--md-sys-color-primary:/);
+  assert.match(theme, /--md-sys-color-/);
   assert.match(globalCss, /--md-sys-typescale-title-large-size:/);
   assert.match(globalCss, /--md-sys-shape-corner-extra-large:/);
 });
@@ -114,7 +115,7 @@ test("les états hover sont réservés aux appareils qui disposent d'un pointeur
 
 test("la feuille globale conserve un seul :root SSR et aucune couche d'overrides finale", () => {
   assert.equal((globalCss.match(/:root\s*\{/g) ?? []).length, 1);
-  assert.match(globalCss, /Valeurs initiales SSR/);
+  assert.doesNotMatch(globalCss, /--md-sys-color-/);
   assert.doesNotMatch(globalCss, /Couche Material 3 Fidelity/);
 });
 
@@ -203,10 +204,10 @@ test("les cartes de prénoms acceptent les noms longs sans déborder ni couper l
 });
 
 test("les catégories Rainbow utilisent des rôles explicites sans couleur de repli", () => {
-  assert.match(provider, /--md-sys-color-category-/);
+  assert.match(theme, /--namesia-color-category-/);
   assert.match(provider, /--md-sys-color-\$\{role\}/);
-  assert.match(allCss, /var\(--md-sys-color-category-container\)/);
-  assert.doesNotMatch(allCss, /var\(--md-sys-color-category[^)]*,/);
+  assert.match(allCss, /var\(--namesia-color-category-container\)/);
+  assert.doesNotMatch(allCss, /var\(--namesia-color-category[^)]*,/);
 });
 
 test("le hero d'accueil sépare le récit et les outils dans une composition Fidelity responsive", () => {
