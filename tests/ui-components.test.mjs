@@ -359,6 +359,7 @@ test("TextField reprend les variantes, états et la typographie Material 3", () 
   assert.match(textField, /export function TextField/);
   assert.match(textField, /variant: TextFieldVariant/);
   assert.match(textField, /aria-describedby/);
+  assert.match(textField, /aria-invalid/);
   assert.match(textFieldStyles, /md-sys-typescale-body-large-size/);
   assert.match(textFieldStyles, /md-sys-typescale-label-small-size/);
   assert.match(textFieldStyles, /placeholder-shown/);
@@ -367,6 +368,8 @@ test("TextField reprend les variantes, états et la typographie Material 3", () 
   assert.match(textFieldStyles, /focus-within\.outlined/);
   assert.match(textFieldStyles, /border-bottom: 2px/);
   assert.match(textFieldStyles, /md-sys-color-error/);
+  assert.match(textFieldStyles, /38%, transparent/);
+  assert.match(textFieldStyles, /4%, var\(--md-sys-color-surface-container-highest\)/);
   assert.match(adminClient, /<TextField id="admin-email"/);
   assert.match(adminClient, /<TextField id="fiche-json"/);
   assert.doesNotMatch(adminClient, /<input id="admin-email"|<textarea id="fiche-json"/);
@@ -380,6 +383,7 @@ test("Card expose les trois variantes Material 3 et centralise les surfaces", ()
   assert.match(cardStyles, /\.filled\s*\{[^}]*surface-container-highest/s);
   assert.match(cardStyles, /\.outlined\s*\{[^}]*outline-variant/s);
   assert.match(cardStyles, /corner-medium/);
+  assert.match(cardStyles, /0 2px 6px 2px/);
   for (const source of [catalogue, favorisActions, historiqueActions, comparateur, vitrine, suggestions]) {
     assert.match(source, /<Card/);
   }
