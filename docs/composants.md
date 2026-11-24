@@ -3,7 +3,7 @@
 - **Statut :** contrat canonique de l'interface
 - **Mis à jour :** 2026-11-24
 - **Référence :** AndroidX Compose Material 3 1.5.0 stable, commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c`
-- **Décisions :** [ADR-0037 — Utiliser directement les composants Material 3](decisions/ADR-0037-composants-material-3-directs.md) · [ADR-0038 — Migration effective des primitives](decisions/ADR-0038-migration-effective-material-3.md) · [ADR-0039 — Shell Material 3](decisions/ADR-0039-shell-material-3.md)
+- **Décisions :** [ADR-0037 — Utiliser directement les composants Material 3](decisions/ADR-0037-composants-material-3-directs.md) · [ADR-0038 — Migration effective des primitives](decisions/ADR-0038-migration-effective-material-3.md) · [ADR-0039 — Shell Material 3](decisions/ADR-0039-shell-material-3.md) · [ADR-0040 — Nomenclature des composants](decisions/ADR-0040-nomenclature-composants.md)
 
 Ce document définit les composants d'interface autorisés et leur composition. Le nom Material 3 est le nom du composant dans le code : il n'existe pas de vocabulaire de primitives parallèle propre à Namesia. L'implémentation React traduit les contrats AndroidX en HTML/CSS accessibles ; elle n'importe pas Compose dans le navigateur.
 
@@ -25,13 +25,13 @@ Ce document définit les composants d'interface autorisés et leur composition. 
 |---|---|---|
 | `MaterialTheme` / `ColorScheme` | Thème global clair/sombre | Rôles Fidelity calculés et extensions explicites |
 | `TopAppBar` | Barre supérieure commune | Anatomie, hauteur, alignement et couleurs AndroidX |
-| `NavigationBar` | Navigation compacte | Navigation de premier niveau, 80 dp, indicateur et libellés `label-medium` |
+| `NavigationBar` | Navigation compacte | Navigation de premier niveau, `NavigationBarTokens.TallContainerHeight = 80 dp`, indicateur et libellés `label-medium` |
 | `NavigationRail` | Navigation medium/expanded | Navigation de premier niveau, rail de 80 dp et libellés `label-medium` |
 | `Button` | Actions textuelles | Filled, Filled Tonal, Outlined et Text ; géométrie et états AndroidX |
 | `IconButton` | Actions iconiques | Icône de 24 dp et cible tactile Web adaptée |
 | `SearchBar` | Recherche du catalogue et des parcours | Champ replié AndroidX de 56 dp ; pas de faux panneau expansé |
 | `TextField` | Saisie de formulaire | Variantes et états correspondant au besoin |
-| `FilterChip` | Filtres sélectionnables | Capsule de 32 dp, cible tactile de 48 px, sélection explicite |
+| `FilterChip` | Filtres sélectionnables | `FilterChipTokens.ContainerHeight = 32 dp`, cible tactile de 48 px, sélection explicite |
 | `InputChip` | Éléments sélectionnés et retrait | Anatomie et action de suppression M3 |
 | `Card` | Contenu éditorial et résultats | Variantes Elevated, Filled ou Outlined selon la hiérarchie |
 | `Icon` | Pictogrammes | Material Symbols ; la cible interactive appartient à `IconButton` |
@@ -53,9 +53,10 @@ Les primitives présentes dans le code sont directement nommées d'après Materi
 | `SearchBar` | `components/ui/SearchBar.tsx` | Recherche repliée de 56 dp et effacement par IconButton |
 | `FilterChip` | `components/ui/FilterChip.tsx` | Filtre sélectionnable, conteneur visuel de 32 dp |
 | `InputChip` | `components/ui/InputChip.tsx` | Élément sélectionné avec action de retrait |
+| `Icon` | `components/ui/Icon.tsx` | Pictogrammes Material Symbols Rounded |
 | `Card` | Composition des éléments sémantiques `article` et `section` | Les cartes de contenu ne sont pas encore centralisées dans un composant React partagé |
 
-`NavigationBar` et `NavigationRail` partagent uniquement le rendu des destinations via `NavigationDestinations` ; les deux composants M3 restent distincts dans le shell. `TopAppBar` porte la barre supérieure. Les composants métier `FavoriteButton`, `ComparisonButton` et `ComparisonSelection` orchestrent les actions de favoris et de comparaison ; ils composent `Button` et `InputChip` sans redéfinir leur anatomie. `StatusMessage` est une composition sémantique de statut accessible (annonce `status` ou `alert`) et des extensions de couleur Namesia ; ce n'est pas un composant Material 3. Les liens de navigation utilisent directement `Link` de Next.js avec les styles de `Button`, sans wrapper. Les filtres de favoris utilisent `select` HTML natif, sans abstraction de formulaire supplémentaire.
+`NavigationBar` et `NavigationRail` partagent uniquement le rendu des destinations via `NavigationDestinations` ; les deux composants M3 restent distincts dans le shell. `TopAppBar` porte la barre supérieure. Les composants métier `FavoriteButton`, `FavoriteList`, `NameSearch`, `NameComparator`, `ComparisonBar`, `ComparisonButton`, `ComparisonSelection`, `NameHistory`, `RandomDiscovery`, `FeaturedNames`, `NameSuggestions`, `ShareLink` et `ShareName` portent les parcours produit ; ils composent les primitives M3 sans redéfinir leur anatomie. Les context providers sont `FavoritesProvider` et `HistoryProvider`, exposant `useFavorites` et `useHistory`. `StatusMessage` est une composition sémantique de statut accessible (annonce `status` ou `alert`) et des extensions de couleur Namesia ; ce n'est pas un composant Material 3. Les liens de navigation utilisent directement `Link` de Next.js avec les styles de `Button`, sans wrapper. Les filtres de favoris utilisent `select` HTML natif, sans abstraction de formulaire supplémentaire.
 
 Les anciennes primitives françaises, leurs feuilles CSS et leurs exports sont supprimés dans la même migration. Aucun alias de compatibilité ne subsiste. Les noms métier du domaine restent français dans le contenu visible ; les identifiants des primitives UI suivent Material 3.
 

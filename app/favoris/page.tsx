@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ListeFavoris } from "@/components/liste-favoris";
+import { FavoriteList } from "@/components/FavoriteList";
 import { lireNombreVisible, type TriFavoris } from "@/lib/navigation-prenoms";
 import { getPrenomsIndex } from "@/lib/prenoms";
 
@@ -38,7 +38,7 @@ export default async function FavorisPage({ searchParams }: Props) {
         <span className="eyebrow">Votre sélection</span>
         <h1>Vos prénoms<br /><em>préférés.</em></h1>
         <p className="page-intro">Retrouvez ici les prénoms enregistrés dans ce navigateur. Votre sélection reste privée, sans compte ni synchronisation entre appareils.</p>
-        <ListeFavoris
+        <FavoriteList
           prenoms={prenoms}
           initialRecherche={premierParametre(parametres.q)}
           initialGenre={premierParametre(parametres.genre)}

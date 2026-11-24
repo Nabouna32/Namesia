@@ -4,9 +4,9 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { creerUrlFicheDepuisComparateur } from "@/lib/navigation-prenoms";
 import type { Prenom, PrenomIndex } from "@/lib/prenoms";
-import { PartagerLien } from "@/components/partager-fiche";
+import { ShareLink } from "@/components/ShareLink";
 import { FavoriteButton } from "@/components/FavoriteButton";
-import { useFavoris } from "@/components/favoris-provider";
+import { useFavorites } from "@/components/FavoritesProvider";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { categoryTone } from "@/lib/category-color";
 import { SearchBar } from "@/components/ui/SearchBar";
@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/Button";
 type Props = { prenoms: PrenomIndex[]; selectionInitiale: string[] };
 
 
-export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
+export function NameComparator({ prenoms, selectionInitiale }: Props) {
   const [recherche, setRecherche] = useState("");
   const [nombreVisible, setNombreVisible] = useState(24);
   const [selection, setSelection] = useState<string[]>(selectionInitiale);
@@ -24,7 +24,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
   const [chargement, setChargement] = useState(false);
   const [erreur, setErreur] = useState(false);
   const [tentative, setTentative] = useState(0);
-  const { erreur: erreurFavoris } = useFavoris();
+  const { erreur: erreurFavoris } = useFavorites();
   const selectionInitialeKey = selectionInitiale.join(",");
   const selectionKey = selection.join(",");
 
@@ -262,11 +262,11 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
       {selection.length >= 2 && selectionComplete && !chargement && !erreur && (
         <div className="compare-share">
           <p>Cette sélection est enregistrée dans l’adresse de la page : vous pouvez partager la comparaison.</p>
-          <PartagerLien
-            titre={`Comparaison de ${selectionnes.length} prénoms · Namesia`}
-            texte={`Comparez ${selectionnes.map((prenom) => prenom.nom).join(", ")} sur Namesia.`}
+          <ShareLink
+            title={`Comparaison de ${selectionnes.length} prénoms · Namesia`}
+            text={`Comparez ${selectionnes.map((prenom) => prenom.nom).join(", ")} sur Namesia.`}
             label="Partager cette comparaison"
-            parametres={["prenoms"]}
+            parameters={["prenoms"]}
           />
         </div>
       )}

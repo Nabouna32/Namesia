@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { DecouverteAleatoire } from "@/components/decouverte-aleatoire";
-import { HistoriquePrenoms } from "@/components/historique-prenoms";
-import { PrenomsVedette } from "@/components/prenoms-vedette";
-import { RecherchePrenoms } from "@/components/recherche-prenoms";
+import { RandomDiscovery } from "@/components/RandomDiscovery";
+import { NameHistory } from "@/components/NameHistory";
+import { FeaturedNames } from "@/components/FeaturedNames";
+import { NameSearch } from "@/components/NameSearch";
 import { getPrenomsIndex, type PrenomIndex } from "@/lib/prenoms";
-import { IconeMaterial } from "@/components/icone-material";
+import { Icon } from "@/components/ui/Icon";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { alternates: { canonical: "/" } };
@@ -35,20 +35,20 @@ export default async function Accueil() {
           </div>
           <div className="hero-tools">
             <h2>Un prénom en tête ?</h2>
-            <RecherchePrenoms prenoms={prenoms} compact />
-            {prenoms.length > 0 && <DecouverteAleatoire prenoms={prenoms} />}
+            <NameSearch prenoms={prenoms} compact />
+            {prenoms.length > 0 && <RandomDiscovery prenoms={prenoms} />}
             <p className="ai-disclaimer">Les contenus sont générés par IA et peuvent comporter des erreurs.</p>
           </div>
         </div>
       </section>
-      <HistoriquePrenoms prenoms={prenoms} />
+      <NameHistory prenoms={prenoms} />
       <section className="section explore-section">
         <div className="container">
           <div className="section-heading">
             <div><span className="eyebrow">À explorer</span><h2>Les prénoms à découvrir</h2></div>
-            <Link className="text-link" href="/prenoms">Tous les prénoms <IconeMaterial name="arrow-up-right" size={18} /></Link>
+            <Link className="text-link" href="/prenoms">Tous les prénoms <Icon name="arrow-up-right" size={18} /></Link>
           </div>
-          <PrenomsVedette prenoms={prenomsMisEnAvant} />
+          <FeaturedNames prenoms={prenomsMisEnAvant} />
           {prenoms.length === 0 && <p className="empty-state">Le catalogue sera bientôt disponible.</p>}
         </div>
       </section>

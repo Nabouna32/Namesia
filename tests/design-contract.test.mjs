@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const globalCss = await readFile(join(root, "app/globals.css"), "utf8");
-const provider = await readFile(join(root, "components/material-theme-provider.tsx"), "utf8");
+const provider = await readFile(join(root, "components/MaterialThemeProvider.tsx"), "utf8");
 const theme = await readFile(join(root, "lib/material-theme.ts"), "utf8");
 const layout = await readFile(join(root, "app/layout.tsx"), "utf8");
 const home = await readFile(join(root, "app/page.tsx"), "utf8");
@@ -72,6 +72,19 @@ function collectRules(css) {
   return rules;
 }
 
+test("les fichiers de composants React utilisent une nomenclature PascalCase", async () => {
+  const files = await readdir(join(root, "components"));
+  assert.deepEqual(files.filter((file) => file.endsWith(".tsx") && !/^[A-Z]/.test(file)), []);
+});
+
+test("les anciens fichiers de composants métier français ne peuvent pas réapparaître", async () => {
+  const files = await readdir(join(root, "components"));
+  assert.deepEqual(
+    files.filter((file) => /^(barre-comparaison|comparateur-prenoms|decouverte-aleatoire|historique-prenoms|liste-favoris|partager-fiche|prenoms-vedette|recherche-prenoms|suggestions-prenoms|icone-material|favoris-provider|historique-provider|material-theme-provider|enregistrer-consultation)/.test(file)),
+    []
+  );
+});
+
 test("les anciennes primitives UI françaises ne peuvent pas réapparaître", async () => {
   const files = await readdir(join(root, "components/ui"));
   assert.deepEqual(files.filter((file) => /^(bouton|champ-|chip-|lien-bouton|liste-selection|message-statut)/.test(file)), []);
@@ -132,11 +145,12 @@ test("les états hover sont réservés aux appareils qui disposent d'un pointeur
     );
   }
 
-  const selectionStyles = styles.find(({ path }) => path === "components/ui/liste-selection-comparaison.module.css")?.content ?? "";
+  const selectionStyles = styles.find(({ path }) => path === "components/ui/InputChip.module.css")?.content ?? "";
   assert.ok(selectionStyles.includes(".chip:active"));
   assert.ok(selectionStyles.includes("var(--md-sys-state-pressed-state-layer-opacity)"));
-  assert.ok(selectionStyles.includes("var(--md-sys-color-on-secondary-container)"));
-  assert.ok(selectionStyles.includes("var(--md-sys-color-secondary-container)"));
+  assert.ok(selectionStyles.includes("var(--md-sys-color-on-surface-variant)"));
+  assert.ok(selectionStyles.includes("var(--md-sys-color-outline-variant)"));
+  assert.ok(selectionStyles.includes("var(--md-sys-shape-corner-full)"));
 });
 
 test("la feuille globale conserve un seul :root SSR et aucune couche d'overrides finale", () => {
@@ -287,7 +301,7 @@ test("le hero d'accueil sépare le récit et les outils dans une composition Fid
   assert.match(home, /className="hero-intro"/);
   assert.match(home, /className="hero-tools"/);
   assert.match(home, /<h2>Un prénom en tête\s*\?<\/h2>/);
-  assert.match(home, /<RecherchePrenoms prenoms=\{prenoms\} compact \/>/);
+  assert.match(home, /<NameSearch prenoms=\{prenoms\} compact \/>/);
   assert.match(globalCss, /\.hero-content\s*\{[^}]*display:\s*grid/s);
   assert.match(globalCss, /\.hero-tools\s*\{[^}]*background:\s*var\(--md-sys-color-surface-container-lowest\)/s);
   assert.match(globalCss, /\.hero-copy\s*\{[^}]*color:\s*var\(--md-sys-color-on-surface-variant\)/s);
@@ -303,8 +317,8 @@ test("les en-têtes de section restent lisibles et leurs actions accessibles sur
 
 
 test("les boutons et FilterChip utilisent le rôle typographique M3 label-large", () => {
-  const buttonStyles = styles.find(({ path }) => path === "components/ui/bouton.module.css")?.content ?? "";
-  const filterChipStyles = styles.find(({ path }) => path === "components/ui/chip-filtre.module.css")?.content ?? "";
+  const buttonStyles = styles.find(({ path }) => path === "components/ui/Button.module.css")?.content ?? "";
+  const filterChipStyles = styles.find(({ path }) => path === "components/ui/FilterChip.module.css")?.content ?? "";
   for (const [name, content] of [["Button", buttonStyles], ["FilterChip", filterChipStyles]]) {
     assert.match(content, /font-size:\s*var\(--md-sys-typescale-label-large-size\)/, name + " doit utiliser label-large");
     assert.match(content, /font-weight:\s*var\(--md-sys-typescale-label-large-weight\)/, name + " doit utiliser la graisse du rôle");

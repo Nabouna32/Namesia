@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { RecherchePrenoms } from "@/components/recherche-prenoms";
+import { NameSearch } from "@/components/NameSearch";
 import { jsonLd } from "@/lib/json-ld";
 import { getPrenomsIndex } from "@/lib/prenoms";
 import { lireNombreVisible } from "@/lib/navigation-prenoms";
@@ -82,7 +82,7 @@ export default async function Catalogue({ searchParams }: Props) {
         <span className="eyebrow">Le catalogue</span>
         <h1>Trouvez le prénom<br /><em>qui vous parle.</em></h1>
         <p className="page-intro">Des prénoms d'ici et d'ailleurs, leurs origines, leurs histoires et les traditions qui les accompagnent.</p>
-        <RecherchePrenoms
+        <NameSearch
           prenoms={prenoms}
           synchroniserUrl
           initialRecherche={rechercheInitiale}

@@ -2,18 +2,18 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { BarreComparaison } from "@/components/barre-comparaison";
+import { ComparisonBar } from "@/components/ComparisonBar";
 import { FavoriteButton } from "@/components/FavoriteButton";
-import { useFavoris } from "@/components/favoris-provider";
-import styles from "./recherche-prenoms.module.css";
+import { useFavorites } from "@/components/FavoritesProvider";
+import styles from "./NameSearch.module.css";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
-import { IconeMaterial } from "./icone-material";
+import { Icon } from "@/components/ui/Icon";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { ComparisonButton } from "@/components/ui/ComparisonButton";
 import { Button } from "@/components/ui/Button";
-import { PartagerLien } from "@/components/partager-fiche";
+import { ShareLink } from "@/components/ShareLink";
 import { FilterChip } from "@/components/ui/FilterChip";
 
 type Props = {
@@ -26,7 +26,7 @@ type Props = {
   initialNombreVisible?: number;
 };
 
-export function RecherchePrenoms({
+export function NameSearch({
   prenoms,
   compact = false,
   synchroniserUrl = false,
@@ -35,7 +35,7 @@ export function RecherchePrenoms({
   initialLettre = null,
   initialNombreVisible = 24
 }: Props) {
-  const { erreur: erreurFavoris } = useFavoris();
+  const { erreur: erreurFavoris } = useFavorites();
   const [recherche, setRecherche] = useState(initialRecherche);
   const [genreActif, setGenreActif] = useState(initialGenre);
   const [lettreActive, setLettreActive] = useState(initialLettre);
@@ -200,16 +200,16 @@ export function RecherchePrenoms({
       )}
 
       {!compact && synchroniserUrl && (filtresActifs || nombreVisible > 24) && (
-        <PartagerLien
-          titre="Recherche de prénoms · Namesia"
-          texte="Retrouvez cette sélection de prénoms sur Namesia."
+        <ShareLink
+          title="Recherche de prénoms · Namesia"
+          text="Retrouvez cette sélection de prénoms sur Namesia."
           label="Partager cette recherche"
-          parametres={["q", "genre", "lettre", "limite"]}
+          parameters={["q", "genre", "lettre", "limite"]}
         />
       )}
 
       {!compact && (
-        <BarreComparaison
+        <ComparisonBar
           prenoms={prenomsSelectionnes}
           onRetirer={basculerComparaison}
           onEffacer={() => setSelectionComparaison([])}
@@ -241,10 +241,10 @@ export function RecherchePrenoms({
                         <strong>{prenom.nom}</strong>
                         <small>{prenom.genre} · Découvrir la fiche</small>
                       </span>
-                      <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
+                      <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Link>
                     {!compact && (
-                      <ButtonComparaison
+                      <ComparisonButton
                         name={prenom.nom}
                         selected={selectionComparaison.includes(prenom.slug)}
                         disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
@@ -257,7 +257,7 @@ export function RecherchePrenoms({
               </div>
             {compact && resultats.length > nombreVisible && (
               <Link className="text-link" href={creerUrlCatalogueDepuisRecherche(recherche)}>
-                Voir tous les résultats dans le catalogue <IconeMaterial name="arrow-up-right" size={18} />
+                Voir tous les résultats dans le catalogue <Icon name="arrow-up-right" size={18} />
               </Link>
             )}
             {!compact && resultats.length > nombreVisible && (
@@ -281,10 +281,10 @@ export function RecherchePrenoms({
                     <Link className={`name-card ${styles.resultLink}`} href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
                       <span className="name-initial">{prenom.lettre}</span>
                       <span><strong>{prenom.nom}</strong><small>{prenom.genre} · Suggestion proche</small></span>
-                      <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
+                      <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Link>
                     {!compact && (
-                      <ButtonComparaison
+                      <ComparisonButton
                         name={prenom.nom}
                         selected={selectionComparaison.includes(prenom.slug)}
                         disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}

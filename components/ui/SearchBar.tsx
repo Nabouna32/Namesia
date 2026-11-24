@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, type ChangeEvent } from "react";
-import { IconeMaterial } from "@/components/icone-material";
+import { Icon } from "@/components/ui/Icon";
 import { IconButton } from "@/components/ui/IconButton";
 import styles from "./SearchBar.module.css";
 
@@ -38,7 +38,7 @@ export function SearchBar({
       <label className="sr-only" htmlFor={id}>{label}</label>
       <div className={styles.control}>
         <span className={styles.icon} aria-hidden="true">
-          <IconeMaterial name="search" size={24} />
+          <Icon name="search" size={24} />
         </span>
         <input
           ref={champRef}
@@ -56,7 +56,7 @@ export function SearchBar({
             aria-label={`Effacer : ${label.toLocaleLowerCase("fr")}`}
             onClick={effacer}
           >
-            <IconeMaterial name="close" size={24} />
+            <Icon name="close" size={24} />
           </IconButton>
         )}
       </div>

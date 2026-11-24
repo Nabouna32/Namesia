@@ -1,7 +1,7 @@
 "use client";
 
 import type { PrenomIndex } from "@/lib/prenoms";
-import styles from "./barre-comparaison.module.css";
+import styles from "./ComparisonBar.module.css";
 import { ComparisonSelection } from "@/components/ui/ComparisonSelection";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
@@ -13,7 +13,7 @@ type Props = {
   onEffacer: () => void;
 };
 
-export function BarreComparaison({ prenoms, onRetirer, onEffacer }: Props) {
+export function ComparisonBar({ prenoms, onRetirer, onEffacer }: Props) {
   if (prenoms.length === 0) return null;
 
   const slugs = prenoms.map((prenom) => prenom.slug);

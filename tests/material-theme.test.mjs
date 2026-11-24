@@ -5,7 +5,7 @@ import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
-const provider = await readFile(join(root, "components/material-theme-provider.tsx"), "utf8");
+const provider = await readFile(join(root, "components/MaterialThemeProvider.tsx"), "utf8");
 const theme = await readFile(join(root, "lib/material-theme.ts"), "utf8");
 const layout = await readFile(join(root, "app/layout.tsx"), "utf8");
 const packageJson = JSON.parse(await readFile(join(root, "package.json"), "utf8"));

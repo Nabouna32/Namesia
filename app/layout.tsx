@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { Roboto } from "next/font/google";
-import { FavorisProvider } from "@/components/favoris-provider";
-import { HistoriqueProvider } from "@/components/historique-provider";
-import { MaterialThemeProvider } from "@/components/material-theme-provider";
+import { FavoritesProvider } from "@/components/FavoritesProvider";
+import { HistoryProvider } from "@/components/HistoryProvider";
+import { MaterialThemeProvider } from "@/components/MaterialThemeProvider";
 import { NavigationBar } from "@/components/ui/NavigationBar";
 import { NavigationRail } from "@/components/ui/NavigationRail";
 import { TopAppBar } from "@/components/ui/TopAppBar";
@@ -63,8 +63,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(siteWebData) }} />
     <a className="skip-link" href="#contenu">Aller au contenu</a>
     <MaterialThemeProvider>
-      <FavorisProvider>
-        <HistoriqueProvider>
+      <FavoritesProvider>
+        <HistoryProvider>
           <div className="app-shell">
             <TopAppBar />
             <NavigationBar />
@@ -83,8 +83,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               </footer>
             </div>
           </div>
-        </HistoriqueProvider>
-      </FavorisProvider>
+        </HistoryProvider>
+      </FavoritesProvider>
     </MaterialThemeProvider>
   </body></html>;
 }

@@ -81,6 +81,8 @@ export function suggererPrenomsProches(prenoms: PrenomIndex[], recherche: string
   const terme = normaliserRecherche(recherche);
   if (terme.length < 4) return [];
 
+  if (prenoms.some((prenom) => normaliserRecherche(prenom.nom) === terme)) return [];
+
   const limite = terme.length >= 8 ? 2 : 1;
   return prenoms
     .flatMap((prenom) => {

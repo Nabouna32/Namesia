@@ -5,11 +5,11 @@ import type { PrenomIndex } from "@/lib/prenoms";
 import { creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
 import { normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
-import { BarreComparaison } from "./barre-comparaison";
+import { ComparisonBar } from "./ComparisonBar";
 import { FavoriteButton } from "./FavoriteButton";
-import { useFavoris } from "./favoris-provider";
-import styles from "./liste-favoris.module.css";
-import { IconeMaterial } from "./icone-material";
+import { useFavorites } from "@/components/FavoritesProvider";
+import styles from "./FavoriteList.module.css";
+import { Icon } from "@/components/ui/Icon";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { ComparisonButton } from "@/components/ui/ComparisonButton";
 import { Button } from "@/components/ui/Button";
@@ -27,14 +27,14 @@ type Props = {
 
 const TAILLE_MAX_SAUVEGARDE = 1_000_000;
 
-export function ListeFavoris({
+export function FavoriteList({
   prenoms,
   initialRecherche = "",
   initialGenre = "",
   initialTri = "enregistrement",
   initialNombreVisible = 24
 }: Props) {
-  const { slugs, pret, erreur, retirerPlusieurs, ajouterPlusieurs } = useFavoris();
+  const { slugs, pret, erreur, retirerPlusieurs, ajouterPlusieurs } = useFavorites();
   const [messageImport, setMessageImport] = useState("");
   const [erreurImport, setErreurImport] = useState("");
   const [messageCopie, setMessageCopie] = useState("");
@@ -275,7 +275,7 @@ export function ListeFavoris({
               </select>
             </div>
           </div>
-          <BarreComparaison
+          <ComparisonBar
             prenoms={prenomsSelectionnes}
             onRetirer={basculerComparaison}
             onEffacer={() => setSelectionComparaison([])}
@@ -325,9 +325,9 @@ export function ListeFavoris({
                       <strong>{prenom.nom}</strong>
                       <small>{prenom.genre}</small>
                     </span>
-                    <span className="card-arrow" aria-hidden="true"><IconeMaterial name="arrow-up-right" /></span>
+                    <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                   </Link>
-                  <ButtonComparaison
+                  <ComparisonButton
                     name={prenom.nom}
                     selected={selectionValide.includes(prenom.slug)}
                     disabled={!selectionValide.includes(prenom.slug) && selectionValide.length >= 3}

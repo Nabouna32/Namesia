@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
-import { IconeMaterial } from "@/components/icone-material";
+import { Icon } from "@/components/ui/Icon";
 import styles from "./ComparisonButton.module.css";
 
 type Props = {
@@ -31,7 +31,7 @@ export function ComparisonButton({
     >
       <span className={styles.label}>{selected ? "Ajouté" : "Comparer"}</span>
       <span className={styles.icon} aria-hidden="true">
-        <IconeMaterial name={selected ? "check" : "compare-arrows"} size={18} />
+        <Icon name={selected ? "check" : "compare-arrows"} size={18} />
       </span>
     </Button>
   );

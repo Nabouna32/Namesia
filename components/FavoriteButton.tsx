@@ -2,15 +2,15 @@
 import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
 import styles from "./FavoriteButton.module.css";
-import { IconeMaterial } from "./icone-material";
-import { useFavoris } from "./favoris-provider";
+import { Icon } from "@/components/ui/Icon";
+import { useFavorites } from "@/components/FavoritesProvider";
 type Props = { slug: string; name?: string; compact?: boolean; showError?: boolean };
 export function FavoriteButton({ slug, name, compact = false, showError = true }: Props) {
- const { slugs, pret, erreur, basculer } = useFavoris();
+ const { slugs, pret, erreur, basculer } = useFavorites();
  const selected = slugs.includes(slug);
  const action = selected ? "Retirer des favoris" : "Ajouter aux favoris";
  const accessibleName = name ?? "ce prénom";
- const icon = <IconeMaterial name={selected ? "favorite-filled" : "favorite"} size={compact ? 24 : 18} />;
+ const icon = <Icon name={selected ? "favorite-filled" : "favorite"} size={compact ? 24 : 18} />;
  const label = compact ? pret ? `${action} : ${accessibleName}` : `Chargement des favoris pour ${accessibleName}` : undefined;
  return <div className={compact ? `${styles.container} ${styles.compactContainer}` : styles.container}>
   {compact
