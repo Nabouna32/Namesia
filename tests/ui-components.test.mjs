@@ -388,3 +388,35 @@ test("les actions d'effacement de l'accueil et de comparaison utilisent les prim
   assert.doesNotMatch(historiqueStyles, /\.clear\s*\{/);
   assert.doesNotMatch(barreComparaisonStyles, /\.actions button|\.link\s*\{/);
 });
+
+
+const card = await readFile(new URL("../components/material3/Card.tsx", import.meta.url), "utf8");
+const cardStyles = await readFile(new URL("../components/material3/Card.module.css", import.meta.url), "utf8");
+const textField = await readFile(new URL("../components/material3/TextField.tsx", import.meta.url), "utf8");
+const textFieldStyles = await readFile(new URL("../components/material3/TextField.module.css", import.meta.url), "utf8");
+const adminClient = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
+
+test("Card centralise les surfaces AndroidX et préserve l’élément HTML choisi", () => {
+  assert.match(card, /export function Card</);
+  assert.match(card, /variant: CardVariant/);
+  assert.match(card, /const Component = as \?\? "div"/);
+  assert.match(cardStyles, /\.elevated\s*\{[^}]*surface-container-low/s);
+  assert.match(cardStyles, /\.filled\s*\{[^}]*surface-container-highest/s);
+  assert.match(cardStyles, /\.outlined\s*\{[^}]*outline-variant/s);
+  assert.match(cardStyles, /\.interactive\.elevated:hover/);
+  assert.match(cardStyles, /--md-sys-state-pressed-state-layer-opacity/);
+});
+
+test("TextField reprend l’anatomie et les états AndroidX sans style local concurrent", () => {
+  assert.match(textField, /export function TextField/);
+  assert.match(textField, /variant: TextFieldVariant/);
+  assert.match(textField, /aria-describedby/);
+  assert.match(textField, /aria-invalid/);
+  assert.match(textFieldStyles, /min-height: 56px/);
+  assert.match(textFieldStyles, /placeholder-shown/);
+  assert.match(textFieldStyles, /focus-within\.outlined/);
+  assert.match(textFieldStyles, /md-sys-color-error/);
+  assert.match(adminClient, /@\/components\/material3\/TextField/);
+  assert.match(adminClient, /@\/components\/material3\/Snackbar/);
+  assert.doesNotMatch(adminClient, /components\/ui\//);
+});
