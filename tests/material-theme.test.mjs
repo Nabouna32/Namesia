@@ -13,7 +13,8 @@ test("Fidelity et Rainbow épinglent la version ColorSpec de Material Color Util
   assert.match(theme, /specVersion: "2021"/);
   assert.match(theme, /platform: "phone"/);
   assert.match(theme, /argbFromHex\("#6750A4"\)/);
-  assert.doesNotMatch(theme, /specVersion: "(?:2025|2026)"/);\n  assert.doesNotMatch(theme, /005AC1/);
+  assert.doesNotMatch(theme, /specVersion: "(?:2025|2026)"/);
+  assert.doesNotMatch(theme, /005AC1/);
   assert.match(theme, /rôle Material 3/);
   assert.match(theme, /rôle Rainbow/);
 });
