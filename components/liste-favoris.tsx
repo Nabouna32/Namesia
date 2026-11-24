@@ -12,10 +12,10 @@ import { useFavoris } from "./favoris-provider";
 import styles from "./liste-favoris.module.css";
 import { IconeMaterial } from "./icone-material";
 import { SearchBar } from "@/components/ui/SearchBar";
-import { ChampSelect } from "@/components/ui/champ-select";
-import { BoutonComparaison } from "@/components/ui/bouton-comparaison";
+import { ComparisonButton } from "@/components/ui/bouton-comparaison";
 import { Button } from "@/components/ui/Button";
-import { LienBouton } from "@/components/ui/lien-bouton";
+import Link from "next/link";
+import buttonStyles from "@/components/ui/Button.module.css";
 import { MessageStatut } from "@/components/ui/message-statut";
 
 type Props = {
@@ -237,7 +237,7 @@ export function ListeFavoris({
             : slugs.length === 0
               ? "Vous n’avez pas encore enregistré de prénom."
               : "Aucun de vos favoris n’est actuellement publié."}</p>
-          <LienBouton href="/prenoms">Explorer les prénoms</LienBouton>
+          <Link className={[buttonStyles.button, buttonStyles.filled].join(" ")} href="/prenoms">Explorer les prénoms</Link>
         </div>
       ) : (
         <>
@@ -254,32 +254,27 @@ export function ListeFavoris({
               }}
             />
             {genres.length > 1 && (
-              <ChampSelect
-                id="genre-favoris"
-                label="Filtrer par genre"
-                value={genreActifValide}
-                options={[
-                  { value: "", label: "Tous les genres" },
-                  ...genres.map((genre) => ({ value: genre, label: genre }))
-                ]}
-                onChange={(value) => {
+              <div className={styles.selectField}>
+                <label htmlFor="genre-favoris">Filtrer par genre</label>
+                <select id="genre-favoris" value={genreActifValide} onChange={(event) => {
+                  const value = event.currentTarget.value;
                   setNombreVisible(24);
                   setGenreActif(value);
                   mettreAJourUrl(recherche, value, triActif);
-                }}
-              />
+                }}>
+                  <option value="">Tous les genres</option>
+                  {genres.map((genre) => <option key={genre} value={genre}>{genre}</option>)}
+                </select>
+              </div>
             )}
-            <ChampSelect
-              id="tri-favoris"
-              label="Trier les favoris"
-              value={triActif}
-              options={[
-                { value: "enregistrement", label: "Ordre d’enregistrement" },
-                { value: "nom-asc", label: "Nom · A à Z" },
-                { value: "nom-desc", label: "Nom · Z à A" }
-              ]}
-              onChange={changerTri}
-            />
+            <div className={styles.selectField}>
+              <label htmlFor="tri-favoris">Trier les favoris</label>
+              <select id="tri-favoris" value={triActif} onChange={(event) => changerTri(event.currentTarget.value)}>
+                <option value="enregistrement">Ordre d’enregistrement</option>
+                <option value="nom-asc">Nom · A à Z</option>
+                <option value="nom-desc">Nom · Z à A</option>
+              </select>
+            </div>
           </div>
           <BarreComparaison
             prenoms={prenomsSelectionnes}
