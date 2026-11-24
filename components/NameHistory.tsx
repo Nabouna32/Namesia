@@ -7,7 +7,9 @@ import { useFavorites } from "@/components/FavoritesProvider";
 import { useHistory } from "@/components/HistoryProvider";
 import styles from "./NameHistory.module.css";
 import { Icon } from "@/components/ui/Icon";
+import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
 
 export function NameHistory({ prenoms }: { prenoms: PrenomIndex[] }) {
   const { slugs, retirer, effacer, erreur } = useHistory();
@@ -43,7 +45,7 @@ export function NameHistory({ prenoms }: { prenoms: PrenomIndex[] }) {
           <>
             <div className={styles.grid}>
               {recentes.map((prenom) => (
-                <article className={styles.card} key={prenom.slug}>
+                <Card as="article" variant="outlined" className={styles.card} key={prenom.slug}>
                   <Link className={`name-card ${styles.link}`} href={`/prenoms/${prenom.slug}`}>
                     <span className="name-initial">{prenom.lettre}</span>
                     <span>
@@ -51,7 +53,7 @@ export function NameHistory({ prenoms }: { prenoms: PrenomIndex[] }) {
                       <small>{prenom.genre}</small>
                     </span>
                     <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
-                  </Link>
+                  </Card>
                   {!erreurFavoris && (
                     <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
                   )}
@@ -63,7 +65,7 @@ export function NameHistory({ prenoms }: { prenoms: PrenomIndex[] }) {
                   >
                     <span aria-hidden="true"><Icon name="close" size={24} /></span>
                   </Button>
-                </article>
+                </Card>
               ))}
             </div>
             {erreurFavoris && (
