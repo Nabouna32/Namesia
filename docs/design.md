@@ -14,7 +14,7 @@ La personnalité Namesia reste présente à travers son dégradé de marque. Les
 
 ## 2. Source de vérité des couleurs
 
-La palette d'interface est calculée avec la bibliothèque officielle Google **`@material/material-color-utilities`**. Le bloc `:root` unique porte les valeurs SSR claires ; une règle `@media (prefers-color-scheme: dark)` applique les valeurs sombres initiales à `html`, sans second bloc racine. `MaterialThemeProvider` recalcule ensuite le thème actif, les catégories Rainbow et les extensions sémantiques selon la préférence système. Le thème est construit avec :
+La palette est calculée avec la bibliothèque officielle Google **`@material/material-color-utilities`**. `lib/material-theme.ts` est l’unique générateur : il calcule les schémas clair et sombre, produit les déclarations CSS intégrées au `<head>` dès le rendu serveur, puis `MaterialThemeProvider` réapplique exactement les mêmes valeurs lorsque la préférence système change. Le CSS des composants ne contient donc aucune palette de secours indépendante. Le thème est construit avec :
 - couleur source primaire : `#005AC1`, bleu Pixel choisi pour Namesia ;
 - variante du thème d'interface : `Variant.FIDELITY` ;
 - variante complémentaire des catégories : `Variant.RAINBOW`, calculée séparément avec la même couleur source ;
@@ -128,7 +128,7 @@ L'application occupe au minimum la hauteur de la fenêtre avec une colonne flex.
 - `components/navigation-adaptative.tsx` porte la navigation de premier niveau.
 - `components/ui/` contient les primitives d'interface partagées.
 - `app/layout.tsx` compose la barre supérieure, le rail/la barre de navigation, le contenu et le pied de page.
-- `app/globals.css` contient les rôles initiaux SSR documentés, les formes, la typographie et les styles structurels partagés. Un seul bloc `:root` fournit les valeurs claires initiales avant hydratation ; la préférence sombre est exprimée sur `html`, sans second bloc racine. Il n'existe aucun alias ni fallback CSS.
+- `app/globals.css` contient les formes, la typographie et les styles structurels partagés. Les rôles de couleur sont générés par `lib/material-theme.ts` dans le `<head>` dès le rendu serveur ; aucune palette statique parallèle ni fallback CSS n'existe.
 - Les CSS Modules consomment les tokens partagés. Ils gèrent la disposition propre à un composant, sans redéfinir les styles d'un contrôle commun.
 - Les composants natifs React/HTML sont préférés à une dépendance UI supplémentaire tant qu'une bibliothèque Web officielle maintenue et complète ne répond pas au besoin.
 
