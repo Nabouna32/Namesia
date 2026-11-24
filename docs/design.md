@@ -123,7 +123,7 @@ L'application occupe au minimum la hauteur de la fenêtre avec une colonne flex.
 - Les cartes Open Graph du site et des fiches utilisent la même famille Roboto que l’interface, chargée depuis un fichier TTF local au runtime Node de `ImageResponse`. Le poids 400 suffit à cette surface de partage ; aucun appel Google Fonts, aucune police de substitution et aucune seconde famille ne sont utilisés. Les fonds, textes et accents reprennent les rôles clairs Fidelity ; le dégradé de marque reste limité au monogramme.
 
 - `@material/material-color-utilities` génère les rôles de couleurs ; aucun autre moteur de thème n'est ajouté.
-- `components/material-theme-provider.tsx` synchronise le schéma avec la préférence système.
+- `lib/material-theme.ts` génère le CSS Fidelity/Rainbow initial et les couleurs de barre navigateur ; `components/material-theme-provider.tsx` synchronise les mêmes valeurs avec les changements de préférence système.
 - `app/layout.tsx` charge Roboto via `next/font/google` et expose `--font-roboto` à tous les rôles typographiques ; les tokens ne désignent jamais une famille non chargée.
 - `components/navigation-adaptative.tsx` porte la navigation de premier niveau.
 - `components/ui/` contient les primitives d'interface partagées.
