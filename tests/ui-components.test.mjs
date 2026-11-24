@@ -42,7 +42,7 @@ test("les primitives partagées exposent des variants sémantiques et préserven
 });
 
 test("les composants métier réutilisent les primitives au lieu de redéfinir leurs boutons", () => {
-  assert.match(favoris, /import \{ Button \} from "@\/components\/ui\/bouton"/);
+  assert.match(favoris, /import \{ Button \} from "@\/components\/ui\/Button"/);
   assert.match(favoris, /<Button/);
   assert.doesNotMatch(favoris, /<button/);
   assert.match(decouverte, /<Button/);
@@ -175,7 +175,7 @@ const comparateurActions = await readFile(new URL("../components/comparateur-pre
 const adminStyles = await readFile(new URL("../app/admin/admin.module.css", import.meta.url), "utf8");
 
 test("les actions de l'administration et des visiteurs utilisent les boutons partagés", () => {
-  assert.match(adminActions, /import \{ Button \} from "@\/components\/ui\/bouton"/);
+  assert.match(adminActions, /import \{ Button \} from "@\/components\/ui\/Button"/);
   assert.match(adminActions, /<Button/);
   assert.match(favorisActions, /<Button/);
   assert.match(favorisActions, /<Link/);
@@ -273,7 +273,7 @@ test("les formulaires administratifs utilisent les surfaces, formes et dimension
 });
 
 test("le partage réutilise le bouton commun et ne garde pas un style concurrent", () => {
-  assert.match(partage, /import \{ Button \} from "@\/components\/ui\/bouton"/);
+  assert.match(partage, /import \{ Button \} from "@\/components\/ui\/Button"/);
   assert.match(partage, /<Button variant="tonal"/);
   assert.doesNotMatch(partage, /share-button/);
   assert.doesNotMatch(globalStyles, /\.share-button\s*\{/);
@@ -399,7 +399,7 @@ test("les actions d'effacement de l'accueil et de comparaison utilisent les prim
   assert.match(barreComparaisonActions, /<Button variant="text"[^>]*onClick=\{onEffacer\}/);
   assert.match(barreComparaisonActions, /<Link[^>]*className=/);
   assert.doesNotMatch(historiqueActions, /<button\b/);
-  assert.doesNotMatch(barreComparaisonActions, /<button\b|<Link\b/);
+  assert.doesNotMatch(barreComparaisonActions, /<button\b/);
   assert.doesNotMatch(historiqueStyles, /\.clear\s*\{/);
   assert.doesNotMatch(barreComparaisonStyles, /\.actions button|\.link\s*\{/);
 });
