@@ -13,6 +13,7 @@
 | Variantes et rôles calculés | [Google Material Color Utilities — DynamicScheme](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/dynamiccolor/dynamic_scheme.ts) | Comportement réel de Fidelity/Rainbow et propriétés accessibles |
 | Définitions des couleurs M3 | [Google Material Color Utilities — MaterialDynamicColors](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/dynamiccolor/material_dynamic_colors.ts) | Rôles calculables et distinction des clés de palette |
 | Variantes disponibles | [Google Material Color Utilities — Variant](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/dynamiccolor/variant.ts) | Noms officiels des variantes |
+| Définition de la variante Fidelity | [Google Material Color Utilities — ColorSpec 2021](https://github.com/material-foundation/material-color-utilities/blob/main/typescript/dynamiccolor/color_spec_2021.ts) | Règles de couleur associées à Fidelity |
 | Export et aperçu de thème | [Material Theme Builder](https://material-foundation.github.io/material-theme-builder/) | Contrôle visuel indépendant du thème calculé |
 
 Les sources sont les spécifications Material 3 et le code source officiel Google. Les pages et la bibliothèque peuvent évoluer ; toute mise à jour de dépendance ou de spécification déclenche une nouvelle vérification avant modification des rôles.
