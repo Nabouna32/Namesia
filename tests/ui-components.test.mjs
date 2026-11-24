@@ -379,7 +379,7 @@ const barreComparaisonStyles = await readFile(new URL("../components/features/co
 
 test("les actions d'effacement de l'accueil et de comparaison utilisent les primitives communes", () => {
   assert.match(historiqueActions, /<Button variant="text"[^>]*onClick=\{effacer\}/);
-  assert.match(barreComparaisonActions, /<Button variant="text"[^>]*onClick=\{onEffacer\}/);
+  assert.match(barreComparaisonActions, /<Button variant="text"[^>]*onClick=\{onClear\}/);
   assert.match(barreComparaisonActions, /<Button[^>]*variant="filled"/);
   assert.doesNotMatch(historiqueActions, /<button\b/);
   assert.doesNotMatch(barreComparaisonActions, /<button\b|<Link\b/);
