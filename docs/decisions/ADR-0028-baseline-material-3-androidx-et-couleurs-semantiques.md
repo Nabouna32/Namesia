@@ -26,7 +26,7 @@ Les décisions précédentes ont introduit une couleur source `#005AC1` qualifi�
 
 - Fixer la source Fidelity/Rainbow à `#6750A4`, violet de baseline M3 publié par Android Developers. Ce code est la source de génération Fidelity ; les composants consomment les rôles calculés, pas le code source brut.
 - Conserver `Variant.FIDELITY` pour l'interface et `Variant.RAINBOW` pour les catégories éditoriales seulement.
-- Fixer `specVersion: "2021"` explicitement. Il s'agit de la version ColorSpec de Material Color Utilities, pas de la version de Material Design 3. La bibliothèque redirige actuellement Fidelity/Rainbow vers cette version lorsque 2025 est demandé.
+- Fixer `specVersion: "2021"` explicitement. Il s'agit de la version ColorSpec de Material Color Utilities, pas de la version de Material Design 3. La bibliothèque redirige actuellement Fidelity/Rainbow vers cette version lorsque 2025 ou 2026 est demandé.
 - Déclarer `platform: "phone"` explicitement pour la génération MCU.
 - Restaurer les sources sémantiques existantes : success `#386A20`, warning `#795900`, info `#005B9A`. Les générer via l'utilitaire officiel `customColor` de Material Color Utilities en conservant leur teinte (`blend: false`) et produire les rôles `color`, `onColor`, `colorContainer`, `onColorContainer` pour clair et sombre.
 - Exposer ces rôles sous `--namesia-color-*`. Ils ne sont pas des rôles système M3 et ne doivent jamais utiliser `--md-sys-color-*`. Les erreurs continuent d'utiliser `error`/`on-error`/leurs conteneurs M3.
