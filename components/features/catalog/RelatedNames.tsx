@@ -4,7 +4,7 @@ import type { PrenomIndex } from "@/lib/prenoms";
 import type { ContexteRetourNavigation } from "@/lib/navigation-prenoms";
 import { creerUrlFicheDepuisContexte } from "@/lib/navigation-prenoms";
 import styles from "./RelatedNames.module.css";
-import { IconeMaterial } from "@/components/material3/Icon";
+import { Icon } from "@/components/material3/Icon";
 
 type Props = { prenoms: PrenomIndex[]; contexteRetour?: ContexteRetourNavigation | null };
 
