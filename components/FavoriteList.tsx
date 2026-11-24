@@ -10,11 +10,10 @@ import { FavoriteButton } from "./FavoriteButton";
 import { useFavorites } from "@/components/FavoritesProvider";
 import styles from "./FavoriteList.module.css";
 import { Icon } from "@/components/ui/Icon";
-import { Card } from "@/components/ui/Card";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { ComparisonButton } from "@/components/ui/ComparisonButton";
-import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import buttonStyles from "@/components/ui/Button.module.css";
 import { StatusMessage } from "@/components/ui/StatusMessage";
@@ -238,7 +237,7 @@ export function FavoriteList({
             : slugs.length === 0
               ? "Vous n’avez pas encore enregistré de prénom."
               : "Aucun de vos favoris n’est actuellement publié."}</p>
-          <Link className={[buttonStyles.button, buttonStyles.filled].join(" ")} href="/prenoms">Explorer les prénoms</Card>
+          <Link className={[buttonStyles.button, buttonStyles.filled].join(" ")} href="/prenoms">Explorer les prénoms</Link>
         </div>
       ) : (
         <>
