@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-const source = await readFile(new URL("../components/comparateur-prenoms.tsx", import.meta.url), "utf8");
+const source = await readFile(new URL("../components/features/comparison/NameComparator.tsx", import.meta.url), "utf8");
 const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 
 test("chaque carte comparée donne accès à la fiche complète du prénom correspondant", () => {
