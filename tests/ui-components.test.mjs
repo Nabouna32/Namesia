@@ -189,6 +189,7 @@ test("les actions de l'administration et des visiteurs utilisent les boutons par
 
 
 const navigation = await readFile(new URL("../components/ui/NavigationDestinations.tsx", import.meta.url), "utf8");
+const icones = await readFile(new URL("../components/ui/Icon.tsx", import.meta.url), "utf8");
 const navigationBar = await readFile(new URL("../components/ui/NavigationBar.tsx", import.meta.url), "utf8");
 const navigationRail = await readFile(new URL("../components/ui/NavigationRail.tsx", import.meta.url), "utf8");
 const topAppBar = await readFile(new URL("../components/ui/TopAppBar.tsx", import.meta.url), "utf8");
