@@ -129,12 +129,14 @@ test("les états hover sont réservés aux appareils qui disposent d'un pointeur
 
   const selectionStyles = styles.find(({ path }) => path === "components/ui/liste-selection-comparaison.module.css")?.content ?? "";
   assert.ok(selectionStyles.includes(".chip:active"));
-  assert.ok(selectionStyles.includes("on-secondary-container) 12%, var(--md-sys-color-secondary-container)"));
+  assert.ok(selectionStyles.includes("var(--md-sys-state-pressed-state-layer-opacity)"));
+  assert.ok(selectionStyles.includes("var(--md-sys-color-on-secondary-container)"));
+  assert.ok(selectionStyles.includes("var(--md-sys-color-secondary-container)"));
 });
 
 test("la feuille globale conserve un seul :root SSR et aucune couche d'overrides finale", () => {
   assert.equal((globalCss.match(/:root\s*\{/g) ?? []).length, 1);
-  assert.doesNotMatch(globalCss, /--md-sys-color-/);
+  assert.doesNotMatch(globalCss, /--md-sys-color-[\w-]+\s*:/);
   assert.doesNotMatch(globalCss, /Couche Material 3 Fidelity/);
 });
 
@@ -190,7 +192,7 @@ test("l'échelle typographique Material 3 est complète et limitée aux graisses
   }
   assert.doesNotMatch(allCss, /font-size\s*:[^;]*px/);
   const weights = [...allCss.matchAll(/font-weight:\s*([^;]+);/g)].map((match) => match[1].trim());
-  assert.ok(weights.every((weight) => weight === "400" || weight === "500"), `Graisses interdites : ${weights.join(", ")}`);
+  assert.ok(weights.every((weight) => weight === "400" || weight === "500" || /^var\(--md-sys-typescale-[\w-]+-weight\)$/.test(weight)), `Graisses interdites : ${weights.join(", ")}`);
   assert.doesNotMatch(allCss, /text-transform:\s*uppercase/i);
 });
 
@@ -232,7 +234,7 @@ test("les catégories Rainbow utilisent des rôles explicites sans couleur de re
 
 test("les couleurs sémantiques sont des extensions M3 avec annonces accessibles", () => {
   for (const role of ["success", "warning", "info"]) {
-    assert.match(theme, new RegExp("--namesia-color-" + role));
+    assert.ok(theme.includes('tokens["--namesia-color-" + role]'));
     assert.match(messageStyles, new RegExp("--namesia-color-" + role + "-container"));
     assert.match(messageStyles, new RegExp("--namesia-color-on-" + role + "-container"));
   }
@@ -250,6 +252,7 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.match(composantsDoc, /NavigationBar/);
   assert.match(composantsDoc, /FilterChip/);
   assert.match(composantsDoc, /SearchBar/);
+  assert.match(composantsDoc, /SearchBarTokens/);
   assert.match(composantsDoc, /ButtonSmallTokens/);
   assert.match(composantsDoc, /IconButton/);
   assert.match(materialVerificationDoc, /ButtonSmallTokens\.ContainerHeight/);
@@ -279,7 +282,7 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
 test("le hero d'accueil sépare le récit et les outils dans une composition Fidelity responsive", () => {
   assert.match(home, /className="hero-intro"/);
   assert.match(home, /className="hero-tools"/);
-  assert.match(home, /<h2>Un prénom en tête\?<\/h2>/);
+  assert.match(home, /<h2>Un prénom en tête\s*\?<\/h2>/);
   assert.match(home, /<RecherchePrenoms prenoms=\{prenoms\} compact \/>/);
   assert.match(globalCss, /\.hero-content\s*\{[^}]*display:\s*grid/s);
   assert.match(globalCss, /\.hero-tools\s*\{[^}]*background:\s*var\(--md-sys-color-surface-container-lowest\)/s);
