@@ -57,7 +57,7 @@ test("la vitrine n'attribue aucune couleur selon l'index du prénom", () => {
   assert.doesNotMatch(featured, /featured-\$\{index/);
   assert.doesNotMatch(featured, /featured-\d/);
   assert.doesNotMatch(globalStyles, /\.featured-[123]\b/);
-  assert.match(globalStyles, /\.featured-card\s*\{[^}]*surface-container-low/s);
+  assert.match(globalStyles, /\.featured-card\s*\{[^}]*min-height:\s*210px/s);
   assert.match(globalStyles, /\.featured-bottom strong\s*\{[^}]*on-surface/s);
 });
 
@@ -213,18 +213,12 @@ test("Rainbow ne colore plus les titres ou les surfaces générales", () => {
 
 
 test("les cartes évitent les effets décoratifs et les boutons utilisent les couches d’état Material", () => {
-  const nomBase = globalStyles.indexOf(".name-card { min-height: 76px;");
-  const nomHover = globalStyles.slice(globalStyles.indexOf(".name-card:hover {", nomBase));
-  const vedetteHover = globalStyles.slice(globalStyles.lastIndexOf(".featured-card:hover {"));
   assert.match(styles, /\.button::after/);
   assert.match(styles, /--md-sys-state-hover-state-layer-opacity/);
   assert.match(styles, /--md-sys-state-focus-state-layer-opacity/);
   assert.match(styles, /--md-sys-state-pressed-state-layer-opacity/);
   assert.doesNotMatch(styles, /filter:\s*brightness/);
-  assert.match(nomHover, /surface-container-high/);
-  assert.match(vedetteHover, /surface-container-high/);
-  assert.doesNotMatch(nomHover.slice(0, nomHover.indexOf("\n}")), /translateY|box-shadow:\s*var/);
-  assert.doesNotMatch(vedetteHover.slice(0, vedetteHover.indexOf("\n}")), /translateY|box-shadow:\s*var/);
+  assert.doesNotMatch(globalStyles, /\.name-card:hover|\.featured-card:hover/);
   assert.doesNotMatch(globalStyles, /button:active[^}]*scale\(/);
 });
 
@@ -317,7 +311,7 @@ test("les cartes Rainbow utilisent la couleur de premier plan de leur propre cat
 
 test("les surfaces principales Material sont définies à leur emplacement canonique", () => {
   assert.match(globalStyles, /\.hero \{[^}]*surface-container-low/s);
-  assert.match(globalStyles, /\.featured-card \{[^}]*surface-container-low/s);
+  assert.match(cardStyles, /\.elevated\s*\{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.profile-hero \{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.site-footer \{[^}]*surface-container/s);
   assert.doesNotMatch(globalStyles, /Couche Material 3 Fidelity/);
@@ -342,8 +336,7 @@ test("les actions de catalogue, favoris et comparaison utilisent le bouton commu
 
 test("les options de comparaison ont des états tactiles Material sans survol collant", () => {
   assert.match(globalStyles, /@media \(hover: hover\) and \(pointer: fine\) \{\s*\.compare-option:hover/);
-  assert.match(globalStyles, /@media \(hover: hover\) and \(pointer: fine\) \{\s*\.name-card:hover/);
-  assert.match(globalStyles, /@media \(hover: hover\) and \(pointer: fine\) \{\s*\.featured-card:hover/);
+  assert.doesNotMatch(globalStyles, /\.name-card:hover|\.featured-card:hover/);
   assert.match(globalStyles, /\.compare-option:active:not\(:has\(input:disabled\)\)/);
   assert.match(globalStyles, /\.compare-option:has\(input:checked\):active/);
   assert.match(globalStyles, /\.compare-option:has\(input:checked\)\s*\{[^}]*primary-container/s);
@@ -356,9 +349,9 @@ test("les surfaces du catalogue et du comparateur ne dépendent plus de la couch
   assert.match(globalStyles, /\.catalogue-filters\s*\{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.compare-selector\s*\{[^}]*surface-container-low/s);
   assert.match(globalStyles, /\.empty-results\s*\{[^}]*outline-variant/s);
-  assert.match(globalStyles, /\.name-card\s*\{[^}]*surface-container-low/s);
+  assert.doesNotMatch(globalStyles, /\.name-card\s*\{[^}]*background:/s);
   assert.match(globalStyles, /\.compare-option\s*\{[^}]*surface-container-low/s);
-  assert.match(globalStyles, /\.compare-card\s*\{[^}]*surface-container-low/s);
+  assert.doesNotMatch(globalStyles, /\.compare-card\s*\{[^}]*background:/s);
   assert.match(globalStyles, /\.profile-note\s*\{[^}]*surface-container/s);
   assert.doesNotMatch(globalStyles, /Couche Material 3 Fidelity/);
   assert.doesNotMatch(globalStyles, /linear-gradient\(135deg, var\(--color-surface/);
