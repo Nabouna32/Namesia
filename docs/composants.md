@@ -14,6 +14,7 @@ styles/
 components/
   material3/                 # Implémentations React/HTML des composants M3
     AlertDialog.tsx
+    AlertDialog.module.css
     Button.tsx
     Card.tsx
     Checkbox.tsx
@@ -29,7 +30,6 @@ components/
     NavigationBar.tsx
     NavigationRail.tsx
     NavigationDestinations.tsx
-    AlertDialog.module.css
     Button.module.css
     Card.module.css
     Checkbox.module.css
