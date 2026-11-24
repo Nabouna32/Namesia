@@ -23,7 +23,7 @@ export function BoutonFavori({ slug, nom, compact = false, afficherErreur = true
         disabled={!pret}
         onClick={() => basculer(slug)}
       >
-        <span aria-hidden="true"><IconeMaterial name={actif ? "favorite-filled" : "favorite"} size={compact ? 24 : 20} /></span>
+        <span aria-hidden="true"><IconeMaterial name={actif ? "favorite-filled" : "favorite"} size={compact ? 24 : 18} /></span>
         {!compact && (pret ? action : "Chargement…")}
       </Bouton>
       {erreur && afficherErreur && (
