@@ -307,6 +307,22 @@ test("NavigationBar et NavigationRail utilisent le rôle M3 label-medium à tout
 });
 
 
+
+test("les listes de navigation conservent leur sémantique accessible", () => {
+  const navigationItems = globalCss.match(/\\.navigation-items\\s*\\{([^}]*)\\}/s)?.[1] ?? "";
+  assert.match(navigationItems, /display:\\s*flex/);
+  assert.doesNotMatch(navigationItems, /display:\\s*contents/);
+  assert.match(globalCss, /<ul className="navigation-items">/);
+  assert.match(globalCss, /<li key=\\{destination\\.href\\}>/);
+});
+
+test("la navigation paysage réserve les 80 dp réellement affichés", () => {
+  const paysage = globalCss.match(/@media \\(min-width: 600px\\) and \\(max-height: 480px\\) \\{([\\s\\S]*?)\\n\\}/)?.[1] ?? "";
+  assert.match(paysage, /\\.navigation-bar \\.navigation-item \\{ min-height: 64px/);
+  assert.match(paysage, /padding-bottom: calc\\(80px \\+ env\\(safe-area-inset-bottom\\)\\)/);
+  assert.doesNotMatch(paysage, /padding-bottom: calc\\(72px/);
+});
+
 test("NavigationBar reproduit les 80 dp de TallContainerHeight de Compose Material 3 1.5.0", () => {
   const navigationBar = globalCss.match(/\.navigation-bar\s*\{([^}]*)\}/s)?.[1] ?? "";
   assert.match(navigationBar, /padding:\s*8px 8px env\(safe-area-inset-bottom\)/);
