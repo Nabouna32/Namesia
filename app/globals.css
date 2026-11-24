@@ -537,6 +537,17 @@ gap: 8px;
   border-radius: inherit;
   color: var(--md-sys-color-on-surface);
   text-decoration: none;
+  transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .name-card:hover {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface) var(--md-sys-state-hover-state-layer-opacity), transparent);
+  }
+}
+
+.name-card:active {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) var(--md-sys-state-pressed-state-layer-opacity), transparent);
 }
 
 .name-initial {
