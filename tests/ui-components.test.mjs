@@ -331,6 +331,7 @@ test("les actions de catalogue, favoris et comparaison utilisent le bouton commu
 test("les options de comparaison ont des états tactiles Material sans survol collant", () => {
   assert.match(globalStyles, /@media \(hover: hover\) and \(pointer: fine\) \{\s*\.compare-option:hover/);
   assert.doesNotMatch(globalStyles, /\.name-card:hover|\.featured-card:hover/);
+  assert.match(globalStyles, /\.compare-option\s*\{[^}]*min-height: 62px/s);
   assert.match(globalStyles, /\.compare-option:active:not\(:has\(input:disabled\)\)/);
   assert.match(globalStyles, /\.compare-option:has\(input:checked\):active/);
   assert.match(globalStyles, /\.compare-option:has\(input:checked\)\s*\{[^}]*primary-container/s);
