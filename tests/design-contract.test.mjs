@@ -293,6 +293,14 @@ test("les boutons et FilterChip utilisent le rôle typographique M3 label-large"
     assert.doesNotMatch(content, /typescale-body-(?:medium|large)-(?:size|weight|line-height|tracking)/, name + " ne doit pas détourner un rôle body");
   }
   assert.doesNotMatch(filterChipStyles, /\.initial\s*\{[^}]*font-size:/s, "La variante initiale ne doit pas remplacer la typographie M3");
+  assert.match(filterChipStyles, /min-height:\s*48px/, "La cible interactive doit rester de 48 px");
+  assert.match(filterChipStyles, /\.chip::before\s*\{[^}]*inset:\s*8px 0/s, "La capsule visuelle doit mesurer 32 px dans la cible de 48 px");
+  assert.match(filterChipStyles, /border:\s*1px solid var\(--md-sys-color-outline-variant\)/, "Le contour au repos doit utiliser outline-variant");
+  assert.match(filterChipStyles, /\.chip\[aria-pressed="true"\]::before\s*\{[^}]*border:\s*0/s, "La sélection M3 ne doit pas conserver de contour");
+  assert.match(filterChipStyles, /--md-sys-state-hover-state-layer-opacity/);
+  assert.match(filterChipStyles, /--md-sys-state-focus-state-layer-opacity/);
+  assert.match(filterChipStyles, /--md-sys-state-pressed-state-layer-opacity/);
+  assert.match(composantsDoc, /FilterChipTokens\.ContainerHeight.*32 dp/);
 });
 
 
