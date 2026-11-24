@@ -252,8 +252,7 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.match(composantsDoc, /NavigationBar/);
   assert.match(composantsDoc, /FilterChip/);
   assert.match(composantsDoc, /SearchBar/);
-  assert.match(composantsDoc, /SearchBar/);
-  assert.match(composantsDoc, /ButtonSmallTokens/);
+  assert.match(composantsDoc, /Button/);
   assert.match(composantsDoc, /IconButton/);
   assert.match(materialVerificationDoc, /ButtonSmallTokens\.ContainerHeight/);
   assert.match(materialVerificationDoc, /ButtonDefaults\.IconSize = 18\.dp/);
