@@ -72,6 +72,14 @@ function collectRules(css) {
   return rules;
 }
 
+test("les anciens fichiers de composants métier français ne peuvent pas réapparaître", async () => {
+  const files = await readdir(join(root, "components"));
+  assert.deepEqual(
+    files.filter((file) => /^(barre-comparaison|comparateur-prenoms|decouverte-aleatoire|historique-prenoms|liste-favoris|partager-fiche|prenoms-vedette|recherche-prenoms|suggestions-prenoms|icone-material|favoris-provider|historique-provider|material-theme-provider|enregistrer-consultation)/.test(file)),
+    []
+  );
+});
+
 test("les anciennes primitives UI françaises ne peuvent pas réapparaître", async () => {
   const files = await readdir(join(root, "components/ui"));
   assert.deepEqual(files.filter((file) => /^(bouton|champ-|chip-|lien-bouton|liste-selection|message-statut)/.test(file)), []);
