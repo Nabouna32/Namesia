@@ -16,7 +16,7 @@ Le contrat documentaire précédent ne suffisait pas : le code conservait encore
 - Utiliser directement `Link` de Next.js pour les navigations, avec les classes visuelles de Button ; aucune primitive `ButtonLink` n'est créée.
 - Utiliser directement le `select` HTML pour les filtres natifs ; aucune abstraction locale de select n'est conservée.
 - Conserver `StatusMessage` comme composition sémantique accessible, non comme primitive M3.
-- Garder `ComparisonButton` et `ComparisonSelection` comme compositions métier, et construire la puce sélectionnée avec `InputChip`.
+- Garder `FavoriteButton`, `ComparisonButton` et `ComparisonSelection` comme compositions métier, et construire la puce sélectionnée avec `InputChip`.
 - Supprimer les anciens fichiers et styles français ; aucun alias ni réexport n'est prévu.
 
 ## Conséquences
