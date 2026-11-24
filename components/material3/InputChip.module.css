@@ -36,6 +36,9 @@
 .chip::after { background: currentColor; opacity: 0; }
 .chip > * { position: relative; }
 .chip svg { flex: 0 0 auto; color: var(--md-sys-color-on-surface-variant); }
+.chip[data-selected="true"] { color: var(--md-sys-color-on-secondary-container); }
+.chip[data-selected="true"]::before { border: 0; background: var(--md-sys-color-secondary-container); }
+.chip[data-selected="true"] svg { color: var(--md-sys-color-on-secondary-container); }
 @media (hover: hover) and (pointer: fine) {
   .chip:hover::after { opacity: var(--md-sys-state-hover-state-layer-opacity); }
 }
