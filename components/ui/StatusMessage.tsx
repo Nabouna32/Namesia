@@ -10,12 +10,12 @@ const roles: Record<TypeStatusMessage, string> = {
   error: styles.error
 };
 
-export function MessageStatut({
+export function StatusMessage({
   type,
   children,
   className
 }: Readonly<{
-  type: TypeMessageStatut;
+  type: TypeStatusMessage;
   children: ReactNode;
   className?: string;
 }>) {
