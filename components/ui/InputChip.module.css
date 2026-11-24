@@ -1,39 +1,50 @@
 .chip {
+  position: relative;
+  isolation: isolate;
   display: inline-flex;
   min-width: 0;
   min-height: 48px;
   align-items: center;
-gap: 8px;
-padding: 8px 12px;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--md-sys-shape-corner-full);
+  background: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: var(--md-sys-typescale-label-large-font);
+  font-size: var(--md-sys-typescale-label-large-size);
+  font-weight: var(--md-sys-typescale-label-large-weight);
+  line-height: var(--md-sys-typescale-label-large-line-height);
+  letter-spacing: var(--md-sys-typescale-label-large-tracking);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.chip::before {
+  position: absolute;
+  z-index: -1;
+  inset: 8px 0;
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-sys-shape-corner-full);
-  background: var(--md-sys-color-secondary-container);
-  color: var(--md-sys-color-on-secondary-container);
-  font: inherit;
-  font-size: var(--md-sys-typescale-body-medium-size);
-  font-weight: 500;
-  cursor: pointer;
+  background: var(--md-sys-color-surface);
+  content: "";
+  pointer-events: none;
 }
-
-.chip span {
-  overflow-wrap: anywhere;
+.chip::after {
+  position: absolute;
+  z-index: -1;
+  inset: 8px 0;
+  border-radius: var(--md-sys-shape-corner-full);
+  background: currentColor;
+  content: "";
+  opacity: 0;
+  pointer-events: none;
 }
-
-.chip svg {
-  flex: 0 0 auto;
-}
-
-.chip:active {
-  background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) var(--md-sys-state-pressed-state-layer-opacity), var(--md-sys-color-secondary-container));
-}
-
+.chip > * { position: relative; z-index: 1; }
+.chip span { overflow-wrap: anywhere; }
+.chip svg { flex: 0 0 auto; color: var(--md-sys-color-on-surface-variant); }
 @media (hover: hover) and (pointer: fine) {
-  .chip:hover {
-    background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) var(--md-sys-state-hover-state-layer-opacity), var(--md-sys-color-secondary-container));
-  }
+  .chip:hover::after { opacity: var(--md-sys-state-hover-state-layer-opacity); }
 }
-
-.chip:focus-visible {
-  outline: 2px solid var(--md-sys-color-primary);
-  outline-offset: 2px;
-}
+.chip:focus-visible::after { opacity: var(--md-sys-state-focus-state-layer-opacity); }
+.chip:active::after { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
