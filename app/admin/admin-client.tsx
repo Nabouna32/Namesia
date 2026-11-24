@@ -8,6 +8,7 @@ import { Button } from "@/components/material3/Button";
 import { TextField } from "@/components/material3/TextField";
 import { Snackbar, type SnackbarSeverity } from "@/components/material3/Snackbar";
 import { parseAdminCatalog, type AdminName, type AdminProfile } from "@/lib/admin-catalog";
+import { verifyAdminAccess } from "@/lib/admin-auth";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -47,37 +48,63 @@ export function AdminClient() {
 
   useEffect(() => {
     let active = true;
+    let revision = 0;
 
     async function verifier(nextSession: Session | null) {
+      const currentRevision = ++revision;
       setSession(nextSession);
+      setChecking(true);
+
       if (!nextSession) {
-        if (active) {
+        if (active && currentRevision === revision) {
           setAuthorized(false);
           setCatalog([]);
           setCatalogTotal(0);
           setCatalogOffset(0);
           setCatalogNextOffset(null);
           setCatalogLoading(false);
+          setMessage(null);
           setChecking(false);
         }
         return;
       }
 
-      const { data, error } = await supabase.rpc("is_namesia_admin");
-      if (active) {
-        setAuthorized(data === true && !error);
-        setMessage(error ? { text: "Impossible de vérifier les droits de ce compte.", type: "error" } : null);
-        setChecking(false);
+      try {
+        const isAuthorized = await verifyAdminAccess(() => supabase.rpc("is_namesia_admin"));
+        if (active && currentRevision === revision) {
+          setAuthorized(isAuthorized);
+          setMessage(null);
+        }
+      } catch {
+        if (active && currentRevision === revision) {
+          setAuthorized(false);
+          setMessage({ text: "Impossible de vérifier les droits de ce compte. Vérifiez votre connexion puis réessayez.", type: "error" });
+        }
+      } finally {
+        if (active && currentRevision === revision) setChecking(false);
       }
     }
 
-    void supabase.auth.getSession().then(({ data }) => verifier(data.session));
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       void verifier(nextSession);
     });
 
+    void supabase.auth.getSession().then(({ data, error }) => {
+      if (error) throw error;
+      if (active && revision === 0) return verifier(data.session);
+    }).catch(() => {
+      if (active && revision === 0) {
+        revision += 1;
+        setSession(null);
+        setAuthorized(false);
+        setMessage({ text: "Impossible de lire la session. Vérifiez votre connexion puis réessayez.", type: "error" });
+        setChecking(false);
+      }
+    });
+
     return () => {
       active = false;
+      revision += 1;
       subscription.unsubscribe();
     };
   }, []);
