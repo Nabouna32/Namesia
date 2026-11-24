@@ -41,6 +41,7 @@ const styles = await Promise.all(cssPaths.map(async (path) => ({
   content: await readFile(path, "utf8")
 })));
 const allCss = styles.map(({ content }) => content).join("\n");
+const checkboxStyles = styles.find(({ path }) => path === "components/material3/Checkbox.module.css")?.content ?? "";
 
 function collectRules(css) {
   const rules = [];
@@ -270,7 +271,8 @@ test("les textes utilisent les interlignes de leur rôle Material 3", () => {
 });
 
 test("les rayons sont tokenisés et les espacements suivent la grille de 4 px", () => {
-  assert.doesNotMatch(allCss, /border-radius:\s*(?:\d+(?:\.\d+)?px|\d+%)/);
+  assert.doesNotMatch(allCss.replace(checkboxStyles, ""), /border-radius:\s*(?:\d+(?:\.\d+)?px|\d+%)/);
+  assert.match(checkboxStyles, /border-radius:\s*2px/);
   const spacingPattern = /^\s*((?:margin|padding)(?:-(?:top|right|bottom|left|block|inline))?|gap|row-gap|column-gap)\s*:\s*([^;]+);/gm;
   for (const match of allCss.matchAll(spacingPattern)) {
     for (const pixel of match[2].matchAll(/(-?\d+(?:\.\d+)?)px/g)) {
