@@ -15,10 +15,10 @@ La marque Namesia utilise les rôles Fidelity, y compris pour son monogramme. Le
 ## 2. Source de vérité des couleurs
 
 La palette est calculée avec la bibliothèque officielle Google **`@material/material-color-utilities`**. `lib/material-theme.ts` est l’unique générateur : il calcule les schémas clair et sombre, produit les déclarations CSS intégrées au `<head>` dès le rendu serveur, puis `MaterialThemeProvider` réapplique exactement les mêmes valeurs lorsque la préférence système change. Le CSS des composants ne contient donc aucune palette de secours indépendante. Le thème est construit avec :
-- couleur source primaire : `#6750A4`, violet de la palette Material 3 baseline documentée par Android Developers ; ce n'est pas un bleu Google. Fidelity calcule les rôles à partir de cette source, elle n'est pas recopiée telle quelle dans chaque composant ;
+- couleur source primaire : `#6750A4`, violet de la palette Material 3 baseline documentée par Android Developers ; ce n'est pas un bleu Google. Fidelity calcule les rôles à partir de cette source, elle n'est pas recopiée telle quelle dans chaque composant. Le résultat Fidelity n'est pas le schéma statique Tonal Spot baseline : il conserve la variante Fidelity demandée ;
 - variante du thème d'interface : `Variant.FIDELITY` ;
 - variante complémentaire des catégories : `Variant.RAINBOW`, calculée séparément avec la même couleur source ;
-- version d'algorithme : `specVersion: "2021"`, version de `ColorSpec` dans Material Color Utilities ; ce n'est pas une version de Material Design 3 ni une référence à l'ancien système de composants. Le code de la bibliothèque redirige explicitement Fidelity et Rainbow vers 2021 lorsqu'une spécification 2025 leur est demandée, car ces variantes ne sont pas prises en charge par cette dernière ;
+- version d'algorithme : `specVersion: "2021"`, version de `ColorSpec` dans Material Color Utilities ; ce n'est pas une version de Material Design 3 ni une référence à l'ancien système de composants. Le code de la bibliothèque redirige explicitement Fidelity et Rainbow vers 2021 lorsqu'une spécification 2025 leur est demandée, car ces variantes ne sont pas prises en charge par les spécifications 2025 et 2026 ;
 - plateforme MCU : `phone`, paramètre de calcul du schéma correspondant à la cible Android mobile, sans accès aux API Android depuis le navigateur ;
 - niveau de contraste standard : `0` ;
 - schémas clair et sombre recalculés selon `prefers-color-scheme`.
