@@ -81,12 +81,10 @@ padding: 0 16px;
 .form input[type="email"]:focus-visible,
 .form textarea:focus-visible,
 .form input[type="file"]:focus-visible {
-  outline: 3px solid var(--md-sys-color-primary);
-  outline-offset: 2px;
   border-color: var(--md-sys-color-primary);
 }
 
-.form :disabled {
+.form :is(input, textarea):disabled {
   cursor: not-allowed;
   opacity: .55;
 }
