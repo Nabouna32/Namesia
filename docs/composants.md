@@ -31,7 +31,7 @@ Ce document définit les composants d'interface autorisés et leur composition. 
 | `IconButton` | Actions iconiques | Icône de 24 dp et cible tactile Web adaptée |
 | `SearchBar` | Recherche du catalogue et des parcours | Champ replié AndroidX de 56 dp ; pas de faux panneau expansé |
 | `TextField` | Saisie de formulaire | Variantes et états correspondant au besoin |
-| `FilterChip` | Filtres sélectionnables | Capsule de 32 dp, cible tactile de 48 px, sélection explicite |
+| `FilterChip` | Filtres sélectionnables | `FilterChipTokens.ContainerHeight = 32 dp`, cible tactile de 48 px, sélection explicite |
 | `InputChip` | Éléments sélectionnés et retrait | Anatomie et action de suppression M3 |
 | `Card` | Contenu éditorial et résultats | Variantes Elevated, Filled ou Outlined selon la hiérarchie |
 | `Icon` | Pictogrammes | Material Symbols ; la cible interactive appartient à `IconButton` |
