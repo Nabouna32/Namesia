@@ -9,6 +9,7 @@ import styles from "./RecentNames.module.css";
 import { Icon } from "@/components/material3/Icon";
 import { Button } from "@/components/material3/Button";
 import { IconButton } from "@/components/material3/IconButton";
+import { Card } from "@/components/material3/Card";
 
 export function RecentNames({ prenoms }: { prenoms: PrenomIndex[] }) {
   const { slugs, retirer, effacer, erreur } = useHistory();
@@ -45,14 +46,14 @@ export function RecentNames({ prenoms }: { prenoms: PrenomIndex[] }) {
             <div className={styles.grid}>
               {recentes.map((prenom) => (
                 <article className={styles.card} key={prenom.slug}>
-                  <Link className={`name-card ${styles.link}`} href={`/prenoms/${prenom.slug}`}>
+                  <Card as={Link} variant="elevated" interactive className={`name-card ${styles.link}`} href={`/prenoms/${prenom.slug}`}>
                     <span className="name-initial">{prenom.lettre}</span>
                     <span>
                       <strong>{prenom.nom}</strong>
                       <small>{prenom.genre}</small>
                     </span>
                     <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
-                  </Link>
+                  </Card>
                   {!erreurFavoris && (
                     <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
                   )}
