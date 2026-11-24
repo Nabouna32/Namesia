@@ -244,7 +244,7 @@ export function NameSearch({
               <div className={styles.resultsGrid}>
                 {suggestions.map((prenom) => (
                   <article className={styles.resultCard} key={prenom.slug}>
-                    <Card as={Link} variant="elevated" interactive className={`name-card ${styles.resultLink}`} href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
+                    <Card as={Link} variant="elevated" interactive className="name-card" href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
                       <span className="name-initial">{prenom.lettre}</span>
                       <span>
                         <strong>{prenom.nom}</strong>
