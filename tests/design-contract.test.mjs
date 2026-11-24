@@ -268,3 +268,17 @@ test("les en-têtes de section restent lisibles et leurs actions accessibles sur
   assert.match(globalCss, /\.text-link\s*\{[^}]*min-height:\s*48px/s);
   assert.match(globalCss, /@media \(max-width:\s*599px\)[\s\S]*?\.section-heading\s*\{[^}]*flex-direction:\s*column/s);
 });
+
+
+test("les boutons et FilterChip utilisent le rôle typographique M3 label-large", () => {
+  const buttonStyles = styles.find(({ path }) => path === "components/ui/bouton.module.css")?.content ?? "";
+  const filterChipStyles = styles.find(({ path }) => path === "components/ui/chip-filtre.module.css")?.content ?? "";
+  for (const [name, content] of [["Button", buttonStyles], ["FilterChip", filterChipStyles]]) {
+    assert.match(content, /font-size:\s*var\(--md-sys-typescale-label-large-size\)/, name + " doit utiliser label-large");
+    assert.match(content, /font-weight:\s*var\(--md-sys-typescale-label-large-weight\)/, name + " doit utiliser la graisse du rôle");
+    assert.match(content, /line-height:\s*var\(--md-sys-typescale-label-large-line-height\)/, name + " doit utiliser l'interligne du rôle");
+    assert.match(content, /letter-spacing:\s*var\(--md-sys-typescale-label-large-tracking\)/, name + " doit utiliser l'approche du rôle");
+    assert.doesNotMatch(content, /typescale-body-(?:medium|large)-(?:size|weight|line-height|tracking)/, name + " ne doit pas détourner un rôle body");
+  }
+  assert.doesNotMatch(filterChipStyles, /\.initial\s*\{[^}]*font-size:/s, "La variante initiale ne doit pas remplacer la typographie M3");
+});
