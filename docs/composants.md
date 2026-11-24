@@ -9,7 +9,7 @@ Ce document définit les composants d'interface autorisés et leur composition. 
 
 ## 1. Règles d'architecture
 
-- Les composants UI portent leur nom Material 3 officiel : `Button`, `IconButton`, `SearchBar`, `TextField`, `FilterChip`, `InputChip`, `Card`, `TopAppBar`, `NavigationBar`, `NavigationRail`, etc.
+- Les primitives UI, lorsqu'elles sont réellement utilisées, portent leur nom Material 3 officiel : `Button`, `IconButton`, `SearchBar`, `TextField`, `FilterChip`, `InputChip`, `Card`, `TopAppBar`, `NavigationBar`, `NavigationRail`, etc.
 - Les fichiers, exports, props et variantes suivent la nomenclature et les conventions M3. Les identifiants techniques des primitives ne sont pas traduits en français.
 - Les composants métier (favoris, comparaison, catalogue, fiche) restent des composants métier ; ils composent les composants M3 et ne créent pas de primitives UI concurrentes.
 - Un lien de navigation demeure un lien HTML/Next.js, même lorsqu'il reçoit l'apparence d'un `Button`. Un `select` demeure un élément HTML natif.
