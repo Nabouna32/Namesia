@@ -2,14 +2,14 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { BarreComparaison } from "@/components/features/comparison/ComparisonBar";
+import { ComparisonBar } from "@/components/features/comparison/ComparisonBar";
 import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
 import styles from "./NameSearch.module.css";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
-import { IconeMaterial } from "@/components/material3/Icon";
+import { Icon } from "@/components/material3/Icon";
 import { SearchBar } from "@/components/material3/SearchBar";
 import { ComparisonToggle } from "@/components/features/comparison/ComparisonToggle";
 import { Button } from "@/components/material3/Button";
@@ -208,7 +208,7 @@ export function NameSearch({
       )}
 
       {!compact && (
-        <BarreComparaison
+        <ComparisonBar
           prenoms={prenomsSelectionnes}
           onRetirer={basculerComparaison}
           onEffacer={() => setSelectionComparaison([])}
