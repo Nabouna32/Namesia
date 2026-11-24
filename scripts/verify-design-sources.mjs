@@ -187,4 +187,8 @@ async function verifySourcesWithLimit(items, concurrency) {
   await Promise.all(workers);
 }
 
-await verifySourcesWithLimit([...sources, ...additionalAndroidxSources], 4);
+const verifiedSources = [...sources, ...additionalAndroidxSources];
+const androidxSourceCount = verifiedSources.filter(({ name }) => name.startsWith("AndroidX ")).length;
+assert.equal(androidxSourceCount, 35, "Le registre doit vérifier exactement les 35 fichiers AndroidX documentés");
+
+await verifySourcesWithLimit(verifiedSources, 4);
