@@ -16,6 +16,38 @@ gap: 8px;
   flex: 1 1 auto;
 }
 
+
+.resultCard {
+  position: relative;
+}
+
+.resultLink {
+  padding-top: 60px;
+}
+
+.gender {
+  display: flex !important;
+  min-height: 24px;
+  align-items: center;
+  margin-top: 6px !important;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.gender :global(.material-icon) {
+  width: 20px;
+  height: 20px;
+}
+
+.resultActions {
+  position: absolute;
+  z-index: 1;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .favoriteError {
 margin: 0 0 16px;
   color: var(--md-sys-color-error);
