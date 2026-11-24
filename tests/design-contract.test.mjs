@@ -88,7 +88,7 @@ test("les composants sont organisés par domaine et aucune primitive Namesia his
   assert.deepEqual(directories, ["features", "material3"]);
   await assert.rejects(readdir(join(root, "components/ui")), { code: "ENOENT" });
   const material3 = await readdir(join(root, "components/material3"));
-  for (const name of ["Button.tsx", "IconButton.tsx", "SearchBar.tsx", "FilterChip.tsx", "InputChip.tsx", "Snackbar.tsx", "TopAppBar.tsx", "NavigationBar.tsx", "NavigationRail.tsx"]) {
+  for (const name of ["Button.tsx", "Card.tsx", "TextField.tsx", "IconButton.tsx", "SearchBar.tsx", "FilterChip.tsx", "InputChip.tsx", "Snackbar.tsx", "TopAppBar.tsx", "NavigationBar.tsx", "NavigationRail.tsx"]) {
     assert.ok(material3.includes(name), "Composant Material 3 manquant : " + name);
   }
 });
