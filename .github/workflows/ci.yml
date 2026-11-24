@@ -1,5 +1,12 @@
 name: Vérifications
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   pull_request:
   push:
@@ -9,6 +16,7 @@ on:
 jobs:
   quality:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Récupérer le dépôt
         uses: actions/checkout@v7
