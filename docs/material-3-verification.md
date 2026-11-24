@@ -19,6 +19,7 @@
 | Variantes disponibles | [Google Material Color Utilities 0.4.0 — Variant](https://github.com/material-foundation/material-color-utilities/blob/b03ef34bb53a15c3ba41bf963eb3e2c5c353c85f/typescript/dynamiccolor/variant.ts) | Noms officiels des variantes |
 | Définition de la variante Fidelity | [Google Material Color Utilities 0.4.0 — ColorSpec 2021](https://github.com/material-foundation/material-color-utilities/blob/b03ef34bb53a15c3ba41bf963eb3e2c5c353c85f/typescript/dynamiccolor/color_spec_2021.ts) | Règles de couleur associées à Fidelity |
 | Baseline de couleur M3 | [Android Developers — Color](https://developer.android.com/design/ui/mobile/guides/styles/color) et [AndroidX — PaletteTokens.kt](https://github.com/androidx/androidx/blob/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/tokens/PaletteTokens.kt) | Valeurs baseline M3 ; `#6750A4` est le violet primary documenté, pas un bleu Google |
+| Source Google Blue utilisée par Namesia | [Chromium UI Platform — Dynamic Colors](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/ui/android/dynamic_colors.md) | `#0B57D0` est le `baseline_primary_600` du thème Android Chromium ; utilisé comme source personnalisée de Fidelity/Rainbow, pas comme rôle système M3 |
 | Version MCU installée | [Package npm @material/material-color-utilities 0.4.0](https://www.npmjs.com/package/@material/material-color-utilities) | Source de calcul réellement utilisée ; commit `b03ef34bb53a15c3ba41bf963eb3e2c5c353c85f` |
 | Version Material Web | [Package npm @material/web 2.5.0](https://www.npmjs.com/package/@material/web) | Référence secondaire pour la convention des tokens CSS ; commit `b4de401eb665ec63474f39319a4ba8f2145974cc` |
 | Version Angular Material | [Package npm @angular/material 22.3.0](https://www.npmjs.com/package/@angular/material) | Référence secondaire des fichiers M3 de mouvement, d'état, d'élévation et de forme ; commit `5c7b286a7684599f275a0f7b4b77752ae751b6bd`, tokens v0.161 |
@@ -45,11 +46,11 @@ Les sources normatives sont les spécifications Material 3. Pour l'implémentati
 
 ## Paramètres retenus
 
-`specVersion: "2021"` ne signifie pas que Namesia utilise une ancienne version de Material Design 3. Il s'agit de la version de la spécification algorithmique ColorSpec utilisée par Material Color Utilities pour calculer les rôles. Le violet `#6750A4` est le Primary40 de la baseline AndroidX ; Namesia l'utilise comme entrée de la variante Fidelity, et non comme un remplacement direct de tous les rôles. Le système de composants reste Material 3 ; ses références d'implémentation sont les sources AndroidX Compose Material 3. Fidelity et Rainbow sont actuellement redirigées par la bibliothèque vers ColorSpec 2021 même si 2025 ou 2026 est demandé ; le paramètre est fixé explicitement afin de rendre ce comportement vérifiable.
+`specVersion: "2021"` ne signifie pas que Namesia utilise une ancienne version de Material Design 3. Il s'agit de la version de la spécification algorithmique ColorSpec utilisée par Material Color Utilities pour calculer les rôles. Le violet `#6750A4` reste le Primary40 de la baseline AndroidX par défaut. Namesia choisit volontairement le bleu Google `#0B57D0` (`baseline_primary_600` du thème Android Chromium) comme source personnalisée de Fidelity/Rainbow ; ce choix ne modifie ni les noms des rôles système ni l'algorithme M3. Le système de composants reste Material 3 ; ses références d'implémentation sont les sources AndroidX Compose Material 3. Fidelity et Rainbow sont actuellement redirigées par la bibliothèque vers ColorSpec 2021 même si 2025 ou 2026 est demandé ; le paramètre est fixé explicitement afin de rendre ce comportement vérifiable.
 
 | Paramètre | Valeur | Justification |
 |---|---|---|
-| Couleur source | `#6750A4` | Violet de la baseline Material 3 documentée par Android Developers ; ce n'est pas un bleu Google |
+| Couleur source Namesia | `#0B57D0` | Google Blue `baseline_primary_600` du thème Android Chromium, utilisé comme source personnalisée de génération Fidelity/Rainbow |
 | Variante d'interface | `Variant.FIDELITY` | Conserve le caractère de la couleur source selon la variante M3 |
 | Variante catégorielle | `Variant.RAINBOW` | Schéma distinct réservé aux catégories éditoriales |
 | Version ColorSpec | `2021` | Version de l'algorithme de génération des couleurs, pas version de Material Design 3. `DynamicScheme.maybeFallbackSpecVersion` force Fidelity/Rainbow vers 2021 car les spécifications 2025 et 2026 ne les prennent pas en charge |
@@ -64,7 +65,7 @@ Les sources normatives sont les spécifications Material 3. Pour l'implémentati
 - Les conteneurs et composants utilisent les rôles `surface`, `surface-container-low`, `surface-container`, `surface-container-high` et `surface-container-highest` selon leur hiérarchie ; les contenus reposent sur le rôle `on-surface` ou `on-surface-variant`.
 - Les surfaces d'accent utilisent les paires prévues : `primary/on-primary`, `primary-container/on-primary-container`, etc. Un conteneur n'est jamais associé à un premier plan d'une autre famille.
 - Le mode sombre recalcule le schéma complet ; il ne se contente pas d'inverser les couleurs claires.
-- Le bleu Google de marque (par exemple `#4285F4`) n'est pas la couleur source de la baseline Material 3. Ne pas remplacer la source M3 par le bleu Google par simple assimilation de marque.
+- La source Google Blue `#0B57D0` n'est pas un rôle système M3 : elle sert uniquement d'entrée au générateur Fidelity/Rainbow. Les composants continuent de consommer les rôles calculés, jamais cette valeur brute.
 
 ## Contrôles automatisés
 
