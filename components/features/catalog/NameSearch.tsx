@@ -256,6 +256,7 @@ export function NameSearch({
                     <div className={styles.resultActions}>
                       {!compact && (
                         <ComparisonToggle
+                          iconOnly
                           name={prenom.nom}
                           selected={selectionComparaison.includes(prenom.slug)}
                           disabled={!selectionComparaison.includes(prenom.slug) && selectionComparaison.length >= 3}
