@@ -148,8 +148,9 @@ test("les états hover sont réservés aux appareils qui disposent d'un pointeur
   const selectionStyles = styles.find(({ path }) => path === "components/ui/InputChip.module.css")?.content ?? "";
   assert.ok(selectionStyles.includes(".chip:active"));
   assert.ok(selectionStyles.includes("var(--md-sys-state-pressed-state-layer-opacity)"));
-  assert.ok(selectionStyles.includes("var(--md-sys-color-on-secondary-container)"));
-  assert.ok(selectionStyles.includes("var(--md-sys-color-secondary-container)"));
+  assert.ok(selectionStyles.includes("var(--md-sys-color-on-surface-variant)"));
+  assert.ok(selectionStyles.includes("var(--md-sys-color-outline-variant)"));
+  assert.ok(selectionStyles.includes("var(--md-sys-shape-corner-full)"));
 });
 
 test("la feuille globale conserve un seul :root SSR et aucune couche d'overrides finale", () => {
