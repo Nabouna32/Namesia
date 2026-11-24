@@ -57,8 +57,8 @@
 .button:focus-visible::after,
 .button:active:not(:disabled)::after { opacity: 0.12; }
 
-.button:active:not(:disabled)::before,
-.button:active:not(:disabled)::after {
+.button:not(.icon):active:not(:disabled)::before,
+.button:not(.icon):active:not(:disabled)::after {
   border-radius: var(--md-sys-shape-corner-small);
 }
 
@@ -99,6 +99,10 @@
 .text {
   padding-inline: 12px;
   color: var(--md-sys-color-primary);
+}
+
+.text.icon {
+  color: var(--md-sys-color-on-surface-variant);
 }
 
 .filled:disabled::before,
