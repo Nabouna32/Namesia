@@ -209,7 +209,7 @@ export function RecherchePrenoms({
 
       {!compact && (
         <BarreComparaison
-          prenoms={prenomsSelectionnes}
+          names={prenomsSelectionnes.map((prenom) => ({ slug: prenom.slug, name: prenom.nom }))}
           onRetirer={basculerComparaison}
           onEffacer={() => setSelectionComparaison([])}
         />
@@ -250,7 +250,7 @@ export function RecherchePrenoms({
                         onClick={() => basculerComparaison(prenom.slug)}
                       />
                     )}
-                    <ButtonFavori slug={prenom.slug} nom={prenom.nom} compact showError={false} />
+                    <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
                   </article>
                 ))}
               </div>
@@ -290,7 +290,7 @@ export function RecherchePrenoms({
                         onClick={() => basculerComparaison(prenom.slug)}
                       />
                     )}
-                    <ButtonFavori slug={prenom.slug} nom={prenom.nom} compact showError={false} />
+                    <FavoriteButton slug={prenom.slug} name={prenom.nom} compact showError={false} />
                   </article>
                 ))}
               </div>
