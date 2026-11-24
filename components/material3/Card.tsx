@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ElementType, ReactNode } from "react";
+import { createElement, type ComponentPropsWithoutRef, type ElementType, type ReactNode } from "react";
 import styles from "./Card.module.css";
 
 export type CardVariant = "elevated" | "filled" | "outlined";
@@ -22,17 +22,17 @@ export function Card<T extends ElementType>({
   children,
   ...props
 }: CardProps<T>) {
-  return (
-    <Component
-      {...props}
-      className={[
+  return createElement(
+    Component,
+    {
+      ...props,
+      className: [
         styles.card,
         styles[variant],
         interactive ? styles.interactive : "",
         className
-      ].filter(Boolean).join(" ")}
-    >
-      {children}
-    </Component>
+      ].filter(Boolean).join(" ")
+    } as ComponentPropsWithoutRef<T>,
+    children
   );
 }
