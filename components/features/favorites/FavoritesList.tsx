@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { GenrePrenom, PrenomIndex } from "@/lib/prenoms";
 import { GenreIcon } from "@/components/features/names/GenreIcon";
 import { GENRE_ICONS } from "@/lib/genre-icons";
-import { creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
+import { LIMITE_FAVORIS, creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
 import { normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
 import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
@@ -181,12 +181,18 @@ export function FavoritesList({
     try {
       const contenu: unknown = JSON.parse(await fichier.text());
       const slugsImportes = lireSauvegardeFavoris(contenu);
-      const nombreAjoute = ajouterPlusieurs(slugsImportes);
-      if (nombreAjoute === null) return;
+      const resultat = ajouterPlusieurs(slugsImportes);
+      if (resultat === null) return;
 
-      setMessageImport(nombreAjoute === 0
-        ? "Cette sauvegarde ne contient aucun nouveau favori."
-        : `${nombreAjoute} ${nombreAjoute > 1 ? "favoris ajoutés" : "favori ajouté"} à votre sélection.`);
+      const messages = resultat.nombreAjoute > 0
+        ? [`${resultat.nombreAjoute} ${resultat.nombreAjoute > 1 ? "favoris ajoutés" : "favori ajouté"} à votre sélection.`]
+        : resultat.nombreIgnoreLimite > 0
+          ? ["Aucun nouveau favori ajouté."]
+          : ["Cette sauvegarde ne contient aucun nouveau favori."];
+      if (resultat.nombreIgnoreLimite > 0) {
+        messages.push(`${resultat.nombreIgnoreLimite} ${resultat.nombreIgnoreLimite > 1 ? "favoris ignorés" : "favori ignoré"} : la limite de ${LIMITE_FAVORIS.toLocaleString("fr-FR")} favoris est atteinte.`);
+      }
+      setMessageImport(messages.join(" "));
     } catch (cause) {
       setErreurImport(cause instanceof Error
         ? cause.message
