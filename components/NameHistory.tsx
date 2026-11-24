@@ -8,6 +8,7 @@ import { useHistory } from "@/components/HistoryProvider";
 import styles from "./NameHistory.module.css";
 import { Icon } from "@/components/ui/Icon";
 import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
 
 export function NameHistory({ prenoms }: { prenoms: PrenomIndex[] }) {
