@@ -145,7 +145,7 @@ test("les états hover sont réservés aux appareils qui disposent d'un pointeur
     );
   }
 
-  const selectionStyles = styles.find(({ path }) => path === "components/ui/liste-selection-comparaison.module.css")?.content ?? "";
+  const selectionStyles = styles.find(({ path }) => path === "components/ui/InputChip.module.css")?.content ?? "";
   assert.ok(selectionStyles.includes(".chip:active"));
   assert.ok(selectionStyles.includes("var(--md-sys-state-pressed-state-layer-opacity)"));
   assert.ok(selectionStyles.includes("var(--md-sys-color-on-secondary-container)"));
@@ -316,8 +316,8 @@ test("les en-têtes de section restent lisibles et leurs actions accessibles sur
 
 
 test("les boutons et FilterChip utilisent le rôle typographique M3 label-large", () => {
-  const buttonStyles = styles.find(({ path }) => path === "components/ui/bouton.module.css")?.content ?? "";
-  const filterChipStyles = styles.find(({ path }) => path === "components/ui/chip-filtre.module.css")?.content ?? "";
+  const buttonStyles = styles.find(({ path }) => path === "components/ui/Button.module.css")?.content ?? "";
+  const filterChipStyles = styles.find(({ path }) => path === "components/ui/FilterChip.module.css")?.content ?? "";
   for (const [name, content] of [["Button", buttonStyles], ["FilterChip", filterChipStyles]]) {
     assert.match(content, /font-size:\s*var\(--md-sys-typescale-label-large-size\)/, name + " doit utiliser label-large");
     assert.match(content, /font-weight:\s*var\(--md-sys-typescale-label-large-weight\)/, name + " doit utiliser la graisse du rôle");
