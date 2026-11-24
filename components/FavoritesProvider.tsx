@@ -13,7 +13,7 @@ import {
 
 const CLE_FAVORIS = "namesia:favoris:v1";
 
-type ContexteFavoris = {
+type FavoritesContextValue = {
   slugs: string[];
   pret: boolean;
   erreur: boolean;
@@ -22,7 +22,7 @@ type ContexteFavoris = {
   ajouterPlusieurs: (slugs: string[]) => number | null;
 };
 
-const FavorisContext = createContext<ContexteFavoris | null>(null);
+const FavoritesContext = createContext<FavoritesContextValue | null>(null);
 
 function lireFavoris(value: string | null): string[] {
   if (!value) return [];
@@ -117,14 +117,14 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   );
 
   return (
-    <FavorisContext.Provider value={valeur}>
+    <FavoritesContext.Provider value={valeur}>
       {children}
-    </FavorisContext.Provider>
+    </FavoritesContext.Provider>
   );
 }
 
-export function useFavoris(): ContexteFavoris {
-  const contexte = useContext(FavorisContext);
-  if (!contexte) throw new Error("useFavoris doit être utilisé dans FavoritesProvider.");
+export function useFavorites(): FavoritesContextValue {
+  const contexte = useContext(FavoritesContext);
+  if (!contexte) throw new Error("useFavorites doit être utilisé dans FavoritesProvider.");
   return contexte;
 }
