@@ -10,7 +10,7 @@ import { useFavoris } from "@/components/favoris-provider";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { categoryTone } from "@/lib/category-color";
 import { SearchBar } from "@/components/ui/SearchBar";
-import { ListeSelectionComparaison } from "@/components/ui/liste-selection-comparaison";
+import { ComparisonSelection } from "@/components/ui/ComparisonSelection";
 import { Button } from "@/components/ui/Button";
 
 type Props = { prenoms: PrenomIndex[]; selectionInitiale: string[] };
@@ -171,7 +171,7 @@ export function ComparateurPrenoms({ prenoms, selectionInitiale }: Props) {
         </fieldset>
 
         <div className="compare-selection-footer">
-          <ListeSelectionComparaison
+          <ComparisonSelection
             prenoms={prenomsSelectionnes}
             label="Prénoms sélectionnés"
             onRetirer={(slug) => changerSelection(slug, false)}
