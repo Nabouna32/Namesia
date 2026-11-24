@@ -20,20 +20,26 @@
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-.chip::before,
+.chip::before {
+  position: absolute;
+  z-index: -1;
+  inset: 8px 0;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-small);
+  background: var(--md-sys-color-surface);
+  content: "";
+  pointer-events: none;
+}
 .chip::after {
   position: absolute;
   z-index: -1;
   inset: 8px 0;
   border-radius: var(--md-sys-shape-corner-small);
+  background: currentColor;
   content: "";
+  opacity: 0;
   pointer-events: none;
 }
-.chip::before {
-  border: 1px solid var(--md-sys-color-outline-variant);
-  background: var(--md-sys-color-surface);
-}
-.chip::after { background: currentColor; opacity: 0; }
 .chip > * { position: relative; }
 .chip svg { flex: 0 0 auto; color: var(--md-sys-color-on-surface-variant); }
 .chip[data-selected="true"] { color: var(--md-sys-color-on-secondary-container); }
