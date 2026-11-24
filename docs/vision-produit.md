@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.51
+- **Version :** 3.52
 - **Mis à jour :** 2026-11-24
 
 ## 1. Positionnement
@@ -87,7 +87,7 @@ Les pages de filtres, recherches internes et combinaisons sans contenu éditoria
 
 ## 7. Direction visuelle
 
-La direction visuelle canonique est **Material 3 Fidelity** pour l'interface générale, avec **Material 3 Rainbow** comme palette complémentaire pour les catégories éditoriales et les repères qui bénéficient d'une variation de couleur. Les deux schémas sont calculés par Material Color Utilities à partir du violet de baseline M3 `#6750A4`. La navigation et les actions restent pilotées par Fidelity. Les états success/warning/info utilisent des couleurs personnalisées sémantiques M3, distinctes des rôles système. Aucun dégradé de marque hors M3 n'est conservé. Les règles détaillées et les limites Web sont définies dans [docs/design.md](design.md).
+La direction visuelle canonique est **Material 3 Fidelity** pour l'interface générale, avec **Material 3 Rainbow** comme palette complémentaire pour les catégories éditoriales et les repères qui bénéficient d'une variation de couleur. Les deux schémas sont calculés par Material Color Utilities à partir du bleu Google `#0B57D0` (`baseline_primary_600` utilisé par Chromium Android), choisi explicitement comme source Namesia ; la baseline AndroidX Material 3 par défaut reste le violet `#6750A4`. La navigation et les actions restent pilotées par Fidelity. Les états success/warning/info utilisent des couleurs personnalisées sémantiques M3, distinctes des rôles système. Aucun dégradé de marque hors M3 n'est conservé. Les règles détaillées et les limites Web sont définies dans [docs/design.md](design.md).
 
 
 ## 8. Indicateurs
