@@ -54,10 +54,8 @@ Un contrôle statique ne remplace pas un examen du rendu. Après un changement d
 | Préfixe | Usage | Règle |
 |---|---|---|
 | `--namesia-color-category-*` | Couleurs issues du schéma Rainbow secondaire | Catégorie éditoriale identifiée uniquement |
-| `--namesia-color-success/warning/info` | États propres au produit | Extension déclarée, jamais présentée comme un rôle système |
-| `--namesia-color-brand-gradient` | Monogramme Namesia | Décoration de marque uniquement |
 
-Ces variables ne sont pas des rôles Material. Elles ne remplacent aucun rôle Fidelity et ne sont pas des valeurs de repli. Les familles typographiques, géométriques, de mouvement et d'état utilisent les préfixes système M3 exacts : `--md-sys-typescale-*`, `--md-sys-shape-corner-*`, `--md-sys-motion-easing-*`, `--md-sys-motion-duration-*` et `--md-sys-state-*-state-layer-opacity`.
+Les variables Rainbow sont un namespace d'adaptation Namesia pour distinguer le schéma catégoriel secondaire du schéma Fidelity principal. Les statuts sans rôle M3 dédié ne reçoivent pas de couleurs inventées ; la marque utilise les rôles Fidelity, sans dégradé non-M3. Les familles typographiques, géométriques, de mouvement et d'état utilisent les préfixes système M3 exacts : `--md-sys-typescale-*`, `--md-sys-shape-corner-*`, `--md-sys-motion-easing-*`, `--md-sys-motion-duration-*` et `--md-sys-state-*-state-layer-opacity`.
 
 ## Limites du navigateur : seules exceptions acceptées
 
