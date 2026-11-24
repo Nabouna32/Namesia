@@ -1,4 +1,6 @@
 export { Button } from "./Button";
+export { Card } from "./Card";
+export type { CardVariant } from "./Card";
 export type { ButtonVariant } from "./Button";
 export { FilterChip } from "./FilterChip";
 export { Icon } from "./Icon";
@@ -11,3 +13,5 @@ export { SearchBar } from "./SearchBar";
 export { Snackbar } from "./Snackbar";
 export type { SnackbarSeverity } from "./Snackbar";
 export { TopAppBar } from "./TopAppBar";
+export { TextField } from "./TextField";
+export type { TextFieldVariant } from "./TextField";
