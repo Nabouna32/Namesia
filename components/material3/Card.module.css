@@ -55,12 +55,12 @@
 }
 
 .interactive.filled:active {
-  background: color-mix(in srgb, var(--md-sys-color-primary) var(--md-sys-state-pressed-state-layer-opacity), var(--md-sys-color-surface-container-highest));
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) var(--md-sys-state-pressed-state-layer-opacity), var(--md-sys-color-surface-container-highest));
   box-shadow: none;
 }
 
 .interactive.outlined:active {
-  background: color-mix(in srgb, var(--md-sys-color-primary) var(--md-sys-state-pressed-state-layer-opacity), var(--md-sys-color-surface));
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) var(--md-sys-state-pressed-state-layer-opacity), var(--md-sys-color-surface));
   box-shadow: none;
 }
 
