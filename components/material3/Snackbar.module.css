@@ -29,17 +29,15 @@
   gap: 8px;
 }
 
-.action,
-.dismissAction {
+.action {
   display: flex;
   align-items: center;
-}
-
-.action {
   color: var(--snackbar-action-color);
 }
 
 .dismissAction {
+  display: flex;
+  align-items: center;
   color: var(--snackbar-dismiss-action-color);
 }
 
