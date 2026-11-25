@@ -4,7 +4,6 @@ import { readFile } from "node:fs/promises";
 
 const rootOg = await readFile(new URL("../app/opengraph-image.tsx", import.meta.url), "utf8");
 const profilePage = await readFile(new URL("../app/prenoms/[slug]/page.tsx", import.meta.url), "utf8");
-const namesSource = await readFile(new URL("../lib/names.ts", import.meta.url), "utf8");
 const fontLoader = await readFile(new URL("../lib/polices-open-graph.ts", import.meta.url), "utf8");
 const fontAsset = await readFile(new URL("../assets/fonts/Roboto-Regular.ttf.base64", import.meta.url), "utf8");
 const icon = await readFile(new URL("../app/icon.svg", import.meta.url), "utf8");
@@ -31,6 +30,6 @@ test("le favicon dessine le monogramme en vecteurs sans dépendre d'une police s
 
 test("les fiches héritent de l’aperçu statique sans surcharge d’image dynamique", () => {
   assert.match(profilePage, /card: "summary_large_image"/);
-  assert.doesNotMatch(profilePage, /images:\\s*\\[/);
+  assert.doesNotMatch(profilePage, /images:\s*\[/);
   assert.doesNotMatch(profilePage, /opengraph-image/);
 });
