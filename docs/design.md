@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.58
+- **Version :** 4.59
 - **Mis à jour :** 2026-11-25
 
 ## 1. Direction
@@ -44,7 +44,7 @@ Les composants consomment directement les rôles `--md-sys-color-*` et, pour les
 
 ### Signature Rainbow
 
-Les catégories utilisent trois familles de rôles tonals issues du schéma `Variant.RAINBOW` (`--namesia-color-category-1` à `--namesia-color-category-3`, avec leurs conteneurs et couleurs de premier plan). Une catégorie reçoit toujours la même teinte, quelle que soit la fiche ou l'ordre d'affichage. Une carte de prénom, un bouton ou une surface fonctionnelle ne constitue pas une catégorie : elle utilise les rôles Fidelity neutres ou sémantiques. Les titres, les accents typographiques et les fonds de page ne reçoivent pas de dégradé Rainbow. Les cartes d'associations peuvent recevoir une légère teinte stable issue de la catégorie, sur une surface Fidelity ; leur contour et leur badge utilisent respectivement la teinte et le rôle `on-container` de cette même catégorie, jamais un rôle tertiary générique. La vitrine « Les prénoms à découvrir » applique une surface neutre identique à ses cartes ; aucune carte ne reçoit primary, secondary ou tertiary selon sa position. Les variations de mise en page suivent la largeur disponible : trois colonnes sur grand écran, deux sur fenêtre intermédiaire et une sur écran compact.
+Les catégories utilisent trois familles de rôles tonals issues du schéma `Variant.RAINBOW` (`--namesia-color-category-1` à `--namesia-color-category-3`, avec leurs conteneurs et couleurs de premier plan). Une catégorie reçoit toujours la même teinte, quelle que soit la fiche ou l'ordre d'affichage. Une carte de prénom, un bouton ou une surface fonctionnelle ne constitue pas une catégorie : elle utilise les rôles Fidelity neutres ou sémantiques. Les titres, les accents typographiques et les fonds de page ne reçoivent pas de dégradé Rainbow. Les cartes d'associations peuvent recevoir une légère teinte stable issue de la catégorie, sur une surface Fidelity ; leur contour et leur badge utilisent respectivement la teinte et le rôle `on-container` de cette même catégorie, jamais un rôle tertiary générique. La vitrine « Les prénoms à découvrir » applique une surface neutre identique à ses cartes ; aucune carte ne reçoit primary, secondary ou tertiary selon sa position. Les variations de mise en page suivent la largeur disponible : trois colonnes à partir de 840 px (fenêtres expanded), deux de 600 à 839 px (medium) et une sous 600 px (compact).
 
 ## 3. Formes, typographie et élévation
 
@@ -59,7 +59,7 @@ Les catégories utilisent trois familles de rôles tonals issues du schéma `Var
 
 ### Accueil
 
-Les titres de section et leurs liens d'action forment un groupe lisible : sur grand écran, le lien reste aligné au titre ; sous 600 px, il passe sur sa propre ligne, sous le titre, sans comprimer celui-ci. Le lien conserve une cible tactile minimale de 48 px. Le hero sépare le message éditorial et les outils de découverte : introduction à gauche et panneau de recherche à droite à partir de 900 px, puis empilement naturel sur les fenêtres plus étroites. Le panneau utilise une surface Fidelity distincte, un contour discret et un titre explicite ; la recherche et la découverte aléatoire y forment un seul point de départ. Le texte descriptif utilise `on-surface-variant`, jamais la couleur primaire comme simple décoration. La mention de génération par IA reste visible dans le panneau, au même endroit que les outils auxquels elle se rapporte. Les cartes vedettes gardent une hauteur minimale plutôt qu'une hauteur rigide ; les noms longs peuvent revenir à la ligne sans pousser l'action de découverte hors de la carte. Les cartes du catalogue appliquent la même règle de retour à la ligne.
+Les titres de section et leurs liens d'action forment un groupe lisible : sur grand écran, le lien reste aligné au titre ; sous 600 px, il passe sur sa propre ligne, sous le titre, sans comprimer celui-ci. Le lien conserve une cible tactile minimale de 48 px. Le hero sépare le message éditorial et les outils de découverte : introduction à gauche et panneau de recherche à droite à partir de 840 px (expanded), puis empilement naturel sur les fenêtres compactes et medium. Le panneau utilise une surface Fidelity distincte, un contour discret et un titre explicite ; la recherche et la découverte aléatoire y forment un seul point de départ. Le texte descriptif utilise `on-surface-variant`, jamais la couleur primaire comme simple décoration. La mention de génération par IA reste visible dans le panneau, au même endroit que les outils auxquels elle se rapporte. Les cartes vedettes gardent une hauteur minimale plutôt qu'une hauteur rigide ; les noms longs peuvent revenir à la ligne sans pousser l'action de découverte hors de la carte. Les cartes du catalogue appliquent la même règle de retour à la ligne.
 
 ### Fiche de prénom
 
@@ -76,7 +76,7 @@ Les destinations de premier niveau sont Accueil, Explorer, Comparer et Favoris. 
 - Le composable AndroidX `NavigationBar()` utilise `TallContainerHeight` (80 dp), et non le token `ContainerHeight` (64 dp) non retenu par son implémentation par défaut. Namesia reproduit ces 80 dp par 64 dp de zone de destinations et 8 dp de padding vertical, sans bordure ajoutée. La zone sûre basse est réservée séparément et le contenu de page reçoit le même dégagement. La destination courante utilise l'indicateur tonal en pilule et `aria-current="page"`.
 - La navigation est une navigation de pages, pas un tablist ARIA : les liens natifs conservent l'historique, les ouvertures dans un nouvel onglet et les usages clavier du navigateur. Les destinations restent dans une liste HTML (`ul`/`li`) ; le conteneur ne doit pas utiliser `display: contents`, qui peut retirer la liste de l'arbre d'accessibilité de certains navigateurs.
 
-Ces seuils suivent la logique des window size classes Android : la barre convient aux fenêtres compactes en largeur ou en hauteur et le rail aux fenêtres plus larges. Les adaptations sont pilotées par l'espace disponible, pas par la détection d'une marque d'appareil. Le rail ne possède pas de bouton d'extension artificiel : une navigation de premier niveau reste stable et prévisible.
+Les seuils de largeur suivent les window size classes AndroidX : compact sous 600 dp, medium de 600 à 839 dp, expanded de 840 à 1199 dp, large de 1200 à 1599 dp et extra-large à partir de 1600 dp. La composition du hero et la grille vedette basculent à l'entrée en expanded ; le rail remplace la barre dès medium. La barre reste prioritaire lorsque la hauteur disponible est compacte (moins de 480 dp), même si la largeur est medium ou supérieure. La référence et la date de vérification de ces seuils figurent dans [Vérification Material 3](material-3-verification.md). Les adaptations sont pilotées par l'espace disponible, pas par la détection d'une marque d'appareil. Le rail ne possède pas de bouton d'extension artificiel : une navigation de premier niveau reste stable et prévisible.
 
 ## 5. Bibliothèque de composants
 
