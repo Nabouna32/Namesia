@@ -18,21 +18,21 @@ import { Card } from "@/components/material3/Card";
 import { FilterChip } from "@/components/material3/FilterChip";
 
 type Props = {
-  prenoms: NameIndexEntry[];
-  initialRecherche?: string;
-  initialGenre?: string;
-  initialTri?: TriFavoris;
-  initialNombreVisible?: number;
+  names: NameIndexEntry[];
+  initialSearch?: string;
+  initialGender?: string;
+  initialSort?: TriFavoris;
+  initialVisibleCount?: number;
 };
 
 const TAILLE_MAX_SAUVEGARDE = 1_000_000;
 
 export function FavoritesList({
-  prenoms,
-  initialRecherche = "",
-  initialGenre = "",
-  initialTri = "enregistrement",
-  initialNombreVisible = 24
+  names,
+  initialSearch = "",
+  initialGender = "",
+  initialSort = "enregistrement",
+  initialVisibleCount = 24
 }: Props) {
   const { slugs, pret, erreur, retirerPlusieurs, ajouterPlusieurs } = useFavorites();
   const [messageImport, setMessageImport] = useState("");
@@ -41,21 +41,21 @@ export function FavoritesList({
   const [messageCopie, setMessageCopie] = useState("");
   const [erreurCopie, setErreurCopie] = useState("");
   const generationCopie = useRef(0);
-  const [recherche, setRecherche] = useState(initialRecherche);
-  const [genreActif, setGenreActif] = useState(initialGenre);
-  const [triActif, setTriActif] = useState<TriFavoris>(initialTri);
-  const [nombreVisible, setNombreVisible] = useState(initialNombreVisible);
+  const [recherche, setRecherche] = useState(initialSearch);
+  const [genreActif, setGenreActif] = useState(initialGender);
+  const [triActif, setTriActif] = useState<TriFavoris>(initialSort);
+  const [nombreVisible, setNombreVisible] = useState(initialVisibleCount);
 
-  const parSlug = new Map(prenoms.map((prenom) => [prenom.slug, prenom]));
+  const parSlug = new Map(names.map((name) => [name.slug, name]));
   const favoris = slugs.flatMap((slug) => {
-    const prenom = parSlug.get(slug);
-    return prenom ? [prenom] : [];
+    const name = parSlug.get(slug);
+    return name ? [name] : [];
   });
   const slugsIndisponibles = slugs.filter((slug) => !parSlug.has(slug));
   if (!pret) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
 
   const termeNormalise = normalizeSearchTerm(recherche);
-  const genres: NameGender[] = [...new Set(favoris.map((prenom) => prenom.gender))]
+  const genres: NameGender[] = [...new Set(favoris.map((name) => name.gender))]
     .sort((a, b) => a.localeCompare(b, "fr"));
   const genreActifValide = genres.find((genre) => genre === genreActif) ?? "";
 
@@ -103,9 +103,9 @@ export function FavoritesList({
     }
   }
 
-  const favorisFiltres = favoris.filter((prenom) => (
-    (!termeNormalise || normalizeSearchTerm(prenom.name).includes(termeNormalise))
-    && (!genreActifValide || prenom.gender === genreActifValide)
+  const favorisFiltres = favoris.filter((name) => (
+    (!termeNormalise || normalizeSearchTerm(name.name).includes(termeNormalise))
+    && (!genreActifValide || name.gender === genreActifValide)
   ));
   if (triActif !== "enregistrement") {
     favorisFiltres.sort((a, b) => {
@@ -115,7 +115,7 @@ export function FavoritesList({
   }
   const favorisProches = favorisFiltres.length === 0 && termeNormalise
     ? suggestSimilarNames(
-      favoris.filter((prenom) => !genreActifValide || prenom.gender === genreActifValide),
+      favoris.filter((name) => !genreActifValide || name.gender === genreActifValide),
       recherche
     )
     : [];
@@ -142,7 +142,7 @@ export function FavoritesList({
     }
 
     try {
-      await navigator.clipboard.writeText(favorisFiltres.map((prenom) => prenom.name).join("\n"));
+      await navigator.clipboard.writeText(favorisFiltres.map((name) => name.name).join("\n"));
       if (generation === generationCopie.current) {
         setMessageCopie(`${favorisFiltres.length} ${favorisFiltres.length > 1 ? "prénoms copiés" : "prénom copié"} dans le presse-papiers.`);
       }
@@ -321,21 +321,21 @@ export function FavoritesList({
                 <p className={styles.note}>Aucun résultat exact. Voici les prénoms les plus proches dans votre sélection.</p>
               )}
               <div className="name-grid">
-              {favorisAffiches.slice(0, nombreVisible).map((prenom) => (
-                <article className={styles.row} key={prenom.slug}>
+              {favorisAffiches.slice(0, nombreVisible).map((name) => (
+                <article className={styles.row} key={name.slug}>
                   <Card as={Link} variant="elevated" interactive
                     className="name-card"
-                    href={creerUrlFicheDepuisFavoris(prenom.slug, {
+                    href={creerUrlFicheDepuisFavoris(name.slug, {
                       q: recherche,
                       genre: genreActifValide || null,
                       tri: triActif,
                       limite: nombreVisible
                     })}
                   >
-                    <span className="name-initial">{prenom.initial}</span>
+                    <span className="name-initial">{name.initial}</span>
                     <span>
-                      <strong>{prenom.name}</strong>
-                      <GenderIcon gender={prenom.gender} />
+                      <strong>{name.name}</strong>
+                      <GenderIcon gender={name.gender} />
                     </span>
                     <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                   </Card>
