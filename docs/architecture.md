@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 3.90
+- **Version :** 3.92
 - **Mis à jour :** 2026-11-25
 
 ## Structure de la page
@@ -41,6 +41,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 
 ### Administration
 - Connexion via Supabase Auth par lien e-mail.
+- L'administration utilise exclusivement les liens OTP e-mail ; aucun flux de connexion ou de modification par mot de passe n'est exposé ([ADR-0049](decisions/ADR-0049-authentification-admin-passwordless.md)). L'alerte Supabase `auth_leaked_password_protection` reste visible dans l'Advisor mais ne couvre pas le parcours OTP actuel ; elle doit être réexaminée avant toute introduction d'un flux mot de passe.
 - Les clients serveur, navigateur et administrateur sont typés avec `Database`, généré depuis le schéma PostgreSQL actif dans `lib/supabase/database.types.ts`. Les relations, colonnes et RPC sont donc contrôlées à la compilation ; les lectures du catalogue utilisent les types inférés, sans cast non vérifié.
 - `lib/supabase/config.ts` est l'unique frontière de configuration publique : elle exige l'URL et la clé, valide l'origine et impose HTTPS en production et réserve HTTP aux hôtes loopback en développement. Les clients serveur, navigateur et administrateur partagent ce contrat, sans assertion non nulle ni fallback.
 - Autorisation fondée sur la présence de l'identifiant Auth dans private.admin_users.
