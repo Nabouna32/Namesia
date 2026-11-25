@@ -102,6 +102,46 @@ jobs:
           trap 'rm -f "$response"' EXIT
           curl --fail --show-error --silent --location --retry 8 --retry-all-errors --retry-delay 5 --max-time 30 "$SITE_URL/" --output "$response"
           grep -Eiq '<!doctype html|<html' "$response"
+      - name: Vérifier les parcours publics et la frontière administrateur
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') && vars.CLOUDFLARE_DEPLOY_ENABLED == 'true'
+        env:
+          SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://namesia.nabouna.workers.dev' }}
+        run: |
+          set -euo pipefail
+          workdir="$(mktemp -d)"
+          trap 'rm -rf "$workdir"' EXIT
+
+          check_html() {
+            local path="$1"
+            local output="$2"
+            curl --fail --show-error --silent --location --retry 5 --retry-all-errors --retry-delay 3 --max-time 30 "$SITE_URL$path" --output "$output"
+            grep -Eiq '<!doctype html|<html' "$output"
+          }
+
+          check_html "/prenoms" "$workdir/catalogue.html"
+          check_html "/prenoms/alice" "$workdir/fiche.html"
+          grep -Eiq '<title>[^<]*Alice' "$workdir/fiche.html"
+
+          curl --fail --show-error --silent --location --max-time 30 "$SITE_URL/robots.txt" --output "$workdir/robots.txt"
+          grep -Eiq '^Disallow: /admin' "$workdir/robots.txt"
+          grep -Eiq '^Disallow: /api' "$workdir/robots.txt"
+          grep -Fq "Sitemap: $SITE_URL/sitemap.xml" "$workdir/robots.txt"
+
+          curl --fail --show-error --silent --location --max-time 30 "$SITE_URL/sitemap.xml" --output "$workdir/sitemap.xml"
+          grep -Fq "$SITE_URL/prenoms/alice" "$workdir/sitemap.xml"
+
+          curl --fail --show-error --silent --location --max-time 30 "$SITE_URL/api/prenoms?slug=alice&slug=emma" --output "$workdir/comparison.json"
+          jq -e '[.prenoms[].slug] | index("alice") != null and index("emma") != null' "$workdir/comparison.json"
+
+          og_type="$(curl --fail --show-error --silent --location --max-time 30 --output /dev/null --write-out '%{content_type}' "$SITE_URL/opengraph-image")"
+          test "$og_type" = "image/png"
+          profile_og_type="$(curl --fail --show-error --silent --location --max-time 30 --output /dev/null --write-out '%{content_type}' "$SITE_URL/prenoms/alice/opengraph-image")"
+          test "$profile_og_type" = "image/png"
+
+          for method in GET POST; do
+            status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' --request "$method" "$SITE_URL/api/admin/prenoms")"
+            test "$status" = "401"
+          done
   cleanup:
     if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest

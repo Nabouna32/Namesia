@@ -37,10 +37,10 @@ Utiliser **Cloudflare Workers Free**, avec **GitHub Actions comme moteur de buil
 Le plan Workers Free impose notamment une limite CPU par invocation et une taille maximale de Worker compressé. Le build seul ne prouve donc pas que l'application peut fonctionner dans ces limites.
 
 Avant toute bascule publique, valider sur l'URL `workers.dev` :
-- le rendu SSR et les Route Handlers ;
-- l'authentification OTP et les redirections Supabase sur le domaine final ;
-- les pages de catalogue, fiches, comparateur, sitemap et images Open Graph ;
-- le fonctionnement des sessions et cookies ;
+- le rendu SSR du catalogue et d'une fiche, l'API de comparaison et les Route Handlers ;
+- les réponses `401` des routes d'administration sans jeton ;
+- robots.txt, sitemap et images Open Graph ;
+- l'authentification OTP, les redirections Supabase et le maintien de session sur le domaine final ;
 - la taille compressée du Worker et le CPU consommé sur les parcours représentatifs.
 
 Les environnements de test ne doivent contenir aucun secret privilégié. L'administration reste protégée par Supabase Auth et RLS en production et est entièrement désactivée dans les Previews.
