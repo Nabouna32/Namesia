@@ -6,6 +6,7 @@ Cette charte s'applique à tout le dépôt, aux contributions humaines et aux ag
 
 - Toute communication durable dans le dépôt est en français : documentation, issues, PR, commentaires, revues, ADR et suivi.
 - Les identifiants, noms de fichiers, modules, types, variables, fonctions et exports créés ou modifiés sont en anglais ; les commentaires de code, textes de tests, documentation, issues, PR et échanges GitHub restent en français. Les composants d'interface utilisent les noms officiels Material 3/AndroidX, sans alias ni wrapper Namesia. Le legacy se migre progressivement lorsqu'il est touché, sans refactor global hors sujet.
+- Les segments de routes, paramètres de requête et chemins d'API publics peuvent rester en français pour préserver le SEO et les contrats existants ; ne pas les renommer sans migration explicite des URL canoniques, du sitemap, des redirections et des liens entrants.
 - La conversation est éphémère : toute décision utile doit être inscrite dans le dépôt.
 - Distinguer faits, hypothèses, propositions, décisions et actions réellement effectuées.
 
@@ -57,6 +58,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Vercel ne construit et ne déploie que main après fusion d'une PR.
 - Aucun push de branche de travail ne doit déclencher de build Vercel.
 - Le quota de 100 builds/déploiements par jour doit être préservé.
+- L'Ignored Build Step n'économise pas le quota : Vercel compte les builds annulés à cette étape comme des déploiements complets. Ne pas ajouter de filtre docs-only dans l'espoir de réduire la consommation.
 - Les vérifications de PR et builds de contrôle sont exécutés dans GitHub Actions.
 - La configuration Vercel doit désactiver les previews et ignorer toute référence autre que main.
 - `ssoProtection.deploymentType` est `preview` : le domaine de production `namesia.vercel.app` reste public, tandis que les previews (désactivées) restent protégées. L'accès administrateur est assuré par Supabase OTP et RLS.
@@ -94,8 +96,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 
 - Construire une base simple, cohérente, modulaire et durable. **Pas de rustines.**
 - Corriger les causes racines ; ne pas empiler overrides CSS, duplications, conditions spéciales ou abstractions artificielles.
-- Ne pas ajouter de fallback de confort, de secours redondant ou de valeur par défaut qui masque un défaut de conception. Chaque chemin d'exécution doit avoir une source de vérité et un comportement explicite.
-- Un fallback n'est acceptable qu'à une frontière réelle et justifiée (donnée facultative prévue par le contrat, indisponibilité externe avec stratégie produit définie, récupération d'erreur nécessaire). Il doit être ciblé, observable et testé ; jamais dupliqué à plusieurs couches pour le même problème.
+- Aucun fallback de comportement, de composant, de stockage, de configuration ou de donnée. Les absences prévues par le contrat sont explicitement optionnelles ; toute erreur ou indisponibilité est propagée et affichée clairement, sans valeur de remplacement ni source secondaire.
 - En HTML/React, utiliser la sémantique native adaptée. Ne pas remplacer un élément HTML par des `div` génériques, des rôles ARIA manuels ou des structures de secours quand l'élément natif répond au besoin. Ne pas ajouter d'ARIA redondant ni de contenu de substitution décoratif.
 - Privilégier un monolithe modulaire adapté à la taille réelle du projet ; pas de microservices sans besoin.
 - Créer des modules et composants réutilisables lorsqu'ils apportent une cohésion, une réutilisation ou une testabilité réelle.

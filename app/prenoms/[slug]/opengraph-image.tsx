@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getPrenom } from "@/lib/prenoms";
 import { Icon } from "@/components/material3/Icon";
-import { GENRE_ICONS } from "@/lib/genre-icons";
+import { GENDER_ICONS } from "@/lib/gender-icons";
 import { chargerPolicesOpenGraph } from "@/lib/polices-open-graph";
 import { getMaterialThemeTokens } from "@/lib/material-theme";
 
@@ -87,7 +87,7 @@ export default async function Image({ params }: Props) {
             background: theme["--md-sys-color-secondary-container"],
             color: theme["--md-sys-color-on-secondary-container"],
             fontSize: 17
-          }}><Icon name={GENRE_ICONS[prenom.genre]} size={24} /></div>
+          }}><Icon name={GENDER_ICONS[prenom.genre]} size={24} /></div>
           <div style={{
             padding: "8px 16px",
             borderRadius: 20,

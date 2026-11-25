@@ -2,9 +2,9 @@
 
 import { useRef, useState, type ChangeEvent } from "react";
 import Link from "next/link";
-import type { GenrePrenom, PrenomIndex } from "@/lib/prenoms";
-import { GenreIcon } from "@/components/features/names/GenreIcon";
-import { GENRE_ICONS } from "@/lib/genre-icons";
+import type { NameGender, PrenomIndex } from "@/lib/prenoms";
+import { GenderIcon } from "@/components/features/names/GenderIcon";
+import { GENDER_ICONS } from "@/lib/gender-icons";
 import { LIMITE_FAVORIS, creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
 import { normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
@@ -55,7 +55,7 @@ export function FavoritesList({
   if (!pret) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
 
   const termeNormalise = normaliserRecherche(recherche);
-  const genres: GenrePrenom[] = [...new Set(favoris.map((prenom) => prenom.genre))]
+  const genres: NameGender[] = [...new Set(favoris.map((prenom) => prenom.genre))]
     .sort((a, b) => a.localeCompare(b, "fr"));
   const genreActifValide = genres.find((genre) => genre === genreActif) ?? "";
 
@@ -273,7 +273,7 @@ export function FavoritesList({
                     <FilterChip
                       key={genre}
                       label={genre}
-                      leadingIcon={<Icon name={GENRE_ICONS[genre]} size={18} />}
+                      leadingIcon={<Icon name={GENDER_ICONS[genre]} size={18} />}
                       iconOnly
                       selected={genreActifValide === genre}
                       onClick={() => changerGenre(genre)}
@@ -335,7 +335,7 @@ export function FavoritesList({
                     <span className="name-initial">{prenom.lettre}</span>
                     <span>
                       <strong>{prenom.nom}</strong>
-                      <GenreIcon genre={prenom.genre} />
+                      <GenderIcon gender={prenom.genre} />
                     </span>
                     <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                   </Card>

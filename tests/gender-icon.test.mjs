@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 const icon = await readFile(new URL("../components/material3/Icon.tsx", import.meta.url), "utf8");
-const genreIcon = await readFile(new URL("../components/features/names/GenreIcon.tsx", import.meta.url), "utf8");
-const genreMap = await readFile(new URL("../lib/genre-icons.ts", import.meta.url), "utf8");
+const genderIcon = await readFile(new URL("../components/features/names/GenderIcon.tsx", import.meta.url), "utf8");
+const genderMap = await readFile(new URL("../lib/gender-icons.ts", import.meta.url), "utf8");
 
 test("le pictogramme masculin sépare son anneau et sa flèche pour rester lisible à petite taille", () => {
   assert.match(icon, /type IconPathName = Exclude<IconName, "gender-male">/);
@@ -18,7 +18,7 @@ test("le pictogramme masculin sépare son anneau et sa flèche pour rester lisib
 });
 
 test("le pictogramme masculin conserve le même contrat accessible que les autres genres", () => {
-  assert.match(genreIcon, /aria-label=\{genre\}/);
-  assert.match(genreIcon, /GENRE_ICONS\[genre\]/);
-  assert.match(genreMap, /"Masculin": "gender-male"/);
+  assert.match(genderIcon, /aria-label=\{gender\}/);
+  assert.match(genderIcon, /GENDER_ICONS\[gender\]/);
+  assert.match(genderMap, /"Masculin": "gender-male"/);
 });

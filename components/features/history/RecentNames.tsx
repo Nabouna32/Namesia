@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { useHistory } from "@/components/features/history/HistoryProvider";
 import styles from "./RecentNames.module.css";
-import { GenreIcon } from "@/components/features/names/GenreIcon";
+import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { Icon } from "@/components/material3/Icon";
 import { Button } from "@/components/material3/Button";
 import { IconButton } from "@/components/material3/IconButton";
@@ -48,7 +48,7 @@ export function RecentNames({ prenoms }: { prenoms: PrenomIndex[] }) {
                     <span className="name-initial">{prenom.lettre}</span>
                     <span>
                       <strong>{prenom.nom}</strong>
-                      <GenreIcon genre={prenom.genre} />
+                      <GenderIcon gender={prenom.genre} />
                     </span>
                     <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                   </Card>
