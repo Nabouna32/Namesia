@@ -87,10 +87,10 @@ export default async function NamesPage({ searchParams }: Props) {
         <NameSearch
           names={names}
           syncUrl
-          initialRecherche={initialSearch}
-          initialGenre={initialGender}
-          initialLettre={initialLetter}
-          initialNombreVisible={initialVisibleCount}
+          initialSearch={initialSearch}
+          initialGender={initialGender}
+          initialLetter={initialLetter}
+          initialVisibleCount={initialVisibleCount}
         />
       </div>
     </main>
