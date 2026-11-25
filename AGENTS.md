@@ -50,6 +50,10 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Pour un run en échec, lire les jobs puis les logs du job en échec avant toute correction. Ne pas se limiter au résumé du statut : les logs distinguent une régression de code d'un contrat de test devenu obsolète.
 - Le job `quality` audite les dépendances de production (`npm audit --omit=dev --audit-level=high`), puis exécute les tests, le contrôle TypeScript et le build même si l'un échoue. La synthèse finale inclut les quatre résultats ; sur un run rouge, lire chaque `outcome` et ses logs avant de corriger afin de traiter toutes les causes indépendantes dans la même boucle.
 - Ne jamais déclarer un test, build ou contrôle réussi sans que la CI GitHub Actions l'ait confirmé.
+
+- Les parcours E2E visuels Playwright s'exécutent sur la Workers Preview Cloudflare des PR internes, jamais sur un environnement authentifié ou contenant des données privées.
+- Les captures couvrent l'accueil, le catalogue et une fiche en formats mobile, tablette et bureau ; les rapports Playwright et axe-core sont publiés comme artefacts GitHub à rétention courte.
+- Les traces ne sont conservées qu'en cas d'échec ; les artefacts ne doivent contenir ni secret, ni session, ni donnée personnelle.
 - Toutes les actions GitHub (`uses`) sont épinglées sur un SHA de commit complet à 40 caractères, avec le tag de version conservé en commentaire. Avant une mise à jour, vérifier que le SHA correspond au tag officiel et relire les changements amont ; ne jamais revenir à une référence de tag mutable. Le checkout désactive `persist-credentials` sauf besoin Git en écriture explicitement justifié.
 
 ### Déploiement et CI
