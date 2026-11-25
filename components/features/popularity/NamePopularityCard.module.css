@@ -32,11 +32,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-.metric sup {
-  margin-inline-start: 2px;
-  font-size: 13px;
-}
-
 .metric span,
 .source {
   color: var(--md-sys-color-on-surface-variant);
