@@ -1,0 +1,66 @@
+.card {
+  display: grid;
+  gap: 16px;
+  margin-block: 24px;
+  padding: 20px;
+}
+
+.heading h2 {
+  margin: 4px 0 0;
+  font-size: var(--md-sys-typescale-title-large-size);
+  font-weight: 500;
+  line-height: var(--md-sys-typescale-title-large-line-height);
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.metric {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.metric strong {
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.metric sup {
+  margin-inline-start: 2px;
+  font-size: 13px;
+}
+
+.metric span,
+.source {
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-body-small-size);
+  line-height: var(--md-sys-typescale-body-small-line-height);
+}
+
+.source {
+  margin: 0;
+}
+
+.source a {
+  color: var(--md-sys-color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 16px;
+  }
+
+  .metrics {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
