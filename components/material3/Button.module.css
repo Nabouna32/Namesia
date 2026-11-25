@@ -61,8 +61,8 @@
 .filled:active::before,
 .tonal:active::before { box-shadow: none; }
 
-.button:not(.icon):active:not(:disabled)::before,
-.button:not(.icon):active:not(:disabled)::after { border-radius: var(--md-sys-shape-corner-small); }
+.button:active:not(:disabled)::before,
+.button:active:not(:disabled)::after { border-radius: var(--md-sys-shape-corner-small); }
 
 .filled { color: var(--md-sys-color-on-primary); }
 .filled::before { background: var(--md-sys-color-primary); }
@@ -71,9 +71,6 @@
 .outlined { color: var(--md-sys-color-on-surface-variant); }
 .outlined::before { border: 1px solid var(--md-sys-color-outline-variant); }
 .text { padding-inline: 12px; color: var(--md-sys-color-primary); }
-.icon { width: 48px; min-width: 48px; padding: 0; color: var(--md-sys-color-on-surface-variant); }
-.icon::before,
-.icon::after { inset: 4px; }
 
 .filled:disabled::before,
 .tonal:disabled::before {

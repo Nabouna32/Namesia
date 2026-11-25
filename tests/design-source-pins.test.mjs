@@ -29,6 +29,8 @@ test("les références de code du contrat M3 pointent vers des révisions immuab
   assert.match(verification, /NavigationRailCollapsedTokens\.kt/);
   assert.match(verification, /AppBar\.kt/);
   assert.match(verification, /AppBarSmallTokens\.kt/);
+  assert.match(verification, /LocalContentColor/);
+  assert.match(verification, /iconButtonVibrantColors/);
   assert.doesNotMatch(verification, /TopAppBar(?:Small)?Tokens?\.kt/);
   assert.match(verification, /NavigationRailColorTokens\.kt/);
   assert.doesNotMatch(verification, /NavigationRailTokens\.kt/);
@@ -41,7 +43,7 @@ test("le registre M3 et ses sources de référence restent complets et lisibles"
   assert.match(sourceVerifier, /maybeFallbackSpecVersion/);
   assert.doesNotMatch(verification, new RegExp("2025/2026"));
   assert.match(sourceVerifier, /filter\(\(\{ name \}\) => name\.startsWith\("AndroidX "\)\)/);
-  assert.match(sourceVerifier, /assert\.equal\(androidxSourceCount, 37/);
+  assert.match(sourceVerifier, /assert\.equal\(androidxSourceCount, 39/);
   assert.match(sourceVerifier, /verifySourcesWithLimit\(verifiedSources, 4\)/);
   assert.match(sourceVerifier, /attempt < 3/);
   assert.match(sourceVerifier, /AbortSignal\.timeout\(15_000\)/);
@@ -50,7 +52,7 @@ test("le registre M3 et ses sources de référence restent complets et lisibles"
   for (const source of ["AndroidX Button", "AndroidX Checkbox", "AndroidX Card", "AndroidX SearchBar", "AndroidX TextField", "AndroidX NavigationBar", "AndroidX NavigationRail", "AndroidX Chips", "AndroidX TopAppBar", "AndroidX Snackbar", "Material Color Utilities ColorSpec versions", "Material Color Utilities ColorSpec 2025", "Material Web README — état de maintenance", "Material Web roadmap — couverture stable"]) {
     assert.ok(sourceVerifier.includes(source), "Source de référence non vérifiée : " + source);
   }
-  for (const file of ["AlertDialog.kt", "DialogTokens.kt", "AppBarSmallTokens.kt", "ElevationTokens.kt", "PaletteTokens.kt", "BaselineButtonTokens.kt", "ButtonSmallTokens.kt", "OutlinedButtonTokens.kt", "TextButtonTokens.kt", "IconButton.kt", "IconButtonTokens.kt", "ElevatedCardTokens.kt", "FilledCardTokens.kt", "OutlinedCardTokens.kt", "TextFieldDefaults.kt", "FilledTextFieldTokens.kt", "OutlinedTextFieldTokens.kt", "InputChipTokens.kt", "NavigationRailCollapsedTokens.kt", "NavigationRailColorTokens.kt", "NavigationRailBaselineItemTokens.kt", "NavigationRailVerticalItemTokens.kt", "SnackbarTokens.kt"]) {
+  for (const file of ["AlertDialog.kt", "DialogTokens.kt", "AppBarSmallTokens.kt", "ElevationTokens.kt", "PaletteTokens.kt", "BaselineButtonTokens.kt", "ButtonSmallTokens.kt", "OutlinedButtonTokens.kt", "TextButtonTokens.kt", "IconButton.kt", "IconButtonDefaults.kt", "IconButtonTokens.kt", "SmallIconButtonTokens.kt", "ElevatedCardTokens.kt", "FilledCardTokens.kt", "OutlinedCardTokens.kt", "TextFieldDefaults.kt", "FilledTextFieldTokens.kt", "OutlinedTextFieldTokens.kt", "InputChipTokens.kt", "NavigationRailCollapsedTokens.kt", "NavigationRailColorTokens.kt", "NavigationRailBaselineItemTokens.kt", "NavigationRailVerticalItemTokens.kt", "SnackbarTokens.kt"]) {
     assert.ok(sourceVerifier.includes(file), "Source AndroidX documentée non vérifiée : " + file);
   }
   for (const name of ["AlertDialog", "Button", "Card", "Checkbox", "IconButton", "SearchBar", "TextField", "FilterChip", "InputChip", "Snackbar", "TopAppBar", "NavigationBar", "NavigationRail"]) {
