@@ -16,6 +16,7 @@ test("les previews Cloudflare ont un environnement distinct de la production", (
 test("les previews ne peuvent pas accéder aux opérations d'administration", () => {
   assert.match(adminAuth, /NAMESIA_DEPLOYMENT_ENVIRONMENT === "preview"/);
   assert.match(adminPage, /NAMESIA_DEPLOYMENT_ENVIRONMENT === "preview"/);
+  assert.match(adminPage, /dynamic = "force-dynamic"/);
   assert.match(adminPage, /Administration indisponible/);
 });
 
