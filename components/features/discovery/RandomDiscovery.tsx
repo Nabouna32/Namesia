@@ -8,15 +8,15 @@ import styles from "./RandomDiscovery.module.css";
 import { Icon } from "@/components/material3/Icon";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
 
-type Props = { prenoms: NameIndexEntry[] };
+type Props = { names: NameIndexEntry[] };
 
-export function RandomDiscovery({ prenoms }: Props) {
+export function RandomDiscovery({ names }: Props) {
   const [selection, setSelection] = useState<NameIndexEntry | null>(null);
 
   function decouvrir() {
-    const candidats = selection && prenoms.length > 1
-      ? prenoms.filter((prenom) => prenom.slug !== selection.slug)
-      : prenoms;
+    const candidats = selection && names.length > 1
+      ? names.filter((name) => name.slug !== selection.slug)
+      : names;
     const index = Math.floor(Math.random() * candidats.length);
     const prochain = candidats[index];
 
