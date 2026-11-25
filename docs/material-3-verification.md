@@ -10,6 +10,7 @@
 
 | Sujet | Source primaire | Usage dans Namesia |
 |---|---|---|
+| Classes de fenêtre adaptatives | [AndroidX WindowSizeClass — API de référence](https://developer.android.com/reference/androidx/window/core/layout/WindowSizeClass) et [guide officiel des window size classes](https://developer.android.com/develop/adaptive-apps/guides/use-window-size-classes) (vérifiés le 25 novembre 2026) | Seuils de largeur 600/840/1200/1600 dp et de hauteur 480/900 dp ; adaptation au viewport disponible, indépendamment du type d'appareil. Les seuils CSS sont exprimés en px CSS, équivalents aux dp dans le viewport Web standard. |
 | Rôles et associations de couleurs | [Material 3 — Color roles](https://m3.material.io/styles/color/roles) | Noms des rôles `--md-sys-color-*` et associations premier plan / conteneur |
 | Système de couleur dynamique | [Material 3 — Color system](https://m3.material.io/styles/color) | Génération des palettes tonales et hiérarchie des surfaces |
 | Recommandations d'application des couleurs | [Android Developers — Material 3 theming](https://developer.android.com/codelabs/m3-design-theming) | Affectation de Surface au fond d'application et des rôles de conteneur aux composants |
