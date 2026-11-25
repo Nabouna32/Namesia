@@ -1,7 +1,7 @@
 # Standards techniques et règles de maintenabilité — Namesia
 
 - **Statut :** règle canonique
-- **Version :** 1.7
+- **Version :** 1.8
 - **Mis à jour :** 2026-11-25
 - **Portée :** application web, styles, composants, données et outillage
 
@@ -108,9 +108,9 @@ Chaque changement est validé au niveau adapté à son risque :
 - Les tests Node natifs importent les modules TypeScript avec des chemins relatifs et l'extension `.ts`. Les fonctions pures testées par Node vivent dans des modules cœur sans alias `@/`, client Supabase ou runtime Next.js ; la couche applicative peut les réexporter.
 - Tests d'intégration pour les accès aux données, contrats et interactions entre modules.
 - Tests de composants ou E2E pour les parcours utilisateur critiques.
-- Playwright Chromium couvre quelques parcours représentatifs sur la Preview interne : routes publiques essentielles sur bureau, responsive mobile/tablette sur l'accueil et assertions ciblées pour les composants dont le comportement est à risque.
-- **Pas de captures systématiques, de rapport HTML ni de galerie d'images en CI.** Une capture ponctuelle peut être produite pour diagnostiquer une anomalie ou documenter une évolution visuelle importante ; elle n'est pas archivée après vérification.
-- Les traces Playwright et diagnostics ne sont publiés qu'en cas d'échec, avec une rétention de trois jours. Aucun artefact de réussite n'est conservé.
+- Playwright Chromium couvre uniquement des parcours fonctionnels stables sur la Preview interne : disponibilité des routes publiques essentielles, absence d'erreurs JavaScript et débordements responsive représentatifs. Les assertions de CSS, de géométrie ou de rendu propres à une correction sont temporaires et supprimées après validation.
+- **Aucune capture, vidéo, trace ou rapport Playwright n'est conservé en CI**, même en cas d'échec. Lorsqu'une anomalie visuelle le justifie, les captures et assertions de diagnostic sont temporaires : elles servent à observer et corriger, puis sont retirées dès validation. Pas de galerie, baseline visuelle ni historique de captures.
+- Les fichiers de sortie Playwright sont éphémères sur le runner GitHub Actions ; aucune étape `upload-artifact` ne publie `test-results`, captures, traces ou rapports. Les logs CI restent la seule sortie durable des contrôles.
 - axe-core est exécuté comme diagnostic consultatif ; ses constats sont consignés dans les logs sans bloquer le rendu. Les erreurs HTTP, JavaScript et les débordements responsive restent bloquants.
 - Les tests sont choisis selon le risque : métier et parcours critiques d'abord. Éviter les assertions sur les textes éditoriaux, les détails CSS transitoires et les implémentations internes susceptibles d'évoluer. Retirer les tests devenus sans objet au lieu d'accumuler des contrats historiques.
 - Les tests E2E n'ouvrent aucune route d'administration et n'utilisent aucune session ni donnée privée. Les PR issues de forks ne reçoivent pas de Preview Cloudflare ni de secrets.
