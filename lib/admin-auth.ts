@@ -14,7 +14,7 @@ export async function requireAdmin(request: Request): Promise<AdminAccess> {
     return { supabase: null, user: null, error: { message: "Authentification requise.", status: 401 } };
   }
 
-  let config;
+  let config: ReturnType<typeof getSupabasePublicConfig>;
   try {
     config = getSupabasePublicConfig();
   } catch {
