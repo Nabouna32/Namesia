@@ -31,3 +31,15 @@ test("les previews sont déployées uniquement pour les PR du dépôt et supprim
   assert.match(workflow, /test "\$admin_status" = "403"/);
   assert.match(workflow, /gh pr comment/);
 });
+
+
+test("la production vérifie SSR, catalogue, SEO, Open Graph et refuse l'administration sans jeton", () => {
+  assert.match(workflow, /Vérifier les parcours publics et la frontière administrateur/);
+  assert.match(workflow, /check_html "\/prenoms"/);
+  assert.match(workflow, /check_html "\/prenoms\/alice"/);
+  assert.match(workflow, /\$SITE_URL\/robots\.txt/);
+  assert.match(workflow, /\$SITE_URL\/sitemap\.xml/);
+  assert.match(workflow, /api\/prenoms\?slug=alice&slug=emma/);
+  assert.match(workflow, /opengraph-image/);
+  assert.match(workflow, /test "\$status" = "401"/);
+});
