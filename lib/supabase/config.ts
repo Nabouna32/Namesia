@@ -22,8 +22,9 @@ export function getSupabasePublicConfig(): SupabasePublicConfig {
     throw new Error("NEXT_PUBLIC_SUPABASE_URL doit utiliser HTTP ou HTTPS.");
   }
 
-  if (process.env.NODE_ENV === "production" && parsedUrl.protocol !== "https:") {
-    throw new Error("NEXT_PUBLIC_SUPABASE_URL doit utiliser HTTPS en production.");
+  const isLocalHost = ["localhost", "127.0.0.1", "[::1]"].includes(parsedUrl.hostname);
+  if (parsedUrl.protocol === "http:" && (process.env.NODE_ENV === "production" || !isLocalHost)) {
+    throw new Error("HTTP est réservé à une instance Supabase locale en développement.");
   }
 
   if (parsedUrl.pathname !== "/" || parsedUrl.search || parsedUrl.hash || parsedUrl.username || parsedUrl.password) {
