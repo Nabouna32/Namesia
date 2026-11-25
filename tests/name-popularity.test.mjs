@@ -18,6 +18,8 @@ test("le classement Insee 2025 contient dix prénoms par genre", () => {
   assert.equal(maleNames.length, 10);
   assert.deepEqual(femaleNames.map((entry) => entry.rank), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
   assert.deepEqual(maleNames.map((entry) => entry.rank), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  assert.deepEqual(femaleNames.map((entry) => entry.births), [3070, 2925, 2805, 2500, 2360, 2320, 2310, 2245, 2225, 2130]);
+  assert.deepEqual(maleNames.map((entry) => entry.births), [4625, 3465, 3420, 3285, 3260, 3040, 2875, 2840, 2810, 2700]);
 });
 
 test("les entrées du classement ont des slugs uniques et des effectifs positifs", () => {
@@ -41,5 +43,5 @@ test("la page expose les profils publiés sans masquer les entrées hors catalog
 });
 
 test("le classement renvoie directement vers la publication officielle de l’Insee", () => {
-  assert.match(NAME_POPULARITY_2025_SOURCE_URL, /^https:\/\/www\.insee\.fr\//);
+  assert.equal(NAME_POPULARITY_2025_SOURCE_URL, "https://www.insee.fr/fr/statistiques/9040114");
 });
