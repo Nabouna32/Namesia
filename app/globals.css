@@ -901,7 +901,12 @@ padding: 8px 12px;
 
 .compare-option:has(input:disabled) {
   cursor: not-allowed;
-  opacity: 0.62;
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+}
+
+.compare-option:has(input:disabled) .compare-option-initial {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 10%, transparent);
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
 }
 
 .compare-option-initial {
