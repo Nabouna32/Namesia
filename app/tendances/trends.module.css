@@ -64,7 +64,7 @@
   font-variant-numeric: tabular-nums;
 }
 
- .name {
+.name {
   display: grid;
   min-width: 0;
   gap: 4px;
