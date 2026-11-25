@@ -82,6 +82,12 @@ jobs:
       - name: Installer Playwright et axe-core
         if: steps.preview.outputs.preview_url != ''
         run: npm install --no-save --package-lock=false --no-audit --no-fund @playwright/test@1.65.1 @axe-core/playwright@4.14.0
+      - name: Restaurer le cache Chromium
+        if: steps.preview.outputs.preview_url != ''
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-chromium-1.65.1
       - name: Installer Chromium
         if: steps.preview.outputs.preview_url != ''
         run: npx playwright install --with-deps chromium
