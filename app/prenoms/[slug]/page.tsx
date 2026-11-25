@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
-import { GenreIcon } from "@/components/features/names/GenreIcon";
-import type { GenrePrenom } from "@/lib/prenoms";
+import { GenderIcon } from "@/components/features/names/GenderIcon";
+import type { NameGender } from "@/lib/gender-icons";
 import { Button } from "@/components/material3/Button";
 import { Icon } from "@/components/material3/Icon";
 import { categoryTone } from "@/lib/category-color";
@@ -75,7 +75,7 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
   const texteRetour = contexteRetour?.vue === "favoris"
     ? "← Retour aux favoris"
     : contexteRetour?.vue === "comparateur" ? "← Retour au comparateur" : "← Retour au catalogue";
-  const genreAuPluriel: Record<GenrePrenom, string> = {
+  const genderPlural: Record<NameGender, string> = {
     "Féminin": "féminins",
     "Masculin": "masculins",
     "Mixte": "mixtes",
@@ -124,7 +124,7 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
               <h1>{prenom.nom}<span>.</span></h1>
               <p className="profile-lead">{prenom.introduction}</p>
               <div className="profile-tags">
-                <span className="profile-tag"><GenreIcon genre={prenom.genre} /></span>
+                <span className="profile-tag"><GenderIcon gender={prenom.genre} /></span>
                 <span className="profile-tag">Lettre {prenom.lettre}</span>
               </div>
               <div className={styles.actions}>
@@ -218,7 +218,7 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
             <section className="profile-discovery" aria-labelledby="profile-discovery-title">
               <div className="profile-section-heading">
                 <span className="profile-section-kicker">Pour prolonger la découverte</span>
-                <h2 id="profile-discovery-title">D'autres prénoms {genreAuPluriel[prenom.genre]}</h2>
+                <h2 id="profile-discovery-title">D'autres prénoms {genderPlural[prenom.genre]}</h2>
               </div>
               <RelatedNames prenoms={autresPrenoms} contexteRetour={contexteRetour} />
               <Link className="text-link" href="/prenoms">Explorer tout le catalogue <span aria-hidden="true">↗</span></Link>
