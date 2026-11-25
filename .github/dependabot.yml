@@ -2,8 +2,8 @@ version: 2
 
 updates:
   # npm couvre toutes les dépendances déclarées, y compris celles de développement.
-  # Le lockfile suit les mises à jour directes ; les transitives vulnérables relèvent aussi des alertes de sécurité.
-  # Chaque mise à jour reste une PR distincte ; le cooldown de sécurité GitHub (3 jours) est conservé.
+  # Chaque proposition met aussi à jour le lockfile ; les versions préliminaires ne sont pas recherchées.
+  # Le délai de sept jours satisfait l'audit zizmor et laisse le temps de détecter une publication compromise.
   - package-ecosystem: npm
     directory: /
     schedule:
@@ -11,9 +11,11 @@ updates:
       cronjob: "0 12 * * *"
       timezone: Europe/Paris
     open-pull-requests-limit: 1000
+    cooldown:
+      default-days: 7
 
-  # Les actions des workflows CI, de contrôle et de déploiement sont suivies
-  # individuellement ; leurs SHA complets restent à vérifier avant fusion.
+  # Les actions des workflows CI, de contrôle et de déploiement sont suivies séparément.
+  # Leurs SHA complets restent à vérifier contre le tag officiel avant fusion.
   - package-ecosystem: github-actions
     directory: /
     schedule:
@@ -21,3 +23,5 @@ updates:
       cronjob: "0 12 * * *"
       timezone: Europe/Paris
     open-pull-requests-limit: 1000
+    cooldown:
+      default-days: 7
