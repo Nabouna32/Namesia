@@ -80,7 +80,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Partage d'une fiche par l'API native du navigateur, avec copie du lien lorsque cette API n'est pas disponible.
 - Comparateur client de deux à trois fiches : le sélecteur utilise l'index léger et les rubriques éditoriales sont chargées à la demande uniquement pour les deux ou trois slugs sélectionnés, via une route publique qui valide strictement les paramètres et ne retourne que les fiches publiées. Cette réponse non personnalisée est mise en cache 30 secondes par le navigateur et 1 minute par les caches partagés, avec une fenêtre de revalidation différée d'une minute ; les erreurs ne sont pas mises en cache explicitement. Les slugs sélectionnés sont synchronisés dans l'URL, sans stockage permanent ; le lien partagé ne conserve que ce paramètre de sélection. La page reste non indexée. La recherche normalise accents, casse et séparateurs internes (espaces, tirets, apostrophes) et applique le même classement par pertinence que le catalogue (correspondance exacte, préfixe, puis occurrence la plus proche du début du prénom). Lorsqu'aucune correspondance exacte n'existe et que la recherche comporte au moins quatre caractères, il réutilise le calcul commun de suggestions proches du catalogue (une modification, ou deux à partir de huit caractères), limité à cinq résultats. Un lien vers chaque fiche complète transmet les slugs sélectionnés comme contexte de retour ; le fil d'Ariane et le lien de bas de fiche ramènent au comparateur avec la sélection restaurée. Ce contexte n'est pas ajouté à l'URL canonique et n'est pas stocké durablement. Les prénoms sélectionnés restent visibles dans une liste dédiée, avec retrait individuel même s'ils ne figurent pas dans le lot actuellement affiché ou ne correspondent plus à la recherche en cours. Le sélecteur affiche 24 choix au départ, puis révèle les suivants par lots de 24 ; une nouvelle recherche repart du premier lot.
 - Images Open Graph générées à la demande depuis les fiches publiées, dans le runtime Node.js pour conserver le client Supabase serveur ; aucune image ni donnée éditoriale supplémentaire n'est stockée.
-- Sitemap dynamique construit depuis les fiches publiées ; chaque URL de fiche expose `lastModified` à partir de `name_profiles.published_at`, date réelle de publication de la version immuable (jamais une date de génération inventée). La lecture est paginée avec compte exact, ordre stable et validation explicite des dates ; robots.txt exclut l’administration et les routes API.
+- Sitemap dynamique construit depuis les fiches publiées ; chaque URL de fiche expose `lastModified` à partir de `name_profiles.published_at`, date réelle de publication de la version immuable (jamais une date de génération inventée). La lecture est paginée avec compte exact, ordre stable et validation explicite des dates ; robots.txt exclut l'administration et les routes API.
 - Métadonnées canoniques fondées sur NEXT_PUBLIC_SITE_URL obligatoire et validée ; aucune origine de secours ni date de mise à jour inventée.
 - Données structurées Schema.org pour le site, le catalogue et les fiches ; aucune date, popularité ou affirmation non disponible n'est ajoutée.
 - `lib/site-url.ts` centralise l'origine canonique ; `lib/json-ld.ts` sérialise les données structurées en échappant les chevrons.
@@ -146,6 +146,7 @@ Le stockage métier est relationnel et repose sur trois tables :
 Le JSON est uniquement un contrat d'échange à l'import. L'API le valide, puis une fonction SQL crée atomiquement une version brouillon et ses associations. La publication reste une opération distincte et explicite.
 
 Les anciennes tables documentaires, l'ancienne colonne JSONB et les colonnes redondantes ont été supprimées. Le schéma exposé conserve RLS et des privilèges SQL minimaux : lecture publique des seules fiches publiées, opérations d'écriture réservées aux administrateurs autorisés. Les fichiers de `supabase/migrations/` reprennent les versions réellement enregistrées dans `supabase_migrations.schema_migrations` ; les migrations temporaires du modèle de références éditoriales, jamais appliquées à cette instance, ne font pas partie du schéma cible.
+
 ## 9. Stack
 
 - Next.js App Router, React et TypeScript.
@@ -153,13 +154,15 @@ Les anciennes tables documentaires, l'ancienne colonne JSONB et les colonnes red
 - Supabase Auth et PostgreSQL.
 - JSON Schema comme contrat d'échange ; validation TypeScript à la frontière de l'API.
 - Les cartes Open Graph chargent localement `assets/fonts/Roboto-Regular.ttf.base64` depuis le runtime Node ; le fichier TTF est distribué sous licence Apache 2.0 avec sa notice dans `licenses/Roboto-Apache-2.0.txt`. Le décodage en mémoire évite un appel réseau au moment de générer les aperçus.
-- GitHub Actions pour les contrôles des PR, le build OpenNext, le déploiement Cloudflare et le smoke test HTTP.
+- GitHub Actions pour les contrôles des PR, le build OpenNext, les previews Cloudflare, le déploiement Cloudflare et les smoke tests HTTP.
 - Cloudflare Workers avec OpenNext pour l'hébergement de production.
-- Vercel est conservé temporairement comme retour arrière ; les previews restent désactivées.
+- Vercel est conservé temporairement comme retour arrière ; ses previews restent désactivées.
 
 ## 10. Déploiement et retour arrière
 
 - Cloudflare Workers est la cible de production. Le workflow `.github/workflows/cloudflare.yml` construit avec OpenNext, déploie uniquement depuis `main` et vérifie ensuite que l'URL du Worker renvoie une page HTML.
+- Pour chaque PR issue du dépôt courant, le même workflow exécute `wrangler preview` après le build, publie l'URL dans la PR, vérifie le rendu SSR et le catalogue public, puis supprime l'environnement à la fermeture. Les PR de forks ne reçoivent pas le jeton Cloudflare.
+- Les previews utilisent le sous-domaine `workers.dev` et sont publiques. Cloudflare ajoute `X-Robots-Tag: noindex`. La configuration Preview fixe `NAMESIA_DEPLOYMENT_ENVIRONMENT=preview` ; la page et toutes les routes d'administration sont désactivées, les seules lectures disponibles concernent le catalogue publié.
 - Le workflow `.github/workflows/ci.yml` contrôle les tests, TypeScript et le build Next.js ; les deux workflows sont indépendants de Vercel.
 - Vercel reste temporairement configuré comme retour arrière jusqu'à la validation des parcours SSR, Route Handlers, OTP, cookies, catalogue, sitemap et images Open Graph sur Cloudflare, puis jusqu'à la bascule du domaine public.
 - Les previews Vercel restent désactivées et le script `scripts/vercel-ignore-build.sh` limite le déploiement résiduel à `main` tant que le projet existe.
