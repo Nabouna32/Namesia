@@ -5,7 +5,7 @@ import { readFile } from "node:fs/promises";
 const wrangler = JSON.parse(await readFile(new URL("../wrangler.jsonc", import.meta.url), "utf8"));
 const adminAuth = await readFile(new URL("../lib/admin-auth.ts", import.meta.url), "utf8");
 const adminPage = await readFile(new URL("../app/admin/page.tsx", import.meta.url), "utf8");
-const workflow = await readFile(new URL("../.github/workflows/cloudflare-preview.yml", import.meta.url), "utf8");
+const workflow = await readFile(new URL("../.github/workflows/cloudflare.yml", import.meta.url), "utf8");
 
 test("les previews Cloudflare ont un environnement distinct de la production", () => {
   assert.equal(wrangler.vars.NAMESIA_DEPLOYMENT_ENVIRONMENT, "production");
