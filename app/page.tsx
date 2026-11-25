@@ -46,7 +46,10 @@ export default async function HomePage() {
         <div className="container">
           <div className="section-heading">
             <div><span className="eyebrow">À explorer</span><h2>Les prénoms à découvrir</h2></div>
-            <Link className="text-link" href="/prenoms">Tous les prénoms <Icon name="arrow-up-right" size={18} /></Link>
+            <div className="section-actions">
+              <Link className="text-link" href="/tendances">Tendances 2025 <Icon name="arrow-up-right" size={18} /></Link>
+              <Link className="text-link" href="/prenoms">Tous les prénoms <Icon name="arrow-up-right" size={18} /></Link>
+            </div>
           </div>
           <FeaturedNames names={featuredNames} />
           {names.length === 0 && <p className="empty-state">Le catalogue sera bientôt disponible.</p>}
