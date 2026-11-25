@@ -1,6 +1,7 @@
 import { defineConfig } from "@playwright/test";
 
 const baseURL = process.env.PLAYWRIGHT_BASE_URL;
+const diagnosticsEnabled = process.env.PLAYWRIGHT_DIAGNOSTICS === "true";
 
 if (!baseURL) {
   throw new Error("PLAYWRIGHT_BASE_URL est requis pour auditer une Workers Preview.");
@@ -21,8 +22,8 @@ export default defineConfig({
     locale: "fr-FR",
     colorScheme: "light",
     reducedMotion: "reduce",
-    screenshot: "off",
+    screenshot: diagnosticsEnabled ? "only-on-failure" : "off",
     video: "off",
-    trace: "off"
+    trace: diagnosticsEnabled ? "retain-on-failure" : "off"
   }
 });
