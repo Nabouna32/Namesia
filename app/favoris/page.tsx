@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { FavoritesList } from "@/components/features/favorites/FavoritesList";
-import { lireNombreVisible, type TriFavoris } from "@/lib/navigation-names";
+import { lireNombreVisible, type TriFavoris } from "@/lib/navigation-prenoms";
 import { getNamesIndex } from "@/lib/names";
 
 export const dynamic = "force-dynamic";
