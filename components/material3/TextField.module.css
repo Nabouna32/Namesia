@@ -19,7 +19,7 @@
   background: var(--md-sys-color-surface);
 }
 
- .multiline .label {
+.multiline .label {
   top: 8px;
   transform: none;
 }
