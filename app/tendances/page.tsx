@@ -14,6 +14,8 @@ import styles from "./trends.module.css";
 const pageTitle = "Les prénoms les plus donnés en France en 2025";
 const pageDescription = "Le classement officiel des dix prénoms féminins et masculins les plus attribués en France en 2025, publié par l’Insee.";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: pageTitle,
   description: pageDescription,
