@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
-import { getPrenomsSitemap } from "@/lib/prenoms";
+import { getNamesSitemap } from "@/lib/names";
 import { siteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const prenoms = await getPrenomsSitemap();
+  const prenoms = await getNamesSitemap();
 
   return [
     { url: new URL("/", siteUrl).toString(), changeFrequency: "weekly", priority: 1 },
