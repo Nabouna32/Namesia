@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/material3/Button";
+import { IconButton } from "@/components/material3/IconButton";
 import { Snackbar } from "@/components/material3/Snackbar";
 import { Icon } from "@/components/material3/Icon";
 import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
@@ -12,9 +13,21 @@ type Props = { slug: string; name: string };
 export function FavoriteButton({ slug, name }: Props) {
   const { slugs, pret, erreur, basculer } = useFavorites();
   const [limiteAtteinte, setLimiteAtteinte] = useState(false);
+  const [ajoutAnnulable, setAjoutAnnulable] = useState(false);
   const selected = slugs.includes(slug);
   const action = selected ? "Retirer des favoris" : "Ajouter aux favoris";
   const label = pret ? `${action} : ${name}` : `Chargement des favoris pour ${name}`;
+
+  function basculerFavori() {
+    const resultat = basculer(slug);
+    setLimiteAtteinte(resultat === "limite");
+    setAjoutAnnulable(resultat === "ajoute");
+  }
+
+  function annulerAjout() {
+    if (slugs.includes(slug)) basculer(slug);
+    setAjoutAnnulable(false);
+  }
 
   return (
     <div className={styles.container}>
@@ -23,11 +36,20 @@ export function FavoriteButton({ slug, name }: Props) {
         aria-label={label}
         aria-pressed={selected}
         disabled={!pret}
-        onClick={() => setLimiteAtteinte(basculer(slug) === "limite")}
+        onClick={basculerFavori}
       >
         <Icon name={selected ? "favorite-filled" : "favorite"} size={18} />
         {pret ? action : "Chargement…"}
       </Button>
+      {ajoutAnnulable && (
+        <Snackbar
+          severity="success"
+          action={<Button variant="text" onClick={annulerAjout}>Annuler</Button>}
+          dismissAction={<IconButton label="Fermer le message" onClick={() => setAjoutAnnulable(false)}><Icon name="close" size={24} /></IconButton>}
+        >
+          {name} ajouté aux favoris.
+        </Snackbar>
+      )}
       {limiteAtteinte && (
         <Snackbar severity="warning">
           Vous avez atteint la limite de 10 000 favoris. Retirez-en un avant d’en ajouter un autre.
