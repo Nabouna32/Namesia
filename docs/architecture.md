@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 3.98
+- **Version :** 3.99
 - **Mis à jour :** 2026-11-25
 
 ## Structure de la page
@@ -149,18 +149,18 @@ Les anciennes tables documentaires, l'ancienne colonne JSONB et les colonnes red
 ## 9. Stack
 
 - Next.js App Router, React et TypeScript.
-- Runtime Node.js 26.13.1, défini dans `.nvmrc`, appliqué par GitHub Actions et destiné à être aligné sur le runtime Vercel 26.x ; les types Node 26 suivent cette branche et npm refuse les runtimes incompatibles via `engine-strict`.
+- Runtime Node.js 26.13.1, défini dans `.nvmrc` et vérifié par GitHub Actions ; les types Node 26 suivent cette branche et npm refuse les runtimes incompatibles via `engine-strict`.
 - Supabase Auth et PostgreSQL.
 - JSON Schema comme contrat d'échange ; validation TypeScript à la frontière de l'API.
 - Les cartes Open Graph chargent localement `assets/fonts/Roboto-Regular.ttf.base64` depuis le runtime Node ; le fichier TTF est distribué sous licence Apache 2.0 avec sa notice dans `licenses/Roboto-Apache-2.0.txt`. Le décodage en mémoire évite un appel réseau au moment de générer les aperçus.
-- GitHub Actions pour les contrôles des PR.
-- Vercel est réservé aux déploiements de production.
+- GitHub Actions pour les contrôles des PR, le build OpenNext, le déploiement Cloudflare et le smoke test HTTP.
+- Cloudflare Workers avec OpenNext pour l'hébergement de production.
+- Vercel est conservé temporairement comme retour arrière ; les previews restent désactivées.
 
-## 10. Déploiement et quota
+## 10. Déploiement et retour arrière
 
-- Le paramètre Vercel `previewDeploymentsDisabled` est activé.
-- `ssoProtection.deploymentType` vaut `preview` : les URL de production ne sont pas protégées par Vercel Authentication ; les previews, désactivées, resteraient protégées si elles étaient réactivées.
-- `vercel.json` appelle `scripts/vercel-ignore-build.sh` avant un build.
-- Le script retourne `1` uniquement pour une production issue de `main` ; il retourne `0` dans tous les autres cas, ce qui ignore le build.
-- La politique est testée dans GitHub Actions pour les combinaisons production/preview et main/branche.
-- Aucune Preview, commande CLI ou création de déploiement par API n'est autorisée.
+- Cloudflare Workers est la cible de production. Le workflow `.github/workflows/cloudflare.yml` construit avec OpenNext, déploie uniquement depuis `main` et vérifie ensuite que l'URL du Worker renvoie une page HTML.
+- Le workflow `.github/workflows/ci.yml` contrôle les tests, TypeScript et le build Next.js ; les deux workflows sont indépendants de Vercel.
+- Vercel reste temporairement configuré comme retour arrière jusqu'à la validation des parcours SSR, Route Handlers, OTP, cookies, catalogue, sitemap et images Open Graph sur Cloudflare, puis jusqu'à la bascule du domaine public.
+- Les previews Vercel restent désactivées et le script `scripts/vercel-ignore-build.sh` limite le déploiement résiduel à `main` tant que le projet existe.
+- La suppression du projet Vercel intervient seulement après confirmation que le domaine public, les DNS et les éventuelles intégrations ne dépendent plus de ce projet.
