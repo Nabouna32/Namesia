@@ -437,6 +437,7 @@ test("Checkbox porte le contrat AndroidX dans le comparateur sans contrôle conc
   assert.match(checkboxStyles, /border-radius: 25%/);
   assert.match(checkboxStyles, /\.root:has\(\.input:focus-visible\)::after/);
   assert.match(checkboxStyles, /pressed-state-layer-opacity/);
+  assert.match(checkboxStyles, /transition: color var\(--md-sys-motion-duration-short3\)/);
   assert.match(checkboxStyles, /prefers-reduced-motion: reduce/);
   assert.doesNotMatch(checkboxStyles, /box-shadow/);
   assert.match(checkboxStyles, /focus-visible/);
