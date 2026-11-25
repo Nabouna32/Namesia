@@ -52,7 +52,7 @@ test("IconButton conserve la sémantique d'une action M3, pas d'un contrôle tog
   assert.match(iconButton, /aria-label=\{label\}/);
   assert.doesNotMatch(iconButton, /pressed|aria-pressed/);
   assert.match(iconButton, /IconButton\.module\.css/);
-  assert.doesNotMatch(iconButton, /Button\.module\.css/);
+  assert.doesNotMatch(iconButton, /from "\.\/Button\.module\.css"/);
   assert.match(iconButtonStyles, /min-width: 48px/);
   assert.match(iconButtonStyles, /min-height: 48px/);
   assert.match(iconButtonStyles, /inset: 4px/);
