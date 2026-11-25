@@ -10,6 +10,7 @@ import { categoryTone } from "@/lib/category-color";
 import { RecordVisit } from "@/components/features/history/RecordVisit";
 import { RelatedNames } from "@/components/features/catalog/RelatedNames";
 import { ShareProfile } from "@/components/features/sharing/ShareLink";
+import { NamePopularityCard } from "@/components/features/popularity/NamePopularityCard";
 import styles from "@/components/features/profile/ProfileActions.module.css";
 import { getAutresPrenomsIndexDuGenre, getPrenom } from "@/lib/prenoms";
 import { jsonLd } from "@/lib/json-ld";
@@ -137,6 +138,8 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
             </div>
             <div className="profile-monogram" aria-hidden="true">{prenom.lettre}</div>
           </header>
+
+          <NamePopularityCard slug={prenom.slug} name={prenom.nom} gender={prenom.genre} />
 
           {aDesRubriques && (
             <nav className="profile-toc" aria-label="Sommaire de la fiche">
