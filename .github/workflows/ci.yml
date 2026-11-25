@@ -43,6 +43,10 @@ jobs:
         id: audit
         run: npm audit --omit=dev --audit-level=high
         continue-on-error: true
+      - name: Diagnostiquer les dépendances de développement
+        id: audit_full
+        run: npm audit --audit-level=high
+        continue-on-error: true
       - name: Vérifier les sources Material 3 épinglées
         run: node scripts/verify-design-sources.mjs
       - name: Tester les contrats locaux
@@ -65,11 +69,12 @@ jobs:
         if: always()
         env:
           AUDIT_OUTCOME: ${{ steps.audit.outcome }}
+          AUDIT_FULL_OUTCOME: ${{ steps.audit_full.outcome }}
           TEST_OUTCOME: ${{ steps.tests.outcome }}
           TYPECHECK_OUTCOME: ${{ steps.typecheck.outcome }}
           BUILD_OUTCOME: ${{ steps.build.outcome }}
         run: |
-          printf 'Audit production : %s\nTests : %s\nTypes : %s\nBuild : %s\n' "$AUDIT_OUTCOME" "$TEST_OUTCOME" "$TYPECHECK_OUTCOME" "$BUILD_OUTCOME"
+          printf 'Audit production : %s\nAudit complet (diagnostic non bloquant) : %s\nTests : %s\nTypes : %s\nBuild : %s\n' "$AUDIT_OUTCOME" "$AUDIT_FULL_OUTCOME" "$TEST_OUTCOME" "$TYPECHECK_OUTCOME" "$BUILD_OUTCOME"
           if [[ "$AUDIT_OUTCOME" != "success" || "$TEST_OUTCOME" != "success" || "$TYPECHECK_OUTCOME" != "success" || "$BUILD_OUTCOME" != "success" ]]; then
             exit 1
           fi
