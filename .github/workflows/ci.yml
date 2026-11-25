@@ -15,6 +15,7 @@ on:
 
 jobs:
   quality:
+    name: Vérifier le code et les dépendances
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -38,8 +39,6 @@ jobs:
         run: test "$(node --version)" = "v$(tr -d '\r\n' < .nvmrc)"
       - name: Installer les dépendances
         run: npm ci --no-audit --no-fund
-      - name: Installer les outils Cloudflare épinglés
-        run: npm install --no-save --package-lock=false --no-audit --no-fund @opennextjs/cloudflare@1.20.18 wrangler@4.148.0
       - name: Auditer les dépendances de production
         id: audit
         run: npm audit --omit=dev --audit-level=high

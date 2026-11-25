@@ -10,7 +10,6 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
 
 concurrency:
   group: cloudflare-${{ github.event.pull_request.number || github.ref }}
@@ -18,6 +17,9 @@ concurrency:
 
 jobs:
   build:
+    name: Construire, prévisualiser et déployer
+    outputs:
+      preview_url: ${{ steps.preview.outputs.preview_url }}
     if: github.event_name != 'pull_request' || (github.event.action != 'closed' && (github.event.action != 'labeled' || github.event.label.name == 'diagnostic-playwright'))
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -33,34 +35,37 @@ jobs:
           cache: npm
       - name: Installer les dépendances du projet
         run: npm ci --no-audit --no-fund
-      - name: Installer les outils Cloudflare épinglés
-        run: npm install --no-save --package-lock=false --no-audit --no-fund @opennextjs/cloudflare@1.20.18 wrangler@4.148.0
       - name: Charger la configuration publique
         shell: bash
+        env:
+          SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://namesia.nabouna.workers.dev' }}
         run: |
           set -euo pipefail
           set -a
           source .env.example
           set +a
-          echo "NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL || 'https://namesia.nabouna.workers.dev' }}" >> "$GITHUB_ENV"
-          echo "NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL" >> "$GITHUB_ENV"
-          echo "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY" >> "$GITHUB_ENV"
+          {
+            echo "NEXT_PUBLIC_SITE_URL=$SITE_URL"
+            echo "NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL"
+            echo "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
+          } >> "$GITHUB_ENV"
       - name: Construire l’application pour Cloudflare
         run: ./node_modules/.bin/opennextjs-cloudflare build
       - name: Créer ou mettre à jour la Preview Cloudflare
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && vars.CLOUDFLARE_DEPLOY_ENABLED == 'true'
         id: preview
         shell: bash
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -euo pipefail
-          output="$(./node_modules/.bin/wrangler preview --name "pr-${{ github.event.pull_request.number }}" --json)"
+          output="$(./node_modules/.bin/wrangler preview --name "pr-$PR_NUMBER" --json)"
           printf '%s\n' "$output"
           preview_json="$(printf '%s\n' "$output" | sed -n '/^{/,$p')"
           preview_url="$(printf '%s\n' "$preview_json" | jq -er '.preview.urls[0]')"
           echo "preview_url=$preview_url" >> "$GITHUB_OUTPUT"
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       - name: Vérifier la Preview Cloudflare
         if: steps.preview.outputs.preview_url != ''
         env:
@@ -79,9 +84,6 @@ jobs:
           grep -q 'Administration indisponible' "$admin"
           admin_status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' --request POST "$PREVIEW_URL/api/admin/prenoms")"
           test "$admin_status" = "403"
-      - name: Installer Playwright et axe-core
-        if: steps.preview.outputs.preview_url != ''
-        run: npm install --no-save --package-lock=false --no-audit --no-fund @playwright/test@1.65.1 @axe-core/playwright@4.14.0
       - name: Restaurer le cache Chromium
         if: steps.preview.outputs.preview_url != ''
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
@@ -105,13 +107,6 @@ jobs:
           path: test-results/
           if-no-files-found: ignore
           retention-days: 1
-      - name: Publier l’URL de Preview dans la PR
-        if: steps.preview.outputs.preview_url != ''
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
-        run: gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --body "Preview Cloudflare — $PREVIEW_URL"
       - name: Déployer la production Cloudflare
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') && vars.CLOUDFLARE_DEPLOY_ENABLED == 'true'
         run: ./node_modules/.bin/opennextjs-cloudflare deploy
@@ -175,7 +170,24 @@ jobs:
             status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' --request "$method" "$SITE_URL/api/admin/prenoms")"
             test "$status" = "401"
           done
+  comment-preview:
+    name: Publier l'URL de Preview
+    needs: build
+    if: github.event_name == 'pull_request' && needs.build.outputs.preview_url != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # Seul ce job écrit un commentaire de Preview dans la PR.
+    permissions:
+      pull-requests: write # Publier le lien de Preview dans la PR.
+    steps:
+      - name: Publier l’URL de Preview dans la PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PREVIEW_URL: ${{ needs.build.outputs.preview_url }}
+        run: gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --body "Preview Cloudflare — $PREVIEW_URL"
   cleanup:
+    name: Nettoyer la Preview Cloudflare
     if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -189,14 +201,18 @@ jobs:
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version-file: .nvmrc
-      - name: Installer Wrangler épinglé
-        run: npm install --no-save --package-lock=false --no-audit --no-fund wrangler@4.148.0
+      - name: Installer les dépendances verrouillées
+        run: npm ci --no-audit --no-fund
       - name: Supprimer la Preview Cloudflare
         shell: bash
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -euo pipefail
           set +e
-          output="$(./node_modules/.bin/wrangler preview delete --name "pr-${{ github.event.pull_request.number }}" --skip-confirmation 2>&1)"
+          output="$(./node_modules/.bin/wrangler preview delete --name "pr-$PR_NUMBER" --skip-confirmation 2>&1)"
           status=$?
           set -e
           printf '%s\n' "$output"
@@ -212,6 +228,3 @@ jobs:
 
           echo "Échec inattendu lors de la suppression de la Preview Cloudflare."
           exit "$status"
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
