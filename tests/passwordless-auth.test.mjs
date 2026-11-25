@@ -24,8 +24,6 @@ const applicationSource = (
 test("l'application conserve une authentification passwordless par lien OTP", () => {
   assert.match(applicationSource, /signInWithOtp/);
   assert.match(applicationSource, /shouldCreateUser: false/);
-  assert.doesNotMatch(
-    applicationSource,
-    /\.auth\.signInWithPassword\s*\(|\.auth\.signUp\s*\(|\.auth\.updateUser\s*\(\s*\{[\s\S]{0,200}\bpassword\s*:/
-  );
+  // Interdire les méthodes par leur nom, même si le client Supabase est renommé localement.
+  assert.doesNotMatch(applicationSource, /\b(?:signInWithPassword|signUp|updateUser)\b/);
 });
