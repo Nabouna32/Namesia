@@ -96,7 +96,7 @@ test("les extensions Namesia ne se font pas passer pour des rôles M3", () => {
   }
 });
 
-test("le CSS serveur adapte le thème et la barre du navigateur sans hydratation", () => {
+test("le CSS serveur adapte le thème et la barre du navigateur sans hydratation", async () => {
   assert.match(layout, /materialThemeCss/);
   assert.match(layout, /materialThemeViewportColors/);
   assert.match(theme, /getMaterialThemeTokens\(false\)/);
