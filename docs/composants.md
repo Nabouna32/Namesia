@@ -25,7 +25,6 @@ components/
     InputChip.tsx
     Snackbar.tsx
     TopAppBar.tsx
-    MaterialThemeProvider.tsx
     Icon.tsx
     NavigationBar.tsx
     NavigationRail.tsx
@@ -91,7 +90,6 @@ Les primitives de présentation sont implémentées une seule fois dans `compone
 | `TopAppBar` | `material3/TopAppBar.tsx` | Barre supérieure du shell, marque et titre secondaire ; dimensions et couleurs centralisées dans le système M3. |
 | `NavigationBar` | `material3/NavigationBar.tsx` | Navigation de premier niveau compacte, `NavigationBarTokens.TallContainerHeight = 80.dp`, destinations, indicateur et libellés `label-medium`. |
 | `NavigationRail` | `material3/NavigationRail.tsx` | Même navigation de premier niveau sur fenêtres medium/expanded, `NavigationRail` de 80 dp et libellés `label-medium`. |
-| `MaterialThemeProvider` | `components/material3/MaterialThemeProvider.tsx` | Synchronise les schémas Fidelity/Rainbow calculés côté serveur et les changements de préférence système. |
 | `Icon` | `components/material3/Icon.tsx` | Registre local des tracés Google Material Symbols Rounded 400 ; le pictogramme masculin utilise un cercle et une flèche équilibrés sur la même grille ; les contrôles interactifs restent portés par Button ou IconButton. |
 
 ### Contrôles Web natifs
