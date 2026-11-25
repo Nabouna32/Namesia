@@ -72,7 +72,7 @@ test("la page d'erreur ne prétend pas transmettre une erreur journalisée local
 });
 
 test("la vitrine n'attribue aucune couleur selon l'index du prénom", () => {
-  assert.match(featured, /prenoms\.map\(\(prenom\)/);
+  assert.match(featured, /names\.map\(\(name\)/);
   assert.doesNotMatch(featured, /featured-\$\{index/);
   assert.doesNotMatch(featured, /featured-\d/);
   assert.doesNotMatch(globalStyles, /\.featured-[123]\b/);
