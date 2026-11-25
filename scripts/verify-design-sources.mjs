@@ -203,6 +203,6 @@ async function verifySourcesWithLimit(items, concurrency) {
 
 const verifiedSources = [...sources, ...additionalAndroidxSources];
 const androidxSourceCount = verifiedSources.filter(({ name }) => name.startsWith("AndroidX ")).length;
-assert.equal(androidxSourceCount, 39, "Le registre doit vérifier exactement les 37 fichiers AndroidX documentés");
+assert.equal(androidxSourceCount, 39, "Le registre doit vérifier exactement les 39 fichiers AndroidX documentés");
 
 await verifySourcesWithLimit(verifiedSources, 4);
