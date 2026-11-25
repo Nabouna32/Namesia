@@ -68,7 +68,7 @@ Cloudflare Workers est l'hébergement de production : GitHub Actions construit l
 
 Les PR internes disposent d'une Workers Preview Cloudflare dédiée (`pr-<numéro>`). L'URL est publiée dans la conversation de la PR ; le workflow vérifie le rendu HTML, le catalogue public et l'en-tête `noindex`, puis supprime la Preview lorsque la PR est fermée. Les PR provenant de forks ne reçoivent jamais le jeton Cloudflare. Les previews utilisent uniquement les lectures publiques du catalogue ; l'interface et les routes d'administration y sont désactivées. Elles sont publiques sur `workers.dev`, mais Cloudflare ajoute `X-Robots-Tag: noindex`.
 
-Vercel est conservé temporairement comme solution de retour arrière pendant la validation fonctionnelle et la bascule du domaine ; ses déploiements Preview restent désactivés. Ne pas supprimer le projet Vercel avant la validation des parcours applicatifs sur Cloudflare et la confirmation que le domaine public ne dépend plus de Vercel.
+Cloudflare Workers est l'unique hébergement de production ; le sous-domaine `namesia.nabouna.workers.dev` est l'origine publique canonique actuelle. GitHub Actions assure les builds, les contrôles et les déploiements. Les Previews Cloudflare des PR internes sont isolées, limitées au catalogue public et automatiquement supprimées à la fermeture de la PR. Aucun déploiement Vercel n'est utilisé.
 
 ## Règles éditoriales
 
