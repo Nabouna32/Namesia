@@ -33,17 +33,17 @@
 }
 
 .metric span,
-.source {
+.popularitySource {
   color: var(--md-sys-color-on-surface-variant);
   font-size: var(--md-sys-typescale-body-small-size);
   line-height: var(--md-sys-typescale-body-small-line-height);
 }
 
-.source {
+.popularitySource {
   margin: 0;
 }
 
-.source a {
+.popularitySource a {
   color: var(--md-sys-color-primary);
   text-decoration: underline;
   text-underline-offset: 3px;
