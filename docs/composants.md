@@ -13,6 +13,8 @@ styles/
     tokens.css               # Échelle typographique, formes, mouvement et états M3
 components/
   material3/                 # Implémentations React/HTML des composants M3
+    AlertDialog.tsx
+    AlertDialog.module.css
     Button.tsx
     Card.tsx
     Checkbox.tsx
@@ -76,6 +78,7 @@ Les primitives de présentation sont implémentées une seule fois dans `compone
 
 | Nom officiel | Fichier | Contrat et périmètre Web |
 |---|---|---|
+| `AlertDialog` | `material3/AlertDialog.tsx` | Dialogue de confirmation construit sur le vrai élément HTML `dialog` et son top layer modal : fermeture par Échap ou clic sur le scrim, focus modal et retour vers le déclencheur gérés par le navigateur, nom et description accessibles. Largeur 280–560 dp, surface `surface-container-high`, forme `corner-extra-large`, élévation AndroidX `Level3`, titre `headline-small`, texte `body-medium` et actions `TextButton`. Utilisé pour confirmer la publication publique d’une fiche. |
 | `Button` | `material3/Button.tsx` | Variantes `filled`, `tonal`, `outlined`, `text`. Élément natif `button` pour une action et lien Next.js pour une destination. Son API TypeScript discriminée interdit `disabled`, `onClick` et `aria-pressed` sur un lien : un lien désactivé n’a pas de sémantique HTML native et ne doit jamais être simulé par `aria-disabled`. Cible 48 px, `ButtonSmallTokens.ContainerHeight = 40.dp`, largeur minimale 58 dp, typographie `label-large`, contenu désactivé à 38 % de `on-surface` et conteneur Filled/Tonal à 10 % de `on-surface`, conformément à AndroidX. |
 | `Card` | `material3/Card.tsx` | Surfaces AndroidX `elevated`, `filled` et `outlined`. La prop `as` est obligatoire : chaque usage choisit explicitement son élément HTML sémantique, sans racine `div` implicite. L'état `interactive` est lui aussi explicite. |
 | `Checkbox` | `material3/Checkbox.tsx` | Port Web de Checkbox AndroidX : input natif contrôlé, indicateur de 18 dp, state layer de 40 dp, cible tactile de 62 px portée par le label parent, forme AndroidX `RoundedCornerShape(2.dp)`, couleurs checked/unchecked/disabled et focus M3. Le parent `label` fournit le nom accessible. |
@@ -130,7 +133,7 @@ Toute nouvelle page doit composer le shell partagé, les primitives officielles 
 
 ## Conventions d'implémentation
 
-- Employer exactement les noms Material 3 pour les composants correspondants : `Button`, `IconButton`, `SearchBar`, `FilterChip`, `InputChip`, `Checkbox`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`, `Icon`, `Card`, `TextField`.
+- Employer exactement les noms Material 3 pour les composants correspondants : `AlertDialog`, `Button`, `IconButton`, `SearchBar`, `FilterChip`, `InputChip`, `Checkbox`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`, `Icon`, `Card`, `TextField`.
 - Ne pas créer de traduction, alias, wrapper ou fallback parallèle pour ces composants.
 - Garder les éléments HTML natifs adaptés : `button`, `a`, `input`, `select`, `nav`, `header`, titres et listes sémantiques. Ne pas remplacer leur sémantique par des `div` et des rôles ARIA redondants.
 - Les CSS Modules de `components/material3/` consomment directement les tokens `--md-sys-*` et les seules extensions `--namesia-*` déclarées dans [le système de design](design.md).

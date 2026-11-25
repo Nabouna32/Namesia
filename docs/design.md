@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.56
+- **Version :** 4.57
 - **Mis à jour :** 2026-11-25
 
 ## 1. Direction
@@ -80,7 +80,7 @@ Ces seuils suivent la logique des window size classes Android : la barre convien
 
 ## 5. Bibliothèque de composants
 
-L'inventaire canonique est [Bibliothèque Material 3](composants.md). Les contrôles de présentation portent directement les noms AndroidX (`Button`, `IconButton`, `Checkbox`, `SearchBar`, `FilterChip`, `InputChip`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`, `Icon`, `Card`, `TextField`) et sont implémentés dans `components/material3/`. Les champs de recherche utilisent `SearchBar` replié : 56 dp, forme `full`, surface `surface-container-high` et typographie `body-large`. Le libellé HTML reste présent ; l'effacement utilise `IconButton` et le contrôle natif de suppression du navigateur est masqué pour éviter une action concurrente. Les fonctions métier `FavoriteButton` et `ComparisonSelection` résident dans `components/features/` et composent les composants M3 sans les redéfinir. Les cartes de découverte sont des surfaces de navigation sobres : initiale, prénom, pictogramme de genre et flèche. Le résultat de la découverte aléatoire présente le même pictogramme à côté du prénom tiré au sort. Les pictogrammes sont centralisés dans `GenreIcon` et `lib/genre-icons.ts`, sans libellé visible redondant ; leur nom reste accessible aux technologies d'assistance. Les actions de favori et d'entrée dans le comparateur sont regroupées sur la fiche du prénom, où elles bénéficient du contexte complet. Le comparateur compose `Checkbox` pour sélectionner plusieurs prénoms ; l'input natif est encapsulé par le composant M3 et ne porte aucun style local de page. Les filtres de genre utilisent `FilterChip` icon-only avec nom accessible ; le filtre d'initiale conserve ses libellés. Le tri reste un élément `select` natif, habillé avec les tokens M3 ; aucun faux menu n'est créé.
+L'inventaire canonique est [Bibliothèque Material 3](composants.md). Les contrôles de présentation portent directement les noms AndroidX (`AlertDialog`, `Button`, `IconButton`, `Checkbox`, `SearchBar`, `FilterChip`, `InputChip`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`, `Icon`, `Card`, `TextField`) et sont implémentés dans `components/material3/`. Les champs de recherche utilisent `SearchBar` replié : 56 dp, forme `full`, surface `surface-container-high` et typographie `body-large`. Le libellé HTML reste présent ; l'effacement utilise `IconButton` et le contrôle natif de suppression du navigateur est masqué pour éviter une action concurrente. Les fonctions métier `FavoriteButton` et `ComparisonSelection` résident dans `components/features/` et composent les composants M3 sans les redéfinir. Les cartes de découverte sont des surfaces de navigation sobres : initiale, prénom, pictogramme de genre et flèche. Le résultat de la découverte aléatoire présente le même pictogramme à côté du prénom tiré au sort. Les pictogrammes sont centralisés dans `GenreIcon` et `lib/genre-icons.ts`, sans libellé visible redondant ; leur nom reste accessible aux technologies d'assistance. Les actions de favori et d'entrée dans le comparateur sont regroupées sur la fiche du prénom, où elles bénéficient du contexte complet. Le comparateur compose `Checkbox` pour sélectionner plusieurs prénoms ; l'input natif est encapsulé par le composant M3 et ne porte aucun style local de page. Les filtres de genre utilisent `FilterChip` icon-only avec nom accessible ; le filtre d'initiale conserve ses libellés. Le tri reste un élément `select` natif, habillé avec les tokens M3 ; aucun faux menu n'est créé.
 
 `Card` centralise les variantes `elevated`, `filled` et `outlined` des surfaces de contenu. Les champs de formulaire utilisent `TextField` avec une variante explicite ; les sélecteurs spécialisés restent natifs. Les primitives communes portent les interactions et états transversaux ; les composants métier composent ces primitives et conservent leur logique propre. Les actions de l'administration et des parcours visiteurs utilisent les mêmes variantes de bouton Fidelity ; aucune classe globale de bouton ne constitue une seconde source de style. Les variantes des contrôles utilisent les rôles Fidelity. Une règle de style locale n'est pas une nouvelle primitive.
 
@@ -93,7 +93,8 @@ Les composants doivent partager les mêmes rôles, formes et interactions :
 - chips de filtre et de suggestion ;
 - navigation bar, navigation rail et barre supérieure ;
 - notifications via `Snackbar` ;
-- dialogues, menus, feuilles et boutons flottants uniquement lorsqu'un parcours utilisateur réel les justifie. Ils ne font pas partie de la bibliothèque actuelle et ne doivent pas être créés par anticipation : le besoin produit, le contrat AndroidX et les états nécessaires doivent être établis avant leur ajout.
+- confirmations nécessitant une décision explicite via `AlertDialog` ;
+- menus, feuilles et boutons flottants uniquement lorsqu'un parcours utilisateur réel les justifie. Ils ne font pas partie de la bibliothèque actuelle et ne doivent pas être créés par anticipation : le besoin produit, le contrat AndroidX et les états nécessaires doivent être établis avant leur ajout.
 
 États attendus : repos, survol, focus clavier, pressé, sélectionné, désactivé, chargement, erreur et succès. Les états sont explicites et ne reposent jamais sur la couleur seule.
 

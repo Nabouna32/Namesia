@@ -22,6 +22,8 @@ test("les références de code du contrat M3 pointent vers des révisions immuab
   assert.match(verification, /chromium\.googlesource\.com\/chromium\/src\/\+\/6ffe83723d5b4c60a15ae8c356d51e16a4951b24\/docs\/ui\/android\/dynamic_colors\.md/);
   assert.doesNotMatch(verification, /chromium\.googlesource\.com\/chromium\/src\/\+\/refs\/heads\//);
   assert.match(verification, /CheckboxTokens\.kt/);
+  assert.match(verification, /AlertDialog\.kt/);
+  assert.match(verification, /DialogTokens\.kt/);
   assert.match(verification, /RoundedCornerShape\(2\.0\.dp\)/);
   assert.match(verification, /couche d'état sélectionnée `Primary`/);
   assert.match(verification, /NavigationRailCollapsedTokens\.kt/);
@@ -37,19 +39,19 @@ test("le registre M3 et ses sources de référence restent complets et lisibles"
   assert.equal(verification.includes("\\n|"), false);
   assert.match(sourceVerifier, /const verifiedSources = \[\.\.\.sources, \.\.\.additionalAndroidxSources\]/);
   assert.match(sourceVerifier, /filter\(\(\{ name \}\) => name\.startsWith\("AndroidX "\)\)/);
-  assert.match(sourceVerifier, /assert\.equal\(androidxSourceCount, 35/);
+  assert.match(sourceVerifier, /assert\.equal\(androidxSourceCount, 37/);
   assert.match(sourceVerifier, /verifySourcesWithLimit\(verifiedSources, 4\)/);
   assert.match(sourceVerifier, /attempt < 3/);
   assert.match(sourceVerifier, /AbortSignal\.timeout\(15_000\)/);
   assert.match(sourceVerifier, /lastError = error/);
   assert.match(sourceVerifier, /\[429, 500, 502, 503, 504\]/);
-  for (const source of ["AndroidX Button", "AndroidX Checkbox", "AndroidX Card", "AndroidX SearchBar", "AndroidX TextField", "AndroidX NavigationBar", "AndroidX NavigationRail", "AndroidX Chips", "AndroidX TopAppBar", "AndroidX Snackbar", "Material Web README — état de maintenance", "Material Web roadmap — couverture stable"]) {
+  for (const source of ["AndroidX Button", "AndroidX AlertDialog", "AndroidX Checkbox", "AndroidX Card", "AndroidX SearchBar", "AndroidX TextField", "AndroidX NavigationBar", "AndroidX NavigationRail", "AndroidX Chips", "AndroidX TopAppBar", "AndroidX Snackbar", "Material Web README — état de maintenance", "Material Web roadmap — couverture stable"]) {
     assert.ok(sourceVerifier.includes(source), "Source de référence non vérifiée : " + source);
   }
-  for (const file of ["AppBarSmallTokens.kt", "ElevationTokens.kt", "PaletteTokens.kt", "BaselineButtonTokens.kt", "ButtonSmallTokens.kt", "OutlinedButtonTokens.kt", "TextButtonTokens.kt", "IconButton.kt", "IconButtonTokens.kt", "ElevatedCardTokens.kt", "FilledCardTokens.kt", "OutlinedCardTokens.kt", "TextFieldDefaults.kt", "FilledTextFieldTokens.kt", "OutlinedTextFieldTokens.kt", "InputChipTokens.kt", "NavigationRailCollapsedTokens.kt", "NavigationRailColorTokens.kt", "NavigationRailBaselineItemTokens.kt", "NavigationRailVerticalItemTokens.kt", "SnackbarTokens.kt"]) {
+  for (const file of ["AlertDialog.kt", "DialogTokens.kt", "AppBarSmallTokens.kt", "ElevationTokens.kt", "PaletteTokens.kt", "BaselineButtonTokens.kt", "ButtonSmallTokens.kt", "OutlinedButtonTokens.kt", "TextButtonTokens.kt", "IconButton.kt", "IconButtonTokens.kt", "ElevatedCardTokens.kt", "FilledCardTokens.kt", "OutlinedCardTokens.kt", "TextFieldDefaults.kt", "FilledTextFieldTokens.kt", "OutlinedTextFieldTokens.kt", "InputChipTokens.kt", "NavigationRailCollapsedTokens.kt", "NavigationRailColorTokens.kt", "NavigationRailBaselineItemTokens.kt", "NavigationRailVerticalItemTokens.kt", "SnackbarTokens.kt"]) {
     assert.ok(sourceVerifier.includes(file), "Source AndroidX documentée non vérifiée : " + file);
   }
-  for (const name of ["Button", "Card", "Checkbox", "IconButton", "SearchBar", "TextField", "FilterChip", "InputChip", "Snackbar", "TopAppBar", "NavigationBar", "NavigationRail"]) {
+  for (const name of ["AlertDialog", "Button", "Card", "Checkbox", "IconButton", "SearchBar", "TextField", "FilterChip", "InputChip", "Snackbar", "TopAppBar", "NavigationBar", "NavigationRail"]) {
     assert.ok(components.includes("| `" + name + "` |"), "Composant absent du registre : " + name);
     assert.match(verification, new RegExp("\\| " + name + " \\|"));
   }

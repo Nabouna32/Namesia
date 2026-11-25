@@ -115,6 +115,8 @@ const sources = [
 ];
 
 const additionalAndroidxSources = [
+  ["AlertDialog.kt", ["AlertDialog", "BasicAlertDialog", "DialogMinWidth", "DialogMaxWidth", "AlertDialogFlowRow"]],
+  ["DialogTokens.kt", ["DialogTokens", "SurfaceContainerHigh", "ElevationTokens.Level3", "CornerExtraLarge", "HeadlineSmall", "BodyMedium", "LabelLarge", "IconSize"]],
   ["AppBarSmallTokens.kt", "AppBarSmallTokens"],
   ["PaletteTokens.kt", "PaletteTokens"],
   ["BaselineButtonTokens.kt", "BaselineButtonTokens"],
@@ -137,7 +139,7 @@ const additionalAndroidxSources = [
   ["ElevationTokens.kt", ["ElevationTokens", "Level3", "get() = 6.0.dp"]],
 ].map(([file, marker]) => ({
   name: `AndroidX ${file}`,
-  url: `https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/${file === "IconButton.kt" ? file : `tokens/${file}`}`,
+  url: `https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/${["IconButton.kt", "AlertDialog.kt"].includes(file) ? file : `tokens/${file}`}`,
   markers: Array.isArray(marker) ? marker : [marker],
 }));
 
@@ -189,6 +191,6 @@ async function verifySourcesWithLimit(items, concurrency) {
 
 const verifiedSources = [...sources, ...additionalAndroidxSources];
 const androidxSourceCount = verifiedSources.filter(({ name }) => name.startsWith("AndroidX ")).length;
-assert.equal(androidxSourceCount, 35, "Le registre doit vérifier exactement les 35 fichiers AndroidX documentés");
+assert.equal(androidxSourceCount, 37, "Le registre doit vérifier exactement les 37 fichiers AndroidX documentés");
 
 await verifySourcesWithLimit(verifiedSources, 4);
