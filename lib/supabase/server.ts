@@ -1,13 +1,9 @@
 import { createClient } from "@supabase/supabase-js";
+import { getSupabasePublicConfig } from "@/lib/supabase/config";
 import type { Database } from "@/lib/supabase/database.types";
 
 export function createSupabaseServerClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-
-  if (!url || !key) {
-    throw new Error("La configuration Supabase est incomplète.");
-  }
+  const { url, key } = getSupabasePublicConfig();
 
   return createClient<Database>(url, key, {
     auth: {
