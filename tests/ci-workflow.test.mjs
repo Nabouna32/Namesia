@@ -15,13 +15,18 @@ test("les actions GitHub sont épinglées sur des commits immuables", () => {
   assert.match(agents, /Toutes les actions GitHub.*SHA de commit complet à 40 caractères/);
   assert.match(workflow, /persist-credentials: false/);
   assert.match(workflow, /npm audit --omit=dev --audit-level=high/);
+  assert.match(workflow, /npm audit --audit-level=high/);
   assert.match(workflow, /AUDIT_OUTCOME/);
+  assert.match(workflow, /AUDIT_FULL_OUTCOME/);
 });
 
-test("la CI audite les dépendances de production et bloque sur un audit rouge", () => {
+test("la CI bloque sur un audit de production rouge et expose l'audit complet en diagnostic", () => {
   assert.match(workflow, /id: audit[\s\S]*npm audit --omit=dev --audit-level=high[\s\S]*continue-on-error: true/);
+  assert.match(workflow, /id: audit_full[\s\S]*npm audit --audit-level=high[\s\S]*continue-on-error: true/);
   assert.match(workflow, /AUDIT_OUTCOME: \$\{\{ steps\.audit\.outcome \}\}/);
+  assert.match(workflow, /AUDIT_FULL_OUTCOME: \$\{\{ steps\.audit_full\.outcome \}\}/);
   assert.match(workflow, /if \[\[ "\$AUDIT_OUTCOME" != "success"/);
+  assert.doesNotMatch(workflow, /if \[\[ [^\n]*AUDIT_FULL_OUTCOME/);
 });
 
 test("la CI restaure le cache Next.js avec une action épinglée", () => {
