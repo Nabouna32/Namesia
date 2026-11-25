@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { PrenomIndex } from "@/lib/prenoms";
+import type { NameIndexEntry } from "@/lib/names";
 import { useHistory } from "@/components/features/history/HistoryProvider";
 import styles from "./RecentNames.module.css";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
@@ -10,7 +10,7 @@ import { Button } from "@/components/material3/Button";
 import { IconButton } from "@/components/material3/IconButton";
 import { Card } from "@/components/material3/Card";
 
-export function RecentNames({ prenoms }: { prenoms: PrenomIndex[] }) {
+export function RecentNames({ prenoms }: { prenoms: NameIndexEntry[] }) {
   const { slugs, removeVisit, clearHistory, error } = useHistory();
   if (slugs.length === 0 && !error) return null;
 
@@ -45,15 +45,15 @@ export function RecentNames({ prenoms }: { prenoms: PrenomIndex[] }) {
               {recentNames.map((prenom) => (
                 <article className={styles.card} key={prenom.slug}>
                   <Card as={Link} variant="elevated" interactive className={`name-card ${styles.link}`} href={`/prenoms/${prenom.slug}`}>
-                    <span className="name-initial">{prenom.lettre}</span>
+                    <span className="name-initial">{prenom.initial}</span>
                     <span>
-                      <strong>{prenom.nom}</strong>
-                      <GenderIcon gender={prenom.genre} />
+                      <strong>{prenom.name}</strong>
+                      <GenderIcon gender={prenom.gender} />
                     </span>
                     <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                   </Card>
                   <IconButton
-                    label={`Retirer ${prenom.nom} de l’historique`}
+                    label={`Retirer ${prenom.name} de l’historique`}
                     onClick={() => removeVisit(prenom.slug)}
                   >
                     <span aria-hidden="true"><Icon name="close" size={24} /></span>
