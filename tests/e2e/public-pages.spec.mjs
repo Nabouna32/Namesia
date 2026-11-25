@@ -20,14 +20,16 @@ for (const route of routes) {
     test.setTimeout(120_000);
     const blockingViolations = [];
     const pageErrors = [];
+    const overflowIssues = [];
 
     for (const viewport of viewports) {
-      const page = await browser.newPage({
+      const context = await browser.newContext({
         viewport: { width: viewport.width, height: viewport.height },
         locale: "fr-FR",
         colorScheme: "light",
         reducedMotion: "reduce"
       });
+      const page = await context.newPage();
       page.on("pageerror", (error) => pageErrors.push({
         route: route.path,
         viewport: viewport.name,
@@ -47,7 +49,9 @@ for (const route of routes) {
         const hasHorizontalOverflow = await page.evaluate(
           () => document.documentElement.scrollWidth > document.documentElement.clientWidth
         );
-        expect(hasHorizontalOverflow, `Débordement horizontal sur ${route.path} en ${viewport.name}`).toBe(false);
+        if (hasHorizontalOverflow) {
+          overflowIssues.push({ route: route.path, viewport: viewport.name });
+        }
 
         const outputDirectory = join("artifacts", "visual");
         mkdirSync(outputDirectory, { recursive: true });
@@ -102,10 +106,14 @@ for (const route of routes) {
             }))
         );
       } finally {
-        await page.close();
+        await context.close();
       }
     }
 
+    expect(
+      overflowIssues,
+      `Débordements horizontaux sur ${route.path}`
+    ).toEqual([]);
     expect(
       blockingViolations,
       `Violations axe-core sérieuses ou critiques sur ${route.path}`
