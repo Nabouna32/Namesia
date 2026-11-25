@@ -9,7 +9,7 @@ const sources = [
   {
     name: "AndroidX Checkbox",
     url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/Checkbox.kt",
-    markers: ["Checkbox", "RoundedCornerShape"],
+    markers: ["Checkbox", "RoundedCornerShape", "StateLayerSize", "focusRingShape", "minimumInteractiveComponentSize", "triStateToggleable"],
   },
   {
     name: "AndroidX Card",
@@ -54,7 +54,7 @@ const sources = [
   {
     name: "AndroidX Checkbox tokens",
     url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/tokens/CheckboxTokens.kt",
-    markers: ["get() = 18.0.dp", "get() = 40.0.dp", "UnselectedDisabledContainerOpacity = 0.38f"],
+    markers: ["get() = 18.0.dp", "get() = 40.0.dp", "StateLayerShape", "ShapeKeyTokens.CornerFull", "StateLayerSize", "FocusIndicatorColor", "ColorSchemeKeyTokens.Secondary", "UnselectedFocusOutlineColor", "ColorSchemeKeyTokens.OnSurface", "UnselectedHoverOutlineColor", "UnselectedPressedOutlineColor", "UnselectedDisabledContainerOpacity = 0.38f"],
   },
   {
     name: "AndroidX SearchBar tokens",
