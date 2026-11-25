@@ -470,7 +470,7 @@ test("TextField reprend l’anatomie et les états AndroidX sans style local con
 
 const alertDialog = await readFile(new URL("../components/material3/AlertDialog.tsx", import.meta.url), "utf8");
 const alertDialogStyles = await readFile(new URL("../components/material3/AlertDialog.module.css", import.meta.url), "utf8");
-const adminClient = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
+const alertAdminClient = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
 
 test("AlertDialog reprend le contrat AndroidX et sécurise la publication publique", () => {
   assert.match(alertDialog, /dialog\.showModal\(\)/);
@@ -483,8 +483,8 @@ test("AlertDialog reprend le contrat AndroidX et sécurise la publication publiq
   assert.match(alertDialogStyles, /surface-container-high/);
   assert.match(alertDialogStyles, /corner-extra-large/);
   assert.match(alertDialogStyles, /--md-sys-color-scrim/);
-  assert.match(adminClient, /<AlertDialog/);
-  assert.match(adminClient, /setPublicationDialogOpen\(true\)/);
-  assert.match(adminClient, /Publier cette fiche \?/);
-  assert.doesNotMatch(adminClient, /onClick=\{publier\}/);
+  assert.match(alertAdminClient, /<AlertDialog/);
+  assert.match(alertAdminClient, /setPublicationDialogOpen\(true\)/);
+  assert.match(alertAdminClient, /Publier cette fiche \?/);
+  assert.doesNotMatch(alertAdminClient, /onClick=\{publier\}/);
 });
