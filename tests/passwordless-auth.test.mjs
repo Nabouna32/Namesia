@@ -6,5 +6,6 @@ const adminClient = await readFile(new URL("../app/admin/admin-client.tsx", impo
 
 test("l'administration conserve une authentification passwordless par lien OTP", () => {
   assert.match(adminClient, /signInWithOtp/);
+  assert.match(adminClient, /shouldCreateUser: false/);
   assert.doesNotMatch(adminClient, /signInWithPassword|updateUser|signUp/);
 });
