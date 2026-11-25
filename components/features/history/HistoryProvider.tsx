@@ -11,10 +11,10 @@ import {
   type ReactNode
 } from "react";
 import {
-  ajouterConsultation as addVisit,
-  lireHistoriqueSession as parseHistory,
-  retirerConsultation as removeHistoryVisit
-} from "@/lib/historique-prenoms";
+  addHistoryVisit,
+  parseSessionHistory,
+  removeHistoryVisit
+} from "@/lib/history";
 
 const HISTORY_KEY = "namesia:historique-session:v1";
 
@@ -37,7 +37,7 @@ export function HistoryProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
-      const storedHistory = parseHistory(window.sessionStorage.getItem(HISTORY_KEY));
+      const storedHistory = parseSessionHistory(window.sessionStorage.getItem(HISTORY_KEY));
       historyRef.current = storedHistory;
       setSlugs(storedHistory);
     } catch {
@@ -59,7 +59,7 @@ export function HistoryProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const recordVisit = useCallback((slug: string) => {
-    persist(addVisit(historyRef.current, slug));
+    persist(addHistoryVisit(historyRef.current, slug));
   }, [persist]);
 
   const removeVisit = useCallback((slug: string) => {
