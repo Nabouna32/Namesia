@@ -11,7 +11,7 @@ import { RelatedNames } from "@/components/features/catalog/RelatedNames";
 import { ShareProfile } from "@/components/features/sharing/ShareLink";
 import { NamePopularityCard } from "@/components/features/popularity/NamePopularityCard";
 import styles from "@/components/features/profile/ProfileActions.module.css";
-import { getAutresPrenomsIndexDuGenre, getPrenom, type NameGender } from "@/lib/prenoms";
+import { getOtherNamesByGender, getNameBySlug, type NameGender } from "@/lib/names";
 import { jsonLd } from "@/lib/json-ld";
 import { siteUrl } from "@/lib/site-url";
 import {
@@ -37,16 +37,16 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const prenom = await getPrenom(slug);
+  const prenom = await getNameBySlug(slug);
   return prenom ? {
-    title: prenom.nom,
+    title: prenom.name,
     description: prenom.introduction,
     alternates: { canonical: `/prenoms/${prenom.slug}` },
     openGraph: {
       type: "article",
       locale: "fr_FR",
       siteName: "Namesia",
-      title: prenom.nom,
+      title: prenom.name,
       description: prenom.introduction,
       url: `/prenoms/${prenom.slug}`
     },
@@ -59,12 +59,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function NameProfilePage({ params, searchParams }: Props) {
   const { slug } = await params;
-  const prenom = await getPrenom(slug);
+  const prenom = await getNameBySlug(slug);
   if (!prenom) notFound();
 
-  const [parametresRetour, autresPrenoms] = await Promise.all([
+  const [parametresRetour, autresNames] = await Promise.all([
     searchParams,
-    getAutresPrenomsIndexDuGenre(prenom.genre, prenom.slug)
+    getOtherNamesByGender(prenom.gender, prenom.slug)
   ]);
   const contexteRetour = lireContexteRetourNavigation(parametresRetour);
   const urlRetour = creerUrlRetourNavigation(parametresRetour);
@@ -84,17 +84,17 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
   const ficheData = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: `${prenom.nom} · Namesia`,
+    name: `${prenom.name} · Namesia`,
     description: prenom.introduction,
     url: new URL(`/prenoms/${prenom.slug}`, siteUrl).toString(),
     inLanguage: "fr-FR",
-    about: { "@type": "Thing", name: prenom.nom },
+    about: { "@type": "Thing", name: prenom.name },
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Accueil", item: new URL("/", siteUrl).toString() },
         { "@type": "ListItem", position: 2, name: "Prénoms", item: new URL("/prenoms", siteUrl).toString() },
-        { "@type": "ListItem", position: 3, name: prenom.nom, item: new URL(`/prenoms/${prenom.slug}`, siteUrl).toString() }
+        { "@type": "ListItem", position: 3, name: prenom.name, item: new URL(`/prenoms/${prenom.slug}`, siteUrl).toString() }
       ]
     }
   };
@@ -112,7 +112,7 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
           <ol>
             <li><Link href="/">Accueil</Link></li>
             <li><Link href={urlRetour}>{libelleRetour}</Link></li>
-            <li aria-current="page">{prenom.nom}</li>
+            <li aria-current="page">{prenom.name}</li>
           </ol>
         </nav>
 
@@ -120,25 +120,25 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
           <header className="profile-hero">
             <div className="profile-hero-copy">
               <span className="eyebrow">Découvrir un prénom</span>
-              <h1>{prenom.nom}<span>.</span></h1>
+              <h1>{prenom.name}<span>.</span></h1>
               <p className="profile-lead">{prenom.introduction}</p>
               <div className="profile-tags">
-                <span className="profile-tag"><GenderIcon gender={prenom.genre} /></span>
-                <span className="profile-tag">Lettre {prenom.lettre}</span>
+                <span className="profile-tag"><GenderIcon gender={prenom.gender} /></span>
+                <span className="profile-tag">Lettre {prenom.initial}</span>
               </div>
               <div className={styles.actions}>
-                <FavoriteButton slug={prenom.slug} name={prenom.nom} />
+                <FavoriteButton slug={prenom.slug} name={prenom.name} />
                 <Button href={`/comparer?prenoms=${encodeURIComponent(prenom.slug)}`} variant="outlined">
                   <Icon name="compare-arrows" size={18} />
                   Comparer ce prénom
                 </Button>
               </div>
-              <ShareProfile name={prenom.nom} />
+              <ShareProfile name={prenom.name} />
             </div>
-            <div className="profile-monogram" aria-hidden="true">{prenom.lettre}</div>
+            <div className="profile-monogram" aria-hidden="true">{prenom.initial}</div>
           </header>
 
-          <NamePopularityCard slug={prenom.slug} name={prenom.nom} gender={prenom.genre} />
+          <NamePopularityCard slug={prenom.slug} name={prenom.name} gender={prenom.gender} />
 
           {aDesRubriques && (
             <nav className="profile-toc" aria-label="Sommaire de la fiche">
@@ -213,13 +213,13 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
             </aside>
           </div>
 
-          {autresPrenoms.length > 0 && (
+          {autresNames.length > 0 && (
             <section className="profile-discovery" aria-labelledby="profile-discovery-title">
               <div className="profile-section-heading">
                 <span className="profile-section-kicker">Pour prolonger la découverte</span>
-                <h2 id="profile-discovery-title">D'autres prénoms {genderPlural[prenom.genre]}</h2>
+                <h2 id="profile-discovery-title">D'autres prénoms {genderPlural[prenom.gender]}</h2>
               </div>
-              <RelatedNames prenoms={autresPrenoms} contexteRetour={contexteRetour} />
+              <RelatedNames prenoms={autresNames} contexteRetour={contexteRetour} />
               <Link className="text-link" href="/prenoms">Explorer tout le catalogue <span aria-hidden="true">↗</span></Link>
             </section>
           )}
