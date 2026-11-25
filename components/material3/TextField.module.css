@@ -19,6 +19,11 @@
   background: var(--md-sys-color-surface);
 }
 
+ .multiline .label {
+  top: 8px;
+  transform: none;
+}
+
 .filled {
   border: 0;
   border-bottom: 1px solid var(--md-sys-color-on-surface-variant);
