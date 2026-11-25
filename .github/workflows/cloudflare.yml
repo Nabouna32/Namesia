@@ -166,7 +166,26 @@ jobs:
       - name: Installer Wrangler épinglé
         run: npm install --no-save --package-lock=false --no-audit --no-fund wrangler@4.148.0
       - name: Supprimer la Preview Cloudflare
-        run: ./node_modules/.bin/wrangler preview delete --name "pr-${{ github.event.pull_request.number }}" --skip-confirmation
+        shell: bash
+        run: |
+          set -euo pipefail
+          set +e
+          output="$(./node_modules/.bin/wrangler preview delete --name "pr-${{ github.event.pull_request.number }}" --skip-confirmation 2>&1)"
+          status=$?
+          set -e
+          printf '%s\n' "$output"
+
+          if [[ "$status" -eq 0 ]]; then
+            exit 0
+          fi
+
+          if grep -Fq 'Preview not found. [code: 10025]' <<< "$output"; then
+            echo "La Preview est déjà absente : le nettoyage est terminé."
+            exit 0
+          fi
+
+          echo "Échec inattendu lors de la suppression de la Preview Cloudflare."
+          exit "$status"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
