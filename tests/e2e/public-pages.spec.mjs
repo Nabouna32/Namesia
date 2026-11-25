@@ -61,5 +61,13 @@ test("l’accueil reste utilisable sur mobile et tablette", async ({ page }) => 
       () => document.documentElement.scrollWidth > document.documentElement.clientWidth
     );
     expect(hasHorizontalOverflow, `Débordement horizontal en ${viewport.name}`).toBe(false);
+
+    if (viewport.name === "mobile") {
+      await page.locator('input[type="search"]').first().fill("alice");
+      const clearButton = page.locator('button[aria-label^="Effacer"]').first();
+      await expect(clearButton).toBeVisible();
+      await clearButton.focus();
+      await page.screenshot({ path: "test-results/icon-button-mobile.png", fullPage: true });
+    }
   }
 });
