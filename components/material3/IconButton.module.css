@@ -12,7 +12,7 @@
   border: 0;
   border-radius: var(--md-sys-shape-corner-full);
   background: transparent;
-  color: var(--md-sys-color-on-surface-variant);
+  color: inherit;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
@@ -54,7 +54,7 @@
 }
 
 .button:disabled {
-  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+  color: color-mix(in srgb, currentColor 38%, transparent);
   cursor: not-allowed;
 }
 
