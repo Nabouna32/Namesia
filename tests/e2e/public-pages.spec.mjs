@@ -63,3 +63,31 @@ test("l’accueil reste utilisable sur mobile et tablette", async ({ page }) => 
     expect(hasHorizontalOverflow, `Débordement horizontal en ${viewport.name}`).toBe(false);
   }
 });
+
+
+test("un favori peut être annulé ou fermé depuis sa Snackbar sur mobile", async ({ page }) => {
+  await page.addInitScript(() => window.localStorage.clear());
+  await page.setViewportSize({ width: 390, height: 844 });
+  const response = await page.goto("/prenoms/alice", {
+    waitUntil: "domcontentloaded",
+    timeout: 30_000
+  });
+
+  expect(response?.status(), "HTTP fiche Alice").toBeLessThan(400);
+  const favoriteButton = page.locator("button[aria-pressed]").first();
+  await expect(favoriteButton).toBeEnabled();
+
+  await favoriteButton.click();
+  await expect(favoriteButton).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("status")).toContainText("Alice ajouté aux favoris");
+  await page.screenshot({ path: "test-results/snackbar-action-mobile.png", fullPage: true });
+  await page.getByRole("button", { name: "Annuler" }).click();
+  await expect(favoriteButton).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByRole("status").filter({ hasText: "Alice ajouté aux favoris" })).toHaveCount(0);
+
+  await favoriteButton.click();
+  await expect(favoriteButton).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Fermer le message" }).click();
+  await expect(favoriteButton).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("status").filter({ hasText: "Alice ajouté aux favoris" })).toHaveCount(0);
+});
