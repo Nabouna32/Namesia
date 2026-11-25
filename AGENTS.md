@@ -51,9 +51,12 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Le job `quality` audite les dépendances de production (`npm audit --omit=dev --audit-level=high`), puis exécute les tests, le contrôle TypeScript et le build même si l'un échoue. La synthèse finale inclut les quatre résultats ; sur un run rouge, lire chaque `outcome` et ses logs avant de corriger afin de traiter toutes les causes indépendantes dans la même boucle.
 - Ne jamais déclarer un test, build ou contrôle réussi sans que la CI GitHub Actions l'ait confirmé.
 
-- Les parcours E2E visuels Playwright s'exécutent sur la Workers Preview Cloudflare des PR internes, jamais sur un environnement authentifié ou contenant des données privées.
-- Les captures couvrent l'accueil, le catalogue et une fiche en formats mobile, tablette et bureau ; les rapports Playwright et axe-core sont publiés comme artefacts GitHub à rétention courte.
-- Les traces ne sont conservées qu'en cas d'échec ; les artefacts ne doivent contenir ni secret, ni session, ni donnée personnelle.
+- Playwright vérifie un petit nombre de parcours publics représentatifs sur la Workers Preview des PR internes, jamais sur un environnement authentifié ou contenant des données privées : disponibilité des routes essentielles, erreurs JavaScript, débordements responsive représentatifs et contrôles ciblés des composants réellement concernés.
+- **Aucune capture d'écran systématique en CI.** Les captures sont réservées au diagnostic ponctuel d'un défaut visuel ou à une comparaison explicitement demandée ; elles ne sont ni générées ni publiées à chaque PR.
+- Les traces et rapports détaillés sont conservés uniquement lorsqu'un contrôle échoue, dans un artefact GitHub à rétention courte (trois jours). Aucun artefact de réussite n'est archivé.
+- axe-core est consultatif : ses constats sont visibles dans les logs, mais ne bloquent pas le rendu. Les vrais défauts fonctionnels, erreurs JavaScript, échecs HTTP et débordements vérifiés restent bloquants.
+- Les tests permanents protègent des comportements métier, parcours critiques ou régressions coûteuses. Ne pas tester chaque texte, classe CSS, valeur de style ou détail transitoire ; supprimer ou réviser les tests devenus obsolètes quand le produit évolue.
+- Toute assertion visuelle automatisée doit être ciblée, stable et justifiée par un risque réel (par exemple l'anneau de focus de SearchBar). Pas de matrice exhaustive de captures ni de baselines pixel-à-pixel pendant le développement courant.
 - Toutes les actions GitHub (`uses`) sont épinglées sur un SHA de commit complet à 40 caractères, avec le tag de version conservé en commentaire. Avant une mise à jour, vérifier que le SHA correspond au tag officiel et relire les changements amont ; ne jamais revenir à une référence de tag mutable. Le checkout désactive `persist-credentials` sauf besoin Git en écriture explicitement justifié.
 
 ### Déploiement et CI
