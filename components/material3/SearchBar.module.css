@@ -34,4 +34,4 @@
 }
 .container input::placeholder { color: var(--md-sys-color-on-surface-variant); opacity: 1; }
 .container input::-webkit-search-cancel-button { appearance: none; }
-.clearButton { color: var(--md-sys-color-on-surface-variant); }
+.container .clearButton { color: var(--md-sys-color-on-surface-variant); }
