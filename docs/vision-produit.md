@@ -31,6 +31,8 @@ Les fiches générées par IA ne disposent pas d'un système de sources ou de v�
 
 Ces principes de transparence ne constituent pas un processus de vérification factuelle.
 
+## 4. Périmètre produit
+
 ### Accès public et compte facultatif
 
 La consultation de Namesia ne nécessite jamais de compte. Toute personne peut librement rechercher, découvrir, lire, comparer et partager les fiches publiques sans inscription ni connexion. Aucune de ces fonctions publiques ne doit être conditionnée à la création d'un compte.
@@ -39,7 +41,6 @@ Le compte est facultatif et apporte du confort : paramètres et préférences pe
 
 Les données personnelles liées au compte restent sous le contrôle de leur titulaire : accès, modification et suppression doivent être prévus dans la conception. Les choix d'authentification, de confidentialité, de conservation et de suppression seront détaillés dans un ADR d'architecture avant l'implémentation.
 
-## 4. Périmètre produit
 
 ### Inclus
 
