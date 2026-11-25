@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Icon } from "@/components/material3/Icon";
 import { NameSearch } from "@/components/features/catalog/NameSearch";
 import { jsonLd } from "@/lib/json-ld";
-import { getPrenomsIndex } from "@/lib/prenoms";
+import { getNamesIndex } from "@/lib/names";
 import { lireNombreVisible } from "@/lib/navigation-prenoms";
 import { siteUrl } from "@/lib/site-url";
 
@@ -44,14 +44,14 @@ function normaliserFiltre(value: string): string {
 }
 
 export default async function NamesPage({ searchParams }: Props) {
-  const [parametres, prenoms] = await Promise.all([searchParams, getPrenomsIndex()]);
+  const [parametres, prenoms] = await Promise.all([searchParams, getNamesIndex()]);
   const rechercheInitiale = premierParametre(parametres.q);
   const nombreVisibleInitial = lireNombreVisible(parametres.limite, Math.max(24, Math.ceil(prenoms.length / 24) * 24));
   const genreDemande = premierParametre(parametres.genre);
   const lettreDemandee = normaliserFiltre(premierParametre(parametres.lettre));
 
-  const lettresDisponibles = new Set(prenoms.map((prenom) => normaliserFiltre(prenom.lettre)));
-  const genreInitial = prenoms.find((prenom) => prenom.genre === genreDemande)?.genre ?? null;
+  const lettresDisponibles = new Set(prenoms.map((prenom) => normaliserFiltre(prenom.initial)));
+  const genreInitial = prenoms.find((prenom) => prenom.gender === genreDemande)?.gender ?? null;
   const lettreInitiale = lettresDisponibles.has(lettreDemandee) ? lettreDemandee : null;
 
   const catalogueData = {
@@ -69,7 +69,7 @@ export default async function NamesPage({ searchParams }: Props) {
         position: index + 1,
         item: {
           "@type": "Thing",
-          name: prenom.nom,
+          name: prenom.name,
           url: new URL(`/prenoms/${prenom.slug}`, siteUrl).toString()
         }
       }))

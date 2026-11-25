@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Card } from "@/components/material3/Card";
 import { Icon } from "@/components/material3/Icon";
-import { getPrenomsIndex } from "@/lib/prenoms";
+import { getNamesIndex } from "@/lib/names";
 import {
   NAME_POPULARITY_2025,
   NAME_POPULARITY_2025_SOURCE_URL
@@ -31,11 +31,11 @@ export const metadata: Metadata = {
 };
 
 export default async function NameTrendsPage() {
-  const publishedNames = await getPrenomsIndex();
+  const publishedNames = await getNamesIndex();
   const publishedNamesBySlug = new Map(publishedNames.map((name) => [name.slug, name] as const));
   for (const entry of NAME_POPULARITY_2025) {
     const publishedName = publishedNamesBySlug.get(entry.slug);
-    if (publishedName && (publishedName.nom !== entry.name || publishedName.genre !== entry.gender)) {
+    if (publishedName && (publishedName.name !== entry.name || publishedName.gender !== entry.gender)) {
       throw new Error(`Le classement Insee ne correspond pas à la fiche publiée : ${entry.slug}.`);
     }
   }

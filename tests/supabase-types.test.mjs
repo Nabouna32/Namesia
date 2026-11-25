@@ -6,7 +6,7 @@ const databaseTypes = await readFile(new URL("../lib/supabase/database.types.ts"
 const serverClient = await readFile(new URL("../lib/supabase/server.ts", import.meta.url), "utf8");
 const adminAuth = await readFile(new URL("../lib/admin-auth.ts", import.meta.url), "utf8");
 const adminClient = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
-const prenoms = await readFile(new URL("../lib/prenoms.ts", import.meta.url), "utf8");
+const namesSource = await readFile(new URL("../lib/names.ts", import.meta.url), "utf8");
 const publication = await readFile(new URL("../lib/publication-prenom.ts", import.meta.url), "utf8");
 const adminCatalog = await readFile(new URL("../lib/admin-catalog.ts", import.meta.url), "utf8");
 const architecture = await readFile(new URL("../docs/architecture.md", import.meta.url), "utf8");
@@ -39,10 +39,10 @@ test("la génération du schéma fait partie du contrat d'architecture", () => {
 });
 
 test("les lectures du catalogue dérivent du schéma sans casts non vérifiés", () => {
-  assert.match(prenoms, /Pick<Tables<"names">/);
+  assert.match(namesSource, /Pick<Tables<"names">/);
   assert.match(publication, /Tables<"name_profiles">/);
   assert.match(adminCatalog, /Pick<Tables<"name_profiles">/);
   assert.match(adminCatalog, /Pick<Tables<"names">/);
-  assert.doesNotMatch(prenoms, /as unknown as/);
+  assert.doesNotMatch(namesSource, /as unknown as/);
   assert.doesNotMatch(adminCatalog, /as number/);
 });

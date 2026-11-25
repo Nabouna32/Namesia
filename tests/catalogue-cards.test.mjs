@@ -45,16 +45,16 @@ test("les quatre genres ont une correspondance SVG exhaustive et centralisée", 
 
 test("les vues de prénoms affichent le pictogramme sans libellé visible", () => {
   for (const source of [catalogue, featured, related, history, favorites, comparator, profile]) {
-    assert.match(source, /<GenderIcon[^>]*gender=\{prenom\.genre\}/);
-    assert.doesNotMatch(source, /<small>\{prenom\.genre\}<\/small>/);
-    assert.doesNotMatch(source, /className="profile-tag">\{prenom\.genre\}/);
+    assert.match(source, /<GenderIcon[^>]*gender=\{prenom\.gender\}/);
+    assert.doesNotMatch(source, /<small>\{prenom\.gender\}<\/small>/);
+    assert.doesNotMatch(source, /className="profile-tag">\{prenom\.gender\}/);
   }
-  assert.match(openGraph, /GENDER_ICONS\[prenom\.genre\]/);
-  assert.doesNotMatch(openGraph, /\{prenom\.genre\}/);
+  assert.match(openGraph, /GENDER_ICONS\[prenom\.gender\]/);
+  assert.doesNotMatch(openGraph, /\{prenom\.gender\}/);
 });
 
 test("la découverte aléatoire affiche le pictogramme du prénom sélectionné", () => {
-  assert.match(discovery, /<GenderIcon gender=\{selection\.genre\}/);
+  assert.match(discovery, /<GenderIcon gender=\{selection\.gender\}/);
   assert.match(discoveryStyles, /\.resultLine \{[^}]*display: inline-flex;[^}]*align-items: center;[^}]*flex-wrap: wrap;[^}]*gap: 8px 12px;/s);
 });
 
@@ -73,7 +73,7 @@ test("les cartes de découverte ne portent plus d'actions de favori ou de compar
     assert.doesNotMatch(source, /<ComparisonToggle/);
     assert.doesNotMatch(source, /<ComparisonBar/);
   }
-  assert.match(profile, /<FavoriteButton slug=\{prenom\.slug\} name=\{prenom\.nom\}/);
+  assert.match(profile, /<FavoriteButton slug=\{prenom\.slug\} name=\{prenom\.name\}/);
   assert.match(profile, /Comparer ce prénom/);
   assert.match(comparator, /<Checkbox/);
   assert.doesNotMatch(comparator, /type="checkbox"/);

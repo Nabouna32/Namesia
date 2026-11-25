@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { NameComparator } from "@/components/features/comparison/NameComparator";
-import { getPrenomsIndex } from "@/lib/prenoms";
+import { getNamesIndex } from "@/lib/names";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 type Props = { searchParams: Promise<{ prenoms?: string | string[] }> };
 
 export default async function ComparePage({ searchParams }: Props) {
-  const [{ prenoms: demandes }, prenoms] = await Promise.all([searchParams, getPrenomsIndex()]);
+  const [{ prenoms: demandes }, prenoms] = await Promise.all([searchParams, getNamesIndex()]);
   const slugsDemandes = (Array.isArray(demandes) ? demandes : [demandes ?? ""])
     .flatMap((valeur) => valeur.split(","))
     .filter(Boolean);

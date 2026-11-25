@@ -3,24 +3,24 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { creerUrlFicheDepuisComparateur } from "@/lib/navigation-prenoms";
-import type { Prenom, PrenomIndex } from "@/lib/prenoms";
+import type { Name, NameIndexEntry } from "@/lib/names";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { ShareLink } from "@/components/features/sharing/ShareLink";
-import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
+import { compareRelevance, normalizeSearchTerm, suggestSimilarNames } from "@/lib/name-search";
 import { categoryTone } from "@/lib/category-color";
 import { SearchBar } from "@/components/material3/SearchBar";
 import { Checkbox } from "@/components/material3/Checkbox";
 import { ComparisonSelection } from "@/components/features/comparison/ComparisonSelection";
 import { Button } from "@/components/material3/Button";
 
-type Props = { prenoms: PrenomIndex[]; selectionInitiale: string[] };
+type Props = { prenoms: NameIndexEntry[]; selectionInitiale: string[] };
 
 
 export function NameComparator({ prenoms, selectionInitiale }: Props) {
   const [recherche, setRecherche] = useState("");
   const [nombreVisible, setNombreVisible] = useState(24);
   const [selection, setSelection] = useState<string[]>(selectionInitiale);
-  const [fiches, setFiches] = useState<Record<string, Prenom>>({});
+  const [fiches, setFiches] = useState<Record<string, Name>>({});
   const [chargement, setChargement] = useState(false);
   const [erreur, setErreur] = useState(false);
   const [tentative, setTentative] = useState(0);
@@ -54,7 +54,7 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
         });
         if (!response.ok) throw new Error("Chargement impossible.");
 
-        const resultat = await response.json() as { prenoms: Prenom[] };
+        const resultat = await response.json() as { prenoms: Name[] };
         if (!Array.isArray(resultat.prenoms)) throw new Error("Réponse invalide.");
 
         setFiches(Object.fromEntries(resultat.prenoms.map((prenom) => [prenom.slug, prenom])));
@@ -71,13 +71,13 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
   }, [selectionKey, tentative]);
 
   const resultats = useMemo(() => {
-    const terme = normaliserRecherche(recherche);
+    const terme = normalizeSearchTerm(recherche);
     return prenoms
-      .filter((prenom) => !terme || normaliserRecherche(prenom.nom).includes(terme))
-      .sort((a, b) => comparerPertinence(a, b, terme));
+      .filter((prenom) => !terme || normalizeSearchTerm(prenom.name).includes(terme))
+      .sort((a, b) => compareRelevance(a, b, terme));
   }, [prenoms, recherche]);
   const suggestions = useMemo(
-    () => resultats.length > 0 ? [] : suggererPrenomsProches(prenoms, recherche),
+    () => resultats.length > 0 ? [] : suggestSimilarNames(prenoms, recherche),
     [prenoms, recherche, resultats.length]
   );
   const prenomsSelectionnes = selection.flatMap((slug) => {
@@ -144,10 +144,10 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
                         disabled={!coche && selection.length >= 3}
                         onChange={(checked) => changerSelection(prenom.slug, checked)}
                       />
-                      <span className="compare-option-initial" aria-hidden="true">{prenom.lettre}</span>
+                      <span className="compare-option-initial" aria-hidden="true">{prenom.initial}</span>
                       <span className="compare-option-name">
-                        <strong>{prenom.nom}</strong>
-                        <GenderIcon gender={prenom.genre} />
+                        <strong>{prenom.name}</strong>
+                        <GenderIcon gender={prenom.gender} />
                       </span>
                     </label>
                   );
@@ -170,7 +170,7 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
 
         <div className="compare-selection-footer">
           <ComparisonSelection
-            names={prenomsSelectionnes.map((prenom) => ({ slug: prenom.slug, name: prenom.nom }))}
+            names={prenomsSelectionnes.map((prenom) => ({ slug: prenom.slug, name: prenom.name }))}
             label="Prénoms sélectionnés"
             onRemove={(slug) => changerSelection(slug, false)}
           />
@@ -208,22 +208,22 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
           >
             <table className="compare-table">
               <caption className="sr-only">
-                Comparaison de {selectionnes.map((prenom) => prenom.nom).join(", ")}
+                Comparaison de {selectionnes.map((prenom) => prenom.name).join(", ")}
               </caption>
               <thead>
                 <tr>
                   <th scope="col" className="compare-criterion-heading">Critères</th>
                   {selectionnes.map((prenom) => (
                     <th scope="col" key={prenom.slug}>
-                      <strong className="compare-name">{prenom.nom}</strong>
+                      <strong className="compare-name">{prenom.name}</strong>
                       <span className="compare-header-meta">
-                        <span className="profile-tag"><GenderIcon gender={prenom.genre} /></span>
-                        <span className="profile-tag">Lettre {prenom.lettre}</span>
+                        <span className="profile-tag"><GenderIcon gender={prenom.gender} /></span>
+                        <span className="profile-tag">Lettre {prenom.initial}</span>
                       </span>
                       <Link
                         className="compare-profile-link"
                         href={creerUrlFicheDepuisComparateur(prenom.slug, selection)}
-                        aria-label={`Lire la fiche complète de ${prenom.nom}`}
+                        aria-label={`Lire la fiche complète de ${prenom.name}`}
                       >
                         Voir la fiche complète
                       </Link>
@@ -296,7 +296,7 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
           <p>Cette sélection est enregistrée dans l’adresse de la page : vous pouvez partager la comparaison.</p>
           <ShareLink
             title={`Comparaison de ${selectionnes.length} prénoms · Namesia`}
-            text={`Comparez ${selectionnes.map((prenom) => prenom.nom).join(", ")} sur Namesia.`}
+            text={`Comparez ${selectionnes.map((prenom) => prenom.name).join(", ")} sur Namesia.`}
             label="Partager cette comparaison"
             queryParameters={["prenoms"]}
           />

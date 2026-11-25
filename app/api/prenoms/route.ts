@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getPrenomsParSlugs } from "@/lib/prenoms";
+import { getNamesBySlugs } from "@/lib/names";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -19,7 +19,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const prenoms = await getPrenomsParSlugs(slugs);
+    const prenoms = await getNamesBySlugs(slugs);
     return NextResponse.json(
       { prenoms },
       { headers: { "Cache-Control": "public, max-age=30, s-maxage=60, stale-while-revalidate=60" } }

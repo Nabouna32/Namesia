@@ -1,4 +1,4 @@
-import type { NameGender } from "@/lib/prenoms";
+import type { NameGender } from "@/lib/names";
 import { GENDER_ICONS } from "@/lib/gender-icons";
 import { Icon } from "@/components/material3/Icon";
 import styles from "./GenderIcon.module.css";
