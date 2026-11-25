@@ -3,6 +3,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { createClient, type Session } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/database.types";
+import { getSupabasePublicConfig } from "@/lib/supabase/config";
 import { FICHE_SCHEMA_VERSION, parseFichePrenom, type FichePrenomImport } from "@/lib/fiche-prenom";
 import styles from "./admin.module.css";
 import { AlertDialog } from "@/components/material3/AlertDialog";
@@ -12,10 +13,8 @@ import { Snackbar, type SnackbarSeverity } from "@/components/material3/Snackbar
 import { parseAdminCatalog, type AdminName, type AdminProfile } from "@/lib/admin-catalog";
 import { verifyAdminAccess } from "@/lib/admin-auth";
 
-const supabase = createClient<Database>(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
-);
+const { url, key } = getSupabasePublicConfig();
+const supabase = createClient<Database>(url, key);
 
 type ImportResult = { profileId: string; version: number };
 type ProfileRow = AdminProfile;
