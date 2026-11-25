@@ -8,7 +8,7 @@ const sitemap = await readFile(new URL("../app/sitemap.ts", import.meta.url), "u
 
 test("le sitemap expose la date réelle de publication de chaque fiche", () => {
   assert.match(prenoms, /type JoinedNameSitemap/);
-  assert.match(publication, /published_at: string \| null/);
+  assert.match(publication, /Tables<"name_profiles">/);
   assert.match(prenoms, /\.eq\("name_profiles\.status", "publie"\)/);
   assert.match(prenoms, /\.not\("name_profiles\.published_at", "is", null\)/);
   assert.match(publication, /new Date\(profil\.published_at\)/);
