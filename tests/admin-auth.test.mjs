@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { verifyAdminAccess } from "../lib/admin-auth.ts";
+import { verifyAdminAccess } from "../lib/admin-auth-core.ts";
 
 test("la vérification des droits accepte uniquement un booléen explicite", async () => {
   assert.equal(await verifyAdminAccess(async () => ({ data: true, error: null })), true);
