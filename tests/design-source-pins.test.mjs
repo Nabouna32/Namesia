@@ -38,6 +38,8 @@ test("le registre M3 et ses sources de référence restent complets et lisibles"
   assert.equal(components.includes("\\n|"), false);
   assert.equal(verification.includes("\\n|"), false);
   assert.match(sourceVerifier, /const verifiedSources = \[\.\.\.sources, \.\.\.additionalAndroidxSources\]/);
+  assert.match(sourceVerifier, /maybeFallbackSpecVersion/);
+  assert.doesNotMatch(verification, /2025\\/2026/);
   assert.match(sourceVerifier, /filter\(\(\{ name \}\) => name\.startsWith\("AndroidX "\)\)/);
   assert.match(sourceVerifier, /assert\.equal\(androidxSourceCount, 37/);
   assert.match(sourceVerifier, /verifySourcesWithLimit\(verifiedSources, 4\)/);
@@ -45,7 +47,7 @@ test("le registre M3 et ses sources de référence restent complets et lisibles"
   assert.match(sourceVerifier, /AbortSignal\.timeout\(15_000\)/);
   assert.match(sourceVerifier, /lastError = error/);
   assert.match(sourceVerifier, /\[429, 500, 502, 503, 504\]/);
-  for (const source of ["AndroidX Button", "AndroidX AlertDialog", "AndroidX Checkbox", "AndroidX Card", "AndroidX SearchBar", "AndroidX TextField", "AndroidX NavigationBar", "AndroidX NavigationRail", "AndroidX Chips", "AndroidX TopAppBar", "AndroidX Snackbar", "Material Web README — état de maintenance", "Material Web roadmap — couverture stable"]) {
+  for (const source of ["AndroidX Button", "AndroidX AlertDialog", "AndroidX Checkbox", "AndroidX Card", "AndroidX SearchBar", "AndroidX TextField", "AndroidX NavigationBar", "AndroidX NavigationRail", "AndroidX Chips", "AndroidX TopAppBar", "AndroidX Snackbar", "Material Color Utilities ColorSpec versions", "Material Color Utilities ColorSpec 2025", "Material Web README — état de maintenance", "Material Web roadmap — couverture stable"]) {
     assert.ok(sourceVerifier.includes(source), "Source de référence non vérifiée : " + source);
   }
   for (const file of ["AlertDialog.kt", "DialogTokens.kt", "AppBarSmallTokens.kt", "ElevationTokens.kt", "PaletteTokens.kt", "BaselineButtonTokens.kt", "ButtonSmallTokens.kt", "OutlinedButtonTokens.kt", "TextButtonTokens.kt", "IconButton.kt", "IconButtonTokens.kt", "ElevatedCardTokens.kt", "FilledCardTokens.kt", "OutlinedCardTokens.kt", "TextFieldDefaults.kt", "FilledTextFieldTokens.kt", "OutlinedTextFieldTokens.kt", "InputChipTokens.kt", "NavigationRailCollapsedTokens.kt", "NavigationRailColorTokens.kt", "NavigationRailBaselineItemTokens.kt", "NavigationRailVerticalItemTokens.kt", "SnackbarTokens.kt"]) {
