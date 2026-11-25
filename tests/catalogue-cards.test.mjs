@@ -4,9 +4,9 @@ import { readFile } from "node:fs/promises";
 
 const read = async (path) => readFile(new URL(path, import.meta.url), "utf8");
 const icon = await read("../components/material3/Icon.tsx");
-const genreMap = await read("../lib/genre-icons.ts");
-const genreIcon = await read("../components/features/names/GenreIcon.tsx");
-const genreStyles = await read("../components/features/names/GenreIcon.module.css");
+const genderMap = await read("../lib/gender-icons.ts");
+const genderIcon = await read("../components/features/names/GenderIcon.tsx");
+const genderStyles = await read("../components/features/names/GenderIcon.module.css");
 const filterChip = await read("../components/material3/FilterChip.tsx");
 const catalogue = await read("../components/features/catalog/NameSearch.tsx");
 const featured = await read("../components/features/catalog/FeaturedNames.tsx");
@@ -27,7 +27,7 @@ test("les quatre genres ont une correspondance SVG exhaustive et centralisée", 
     ["Mixte", "gender-mixed"],
     ["Genre non renseigné", "gender-unknown"]
   ]) {
-    assert.match(genreMap, new RegExp(`"${label}": "${name}"`));
+    assert.match(genderMap, new RegExp(`"${label}": "${name}"`));
     if (name === "gender-male") {
       assert.match(icon, /type IconPathName = Exclude<IconName, "gender-male">/);
       assert.match(icon, /name === "gender-male"/);
@@ -37,30 +37,30 @@ test("les quatre genres ont une correspondance SVG exhaustive et centralisée", 
       assert.match(icon, new RegExp(`"${name}":`));
     }
   }
-  assert.match(genreMap, /Record<GenrePrenom, IconName>/);
-  assert.match(genreIcon, /role="img" aria-label=\{genre\}/);
-  assert.match(genreStyles, /width: 24px/);
+  assert.match(genderMap, /Record<NameGender, IconName>/);
+  assert.match(genderIcon, /role="img" aria-label=\{gender\}/);
+  assert.match(genderStyles, /width: 24px/);
   assert.match(icon, /viewBox="0 -960 960 960"/);
 });
 
 test("les vues de prénoms affichent le pictogramme sans libellé visible", () => {
   for (const source of [catalogue, featured, related, history, favorites, comparator, profile]) {
-    assert.match(source, /<GenreIcon[^>]*genre=\{prenom\.genre\}/);
+    assert.match(source, /<GenderIcon[^>]*gender=\{prenom\.genre\}/);
     assert.doesNotMatch(source, /<small>\{prenom\.genre\}<\/small>/);
     assert.doesNotMatch(source, /className="profile-tag">\{prenom\.genre\}/);
   }
-  assert.match(openGraph, /GENRE_ICONS\[prenom\.genre\]/);
+  assert.match(openGraph, /GENDER_ICONS\[prenom\.genre\]/);
   assert.doesNotMatch(openGraph, /\{prenom\.genre\}/);
 });
 
 test("la découverte aléatoire affiche le pictogramme du prénom sélectionné", () => {
-  assert.match(discovery, /<GenreIcon genre=\{selection\.genre\}/);
+  assert.match(discovery, /<GenderIcon gender=\{selection\.genre\}/);
   assert.match(discoveryStyles, /\.resultLine \{[^}]*display: inline-flex;[^}]*align-items: center;[^}]*flex-wrap: wrap;[^}]*gap: 8px 12px;/s);
 });
 
 test("les filtres de genre utilisent les pictogrammes et conservent un nom accessible", () => {
   for (const source of [catalogue, favorites]) {
-    assert.match(source, /leadingIcon=\{<Icon name=\{GENRE_ICONS\[genre\]\}/);
+    assert.match(source, /leadingIcon=\{<Icon name=\{GENDER_ICONS\[genre\]\}/);
     assert.match(source, /iconOnly/);
   }
   assert.match(filterChip, /aria-label=\{iconOnly \? label : undefined\}/);
