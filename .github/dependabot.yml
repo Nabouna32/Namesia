@@ -6,8 +6,8 @@ updates:
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: daily
-      time: "12:00"
+      interval: cron
+      cronjob: "0 12 * * *"
       timezone: Europe/Paris
     open-pull-requests-limit: 1000
 
@@ -16,7 +16,7 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: daily
-      time: "12:00"
+      interval: cron
+      cronjob: "0 12 * * *"
       timezone: Europe/Paris
     open-pull-requests-limit: 1000
