@@ -21,7 +21,7 @@ La palette est calculée avec la bibliothèque officielle Google **`@material/ma
 - variante du thème d'interface : `Variant.FIDELITY` ;
 - variante complémentaire des catégories : `Variant.RAINBOW`, calculée séparément avec la même couleur source ;
 - bibliothèque de calcul : `@material/material-color-utilities` version `0.4.0`, épinglée dans `package-lock.json` et dans [Vérification Material 3](material-3-verification.md) ;
-- version d'algorithme : `specVersion: "2021"`, version de `ColorSpec` dans Material Color Utilities ; ce n'est pas une version de Material Design 3 ni une référence à l'ancien système de composants. Le code de la bibliothèque redirige explicitement Fidelity et Rainbow vers 2021 lorsqu'une spécification 2025 leur est demandée, car ces variantes ne sont pas prises en charge par les spécifications 2025 et 2026 ;
+- version d'algorithme : `specVersion: "2021"`, version de `ColorSpec` dans Material Color Utilities ; ce n'est pas une version de Material Design 3 ni une référence à l'ancien système de composants. Le code de la bibliothèque maintient Fidelity et Rainbow sur 2021 : la spécification 2025 n'est transmise qu'aux variantes Expressive, Vibrant, Tonal Spot et Neutral ;
 - plateforme MCU : `phone`, paramètre de calcul du schéma correspondant à la cible Android mobile, sans accès aux API Android depuis le navigateur ;
 - niveau de contraste standard : `0` ;
 - schémas clair et sombre recalculés selon `prefers-color-scheme`.
