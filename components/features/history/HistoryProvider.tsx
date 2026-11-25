@@ -6,73 +6,82 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode
 } from "react";
-import { ajouterConsultation, lireHistoriqueSession, retirerConsultation } from "@/lib/historique-prenoms";
+import {
+  ajouterConsultation as addVisit,
+  lireHistoriqueSession as parseHistory,
+  retirerConsultation as removeHistoryVisit
+} from "@/lib/historique-prenoms";
 
-const CLE_HISTORIQUE = "namesia:historique-session:v1";
+const HISTORY_KEY = "namesia:historique-session:v1";
 
-type ContexteHistorique = {
+type HistoryContextValue = {
   slugs: string[];
-  pret: boolean;
-  erreur: boolean;
-  enregistrer: (slug: string) => void;
-  retirer: (slug: string) => void;
-  effacer: () => void;
+  ready: boolean;
+  error: boolean;
+  recordVisit: (slug: string) => void;
+  removeVisit: (slug: string) => void;
+  clearHistory: () => void;
 };
 
-const HistoriqueContext = createContext<ContexteHistorique | null>(null);
+const HistoryContext = createContext<HistoryContextValue | null>(null);
 
 export function HistoryProvider({ children }: { children: ReactNode }) {
+  const historyRef = useRef<string[]>([]);
   const [slugs, setSlugs] = useState<string[]>([]);
-  const [pret, setPret] = useState(false);
-  const [erreur, setErreur] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     try {
-      setSlugs(lireHistoriqueSession(window.sessionStorage.getItem(CLE_HISTORIQUE)));
+      const storedHistory = parseHistory(window.sessionStorage.getItem(HISTORY_KEY));
+      historyRef.current = storedHistory;
+      setSlugs(storedHistory);
     } catch {
-      setSlugs([]);
-      setErreur(true);
+      setError(true);
+    } finally {
+      setReady(true);
     }
-    setPret(true);
   }, []);
 
-  useEffect(() => {
-    if (!pret) return;
+  const persist = useCallback((nextSlugs: string[]) => {
     try {
-      window.sessionStorage.setItem(CLE_HISTORIQUE, JSON.stringify(slugs));
-      setErreur(false);
+      window.sessionStorage.setItem(HISTORY_KEY, JSON.stringify(nextSlugs));
+      historyRef.current = nextSlugs;
+      setSlugs(nextSlugs);
+      setError(false);
     } catch {
-      setErreur(true);
+      setError(true);
     }
-  }, [pret, slugs]);
-
-  const enregistrer = useCallback((slug: string) => {
-    setSlugs((courants) => ajouterConsultation(courants, slug));
   }, []);
 
-  const retirer = useCallback((slug: string) => {
-    setSlugs((courants) => retirerConsultation(courants, slug));
-  }, []);
+  const recordVisit = useCallback((slug: string) => {
+    persist(addVisit(historyRef.current, slug));
+  }, [persist]);
 
-  const effacer = useCallback(() => setSlugs([]), []);
+  const removeVisit = useCallback((slug: string) => {
+    persist(removeHistoryVisit(historyRef.current, slug));
+  }, [persist]);
 
-  const valeur = useMemo(
-    () => ({ slugs, pret, erreur, enregistrer, retirer, effacer }),
-    [slugs, pret, erreur, enregistrer, retirer, effacer]
+  const clearHistory = useCallback(() => persist([]), [persist]);
+
+  const value = useMemo(
+    () => ({ slugs, ready, error, recordVisit, removeVisit, clearHistory }),
+    [slugs, ready, error, recordVisit, removeVisit, clearHistory]
   );
 
   return (
-    <HistoriqueContext.Provider value={valeur}>
+    <HistoryContext.Provider value={value}>
       {children}
-    </HistoriqueContext.Provider>
+    </HistoryContext.Provider>
   );
 }
 
-export function useHistory(): ContexteHistorique {
-  const contexte = useContext(HistoriqueContext);
-  if (!contexte) throw new Error("useHistory doit être utilisé dans HistoryProvider.");
-  return contexte;
+export function useHistory(): HistoryContextValue {
+  const context = useContext(HistoryContext);
+  if (!context) throw new Error("useHistory must be used within HistoryProvider.");
+  return context;
 }
