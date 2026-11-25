@@ -3,7 +3,7 @@
 import { useRef, useState, type ChangeEvent } from "react";
 import Link from "next/link";
 import type { PrenomIndex } from "@/lib/prenoms";
-import type { NameGender } from "@/lib/gender-icons";
+import type { NameGender } from "@/lib/prenoms";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { GENDER_ICONS } from "@/lib/gender-icons";
 import { LIMITE_FAVORIS, creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
