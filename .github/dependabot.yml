@@ -1,36 +1,23 @@
 version: 2
 
 updates:
-  # Les mises à jour de versions sont regroupées chaque semaine.
-  # Les correctifs de sécurité restent indépendants et ne sont pas retardés par le cooldown.
+  # Vérification quotidienne ; chaque mise à jour reste isolée dans sa propre PR.
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: weekly
-      day: monday
-      time: "12:00"
+      interval: cron
+      cronjob: "0 12 * * *"
       timezone: Europe/Paris
-    open-pull-requests-limit: 1
+    open-pull-requests-limit: 1000
     cooldown:
       default-days: 7
-    groups:
-      minor-and-patch:
-        update-types:
-          - minor
-          - patch
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: weekly
-      day: monday
-      time: "12:00"
+      interval: cron
+      cronjob: "0 12 * * *"
       timezone: Europe/Paris
-    open-pull-requests-limit: 1
+    open-pull-requests-limit: 1000
     cooldown:
       default-days: 7
-    groups:
-      minor-and-patch:
-        update-types:
-          - minor
-          - patch

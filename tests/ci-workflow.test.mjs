@@ -35,3 +35,9 @@ test("la CI restaure le cache Next.js avec une action épinglée", () => {
   assert.ok(workflow.includes("key: ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}-${{ github.sha }}"));
   assert.ok(workflow.includes("restore-keys:"));
 });
+
+test("la charte impose d'attendre la fin de la CI avant toute fusion", () => {
+  assert.match(agents, /attendre la fin de tous les contrôles requis avant de fusionner/);
+  assert.match(agents, /Ne jamais fusionner tant qu'un contrôle est en cours ou en attente/);
+  assert.match(agents, /Si un contrôle échoue[\s\S]*corriger la cause puis attendre une nouvelle exécution complète/);
+});

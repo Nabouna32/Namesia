@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 
 const config = await readFile(new URL("../.github/dependabot.yml", import.meta.url), "utf8");
 const standards = await readFile(new URL("../docs/standards-techniques.md", import.meta.url), "utf8");
+const adr = await readFile(new URL("../docs/decisions/ADR-0052-dependabot-quotidien.md", import.meta.url), "utf8");
 
 function ecosystemConfig(name) {
   const start = config.indexOf(`- package-ecosystem: ${name}`);
@@ -12,24 +13,27 @@ function ecosystemConfig(name) {
   return config.slice(start, next === -1 ? undefined : next);
 }
 
-test("npm et GitHub Actions sont vérifiés chaque lundi à midi, heure de Paris", () => {
+test("npm et GitHub Actions sont vérifiés chaque jour calendaire à midi, heure de Paris", () => {
   for (const name of ["npm", "github-actions"]) {
     const section = ecosystemConfig(name);
-    assert.match(section, /schedule:\s+interval: weekly\s+day: monday\s+time: "12:00"\s+timezone: Europe\/Paris/);
+    assert.match(section, /schedule:\s+interval: cron\s+cronjob: "0 12 \* \* \*"\s+timezone: Europe\/Paris/);
   }
+  assert.match(adr, /tous les jours calendaires à 12 h/);
+  assert.match(standards, /chaque jour calendaire à 12 h/);
 });
 
-test("les mises à jour mineures et correctives sont regroupées avec un cooldown de sept jours", () => {
+test("chaque mise à jour reste isolée et conserve le refroidissement de sécurité", () => {
   for (const name of ["npm", "github-actions"]) {
     const section = ecosystemConfig(name);
-    assert.match(section, /open-pull-requests-limit: 1/);
+    assert.match(section, /open-pull-requests-limit: 1000/);
     assert.match(section, /cooldown:\s+default-days: 7/);
-    assert.match(section, /groups:\s+minor-and-patch:\s+update-types:\s+- minor\s+- patch/);
+    assert.doesNotMatch(section, /groups:/);
   }
-    assert.match(standards, /Dependabot regroupe chaque semaine les mises à jour mineures\/patch de npm et des actions GitHub, avec un délai de refroidissement de 7 jours et au plus une PR ouverte par écosystème/);
+  assert.match(adr, /aucun groupe/);
+  assert.match(standards, /chaque mise à jour dans une PR distincte/);
 });
 
-test("la configuration ne réintroduit ni cadence quotidienne ni limite massive de PR", () => {
-  assert.doesNotMatch(config, /interval: (?:daily|cron)/);
-  assert.doesNotMatch(config, /open-pull-requests-limit: (?:[2-9]|[1-9]\d+)/);
+test("les mises à jour de sécurité ne sont pas retardées par le cooldown des versions", () => {
+  assert.match(adr, /mécanisme distinct de security updates/);
+  assert.doesNotMatch(config, /groups:/);
 });
