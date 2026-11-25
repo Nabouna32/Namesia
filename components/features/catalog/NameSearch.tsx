@@ -4,7 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { PrenomIndex } from "@/lib/prenoms";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
-import { GENRE_ICONS } from "@/lib/genre-icons";
+import { GENDER_ICONS } from "@/lib/gender-icons";
 import styles from "./NameSearch.module.css";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
@@ -191,7 +191,7 @@ export function NameSearch({
                   <FilterChip
                     key={genre}
                     label={genre}
-                    leadingIcon={<Icon name={GENRE_ICONS[genre]} size={18} />}
+                    leadingIcon={<Icon name={GENDER_ICONS[genre]} size={18} />}
                     iconOnly
                     selected={genreActif === genre}
                     onClick={() => changerGenre(genre)}
