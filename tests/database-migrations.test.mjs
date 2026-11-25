@@ -5,7 +5,7 @@ import { readdir, readFile } from "node:fs/promises";
 const migrationsDirectory = new URL("../supabase/migrations/", import.meta.url);
 const migrationFiles = (await readdir(migrationsDirectory)).filter((file) => file.endsWith(".sql"));
 const migrationVersions = migrationFiles.map((file) => file.slice(0, 14));
-const associationPolicyMigration = await readFile(
+const associationPolicyNamingMigration = await readFile(\n  new URL("../supabase/migrations/20261125011430_rename_association_policies_english.sql", import.meta.url),\n  "utf8"\n);\nconst associationPolicyMigration = await readFile(
   new URL("../supabase/migrations/20261125005358_consolider_policies_lecture_associations.sql", import.meta.url),
   "utf8"
 );
@@ -13,10 +13,17 @@ const associationPolicyMigration = await readFile(
 test("les migrations locales restent alignées sur les versions Supabase appliquées", () => {
   assert.ok(migrationFiles.includes("20261122002440_finaliser_nettoyage_modele.sql"));
   assert.ok(migrationFiles.includes("20261125005358_consolider_policies_lecture_associations.sql"));
+  assert.ok(migrationFiles.includes("20261125011430_rename_association_policies_english.sql"));
   assert.equal(new Set(migrationVersions).size, migrationVersions.length);
   assert.ok(migrationFiles.every((file) => /^\d{14}_[a-z0-9_]+\.sql$/.test(file)));
   assert.ok(migrationVersions.every((version) => /^\d{14}$/.test(version)));
   assert.equal(migrationFiles.some((file) => /20261122140000|references_editoriales|versionner_reprise_editoriale/.test(file)), false);
+});
+
+test("les policies de la table des associations utilisent des identifiants anglais", () => {
+  assert.match(associationPolicyNamingMigration, /rename to "admin_insert_profile_associations"/);
+  assert.match(associationPolicyNamingMigration, /rename to "read_published_or_admin_profile_associations"/);
+  assert.match(associationPolicyNamingMigration, /rename to "read_published_profile_associations"/);
 });
 
 test("les lectures RLS des associations sont séparées par rôle", () => {
