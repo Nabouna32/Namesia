@@ -1,8 +1,8 @@
 # ADR-0050 — Hébergement Next.js sur Cloudflare Workers
 
-- **Statut :** déploiement initial effectué ; validation fonctionnelle du Worker en cours
+- **Statut :** production déployée ; validation fonctionnelle complète en cours
 - **Date :** 2026-11-25
-- **Portée :** hébergement, builds et déploiements de Namesia
+- **Portée :** hébergement, builds, déploiements et previews de Namesia
 
 ## Contexte
 
@@ -19,13 +19,17 @@ Le besoin réel est de réduire la dépendance au quota de builds Vercel, tout e
 
 ## Décision
 
-Préparer une migration réversible vers **Cloudflare Workers Free**, avec **GitHub Actions comme moteur de build et d'orchestration** et **OpenNext for Cloudflare** comme adaptateur initial.
+Utiliser **Cloudflare Workers Free**, avec **GitHub Actions comme moteur de build et d'orchestration** et **OpenNext for Cloudflare** comme adaptateur.
 
 - Le Worker de production s'appelle `namesia` et utilise le sous-domaine `nabouna.workers.dev` du compte Cloudflare.
 - Le build est produit dans GitHub Actions avec des versions d'outils explicitement épinglées dans le workflow.
-- Les Pull Requests exécutent le build Cloudflare comme contrôle, sans déploiement distant ni exposition du jeton Cloudflare.
 - La branche `main` déploie le Worker de production via `opennextjs-cloudflare deploy`, uniquement après fusion d'une PR. Le workflow peut aussi être lancé manuellement sur `main`.
-- Les ressources de production ne doivent pas partager de stockage mutable avec des environnements de test. L'application utilise actuellement Supabase ; les droits RLS restent la frontière de sécurité des données.
+- Les Pull Requests internes créent ou mettent à jour une **Workers Preview** nommée `pr-<numéro>` via `wrangler preview`. Le workflow commente l'URL dans la PR, vérifie le HTML, le catalogue public et l'en-tête `X-Robots-Tag: noindex`, puis supprime la Preview à la fermeture de la PR.
+- Les secrets Cloudflare ne sont jamais exposés aux PR provenant de forks : seuls les événements dont le dépôt source est le dépôt courant peuvent créer ou supprimer une Preview.
+- Les previews sont publiques par défaut sur `workers.dev`. Elles ne contiennent que le catalogue public ; leur URL reçoit le signal `noindex` de Cloudflare.
+- Le bloc Wrangler `previews` définit explicitement `NAMESIA_DEPLOYMENT_ENVIRONMENT=preview`, distinct de `production`. La page d'administration n'affiche pas son client d'authentification et toutes les routes d'administration refusent les requêtes en Preview. Aucune clé privilégiée Supabase n'est fournie.
+- Les previews utilisent les lectures publiques du projet Supabase de production ; elles n'ont aucun chemin d'écriture applicatif disponible. Toute activation future de l'administration dans un environnement de test exige un projet Supabase de staging distinct et des secrets propres à cet environnement.
+- Aucun binding mutable de production n'est déclaré dans le bloc `previews`. Toute nouvelle ressource liée doit être explicitement évaluée et isolée.
 - Vercel, son domaine public et sa configuration restent inchangés pendant la validation. Aucun DNS ni alias public n'est basculé par cette migration.
 
 ## Limites et conditions de validation
@@ -34,18 +38,20 @@ Le plan Workers Free impose notamment une limite CPU par invocation et une taill
 
 Avant toute bascule publique, valider sur l'URL `workers.dev` :
 - le rendu SSR et les Route Handlers ;
-- l'authentification OTP et les redirections Supabase ;
+- l'authentification OTP et les redirections Supabase sur le domaine final ;
 - les pages de catalogue, fiches, comparateur, sitemap et images Open Graph ;
 - le fonctionnement des sessions et cookies ;
 - la taille compressée du Worker et le CPU consommé sur les parcours représentatifs.
 
-Les environnements de test ne doivent contenir aucun secret privilégié. L'administration reste protégée par Supabase Auth et RLS.
+Les environnements de test ne doivent contenir aucun secret privilégié. L'administration reste protégée par Supabase Auth et RLS en production et est entièrement désactivée dans les Previews.
 
-Aucune clé Supabase privilégiée n'est ajoutée au Worker ou à GitHub Actions. Seuls l'URL publique Supabase et la clé publishable sont nécessaires.
+Aucune clé Supabase privilégiée n'est ajoutée au Worker ou à GitHub Actions. Seuls l'URL publique Supabase et la clé publishable sont nécessaires aux lectures du catalogue.
 
 ## Conséquences
 
 - Les builds de contrôle et de déploiement Cloudflare sont exécutés par GitHub Actions, sans dépendre de Workers Builds.
+- Les PR internes disposent d'une URL stable de Preview et d'une URL de déploiement propre à chaque mise à jour.
+- Les previews ouvertes peuvent être consultées publiquement ; leur suppression automatique évite de conserver les environnements de PR fermées.
 - Les quotas Cloudflare d'exécution, de requêtes, de taille de Worker et d'observabilité restent applicables.
 - La migration n'est pas considérée terminée tant que le contrôle HTTP post-déploiement du Worker et les parcours SSR, Route Handlers, authentification OTP, cookies, catalogue, sitemap et images Open Graph n'ont pas été validés sur son URL `workers.dev`.
 - Le domaine Vercel et son déploiement restent le mécanisme de retour arrière jusqu'à la bascule finale.
@@ -53,7 +59,11 @@ Aucune clé Supabase privilégiée n'est ajoutée au Worker ou à GitHub Actions
 
 ## Sources vérifiées le 25 novembre 2026
 
-- Cloudflare — [OpenNext adapter](https://developers.cloudflare.com/workers/framework-guides/web-apps/opennext/) : configuration, runtime Node.js et matrice de fonctionnalités.
+- Cloudflare — [Workers Previews](https://developers.cloudflare.com/workers/previews/) : cycle de vie, URLs, isolation et limites.
+- Cloudflare — [Previews configuration](https://developers.cloudflare.com/workers/previews/configuration/) : variables, secrets et bindings dédiés.
+- Cloudflare — [GitHub Actions examples](https://developers.cloudflare.com/workers/previews/examples/) : création, commentaire, probe et suppression des Previews.
+- Cloudflare — [Compare workflows](https://developers.cloudflare.com/workers/previews/compare-workflows/) : différence entre Previews, Version URLs et environnements Wrangler.
+- Cloudflare — [OpenNext adapter](https://developers.cloudflare.com/workers/framework-guides/web-apps/opennext/) : configuration et matrice de fonctionnalités.
 - OpenNext — [CLI](https://opennext.js.org/cloudflare/cli) : commandes `build`, `preview` locale et `deploy`.
 - OpenNext — [Cloudflare Get Started](https://opennext.js.org/cloudflare/get-started) : migration d'une application Next.js existante.
 - Cloudflare — [vinext](https://github.com/cloudflare/vinext) : statut et limites de compatibilité.
