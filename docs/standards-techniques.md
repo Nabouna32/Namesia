@@ -1,7 +1,7 @@
 # Standards techniques et règles de maintenabilité — Namesia
 
 - **Statut :** règle canonique
-- **Version :** 1.8
+- **Version :** 1.9
 - **Mis à jour :** 2026-11-25
 - **Portée :** application web, styles, composants, données et outillage
 
@@ -117,7 +117,6 @@ Chaque changement est validé au niveau adapté à son risque :
 - Les tests E2E n'ouvrent aucune route d'administration et n'utilisent aucune session ni donnée privée. Les PR issues de forks ne reçoivent pas de Preview Cloudflare ni de secrets.
 - Vérifications statiques et build dans la CI GitHub Actions.
 - Contrôles manuels ciblés lorsque l'accessibilité, le responsive ou le rendu visuel ne sont pas couverts par l'automatisation.
-
 Ne pas ajouter des tests purement décoratifs. Les tests doivent protéger un comportement ou une règle identifiable. Ne jamais déclarer un contrôle exécuté s'il ne l'a pas été.
 
 Pour une refonte CSS ou de composants, vérifier au minimum :
@@ -152,16 +151,16 @@ Après le refactor :
 
 La dette technique est suivie avec honnêteté. Une dette acceptée doit être visible, contextualisée, priorisée selon son impact et réévaluée ; elle ne doit pas être présentée comme une convention moderne.
 
-## 8. Fallbacks, sémantique et source de vérité
+## 8. Absences, erreurs, sémantique et source de vérité
 
-- Concevoir le parcours nominal pour qu'il fonctionne sans chemins de secours artificiels. Une architecture correcte ne doit pas dépendre d'une cascade de fallbacks pour compenser des contrats flous ou des responsabilités mal placées.
-- Ne pas dupliquer une même valeur par défaut, une même transformation ou une même récupération à plusieurs niveaux. Définir la source de vérité à la frontière appropriée.
-- Ne pas masquer une erreur technique par `null`, une chaîne vide, un tableau vide, une donnée fictive, un contenu statique ou une valeur par défaut. Une absence métier prévue par le contrat est distincte d'une panne et doit être représentée explicitement.
-- Un fallback n'est autorisé que si un besoin réel le justifie : champ facultatif prévu par le modèle, dépendance externe avec comportement dégradé attendu, ou récupération d'erreur nécessaire à la sécurité et à l'expérience. Le documenter au point où il est décidé, le tester et le rendre observable.
-- Ne pas multiplier les `try/catch`, valeurs `??`, `||`, optional chaining, branches conditionnelles ou composants de secours sans raison propre à chaque frontière. Ces mécanismes ne sont pas mauvais en soi ; leur accumulation pour cacher une conception fragile l'est.
+- Le parcours nominal est le seul parcours de fonctionnement. Ne pas ajouter de fallback de composant, de donnée, de stockage, de configuration, de fournisseur, de cache, de route ou de comportement.
+- Une valeur facultative n'est pas un fallback : son absence doit être prévue par le contrat, typée et traitée explicitement à l'endroit où elle est consommée. Ne jamais remplacer une valeur absente par une autre valeur ou une autre source.
+- Une erreur technique doit rester une erreur identifiable et être propagée jusqu'à une frontière qui peut l'expliquer à l'utilisateur. Ne pas la convertir en `null`, chaîne vide, tableau vide, donnée fictive, contenu statique ou valeur par défaut.
+- Définir une seule source de vérité pour chaque donnée et chaque opération. Ne pas basculer vers un stockage, fournisseur, cache ou chemin secondaire lorsque la source principale est indisponible.
+- Les opérateurs `??`, `||`, optional chaining, branches conditionnelles et `try/catch` sont utilisés uniquement pour exprimer un contrat explicite (optionnalité, validation ou frontière d'erreur), jamais pour masquer une absence ou une panne. Ils ne constituent pas une autorisation implicite de fallback.
 - En HTML, choisir l'élément natif qui porte le sens et le comportement : `button`, `a`, `main`, `nav`, `header`, `footer`, `section`, `article`, `form`, listes, titres, etc. Éviter les `div`/`span` génériques quand une balise sémantique convient.
 - Ne pas recréer manuellement avec `role`, `tabIndex` et des gestionnaires clavier le comportement déjà fourni par un élément natif. Ne pas ajouter d'attributs ARIA redondants ; l'accessibilité doit découler d'abord de la structure et des contrôles natifs.
-- Les états vide, chargement et erreur sont des états produit explicites, pas des fallbacks passe-partout. N'en créer que lorsqu'ils correspondent à un état réellement possible.
+- Les états vide, chargement et erreur sont des états produit explicites, pas des composants de secours. Ne les créer que lorsqu'ils correspondent à un état réellement possible et les présenter comme tels.
 
 ## 9. Dérogations
 
