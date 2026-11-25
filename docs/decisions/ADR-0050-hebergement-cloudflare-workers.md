@@ -1,14 +1,14 @@
 # ADR-0050 — Hébergement Next.js sur Cloudflare Workers
 
-- **Statut :** production déployée ; validation fonctionnelle complète en cours
+- **Statut :** production Cloudflare active ; migration d'hébergement terminée ; validation manuelle OTP encore en attente
 - **Date :** 2026-11-25
 - **Portée :** hébergement, builds, déploiements et previews de Namesia
 
 ## Contexte
 
-Namesia est une application Next.js 16 App Router avec rendu serveur, Route Handlers, administration Supabase Auth et PostgreSQL. Le déploiement Vercel est actuellement limité par le quota quotidien ; le dernier HEAD de `main` n'a pas pu être publié à cause d'un refus « Deployment rate limited ».
+Namesia est une application Next.js 16 App Router avec rendu serveur, Route Handlers, administration Supabase Auth et PostgreSQL. Le précédent hébergement Vercel a été supprimé après le transfert de la production vers Cloudflare Workers. L'application reste servie par `https://namesia.nabouna.workers.dev`.
 
-Le besoin réel est de réduire la dépendance au quota de builds Vercel, tout en conservant un hébergement compatible avec Next.js et un retour arrière simple.
+Le besoin est un hébergement compatible avec Next.js, dont les builds et déploiements sont maîtrisés dans GitHub Actions, sans dépendance à un quota de builds tiers.
 
 ## Challenge
 
@@ -31,7 +31,7 @@ Utiliser **Cloudflare Workers Free**, avec **GitHub Actions comme moteur de buil
 - Les fichiers lus à l'exécution via `node:fs` doivent être inclus explicitement dans le système de fichiers virtuel du Worker. Wrangler utilise `find_additional_modules`, une règle `Text` et `preserve_file_names` pour embarquer la police Open Graph à son chemin attendu ; les fichiers non importés ne sont pas présents automatiquement dans `/bundle`.
 - Les previews utilisent les lectures publiques du projet Supabase de production ; elles n'ont aucun chemin d'écriture applicatif disponible. Toute activation future de l'administration dans un environnement de test exige un projet Supabase de staging distinct et des secrets propres à cet environnement.
 - Aucun binding mutable de production n'est déclaré dans le bloc `previews`. Toute nouvelle ressource liée doit être explicitement évaluée et isolée.
-- Vercel, son domaine public et sa configuration restent inchangés pendant la validation. Aucun DNS ni alias public n'est basculé par cette migration.
+- L'ancien projet et le domaine Vercel ont été supprimés par le propriétaire ; Cloudflare Workers est désormais l'unique hébergement de production.
 
 ## Limites et conditions de validation
 
@@ -39,12 +39,12 @@ Le plan Workers Free impose notamment une limite CPU par invocation et une taill
 
 Les images Open Graph des fiches référencent explicitement l'image statique commune. Le rendu Satori dynamique par fiche a été retiré après des annulations HTTP 500 sur le Worker ; les métadonnées textuelles restent personnalisées.
 
-Avant toute bascule publique, valider sur l'URL `workers.dev` :
+La production publique utilise désormais l'URL `workers.dev`. Les vérifications automatisées exécutées par GitHub Actions couvrent :
 - le rendu SSR du catalogue et d'une fiche, l'API de comparaison et les Route Handlers ;
 - les réponses `401` des routes d'administration sans jeton ;
 - robots.txt, sitemap et l'image Open Graph statique commune, référencée par les fiches dont le titre et la description restent spécifiques ;
 - l'API Supabase Auth et le fournisseur e-mail activé (contrôle automatique) ;
-- l'envoi et le clic réels d'un OTP, l'URL de redirection autorisée et la session locale (contrôle manuel sur le domaine final) ;
+- l'activation du fournisseur e-mail Supabase (contrôle automatique). L'envoi et le clic réels d'un OTP, l'URL de redirection et la session restent à valider manuellement ;
 - la taille compressée du Worker et le CPU consommé sur les parcours représentatifs.
 
 Les environnements de test ne doivent contenir aucun secret privilégié. L'administration reste protégée par Supabase Auth et RLS en production et est entièrement désactivée dans les Previews.
@@ -58,7 +58,7 @@ Aucune clé Supabase privilégiée n'est ajoutée au Worker ou à GitHub Actions
 - Les previews ouvertes peuvent être consultées publiquement ; leur suppression automatique évite de conserver les environnements de PR fermées.
 - Les quotas Cloudflare d'exécution, de requêtes, de taille de Worker et d'observabilité restent applicables.
 - La migration n'est pas considérée terminée tant que le contrôle HTTP post-déploiement du Worker et les parcours SSR, Route Handlers, authentification OTP, cookies, catalogue, sitemap et images Open Graph n'ont pas été validés sur son URL `workers.dev`.
-- Le domaine Vercel et son déploiement restent le mécanisme de retour arrière jusqu'à la bascule finale.
+- Vercel n'est plus un mécanisme de retour arrière. Les versions et déploiements Worker Cloudflare constituent le mécanisme opérationnel de retour arrière.
 - Réexaminer OpenNext au regard de vinext après la première validation de production, sans changer d'adaptateur dans cette migration initiale.
 
 ## Sources vérifiées le 25 novembre 2026
