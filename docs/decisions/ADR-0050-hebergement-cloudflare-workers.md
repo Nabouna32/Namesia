@@ -22,9 +22,9 @@ Le besoin réel est de réduire la dépendance au quota de builds Vercel, tout e
 Utiliser **Cloudflare Workers Free**, avec **GitHub Actions comme moteur de build et d'orchestration** et **OpenNext for Cloudflare** comme adaptateur.
 
 - Le Worker de production s'appelle `namesia` et utilise le sous-domaine `nabouna.workers.dev` du compte Cloudflare.
-- Le build est produit dans GitHub Actions avec des versions d'outils explicitement épinglées dans le workflow.
+- Le build est produit dans GitHub Actions avec des versions d'outils explicitement épinglées dans les workflows.
 - La branche `main` déploie le Worker de production via `opennextjs-cloudflare deploy`, uniquement après fusion d'une PR. Le workflow peut aussi être lancé manuellement sur `main`.
-- Les Pull Requests internes créent ou mettent à jour une **Workers Preview** nommée `pr-<numéro>` via `wrangler preview`. Le workflow commente l'URL dans la PR, vérifie le HTML, le catalogue public et l'en-tête `X-Robots-Tag: noindex`, puis supprime la Preview à la fermeture de la PR.
+- Les Pull Requests internes créent ou mettent à jour une **Workers Preview** nommée `pr-<numéro>` via `wrangler preview`. Le workflow dédié `.github/workflows/cloudflare-preview.yml` commente l'URL dans la PR, vérifie le HTML, le catalogue public et l'en-tête `X-Robots-Tag: noindex`, puis supprime la Preview à la fermeture de la PR.
 - Les secrets Cloudflare ne sont jamais exposés aux PR provenant de forks : seuls les événements dont le dépôt source est le dépôt courant peuvent créer ou supprimer une Preview.
 - Les previews sont publiques par défaut sur `workers.dev`. Elles ne contiennent que le catalogue public ; leur URL reçoit le signal `noindex` de Cloudflare.
 - Le bloc Wrangler `previews` définit explicitement `NAMESIA_DEPLOYMENT_ENVIRONMENT=preview`, distinct de `production`. La page d'administration n'affiche pas son client d'authentification et toutes les routes d'administration refusent les requêtes en Preview. Aucune clé privilégiée Supabase n'est fournie.
@@ -49,7 +49,7 @@ Aucune clé Supabase privilégiée n'est ajoutée au Worker ou à GitHub Actions
 
 ## Conséquences
 
-- Les builds de contrôle et de déploiement Cloudflare sont exécutés par GitHub Actions, sans dépendre de Workers Builds.
+- Les builds de contrôle, de Preview et de production Cloudflare sont exécutés par GitHub Actions, sans dépendre de Workers Builds.
 - Les PR internes disposent d'une URL stable de Preview et d'une URL de déploiement propre à chaque mise à jour.
 - Les previews ouvertes peuvent être consultées publiquement ; leur suppression automatique évite de conserver les environnements de PR fermées.
 - Les quotas Cloudflare d'exécution, de requêtes, de taille de Worker et d'observabilité restent applicables.
