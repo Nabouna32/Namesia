@@ -530,6 +530,13 @@ margin: 12px 0 0;
   line-height: var(--md-sys-typescale-headline-medium-line-height);
 }
 
+.section-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+}
+
 .text-link {
   display: inline-flex;
   min-height: 48px;
