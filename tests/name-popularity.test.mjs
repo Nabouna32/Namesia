@@ -30,6 +30,7 @@ test("les entrées du classement ont des slugs uniques et des effectifs positifs
 });
 
 test("la page expose les profils publiés sans masquer les entrées hors catalogue", () => {
+  assert.match(page, /export const dynamic = "force-dynamic"/);
   assert.match(page, /publishedSlugs\.has\(entry\.slug\)/);
   assert.match(page, /Fiche non publiée sur Namesia/);
   assert.match(page, /NAME_POPULARITY_2025_SOURCE_URL/);
