@@ -8,7 +8,6 @@ on:
   push:
     branches:
       - main
-      - ci/workflow-security-audit
     paths:
       - ".github/workflows/**"
       - ".github/dependabot.yml"
@@ -25,7 +24,6 @@ concurrency:
 jobs:
   audit:
     name: Linter et auditer la configuration CI
-    if: github.event_name != 'push' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -54,33 +52,3 @@ jobs:
           advanced-security: "false"
           annotations: "true"
 
-  toolchain-lock:
-    name: Générer le lockfile des outils CI
-    if: github.event_name == 'push' && github.ref == 'refs/heads/ci/workflow-security-audit'
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    # Écriture temporaire limitée à cette branche pour enregistrer le lockfile généré par npm.
-    permissions:
-      contents: write
-    steps:
-      - name: Récupérer le dépôt
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          ref: ci/workflow-security-audit
-      - name: Installer Node.js
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
-        with:
-          node-version-file: .nvmrc
-      - name: Générer le manifeste et le lockfile des outils
-        run: npm install --save-dev --save-exact --package-lock-only --ignore-scripts --no-audit --no-fund @opennextjs/cloudflare@1.20.18 wrangler@4.148.0 @playwright/test@1.65.1 @axe-core/playwright@4.14.0
-      - name: Enregistrer le lockfile sur la branche
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package.json package-lock.json
-          if git diff --cached --quiet; then
-            echo "Le lockfile des outils est déjà à jour."
-            exit 0
-          fi
-          git commit -m "Verrouiller les outils de la CI"
-          git push origin HEAD:ci/workflow-security-audit
