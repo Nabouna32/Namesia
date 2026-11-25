@@ -18,6 +18,7 @@ const schema = await readFile(join(root, "schemas/fiche-prenom.schema.json"), "u
 const messageComponent = await readFile(join(root, "components/material3/Snackbar.tsx"), "utf8");
 const messageStyles = await readFile(join(root, "components/material3/Snackbar.module.css"), "utf8");
 const composantsDoc = await readFile(join(root, "docs/composants.md"), "utf8");
+const designDoc = await readFile(join(root, "docs/design.md"), "utf8");
 const architectureDoc = await readFile(join(root, "docs/architecture.md"), "utf8");
 const materialVerificationDoc = await readFile(join(root, "docs/material-3-verification.md"), "utf8");
 const navigationComponent = await readFile(join(root, "components/material3/NavigationDestinations.tsx"), "utf8");
@@ -383,9 +384,20 @@ test("le hero d'accueil sépare le récit et les outils dans une composition Fid
   assert.match(globalCss, /\.hero-content\s*\{[^}]*display:\s*grid/s);
   assert.match(globalCss, /\.hero-tools\s*\{[^}]*background:\s*var\(--md-sys-color-surface-container-lowest\)/s);
   assert.match(globalCss, /\.hero-copy\s*\{[^}]*color:\s*var\(--md-sys-color-on-surface-variant\)/s);
-  assert.match(globalCss, /@media \(min-width:\s*900px\)[\s\S]*?\.hero-content\s*\{[^}]*grid-template-columns:/);
+  assert.match(globalCss, /@media \(min-width:\s*840px\)[\s\S]*?\.hero-content\s*\{[^}]*grid-template-columns:/);
+  assert.match(globalCss, /@media \(min-width:\s*600px\) and \(max-width:\s*839px\)[\s\S]*?\.featured-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2/);
+  assert.doesNotMatch(globalCss, /@media \(min-width:\s*900px\)/);
 });
 
+
+test("les compositions suivent les classes de fenêtre AndroidX vérifiées", () => {
+  assert.match(globalCss, /@media \(max-width:\s*599px\)/);
+  assert.match(globalCss, /@media \(min-width:\s*600px\) and \(max-width:\s*839px\)/);
+  assert.match(globalCss, /@media \(min-width:\s*840px\)/);
+  assert.match(designDoc, /compact sous 600 dp, medium de 600 à 839 dp, expanded de 840 à 1199 dp/);
+  assert.ok(materialVerificationDoc.includes("https://developer.android.com/reference/androidx/window/core/layout/WindowSizeClass"));
+  assert.match(materialVerificationDoc, /vérifiés le 25 novembre 2026/);
+});
 
 test("les en-têtes de section restent lisibles et leurs actions accessibles sur mobile", () => {
   assert.match(globalCss, /\.text-link\s*\{[^}]*display:\s*inline-flex/s);
