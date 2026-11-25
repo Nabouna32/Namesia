@@ -291,7 +291,7 @@ export function FavoritesList({
               </select>
             </div>
           </div>
-          <p className={styles.count} role="status" aria-live="polite">
+          <p className={styles.count} role="status">
             {favorisFiltres.length === 0 && favorisProches.length > 0
               ? `Aucun résultat exact · ${favorisProches.length} ${favorisProches.length > 1 ? "suggestions proches" : "suggestion proche"} parmi vos favoris`
               : filtresActifs
