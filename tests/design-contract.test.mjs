@@ -332,6 +332,14 @@ test("les couleurs sémantiques sont des extensions M3 avec annonces accessibles
   assert.match(messageStyles, /md-sys-color-inverse-on-surface/);
   assert.ok(messageStyles.includes("box-shadow:") && messageStyles.includes("color-mix"));
   assert.match(messageComponent, /severity = "neutral"/);
+  assert.match(messageComponent, /action\?: ReactNode/);
+  assert.match(messageComponent, /dismissAction\?: ReactNode/);
+  assert.match(messageComponent, /actionOnNewLine\?: boolean/);
+  assert.match(messageComponent, /actionOnNewLine && action/);
+  assert.match(messageStyles, /--snackbar-action-color/);
+  assert.match(messageStyles, /--snackbar-dismiss-action-color/);
+  assert.match(messageStyles, /\.actionOnNewLine/);
+  assert.match(messageStyles, /min-height: 68px/);
   assert.match(messageComponent, /role={urgent \? "alert" : "status"}/);
   assert.doesNotMatch(allCss, /--md-sys-color-(?:success|warning|info)\b/);
 });
