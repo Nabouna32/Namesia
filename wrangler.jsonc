@@ -5,7 +5,9 @@
   "workers_dev": true,
   "upload_source_maps": true,
   "compatibility_date": "2026-11-25",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "vars": {
     "NAMESIA_DEPLOYMENT_ENVIRONMENT": "production"
   },
@@ -23,5 +25,16 @@
     "observability": {
       "enabled": true
     }
-  }
+  },
+  "find_additional_modules": true,
+  "base_dir": ".",
+  "preserve_file_names": true,
+  "rules": [
+    {
+      "type": "Text",
+      "globs": [
+        "assets/fonts/**/*.base64"
+      ]
+    }
+  ]
 }

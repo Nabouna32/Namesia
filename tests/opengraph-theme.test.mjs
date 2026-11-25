@@ -18,3 +18,15 @@ test("les aperçus Open Graph utilisent exclusivement les rôles Material 3 Fide
     assert.doesNotMatch(source, /linear-gradient\s*\(/i);
   }
 });
+
+
+test("la police Open Graph est incluse dans le système de fichiers virtuel du Worker", async () => {
+  const wrangler = JSON.parse(await readFile(new URL("../wrangler.jsonc", import.meta.url), "utf8"));
+  assert.equal(wrangler.find_additional_modules, true);
+  assert.equal(wrangler.base_dir, ".");
+  assert.equal(wrangler.preserve_file_names, true);
+  assert.ok(wrangler.rules.some((rule) =>
+    rule.type === "Text" && rule.globs.includes("assets/fonts/**/*.base64")
+  ));
+  await readFile(new URL("../assets/fonts/Roboto-Regular.ttf.base64", import.meta.url), "utf8");
+});
