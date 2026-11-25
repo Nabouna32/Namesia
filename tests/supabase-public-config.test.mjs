@@ -54,7 +54,10 @@ test("HTTP reste réservé au développement local", () => {
     assert.equal(getSupabasePublicConfig().url, "http://127.0.0.1:54321");
   });
   withEnvironment("http://127.0.0.1:54321", "sb_publishable_test", "production", () => {
-    assert.throws(getSupabasePublicConfig, /HTTPS en production/);
+    assert.throws(getSupabasePublicConfig, /HTTP est réservé/);
+  });
+  withEnvironment("http://remote.example", "sb_publishable_test", "development", () => {
+    assert.throws(getSupabasePublicConfig, /HTTP est réservé/);
   });
 });
 
