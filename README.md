@@ -35,6 +35,7 @@ La clé publishable peut être exposée au navigateur. La sécurité repose sur 
 Le stockage est relationnel : `names` porte l'identité stable, `name_profiles` les versions éditoriales et leurs rubriques en colonnes dédiées, et `name_profile_associations` les associations symboliques répétables. Le JSON n'est qu'un format d'import : ses champs sont validés puis répartis dans les colonnes et lignes relationnelles au cours d'une transaction SQL.
 
 Les anciennes tables documentaires, l'ancien stockage JSONB et les colonnes redondantes ont été supprimés. Les règles RLS et les privilèges SQL limitent la lecture publique aux fiches publiées et réservent les écritures aux administrateurs autorisés.
+
 ### Administration
 
 L'administration est disponible sur `/admin`. L'accès utilise Supabase Auth par lien e-mail et la liste privée `private.admin_users`. Le compte propriétaire initial est déjà autorisé en production. L'auto-inscription reste désactivée.
@@ -43,7 +44,7 @@ Tout nouveau compte doit être invité dans Supabase Auth puis ajouté explicite
 
 ### Contrat JSON
 
-Le contrat courant est schemas/fiche-prenom.schema.json, version 2.0.0. Il est uniquement utilisé à l'import ; la base stocke les rubriques dans des colonnes SQL et les associations dans des lignes dédiées. Il comprend :
+Le contrat courant est `schemas/fiche-prenom.schema.json`, version 2.0.0. Il est uniquement utilisé à l'import ; la base stocke les rubriques dans des colonnes SQL et les associations dans des lignes dédiées. Il comprend :
 
 - identity : slug, nom affiché et genre ;
 - content : introduction, origine, histoire, usages et tableau `symbolic_associations` obligatoire (vide si aucune association ne s’applique).
@@ -52,10 +53,10 @@ Le JSON ne contient ni identifiant de base, ni numéro de version, ni statut de 
 
 ### Commandes
 
-- npm run dev : serveur de développement ;
-- npm run typecheck : vérification TypeScript ;
-- npm run build : build de production ;
-- npm run start : serveur de production après build.
+- `npm run dev` : serveur de développement ;
+- `npm run typecheck` : vérification TypeScript ;
+- `npm run build` : build de production ;
+- `npm run start` : serveur de production après build.
 
 ## Référencement public
 
@@ -63,7 +64,11 @@ Le site publie un sitemap dynamique limité aux fiches effectivement publiées, 
 
 ## Déploiement
 
-Cloudflare Workers est l'hébergement de production cible : GitHub Actions construit l'application avec OpenNext, déploie le Worker `namesia`, puis vérifie sa disponibilité HTTP. Le workflow qualité contrôle séparément les tests, les types et le build Next.js. Vercel est conservé temporairement comme solution de retour arrière pendant la validation fonctionnelle et la bascule du domaine ; ses déploiements Preview restent désactivés. Ne pas supprimer le projet Vercel avant la validation des parcours applicatifs sur Cloudflare et la confirmation que le domaine public ne dépend plus de Vercel.
+Cloudflare Workers est l'hébergement de production : GitHub Actions construit l'application avec OpenNext, déploie le Worker `namesia`, puis vérifie sa disponibilité HTTP. Le workflow qualité contrôle séparément les tests, les types et le build Next.js.
+
+Les PR internes disposent d'une Workers Preview Cloudflare dédiée (`pr-<numéro>`). L'URL est publiée dans la conversation de la PR ; le workflow vérifie le rendu HTML, le catalogue public et l'en-tête `noindex`, puis supprime la Preview lorsque la PR est fermée. Les PR provenant de forks ne reçoivent jamais le jeton Cloudflare. Les previews utilisent uniquement les lectures publiques du catalogue ; l'interface et les routes d'administration y sont désactivées. Elles sont publiques sur `workers.dev`, mais Cloudflare ajoute `X-Robots-Tag: noindex`.
+
+Vercel est conservé temporairement comme solution de retour arrière pendant la validation fonctionnelle et la bascule du domaine ; ses déploiements Preview restent désactivés. Ne pas supprimer le projet Vercel avant la validation des parcours applicatifs sur Cloudflare et la confirmation que le domaine public ne dépend plus de Vercel.
 
 ## Règles éditoriales
 
@@ -71,16 +76,16 @@ Les contenus sont générés par IA et peuvent comporter des erreurs. L'enregist
 
 ## Règles de contribution
 
-La charte AGENTS.md s'applique à tout le dépôt, à chaque contribution humaine ou assistée par IA. Elle impose notamment le challenge critique systématique des demandes, propositions, décisions et de l'existant.
+La charte `AGENTS.md` s'applique à tout le dépôt, à chaque contribution humaine ou assistée par IA. Elle impose notamment le challenge critique systématique des demandes, propositions, décisions et de l'existant.
 
 ## Documentation canonique
 
-- Charte de contribution et de challenge : AGENTS.md
-- Standards techniques et règles de maintenabilité : docs/standards-techniques.md
-- Vision produit : docs/vision-produit.md
-- Architecture : docs/architecture.md
-- Modèle de données : docs/modele-donnees.md
-- Principes éditoriaux et transparence IA : docs/politique-editoriale.md
-- Production et import des fiches : docs/pipeline-generation-ia.md
-- Contrat JSON des fiches : schemas/fiche-prenom.schema.json
-- Décisions d'architecture : docs/decisions/
+- Charte de contribution et de challenge : `AGENTS.md`
+- Standards techniques et règles de maintenabilité : `docs/standards-techniques.md`
+- Vision produit : `docs/vision-produit.md`
+- Architecture : `docs/architecture.md`
+- Modèle de données : `docs/modele-donnees.md`
+- Principes éditoriaux et transparence IA : `docs/politique-editoriale.md`
+- Production et import des fiches : `docs/pipeline-generation-ia.md`
+- Contrat JSON des fiches : `schemas/fiche-prenom.schema.json`
+- Décisions d'architecture : `docs/decisions/`

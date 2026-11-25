@@ -6,11 +6,22 @@
   "upload_source_maps": true,
   "compatibility_date": "2026-11-25",
   "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "NAMESIA_DEPLOYMENT_ENVIRONMENT": "production"
+  },
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
   "observability": {
     "enabled": true
+  },
+  "previews": {
+    "vars": {
+      "NAMESIA_DEPLOYMENT_ENVIRONMENT": "preview"
+    },
+    "observability": {
+      "enabled": true
+    }
   }
 }
