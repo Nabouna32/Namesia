@@ -42,9 +42,11 @@ jobs:
           set -a
           source .env.example
           set +a
-          echo "NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL || 'https://namesia.nabouna.workers.dev' }}" >> "$GITHUB_ENV"
-          echo "NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL" >> "$GITHUB_ENV"
-          echo "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY" >> "$GITHUB_ENV"
+          {
+            echo "NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL || 'https://namesia.nabouna.workers.dev' }}"
+            echo "NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL"
+            echo "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
+          } >> "$GITHUB_ENV"
       - name: Construire l’application pour Cloudflare
         run: ./node_modules/.bin/opennextjs-cloudflare build
       - name: Créer ou mettre à jour la Preview Cloudflare
