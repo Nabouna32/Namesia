@@ -13,7 +13,7 @@ export function FeaturedNames({ names }: Props) {
       {names.map((name) => (
         <article className={styles.item} key={name.slug}>
           <Card as={Link} variant="elevated" interactive className="featured-card" href={`/prenoms/${name.slug}`}>
-            <span className="featured-letter">{name.initial}</span>
+            <span className="featured-letter" aria-hidden="true">{name.initial}</span>
             <span className="featured-bottom">
               <span className="featured-name">
                 <strong>{name.name}</strong>
