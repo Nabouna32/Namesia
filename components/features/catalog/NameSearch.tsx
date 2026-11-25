@@ -6,7 +6,7 @@ import type { NameIndexEntry } from "@/lib/names";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { GENDER_ICONS } from "@/lib/gender-icons";
 import styles from "./NameSearch.module.css";
-import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
+import { compareRelevance, normalizeSearchTerm, suggestSimilarNames } from "@/lib/name-search";
 import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
 import { Icon } from "@/components/material3/Icon";
 import { SearchBar } from "@/components/material3/SearchBar";
@@ -50,29 +50,29 @@ export function NameSearch({
     [prenoms]
   );
   const lettres = useMemo(
-    () => [...new Set(prenoms.map((prenom) => normaliserRecherche(prenom.initial)))].sort((a, b) => a.localeCompare(b, "fr")),
+    () => [...new Set(prenoms.map((prenom) => normalizeSearchTerm(prenom.initial)))].sort((a, b) => a.localeCompare(b, "fr")),
     [prenoms]
   );
 
   const resultats = useMemo(() => {
-    const terme = normaliserRecherche(recherche);
+    const terme = normalizeSearchTerm(recherche);
     return prenoms
       .filter((prenom) => {
-        const correspondAuNom = !terme || normaliserRecherche(prenom.name).includes(terme);
+        const correspondAuNom = !terme || normalizeSearchTerm(prenom.name).includes(terme);
         const correspondAuGenre = !genreActif || prenom.gender === genreActif;
-        const correspondALaLettre = !lettreActive || normaliserRecherche(prenom.initial) === lettreActive;
+        const correspondALaLettre = !lettreActive || normalizeSearchTerm(prenom.initial) === lettreActive;
         return correspondAuNom && correspondAuGenre && correspondALaLettre;
       })
-      .sort((a, b) => comparerPertinence(a, b, terme));
+      .sort((a, b) => compareRelevance(a, b, terme));
   }, [genreActif, lettreActive, prenoms, recherche]);
 
   const suggestions = useMemo(() => {
     if (resultats.length > 0) return [];
     const candidats = prenoms.filter((prenom) => (
       (!genreActif || prenom.gender === genreActif)
-      && (!lettreActive || normaliserRecherche(prenom.initial) === lettreActive)
+      && (!lettreActive || normalizeSearchTerm(prenom.initial) === lettreActive)
     ));
-    return suggererPrenomsProches(candidats, recherche);
+    return suggestSimilarNames(candidats, recherche);
   }, [genreActif, lettreActive, prenoms, recherche, resultats.length]);
 
   const filtresActifs = Boolean(recherche.trim() || genreActif || lettreActive);
