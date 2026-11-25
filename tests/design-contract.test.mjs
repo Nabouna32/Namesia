@@ -18,6 +18,7 @@ const schema = await readFile(join(root, "schemas/fiche-prenom.schema.json"), "u
 const messageComponent = await readFile(join(root, "components/material3/Snackbar.tsx"), "utf8");
 const messageStyles = await readFile(join(root, "components/material3/Snackbar.module.css"), "utf8");
 const composantsDoc = await readFile(join(root, "docs/composants.md"), "utf8");
+const architectureDoc = await readFile(join(root, "docs/architecture.md"), "utf8");
 const materialVerificationDoc = await readFile(join(root, "docs/material-3-verification.md"), "utf8");
 const navigationComponent = await readFile(join(root, "components/material3/NavigationDestinations.tsx"), "utf8");
 const comparisonSelectionComponent = await readFile(join(root, "components/features/comparison/ComparisonSelection.tsx"), "utf8");
@@ -337,6 +338,7 @@ test("les couleurs sémantiques sont des extensions M3 avec annonces accessibles
 
 test("toute nouvelle page doit suivre le registre de composants Material 3", () => {
   assert.match(composantsDoc, /Correspondance avec les composants Material 3/);
+  assert.match(architectureDoc, /`AlertDialog` encadre la confirmation de la publication publique/);
   assert.match(composantsDoc, /Contrat obligatoire pour toute nouvelle page/);
   assert.match(composantsDoc, /TopAppBar/);
   assert.match(composantsDoc, /NavigationBar/);
