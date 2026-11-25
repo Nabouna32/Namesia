@@ -1,5 +1,6 @@
 import { createClient, type SupabaseClient, type User } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/database.types";
+import { getSupabasePublicConfig } from "@/lib/supabase/config";
 
 type AdminAccess =
   | { supabase: SupabaseClient<Database>; user: User; error: null }
@@ -13,15 +14,15 @@ export async function requireAdmin(request: Request): Promise<AdminAccess> {
     return { supabase: null, user: null, error: { message: "Authentification requise.", status: 401 } };
   }
 
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-
-  if (!url || !key) {
-    console.error("Configuration Supabase absente pour une route administrateur.");
+  let config;
+  try {
+    config = getSupabasePublicConfig();
+  } catch {
+    console.error("Configuration Supabase invalide pour une route administrateur.");
     return { supabase: null, user: null, error: { message: "Service momentanément indisponible.", status: 503 } };
   }
 
-  const supabase = createClient<Database>(url, key, {
+  const supabase = createClient<Database>(config.url, config.key, {
     auth: {
       persistSession: false,
       autoRefreshToken: false,
