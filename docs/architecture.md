@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 3.87
+- **Version :** 3.88
 - **Mis à jour :** 2026-11-25
 
 ## Structure de la page
@@ -41,6 +41,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 
 ### Administration
 - Connexion via Supabase Auth par lien e-mail.
+- Les clients serveur, navigateur et administrateur sont typés avec `Database`, généré depuis le schéma PostgreSQL actif dans `lib/supabase/database.types.ts`. Les relations, colonnes et RPC sont donc contrôlées à la compilation ; les lectures du catalogue utilisent les types inférés, sans cast non vérifié.
 - Autorisation fondée sur la présence de l'identifiant Auth dans private.admin_users.
 - Import d'un fichier JSON ou d'un contenu collé.
 - Validation du contrat avant envoi.
