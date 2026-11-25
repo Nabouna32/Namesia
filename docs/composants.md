@@ -3,7 +3,7 @@
 - **Statut :** référence canonique des composants d'interface
 - **Mis à jour :** 2026-11-25
 
-Ce document est le point d'entrée unique pour composer l'interface. Les composants de présentation portent les noms officiels Material 3 et sont centralisés dans `components/material3/`. Les fonctions propres au produit sont isolées dans `components/features/`. Il n'existe pas de couche parallèle de primitives génériques nommées en français, ni de wrappers de convenance qui masquent le contrat M3.
+Ce document est le point d'entrée unique pour composer l'interface. Les ports Web des contrats Material 3 sont centralisés dans `components/material3/` ; les fonctions propres au produit sont isolées dans `components/features/`. Il n'existe pas de seconde bibliothèque de primitives ni de wrappers de convenance. Les ports locaux sont nécessaires parce qu'AndroidX Compose cible Android/Kotlin et que Material Web ne couvre pas le besoin stable complet ; ils ne sont pas présentés comme des composants AndroidX exécutés dans le navigateur. La décision, les alternatives et les limites sont détaillées dans [ADR-0037](decisions/ADR-0037-architecture-composants-material3.md).
 
 ## Architecture
 
@@ -25,7 +25,6 @@ components/
     InputChip.tsx
     Snackbar.tsx
     TopAppBar.tsx
-    MaterialThemeProvider.tsx
     Icon.tsx
     NavigationBar.tsx
     NavigationRail.tsx
@@ -91,7 +90,6 @@ Les primitives de présentation sont implémentées une seule fois dans `compone
 | `TopAppBar` | `material3/TopAppBar.tsx` | Barre supérieure du shell, marque et titre secondaire ; dimensions et couleurs centralisées dans le système M3. |
 | `NavigationBar` | `material3/NavigationBar.tsx` | Navigation de premier niveau compacte, `NavigationBarTokens.TallContainerHeight = 80.dp`, destinations, indicateur et libellés `label-medium`. |
 | `NavigationRail` | `material3/NavigationRail.tsx` | Même navigation de premier niveau sur fenêtres medium/expanded, `NavigationRail` de 80 dp et libellés `label-medium`. |
-| `MaterialThemeProvider` | `components/material3/MaterialThemeProvider.tsx` | Synchronise les schémas Fidelity/Rainbow calculés côté serveur et les changements de préférence système. |
 | `Icon` | `components/material3/Icon.tsx` | Registre local des tracés Google Material Symbols Rounded 400 ; le pictogramme masculin utilise un cercle et une flèche équilibrés sur la même grille ; les contrôles interactifs restent portés par Button ou IconButton. |
 
 ### Contrôles Web natifs

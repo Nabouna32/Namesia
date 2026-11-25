@@ -5,7 +5,6 @@ import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
-const provider = await readFile(join(root, "components/material3/MaterialThemeProvider.tsx"), "utf8");
 const theme = await readFile(join(root, "lib/material-theme.ts"), "utf8");
 const layout = await readFile(join(root, "app/layout.tsx"), "utf8");
 const packageJson = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
@@ -97,15 +96,19 @@ test("les extensions Namesia ne se font pas passer pour des rôles M3", () => {
   }
 });
 
-test("le rendu SSR, l'hydratation et la barre du navigateur partagent les mêmes schémas", () => {
+test("le CSS serveur adapte le thème et la barre du navigateur sans hydratation", async () => {
   assert.match(layout, /materialThemeCss/);
   assert.match(layout, /materialThemeViewportColors/);
   assert.match(theme, /getMaterialThemeTokens\(false\)/);
   assert.match(theme, /getMaterialThemeTokens\(true\)/);
   assert.match(theme, /color-scheme: light/);
   assert.match(theme, /color-scheme: dark/);
-  assert.match(provider, /applyMaterialTheme/);
-  assert.match(provider, /matchMedia\("\(prefers-color-scheme: dark\)"\)/);
+  assert.match(theme, /@media \(prefers-color-scheme: dark\)/);
+  assert.doesNotMatch(theme, /document\.documentElement|matchMedia|applyMaterialTheme/);
+  assert.doesNotMatch(layout, /MaterialThemeProvider/);
+  assert.equal((await readdir(join(root, "components/material3"))).includes("MaterialThemeProvider.tsx"), false);
+  assert.doesNotMatch(await readFile(join(root, "components/material3/index.ts"), "utf8"), /MaterialThemeProvider/);
+  assert.doesNotMatch(layout, /use client|useEffect/);
   assert.match(theme, /light: lightTokens\["--md-sys-color-background"\]/);
   assert.match(theme, /dark: darkTokens\["--md-sys-color-background"\]/);
 });

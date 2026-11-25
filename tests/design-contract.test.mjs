@@ -8,7 +8,6 @@ const root = fileURLToPath(new URL("../", import.meta.url));
 const globalCss = await readFile(join(root, "app/globals.css"), "utf8");
 const layoutSource = await readFile(join(root, "app/layout.tsx"), "utf8");
 const tokensCss = await readFile(join(root, "styles/material3/tokens.css"), "utf8");
-const provider = await readFile(join(root, "components/material3/MaterialThemeProvider.tsx"), "utf8");
 const theme = await readFile(join(root, "lib/material-theme.ts"), "utf8");
 const layout = await readFile(join(root, "app/layout.tsx"), "utf8");
 const home = await readFile(join(root, "app/page.tsx"), "utf8");
@@ -359,7 +358,9 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.match(composantsDoc, /FilterChip/);
   assert.match(composantsDoc, /SearchBar/);
   assert.match(composantsDoc, /components\/material3/);
-  assert.match(agents, /composants Material 3 par leur nom officiel/);
+  assert.match(agents, /doit porter le nom M3 officiel/);
+  assert.match(agents, /port React\/HTML local du contrat AndroidX est admis/);
+  assert.match(agents, /sans alias ni wrapper Namesia|wrappers Namesia/);
   assert.doesNotMatch(composantsDoc, /ChampRecherche|ChipFiltre|MessageStatut/);
   assert.match(composantsDoc, /SearchBarTokens/);
   assert.match(composantsDoc, /ButtonSmallTokens/);

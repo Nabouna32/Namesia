@@ -21,6 +21,8 @@ Cette organisation rendait la fidélité difficile à auditer : un nouveau compo
 
 ## Décision
 
+Le critère littéral « aucun composant maison » est techniquement incompatible avec la cible Next.js/React tant qu'aucune bibliothèque Web officielle, maintenue et complète ne fournit les composants requis. AndroidX Compose cible Kotlin/Android ; Material Web est en maintenance et ne couvre pas le shell ni plusieurs composants nécessaires. Remplacer les ports locaux par des composants tiers non officiels ou des composants expérimentaux dégraderait la provenance, la maintenance ou la fidélité. La bonne exigence n'est donc pas zéro code d'interface local, mais zéro primitive concurrente ou wrapper arbitraire : chaque port local doit être l'implémentation principale, unique et traçable d'un contrat AndroidX sur le Web. Cette décision constitue une dérogation explicite à la formulation littérale antérieure et doit être réexaminée si une alternative officielle stable et complète devient disponible.
+
 1. Les composants de présentation M3 vivent dans `components/material3/` et portent leur nom officiel : `Button`, `IconButton`, `Checkbox`, `SearchBar`, `TextField`, `FilterChip`, `InputChip`, `Card`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail` et `Icon`.
 2. Les composants propres au produit vivent dans `components/features/` et portent un nom métier anglais explicite. Ils composent les composants Material 3 ; ils ne redéfinissent pas leurs états ni leur apparence.
 3. Le comparateur compose `Checkbox`, port Web d'AndroidX : un input natif contrôlé conserve la sémantique et le clavier, tandis que l'indicateur, la cible et les états M3 restent centralisés.
@@ -41,6 +43,17 @@ Cette organisation rendait la fidélité difficile à auditer : un nouveau compo
 ## Migration
 
 Les anciennes décisions de bibliothèque et de noms d'adaptateurs sont marquées comme remplacées par cet ADR. Les composants historiques `components/ui/` et leurs imports sont supprimés ; les usages sont migrés vers les composants officiels et les compositions métier.
+
+## Inventaire des alternatives et décision
+
+| Surface | Alternative Web officielle | Décision Namesia |
+|---|---|---|
+| Button, IconButton, Checkbox, TextField, FilterChip, InputChip | Material Web fournit des éléments pour une partie de ces contrôles, mais son projet est en maintenance et ses contrats Lit ne sont pas AndroidX Compose. | Conserver les ports React/HTML AndroidX déjà utilisés : pas de migration vers une dépendance non pérenne ni de double pile. |
+| Card, NavigationBar, NavigationRail, SearchBar, Snackbar, TopAppBar | Absents de la couverture stable Material Web vérifiée au commit épinglé ; les éléments expérimentaux ne sont pas un contrat de production. | Conserver les ports uniquement lorsqu'ils sont utilisés ; utiliser les éléments HTML natifs pour les comportements de plateforme. |
+| Dialog | Élément HTML natif `dialog` disponible. | Utiliser `dialog` comme primitive de plateforme et appliquer le contrat visuel M3 ; pas de moteur modal maison. |
+| Select, liens, boutons de formulaire, typographie | Éléments HTML natifs. | Préférer directement `select`, `a`, `button`, `input` et les éléments typographiques sémantiques ; ne pas fabriquer de primitive locale. |
+
+L'inventaire est une décision d'architecture, pas une affirmation de parité parfaite. Les ports existants doivent être challengés individuellement lorsqu'ils sont touchés ; les composants inutilisés sont supprimés. Une alternative ne sera adoptée que si sa disponibilité stable, maintenance, accessibilité, API React/Next et fidélité sont démontrées.
 
 ## Validation
 

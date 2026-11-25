@@ -1,38 +1,27 @@
 version: 2
 
 updates:
+  # npm couvre toutes les dépendances déclarées, y compris celles de développement.
+  # Chaque proposition met aussi à jour le lockfile ; les versions préliminaires ne sont pas recherchées.
+  # Le délai de sept jours satisfait l'audit zizmor et laisse le temps de détecter une publication compromise.
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: weekly
-      day: monday
-      time: "08:00"
+      interval: cron
+      cronjob: "0 12 * * *"
       timezone: Europe/Paris
-    open-pull-requests-limit: 1
+    open-pull-requests-limit: 1000
     cooldown:
       default-days: 7
-    groups:
-      npm-minor-and-patch:
-        patterns:
-          - "*"
-        update-types:
-          - minor
-          - patch
 
+  # Les actions des workflows CI, de contrôle et de déploiement sont suivies séparément.
+  # Leurs SHA complets restent à vérifier contre le tag officiel avant fusion.
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: weekly
-      day: monday
-      time: "08:00"
+      interval: cron
+      cronjob: "0 12 * * *"
       timezone: Europe/Paris
-    open-pull-requests-limit: 1
+    open-pull-requests-limit: 1000
     cooldown:
       default-days: 7
-    groups:
-      actions-minor-and-patch:
-        patterns:
-          - "*"
-        update-types:
-          - minor
-          - patch

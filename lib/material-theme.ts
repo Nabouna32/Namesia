@@ -154,10 +154,3 @@ export const materialThemeViewportColors = {
   dark: darkTokens["--md-sys-color-background"]
 };
 
-export function applyMaterialTheme(isDark: boolean) {
-  const tokens = isDark ? darkTokens : lightTokens;
-  for (const [name, value] of Object.entries(tokens)) {
-    document.documentElement.style.setProperty(name, value);
-  }
-  document.documentElement.dataset.theme = isDark ? "dark" : "light";
-}
