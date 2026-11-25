@@ -10,6 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     { url: new URL("/", siteUrl).toString(), changeFrequency: "weekly", priority: 1 },
     { url: new URL("/prenoms", siteUrl).toString(), changeFrequency: "weekly", priority: 0.9 },
+    { url: new URL("/tendances", siteUrl).toString(), changeFrequency: "monthly", priority: 0.7 },
     ...prenoms.map((prenom) => ({
       url: new URL(`/prenoms/${prenom.slug}`, siteUrl).toString(),
       lastModified: prenom.publishedAt,
