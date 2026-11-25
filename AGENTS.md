@@ -1,5 +1,8 @@
 # AGENTS.md — Charte de travail de Namesia
 
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-25 09:22:27 (Europe/Paris)
+
 Cette charte s'applique à tout le dépôt, aux contributions humaines et aux agents IA.
 
 ## 1. Langue et traçabilité
@@ -81,6 +84,11 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - [ ] Aucun secret ni donnée personnelle inutile n'est introduit.
 
 ## 5. Documentation canonique
+
+- **Métadonnées documentaires obligatoires :** tout document Markdown maintenu du dépôt (AGENTS.md, README, documentation canonique et ADR) porte un numéro de version et une date/heure de dernière mise à jour au format `AAAA-MM-JJ HH:mm:ss (Europe/Paris)`. Incrémenter la version lors d'une évolution substantielle du contenu ou du contrat ; une correction purement typographique ne force pas une nouvelle version, mais actualise la date/heure.
+- **ADR :** ajouter en plus la date et l'heure exactes de la décision (`Décision prise le`), son statut et sa version. La date de décision est distincte de la date de dernière modification. Ne jamais antidater ni inventer une heure : si elle n'a pas été consignée à l'origine, le signaler explicitement et conserver l'historique Git comme source de traçabilité.
+- **Documents existants :** appliquer ces métadonnées lors de leur prochaine modification substantielle, sans créer une PR de masse ni inventer rétroactivement des dates. Pour connaître l'ancienneté d'un document non encore migré, consulter son historique Git.
+- **Audit de fraîcheur :** une date ancienne est un signal pour réexaminer la pertinence, les liens, les hypothèses et les décisions ; elle ne rend pas automatiquement le document obsolète. Une décision reste applicable tant qu'elle n'est pas explicitement remplacée, retirée ou révisée dans un ADR. Les documents de référence doivent être audités lorsque leur contexte change et lors des passages d'audit documentaire, en priorisant les plus anciens et les plus structurants.
 
 - Le dépôt Git est la mémoire durable du projet.
 - Toute PR qui change un comportement, un contrat, une architecture ou une décision met à jour les documents concernés dans la même PR.
