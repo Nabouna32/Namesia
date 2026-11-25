@@ -59,6 +59,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Le quota de 100 builds/déploiements par jour doit être préservé.
 - Les vérifications de PR et builds de contrôle sont exécutés dans GitHub Actions.
 - La configuration Vercel doit désactiver les previews et ignorer toute référence autre que main.
+- `ssoProtection.deploymentType` est `preview` : le domaine de production `namesia.vercel.app` reste public, tandis que les previews (désactivées) restent protégées. L'accès administrateur est assuré par Supabase OTP et RLS.
 - Ne jamais contourner ces règles avec une CLI ou une API. Toute exception à cette politique nécessite une autorisation explicite.
 
 ### Checklist de PR
