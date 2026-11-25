@@ -136,7 +136,7 @@ const additionalAndroidxSources = [
   ["IconButton.kt", ["IconButton", "minimumInteractiveComponentSize", "smallContainerSize", "48 x 48dp", "24 x 24 dp"]],
   ["IconButtonDefaults.kt", ["smallContainerSize", "standardShape", "LocalContentColor.current", "defaultIconButtonColors", "iconButtonVibrantColors", "StandardIconButtonTokens.Color", "DisabledOpacity"]],
   ["IconButtonTokens.kt", "StandardIconButtonTokens"],
-  ["SmallIconButtonTokens.kt", ["ContainerHeight", "40.0.dp", "IconSize", "24.0.dp", "ContainerShapeRound", "CornerFull", "PressedContainerShape", "CornerSmall"]],
+  ["SmallIconButtonTokens.kt", ["ContainerHeight", "40.0.dp", "IconSize", "24.0.dp", "ContainerShapeRound", "CornerFull"]],
   ["ElevatedCardTokens.kt", "ElevatedCardTokens"],
   ["FilledCardTokens.kt", "FilledCardTokens"],
   ["OutlinedCardTokens.kt", "OutlinedCardTokens"],
