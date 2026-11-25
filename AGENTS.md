@@ -105,6 +105,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Les migrations Supabase doivent rester alignées sur `supabase_migrations.schema_migrations` de l'instance active : chaque version appliquée possède un fichier dont le préfixe correspond exactement à `version`, et toute migration restante doit pouvoir s'exécuter dans l'ordre depuis le schéma courant.
 - Avant toute évolution SQL, comparer l'historique distant (`list_migrations`) au répertoire `supabase/migrations/`. Ne jamais conserver un doublon horodaté d'une migration déjà appliquée ni une séquence abandonnée qui crée puis détruit un modèle refusé. Une migration appliquée n'est jamais réécrite ; les corrections passent par une nouvelle migration additive.
 - Les migrations doivent être versionnées, relisibles, compatibles avec le schéma réel et vérifiées par la CI lorsque des contrôles automatisés sont pertinents.
+- Le type `Database` de `lib/supabase/database.types.ts` est généré depuis le schéma actif et appliqué à chaque client Supabase. Après une migration, régénérer ce fichier ; ne jamais contourner un client non typé avec `as unknown as` sur les résultats SQL. Valider à l'exécution les seules données qui franchissent une frontière externe non typée.
 
 ## Contrat design
 
