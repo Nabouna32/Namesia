@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import { useHistory } from "@/components/features/history/HistoryProvider";
 
 export function RecordVisit({ slug }: { slug: string }) {
-  const { pret, enregistrer } = useHistory();
+  const { ready, recordVisit } = useHistory();
 
   useEffect(() => {
-    if (pret) enregistrer(slug);
-  }, [slug, pret, enregistrer]);
+    if (ready) recordVisit(slug);
+  }, [slug, ready, recordVisit]);
 
   return null;
 }
