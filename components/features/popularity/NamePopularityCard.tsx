@@ -3,12 +3,15 @@ import { Card } from "@/components/material3/Card";
 import { getNamePopularity2025, NAME_POPULARITY_2025_SOURCE_URL } from "@/lib/name-popularity";
 import styles from "./NamePopularityCard.module.css";
 
-export function NamePopularityCard({ slug }: { slug: string }) {
+import type { GenrePrenom } from "@/lib/prenoms";
+
+export function NamePopularityCard({ slug, name, gender }: { slug: string; name: string; gender: GenrePrenom }) {
   const popularity = getNamePopularity2025(slug);
   if (!popularity) return null;
-  const rankLabel = popularity.rank === 1
-    ? popularity.gender === "Féminin" ? "1re" : "1er"
-    : `${popularity.rank}e`;
+  if (popularity.name !== name || popularity.gender !== gender) {
+    throw new Error(`Le classement Insee ne correspond pas à la fiche publiée : ${slug}.`);
+  }
+  const rankLabel = popularity.rank === 1 ? "1er" : `${popularity.rank}e`;
 
   return (
     <Card as="section" variant="outlined" interactive={false} className={styles.card}>
