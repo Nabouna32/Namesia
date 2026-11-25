@@ -43,7 +43,8 @@ Avant toute bascule publique, valider sur l'URL `workers.dev` :
 - le rendu SSR du catalogue et d'une fiche, l'API de comparaison et les Route Handlers ;
 - les réponses `401` des routes d'administration sans jeton ;
 - robots.txt, sitemap et l'image Open Graph statique commune, référencée par les fiches dont le titre et la description restent spécifiques ;
-- l'authentification OTP, les redirections Supabase et le maintien de session sur le domaine final ;
+- l'API Supabase Auth et le fournisseur e-mail activé (contrôle automatique) ;
+- l'envoi et le clic réels d'un OTP, l'URL de redirection autorisée et la session locale (contrôle manuel sur le domaine final) ;
 - la taille compressée du Worker et le CPU consommé sur les parcours représentatifs.
 
 Les environnements de test ne doivent contenir aucun secret privilégié. L'administration reste protégée par Supabase Auth et RLS en production et est entièrement désactivée dans les Previews.
