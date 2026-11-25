@@ -11,17 +11,17 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default async function HomePage() {
-  const prenoms = await getNamesIndex();
-  const decalageDuJour = prenoms.length > 0
-    ? Math.floor(Date.now() / 86_400_000) % prenoms.length
+  const names = await getNamesIndex();
+  const dailyOffset = names.length > 0
+    ? Math.floor(Date.now() / 86_400_000) % names.length
     : 0;
-  const nombreMisEnAvant = Math.min(3, prenoms.length);
-  const prenomsMisEnAvant: NameIndexEntry[] = [];
+  const featuredCount = Math.min(3, names.length);
+  const featuredNames: NameIndexEntry[] = [];
 
-  for (let position = 0; position < nombreMisEnAvant; position += 1) {
-    const indexCatalogue = (decalageDuJour + Math.floor(position * prenoms.length / nombreMisEnAvant)) % prenoms.length;
-    const prenom = prenoms[indexCatalogue];
-    if (prenom) prenomsMisEnAvant.push(prenom);
+  for (let position = 0; position < featuredCount; position += 1) {
+    const catalogIndex = (dailyOffset + Math.floor(position * names.length / featuredCount)) % names.length;
+    const name = names[catalogIndex];
+    if (name) featuredNames.push(name);
   }
 
   return (
@@ -35,21 +35,21 @@ export default async function HomePage() {
           </div>
           <div className="hero-tools">
             <h2>Un prénom en tête ?</h2>
-            <NameSearch prenoms={prenoms} compact />
-            {prenoms.length > 0 && <RandomDiscovery prenoms={prenoms} />}
+            <NameSearch names={names} compact />
+            {names.length > 0 && <RandomDiscovery names={names} />}
             <p className="ai-disclaimer">Les contenus sont générés par IA et peuvent comporter des erreurs.</p>
           </div>
         </div>
       </section>
-      <RecentNames prenoms={prenoms} />
+      <RecentNames names={names} />
       <section className="section explore-section">
         <div className="container">
           <div className="section-heading">
             <div><span className="eyebrow">À explorer</span><h2>Les prénoms à découvrir</h2></div>
             <Link className="text-link" href="/prenoms">Tous les prénoms <Icon name="arrow-up-right" size={18} /></Link>
           </div>
-          <FeaturedNames prenoms={prenomsMisEnAvant} />
-          {prenoms.length === 0 && <p className="empty-state">Le catalogue sera bientôt disponible.</p>}
+          <FeaturedNames names={featuredNames} />
+          {names.length === 0 && <p className="empty-state">Le catalogue sera bientôt disponible.</p>}
         </div>
       </section>
     </main>
