@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.61
+- **Version :** 4.62
 - **Mis à jour :** 2026-11-25
 
 ## 1. Direction
@@ -16,7 +16,7 @@ La marque Namesia utilise les rôles Fidelity, y compris pour son monogramme. Le
 
 ## 2. Source de vérité des couleurs
 
-La palette est calculée avec la bibliothèque officielle Google **`@material/material-color-utilities`**. `lib/material-theme.ts` est l’unique générateur : il calcule les schémas clair et sombre, produit les déclarations CSS intégrées au `<head>` dès le rendu serveur, puis `MaterialThemeProvider` réapplique exactement les mêmes valeurs lorsque la préférence système change. Le CSS des composants ne contient donc aucune palette de secours indépendante. Le thème est construit avec :
+La palette est calculée avec la bibliothèque officielle Google **`@material/material-color-utilities`**. `lib/material-theme.ts` est l’unique générateur : il calcule les schémas clair et sombre et produit les déclarations CSS intégrées au `<head>` dès le rendu serveur. La règle CSS `@media (prefers-color-scheme: dark)` applique directement le schéma sombre et suit les changements de préférence sans JavaScript, hydratation ni synchronisation DOM. Le CSS des composants ne contient donc aucune palette de secours indépendante. Le thème est construit avec :
 - couleur source primaire : `#0B57D0`, bleu Google `baseline_primary_600` documenté dans le thème Android de Chromium. C'est un choix explicite de source Namesia, pas une affirmation selon laquelle le bleu serait la baseline AndroidX Material 3 : celle-ci conserve le violet `#6750A4`. Fidelity calcule les rôles à partir du bleu source, qui n'est jamais recopié directement dans les composants. Le résultat reste la variante Fidelity demandée, pas un schéma statique Tonal Spot ;
 - variante du thème d'interface : `Variant.FIDELITY` ;
 - variante complémentaire des catégories : `Variant.RAINBOW`, calculée séparément avec la même couleur source ;
@@ -26,7 +26,7 @@ La palette est calculée avec la bibliothèque officielle Google **`@material/ma
 - niveau de contraste standard : `0` ;
 - schémas clair et sombre recalculés selon `prefers-color-scheme`.
 
-Le générateur expose les rôles système sous leurs noms M3 exacts `--md-sys-color-*`. Les rôles absents provoquent une erreur explicite : aucun rôle n’est silencieusement ignoré. Le rendu initial et le thème après hydratation proviennent du même calcul, sans palette statique approximative ni bascule visuelle vers une autre variante.
+Le générateur expose les rôles système sous leurs noms M3 exacts `--md-sys-color-*`. Les rôles absents provoquent une erreur explicite : aucun rôle n’est silencieusement ignoré. Le rendu initial et les changements de préférence proviennent du même CSS généré côté serveur, sans palette statique approximative, hydratation ni bascule visuelle vers une autre variante.
 
 La couleur source est fixe et maîtrisée par Namesia : le navigateur n'a pas accès au fond d'écran Android et le site ne prétend donc pas récupérer la couleur dynamique du téléphone. Une future personnalisation de la couleur source doit rester une décision explicite, pas une collecte implicite.
 
@@ -131,7 +131,7 @@ L'application occupe au minimum la hauteur de la fenêtre avec une colonne flex.
 - `@material/material-color-utilities` génère les rôles Fidelity/Rainbow et les quatre rôles des couleurs sémantiques personnalisées ; aucun autre moteur de thème n'est ajouté.
 - Les images Open Graph du site et des fiches utilisent le schéma clair généré par `getMaterialThemeTokens(false)` : fond, surfaces, textes, monogramme et accents proviennent des rôles Fidelity. Elles ne définissent aucune couleur hexadécimale ni dégradé de marque parallèle.
 - Les références de composants sont les guides M3 et les sources AndroidX Compose Material 3 ; les ports React/HTML portent les noms M3 et sont centralisés dans `components/material3/`.
-- `lib/material-theme.ts` génère le CSS Fidelity/Rainbow initial et les couleurs de barre navigateur ; `components/material3/MaterialThemeProvider.tsx` synchronise les mêmes valeurs avec les changements de préférence système.
+- `lib/material-theme.ts` génère le CSS Fidelity/Rainbow et les couleurs de barre navigateur. Le navigateur applique les schémas clair/sombre avec `prefers-color-scheme` ; aucune couche React cliente n'est nécessaire.
 - `app/layout.tsx` charge Roboto via `next/font/google` et expose `--font-roboto` à tous les rôles typographiques ; les tokens ne désignent jamais une famille non chargée.
 - `components/material3/TopAppBar.tsx`, `NavigationBar.tsx` et `NavigationRail.tsx` portent le shell ; `NavigationDestinations.tsx` centralise les quatre destinations sans dupliquer leurs liens ni leurs états.
 - `components/material3/` contient les composants de présentation M3 ; `components/features/` contient les compositions propres au produit.
