@@ -20,7 +20,7 @@ Retenir l'option 3 pour les écosystèmes présents dans le dépôt :
 - **npm**, à la racine : dépendances directes et transitives, de production comme de développement. Dependabot suit les manifestes et le fichier de verrouillage ; les dépendances de développement ne sont pas exclues.
 - **GitHub Actions**, à la racine : actions référencées par les workflows de CI, de contrôle et de déploiement.
 
-Les deux écosystèmes sont vérifiés **chaque jour à 12 h, fuseau `Europe/Paris`**. Chaque mise à jour est proposée dans une PR distincte : aucun groupe, aucune période de refroidissement et une limite de PR suffisamment haute pour ne pas réduire artificiellement le flux de propositions (1 000 par écosystème).
+Les deux écosystèmes sont vérifiés **tous les jours calendaires à 12 h, fuseau `Europe/Paris`**, avec le calendrier cron `0 12 * * *`. Le choix de cron est intentionnel : l'intervalle Dependabot `daily` ne s'exécute que du lundi au vendredi. Chaque mise à jour est proposée dans une PR distincte : aucun groupe, aucune période de refroidissement et une limite de PR suffisamment haute pour ne pas réduire artificiellement le flux de propositions (1 000 par écosystème).
 
 Les mises à jour de sécurité Dependabot restent également activables par les mécanismes de sécurité GitHub et ne sont pas retardées par la cadence planifiée.
 
