@@ -3,8 +3,8 @@
 import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { PrenomIndex } from "@/lib/prenoms";
-import { GenreIcon } from "@/components/features/names/GenreIcon";
-import { GENRE_ICONS } from "@/lib/genre-icons";
+import { GenderIcon } from "@/components/features/names/GenderIcon";
+import { GENDER_ICONS } from "@/lib/gender-icons";
 import styles from "./NameSearch.module.css";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
@@ -191,7 +191,7 @@ export function NameSearch({
                   <FilterChip
                     key={genre}
                     label={genre}
-                    leadingIcon={<Icon name={GENRE_ICONS[genre]} size={18} />}
+                    leadingIcon={<Icon name={GENDER_ICONS[genre]} size={18} />}
                     iconOnly
                     selected={genreActif === genre}
                     onClick={() => changerGenre(genre)}
@@ -262,7 +262,7 @@ export function NameSearch({
                       <span className="name-initial">{prenom.lettre}</span>
                       <span>
                         <strong>{prenom.nom}</strong>
-                        <GenreIcon genre={prenom.genre} />
+                        <GenderIcon gender={prenom.genre} />
                       </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Card>
@@ -297,7 +297,7 @@ export function NameSearch({
                       <span className="name-initial">{prenom.lettre}</span>
                       <span>
                         <strong>{prenom.nom}</strong>
-                        <GenreIcon genre={prenom.genre} />
+                        <GenderIcon gender={prenom.genre} />
                       </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Card>
