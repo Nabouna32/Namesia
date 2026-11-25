@@ -186,36 +186,6 @@ export async function getNamesBySlugs(slugs: string[]): Promise<Name[]> {
   return data.map(mapNameProfile);
 }
 
-export type NameOpenGraph = Pick<Name, "slug" | "name" | "initial" | "gender">;
-
-export const getNameOpenGraphBySlug = cache(async (slug: string): Promise<NameOpenGraph | null> => {
-  const supabase = createSupabaseServerClient();
-  const { data, error } = await supabase
-    .from("names")
-    .select("slug, display_name, gender, name_profiles!inner(status, published_at)")
-    .eq("slug", slug)
-    .eq("name_profiles.status", "publie")
-    .not("name_profiles.published_at", "is", null)
-    .maybeSingle();
-
-  if (error) {
-    console.error(`Échec du chargement de l’aperçu Open Graph "${slug}" :`, error);
-    throw new Error("L’aperçu de cette fiche est momentanément indisponible.");
-  }
-
-  if (!data) return null;
-  if (data.name_profiles.length !== 1) {
-    throw new Error(`Le prénom "${slug}" doit avoir exactement une version publiée.`);
-  }
-
-  return {
-    slug: data.slug,
-    name: data.display_name,
-    initial: getInitial(data.display_name),
-    gender: getGenderLabel(data.gender)
-  };
-});
-
 export const getNameBySlug = cache(async (slug: string): Promise<Name | null> => {
   const supabase = createSupabaseServerClient();
   const { data, error } = await supabase

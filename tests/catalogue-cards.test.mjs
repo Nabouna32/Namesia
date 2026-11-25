@@ -17,7 +17,6 @@ const discovery = await read("../components/features/discovery/RandomDiscovery.t
 const discoveryStyles = await read("../components/features/discovery/RandomDiscovery.module.css");
 const comparator = await read("../components/features/comparison/NameComparator.tsx");
 const profile = await read("../app/prenoms/[slug]/page.tsx");
-const openGraph = await read("../app/prenoms/[slug]/opengraph-image.tsx");
 const favoriteButton = await read("../components/features/favorites/FavoriteButton.tsx");
 
 test("les quatre genres ont une correspondance SVG exhaustive et centralisée", () => {
@@ -49,8 +48,7 @@ test("les vues de prénoms affichent le pictogramme sans libellé visible", () =
     assert.doesNotMatch(source, /<small>\{name\.gender\}<\/small>/);
     assert.doesNotMatch(source, /className="profile-tag">\{name\.gender\}/);
   }
-  assert.doesNotMatch(openGraph, /GENDER_ICONS/);
-  assert.match(openGraph, /\{name\.gender\}/);
+  assert.doesNotMatch(profile, /twitter:\s*\{[^}]*images:/s);
 });
 
 test("la découverte aléatoire affiche le pictogramme du prénom sélectionné", () => {

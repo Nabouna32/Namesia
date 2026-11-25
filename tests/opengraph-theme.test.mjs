@@ -3,8 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 const chemins = [
-  new URL("../app/opengraph-image.tsx", import.meta.url),
-  new URL("../app/prenoms/[slug]/opengraph-image.tsx", import.meta.url)
+  new URL("../app/opengraph-image.tsx", import.meta.url)
 ];
 
 test("les aperçus Open Graph utilisent exclusivement les rôles Material 3 Fidelity", async () => {
@@ -32,9 +31,8 @@ test("la police Open Graph est incluse dans le système de fichiers virtuel du W
 });
 
 
-test("l'image d'une fiche évite les composants SVG interactifs et rend le genre en texte", async () => {
-  const profileImage = await readFile(new URL("../app/prenoms/[slug]/opengraph-image.tsx", import.meta.url), "utf8");
-  assert.doesNotMatch(profileImage, /components\/material3\/Icon/);
-  assert.doesNotMatch(profileImage, /GENDER_ICONS/);
-  assert.match(profileImage, /\{name\.gender\}/);
+test("les fiches héritent de l’image Open Graph statique commune", async () => {
+  const profilePage = await readFile(new URL("../app/prenoms/[slug]/page.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(profilePage, /images:\s*\[/);
+  await assert.rejects(readFile(new URL("../app/prenoms/[slug]/opengraph-image.tsx", import.meta.url)));
 });
