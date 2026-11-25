@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { PrenomIndex } from "@/lib/prenoms";
 import styles from "./FeaturedNames.module.css";
-import { GenreIcon } from "@/components/features/names/GenreIcon";
+import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { Icon } from "@/components/material3/Icon";
 import { Card } from "@/components/material3/Card";
 
@@ -17,7 +17,7 @@ export function FeaturedNames({ prenoms }: Props) {
             <span className="featured-bottom">
               <span className="featured-name">
                 <strong>{prenom.nom}</strong>
-                <GenreIcon className={styles.gender} genre={prenom.genre} />
+                <GenderIcon className={styles.gender} gender={prenom.genre} />
               </span>
               <span className="featured-action">Découvrir <b><Icon name="arrow-up-right" size={18} /></b></span>
             </span>
