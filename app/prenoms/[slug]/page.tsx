@@ -48,10 +48,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: "Namesia",
       title: name.name,
       description: name.introduction,
-      url: `/prenoms/${name.slug}`
+      url: `/prenoms/${name.slug}`,
+      images: ["/opengraph-image"]
     },
     twitter: {
-      card: "summary_large_image"
+      card: "summary_large_image",
+      images: ["/opengraph-image"]
     }
   } : {};
 }
