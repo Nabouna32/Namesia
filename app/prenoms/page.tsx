@@ -4,7 +4,7 @@ import { Icon } from "@/components/material3/Icon";
 import { NameSearch } from "@/components/features/catalog/NameSearch";
 import { jsonLd } from "@/lib/json-ld";
 import { getNamesIndex } from "@/lib/names";
-import { lireNombreVisible } from "@/lib/navigation-prenoms";
+import { lireNombreVisible } from "@/lib/navigation-names";
 import { siteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
@@ -35,24 +35,24 @@ type Props = {
   }>;
 };
 
-function premierParametre(value: string | string[] | undefined): string {
+function getFirstParam(value: string | string[] | undefined): string {
   return Array.isArray(value) ? value[0] ?? "" : value ?? "";
 }
 
-function normaliserFiltre(value: string): string {
+function normalizeFilter(value: string): string {
   return value.trim().normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("fr");
 }
 
 export default async function NamesPage({ searchParams }: Props) {
-  const [parametres, prenoms] = await Promise.all([searchParams, getNamesIndex()]);
-  const rechercheInitiale = premierParametre(parametres.q);
-  const nombreVisibleInitial = lireNombreVisible(parametres.limite, Math.max(24, Math.ceil(prenoms.length / 24) * 24));
-  const genreDemande = premierParametre(parametres.genre);
-  const lettreDemandee = normaliserFiltre(premierParametre(parametres.lettre));
+  const [searchParams, names] = await Promise.all([searchParams, getNamesIndex()]);
+  const initialSearch = getFirstParam(searchParams.q);
+  const initialVisibleCount = lireNombreVisible(searchParams.limite, Math.max(24, Math.ceil(names.length / 24) * 24));
+  const requestedGender = getFirstParam(searchParams.genre);
+  const requestedLetter = normalizeFilter(getFirstParam(searchParams.lettre));
 
-  const lettresDisponibles = new Set(prenoms.map((prenom) => normaliserFiltre(prenom.initial)));
-  const genreInitial = prenoms.find((prenom) => prenom.gender === genreDemande)?.gender ?? null;
-  const lettreInitiale = lettresDisponibles.has(lettreDemandee) ? lettreDemandee : null;
+  const availableInitials = new Set(names.map((name) => normalizeFilter(name.initial)));
+  const initialGender = names.find((name) => name.gender === requestedGender)?.gender ?? null;
+  const initialLetter = availableInitials.has(requestedLetter) ? requestedLetter : null;
 
   const catalogueData = {
     "@context": "https://schema.org",
@@ -63,14 +63,14 @@ export default async function NamesPage({ searchParams }: Props) {
     inLanguage: "fr-FR",
     mainEntity: {
       "@type": "ItemList",
-      numberOfItems: prenoms.length,
-      itemListElement: prenoms.map((prenom, index) => ({
+      numberOfItems: names.length,
+      itemListElement: names.map((name, index) => ({
         "@type": "ListItem",
         position: index + 1,
         item: {
           "@type": "Thing",
-          name: prenom.name,
-          url: new URL(`/prenoms/${prenom.slug}`, siteUrl).toString()
+          name: name.name,
+          url: new URL(`/prenoms/${name.slug}`, siteUrl).toString()
         }
       }))
     }
@@ -85,12 +85,12 @@ export default async function NamesPage({ searchParams }: Props) {
         <p className="page-intro">Des prénoms d'ici et d'ailleurs, leurs origines, leurs histoires et les traditions qui les accompagnent.</p>
         <p><Link className="text-link" href="/tendances">Voir les tendances 2025 <Icon name="arrow-up-right" size={18} /></Link></p>
         <NameSearch
-          prenoms={prenoms}
-          synchroniserUrl
-          initialRecherche={rechercheInitiale}
-          initialGenre={genreInitial}
-          initialLettre={lettreInitiale}
-          initialNombreVisible={nombreVisibleInitial}
+          names={names}
+          syncUrl
+          initialRecherche={initialSearch}
+          initialGenre={initialGender}
+          initialLettre={initialLetter}
+          initialNombreVisible={initialVisibleCount}
         />
       </div>
     </main>
