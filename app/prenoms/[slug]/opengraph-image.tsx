@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { getPrenom } from "@/lib/prenoms";
+import { getNameBySlug } from "@/lib/names";
 import { Icon } from "@/components/material3/Icon";
 import { GENDER_ICONS } from "@/lib/gender-icons";
 import { chargerPolicesOpenGraph } from "@/lib/polices-open-graph";
@@ -15,13 +15,13 @@ type Props = { params: Promise<{ slug: string }> };
 
 export default async function Image({ params }: Props) {
   const { slug } = await params;
-  const prenom = await getPrenom(slug);
+  const prenom = await getNameBySlug(slug);
   if (!prenom) return new Response("Fiche introuvable", { status: 404 });
 
   const extrait = prenom.introduction.length > 150
     ? `${prenom.introduction.slice(0, 147).trimEnd()}…`
     : prenom.introduction;
-  const tailleNom = Math.min(108, Math.max(48, Math.floor(1050 / (prenom.nom.length * 0.58))));
+  const tailleNom = Math.min(108, Math.max(48, Math.floor(1050 / (prenom.name.length * 0.58))));
 
   const theme = getMaterialThemeTokens(false);
 
@@ -73,7 +73,7 @@ export default async function Image({ params }: Props) {
           fontSize: tailleNom,
           lineHeight: 1.04,
           letterSpacing: -2
-        }}>{prenom.nom}<span style={{ color: theme["--md-sys-color-primary"] }}>.</span></div>
+        }}>{prenom.name}<span style={{ color: theme["--md-sys-color-primary"] }}>.</span></div>
         <div style={{
           maxWidth: 1000,
           color: theme["--md-sys-color-on-surface-variant"],
@@ -87,14 +87,14 @@ export default async function Image({ params }: Props) {
             background: theme["--md-sys-color-secondary-container"],
             color: theme["--md-sys-color-on-secondary-container"],
             fontSize: 17
-          }}><Icon name={GENDER_ICONS[prenom.genre]} size={24} /></div>
+          }}><Icon name={GENDER_ICONS[prenom.gender]} size={24} /></div>
           <div style={{
             padding: "8px 16px",
             borderRadius: 20,
             background: theme["--md-sys-color-secondary-container"],
             color: theme["--md-sys-color-on-secondary-container"],
             fontSize: 17
-          }}>Lettre {prenom.lettre}</div>
+          }}>Lettre {prenom.initial}</div>
         </div>
       </div>
       <div style={{ color: theme["--md-sys-color-on-surface-variant"], fontSize: 16 }}>ORIGINE · HISTOIRE · USAGES</div>
