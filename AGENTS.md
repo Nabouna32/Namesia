@@ -52,17 +52,12 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Ne jamais déclarer un test, build ou contrôle réussi sans que la CI GitHub Actions l'ait confirmé.
 - Toutes les actions GitHub (`uses`) sont épinglées sur un SHA de commit complet à 40 caractères, avec le tag de version conservé en commentaire. Avant une mise à jour, vérifier que le SHA correspond au tag officiel et relire les changements amont ; ne jamais revenir à une référence de tag mutable. Le checkout désactive `persist-credentials` sauf besoin Git en écriture explicitement justifié.
 
-### Politique Vercel et quota
+### Déploiement et CI
 
-- Aucun déploiement Preview Vercel, automatique ou manuel.
-- Vercel ne construit et ne déploie que main après fusion d'une PR.
-- Aucun push de branche de travail ne doit déclencher de build Vercel.
-- Le quota de 100 builds/déploiements par jour doit être préservé.
-- L'Ignored Build Step n'économise pas le quota : Vercel compte les builds annulés à cette étape comme des déploiements complets. Ne pas ajouter de filtre docs-only dans l'espoir de réduire la consommation.
-- Les vérifications de PR et builds de contrôle sont exécutés dans GitHub Actions.
-- La configuration Vercel doit désactiver les previews et ignorer toute référence autre que main.
-- `ssoProtection.deploymentType` est `preview` : le domaine de production `namesia.vercel.app` reste public, tandis que les previews (désactivées) restent protégées. L'accès administrateur est assuré par Supabase OTP et RLS.
-- Ne jamais contourner ces règles avec une CLI ou une API. Toute exception à cette politique nécessite une autorisation explicite.
+- Cloudflare Workers est l'unique hébergement de production ; GitHub Actions est l'unique moteur de build, de vérification et de déploiement.
+- Les PR internes peuvent créer une Workers Preview isolée ; les secrets Cloudflare ne sont jamais exposés aux forks.
+- Seule la branche `main`, après fusion d'une PR, déploie la production. Le lancement manuel du workflow est réservé à `main`.
+- Les vérifications de PR et les contrôles visuels s'exécutent dans GitHub Actions ; aucun hébergeur tiers de build ou de déploiement n'est requis.
 
 ### Checklist de PR
 
