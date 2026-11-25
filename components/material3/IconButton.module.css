@@ -1,0 +1,65 @@
+.button {
+  position: relative;
+  isolation: isolate;
+  display: inline-grid;
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  min-height: 48px;
+  flex: 0 0 48px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--md-sys-shape-corner-full);
+  background: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.button::after {
+  position: absolute;
+  z-index: -1;
+  inset: 4px;
+  border-radius: var(--md-sys-shape-corner-full);
+  background: currentColor;
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.button > * {
+  position: relative;
+  z-index: 1;
+}
+
+.button svg {
+  width: 24px;
+  height: 24px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover:not(:disabled)::after {
+    opacity: var(--md-sys-state-hover-state-layer-opacity);
+  }
+}
+
+.button:focus-visible::after {
+  opacity: var(--md-sys-state-focus-state-layer-opacity);
+}
+
+.button:active:not(:disabled)::after {
+  opacity: var(--md-sys-state-pressed-state-layer-opacity);
+}
+
+.button:disabled {
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button::after {
+    transition: none;
+  }
+}
