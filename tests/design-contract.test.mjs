@@ -157,7 +157,7 @@ test("les contrôles des favoris conservent l'indicateur global de focus", () =>
   assert.doesNotMatch(favorisStyles, /select:focus-visible/);
   assert.match(favorisStyles, /\.importButton input\s*\{[^}]*position:\s*absolute;[^}]*inset:\s*0;[^}]*width:\s*100%;[^}]*height:\s*100%;[^}]*opacity:\s*0;/s);
   assert.doesNotMatch(favorisStyles, /\.importButton input\s*\{[^}]*clip\s*:/s);
-  assert.match(globalCss, /input:focus-visible/);
+  assert.match(globalCss, /input:not\(\[type="search"\]\):focus-visible/);
 });
 
 test("les états hover sont réservés aux appareils qui disposent d'un pointeur fin", () => {
