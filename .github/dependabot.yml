@@ -1,8 +1,9 @@
 version: 2
 
 updates:
-  # npm couvre les dépendances de production, de développement et transitives.
-  # Chaque mise à jour reste une PR distincte pour permettre une revue explicite.
+  # npm couvre toutes les dépendances déclarées, y compris celles de développement.
+  # Le lockfile suit les mises à jour directes ; les transitives vulnérables relèvent aussi des alertes de sécurité.
+  # Chaque mise à jour reste une PR distincte ; le cooldown de sécurité GitHub (3 jours) est conservé.
   - package-ecosystem: npm
     directory: /
     schedule:
