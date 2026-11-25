@@ -66,6 +66,32 @@ for (const route of routes) {
           contentType: "image/png"
         });
 
+        if (route.name === "accueil") {
+          const searchInput = page.locator('input[type="search"]').first();
+          await searchInput.focus();
+          await expect.poll(() => searchInput.evaluate((input) => input.matches(":focus-visible"))).toBe(true);
+          const focusRing = await searchInput.evaluate((input) => {
+            const container = getComputedStyle(input.parentElement);
+            return {
+              style: container.outlineStyle,
+              width: container.outlineWidth,
+              color: container.outlineColor,
+              radius: container.borderRadius
+            };
+          });
+          expect(focusRing).toMatchObject({
+            style: "solid",
+            width: "2px",
+            radius: "9999px"
+          });
+          const focusScreenshot = join(outputDirectory, `searchbar-focus-${viewport.name}.png`);
+          await page.screenshot({ path: focusScreenshot, animations: "disabled" });
+          await testInfo.attach(`searchbar-focus-${viewport.name}`, {
+            path: focusScreenshot,
+            contentType: "image/png"
+          });
+        }
+
         if (viewport.name === "bureau") {
           const fullPagePath = join(outputDirectory, `${route.name}-bureau-complet.png`);
           await page.screenshot({

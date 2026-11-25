@@ -102,8 +102,11 @@ test("SearchBar applique le champ replié AndroidX et reste accessible dans les 
   assert.match(searchBarStyles, /surface-container-high/);
   assert.match(searchBarStyles, /body-large-(?:font|size|weight|line-height|tracking)/);
   assert.match(searchBarStyles, /leadingIcon/);
-  assert.doesNotMatch(searchBarStyles, /:focus-within|outline:/);
-  assert.match(globalStyles, /input:focus-visible/);
+  assert.match(searchBarStyles, /:has\(input:focus-visible\)/);
+  assert.match(searchBarStyles, /outline: 2px solid var\(--md-sys-color-primary\)/);
+  assert.match(searchBarStyles, /outline-offset: -2px/);
+  assert.match(searchBarStyles, /\.container input\s*\{[^}]*outline: 0/s);
+  assert.match(globalStyles, /input:not\(\[type="search"\]\):focus-visible/);
   assert.match(catalogue, /<SearchBar/);
   assert.match(comparator, /<SearchBar/);
   assert.match(favorites, /<SearchBar/);
@@ -376,7 +379,7 @@ test("les surfaces du catalogue et du comparateur ne dépendent plus de la couch
 
 test("la fiche prénom applique Material 3 dans ses règles canoniques", () => {
   assert.match(globalStyles, /\.profile-toc a\s*\{[^}]*min-height: 48px/s);
-  assert.match(globalStyles, /a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, \[tabindex="0"\]:focus-visible\s*\{[^}]*outline: 3px solid var\(--md-sys-color-primary\)/s);
+  assert.match(globalStyles, /a:focus-visible, button:focus-visible, input:not\(\[type="search"\]\):focus-visible, select:focus-visible, textarea:focus-visible, \[tabindex="0"\]:focus-visible\s*\{[^}]*outline: 3px solid var\(--md-sys-color-primary\)/s);
   assert.match(globalStyles, /\.profile-section\s*\{[^}]*scroll-margin-top: 88px/s);
   assert.match(globalStyles, /\.profile-copy\s*\{[^}]*color: var\(--md-sys-color-on-surface\)/s);
   assert.match(globalStyles, /\.profile-section \+ \.profile-section\s*\{[^}]*outline-variant/s);

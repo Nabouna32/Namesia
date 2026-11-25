@@ -1416,7 +1416,7 @@ button:disabled {
   cursor: not-allowed;
 }
 
-a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, [tabindex="0"]:focus-visible {
+a:focus-visible, button:focus-visible, input:not([type="search"]):focus-visible, select:focus-visible, textarea:focus-visible, [tabindex="0"]:focus-visible {
   outline: 3px solid var(--md-sys-color-primary);
   outline-offset: 3px;
 }
