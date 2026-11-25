@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
-import type { NameGender } from "@/lib/prenoms";
 import { Button } from "@/components/material3/Button";
 import { Icon } from "@/components/material3/Icon";
 import { categoryTone } from "@/lib/category-color";
@@ -12,7 +11,7 @@ import { RelatedNames } from "@/components/features/catalog/RelatedNames";
 import { ShareProfile } from "@/components/features/sharing/ShareLink";
 import { NamePopularityCard } from "@/components/features/popularity/NamePopularityCard";
 import styles from "@/components/features/profile/ProfileActions.module.css";
-import { getAutresPrenomsIndexDuGenre, getPrenom } from "@/lib/prenoms";
+import { getAutresPrenomsIndexDuGenre, getPrenom, type NameGender } from "@/lib/prenoms";
 import { jsonLd } from "@/lib/json-ld";
 import { siteUrl } from "@/lib/site-url";
 import {
