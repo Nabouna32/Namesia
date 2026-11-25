@@ -1,5 +1,6 @@
 import { cache } from "react";
-import { parseContenuFiche, type AssociationSymbolique, type ContenuFichePrenom } from "@/lib/fiche-prenom";
+import { parseContenuFiche, type ContenuFichePrenom } from "@/lib/fiche-prenom";
+import type { Tables } from "@/lib/supabase/database.types";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { lireToutesLesPages } from "@/lib/pagination";
 import { calculerFenetreSuggestions } from "@/lib/suggestions-prenoms";
@@ -17,13 +18,9 @@ export type Prenom = {
 
 export type PrenomIndex = Pick<Prenom, "id" | "slug" | "nom" | "lettre" | "genre">;
 
-type JoinedAssociation = AssociationSymbolique & { position: number };
+type JoinedAssociation = Pick<Tables<"name_profile_associations">, "category" | "value" | "context_note" | "position">;
 
-type JoinedProfile = {
-  introduction: string;
-  origin_text: string | null;
-  history_text: string | null;
-  usage_text: string | null;
+type JoinedProfile = Pick<Tables<"name_profiles">, "introduction" | "origin_text" | "history_text" | "usage_text"> & {
   name_profile_associations: JoinedAssociation[];
 };
 
@@ -34,11 +31,7 @@ const libellesGenres: Record<string, GenrePrenom> = {
   inconnu: "Genre non renseigné"
 };
 
-type JoinedName = {
-  id: string;
-  slug: string;
-  display_name: string;
-  gender: string;
+type JoinedName = Pick<Tables<"names">, "id" | "slug" | "display_name" | "gender"> & {
   name_profiles: JoinedProfile[];
 };
 
@@ -90,11 +83,7 @@ function convertir(row: JoinedName): Prenom {
 }
 
 
-type JoinedNameIndex = {
-  id: string;
-  slug: string;
-  display_name: string;
-  gender: string;
+type JoinedNameIndex = Pick<Tables<"names">, "id" | "slug" | "display_name" | "gender"> & {
   name_profiles: ProfilPublication[];
 };
 
@@ -136,7 +125,7 @@ export const getPrenomsIndex = cache(async (): Promise<PrenomIndex[]> => {
         .order("id", { ascending: true })
         .range(debut, fin);
 
-      return { data: data as unknown as JoinedNameIndex[] | null, error, count };
+      return { data, error, count };
     }, TAILLE_PAGE_INDEX);
 
     return lignes.map(convertirIndex);
@@ -146,9 +135,7 @@ export const getPrenomsIndex = cache(async (): Promise<PrenomIndex[]> => {
   }
 });
 
-type JoinedNameSitemap = {
-  id: string;
-  slug: string;
+type JoinedNameSitemap = Pick<Tables<"names">, "id" | "slug"> & {
   name_profiles: ProfilPublication[];
 };
 
@@ -166,7 +153,7 @@ export const getPrenomsSitemap = cache(async (): Promise<{ slug: string; publish
         .order("id", { ascending: true })
         .range(debut, fin);
 
-      return { data: data as unknown as JoinedNameSitemap[] | null, error, count };
+      return { data, error, count };
     }, TAILLE_PAGE_INDEX);
 
     return lignes.map((ligne) => ({
@@ -196,7 +183,8 @@ export async function getPrenomsParSlugs(slugs: string[]): Promise<Prenom[]> {
     throw new Error("Les fiches sélectionnées sont momentanément indisponibles.");
   }
 
-  return (data as unknown as JoinedName[]).map(convertir);
+  if (!data) throw new Error("La lecture des fiches sélectionnées a retourné une réponse vide.");
+  return data.map(convertir);
 }
 
 export const getPrenom = cache(async (slug: string): Promise<Prenom | null> => {
@@ -214,7 +202,7 @@ export const getPrenom = cache(async (slug: string): Promise<Prenom | null> => {
     throw new Error("Cette fiche est momentanément indisponible.");
   }
 
-  return data ? convertir(data as unknown as JoinedName) : null;
+  return data ? convertir(data) : null;
 });
 
 export const getAutresPrenomsIndexDuGenre = cache(async (genre: string, slug: string): Promise<PrenomIndex[]> => {
@@ -257,7 +245,7 @@ export const getAutresPrenomsIndexDuGenre = cache(async (genre: string, slug: st
     throw new Error("Les suggestions de prénoms sont momentanément indisponibles.");
   }
 
-  return (data as unknown as JoinedNameIndex[])
+  return data
     .map(convertirIndex)
     .sort((a, b) => scoreSuggestion(slug, a.slug) - scoreSuggestion(slug, b.slug)
       || a.slug.localeCompare(b.slug, "fr"))
