@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { FavoritesList } from "@/components/features/favorites/FavoritesList";
 import { lireNombreVisible, type TriFavoris } from "@/lib/navigation-prenoms";
-import { getPrenomsIndex } from "@/lib/prenoms";
+import { getNamesIndex } from "@/lib/names";
 
 export const dynamic = "force-dynamic";
 
@@ -30,7 +30,7 @@ function lireTri(value: string): TriFavoris {
 }
 
 export default async function FavoritesPage({ searchParams }: Props) {
-  const [parametres, prenoms] = await Promise.all([searchParams, getPrenomsIndex()]);
+  const [parametres, prenoms] = await Promise.all([searchParams, getNamesIndex()]);
 
   return (
     <main id="contenu" tabIndex={-1} className="page-main">
@@ -41,7 +41,7 @@ export default async function FavoritesPage({ searchParams }: Props) {
         <FavoritesList
           prenoms={prenoms}
           initialRecherche={premierParametre(parametres.q)}
-          initialGenre={premierParametre(parametres.genre)}
+          initialGenre={premierParametre(parametres.gender)}
           initialTri={lireTri(premierParametre(parametres.tri))}
           initialNombreVisible={lireNombreVisible(parametres.limite)}
         />
