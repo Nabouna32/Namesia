@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 3.92
+- **Version :** 3.93
 - **Mis à jour :** 2026-11-25
 
 ## Structure de la page
@@ -117,6 +117,7 @@ Aucune table de sources, références ou preuves n'est nécessaire. Les associat
 - Le schéma private n'est pas exposé à la Data API ; les droits de lecture de la liste sont limités au rôle authenticated et à sa propre ligne.
 - Les routes API vérifient le jeton et l'autorisation côté serveur.
 - RLS est activé sur toutes les tables exposées.
+- Sur `name_profile_associations`, les policies sont `read_published_profile_associations` (`anon`), `read_published_or_admin_profile_associations` (`authenticated`) et `admin_insert_profile_associations` (`authenticated`). Les noms sont en anglais ; les policies legacy des autres tables seront renommées uniquement lorsqu'elles seront retravaillées.
 - Les lectures publiques et authentifiées sont séparées par rôle : `anon` ne lit que les fiches publiées ; `authenticated` lit les fiches publiées et les brouillons uniquement si l'utilisateur figure dans `private.admin_users`. Une seule policy permissive `SELECT` est définie par table et rôle afin d'éviter l'évaluation répétée de policies concurrentes.
 - Les privilèges SQL sont accordés au strict nécessaire, indépendamment des politiques RLS.
 - Les fonctions SQL restent SECURITY INVOKER et vérifient elles-mêmes le rôle administrateur.
