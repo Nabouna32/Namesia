@@ -174,7 +174,7 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
             label="Prénoms sélectionnés"
             onRemove={(slug) => changerSelection(slug, false)}
           />
-          <span role="status" aria-live="polite">{selection.length} / 3 prénoms sélectionnés</span>
+          <span role="status">{selection.length} / 3 prénoms sélectionnés</span>
           <Button variant="text" type="button" disabled={selection.length === 0} onClick={effacerSelection}>
             Effacer la sélection
           </Button>
