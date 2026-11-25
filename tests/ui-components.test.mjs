@@ -59,7 +59,7 @@ test("les fonctions métier composent les composants Material 3 sans réimpléme
   assert.match(favoriteButton, /aria-pressed=\{selected\}/);
   assert.match(discovery, /<Button/);
   assert.doesNotMatch(featured, /<FavoriteButton/);
-  assert.match(featured, /<GenreIcon/);
+  assert.match(featured, /<GenderIcon/);
   assert.match(history, /<IconButton/);
   assert.match(notFound, /<Button href=/);
   assert.doesNotMatch(discovery, /<button/);
@@ -157,7 +157,7 @@ test("FilterChip suit la géométrie et les états AndroidX", () => {
 });
 
 test("les filtres de genre des favoris sont icon-only et le tri reste natif", () => {
-  assert.match(favorites, /leadingIcon=\{<Icon name=\{GENRE_ICONS\[genre\]\}/);
+  assert.match(favorites, /leadingIcon=\{<Icon name=\{GENDER_ICONS\[genre\]\}/);
   assert.match(favorites, /iconOnly/);
   assert.match(favorites, /<FilterChip label="Tous"/);
   assert.match(favorites, /<label htmlFor="tri-favoris">/);
