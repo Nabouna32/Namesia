@@ -2,11 +2,11 @@
 
 import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import type { PrenomIndex } from "@/lib/prenoms";
+import type { NameIndexEntry } from "@/lib/names";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { GENDER_ICONS } from "@/lib/gender-icons";
 import styles from "./NameSearch.module.css";
-import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
+import { comparerPertinence, normaliserRecherche, suggererNamesProches } from "@/lib/recherche-prenoms";
 import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
 import { Icon } from "@/components/material3/Icon";
 import { SearchBar } from "@/components/material3/SearchBar";
@@ -17,7 +17,7 @@ import { Snackbar } from "@/components/material3/Snackbar";
 import { Card } from "@/components/material3/Card";
 
 type Props = {
-  prenoms: PrenomIndex[];
+  prenoms: NameIndexEntry[];
   compact?: boolean;
   synchroniserUrl?: boolean;
   initialRecherche?: string;
@@ -46,11 +46,11 @@ export function NameSearch({
   const generationCopie = useRef(0);
 
   const genres = useMemo(
-    () => [...new Set(prenoms.map((prenom) => prenom.genre))].sort((a, b) => a.localeCompare(b, "fr")),
+    () => [...new Set(prenoms.map((prenom) => prenom.gender))].sort((a, b) => a.localeCompare(b, "fr")),
     [prenoms]
   );
   const lettres = useMemo(
-    () => [...new Set(prenoms.map((prenom) => normaliserRecherche(prenom.lettre)))].sort((a, b) => a.localeCompare(b, "fr")),
+    () => [...new Set(prenoms.map((prenom) => normaliserRecherche(prenom.initial)))].sort((a, b) => a.localeCompare(b, "fr")),
     [prenoms]
   );
 
@@ -58,9 +58,9 @@ export function NameSearch({
     const terme = normaliserRecherche(recherche);
     return prenoms
       .filter((prenom) => {
-        const correspondAuNom = !terme || normaliserRecherche(prenom.nom).includes(terme);
-        const correspondAuGenre = !genreActif || prenom.genre === genreActif;
-        const correspondALaLettre = !lettreActive || normaliserRecherche(prenom.lettre) === lettreActive;
+        const correspondAuNom = !terme || normaliserRecherche(prenom.name).includes(terme);
+        const correspondAuGenre = !genreActif || prenom.gender === genreActif;
+        const correspondALaLettre = !lettreActive || normaliserRecherche(prenom.initial) === lettreActive;
         return correspondAuNom && correspondAuGenre && correspondALaLettre;
       })
       .sort((a, b) => comparerPertinence(a, b, terme));
@@ -69,10 +69,10 @@ export function NameSearch({
   const suggestions = useMemo(() => {
     if (resultats.length > 0) return [];
     const candidats = prenoms.filter((prenom) => (
-      (!genreActif || prenom.genre === genreActif)
-      && (!lettreActive || normaliserRecherche(prenom.lettre) === lettreActive)
+      (!genreActif || prenom.gender === genreActif)
+      && (!lettreActive || normaliserRecherche(prenom.initial) === lettreActive)
     ));
-    return suggererPrenomsProches(candidats, recherche);
+    return suggererNamesProches(candidats, recherche);
   }, [genreActif, lettreActive, prenoms, recherche, resultats.length]);
 
   const filtresActifs = Boolean(recherche.trim() || genreActif || lettreActive);
@@ -158,7 +158,7 @@ export function NameSearch({
     }
 
     try {
-      await navigator.clipboard.writeText(resultats.map((prenom) => prenom.nom).join("\n"));
+      await navigator.clipboard.writeText(resultats.map((prenom) => prenom.name).join("\n"));
       if (generation === generationCopie.current) {
         setMessageCopie(`${resultats.length} ${resultats.length > 1 ? "prénoms copiés" : "prénom copié"} dans le presse-papiers.`);
       }
@@ -259,10 +259,10 @@ export function NameSearch({
                 {resultats.slice(0, nombreVisible).map((prenom) => (
                   <article className={styles.resultCard} key={prenom.slug}>
                     <Card as={Link} variant="elevated" interactive className="name-card" href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
-                      <span className="name-initial">{prenom.lettre}</span>
+                      <span className="name-initial">{prenom.initial}</span>
                       <span>
-                        <strong>{prenom.nom}</strong>
-                        <GenderIcon gender={prenom.genre} />
+                        <strong>{prenom.name}</strong>
+                        <GenderIcon gender={prenom.gender} />
                       </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Card>
@@ -294,10 +294,10 @@ export function NameSearch({
                 {suggestions.map((prenom) => (
                   <article className={styles.resultCard} key={prenom.slug}>
                     <Card as={Link} variant="elevated" interactive className="name-card" href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
-                      <span className="name-initial">{prenom.lettre}</span>
+                      <span className="name-initial">{prenom.initial}</span>
                       <span>
-                        <strong>{prenom.nom}</strong>
-                        <GenderIcon gender={prenom.genre} />
+                        <strong>{prenom.name}</strong>
+                        <GenderIcon gender={prenom.gender} />
                       </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Card>
