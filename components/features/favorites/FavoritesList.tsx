@@ -2,11 +2,11 @@
 
 import { useRef, useState, type ChangeEvent } from "react";
 import Link from "next/link";
-import type { NameGender, PrenomIndex } from "@/lib/prenoms";
+import type { NameGender, NameIndexEntry } from "@/lib/names";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { GENDER_ICONS } from "@/lib/gender-icons";
 import { LIMITE_FAVORIS, creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
-import { normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
+import { normaliserRecherche, suggererNamesProches } from "@/lib/recherche-prenoms";
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
 import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
 import styles from "./FavoritesList.module.css";
@@ -18,7 +18,7 @@ import { Card } from "@/components/material3/Card";
 import { FilterChip } from "@/components/material3/FilterChip";
 
 type Props = {
-  prenoms: PrenomIndex[];
+  prenoms: NameIndexEntry[];
   initialRecherche?: string;
   initialGenre?: string;
   initialTri?: TriFavoris;
@@ -55,7 +55,7 @@ export function FavoritesList({
   if (!pret) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
 
   const termeNormalise = normaliserRecherche(recherche);
-  const genres: NameGender[] = [...new Set(favoris.map((prenom) => prenom.genre))]
+  const genres: NameGender[] = [...new Set(favoris.map((prenom) => prenom.gender))]
     .sort((a, b) => a.localeCompare(b, "fr"));
   const genreActifValide = genres.find((genre) => genre === genreActif) ?? "";
 
@@ -104,18 +104,18 @@ export function FavoritesList({
   }
 
   const favorisFiltres = favoris.filter((prenom) => (
-    (!termeNormalise || normaliserRecherche(prenom.nom).includes(termeNormalise))
-    && (!genreActifValide || prenom.genre === genreActifValide)
+    (!termeNormalise || normaliserRecherche(prenom.name).includes(termeNormalise))
+    && (!genreActifValide || prenom.gender === genreActifValide)
   ));
   if (triActif !== "enregistrement") {
     favorisFiltres.sort((a, b) => {
-      const ordre = a.nom.localeCompare(b.nom, "fr") || a.slug.localeCompare(b.slug, "fr");
+      const ordre = a.name.localeCompare(b.name, "fr") || a.slug.localeCompare(b.slug, "fr");
       return triActif === "nom-asc" ? ordre : -ordre;
     });
   }
   const favorisProches = favorisFiltres.length === 0 && termeNormalise
-    ? suggererPrenomsProches(
-      favoris.filter((prenom) => !genreActifValide || prenom.genre === genreActifValide),
+    ? suggererNamesProches(
+      favoris.filter((prenom) => !genreActifValide || prenom.gender === genreActifValide),
       recherche
     )
     : [];
@@ -142,7 +142,7 @@ export function FavoritesList({
     }
 
     try {
-      await navigator.clipboard.writeText(favorisFiltres.map((prenom) => prenom.nom).join("\n"));
+      await navigator.clipboard.writeText(favorisFiltres.map((prenom) => prenom.name).join("\n"));
       if (generation === generationCopie.current) {
         setMessageCopie(`${favorisFiltres.length} ${favorisFiltres.length > 1 ? "prénoms copiés" : "prénom copié"} dans le presse-papiers.`);
       }
@@ -186,15 +186,15 @@ export function FavoritesList({
       const slugsImportes = lireSauvegardeFavoris(contenu);
       const resultat = ajouterPlusieurs(slugsImportes);
       if (resultat === null) return;
-      setImportPartiel(resultat.nombreIgnoreLimite > 0);
+      setImportPartiel(resultat.namebreIgnoreLimite > 0);
 
-      const messages = resultat.nombreAjoute > 0
-        ? [`${resultat.nombreAjoute} ${resultat.nombreAjoute > 1 ? "favoris ajoutés" : "favori ajouté"} à votre sélection.`]
-        : resultat.nombreIgnoreLimite > 0
+      const messages = resultat.namebreAjoute > 0
+        ? [`${resultat.namebreAjoute} ${resultat.namebreAjoute > 1 ? "favoris ajoutés" : "favori ajouté"} à votre sélection.`]
+        : resultat.namebreIgnoreLimite > 0
           ? ["Aucun nouveau favori ajouté."]
           : ["Cette sauvegarde ne contient aucun nouveau favori."];
-      if (resultat.nombreIgnoreLimite > 0) {
-        messages.push(`${resultat.nombreIgnoreLimite} ${resultat.nombreIgnoreLimite > 1 ? "favoris ignorés" : "favori ignoré"} : la limite de ${LIMITE_FAVORIS.toLocaleString("fr-FR")} favoris est atteinte.`);
+      if (resultat.namebreIgnoreLimite > 0) {
+        messages.push(`${resultat.namebreIgnoreLimite} ${resultat.namebreIgnoreLimite > 1 ? "favoris ignorés" : "favori ignoré"} : la limite de ${LIMITE_FAVORIS.toLocaleString("fr-FR")} favoris est atteinte.`);
       }
       setMessageImport(messages.join(" "));
     } catch (cause) {
@@ -332,10 +332,10 @@ export function FavoritesList({
                       limite: nombreVisible
                     })}
                   >
-                    <span className="name-initial">{prenom.lettre}</span>
+                    <span className="name-initial">{prenom.initial}</span>
                     <span>
-                      <strong>{prenom.nom}</strong>
-                      <GenderIcon gender={prenom.genre} />
+                      <strong>{prenom.name}</strong>
+                      <GenderIcon gender={prenom.gender} />
                     </span>
                     <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                   </Card>
