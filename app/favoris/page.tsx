@@ -41,7 +41,7 @@ export default async function FavoritesPage({ searchParams }: Props) {
         <FavoritesList
           prenoms={prenoms}
           initialRecherche={premierParametre(parametres.q)}
-          initialGenre={premierParametre(parametres.gender)}
+          initialGenre={premierParametre(parametres.genre)}
           initialTri={lireTri(premierParametre(parametres.tri))}
           initialNombreVisible={lireNombreVisible(parametres.limite)}
         />
