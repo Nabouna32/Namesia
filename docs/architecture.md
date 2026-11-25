@@ -161,7 +161,7 @@ Les anciennes tables documentaires, l'ancienne colonne JSONB et les colonnes red
 ## 10. Déploiement et retour arrière
 
 - Cloudflare Workers est la cible de production. Le workflow `.github/workflows/cloudflare.yml` construit avec OpenNext, déploie uniquement depuis `main` et vérifie ensuite que l'URL du Worker renvoie une page HTML.
-- Pour chaque PR issue du dépôt courant, `.github/workflows/cloudflare-preview.yml` exécute `wrangler preview` après le build, publie l'URL dans la PR, vérifie le rendu SSR et le catalogue public, puis supprime l'environnement à la fermeture. Les PR de forks ne reçoivent pas le jeton Cloudflare.
+- Pour chaque PR issue du dépôt courant, `.github/workflows/cloudflare.yml` exécute `wrangler preview` après le build, publie l'URL dans la PR, vérifie le rendu SSR et le catalogue public, puis supprime l'environnement à la fermeture. Les PR de forks ne reçoivent pas le jeton Cloudflare.
 - Les previews utilisent le sous-domaine `workers.dev` et sont publiques. Cloudflare ajoute `X-Robots-Tag: noindex`. La configuration Preview fixe `NAMESIA_DEPLOYMENT_ENVIRONMENT=preview` ; la page et toutes les routes d'administration sont désactivées, les seules lectures disponibles concernent le catalogue publié.
 - Le workflow `.github/workflows/ci.yml` contrôle les tests, TypeScript et le build Next.js ; les deux workflows sont indépendants de Vercel.
 - Vercel reste temporairement configuré comme retour arrière jusqu'à la validation des parcours SSR, Route Handlers, OTP, cookies, catalogue, sitemap et images Open Graph sur Cloudflare, puis jusqu'à la bascule du domaine public.
