@@ -24,7 +24,7 @@ test("l’historique est écrit avant toute mise à jour de l’état React", ()
 
 test("un échec du stockage est exposé sans conserver un historique volatile", () => {
   assert.match(provider, /catch \{\s*setError\(true\);\s*\}/);
-  assert.match(component, /Le navigateur a refusé l’accès au stockage de session/);
+  assert.match(component, /L’historique est indisponible\. Réinitialisez-le pour réessayer/);
   assert.doesNotMatch(provider, /setSlugs\(\(current|setSlugs\(\(courants/);
 });
 
