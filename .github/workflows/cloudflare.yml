@@ -55,7 +55,8 @@ jobs:
           set -euo pipefail
           output="$(./node_modules/.bin/wrangler preview --name "pr-${{ github.event.pull_request.number }}" --json)"
           printf '%s\\n' "$output"
-          preview_url="$(printf '%s' "$output" | jq -er '.preview.urls[0]')"
+          preview_json="$(printf '%s\n' "$output" | sed -n '/^{/,$p')"
+          preview_url="$(printf '%s\n' "$preview_json" | jq -er '.preview.urls[0]')"
           echo "preview_url=$preview_url" >> "$GITHUB_OUTPUT"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -68,11 +69,16 @@ jobs:
           set -euo pipefail
           response="$(mktemp)"
           headers="$(mktemp)"
-          trap 'rm -f "$response" "$headers"' EXIT
+          admin="$(mktemp)"
+          trap 'rm -f "$response" "$headers" "$admin"' EXIT
           curl --fail --show-error --silent --location --retry 8 --retry-all-errors --retry-delay 5 --max-time 30 --dump-header "$headers" "$PREVIEW_URL/" --output "$response"
           grep -Eiq '<!doctype html|<html' "$response"
           grep -Eiq '^x-robots-tag:.*noindex' "$headers"
           curl --fail --show-error --silent --location --retry 5 --retry-all-errors --retry-delay 3 --max-time 30 "$PREVIEW_URL/prenoms" --output /dev/null
+          curl --fail --show-error --silent --location --max-time 30 "$PREVIEW_URL/admin" --output "$admin"
+          grep -q 'Administration indisponible' "$admin"
+          admin_status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' --request POST "$PREVIEW_URL/api/admin/prenoms")"
+          test "$admin_status" = "403"
       - name: Publier l’URL de Preview dans la PR
         if: steps.preview.outputs.preview_url != ''
         env:
