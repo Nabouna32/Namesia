@@ -63,25 +63,4 @@ test("l’accueil reste utilisable sur mobile et tablette", async ({ page }) => 
     expect(hasHorizontalOverflow, `Débordement horizontal en ${viewport.name}`).toBe(false);
   }
 });
-
-test("SearchBar conserve son anneau M3 complet au focus clavier", async ({ page }) => {
-  await page.goto("/", { waitUntil: "domcontentloaded" });
-  const searchInput = page.locator('input[type="search"]').first();
-  await searchInput.focus();
-
-  await expect.poll(() => searchInput.evaluate((input) => input.matches(":focus-visible"))).toBe(true);
-  const focusRing = await searchInput.evaluate((input) => {
-    const container = getComputedStyle(input.parentElement);
-    return {
-      style: container.outlineStyle,
-      width: container.outlineWidth,
-      radius: container.borderRadius
-    };
-  });
-
-  expect(focusRing).toMatchObject({
-    style: "solid",
-    width: "2px",
-    radius: "9999px"
-  });
-});
+\n

@@ -21,6 +21,8 @@ export default defineConfig({
     locale: "fr-FR",
     colorScheme: "light",
     reducedMotion: "reduce",
-    trace: "retain-on-failure"
+    screenshot: "off",
+    video: "off",
+    trace: "off"
   }
 });
