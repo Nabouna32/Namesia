@@ -2,16 +2,16 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import type { PrenomIndex } from "@/lib/prenoms";
+import type { NameIndexEntry } from "@/lib/names";
 import { Button } from "@/components/material3/Button";
 import styles from "./RandomDiscovery.module.css";
 import { Icon } from "@/components/material3/Icon";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
 
-type Props = { prenoms: PrenomIndex[] };
+type Props = { prenoms: NameIndexEntry[] };
 
 export function RandomDiscovery({ prenoms }: Props) {
-  const [selection, setSelection] = useState<PrenomIndex | null>(null);
+  const [selection, setSelection] = useState<NameIndexEntry | null>(null);
 
   function decouvrir() {
     const candidats = selection && prenoms.length > 1
@@ -31,8 +31,8 @@ export function RandomDiscovery({ prenoms }: Props) {
       <div className={styles.copy} aria-live="polite" aria-atomic="true">
         {selection ? (
           <span className={styles.resultLine}>
-            Votre prochaine découverte : <Link className={styles.result} href={`/prenoms/${selection.slug}`}>{selection.nom}</Link>
-            <GenderIcon gender={selection.genre} />
+            Votre prochaine découverte : <Link className={styles.result} href={`/prenoms/${selection.slug}`}>{selection.name}</Link>
+            <GenderIcon gender={selection.gender} />
           </span>
         ) : (
           "Pas d’idée précise ? Laissez-vous guider par le hasard."
