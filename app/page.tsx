@@ -4,19 +4,19 @@ import { RandomDiscovery } from "@/components/features/discovery/RandomDiscovery
 import { RecentNames } from "@/components/features/history/RecentNames";
 import { FeaturedNames } from "@/components/features/catalog/FeaturedNames";
 import { NameSearch } from "@/components/features/catalog/NameSearch";
-import { getPrenomsIndex, type PrenomIndex } from "@/lib/prenoms";
+import { getNamesIndex, type NameIndexEntry } from "@/lib/names";
 import { Icon } from "@/components/material3/Icon";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default async function HomePage() {
-  const prenoms = await getPrenomsIndex();
+  const prenoms = await getNamesIndex();
   const decalageDuJour = prenoms.length > 0
     ? Math.floor(Date.now() / 86_400_000) % prenoms.length
     : 0;
   const nombreMisEnAvant = Math.min(3, prenoms.length);
-  const prenomsMisEnAvant: PrenomIndex[] = [];
+  const prenomsMisEnAvant: NameIndexEntry[] = [];
 
   for (let position = 0; position < nombreMisEnAvant; position += 1) {
     const indexCatalogue = (decalageDuJour + Math.floor(position * prenoms.length / nombreMisEnAvant)) % prenoms.length;
