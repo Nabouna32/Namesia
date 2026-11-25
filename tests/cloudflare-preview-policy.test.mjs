@@ -21,8 +21,9 @@ test("les previews ne peuvent pas accéder aux opérations d'administration", ()
 });
 
 test("les previews sont déployées uniquement pour les PR du dépôt et supprimées à leur fermeture", () => {
-  assert.match(workflow, /pull_request:\n    types: \[opened, synchronize, reopened, closed\]/);
+  assert.match(workflow, /pull_request:\n    types: \[opened, synchronize, reopened, labeled, closed\]/);
   assert.match(workflow, /github\.event\.pull_request\.head\.repo\.full_name == github\.repository/);
+  assert.match(workflow, /github\.event\.action != 'labeled' \|\| github\.event\.label\.name == 'diagnostic-playwright'/);
   assert.match(workflow, /wrangler preview --name "pr-/);
   assert.match(workflow, /wrangler preview delete --name "pr-/);
   assert.match(workflow, /x-robots-tag:.*noindex/);
@@ -31,7 +32,6 @@ test("les previews sont déployées uniquement pour les PR du dépôt et supprim
   assert.match(workflow, /test "\$admin_status" = "403"/);
   assert.match(workflow, /gh pr comment/);
 });
-
 
 test("la production vérifie SSR, catalogue, SEO, Open Graph et refuse l'administration sans jeton", () => {
   assert.match(workflow, /Vérifier les parcours publics et la frontière administrateur/);
