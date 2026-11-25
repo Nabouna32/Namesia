@@ -38,6 +38,10 @@ export function SearchBar({ id, label, value, placeholder, onChange, className }
           id={id}
           type="search"
           autoComplete="off"
+          autoCapitalize="none"
+          autoCorrect="off"
+          spellCheck={false}
+          enterKeyHint="search"
           value={value}
           onChange={handleChange}
           placeholder={placeholder}
