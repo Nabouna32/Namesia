@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 3.93
+- **Version :** 3.94
 - **Mis à jour :** 2026-11-25
 
 ## Structure de la page
@@ -84,7 +84,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Métadonnées canoniques fondées sur NEXT_PUBLIC_SITE_URL obligatoire et validée ; aucune origine de secours ni date de mise à jour inventée.
 - Données structurées Schema.org pour le site, le catalogue et les fiches ; aucune date, popularité ou affirmation non disponible n'est ajoutée.
 - `lib/site-url.ts` centralise l'origine canonique ; `lib/json-ld.ts` sérialise les données structurées en échappant les chevrons.
-- La génération des fichiers d'indexation ne modifie pas les contrôles d'accès ; le domaine Vercel par défaut reste protégé par SSO tant que sa configuration n'est pas changée.
+- La génération des fichiers d'indexation ne modifie pas les contrôles d'accès ; le domaine de production `namesia.vercel.app` est public. Vercel Authentication ne s'applique qu'aux previews, désactivées ; l'administration reste protégée par Supabase OTP et RLS.
 - Pas d'appel à un modèle IA lors de l'affichage.
 - Initiale calculée à partir du nom affiché ; elle n'est pas stockée.
 - Mention visible indiquant que le contenu est généré par IA et peut comporter des erreurs.
@@ -159,6 +159,7 @@ Les anciennes tables documentaires, l'ancienne colonne JSONB et les colonnes red
 ## 10. Déploiement et quota
 
 - Le paramètre Vercel `previewDeploymentsDisabled` est activé.
+- `ssoProtection.deploymentType` vaut `preview` : les URL de production ne sont pas protégées par Vercel Authentication ; les previews, désactivées, resteraient protégées si elles étaient réactivées.
 - `vercel.json` appelle `scripts/vercel-ignore-build.sh` avant un build.
 - Le script retourne `1` uniquement pour une production issue de `main` ; il retourne `0` dans tous les autres cas, ce qui ignore le build.
 - La politique est testée dans GitHub Actions pour les combinaisons production/preview et main/branche.
