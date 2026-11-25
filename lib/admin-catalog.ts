@@ -1,14 +1,10 @@
-export type AdminProfile = {
-  id: string;
-  version: number;
+import type { Tables } from "@/lib/supabase/database.types";
+
+export type AdminProfile = Pick<Tables<"name_profiles">, "id" | "version" | "created_at"> & {
   status: "brouillon" | "publie" | "archive";
-  created_at: string;
 };
 
-export type AdminName = {
-  id: string;
-  slug: string;
-  display_name: string;
+export type AdminName = Pick<Tables<"names">, "id" | "slug" | "display_name"> & {
   name_profiles: AdminProfile[];
 };
 
