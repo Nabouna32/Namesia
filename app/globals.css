@@ -1474,7 +1474,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .footer-note { margin-left: auto; }
 }
 
-@media (min-width: 600px) and (max-width: 899px) {
+@media (min-width: 600px) and (max-width: 839px) {
   .featured-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -1513,7 +1513,7 @@ padding: 12px 8px 24px;
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 840px) {
   .hero-content {
     grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr);
     gap: clamp(32px, 5vw, 72px);
