@@ -49,8 +49,8 @@ test("les vues de prénoms affichent le pictogramme sans libellé visible", () =
     assert.doesNotMatch(source, /<small>\{name\.gender\}<\/small>/);
     assert.doesNotMatch(source, /className="profile-tag">\{name\.gender\}/);
   }
-  assert.match(openGraph, /GENDER_ICONS\[name\.gender\]/);
-  assert.doesNotMatch(openGraph, /\{name\.gender\}/);
+  assert.doesNotMatch(openGraph, /GENDER_ICONS/);
+  assert.match(openGraph, /\{name\.gender\}/);
 });
 
 test("la découverte aléatoire affiche le pictogramme du prénom sélectionné", () => {
