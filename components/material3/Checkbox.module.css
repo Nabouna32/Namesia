@@ -131,6 +131,9 @@
     border-color: var(--md-sys-color-primary);
   }
 }
+  .root:has(.input:focus-visible)::before {
+    opacity: var(--md-sys-state-focus-state-layer-opacity);
+  }
 
 .root:has(.input:active:not(:disabled))::before {
   opacity: var(--md-sys-state-pressed-state-layer-opacity);
