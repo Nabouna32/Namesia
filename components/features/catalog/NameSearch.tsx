@@ -35,10 +35,12 @@ export function NameSearch({
   initialLettre = null,
   initialNombreVisible = 24
 }: Props) {
+  const nombreVisibleParDefaut = compact ? 6 : 24;
+  const nombreVisibleInitial = compact ? Math.min(initialNombreVisible, nombreVisibleParDefaut) : initialNombreVisible;
   const [recherche, setRecherche] = useState(initialRecherche);
   const [genreActif, setGenreActif] = useState(initialGenre);
   const [lettreActive, setLettreActive] = useState(initialLettre);
-  const [nombreVisible, setNombreVisible] = useState(initialNombreVisible);
+  const [nombreVisible, setNombreVisible] = useState(nombreVisibleInitial);
   const [messageCopie, setMessageCopie] = useState("");
   const [erreurCopie, setErreurCopie] = useState("");
   const generationCopie = useRef(0);
@@ -110,28 +112,28 @@ export function NameSearch({
 
   function changerRecherche(value: string) {
     effacerFeedbackCopie();
-    setNombreVisible(24);
+    setNombreVisible(nombreVisibleParDefaut);
     setRecherche(value);
     mettreAJourUrl(value, genreActif, lettreActive);
   }
 
   function changerGenre(value: string | null) {
     effacerFeedbackCopie();
-    setNombreVisible(24);
+    setNombreVisible(nombreVisibleParDefaut);
     setGenreActif(value);
     mettreAJourUrl(recherche, value, lettreActive);
   }
 
   function changerLettre(value: string | null) {
     effacerFeedbackCopie();
-    setNombreVisible(24);
+    setNombreVisible(nombreVisibleParDefaut);
     setLettreActive(value);
     mettreAJourUrl(recherche, genreActif, value);
   }
 
   function effacerFiltres() {
     effacerFeedbackCopie();
-    setNombreVisible(24);
+    setNombreVisible(nombreVisibleParDefaut);
     setRecherche("");
     setGenreActif(null);
     setLettreActive(null);
@@ -237,7 +239,7 @@ export function NameSearch({
         <div className="search-results">
           <p className={compact ? "results-meta sr-only" : "results-meta"} role="status">
             {resultats.length > 0
-              ? `${resultats.length} ${resultats.length > 1 ? "prénoms" : "prénom"}${compact ? (resultats.length > 1 ? " trouvés" : " trouvé") : ` trouvés · ${Math.min(resultats.length, nombreVisible)} affichés`}`
+              ? `${resultats.length} ${resultats.length > 1 ? "prénoms trouvés" : "prénom trouvé"} · ${Math.min(resultats.length, nombreVisible)} ${Math.min(resultats.length, nombreVisible) > 1 ? "affichés" : "affiché"}`
               : suggestions.length > 0
                 ? `${suggestions.length} suggestions proches`
                 : `0 résultat affiché sur ${prenoms.length}`}
