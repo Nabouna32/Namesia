@@ -80,7 +80,6 @@ test("un favori peut être annulé ou fermé depuis sa Snackbar sur mobile", asy
   await expect(favoriteButton).toHaveAttribute("aria-pressed", "true");
   const snackbar = page.locator('[role="status"]').filter({ hasText: "Alice ajouté aux favoris" });
   await expect(snackbar).toBeVisible();
-  await page.screenshot({ path: "test-results/snackbar-action-mobile.png", fullPage: true });
   await page.getByRole("button", { name: "Annuler" }).click();
   await expect(favoriteButton).toHaveAttribute("aria-pressed", "false");
   await expect(snackbar).toHaveCount(0);
