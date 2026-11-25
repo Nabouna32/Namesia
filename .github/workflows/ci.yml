@@ -39,7 +39,7 @@ jobs:
         run: test "$(node --version)" = "v$(tr -d '\r\n' < .nvmrc)"
       - name: Installer les dépendances
         run: npm ci --no-audit --no-fund
-      - name: Auditer les dépendances de production
+      - name: Auditer toutes les dépendances
         id: audit
         run: npm audit --audit-level=high
         continue-on-error: true
