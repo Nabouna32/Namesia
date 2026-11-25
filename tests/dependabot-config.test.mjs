@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 const config = await readFile(new URL("../.github/dependabot.yml", import.meta.url), "utf8");
-const agents = await readFile(new URL("../AGENTS.md", import.meta.url), "utf8");
+const standards = await readFile(new URL("../docs/standards-techniques.md", import.meta.url), "utf8");
 
 function ecosystemConfig(name) {
   const start = config.indexOf(`- package-ecosystem: ${name}`);
