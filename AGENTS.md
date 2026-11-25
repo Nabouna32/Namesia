@@ -5,7 +5,7 @@ Cette charte s'applique à tout le dépôt, aux contributions humaines et aux ag
 ## 1. Langue et traçabilité
 
 - Toute communication durable dans le dépôt est en français : documentation, issues, PR, commentaires, revues, ADR et suivi.
-- Les identifiants techniques et termes consacrés peuvent rester dans leur langue d'origine.
+- Les identifiants, noms de fichiers, modules, types, variables, fonctions et exports créés ou modifiés sont en anglais ; les commentaires de code, textes de tests, documentation, issues, PR et échanges GitHub restent en français. Les composants d'interface utilisent les noms officiels Material 3/AndroidX, sans alias ni wrapper Namesia. Le legacy se migre progressivement lorsqu'il est touché, sans refactor global hors sujet.
 - La conversation est éphémère : toute décision utile doit être inscrite dans le dépôt.
 - Distinguer faits, hypothèses, propositions, décisions et actions réellement effectuées.
 
@@ -105,6 +105,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Les migrations Supabase doivent rester alignées sur `supabase_migrations.schema_migrations` de l'instance active : chaque version appliquée possède un fichier dont le préfixe correspond exactement à `version`, et toute migration restante doit pouvoir s'exécuter dans l'ordre depuis le schéma courant.
 - Avant toute évolution SQL, comparer l'historique distant (`list_migrations`) au répertoire `supabase/migrations/`. Ne jamais conserver un doublon horodaté d'une migration déjà appliquée ni une séquence abandonnée qui crée puis détruit un modèle refusé. Une migration appliquée n'est jamais réécrite ; les corrections passent par une nouvelle migration additive.
 - Les migrations doivent être versionnées, relisibles, compatibles avec le schéma réel et vérifiées par la CI lorsque des contrôles automatisés sont pertinents.
+- Après chaque migration SQL appliquée, relancer les advisors Supabase `security` et `performance`, puis vérifier les policies réellement présentes dans `pg_policies`. Les limites liées au forfait ou à une configuration externe sont documentées dans une issue ; elles ne sont jamais contournées par du code applicatif.
 
 ## Contrat design
 
