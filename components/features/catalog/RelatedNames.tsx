@@ -7,13 +7,13 @@ import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { Icon } from "@/components/material3/Icon";
 import { Card } from "@/components/material3/Card";
 
-type Props = { names: NameIndexEntry[]; contexteRetour?: ContexteRetourNavigation | null };
+type Props = { names: NameIndexEntry[]; returnContext?: ContexteRetourNavigation | null };
 
-export function RelatedNames({ names, contexteRetour = null }: Props) {
+export function RelatedNames({ names, returnContext = null }: Props) {
   return (
     <div className={styles.grid}>
       {names.map((name) => (
-        <Card as={Link} variant="elevated" interactive className="name-card" href={creerUrlFicheDepuisContexte(name.slug, contexteRetour)} key={name.slug}>
+        <Card as={Link} variant="elevated" interactive className="name-card" href={creerUrlFicheDepuisContexte(name.slug, returnContext)} key={name.slug}>
             <span className="name-initial">{name.initial}</span>
             <span>
               <strong>{name.name}</strong>
