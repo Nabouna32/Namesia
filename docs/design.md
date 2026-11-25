@@ -1,8 +1,8 @@
 # Système de design — Namesia
 
 - **Statut :** référence visuelle canonique
-- **Version :** 4.62
-- **Mis à jour :** 2026-11-25
+- **Version :** 4.63
+- **Mis à jour le :** 2026-11-25 09:22:27 (Europe/Paris)
 
 ## 1. Direction
 
