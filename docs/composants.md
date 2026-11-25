@@ -55,8 +55,8 @@ components/
     profile/
       ProfileActions.module.css
     names/
-      GenreIcon.tsx
-      GenreIcon.module.css
+      GenderIcon.tsx
+      GenderIcon.module.css
     comparison/
       NameComparator.tsx
       ComparisonSelection.tsx
@@ -112,7 +112,7 @@ Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques 
 | `RecentNames` | `features/history/RecentNames.tsx` | Liste des fiches récemment consultées. |
 | `RecordVisit` | `features/history/RecordVisit.tsx` | Enregistre une consultation dans l'historique de session. |
 | `NameSearch` | `features/catalog/NameSearch.tsx` | Recherche, filtres et pagination du catalogue. |
-| `GenreIcon` | `features/names/GenreIcon.tsx` | Pictogramme SVG exhaustif des quatre genres, avec nom accessible ; la correspondance est centralisée dans `lib/genre-icons.ts`. |
+| `GenderIcon` | `features/names/GenderIcon.tsx` | Pictogramme SVG exhaustif des quatre genres, avec nom accessible ; la correspondance est centralisée dans `lib/gender-icons.ts`. |
 | `FeaturedNames` | `features/catalog/FeaturedNames.tsx` | Présentation des prénoms mis en avant. |
 | `RelatedNames` | `features/catalog/RelatedNames.tsx` | Suggestions liées depuis une fiche. |
 | `RandomDiscovery` | `features/discovery/RandomDiscovery.tsx` | Découverte aléatoire avec pictogramme de genre accessible et lien vers la fiche. |
@@ -122,7 +122,7 @@ Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques 
 | `ComparisonSelection` | `features/comparison/ComparisonSelection.tsx` | Liste des prénoms retenus ; compose InputChip pour le retrait individuel. |
 | `ShareLink` | `features/sharing/ShareLink.tsx` | Partage natif ou copie d'une URL reconstruite avec une liste explicite de paramètres autorisés. |
 
-Les cartes de résultats, de suggestions, de favoris et d'historique utilisent le lien `Card` comme surface de navigation. Le résultat textuel de la découverte aléatoire associe également le nom à `GenreIcon` avant d'ouvrir la fiche. Le genre est représenté exclusivement par `GenreIcon`, dont la correspondance exhaustive est centralisée dans `lib/genre-icons.ts` : `gender-female`, `gender-male`, `gender-mixed` et `gender-unknown`. Le pictogramme masculin sépare le contour circulaire de la flèche diagonale afin de conserver une épaisseur et une lecture équilibrées à 20 px comme à 24 px. Le nom du genre est fourni à l'arbre d'accessibilité par le pictogramme, sans libellé visible redondant. Les filtres de genre utilisent la même iconographie dans des `FilterChip` icon-only, avec nom accessible et état sélectionné. La flèche suffit à signaler l'ouverture de la fiche ; aucun texte « Découvrir » n'est ajouté au catalogue. Les cartes de découverte ne portent ni action de favori ni action de comparaison : ces deux actions sont regroupées sur la fiche du prénom. Le comparateur compose `Checkbox` pour chaque choix ; la limite de trois éléments est exprimée par son état désactivé.
+Les cartes de résultats, de suggestions, de favoris et d'historique utilisent le lien `Card` comme surface de navigation. Le résultat textuel de la découverte aléatoire associe également le nom à `GenderIcon` avant d'ouvrir la fiche. Le genre est représenté exclusivement par `GenderIcon`, dont la correspondance exhaustive est centralisée dans `lib/gender-icons.ts` : `gender-female`, `gender-male`, `gender-mixed` et `gender-unknown`. Le pictogramme masculin sépare le contour circulaire de la flèche diagonale afin de conserver une épaisseur et une lecture équilibrées à 20 px comme à 24 px. Le nom du genre est fourni à l'arbre d'accessibilité par le pictogramme, sans libellé visible redondant. Les filtres de genre utilisent la même iconographie dans des `FilterChip` icon-only, avec nom accessible et état sélectionné. La flèche suffit à signaler l'ouverture de la fiche ; aucun texte « Découvrir » n'est ajouté au catalogue. Les cartes de découverte ne portent ni action de favori ni action de comparaison : ces deux actions sont regroupées sur la fiche du prénom. Le comparateur compose `Checkbox` pour chaque choix ; la limite de trois éléments est exprimée par son état désactivé.
 
 
 Les composants métier peuvent être propres à Namesia, mais ils ne redéfinissent jamais les styles, états ou interactions d'un composant Material 3 générique. Les règles de disposition restent dans leurs CSS Modules ; les variantes et états M3 restent dans `components/material3/`.
@@ -148,7 +148,7 @@ Toute nouvelle page doit composer le shell partagé, les primitives officielles 
 |---|---|
 | Accueil | TopAppBar, NavigationBar/NavigationRail, SearchBar, Button et Card sémantique navigable |
 | Catalogue | Shell, SearchBar, FilterChip icon-only pour le genre et cartes de résultats navigables |
-| Fiche | Shell, titres et corps typographiques M3, GenreIcon, FavoriteButton, Button de comparaison, partage et cartes éditoriales sémantiques |
+| Fiche | Shell, titres et corps typographiques M3, GenderIcon, FavoriteButton, Button de comparaison, partage et cartes éditoriales sémantiques |
 | Comparateur | Shell, SearchBar, Checkbox, ComparisonSelection, Button et cartes de comparaison |
 | Favoris | Shell, SearchBar, FilterChip icon-only pour le genre, `select` natif pour le tri, Snackbar et cartes navigables |
 | Administration | Shell, champs natifs, Button, Snackbar et cartes de prévisualisation |
