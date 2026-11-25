@@ -108,6 +108,9 @@ Chaque changement est validé au niveau adapté à son risque :
 - Les tests Node natifs importent les modules TypeScript avec des chemins relatifs et l'extension `.ts`. Les fonctions pures testées par Node vivent dans des modules cœur sans alias `@/`, client Supabase ou runtime Next.js ; la couche applicative peut les réexporter.
 - Tests d'intégration pour les accès aux données, contrats et interactions entre modules.
 - Tests de composants ou E2E pour les parcours utilisateur critiques.
+- Pour chaque PR interne, Playwright Chromium capture l'accueil, le catalogue et une fiche sur mobile (390 px), tablette (768 px) et bureau (1440 px). Les captures, le rapport HTML et les traces d'échec sont publiés en artefacts GitHub à rétention de trois jours.
+- axe-core analyse les pages publiques sur les trois formats ; les violations WCAG de sévérité sérieuse ou critique bloquent la vérification. Les autres niveaux restent visibles dans les rapports pour permettre leur priorisation.
+- Les tests E2E n'ouvrent aucune route d'administration et n'utilisent aucune session ni donnée privée. Les PR issues de forks ne reçoivent pas de Preview Cloudflare ni de secrets.
 - Vérifications statiques et build dans la CI GitHub Actions.
 - Contrôles manuels ciblés lorsque l'accessibilité, le responsive ou le rendu visuel ne sont pas couverts par l'automatisation.
 
@@ -121,7 +124,7 @@ Pour une refonte CSS ou de composants, vérifier au minimum :
 - les contrastes et la navigation clavier ;
 - les pages représentatives, pas uniquement la page d'accueil.
 
-Les builds de PR et les déploiements de production sont exécutés par GitHub Actions vers Cloudflare Workers. Vercel reste temporairement un retour arrière ; ses previews sont désactivées et sa politique résiduelle est documentée dans [AGENTS.md](../AGENTS.md).
+Les builds de PR et les déploiements de production sont exécutés par GitHub Actions vers Cloudflare Workers. Les Previews internes servent aussi de cible aux tests navigateur ; aucune plateforme tierce de build ou de déploiement n'est requise.
 
 ## 7. Refactorisation et dette technique
 
@@ -180,8 +183,8 @@ Les en-têtes sont appliqués au niveau Next.js à l'ensemble des routes, y comp
 - npm est celui fourni avec l'installation Node.js retenue ; aucune version npm indépendante n'est épinglée.
 - GitHub Actions lit directement `.nvmrc` avec `actions/setup-node` ; elle vérifie ensuite que la version réellement installée correspond exactement au fichier.
 - Les développeurs utilisent `npm ci` pour installer l'arbre verrouillé, pas `npm install` pour les installations reproductibles.
-- Toute montée de version Node doit modifier `.nvmrc`, la contrainte de compatibilité, les types Node et le runtime Vercel dans la même PR ; la CI doit valider l'ensemble.
-- Les actions GitHub officielles sont maintenues sur leurs versions majeures stables actuelles ; leur mise à jour ne doit pas réactiver les déploiements Preview Vercel.
+- Toute montée de version Node doit modifier `.nvmrc`, la contrainte de compatibilité, les types Node et le runtime Cloudflare/OpenNext dans la même PR ; la CI doit valider l'ensemble.
+- Les actions GitHub officielles sont maintenues sur des versions stables épinglées par SHA complet, vérifiées contre leur tag officiel.
 
 
 ## 12. Vérification de session administrateur
