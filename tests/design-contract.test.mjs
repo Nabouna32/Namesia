@@ -336,6 +336,10 @@ test("les couleurs sémantiques sont des extensions M3 avec annonces accessibles
   assert.match(messageComponent, /dismissAction\?: ReactNode/);
   assert.match(messageComponent, /actionOnNewLine\?: boolean/);
   assert.match(messageComponent, /actionOnNewLine && action/);
+  assert.match(messageComponent, /<div className={classes} role=/);
+  assert.match(messageComponent, /styles\.action/);
+  assert.match(messageComponent, /styles\.dismissAction/);
+  assert.doesNotMatch(messageComponent, /<p className={classes}/);
   assert.match(messageStyles, /--snackbar-action-color/);
   assert.match(messageStyles, /--snackbar-dismiss-action-color/);
   assert.match(messageStyles, /\.actionOnNewLine/);
