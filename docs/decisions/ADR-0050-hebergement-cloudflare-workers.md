@@ -43,7 +43,6 @@ La production publique utilise désormais l'URL `workers.dev`. Les vérification
 - le rendu SSR du catalogue et d'une fiche, l'API de comparaison et les Route Handlers ;
 - les réponses `401` des routes d'administration sans jeton ;
 - robots.txt, sitemap et l'image Open Graph statique commune, référencée par les fiches dont le titre et la description restent spécifiques ;
-- l'API Supabase Auth et le fournisseur e-mail activé (contrôle automatique) ;
 - l'activation du fournisseur e-mail Supabase (contrôle automatique). L'envoi et le clic réels d'un OTP, l'URL de redirection et la session restent à valider manuellement ;
 - la taille compressée du Worker et le CPU consommé sur les parcours représentatifs.
 
@@ -57,7 +56,7 @@ Aucune clé Supabase privilégiée n'est ajoutée au Worker ou à GitHub Actions
 - Les PR internes disposent d'une URL stable de Preview et d'une URL de déploiement propre à chaque mise à jour.
 - Les previews ouvertes peuvent être consultées publiquement ; leur suppression automatique évite de conserver les environnements de PR fermées.
 - Les quotas Cloudflare d'exécution, de requêtes, de taille de Worker et d'observabilité restent applicables.
-- La migration n'est pas considérée terminée tant que le contrôle HTTP post-déploiement du Worker et les parcours SSR, Route Handlers, authentification OTP, cookies, catalogue, sitemap et images Open Graph n'ont pas été validés sur son URL `workers.dev`.
+- Le transfert d'hébergement est terminé et le contrôle HTTP post-déploiement couvre les parcours publics. La validation manuelle de l'OTP, de la redirection et de la session reste une limite connue ; elle ne remet pas en cause l'hébergement Cloudflare.
 - Vercel n'est plus un mécanisme de retour arrière. Les versions et déploiements Worker Cloudflare constituent le mécanisme opérationnel de retour arrière.
 - Réexaminer OpenNext au regard de vinext après la première validation de production, sans changer d'adaptateur dans cette migration initiale.
 
