@@ -102,6 +102,8 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Ne pas ajouter de dépendance sans justifier le besoin, les alternatives et le coût de maintenance.
 - Ne jamais exposer de clé privilégiée, secret ou donnée sensible.
 - Prévoir des tests au niveau adapté au risque ; leur réussite n'est établie que lorsque la CI GitHub Actions l'a confirmée.
+- Les migrations Supabase doivent rester alignées sur `supabase_migrations.schema_migrations` de l'instance active : chaque version appliquée possède un fichier dont le préfixe correspond exactement à `version`, et toute migration restante doit pouvoir s'exécuter dans l'ordre depuis le schéma courant.
+- Avant toute évolution SQL, comparer l'historique distant (`list_migrations`) au répertoire `supabase/migrations/`. Ne jamais conserver un doublon horodaté d'une migration déjà appliquée ni une séquence abandonnée qui crée puis détruit un modèle refusé. Une migration appliquée n'est jamais réécrite ; les corrections passent par une nouvelle migration additive.
 - Les migrations doivent être versionnées, relisibles, compatibles avec le schéma réel et vérifiées par la CI lorsque des contrôles automatisés sont pertinents.
 
 ## Contrat design
