@@ -17,6 +17,7 @@ concurrency:
 
 jobs:
   build:
+    name: Construire, prévisualiser et déployer
     outputs:
       preview_url: ${{ steps.preview.outputs.preview_url }}
     if: github.event_name != 'pull_request' || (github.event.action != 'closed' && (github.event.action != 'labeled' || github.event.label.name == 'diagnostic-playwright'))
@@ -180,6 +181,7 @@ jobs:
     if: github.event_name == 'pull_request' && needs.build.outputs.preview_url != ''
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    # Seul ce job écrit un commentaire de Preview dans la PR.
     permissions:
       pull-requests: write
     steps:
@@ -190,6 +192,7 @@ jobs:
           PREVIEW_URL: ${{ needs.build.outputs.preview_url }}
         run: gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --body "Preview Cloudflare — $PREVIEW_URL"
   cleanup:
+    name: Nettoyer la Preview Cloudflare
     if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 10
