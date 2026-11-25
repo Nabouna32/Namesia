@@ -17,7 +17,7 @@ function isActive(pathname: string, href: string) {
 }
 
 export function NavigationDestinations() {
-  const pathname = usePathname() ?? "/";
+  const pathname = usePathname();
   return (
     <ul className="navigation-items">
       {destinations.map((destination) => {
