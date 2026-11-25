@@ -478,11 +478,13 @@ test("Card centralise les surfaces AndroidX et préserve l’élément HTML choi
   assert.match(cardStyles, /\.interactive\.outlined:active\s*\{[^}]*on-surface[^}]*pressed-state-layer-opacity/s);
   assert.doesNotMatch(cardStyles, /\.interactive\.(?:elevated|filled|outlined):active\s*\{[^}]*md-sys-color-primary/s);
   assert.match(cardStyles, /--md-sys-state-pressed-state-layer-opacity/);
-  assert.match(checkboxStyles, /\.input:checked:not\(:disabled\):active \+ \.indicator\s*\{[^}]*md-sys-color-primary[^}]*pressed-state-layer-opacity/s);
+  assert.match(checkboxStyles, /\.root:has\(\.input:active:not\(:disabled\)\)::before\s*\{[^}]*pressed-state-layer-opacity/s);
   assert.match(checkboxStyles, /\.input:not\(:disabled\):hover \+ \.indicator\s*\{[^}]*border-color: var\(--md-sys-color-on-surface\)/s);
   assert.match(checkboxStyles, /\.input:not\(:disabled\):active \+ \.indicator\s*\{[^}]*border-color: var\(--md-sys-color-on-surface\)/s);
-  assert.match(checkboxStyles, /\.input:checked:not\(:disabled\):hover \+ \.indicator\s*\{[^}]*md-sys-color-primary[^}]*hover-state-layer-opacity/s);
-  assert.match(checkboxStyles, /\.input:focus-visible \+ \.indicator\s*\{[^}]*md-sys-color-on-surface[^}]*md-sys-color-secondary/s);
+  assert.match(checkboxStyles, /\.root:has\(\.input:hover:not\(:disabled\)\)::before\s*\{[^}]*hover-state-layer-opacity/s);
+  assert.match(checkboxStyles, /\.input:focus-visible \+ \.indicator\s*\{[^}]*md-sys-color-on-surface/s);
+  assert.match(checkboxStyles, /\.root::after\s*\{[^}]*border: 2px solid var\(--md-sys-color-secondary\)/s);
+  assert.match(checkboxStyles, /\.root:has\(\.input:focus-visible\)::after\s*\{[^}]*opacity: 1/s);
 });
 
 test("TextField reprend l’anatomie et les états AndroidX sans style local concurrent", () => {
