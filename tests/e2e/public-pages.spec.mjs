@@ -63,4 +63,3 @@ test("l’accueil reste utilisable sur mobile et tablette", async ({ page }) => 
     expect(hasHorizontalOverflow, `Débordement horizontal en ${viewport.name}`).toBe(false);
   }
 });
-\n
