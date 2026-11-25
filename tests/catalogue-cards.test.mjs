@@ -48,7 +48,7 @@ test("les vues de prénoms affichent le pictogramme sans libellé visible", () =
     assert.doesNotMatch(source, /<small>\{name\.gender\}<\/small>/);
     assert.doesNotMatch(source, /className="profile-tag">\{name\.gender\}/);
   }
-  assert.doesNotMatch(profile, /twitter:\s*\{[^}]*images:/s);
+  assert.match(profile, /images:\s*\["\/opengraph-image"\]/);
 });
 
 test("la découverte aléatoire affiche le pictogramme du prénom sélectionné", () => {
