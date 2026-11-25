@@ -102,8 +102,11 @@ test("SearchBar applique le champ replié AndroidX et reste accessible dans les 
   assert.match(searchBarStyles, /surface-container-high/);
   assert.match(searchBarStyles, /body-large-(?:font|size|weight|line-height|tracking)/);
   assert.match(searchBarStyles, /leadingIcon/);
-  assert.doesNotMatch(searchBarStyles, /:focus-within|outline:/);
-  assert.match(globalStyles, /input:focus-visible/);
+  assert.match(searchBarStyles, /:has\(input:focus-visible\)/);
+  assert.match(searchBarStyles, /outline: 2px solid var\(--md-sys-color-primary\)/);
+  assert.match(searchBarStyles, /outline-offset: -2px/);
+  assert.match(searchBarStyles, /\.container input\s*\{[^}]*outline: 0/s);
+  assert.match(globalStyles, /input:not\(\[type="search"\]\):focus-visible/);
   assert.match(catalogue, /<SearchBar/);
   assert.match(comparator, /<SearchBar/);
   assert.match(favorites, /<SearchBar/);
