@@ -276,7 +276,7 @@ test("les textes utilisent les interlignes de leur rôle Material 3", () => {
   assert.match(globalCss, /\.featured-letter\s*\{[^}]*line-height:\s*0\.95;/s);
   assert.match(globalCss, /\.profile-monogram\s*\{[^}]*line-height:\s*0\.95;/s);
   for (const role of ["body-large", "body-medium", "body-small", "headline-large"]) {
-    assert.match(allCss, new RegExp("line-height:\s*var\(--md-sys-typescale-" + role + "-line-height\)"));
+    assert.match(allCss, new RegExp("line-height:\\s*var\\(--md-sys-typescale-" + role + "-line-height\\)"));
   }
 });
 
