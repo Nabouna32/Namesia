@@ -28,6 +28,7 @@ Utiliser **Cloudflare Workers Free**, avec **GitHub Actions comme moteur de buil
 - Les secrets Cloudflare ne sont jamais exposés aux PR provenant de forks : seuls les événements dont le dépôt source est le dépôt courant peuvent créer ou supprimer une Preview.
 - Les previews sont publiques par défaut sur `workers.dev`. Elles ne contiennent que le catalogue public ; leur URL reçoit le signal `noindex` de Cloudflare.
 - Le bloc Wrangler `previews` définit explicitement `NAMESIA_DEPLOYMENT_ENVIRONMENT=preview`, distinct de `production`. La page d'administration n'affiche pas son client d'authentification et toutes les routes d'administration refusent les requêtes en Preview. Aucune clé privilégiée Supabase n'est fournie.
+- Les fichiers lus à l'exécution via `node:fs` doivent être inclus explicitement dans le système de fichiers virtuel du Worker. Wrangler utilise `find_additional_modules`, une règle `Text` et `preserve_file_names` pour embarquer la police Open Graph à son chemin attendu ; les fichiers non importés ne sont pas présents automatiquement dans `/bundle`.
 - Les previews utilisent les lectures publiques du projet Supabase de production ; elles n'ont aucun chemin d'écriture applicatif disponible. Toute activation future de l'administration dans un environnement de test exige un projet Supabase de staging distinct et des secrets propres à cet environnement.
 - Aucun binding mutable de production n'est déclaré dans le bloc `previews`. Toute nouvelle ressource liée doit être explicitement évaluée et isolée.
 - Vercel, son domaine public et sa configuration restent inchangés pendant la validation. Aucun DNS ni alias public n'est basculé par cette migration.
@@ -64,6 +65,7 @@ Aucune clé Supabase privilégiée n'est ajoutée au Worker ou à GitHub Actions
 - Cloudflare — [GitHub Actions examples](https://developers.cloudflare.com/workers/previews/examples/) : création, commentaire, probe et suppression des Previews.
 - Cloudflare — [Compare workflows](https://developers.cloudflare.com/workers/previews/compare-workflows/) : différence entre Previews, Version URLs et environnements Wrangler.
 - Cloudflare — [OpenNext adapter](https://developers.cloudflare.com/workers/framework-guides/web-apps/opennext/) : configuration et matrice de fonctionnalités.
+- Cloudflare — [Wrangler bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) et [Node.js fs](https://developers.cloudflare.com/workers/runtime-apis/nodejs/fs/) : inclusion des modules additionnels dans le système de fichiers virtuel du Worker.
 - OpenNext — [CLI](https://opennext.js.org/cloudflare/cli) : commandes `build`, `preview` locale et `deploy`.
 - OpenNext — [Cloudflare Get Started](https://opennext.js.org/cloudflare/get-started) : migration d'une application Next.js existante.
 - Cloudflare — [vinext](https://github.com/cloudflare/vinext) : statut et limites de compatibilité.
