@@ -26,7 +26,8 @@ Conserver le nom métier `ChampRecherche` et son API de valeur contrôlée, mais
 - surface `SurfaceContainerHigh` ;
 - texte de saisie `BodyLarge` ;
 - icône initiale `OnSurface` et action finale `OnSurfaceVariant` ;
-- élévation tonale et ombre nulles (`Level0`).
+- élévation tonale et ombre nulles (`Level0`) ;
+- indicateur de focus clavier dessiné sur le conteneur complet de la capsule, avec `primary`, un contour de 2 px et le même rayon `full` ; le champ intérieur ne dessine pas de rectangle concurrent.
 
 Le label HTML demeure présent et accessible, mais il n'est plus affiché au-dessus du champ ; le placeholder visible ne devient jamais le seul nom accessible. Le bouton d'effacement reste une action Namesia partagée et restitue le focus au champ. Le bouton de suppression natif du navigateur reste masqué pour éviter une action concurrente.
 
@@ -37,7 +38,7 @@ La variante visuelle `compact` du champ est supprimée. La compacité de l'accue
 - Une seule apparence de recherche sur les parcours accueil, catalogue, comparateur et favoris.
 - Le rayon de formulaire et le contour outlined ne sont plus appliqués à une recherche.
 - Les résultats restent intégrés au flux Namesia ; aucune expansion ou surface de résultats fictive n'est introduite.
-- Le focus conserve un indicateur Web visible, sans dépendre d'un comportement Android indisponible dans le navigateur.
+- Le focus clavier conserve un anneau continu autour de toute la capsule, au lieu d'un rectangle autour du seul input. Le sélecteur `:focus-visible` évite de déclencher cet anneau au simple clic ; `:has()` transmet l'état du champ à son conteneur sans ajouter de wrapper interactif.
 
 ## Vérification
 
