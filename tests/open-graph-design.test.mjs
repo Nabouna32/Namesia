@@ -30,6 +30,6 @@ test("le favicon dessine le monogramme en vecteurs sans dépendre d'une police s
 
 test("les fiches héritent de l’aperçu statique sans surcharge d’image dynamique", () => {
   assert.match(profilePage, /card: "summary_large_image"/);
-  assert.doesNotMatch(profilePage, /images:\s*\[/);
-  assert.doesNotMatch(profilePage, /opengraph-image/);
+  assert.match(profilePage, /images:\s*\["\/opengraph-image"\]/);
+  assert.doesNotMatch(profilePage, /\/prenoms\/\$\{name\.slug\}\/opengraph-image/);
 });
