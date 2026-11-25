@@ -66,7 +66,6 @@ test("l’accueil reste utilisable sur mobile et tablette", async ({ page }) => 
 
 
 test("un favori peut être annulé ou fermé depuis sa Snackbar sur mobile", async ({ page }) => {
-  await page.addInitScript(() => window.localStorage.clear());
   await page.setViewportSize({ width: 390, height: 844 });
   const response = await page.goto("/prenoms/alice", {
     waitUntil: "domcontentloaded",
