@@ -39,7 +39,7 @@ test("le registre M3 et ses sources de référence restent complets et lisibles"
   assert.equal(verification.includes("\\n|"), false);
   assert.match(sourceVerifier, /const verifiedSources = \[\.\.\.sources, \.\.\.additionalAndroidxSources\]/);
   assert.match(sourceVerifier, /maybeFallbackSpecVersion/);
-  assert.doesNotMatch(verification, /2025\\/2026/);
+  assert.doesNotMatch(verification, new RegExp("2025/2026"));
   assert.match(sourceVerifier, /filter\(\(\{ name \}\) => name\.startsWith\("AndroidX "\)\)/);
   assert.match(sourceVerifier, /assert\.equal\(androidxSourceCount, 37/);
   assert.match(sourceVerifier, /verifySourcesWithLimit\(verifiedSources, 4\)/);
