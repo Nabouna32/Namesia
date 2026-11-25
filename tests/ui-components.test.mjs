@@ -5,6 +5,7 @@ import { readFile } from "node:fs/promises";
 const button = await readFile(new URL("../components/material3/Button.tsx", import.meta.url), "utf8");
 const buttonStyles = await readFile(new URL("../components/material3/Button.module.css", import.meta.url), "utf8");
 const iconButton = await readFile(new URL("../components/material3/IconButton.tsx", import.meta.url), "utf8");
+const iconButtonStyles = await readFile(new URL("../components/material3/IconButton.module.css", import.meta.url), "utf8");
 const favoriteButton = await readFile(new URL("../components/features/favorites/FavoriteButton.tsx", import.meta.url), "utf8");
 const discovery = await readFile(new URL("../components/features/discovery/RandomDiscovery.tsx", import.meta.url), "utf8");
 const featured = await readFile(new URL("../components/features/catalog/FeaturedNames.tsx", import.meta.url), "utf8");
@@ -50,6 +51,18 @@ test("IconButton conserve la sémantique d'une action M3, pas d'un contrôle tog
   assert.match(iconButton, /<button/);
   assert.match(iconButton, /aria-label=\{label\}/);
   assert.doesNotMatch(iconButton, /pressed|aria-pressed/);
+  assert.match(iconButton, /IconButton\\.module\\.css/);
+  assert.doesNotMatch(iconButton, /Button\\.module\\.css/);
+  assert.match(iconButtonStyles, /min-width: 48px/);
+  assert.match(iconButtonStyles, /min-height: 48px/);
+  assert.match(iconButtonStyles, /inset: 4px/);
+  assert.match(iconButtonStyles, /corner-full/);
+  assert.match(iconButtonStyles, /on-surface-variant/);
+  assert.match(iconButtonStyles, /on-surface\\) 38%, transparent/);
+  assert.match(iconButtonStyles, /hover-state-layer-opacity/);
+  assert.match(iconButtonStyles, /focus-state-layer-opacity/);
+  assert.match(iconButtonStyles, /pressed-state-layer-opacity/);
+  assert.match(iconButtonStyles, /prefers-reduced-motion: reduce/);
 });
 
 test("les fonctions métier composent les composants Material 3 sans réimplémenter les boutons", () => {
