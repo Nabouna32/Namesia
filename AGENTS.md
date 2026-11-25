@@ -182,7 +182,7 @@ Principes :
 - Signaler les désaccords clairement, avec raisons et proposition alternative ; décider seul de la suite cohérente.
 - En cas de risque important ou de contradiction avec une décision antérieure, analyser le problème, arbitrer et agir sans demander de clarification ni suspendre le travail.
 - Les informations manquantes sont traitées par une décision prudente, documentée et réversible autant que possible ; décider seul et ne pas poser de question au propriétaire.
-- Ne pas demander d'autorisation pour fusionner, supprimer des données, migrer ou refondre la base, ni mettre en production dans le cadre de la politique Vercel définie au §4.
+- Ne pas demander d'autorisation pour fusionner, supprimer des données, migrer ou refondre la base, ni déployer la production Cloudflare selon le workflow défini au §4.
 - À la fin d'une intervention, résumer les changements réellement effectués, les vérifications confirmées par la CI, les limites restantes et les liens vers les PR/issues.
 
 ## 10. Cadence des passes design
