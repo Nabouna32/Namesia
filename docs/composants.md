@@ -3,7 +3,7 @@
 - **Statut :** référence canonique des composants d'interface
 - **Mis à jour :** 2026-11-25
 
-Ce document est le point d'entrée unique pour composer l'interface. Les composants de présentation portent les noms officiels Material 3 et sont centralisés dans `components/material3/`. Les fonctions propres au produit sont isolées dans `components/features/`. Il n'existe pas de couche parallèle de primitives génériques nommées en français, ni de wrappers de convenance qui masquent le contrat M3.
+Ce document est le point d'entrée unique pour composer l'interface. Les ports Web des contrats Material 3 sont centralisés dans `components/material3/` ; les fonctions propres au produit sont isolées dans `components/features/`. Il n'existe pas de seconde bibliothèque de primitives ni de wrappers de convenance. Les ports locaux sont nécessaires parce qu'AndroidX Compose cible Android/Kotlin et que Material Web ne couvre pas le besoin stable complet ; ils ne sont pas présentés comme des composants AndroidX exécutés dans le navigateur. La décision, les alternatives et les limites sont détaillées dans [ADR-0037](decisions/ADR-0037-architecture-composants-material3.md).
 
 ## Architecture
 
