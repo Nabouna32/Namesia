@@ -63,3 +63,20 @@ test("l’accueil reste utilisable sur mobile et tablette", async ({ page }) => 
     expect(hasHorizontalOverflow, `Débordement horizontal en ${viewport.name}`).toBe(false);
   }
 });
+
+
+test("Checkbox expose son state sélectionné et son focus Material 3 sur mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  const response = await page.goto("/comparer", {
+    waitUntil: "domcontentloaded",
+    timeout: 30_000
+  });
+
+  expect(response?.status(), "HTTP comparateur mobile").toBeLessThan(400);
+  const checkbox = page.getByRole("checkbox").first();
+  await expect(checkbox).toBeVisible();
+  await checkbox.focus();
+  await page.keyboard.press("Space");
+  await expect(checkbox).toBeChecked();
+  await page.screenshot({ path: "test-results/checkbox-state-mobile.png", fullPage: true });
+});
