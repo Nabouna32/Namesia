@@ -15,6 +15,7 @@ on:
 
 jobs:
   quality:
+    name: Vérifier le code et les dépendances
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
