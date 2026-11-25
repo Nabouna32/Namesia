@@ -26,7 +26,7 @@ Variables d'environnement :
 
 - `NEXT_PUBLIC_SUPABASE_URL` (requise)
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (requise)
-- `NEXT_PUBLIC_SITE_URL` (optionnelle, origine canonique du site ; défaut : `https://namesia.vercel.app`)
+- `NEXT_PUBLIC_SITE_URL` (requise, origine canonique HTTPS du site en production)
 
 La clé publishable peut être exposée au navigateur. La sécurité repose sur les privilèges SQL, RLS et l'autorisation administrateur. Aucune clé service_role ou clé secrète ne doit être intégrée au site.
 
