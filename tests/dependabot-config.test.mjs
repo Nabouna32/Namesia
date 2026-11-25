@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 const config = await readFile(new URL("../.github/dependabot.yml", import.meta.url), "utf8");
-const agents = await readFile(new URL("../AGENTS.md", import.meta.url), "utf8");
+const standards = await readFile(new URL("../docs/standards-techniques.md", import.meta.url), "utf8");
 
 function ecosystemConfig(name) {
   const start = config.indexOf(`- package-ecosystem: ${name}`);
@@ -26,7 +26,7 @@ test("les mises à jour mineures et correctives sont regroupées avec un cooldow
     assert.match(section, /cooldown:\s+default-days: 7/);
     assert.match(section, /groups:\s+minor-and-patch:\s+update-types:\s+- minor\s+- patch/);
   }
-  assert.match(agents, /Dependabot regroupe chaque semaine les mises à jour mineures\/patch/);
+    assert.match(standards, /Dependabot regroupe chaque semaine les mises à jour mineures\/patch de npm et des actions GitHub, avec un délai de refroidissement de 7 jours et au plus une PR ouverte par écosystème/);
 });
 
 test("la configuration ne réintroduit ni cadence quotidienne ni limite massive de PR", () => {
