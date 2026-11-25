@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { creerUrlFicheDepuisComparateur } from "@/lib/navigation-prenoms";
 import type { Prenom, PrenomIndex } from "@/lib/prenoms";
-import { GenreIcon } from "@/components/features/names/GenreIcon";
+import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { ShareLink } from "@/components/features/sharing/ShareLink";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { categoryTone } from "@/lib/category-color";
@@ -147,7 +147,7 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
                       <span className="compare-option-initial" aria-hidden="true">{prenom.lettre}</span>
                       <span className="compare-option-name">
                         <strong>{prenom.nom}</strong>
-                        <GenreIcon genre={prenom.genre} />
+                        <GenderIcon gender={prenom.genre} />
                       </span>
                     </label>
                   );
@@ -217,7 +217,7 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
                     <th scope="col" key={prenom.slug}>
                       <strong className="compare-name">{prenom.nom}</strong>
                       <span className="compare-header-meta">
-                        <span className="profile-tag"><GenreIcon genre={prenom.genre} /></span>
+                        <span className="profile-tag"><GenderIcon gender={prenom.genre} /></span>
                         <span className="profile-tag">Lettre {prenom.lettre}</span>
                       </span>
                       <Link
