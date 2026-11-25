@@ -5,15 +5,15 @@ import { siteUrl } from "@/lib/site-url";
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const prenoms = await getNamesSitemap();
+  const names = await getNamesSitemap();
 
   return [
     { url: new URL("/", siteUrl).toString(), changeFrequency: "weekly", priority: 1 },
     { url: new URL("/prenoms", siteUrl).toString(), changeFrequency: "weekly", priority: 0.9 },
     { url: new URL("/tendances", siteUrl).toString(), changeFrequency: "monthly", priority: 0.7 },
-    ...prenoms.map((prenom) => ({
-      url: new URL(`/prenoms/${prenom.slug}`, siteUrl).toString(),
-      lastModified: prenom.publishedAt,
+    ...names.map((name) => ({
+      url: new URL(`/prenoms/${name.slug}`, siteUrl).toString(),
+      lastModified: name.publishedAt,
       changeFrequency: "monthly" as const,
       priority: 0.8
     }))
