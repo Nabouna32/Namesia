@@ -39,10 +39,8 @@ Le plan Workers Free impose notamment une limite CPU par invocation et une taill
 Avant toute bascule publique, valider sur l'URL `workers.dev` :
 - le rendu SSR du catalogue et d'une fiche, l'API de comparaison et les Route Handlers ;
 - les réponses `401` des routes d'administration sans jeton ;
-- les robots.txt, sitemap et images Open Graph ;
-- l'authentification OTP et les redirections Supabase sur le domaine final ;
-- les pages de catalogue, fiches, comparateur, sitemap et images Open Graph ;
-- le fonctionnement des sessions et cookies ;
+- robots.txt, sitemap et images Open Graph ;
+- l'authentification OTP, les redirections Supabase et le maintien de session sur le domaine final ;
 - la taille compressée du Worker et le CPU consommé sur les parcours représentatifs.
 
 Les environnements de test ne doivent contenir aucun secret privilégié. L'administration reste protégée par Supabase Auth et RLS en production et est entièrement désactivée dans les Previews.
