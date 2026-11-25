@@ -3,16 +3,17 @@ import { parseContenuFiche, type ContenuFichePrenom } from "@/lib/fiche-prenom";
 import type { Tables } from "@/lib/supabase/database.types";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { lireToutesLesPages } from "@/lib/pagination";
-import type { NameGender } from "@/lib/name-types";
 import { calculerFenetreSuggestions } from "@/lib/suggestions-prenoms";
 import { obtenirDatePublicationUnique, type ProfilPublication } from "@/lib/publication-prenom";
+
+export type GenrePrenom = "Féminin" | "Masculin" | "Mixte" | "Genre non renseigné";
 
 export type Prenom = {
   id: string;
   slug: string;
   nom: string;
   lettre: string;
-  genre: NameGender;
+  genre: GenrePrenom;
 } & ContenuFichePrenom;
 
 export type PrenomIndex = Pick<Prenom, "id" | "slug" | "nom" | "lettre" | "genre">;
@@ -23,7 +24,7 @@ type JoinedProfile = Pick<Tables<"name_profiles">, "introduction" | "origin_text
   name_profile_associations: JoinedAssociation[];
 };
 
-const libellesGenres: Record<string, NameGender> = {
+const libellesGenres: Record<string, GenrePrenom> = {
   feminin: "Féminin",
   masculin: "Masculin",
   mixte: "Mixte",
@@ -48,7 +49,7 @@ function obtenirInitiale(displayName: string): string {
   return initiale.toLocaleUpperCase("fr");
 }
 
-function obtenirLibelleGenre(genre: string): NameGender {
+function obtenirLibelleGenre(genre: string): GenrePrenom {
   const libelle = libellesGenres[genre];
   if (!libelle) throw new Error(`Genre de prénom non pris en charge : "${genre}".`);
   return libelle;
