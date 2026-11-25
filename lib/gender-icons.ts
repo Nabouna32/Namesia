@@ -1,5 +1,7 @@
-import type { NameGender } from "@/lib/name-types";
+import type { GenrePrenom } from "@/lib/prenoms";
 import type { IconName } from "@/components/material3/Icon";
+
+export type NameGender = GenrePrenom;
 
 export const GENDER_ICONS: Record<NameGender, IconName> = {
   "Féminin": "gender-female",
