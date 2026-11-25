@@ -6,6 +6,9 @@ import styles from "./NamePopularityCard.module.css";
 export function NamePopularityCard({ slug }: { slug: string }) {
   const popularity = getNamePopularity2025(slug);
   if (!popularity) return null;
+  const rankLabel = popularity.rank === 1
+    ? popularity.gender === "Féminin" ? "1re" : "1er"
+    : `${popularity.rank}e`;
 
   return (
     <Card as="section" variant="outlined" interactive={false} className={styles.card}>
@@ -15,7 +18,7 @@ export function NamePopularityCard({ slug }: { slug: string }) {
       </div>
       <div className={styles.metrics}>
         <div className={styles.metric}>
-          <strong>{popularity.rank}<sup>e</sup></strong>
+          <strong>{rankLabel}</strong>
           <span>prénom {popularity.gender.toLocaleLowerCase("fr")} le plus donné</span>
         </div>
         <div className={styles.metric}>
