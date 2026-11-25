@@ -133,8 +133,10 @@ jobs:
           curl --fail --show-error --silent --location --max-time 30 "$SITE_URL/api/prenoms?slug=alice&slug=emma" --output "$workdir/comparison.json"
           jq -e '[.prenoms[].slug] | index("alice") != null and index("emma") != null' "$workdir/comparison.json"
 
+          echo "Vérifier l’image Open Graph générale"
           og_type="$(curl --fail --show-error --silent --location --max-time 30 --output /dev/null --write-out '%{content_type}' "$SITE_URL/opengraph-image")"
           test "$og_type" = "image/png"
+          echo "Vérifier l’image Open Graph de la fiche Alice"
           profile_og_type="$(curl --fail --show-error --silent --location --max-time 30 --output /dev/null --write-out '%{content_type}' "$SITE_URL/prenoms/alice/opengraph-image")"
           test "$profile_og_type" = "image/png"
 
