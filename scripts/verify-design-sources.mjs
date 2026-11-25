@@ -79,12 +79,12 @@ const sources = [
   {
     name: "Material Color Utilities Fidelity",
     url: "https://raw.githubusercontent.com/material-foundation/material-color-utilities/b03ef34bb53a15c3ba41bf963eb3e2c5c353c85f/typescript/dynamiccolor/dynamic_scheme.ts",
-    markers: ["Variant.FIDELITY", "specVersion", "maybeFallbackSpecVersion", "case Variant.EXPRESSIVE", "case Variant.NEUTRAL", "2021"],
+    markers: ["Variant.FIDELITY", "specVersion", "maybeFallbackSpecVersion", "case Variant.EXPRESSIVE", "case Variant.NEUTRAL", "return '2021';"],
   },
   {
     name: "Material Color Utilities ColorSpec versions",
     url: "https://raw.githubusercontent.com/material-foundation/material-color-utilities/b03ef34bb53a15c3ba41bf963eb3e2c5c353c85f/typescript/dynamiccolor/color_spec.ts",
-    markers: ["SpecVersion", "2025", "Unsupported spec version"],
+    markers: ["SpecVersion = '2021'|'2025'", "case '2025'", "Unsupported spec version"],
   },
   {
     name: "Material Color Utilities ColorSpec 2025",
