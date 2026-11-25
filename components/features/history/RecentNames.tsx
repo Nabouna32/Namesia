@@ -11,11 +11,11 @@ import { IconButton } from "@/components/material3/IconButton";
 import { Card } from "@/components/material3/Card";
 
 export function RecentNames({ prenoms }: { prenoms: PrenomIndex[] }) {
-  const { slugs, retirer, effacer, erreur } = useHistory();
-  if (slugs.length === 0 && !erreur) return null;
+  const { slugs, removeVisit, clearHistory, error } = useHistory();
+  if (slugs.length === 0 && !error) return null;
 
   const index = new Map(prenoms.map((prenom) => [prenom.slug, prenom] as const));
-  const recentes = slugs.flatMap((slug) => {
+  const recentNames = slugs.flatMap((slug) => {
     const prenom = index.get(slug);
     return prenom ? [prenom] : [];
   });
@@ -29,20 +29,20 @@ export function RecentNames({ prenoms }: { prenoms: PrenomIndex[] }) {
             <h2 id="historique-title">Vos dernières fiches</h2>
           </div>
           {slugs.length > 0 && (
-            <Button variant="text" type="button" onClick={effacer}>
+            <Button variant="text" type="button" onClick={clearHistory}>
               Effacer l’historique
             </Button>
           )}
         </div>
-        {erreur && (
-          <p className={styles.favoriteError} role="status">
-            L’historique ne peut pas être conservé après rechargement dans cet onglet. Il reste disponible tant que la page est ouverte.
+        {error && (
+          <p className={styles.note} role="alert">
+            Le navigateur a refusé l’accès au stockage de session. L’historique n’est pas disponible dans cet onglet.
           </p>
         )}
-        {recentes.length > 0 ? (
+        {recentNames.length > 0 ? (
           <>
             <div className={styles.grid}>
-              {recentes.map((prenom) => (
+              {recentNames.map((prenom) => (
                 <article className={styles.card} key={prenom.slug}>
                   <Card as={Link} variant="elevated" interactive className={`name-card ${styles.link}`} href={`/prenoms/${prenom.slug}`}>
                     <span className="name-initial">{prenom.lettre}</span>
@@ -54,7 +54,7 @@ export function RecentNames({ prenoms }: { prenoms: PrenomIndex[] }) {
                   </Card>
                   <IconButton
                     label={`Retirer ${prenom.nom} de l’historique`}
-                    onClick={() => retirer(prenom.slug)}
+                    onClick={() => removeVisit(prenom.slug)}
                   >
                     <span aria-hidden="true"><Icon name="close" size={24} /></span>
                   </IconButton>
@@ -63,7 +63,7 @@ export function RecentNames({ prenoms }: { prenoms: PrenomIndex[] }) {
             </div>
             <p className={styles.note}>Cet historique est propre à cet onglet : il est conservé lors des rechargements et supprimé à sa fermeture.</p>
           </>
-        ) : !erreur ? (
+        ) : !error ? (
           <p className={styles.note}>Aucune des fiches consultées récemment n’est actuellement publiée.</p>
         ) : null}
       </div>
