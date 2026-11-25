@@ -62,27 +62,27 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return <html lang="fr" className={roboto.variable} data-scroll-behavior="smooth"><head><style dangerouslySetInnerHTML={{ __html: materialThemeCss }} /></head><body>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(siteWebData) }} />
     <a className="skip-link" href="#contenu">Aller au contenu</a>
-      <FavoritesProvider>
-        <HistoryProvider>
-          <div className="app-shell">
-            <TopAppBar />
-            <NavigationBar />
-            <NavigationRail />
-            <div className="app-content">
-              {children}
-              <footer className="site-footer">
-                <div className="footer-inner">
-                  <Link className="brand footer-brand" href="/">
-                    <span className="brand-mark">n.</span>
-                    <span>namesia</span>
-                  </Link>
-                  <p>Les prénoms ont des histoires. Prenons le temps de les raconter.</p>
-                  <span className="footer-note">© {new Date().getFullYear()} Namesia</span>
-                </div>
-              </footer>
-            </div>
+    <FavoritesProvider>
+      <HistoryProvider>
+        <div className="app-shell">
+          <TopAppBar />
+          <NavigationBar />
+          <NavigationRail />
+          <div className="app-content">
+            {children}
+            <footer className="site-footer">
+              <div className="footer-inner">
+                <Link className="brand footer-brand" href="/">
+                  <span className="brand-mark">n.</span>
+                  <span>namesia</span>
+                </Link>
+                <p>Les prénoms ont des histoires. Prenons le temps de les raconter.</p>
+                <span className="footer-note">© {new Date().getFullYear()} Namesia</span>
+              </div>
+            </footer>
           </div>
-        </HistoryProvider>
-      </FavoritesProvider>
+        </div>
+      </HistoryProvider>
+    </FavoritesProvider>
   </body></html>;
 }
