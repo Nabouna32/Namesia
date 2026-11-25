@@ -3,8 +3,9 @@
   max-width: 560px;
   min-height: 48px;
   align-items: center;
+  gap: 8px;
   margin: 0;
-  padding: 12px 16px;
+  padding: 0 8px 0 16px;
   border-radius: var(--md-sys-shape-corner-extra-small);
   font-family: var(--md-sys-typescale-body-medium-font);
   font-size: var(--md-sys-typescale-body-medium-size);
@@ -14,8 +15,100 @@
     0 6px 10px 0 color-mix(in srgb, var(--md-sys-color-shadow) 14%, transparent),
     0 1px 18px 0 color-mix(in srgb, var(--md-sys-color-shadow) 12%, transparent);
 }
-.neutral { background: var(--md-sys-color-inverse-surface); color: var(--md-sys-color-inverse-on-surface); }
-.success { background: var(--namesia-color-success-container); color: var(--namesia-color-on-success-container); }
-.warning { background: var(--namesia-color-warning-container); color: var(--namesia-color-on-warning-container); }
-.info { background: var(--namesia-color-info-container); color: var(--namesia-color-on-info-container); }
-.error { background: var(--md-sys-color-error-container); color: var(--md-sys-color-on-error-container); }
+
+.message {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-block: 12px;
+}
+
+.actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.action,
+.dismissAction {
+  display: flex;
+  align-items: center;
+}
+
+.action {
+  color: var(--snackbar-action-color);
+}
+
+.dismissAction {
+  color: var(--snackbar-dismiss-action-color);
+}
+
+.action :global(button),
+.action :global(a) {
+  min-height: 40px;
+  color: inherit;
+}
+
+.dismissAction :global(button),
+.dismissAction :global(a) {
+  color: inherit;
+}
+
+.actionOnNewLine {
+  min-height: 68px;
+  flex-wrap: wrap;
+}
+
+.actionOnNewLine .message {
+  flex: 1 1 100%;
+  padding-block: 8px 0;
+}
+
+.actionOnNewLine .actions {
+  flex: 1 1 100%;
+  justify-content: flex-end;
+  padding-bottom: 4px;
+}
+
+.neutral {
+  --snackbar-action-color: var(--md-sys-color-inverse-primary);
+  --snackbar-dismiss-action-color: var(--md-sys-color-inverse-on-surface);
+  background: var(--md-sys-color-inverse-surface);
+  color: var(--md-sys-color-inverse-on-surface);
+}
+
+.success {
+  --snackbar-action-color: var(--namesia-color-on-success-container);
+  --snackbar-dismiss-action-color: var(--namesia-color-on-success-container);
+  background: var(--namesia-color-success-container);
+  color: var(--namesia-color-on-success-container);
+}
+
+.warning {
+  --snackbar-action-color: var(--namesia-color-on-warning-container);
+  --snackbar-dismiss-action-color: var(--namesia-color-on-warning-container);
+  background: var(--namesia-color-warning-container);
+  color: var(--namesia-color-on-warning-container);
+}
+
+.info {
+  --snackbar-action-color: var(--namesia-color-on-info-container);
+  --snackbar-dismiss-action-color: var(--namesia-color-on-info-container);
+  background: var(--namesia-color-info-container);
+  color: var(--namesia-color-on-info-container);
+}
+
+.error {
+  --snackbar-action-color: var(--md-sys-color-on-error-container);
+  --snackbar-dismiss-action-color: var(--md-sys-color-on-error-container);
+  background: var(--md-sys-color-error-container);
+  color: var(--md-sys-color-on-error-container);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snackbar,
+  .message,
+  .actions {
+    transition: none;
+  }
+}
