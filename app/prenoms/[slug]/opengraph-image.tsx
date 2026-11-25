@@ -1,7 +1,5 @@
 import { ImageResponse } from "next/og";
 import { getNameBySlug } from "@/lib/names";
-import { Icon } from "@/components/material3/Icon";
-import { GENDER_ICONS } from "@/lib/gender-icons";
 import { chargerPolicesOpenGraph } from "@/lib/polices-open-graph";
 import { getMaterialThemeTokens } from "@/lib/material-theme";
 
@@ -87,7 +85,7 @@ export default async function Image({ params }: Props) {
             background: theme["--md-sys-color-secondary-container"],
             color: theme["--md-sys-color-on-secondary-container"],
             fontSize: 17
-          }}><Icon name={GENDER_ICONS[name.gender]} size={24} /></div>
+          }}>{name.gender}</div>
           <div style={{
             padding: "8px 16px",
             borderRadius: 20,
