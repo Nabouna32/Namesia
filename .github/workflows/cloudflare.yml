@@ -178,7 +178,7 @@ jobs:
     timeout-minutes: 5
     # Seul ce job écrit un commentaire de Preview dans la PR.
     permissions:
-      pull-requests: write
+      pull-requests: write # Publier le lien de Preview dans la PR.
     steps:
       - name: Publier l’URL de Preview dans la PR
         env:
