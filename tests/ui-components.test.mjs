@@ -90,6 +90,10 @@ test("SearchBar applique le champ replié AndroidX et reste accessible dans les 
   assert.match(searchBar, /export function SearchBar\(/);
   assert.match(searchBar, /<label[^>]+htmlFor=\{id\}/);
   assert.match(searchBar, /type="search"/);
+  assert.match(searchBar, /autoCapitalize="none"/);
+  assert.match(searchBar, /autoCorrect="off"/);
+  assert.match(searchBar, /spellCheck=\{false\}/);
+  assert.match(searchBar, /enterKeyHint="search"/);
   assert.match(searchBar, /<IconButton/);
   assert.match(searchBar, /label=\{\`Effacer/);
   assert.match(searchBar, /inputRef\.current\?\.focus\(\)/);
