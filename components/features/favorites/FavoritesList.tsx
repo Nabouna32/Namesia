@@ -186,15 +186,15 @@ export function FavoritesList({
       const slugsImportes = lireSauvegardeFavoris(contenu);
       const resultat = ajouterPlusieurs(slugsImportes);
       if (resultat === null) return;
-      setImportPartiel(resultat.namebreIgnoreLimite > 0);
+      setImportPartiel(resultat.nombreIgnoreLimite > 0);
 
-      const messages = resultat.namebreAjoute > 0
-        ? [`${resultat.namebreAjoute} ${resultat.namebreAjoute > 1 ? "favoris ajoutés" : "favori ajouté"} à votre sélection.`]
-        : resultat.namebreIgnoreLimite > 0
+      const messages = resultat.nombreAjoute > 0
+        ? [`${resultat.nombreAjoute} ${resultat.nombreAjoute > 1 ? "favoris ajoutés" : "favori ajouté"} à votre sélection.`]
+        : resultat.nombreIgnoreLimite > 0
           ? ["Aucun nouveau favori ajouté."]
           : ["Cette sauvegarde ne contient aucun nouveau favori."];
-      if (resultat.namebreIgnoreLimite > 0) {
-        messages.push(`${resultat.namebreIgnoreLimite} ${resultat.namebreIgnoreLimite > 1 ? "favoris ignorés" : "favori ignoré"} : la limite de ${LIMITE_FAVORIS.toLocaleString("fr-FR")} favoris est atteinte.`);
+      if (resultat.nombreIgnoreLimite > 0) {
+        messages.push(`${resultat.nombreIgnoreLimite} ${resultat.nombreIgnoreLimite > 1 ? "favoris ignorés" : "favori ignoré"} : la limite de ${LIMITE_FAVORIS.toLocaleString("fr-FR")} favoris est atteinte.`);
       }
       setMessageImport(messages.join(" "));
     } catch (cause) {
