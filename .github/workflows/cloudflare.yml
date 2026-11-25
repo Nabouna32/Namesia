@@ -96,14 +96,6 @@ jobs:
         env:
           PLAYWRIGHT_BASE_URL: ${{ steps.preview.outputs.preview_url }}
         run: npx playwright test --config=playwright.config.mjs
-      - name: Publier les traces Playwright en cas d’échec
-        if: failure() && steps.preview.outputs.preview_url != ''
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        with:
-          name: diagnostic-playwright-pr-${{ github.event.pull_request.number }}
-          path: test-results/
-          if-no-files-found: ignore
-          retention-days: 3
       - name: Publier l’URL de Preview dans la PR
         if: steps.preview.outputs.preview_url != ''
         env:
