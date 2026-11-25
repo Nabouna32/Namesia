@@ -31,6 +31,7 @@ Conserver l'authentification administrateur passwordless par lien OTP e-mail.
 - L'alerte \`auth_leaked_password_protection\` reste visible dans Supabase Advisor ; elle est documentée comme non applicable au parcours OTP actuel, pas comme résolue.
 - L'application ne gère aucun mot de passe administrateur.
 - Toute évolution vers un flux mot de passe doit réexaminer cette décision et sa condition de sécurité.
+- `tests/passwordless-auth.test.mjs` parcourt `app/`, `components/` et `lib/` pour empêcher l'introduction silencieuse d'un flux mot de passe.
 
 ## Références
 
