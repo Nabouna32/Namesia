@@ -1,6 +1,6 @@
 # ADR-0050 — Hébergement Next.js sur Cloudflare Workers
 
-- **Statut :** acceptée pour la migration, bascule de production en attente de validation
+- **Statut :** déploiement initial effectué ; validation fonctionnelle du Worker en cours
 - **Date :** 2026-11-25
 - **Portée :** hébergement, builds et déploiements de Namesia
 
@@ -47,7 +47,7 @@ Aucune clé Supabase privilégiée n'est ajoutée au Worker ou à GitHub Actions
 
 - Les builds de contrôle et de déploiement Cloudflare sont exécutés par GitHub Actions, sans dépendre de Workers Builds.
 - Les quotas Cloudflare d'exécution, de requêtes, de taille de Worker et d'observabilité restent applicables.
-- La migration n'est pas considérée terminée tant que le Worker de production n'a pas été validé sur son URL `workers.dev`.
+- La migration n'est pas considérée terminée tant que le contrôle HTTP post-déploiement du Worker et les parcours SSR, Route Handlers, authentification OTP, cookies, catalogue, sitemap et images Open Graph n'ont pas été validés sur son URL `workers.dev`.
 - Le domaine Vercel et son déploiement restent le mécanisme de retour arrière jusqu'à la bascule finale.
 - Réexaminer OpenNext au regard de vinext après la première validation de production, sans changer d'adaptateur dans cette migration initiale.
 
