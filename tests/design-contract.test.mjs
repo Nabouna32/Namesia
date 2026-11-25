@@ -444,6 +444,8 @@ test("les listes de navigation conservent leur sémantique accessible", () => {
   const navigationItems = globalCss.match(/\.navigation-items\s*\{([^}]*)\}/s)?.[1] ?? "";
   assert.match(navigationItems, /display:\s*flex/);
   assert.doesNotMatch(navigationItems, /display:\s*contents/);
+  assert.match(navigationComponent, /const pathname = usePathname\(\);/);
+  assert.doesNotMatch(navigationComponent, /usePathname\(\)\s*\?\?/);
   assert.match(navigationComponent, /<ul className="navigation-items">/);
   assert.match(navigationComponent, /<li key=\{destination\.href\}>/);
 });
