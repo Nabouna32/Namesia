@@ -389,6 +389,15 @@ test("le hero d'accueil sépare le récit et les outils dans une composition Fid
 });
 
 
+test("les compositions suivent les classes de fenêtre AndroidX vérifiées", () => {
+  assert.match(globalCss, /@media \\(max-width:\\s*599px\\)/);
+  assert.match(globalCss, /@media \\(min-width:\\s*600px\\) and \\(max-width:\\s*839px\\)/);
+  assert.match(globalCss, /@media \\(min-width:\\s*840px\\)/);
+  assert.match(designDoc, /compact sous 600 dp, medium de 600 à 839 dp, expanded de 840 à 1199 dp/);
+  assert.match(materialVerificationDoc, /developer\\.android\\.com\\/reference\\/androidx\\/window\\/core\\/layout\\/WindowSizeClass/);
+  assert.match(materialVerificationDoc, /vérifiés le 25 novembre 2026/);
+});
+
 test("les en-têtes de section restent lisibles et leurs actions accessibles sur mobile", () => {
   assert.match(globalCss, /\.text-link\s*\{[^}]*display:\s*inline-flex/s);
   assert.match(globalCss, /\.text-link\s*\{[^}]*min-height:\s*48px/s);
