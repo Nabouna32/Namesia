@@ -1,0 +1,128 @@
+.page {
+  padding-block: 40px 64px;
+}
+
+.page h1 {
+  max-width: 760px;
+  margin-block: 12px 16px;
+}
+
+.rankings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  margin-block: 32px;
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-block-end: 16px;
+}
+
+.sectionHeading h2 {
+  margin: 0;
+  font-size: var(--md-sys-typescale-title-large-size);
+  font-weight: 500;
+  line-height: var(--md-sys-typescale-title-large-line-height);
+}
+
+.sectionHeading > span {
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-label-large-size);
+}
+
+.ranking {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 68px;
+  padding: 12px;
+}
+
+.rank {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: var(--md-sys-shape-corner-full);
+  background: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
+  font-size: var(--md-sys-typescale-label-large-size);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.name {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.name strong {
+  font-size: var(--md-sys-typescale-body-large-size);
+  font-weight: 500;
+}
+
+.name > span {
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-body-small-size);
+}
+
+.births {
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-body-medium-size);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.source {
+  margin-block: 24px 0;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-body-small-size);
+  line-height: var(--md-sys-typescale-body-small-line-height);
+}
+
+.source a,
+.backLink a {
+  color: var(--md-sys-color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.backLink {
+  margin-block: 16px 0;
+}
+
+@media (max-width: 900px) {
+  .rankings {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding-block: 24px 48px;
+  }
+
+  .entry {
+    grid-template-columns: 32px minmax(0, 1fr);
+  }
+
+  .births {
+    grid-column: 2;
+    margin-top: -4px;
+  }
+}
