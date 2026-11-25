@@ -6,7 +6,7 @@ import { creerUrlFicheDepuisComparateur } from "@/lib/navigation-prenoms";
 import type { Name, NameIndexEntry } from "@/lib/names";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { ShareLink } from "@/components/features/sharing/ShareLink";
-import { comparerPertinence, normaliserRecherche, suggererNamesProches } from "@/lib/recherche-prenoms";
+import { compareRelevance, normalizeSearchTerm, suggestSimilarNames } from "@/lib/name-search";
 import { categoryTone } from "@/lib/category-color";
 import { SearchBar } from "@/components/material3/SearchBar";
 import { Checkbox } from "@/components/material3/Checkbox";
@@ -71,13 +71,13 @@ export function NameComparator({ prenoms, selectionInitiale }: Props) {
   }, [selectionKey, tentative]);
 
   const resultats = useMemo(() => {
-    const terme = normaliserRecherche(recherche);
+    const terme = normalizeSearchTerm(recherche);
     return prenoms
-      .filter((prenom) => !terme || normaliserRecherche(prenom.name).includes(terme))
-      .sort((a, b) => comparerPertinence(a, b, terme));
+      .filter((prenom) => !terme || normalizeSearchTerm(prenom.name).includes(terme))
+      .sort((a, b) => compareRelevance(a, b, terme));
   }, [prenoms, recherche]);
   const suggestions = useMemo(
-    () => resultats.length > 0 ? [] : suggererNamesProches(prenoms, recherche),
+    () => resultats.length > 0 ? [] : suggestSimilarNames(prenoms, recherche),
     [prenoms, recherche, resultats.length]
   );
   const prenomsSelectionnes = selection.flatMap((slug) => {
