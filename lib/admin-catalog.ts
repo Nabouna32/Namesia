@@ -1,14 +1,10 @@
-export type AdminProfile = {
-  id: string;
-  version: number;
+import type { Tables } from "@/lib/supabase/database.types";
+
+export type AdminProfile = Pick<Tables<"name_profiles">, "id" | "version" | "created_at"> & {
   status: "brouillon" | "publie" | "archive";
-  created_at: string;
 };
 
-export type AdminName = {
-  id: string;
-  slug: string;
-  display_name: string;
+export type AdminName = Pick<Tables<"names">, "id" | "slug" | "display_name"> & {
   name_profiles: AdminProfile[];
 };
 
@@ -27,22 +23,22 @@ function isNonEmptyString(value: unknown): value is string {
 }
 
 function parseProfile(value: unknown, index: number): AdminProfile {
-  if (!isRecord(value)
-    || !isNonEmptyString(value.id)
-    || !Number.isSafeInteger(value.version)
-    || (value.version as number) < 1
-    || (value.status !== "brouillon" && value.status !== "publie" && value.status !== "archive")
-    || !isNonEmptyString(value.created_at)
-    || !Number.isFinite(Date.parse(value.created_at))) {
+  if (!isRecord(value)) {
     throw new Error(`Le profil administrateur ${index} reçu de l'API est invalide.`);
   }
 
-  return {
-    id: value.id,
-    version: value.version as number,
-    status: value.status,
-    created_at: value.created_at
-  };
+  const { id, version, status, created_at } = value;
+  if (!isNonEmptyString(id)
+    || typeof version !== "number"
+    || !Number.isSafeInteger(version)
+    || version < 1
+    || (status !== "brouillon" && status !== "publie" && status !== "archive")
+    || !isNonEmptyString(created_at)
+    || !Number.isFinite(Date.parse(created_at))) {
+    throw new Error(`Le profil administrateur ${index} reçu de l'API est invalide.`);
+  }
+
+  return { id, version, status, created_at };
 }
 
 function parseName(value: unknown, index: number): AdminName {
@@ -63,19 +59,27 @@ function parseName(value: unknown, index: number): AdminName {
 }
 
 export function parseAdminCatalog(value: unknown): AdminCatalogPage {
-  if (!isRecord(value)
-    || !Array.isArray(value.names)
-    || value.names.length > 100
-    || !Number.isSafeInteger(value.total)
-    || (value.total as number) < 0
-    || !(value.nextOffset === null
-      || (Number.isSafeInteger(value.nextOffset) && (value.nextOffset as number) > 0 && (value.nextOffset as number) <= (value.total as number)))) {
+  if (!isRecord(value)) {
+    throw new Error("La réponse du catalogue administrateur ne respecte pas son contrat.");
+  }
+
+  const { names, total, nextOffset } = value;
+  if (!Array.isArray(names)
+    || names.length > 100
+    || typeof total !== "number"
+    || !Number.isSafeInteger(total)
+    || total < 0
+    || !(nextOffset === null
+      || (typeof nextOffset === "number"
+        && Number.isSafeInteger(nextOffset)
+        && nextOffset > 0
+        && nextOffset <= total))) {
     throw new Error("La réponse du catalogue administrateur ne respecte pas son contrat.");
   }
 
   return {
-    names: value.names.map(parseName),
-    total: value.total as number,
-    nextOffset: value.nextOffset as number | null
+    names: names.map(parseName),
+    total,
+    nextOffset
   };
 }

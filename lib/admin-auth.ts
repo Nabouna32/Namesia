@@ -1,7 +1,8 @@
 import { createClient, type SupabaseClient, type User } from "@supabase/supabase-js";
+import type { Database } from "@/lib/supabase/database.types";
 
 type AdminAccess =
-  | { supabase: SupabaseClient; user: User; error: null }
+  | { supabase: SupabaseClient<Database>; user: User; error: null }
   | { supabase: null; user: null; error: { message: string; status: number } };
 
 export async function requireAdmin(request: Request): Promise<AdminAccess> {
@@ -20,7 +21,7 @@ export async function requireAdmin(request: Request): Promise<AdminAccess> {
     return { supabase: null, user: null, error: { message: "Service momentanément indisponible.", status: 503 } };
   }
 
-  const supabase = createClient(url, key, {
+  const supabase = createClient<Database>(url, key, {
     auth: {
       persistSession: false,
       autoRefreshToken: false,

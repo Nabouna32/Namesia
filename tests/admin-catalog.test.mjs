@@ -39,7 +39,10 @@ test("le catalogue administrateur rejette une réponse incomplète ou mal formé
     { names: [], total: 1, nextOffset: 2 },
     { names: [null], total: 1, nextOffset: null },
     { names: [{ ...name, name_profiles: null }], total: 1, nextOffset: null },
-    { names: [{ ...name, name_profiles: [{ ...profile, status: "unknown" }] }], total: 1, nextOffset: null }
+    { names: [{ ...name, name_profiles: [{ ...profile, status: "unknown" }] }], total: 1, nextOffset: null },
+    { names: [{ ...name, name_profiles: [{ ...profile, version: "1" }] }], total: 1, nextOffset: null },
+    { names: [], total: "1", nextOffset: null },
+    { names: [], total: 1, nextOffset: "1" }
   ]) {
     assert.throws(() => parseAdminCatalog(value));
   }

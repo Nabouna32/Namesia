@@ -1,7 +1,6 @@
-export type ProfilPublication = {
-  status: string;
-  published_at: string | null;
-};
+import type { Tables } from "@/lib/supabase/database.types";
+
+export type ProfilPublication = Pick<Tables<"name_profiles">, "status" | "published_at">;
 
 export function obtenirDatePublicationUnique(slug: string, profils: ProfilPublication[]): Date {
   if (profils.length !== 1) {
