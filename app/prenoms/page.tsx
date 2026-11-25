@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { Icon } from "@/components/material3/Icon";
 import { NameSearch } from "@/components/features/catalog/NameSearch";
 import { jsonLd } from "@/lib/json-ld";
 import { getPrenomsIndex } from "@/lib/prenoms";
@@ -81,6 +83,7 @@ export default async function NamesPage({ searchParams }: Props) {
         <span className="eyebrow">Le catalogue</span>
         <h1>Trouvez le prénom<br /><em>qui vous parle.</em></h1>
         <p className="page-intro">Des prénoms d'ici et d'ailleurs, leurs origines, leurs histoires et les traditions qui les accompagnent.</p>
+        <p><Link className="text-link" href="/tendances">Voir les tendances 2025 <Icon name="arrow-up-right" size={18} /></Link></p>
         <NameSearch
           prenoms={prenoms}
           synchroniserUrl
