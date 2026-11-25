@@ -27,6 +27,8 @@ updates:
       time: "08:00"
       timezone: Europe/Paris
     open-pull-requests-limit: 1
+    cooldown:
+      default-days: 7
     groups:
       actions-minor-and-patch:
         patterns:
