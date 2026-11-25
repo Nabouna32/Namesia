@@ -13,12 +13,12 @@ export const metadata: Metadata = {
 type Props = { searchParams: Promise<{ prenoms?: string | string[] }> };
 
 export default async function ComparePage({ searchParams }: Props) {
-  const [{ prenoms: requestedSlugs }, names] = await Promise.all([searchParams, getNamesIndex()]);
-  const slugsDemandes = (Array.isArray(requestedSlugs) ? requestedSlugs : [requestedSlugs ?? ""])
-    .flatMap((valeur) => valeur.split(","))
+  const [{ prenoms: rawSlugs }, names] = await Promise.all([searchParams, getNamesIndex()]);
+  const requestedSlugs = (Array.isArray(rawSlugs) ? rawSlugs : [rawSlugs ?? ""])
+    .flatMap((value) => value.split(","))
     .filter(Boolean);
-  const availableSlugs = new Set(names.map((prenom) => prenom.slug));
-  const initialSelection = [...new Set(slugsDemandes)]
+  const availableSlugs = new Set(names.map((name) => name.slug));
+  const initialSelection = [...new Set(requestedSlugs)]
     .filter((slug) => availableSlugs.has(slug) && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug))
     .slice(0, 3);
 
