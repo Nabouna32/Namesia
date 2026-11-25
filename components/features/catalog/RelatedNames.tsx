@@ -3,7 +3,7 @@ import type { PrenomIndex } from "@/lib/prenoms";
 import type { ContexteRetourNavigation } from "@/lib/navigation-prenoms";
 import { creerUrlFicheDepuisContexte } from "@/lib/navigation-prenoms";
 import styles from "./RelatedNames.module.css";
-import { GenreIcon } from "@/components/features/names/GenreIcon";
+import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { Icon } from "@/components/material3/Icon";
 import { Card } from "@/components/material3/Card";
 
@@ -17,7 +17,7 @@ export function RelatedNames({ prenoms, contexteRetour = null }: Props) {
             <span className="name-initial">{prenom.lettre}</span>
             <span>
               <strong>{prenom.nom}</strong>
-              <GenreIcon genre={prenom.genre} />
+              <GenderIcon gender={prenom.genre} />
             </span>
             <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
         </Card>
