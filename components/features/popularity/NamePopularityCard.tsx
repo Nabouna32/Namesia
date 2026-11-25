@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { Card } from "@/components/material3/Card";
 import { getNamePopularity2025, NAME_POPULARITY_2025_SOURCE_URL } from "@/lib/name-popularity";
-import styles from "./NamePopularityCard.module.css";
-
 import type { NameGender } from "@/lib/gender-icons";
+import styles from "./NamePopularityCard.module.css";
 
 export function NamePopularityCard({ slug, name, gender }: { slug: string; name: string; gender: NameGender }) {
   const popularity = getNamePopularity2025(slug);
