@@ -3,9 +3,9 @@ import { Card } from "@/components/material3/Card";
 import { getNamePopularity2025, NAME_POPULARITY_2025_SOURCE_URL } from "@/lib/name-popularity";
 import styles from "./NamePopularityCard.module.css";
 
-import type { GenrePrenom } from "@/lib/prenoms";
+import type { NameGender } from "@/lib/gender-icons";
 
-export function NamePopularityCard({ slug, name, gender }: { slug: string; name: string; gender: GenrePrenom }) {
+export function NamePopularityCard({ slug, name, gender }: { slug: string; name: string; gender: NameGender }) {
   const popularity = getNamePopularity2025(slug);
   if (!popularity) return null;
   if (popularity.name !== name || popularity.gender !== gender) {
