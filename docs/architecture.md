@@ -84,7 +84,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Métadonnées canoniques fondées sur NEXT_PUBLIC_SITE_URL obligatoire et validée ; aucune origine de secours ni date de mise à jour inventée.
 - Données structurées Schema.org pour le site, le catalogue et les fiches ; aucune date, popularité ou affirmation non disponible n'est ajoutée.
 - `lib/site-url.ts` centralise l'origine canonique ; `lib/json-ld.ts` sérialise les données structurées en échappant les chevrons.
-- La génération des fichiers d'indexation ne modifie pas les contrôles d'accès ; le domaine de production `namesia.vercel.app` est public. Vercel Authentication ne s'applique qu'aux previews, désactivées ; l'administration reste protégée par Supabase OTP et RLS.
+- La génération des fichiers d'indexation ne modifie pas les contrôles d'accès ; le domaine de production est public. Les Workers Previews Cloudflare sont également publiques sur `workers.dev`, reçoivent `X-Robots-Tag: noindex` et désactivent l'interface ainsi que les routes d'administration ; Vercel ne reçoit aucun déploiement Preview.
 - Pas d'appel à un modèle IA lors de l'affichage.
 - Initiale calculée à partir du nom affiché ; elle n'est pas stockée.
 - Mention visible indiquant que le contenu est généré par IA et peut comporter des erreurs.
