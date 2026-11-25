@@ -121,7 +121,7 @@ Pour une refonte CSS ou de composants, vérifier au minimum :
 - les contrastes et la navigation clavier ;
 - les pages représentatives, pas uniquement la page d'accueil.
 
-Les builds de PR restent dans GitHub Actions. Respecter strictement la politique Vercel documentée dans [AGENTS.md](../AGENTS.md).
+Les builds de PR et les déploiements de production sont exécutés par GitHub Actions vers Cloudflare Workers. Vercel reste temporairement un retour arrière ; ses previews sont désactivées et sa politique résiduelle est documentée dans [AGENTS.md](../AGENTS.md).
 
 ## 7. Refactorisation et dette technique
 
@@ -174,14 +174,14 @@ Les en-têtes sont appliqués au niveau Next.js à l'ensemble des routes, y comp
 
 ## 11. Environnement d'exécution et dépendances
 
-- La version de référence de Node.js est définie une seule fois dans `.nvmrc` (26.13.1), sur la branche majeure 26.x ; le paramètre de runtime Vercel doit être réglé sur 26.x.
+- La version de référence de Node.js est définie une seule fois dans `.nvmrc` (26.13.1), sur la branche majeure 26.x ; le runtime Cloudflare/OpenNext et le runner GitHub Actions doivent rester compatibles avec cette branche.
 - `package.json` et `package-lock.json` expriment la contrainte compatible `26.x` ; `.npmrc` active `engine-strict=true` pour refuser un runtime incompatible dès l'installation.
 - Les types `@types/node` suivent la branche 26 et leur dépendance `undici-types`, afin de ne pas exposer des API de types d'une version Node plus récente que le runtime.
 - npm est celui fourni avec l'installation Node.js retenue ; aucune version npm indépendante n'est épinglée.
 - GitHub Actions lit directement `.nvmrc` avec `actions/setup-node` ; elle vérifie ensuite que la version réellement installée correspond exactement au fichier.
 - Les développeurs utilisent `npm ci` pour installer l'arbre verrouillé, pas `npm install` pour les installations reproductibles.
 - Toute montée de version Node doit modifier `.nvmrc`, la contrainte de compatibilité, les types Node et le runtime Vercel dans la même PR ; la CI doit valider l'ensemble.
-- Les actions GitHub officielles sont maintenues sur leurs versions majeures stables actuelles ; leur mise à jour ne doit pas changer la politique de déploiement Vercel.
+- Les actions GitHub officielles sont maintenues sur leurs versions majeures stables actuelles ; leur mise à jour ne doit pas réactiver les déploiements Preview Vercel.
 
 
 ## 12. Vérification de session administrateur

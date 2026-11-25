@@ -14,6 +14,6 @@ test("l'origine canonique est explicite, validée et sans fallback", () => {
   assert.match(siteUrl, /siteUrl\.protocol !== "https:"/);
   assert.doesNotMatch(siteUrl, /\?\?/);
   assert.match(readme, /NEXT_PUBLIC_SITE_URL` \(requise/);
-  assert.match(envExample, /NEXT_PUBLIC_SITE_URL=https:\/\/namesia\.vercel\.app/);
-  assert.match(workflow, /NEXT_PUBLIC_SITE_URL: https:\/\/namesia\.vercel\.app/);
+  assert.match(envExample, /NEXT_PUBLIC_SITE_URL=https:\/\/namesia\.nabouna\.workers\.dev/);
+  assert.match(workflow, /NEXT_PUBLIC_SITE_URL: https:\/\/namesia\.nabouna\.workers\.dev/);
 });

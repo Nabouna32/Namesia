@@ -59,11 +59,11 @@ Le JSON ne contient ni identifiant de base, ni numéro de version, ni statut de 
 
 ## Référencement public
 
-Le site publie un sitemap dynamique limité aux fiches effectivement publiées, ainsi qu'un fichier robots.txt qui exclut l'administration et les routes API. `NEXT_PUBLIC_SITE_URL` définit l'origine canonique ; renseigner le domaine public réellement utilisé avant l'ouverture à l'indexation. Le domaine Vercel par défaut est actuellement protégé par SSO : ces routes ne rendent pas le site public et ne remplacent jamais l'authentification ni les règles RLS.
+Le site publie un sitemap dynamique limité aux fiches effectivement publiées, ainsi qu'un fichier robots.txt qui exclut l'administration et les routes API. `NEXT_PUBLIC_SITE_URL` définit l'origine canonique ; renseigner le domaine public réellement utilisé avant l'ouverture à l'indexation. L'origine canonique de production est actuellement `https://namesia.nabouna.workers.dev`. Le domaine personnalisé sera défini explicitement avant toute bascule DNS ; l'authentification et les règles RLS restent indépendantes de l'hébergeur.
 
-## Déploiement et quota Vercel
+## Déploiement
 
-Les déploiements Preview sont désactivés dans les paramètres du projet Vercel. `vercel.json` appelle `scripts/vercel-ignore-build.sh`, qui autorise uniquement une production issue de `main`. Les validations des PR, y compris le build de contrôle et le test de cette politique, sont exécutées par GitHub Actions. Cette règle protège le quota Vercel de 100 builds/déploiements par jour ; voir la politique détaillée dans AGENTS.md.
+Cloudflare Workers est l'hébergement de production cible : GitHub Actions construit l'application avec OpenNext, déploie le Worker `namesia`, puis vérifie sa disponibilité HTTP. Le workflow qualité contrôle séparément les tests, les types et le build Next.js. Vercel est conservé temporairement comme solution de retour arrière pendant la validation fonctionnelle et la bascule du domaine ; ses déploiements Preview restent désactivés. Ne pas supprimer le projet Vercel avant la validation des parcours applicatifs sur Cloudflare et la confirmation que le domaine public ne dépend plus de Vercel.
 
 ## Règles éditoriales
 
