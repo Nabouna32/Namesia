@@ -1,7 +1,7 @@
 # Standards techniques et règles de maintenabilité — Namesia
 
 - **Statut :** règle canonique
-- **Version :** 1.12
+- **Version :** 1.13
 - **Mis à jour :** 2026-11-25
 - **Portée :** application web, styles, composants, données et outillage
 
@@ -116,7 +116,7 @@ Chaque changement est validé au niveau adapté à son risque :
 - Les tests sont choisis selon le risque : métier et parcours critiques d'abord. Éviter les assertions sur les textes éditoriaux, les détails CSS transitoires et les implémentations internes susceptibles d'évoluer. Retirer les tests devenus sans objet au lieu d'accumuler des contrats historiques.
 - Les tests E2E n'ouvrent aucune route d'administration et n'utilisent aucune session ni donnée privée. Les PR issues de forks ne reçoivent pas de Preview Cloudflare ni de secrets.
 - Vérifications statiques et build dans la CI GitHub Actions.
-- Les outils de build Cloudflare et de test navigateur (`@opennextjs/cloudflare`, `wrangler`, `@playwright/test`, `@axe-core/playwright`) sont des dépendances de développement exactes, verrouillées dans `package-lock.json`. Chaque job utilise `npm ci` ; `npm audit --omit=dev --audit-level=high` bloque sur les vulnérabilités hautes ou critiques du graphe de production. Les outils CI restent verrouillés en dépendances de développement ; leurs avis de sécurité sont examinés séparément, car ils ne sont pas livrés au navigateur ni au Worker.
+- Les outils de build Cloudflare et de test navigateur (`@opennextjs/cloudflare`, `wrangler`, `@playwright/test`, `@axe-core/playwright`) sont des dépendances de développement exactes, verrouillées dans `package-lock.json`. Chaque job utilise `npm ci`. La CI exécute deux périmètres distincts : `npm audit --omit=dev --audit-level=high` bloque sur les vulnérabilités hautes ou critiques du graphe de production ; `npm audit --audit-level=high` audite aussi les dépendances de développement à titre diagnostique non bloquant. Ce second résultat apparaît dans les logs et le résumé du job pour suivre les vulnérabilités de l’outillage sans confondre leur présence avec une exposition du Worker. Il ne constitue pas une acceptation définitive : les avis restent à corriger et à réévaluer, notamment pour Wrangler/Miniflare.
 - Le workflow dédié `.github/workflows/workflow-security.yml` ne s'exécute que lorsque `.github/workflows/` ou `.github/dependabot.yml` change. Il vérifie les workflows avec `actionlint` 1.7.12 et ShellCheck, puis audite workflows et configuration Dependabot avec `zizmor` 1.33.1 en persona `pedantic`. Les actions et versions des outils sont épinglées.
 - Dependabot regroupe chaque semaine les mises à jour mineures/patch de npm et des actions GitHub, avec un délai de refroidissement de 7 jours et au plus une PR ouverte par écosystème.
 - Contrôles manuels ciblés lorsque l'accessibilité, le responsive ou le rendu visuel ne sont pas couverts par l'automatisation.
