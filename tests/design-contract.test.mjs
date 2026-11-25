@@ -139,8 +139,8 @@ test("un seul indicateur global matérialise le focus clavier", () => {
   assert.match(globalCss, /\.top-app-bar\s*\{[^}]*z-index:\s*30;/s);
   assert.doesNotMatch(globalCss, /\.navigation-item:focus-visible\s*\{[^}]*outline/s);
   assert.doesNotMatch(globalCss, /\.profile-toc a:focus-visible\s*\{[^}]*outline/s);
-  assert.match(globalCss, /input:focus-visible, select:focus-visible/);
-  assert.doesNotMatch(allCss, /\.container:focus-within\s*\{[^}]*outline/s);
+  assert.match(globalCss, /input:not\(\[type="search"\]\):focus-visible, select:focus-visible/);
+  assert.match(allCss, /\.container:has\(input:focus-visible\)\s*\{[^}]*outline: 2px solid var\(--md-sys-color-primary\)/s);
 });
 
 test("TopAppBar suit la barre small M3 sans séparateur ajouté", () => {
