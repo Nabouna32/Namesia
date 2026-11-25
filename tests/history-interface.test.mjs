@@ -8,7 +8,7 @@ const recordVisit = await readFile(new URL("../components/features/history/Recor
 
 test("chaque fiche de l’historique propose un retrait individuel accessible", () => {
   assert.match(component, /label=.*Retirer .* de l’historique/);
-  assert.match(component, /onClick=\{\(\) => removeVisit\(prenom\.slug\)\}/);
+  assert.match(component, /onClick=\{\(\) => removeVisit\(name\.slug\)\}/);
   assert.match(component, /Icon name="close"/);
 });
 
