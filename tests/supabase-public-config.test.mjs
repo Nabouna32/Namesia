@@ -84,6 +84,6 @@ test("les clients Supabase partagent la configuration validée sans assertion no
   for (const source of [server, adminAuth, adminClient]) {
     assert.match(source, /getSupabasePublicConfig\(\)/);
     assert.doesNotMatch(source, /NEXT_PUBLIC_SUPABASE_(?:URL|PUBLISHABLE_KEY)!/);
-    assert.doesNotMatch(source, /process\\.env\\.NEXT_PUBLIC_SUPABASE_/);
+    assert.doesNotMatch(source, /process\.env\.NEXT_PUBLIC_SUPABASE_/);
   }
 });
