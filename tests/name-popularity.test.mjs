@@ -35,6 +35,8 @@ test("la page expose les profils publiés sans masquer les entrées hors catalog
   assert.match(page, /NAME_POPULARITY_2025_SOURCE_URL/);
   assert.match(sitemap, /new URL\("\/tendances", siteUrl\)/);
   assert.match(profileCard, /getNamePopularity2025\(slug\)/);
+  assert.match(profileCard, /popularity\.name !== name \|\| popularity\.gender !== gender/);
+  assert.match(page, /publishedName\.nom !== entry\.name \|\| publishedName\.genre !== entry\.gender/);
 });
 
 test("le classement renvoie directement vers la publication officielle de l’Insee", () => {
