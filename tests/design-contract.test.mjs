@@ -358,7 +358,9 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.match(composantsDoc, /FilterChip/);
   assert.match(composantsDoc, /SearchBar/);
   assert.match(composantsDoc, /components\/material3/);
-  assert.match(agents, /composants Material 3 par leur nom officiel/);
+  assert.match(agents, /doit porter le nom M3 officiel/);
+  assert.match(agents, /port React\/HTML local du contrat AndroidX est admis/);
+  assert.match(agents, /sans alias ni wrapper Namesia|wrappers Namesia/);
   assert.doesNotMatch(composantsDoc, /ChampRecherche|ChipFiltre|MessageStatut/);
   assert.match(composantsDoc, /SearchBarTokens/);
   assert.match(composantsDoc, /ButtonSmallTokens/);
