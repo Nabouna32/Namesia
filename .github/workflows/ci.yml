@@ -81,6 +81,7 @@ jobs:
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://ftiikxwjaduecvuexlkk.supabase.co
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_QMGPd9f06uaubb8QpCTF9A_jH4y0fwA
+          NEXT_PUBLIC_SITE_URL: https://namesia.vercel.app
       - name: Résumer les contrôles
         if: always()
         env:
