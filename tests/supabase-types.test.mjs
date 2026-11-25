@@ -9,6 +9,9 @@ const adminClient = await readFile(new URL("../app/admin/admin-client.tsx", impo
 const prenoms = await readFile(new URL("../lib/prenoms.ts", import.meta.url), "utf8");
 const publication = await readFile(new URL("../lib/publication-prenom.ts", import.meta.url), "utf8");
 const adminCatalog = await readFile(new URL("../lib/admin-catalog.ts", import.meta.url), "utf8");
+const architecture = await readFile(new URL("../docs/architecture.md", import.meta.url), "utf8");
+const standards = await readFile(new URL("../docs/standards-techniques.md", import.meta.url), "utf8");
+const agents = await readFile(new URL("../AGENTS.md", import.meta.url), "utf8");
 
 test("les types générés décrivent exactement le modèle relationnel actif", () => {
   assert.ok(databaseTypes.includes('PostgrestVersion: "14.18"'));
@@ -27,6 +30,12 @@ test("tous les clients Supabase utilisent le type Database généré", () => {
     assert.ok(source.includes("database.types"));
   }
   assert.match(adminAuth, /SupabaseClient<Database>/);
+});
+
+test("la génération du schéma fait partie du contrat d'architecture", () => {
+  assert.match(architecture, /Database, généré depuis le schéma PostgreSQL actif/);
+  assert.match(standards, /createClient<Database>/);
+  assert.match(agents, /Le type `Database` de `lib\\/supabase\\/database\\.types\\.ts` est généré/);
 });
 
 test("les lectures du catalogue dérivent du schéma sans casts non vérifiés", () => {
