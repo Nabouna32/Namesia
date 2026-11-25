@@ -14,7 +14,7 @@ test("le sitemap expose la date réelle de publication de chaque fiche", () => {
   assert.match(publication, /new Date\(profil\.published_at\)/);
   assert.match(publication, /Number\.isNaN\(datePublication\.getTime\(\)\)/);
   assert.match(sitemap, /getNamesSitemap/);
-  assert.match(sitemap, /lastModified: prenom\.publishedAt/);
+  assert.match(sitemap, /lastModified: name\.publishedAt/);
   assert.doesNotMatch(sitemap, /new Date\(\)/);
 });
 
