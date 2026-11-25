@@ -41,7 +41,7 @@ test("le registre M3 et ses sources de référence restent complets et lisibles"
   assert.match(sourceVerifier, /maybeFallbackSpecVersion/);
   assert.doesNotMatch(verification, new RegExp("2025/2026"));
   assert.match(sourceVerifier, /filter\(\(\{ name \}\) => name\.startsWith\("AndroidX "\)\)/);
-  assert.match(sourceVerifier, /assert\.equal\(androidxSourceCount, 37/);
+  assert.match(sourceVerifier, /assert\.equal\(androidxSourceCount, 39/);
   assert.match(sourceVerifier, /verifySourcesWithLimit\(verifiedSources, 4\)/);
   assert.match(sourceVerifier, /attempt < 3/);
   assert.match(sourceVerifier, /AbortSignal\.timeout\(15_000\)/);
