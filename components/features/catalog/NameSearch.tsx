@@ -17,66 +17,66 @@ import { Snackbar } from "@/components/material3/Snackbar";
 import { Card } from "@/components/material3/Card";
 
 type Props = {
-  prenoms: NameIndexEntry[];
+  names: NameIndexEntry[];
   compact?: boolean;
-  synchroniserUrl?: boolean;
-  initialRecherche?: string;
-  initialGenre?: string | null;
-  initialLettre?: string | null;
-  initialNombreVisible?: number;
+  syncUrl?: boolean;
+  initialSearch?: string;
+  initialGender?: string | null;
+  initialLetter?: string | null;
+  initialVisibleCount?: number;
 };
 
 export function NameSearch({
-  prenoms,
+  names,
   compact = false,
-  synchroniserUrl = false,
-  initialRecherche = "",
-  initialGenre = null,
-  initialLettre = null,
-  initialNombreVisible = 24
+  syncUrl = false,
+  initialSearch = "",
+  initialGender = null,
+  initialLetter = null,
+  initialVisibleCount = 24
 }: Props) {
   const nombreVisibleParDefaut = compact ? 6 : 24;
-  const nombreVisibleInitial = compact ? Math.min(initialNombreVisible, nombreVisibleParDefaut) : initialNombreVisible;
-  const [recherche, setRecherche] = useState(initialRecherche);
-  const [genreActif, setGenreActif] = useState(initialGenre);
-  const [lettreActive, setLettreActive] = useState(initialLettre);
+  const nombreVisibleInitial = compact ? Math.min(initialVisibleCount, nombreVisibleParDefaut) : initialVisibleCount;
+  const [recherche, setRecherche] = useState(initialSearch);
+  const [genreActif, setGenreActif] = useState(initialGender);
+  const [lettreActive, setLettreActive] = useState(initialLetter);
   const [nombreVisible, setNombreVisible] = useState(nombreVisibleInitial);
   const [messageCopie, setMessageCopie] = useState("");
   const [erreurCopie, setErreurCopie] = useState("");
   const generationCopie = useRef(0);
 
   const genres = useMemo(
-    () => [...new Set(prenoms.map((prenom) => prenom.gender))].sort((a, b) => a.localeCompare(b, "fr")),
-    [prenoms]
+    () => [...new Set(names.map((name) => name.gender))].sort((a, b) => a.localeCompare(b, "fr")),
+    [names]
   );
   const lettres = useMemo(
-    () => [...new Set(prenoms.map((prenom) => normalizeSearchTerm(prenom.initial)))].sort((a, b) => a.localeCompare(b, "fr")),
-    [prenoms]
+    () => [...new Set(names.map((name) => normalizeSearchTerm(name.initial)))].sort((a, b) => a.localeCompare(b, "fr")),
+    [names]
   );
 
   const resultats = useMemo(() => {
     const terme = normalizeSearchTerm(recherche);
-    return prenoms
-      .filter((prenom) => {
-        const correspondAuNom = !terme || normalizeSearchTerm(prenom.name).includes(terme);
-        const correspondAuGenre = !genreActif || prenom.gender === genreActif;
-        const correspondALaLettre = !lettreActive || normalizeSearchTerm(prenom.initial) === lettreActive;
+    return names
+      .filter((name) => {
+        const correspondAuNom = !terme || normalizeSearchTerm(name.name).includes(terme);
+        const correspondAuGenre = !genreActif || name.gender === genreActif;
+        const correspondALaLettre = !lettreActive || normalizeSearchTerm(name.initial) === lettreActive;
         return correspondAuNom && correspondAuGenre && correspondALaLettre;
       })
       .sort((a, b) => compareRelevance(a, b, terme));
-  }, [genreActif, lettreActive, prenoms, recherche]);
+  }, [genreActif, lettreActive, names, recherche]);
 
   const suggestions = useMemo(() => {
     if (resultats.length > 0) return [];
-    const candidats = prenoms.filter((prenom) => (
-      (!genreActif || prenom.gender === genreActif)
-      && (!lettreActive || normalizeSearchTerm(prenom.initial) === lettreActive)
+    const candidats = names.filter((name) => (
+      (!genreActif || name.gender === genreActif)
+      && (!lettreActive || normalizeSearchTerm(name.initial) === lettreActive)
     ));
     return suggestSimilarNames(candidats, recherche);
-  }, [genreActif, lettreActive, prenoms, recherche, resultats.length]);
+  }, [genreActif, lettreActive, names, recherche, resultats.length]);
 
   const filtresActifs = Boolean(recherche.trim() || genreActif || lettreActive);
-  const contexteRetour = synchroniserUrl
+  const contexteRetour = syncUrl
     ? { q: recherche, genre: genreActif, lettre: lettreActive, limite: nombreVisible }
     : null;
 
@@ -86,7 +86,7 @@ export function NameSearch({
     lettreSuivante: string | null,
     nombreVisibleSuivant = 24
   ) {
-    if (!synchroniserUrl) return;
+    if (!syncUrl) return;
 
     const url = new URL(window.location.href);
     const parametres: [string, string][] = [
@@ -158,7 +158,7 @@ export function NameSearch({
     }
 
     try {
-      await navigator.clipboard.writeText(resultats.map((prenom) => prenom.name).join("\n"));
+      await navigator.clipboard.writeText(resultats.map((name) => name.name).join("\n"));
       if (generation === generationCopie.current) {
         setMessageCopie(`${resultats.length} ${resultats.length > 1 ? "prénoms copiés" : "prénom copié"} dans le presse-papiers.`);
       }
@@ -226,7 +226,7 @@ export function NameSearch({
         </div>
       )}
 
-      {!compact && synchroniserUrl && (filtresActifs || nombreVisible > 24) && (
+      {!compact && syncUrl && (filtresActifs || nombreVisible > 24) && (
         <ShareLink
           title="Recherche de prénoms · Namesia"
           text="Retrouvez cette sélection de prénoms sur Namesia."
@@ -242,7 +242,7 @@ export function NameSearch({
               ? `${resultats.length} ${resultats.length > 1 ? "prénoms trouvés" : "prénom trouvé"} · ${Math.min(resultats.length, nombreVisible)} ${Math.min(resultats.length, nombreVisible) > 1 ? "affichés" : "affiché"}`
               : suggestions.length > 0
                 ? `${suggestions.length} suggestions proches`
-                : `0 résultat affiché sur ${prenoms.length}`}
+                : `0 résultat affiché sur ${names.length}`}
           </p>
           {!compact && resultats.length > 0 && (
             <div className={styles.resultActions}>
@@ -256,13 +256,13 @@ export function NameSearch({
           {resultats.length > 0 ? (
             <>
               <div className={styles.resultsGrid}>
-                {resultats.slice(0, nombreVisible).map((prenom) => (
-                  <article className={styles.resultCard} key={prenom.slug}>
-                    <Card as={Link} variant="elevated" interactive className="name-card" href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
-                      <span className="name-initial">{prenom.initial}</span>
+                {resultats.slice(0, nombreVisible).map((name) => (
+                  <article className={styles.resultCard} key={name.slug}>
+                    <Card as={Link} variant="elevated" interactive className="name-card" href={creerUrlFicheDepuisCatalogue(name.slug, contexteRetour)}>
+                      <span className="name-initial">{name.initial}</span>
                       <span>
-                        <strong>{prenom.name}</strong>
-                        <GenderIcon gender={prenom.gender} />
+                        <strong>{name.name}</strong>
+                        <GenderIcon gender={name.gender} />
                       </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Card>
@@ -291,13 +291,13 @@ export function NameSearch({
                 Aucun résultat exact pour « {recherche.trim()} ». Voici les prénoms les plus proches :
               </p>
               <div className={styles.resultsGrid}>
-                {suggestions.map((prenom) => (
-                  <article className={styles.resultCard} key={prenom.slug}>
-                    <Card as={Link} variant="elevated" interactive className="name-card" href={creerUrlFicheDepuisCatalogue(prenom.slug, contexteRetour)}>
-                      <span className="name-initial">{prenom.initial}</span>
+                {suggestions.map((name) => (
+                  <article className={styles.resultCard} key={name.slug}>
+                    <Card as={Link} variant="elevated" interactive className="name-card" href={creerUrlFicheDepuisCatalogue(name.slug, contexteRetour)}>
+                      <span className="name-initial">{name.initial}</span>
                       <span>
-                        <strong>{prenom.name}</strong>
-                        <GenderIcon gender={prenom.gender} />
+                        <strong>{name.name}</strong>
+                        <GenderIcon gender={name.gender} />
                       </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Card>
