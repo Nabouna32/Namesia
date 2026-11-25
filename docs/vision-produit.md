@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.58
+- **Version :** 3.59
 - **Mis à jour :** 2026-11-25
 
 ## 1. Positionnement
@@ -30,6 +30,14 @@ Les fiches générées par IA ne disposent pas d'un système de sources ou de v�
 6. Corriger les erreurs identifiées sans masquer les limites du processus de production.
 
 Ces principes de transparence ne constituent pas un processus de vérification factuelle.
+
+## 4. Accès public et compte facultatif
+
+La consultation de Namesia ne nécessite jamais de compte. Toute personne peut librement rechercher, découvrir, lire, comparer et partager les fiches publiques sans inscription ni connexion. Aucune de ces fonctions publiques ne doit être conditionnée à la création d'un compte.
+
+Le compte est facultatif et apporte du confort : paramètres et préférences personnels, favoris persistants, historique de consultation synchronisé entre les appareils et autres fonctions personnelles clairement identifiées. L'absence de compte ne doit pas dégrader artificiellement l'accès au contenu ni multiplier les demandes d'inscription.
+
+Les données personnelles liées au compte restent sous le contrôle de leur titulaire : accès, modification et suppression doivent être prévus dans la conception. Les choix d'authentification, de confidentialité, de conservation et de suppression seront détaillés dans un ADR d'architecture avant l'implémentation.
 
 ## 4. Périmètre produit
 
