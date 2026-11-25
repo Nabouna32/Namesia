@@ -40,7 +40,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Titres, descriptions, commentaires, issues et revues sont en français.
 - Une PR explique le besoin, la solution, les choix, les compromis, les risques, les vérifications et les limites restantes.
 - Lire le diff complet et challenger aussi le code préexistant touché ou rendu obsolète.
-- Garder une seule PR de travail ouverte à la fois. Contribuer à la PR existante si le périmètre est cohérent ; ne pas créer de PR empilée par commodité.
+- Garder une seule PR de travail ouverte à la fois. Contribuer à la PR existante si le périmètre est cohérent ; ne pas créer de PR empilée par commodité. Exception : Dependabot peut maintenir plusieurs PR indépendantes ouvertes afin de proposer chaque mise à jour séparément ; elles restent toutes soumises à une revue humaine et ne sont jamais fusionnées automatiquement.
 - Avant de créer une branche ou une PR, consulter les PR ouvertes et les runs GitHub Actions récents pour repérer les travaux concurrents. Si un périmètre équivalent existe déjà, réutiliser ou compléter sa branche de référence ; ne pas ouvrir de PR doublon. Si un doublon est déjà ouvert, le fermer en indiquant où les changements utiles sont conservés.
 - Autorisation permanente : fusionner les PR vers main sans demander d'autorisation supplémentaire.
 - Autorisation permanente : supprimer des données, effectuer les migrations nécessaires et faire évoluer ou refondre la base de données lorsque cela sert l'objectif du projet. Préserver l'intégrité des données et documenter les opérations structurantes.
