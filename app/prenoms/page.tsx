@@ -4,7 +4,7 @@ import { Icon } from "@/components/material3/Icon";
 import { NameSearch } from "@/components/features/catalog/NameSearch";
 import { jsonLd } from "@/lib/json-ld";
 import { getNamesIndex } from "@/lib/names";
-import { lireNombreVisible } from "@/lib/navigation-names";
+import { lireNombreVisible } from "@/lib/navigation-prenoms";
 import { siteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
