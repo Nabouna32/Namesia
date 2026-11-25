@@ -4,6 +4,7 @@ import test from "node:test";
 
 const component = await readFile(new URL("../components/features/history/RecentNames.tsx", import.meta.url), "utf8");
 const provider = await readFile(new URL("../components/features/history/HistoryProvider.tsx", import.meta.url), "utf8");
+const recordVisit = await readFile(new URL("../components/features/history/RecordVisit.tsx", import.meta.url), "utf8");
 
 test("chaque fiche de l’historique propose un retrait individuel accessible", () => {
   assert.match(component, /label=.*Retirer .* de l’historique/);
@@ -23,6 +24,13 @@ test("l’historique est écrit avant toute mise à jour de l’état React", ()
 
 test("un échec du stockage est exposé sans conserver un historique volatile", () => {
   assert.match(provider, /catch \{\s*setError\(true\);\s*\}/);
-  assert.match(component, /Le navigateur a refusé l’accès au stockage de session/);
+  assert.match(component, /L’historique est indisponible\. Réinitialisez-le pour réessayer/);
   assert.doesNotMatch(provider, /setSlugs\(\(current|setSlugs\(\(courants/);
+});
+
+test("une lecture invalide suspend les visites automatiques jusqu’à une réinitialisation explicite", () => {
+  assert.match(recordVisit, /if \(ready && !error\) recordVisit\(slug\)/);
+  assert.match(component, /\(slugs\.length > 0 \|\| error\)/);
+  assert.match(component, /onClick=\{clearHistory\}/);
+  assert.match(component, /Réinitialiser l’historique/);
 });

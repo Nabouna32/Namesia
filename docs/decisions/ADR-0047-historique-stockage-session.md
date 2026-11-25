@@ -22,6 +22,7 @@ Cette seconde source de vérité rendait le comportement moins prévisible : une
 - Le fournisseur lit le stockage à son initialisation.
 - Chaque ajout, retrait ou effacement écrit la nouvelle valeur dans `sessionStorage` avant de modifier l’état React.
 - Si la lecture ou l’écriture échoue, l’erreur est exposée et aucune valeur volatile n’est présentée comme un historique conservé.
+- Une lecture invalide suspend les enregistrements automatiques : aucune visite ne remplace silencieusement la valeur illisible. L’utilisateur peut demander explicitement la réinitialisation ; si le stockage reste inaccessible, l’erreur demeure.
 - Une écriture réussie rétablit le fonctionnement et efface l’état d’erreur.
 - Aucune synchronisation inter-onglets ou persistance serveur n’est ajoutée.
 
