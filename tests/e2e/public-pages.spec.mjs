@@ -17,6 +17,10 @@ const viewports = [
 
 for (const route of routes) {
   test(`${route.name} — rendu responsive et accessibilité`, async ({ browser }, testInfo) => {
+    test.setTimeout(120_000);
+    const blockingViolations = [];
+    const pageErrors = [];
+
     for (const viewport of viewports) {
       const page = await browser.newPage({
         viewport: { width: viewport.width, height: viewport.height },
@@ -24,8 +28,11 @@ for (const route of routes) {
         colorScheme: "light",
         reducedMotion: "reduce"
       });
-      const pageErrors = [];
-      page.on("pageerror", (error) => pageErrors.push(error.message));
+      page.on("pageerror", (error) => pageErrors.push({
+        route: route.path,
+        viewport: viewport.name,
+        message: error.message
+      }));
 
       try {
         const response = await page.goto(route.path, {
@@ -78,17 +85,31 @@ for (const route of routes) {
           contentType: "application/json"
         });
 
-        const blockingViolations = accessibility.violations.filter(
-          (violation) => violation.impact === "critical" || violation.impact === "serious"
+        blockingViolations.push(
+          ...accessibility.violations
+            .filter((violation) => violation.impact === "critical" || violation.impact === "serious")
+            .map((violation) => ({
+              route: route.path,
+              viewport: viewport.name,
+              id: violation.id,
+              impact: violation.impact,
+              description: violation.description,
+              help: violation.help,
+              nodes: violation.nodes.map((node) => ({
+                target: node.target,
+                summary: node.failureSummary
+              }))
+            }))
         );
-        expect(
-          blockingViolations,
-          `Violations axe-core sérieuses ou critiques sur ${route.path} en ${viewport.name}`
-        ).toEqual([]);
-        expect(pageErrors, `Erreurs JavaScript sur ${route.path} en ${viewport.name}`).toEqual([]);
       } finally {
         await page.close();
       }
     }
+
+    expect(
+      blockingViolations,
+      `Violations axe-core sérieuses ou critiques sur ${route.path}`
+    ).toEqual([]);
+    expect(pageErrors, `Erreurs JavaScript sur ${route.path}`).toEqual([]);
   });
 }
