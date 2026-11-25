@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
-import { GenreIcon } from "@/components/features/names/GenreIcon";
-import type { GenrePrenom } from "@/lib/prenoms";
+import { GenderIcon } from "@/components/features/names/GenderIcon";
+import type { NameGender } from "@/lib/gender-icons";
 import { Button } from "@/components/material3/Button";
 import { Icon } from "@/components/material3/Icon";
 import { categoryTone } from "@/lib/category-color";
@@ -75,7 +75,7 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
   const texteRetour = contexteRetour?.vue === "favoris"
     ? "← Retour aux favoris"
     : contexteRetour?.vue === "comparateur" ? "← Retour au comparateur" : "← Retour au catalogue";
-  const genreAuPluriel: Record<GenrePrenom, string> = {
+  const genreAuPluriel: Record<NameGender, string> = {
     "Féminin": "féminins",
     "Masculin": "masculins",
     "Mixte": "mixtes",
@@ -124,7 +124,7 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
               <h1>{prenom.nom}<span>.</span></h1>
               <p className="profile-lead">{prenom.introduction}</p>
               <div className="profile-tags">
-                <span className="profile-tag"><GenreIcon genre={prenom.genre} /></span>
+                <span className="profile-tag"><GenderIcon gender={prenom.genre} /></span>
                 <span className="profile-tag">Lettre {prenom.lettre}</span>
               </div>
               <div className={styles.actions}>
