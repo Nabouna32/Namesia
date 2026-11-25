@@ -57,8 +57,8 @@ test("IconButton conserve la sémantique d'une action M3, pas d'un contrôle tog
   assert.match(iconButtonStyles, /min-height: 48px/);
   assert.match(iconButtonStyles, /inset: 4px/);
   assert.match(iconButtonStyles, /corner-full/);
-  assert.match(iconButtonStyles, /on-surface-variant/);
-  assert.match(iconButtonStyles, /on-surface\) 38%, transparent/);
+  assert.match(iconButtonStyles, /color: inherit/);
+  assert.match(iconButtonStyles, /currentColor 38%, transparent/);
   assert.match(iconButtonStyles, /hover-state-layer-opacity/);
   assert.match(iconButtonStyles, /focus-state-layer-opacity/);
   assert.match(iconButtonStyles, /pressed-state-layer-opacity/);
@@ -115,6 +115,7 @@ test("SearchBar applique le champ replié AndroidX et reste accessible dans les 
   assert.match(searchBarStyles, /surface-container-high/);
   assert.match(searchBarStyles, /body-large-(?:font|size|weight|line-height|tracking)/);
   assert.match(searchBarStyles, /leadingIcon/);
+  assert.match(searchBarStyles, /\.container \.clearButton/);
   assert.match(searchBarStyles, /:has\(input:focus-visible\)/);
   assert.match(searchBarStyles, /outline: 2px solid var\(--md-sys-color-primary\)/);
   assert.match(searchBarStyles, /outline-offset: -2px/);
