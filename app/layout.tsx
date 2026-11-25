@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Roboto } from "next/font/google";
 import { FavoritesProvider } from "@/components/features/favorites/FavoritesProvider";
 import { HistoryProvider } from "@/components/features/history/HistoryProvider";
-import { MaterialThemeProvider } from "@/components/material3/MaterialThemeProvider";
 import { NavigationBar } from "@/components/material3/NavigationBar";
 import { NavigationRail } from "@/components/material3/NavigationRail";
 import { TopAppBar } from "@/components/material3/TopAppBar";
@@ -63,7 +62,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return <html lang="fr" className={roboto.variable} data-scroll-behavior="smooth"><head><style dangerouslySetInnerHTML={{ __html: materialThemeCss }} /></head><body>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(siteWebData) }} />
     <a className="skip-link" href="#contenu">Aller au contenu</a>
-    <MaterialThemeProvider>
       <FavoritesProvider>
         <HistoryProvider>
           <div className="app-shell">
@@ -86,6 +84,5 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </div>
         </HistoryProvider>
       </FavoritesProvider>
-    </MaterialThemeProvider>
   </body></html>;
 }
