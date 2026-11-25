@@ -12,7 +12,7 @@ const provider = await readFile(join(root, "components/material3/MaterialThemePr
 const theme = await readFile(join(root, "lib/material-theme.ts"), "utf8");
 const layout = await readFile(join(root, "app/layout.tsx"), "utf8");
 const home = await readFile(join(root, "app/page.tsx"), "utf8");
-const prenoms = await readFile(join(root, "lib/prenoms.ts"), "utf8");
+const namesSource = await readFile(join(root, "lib/names.ts"), "utf8");
 const fiche = await readFile(join(root, "lib/fiche-prenom.ts"), "utf8");
 const schema = await readFile(join(root, "schemas/fiche-prenom.schema.json"), "utf8");
 const messageComponent = await readFile(join(root, "components/material3/Snackbar.tsx"), "utf8");
@@ -292,10 +292,10 @@ test("les rayons suivent les tokens ou les valeurs AndroidX source-vérifiées",
 });
 
 test("les données de fiche et les libellés de genre invalides échouent explicitement", () => {
-  assert.doesNotMatch(prenoms, /\?\?/);
+  assert.doesNotMatch(namesSource, /\?\?/);
   assert.doesNotMatch(fiche, /\?\?/);
-  assert.match(prenoms, /Genre de prénom non pris en charge/);
-  assert.match(prenoms, /ne peut pas avoir un nom vide/);
+  assert.match(namesSource, /Genre de prénom non pris en charge/);
+  assert.match(namesSource, /ne peut pas avoir un nom vide/);
   assert.match(schema, /"required":\["introduction","symbolic_associations"\]/);
   assert.doesNotMatch(fiche, /symbolic_associations\s*\?\?\s*\[\]/);
 });
