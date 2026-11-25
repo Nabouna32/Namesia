@@ -5,8 +5,12 @@ import { readdir, readFile } from "node:fs/promises";
 const migrationsDirectory = new URL("../supabase/migrations/", import.meta.url);
 const migrationFiles = (await readdir(migrationsDirectory)).filter((file) => file.endsWith(".sql"));
 const migrationVersions = migrationFiles.map((file) => file.slice(0, 14));
-const associationPolicyNamingMigration = await readFile(\n  new URL("../supabase/migrations/20261125011430_rename_association_policies_english.sql", import.meta.url),\n  "utf8"\n);\nconst associationPolicyMigration = await readFile(
+const associationPolicyMigration = await readFile(
   new URL("../supabase/migrations/20261125005358_consolider_policies_lecture_associations.sql", import.meta.url),
+  "utf8"
+);
+const associationPolicyNamingMigration = await readFile(
+  new URL("../supabase/migrations/20261125011430_rename_association_policies_english.sql", import.meta.url),
   "utf8"
 );
 
