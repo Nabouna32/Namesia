@@ -26,7 +26,7 @@ test("la police Open Graph est incluse dans le système de fichiers virtuel du W
   assert.equal(wrangler.base_dir, ".");
   assert.equal(wrangler.preserve_file_names, true);
   assert.ok(wrangler.rules.some((rule) =>
-    rule.type === "Text" && rule.globs.includes("assets/fonts/**/*.base64")
+    rule.type === "Text" && rule.globs.includes("assets/fonts/Roboto-Regular.ttf.base64") && rule.fallthrough === true
   ));
   await readFile(new URL("../assets/fonts/Roboto-Regular.ttf.base64", import.meta.url), "utf8");
 });
