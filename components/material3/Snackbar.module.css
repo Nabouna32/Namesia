@@ -103,11 +103,3 @@
   background: var(--md-sys-color-error-container);
   color: var(--md-sys-color-on-error-container);
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .snackbar,
-  .message,
-  .actions {
-    transition: none;
-  }
-}
