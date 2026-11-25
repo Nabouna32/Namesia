@@ -27,6 +27,13 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
+      - name: Restaurer le cache Next.js
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}-
       - name: Vérifier la version Node.js
         run: test "$(node --version)" = "v$(tr -d '\r\n' < .nvmrc)"
       - name: Installer les dépendances
