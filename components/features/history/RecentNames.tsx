@@ -28,15 +28,15 @@ export function RecentNames({ prenoms }: { prenoms: PrenomIndex[] }) {
             <span className="eyebrow">Reprendre la découverte</span>
             <h2 id="historique-title">Vos dernières fiches</h2>
           </div>
-          {slugs.length > 0 && (
+          {(slugs.length > 0 || error) && (
             <Button variant="text" type="button" onClick={clearHistory}>
-              Effacer l’historique
+              {error ? "Réinitialiser l’historique" : "Effacer l’historique"}
             </Button>
           )}
         </div>
         {error && (
           <p className={styles.note} role="alert">
-            Le navigateur a refusé l’accès au stockage de session. L’historique n’est pas disponible dans cet onglet.
+            L’historique est indisponible. Réinitialisez-le pour réessayer avec une session propre.
           </p>
         )}
         {recentNames.length > 0 ? (
