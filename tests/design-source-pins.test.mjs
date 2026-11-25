@@ -59,6 +59,11 @@ test("le registre M3 et ses sources de référence restent complets et lisibles"
   for (const file of ["AlertDialog.kt", "DialogTokens.kt", "AppBarSmallTokens.kt", "ElevationTokens.kt", "PaletteTokens.kt", "BaselineButtonTokens.kt", "ButtonSmallTokens.kt", "OutlinedButtonTokens.kt", "TextButtonTokens.kt", "IconButton.kt", "IconButtonDefaults.kt", "IconButtonTokens.kt", "SmallIconButtonTokens.kt", "ElevatedCardTokens.kt", "FilledCardTokens.kt", "OutlinedCardTokens.kt", "TextFieldDefaults.kt", "FilledTextFieldTokens.kt", "OutlinedTextFieldTokens.kt", "InputChipTokens.kt", "NavigationRailCollapsedTokens.kt", "NavigationRailColorTokens.kt", "NavigationRailBaselineItemTokens.kt", "NavigationRailVerticalItemTokens.kt", "SnackbarTokens.kt"]) {
     assert.ok(sourceVerifier.includes(file), "Source AndroidX documentée non vérifiée : " + file);
   }
+  assert.match(sourceVerifier, /actionOnNewLine/);
+  assert.match(sourceVerifier, /dismissAction/);
+  assert.match(sourceVerifier, /ActionLabelTextColor/);
+  assert.match(sourceVerifier, /SingleLineContainerHeight/);
+  assert.match(sourceVerifier, /TwoLinesContainerHeight/);
   for (const name of ["AlertDialog", "Button", "Card", "Checkbox", "IconButton", "SearchBar", "TextField", "FilterChip", "InputChip", "Snackbar", "TopAppBar", "NavigationBar", "NavigationRail"]) {
     assert.ok(components.includes("| `" + name + "` |"), "Composant absent du registre : " + name);
     assert.match(verification, new RegExp("\\| " + name + " \\|"));

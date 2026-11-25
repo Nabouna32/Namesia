@@ -92,7 +92,7 @@ Les composants doivent partager les mêmes rôles, formes et interactions :
 - cartes élevées, remplies ou avec contour ;
 - chips de filtre et de suggestion ;
 - navigation bar, navigation rail et barre supérieure ;
-- notifications via `Snackbar` ;
+- notifications via `Snackbar`, avec actions et fermeture optionnelles ;
 - confirmations nécessitant une décision explicite via `AlertDialog` ;
 - menus, feuilles et boutons flottants uniquement lorsqu'un parcours utilisateur réel les justifie. Ils ne font pas partie de la bibliothèque actuelle et ne doivent pas être créés par anticipation : le besoin produit, le contrat AndroidX et les états nécessaires doivent être établis avant leur ajout.
 

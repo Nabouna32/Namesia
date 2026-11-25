@@ -14,19 +14,35 @@ const severityClass: Record<SnackbarSeverity, string> = {
 export function Snackbar({
   severity = "neutral",
   children,
+  action,
+  dismissAction,
+  actionOnNewLine = false,
   className
 }: Readonly<{
   severity?: SnackbarSeverity;
   children: ReactNode;
+  action?: ReactNode;
+  dismissAction?: ReactNode;
+  actionOnNewLine?: boolean;
   className?: string;
 }>) {
   const urgent = severity === "error";
+  const classes = [
+    styles.snackbar,
+    severityClass[severity],
+    actionOnNewLine && action ? styles.actionOnNewLine : undefined,
+    className
+  ].filter(Boolean).join(" ");
+
   return (
-    <p
-      className={[styles.snackbar, severityClass[severity], className].filter(Boolean).join(" ")}
-      role={urgent ? "alert" : "status"}
-    >
-      {children}
-    </p>
+    <div className={classes} role={urgent ? "alert" : "status"}>
+      <span className={styles.message}>{children}</span>
+      {(action || dismissAction) && (
+        <span className={styles.actions}>
+          {action && <span className={styles.action}>{action}</span>}
+          {dismissAction && <span className={styles.dismissAction}>{dismissAction}</span>}
+        </span>
+      )}
+    </div>
   );
 }
