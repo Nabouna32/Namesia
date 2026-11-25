@@ -125,7 +125,7 @@ jobs:
           curl --fail --show-error --silent --location --max-time 30 "$SITE_URL/robots.txt" --output "$workdir/robots.txt"
           grep -Eiq '^Disallow: /admin' "$workdir/robots.txt"
           grep -Eiq '^Disallow: /api' "$workdir/robots.txt"
-          grep -Eiq '^Sitemap: https://namesia\.nabouna\.workers\.dev/sitemap\.xml' "$workdir/robots.txt"
+          grep -Fq "Sitemap: $SITE_URL/sitemap.xml" "$workdir/robots.txt"
 
           curl --fail --show-error --silent --location --max-time 30 "$SITE_URL/sitemap.xml" --output "$workdir/sitemap.xml"
           grep -Fq "$SITE_URL/prenoms/alice" "$workdir/sitemap.xml"
