@@ -344,6 +344,8 @@ test("les couleurs sémantiques sont des extensions M3 avec annonces accessibles
   assert.match(messageStyles, /--snackbar-dismiss-action-color/);
   assert.match(messageStyles, /\.actionOnNewLine/);
   assert.match(messageStyles, /min-height: 68px/);
+  assert.match(messageStyles, /width: 100%/);
+  assert.match(messageStyles, /max-width: 560px/);
   assert.match(messageComponent, /role={urgent \? "alert" : "status"}/);
   assert.doesNotMatch(allCss, /--md-sys-color-(?:success|warning|info)\b/);
 });
