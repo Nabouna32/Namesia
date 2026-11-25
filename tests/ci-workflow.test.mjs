@@ -23,3 +23,10 @@ test("la CI audite les dépendances de production et bloque sur un audit rouge",
   assert.match(workflow, /AUDIT_OUTCOME: \$\{\{ steps\.audit\.outcome \}\}/);
   assert.match(workflow, /if \[\[ "\$AUDIT_OUTCOME" != "success"/);
 });
+
+test("la CI restaure le cache Next.js avec une action épinglée", () => {
+  assert.ok(workflow.includes("actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0"));
+  assert.ok(workflow.includes("path: .next/cache"));
+  assert.ok(workflow.includes("key: ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}-${{ github.sha }}"));
+  assert.ok(workflow.includes("restore-keys:"));
+});
