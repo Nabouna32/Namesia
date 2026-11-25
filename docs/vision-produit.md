@@ -31,7 +31,7 @@ Les fiches générées par IA ne disposent pas d'un système de sources ou de v�
 
 Ces principes de transparence ne constituent pas un processus de vérification factuelle.
 
-## 4. Accès public et compte facultatif
+### Accès public et compte facultatif
 
 La consultation de Namesia ne nécessite jamais de compte. Toute personne peut librement rechercher, découvrir, lire, comparer et partager les fiches publiques sans inscription ni connexion. Aucune de ces fonctions publiques ne doit être conditionnée à la création d'un compte.
 
