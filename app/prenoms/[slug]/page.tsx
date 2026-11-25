@@ -139,7 +139,7 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
             <div className="profile-monogram" aria-hidden="true">{prenom.lettre}</div>
           </header>
 
-          <NamePopularityCard slug={prenom.slug} />
+          <NamePopularityCard slug={prenom.slug} name={prenom.nom} gender={prenom.genre} />
 
           {aDesRubriques && (
             <nav className="profile-toc" aria-label="Sommaire de la fiche">
