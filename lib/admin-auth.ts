@@ -7,8 +7,12 @@ type AdminAccess =
   | { supabase: null; user: null; error: { message: string; status: number } };
 
 export async function requireAdmin(request: Request): Promise<AdminAccess> {
+  if (process.env.NAMESIA_DEPLOYMENT_ENVIRONMENT === "preview") {
+    return { supabase: null, user: null, error: { message: "L’administration est désactivée dans les environnements Preview.", status: 403 } };
+  }
+
   const authorization = request.headers.get("authorization");
-  const token = authorization?.match(/^Bearer\s+(.+)$/i)?.[1];
+  const token = authorization?.match(/^Bearer\\s+(.+)$/i)?.[1];
 
   if (!token) {
     return { supabase: null, user: null, error: { message: "Authentification requise.", status: 401 } };
