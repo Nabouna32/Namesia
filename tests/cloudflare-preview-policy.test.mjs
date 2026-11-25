@@ -41,5 +41,6 @@ test("la production vérifie SSR, catalogue, SEO, Open Graph et refuse l'adminis
   assert.match(workflow, /\$SITE_URL\/sitemap\.xml/);
   assert.match(workflow, /api\/prenoms\?slug=alice&slug=emma/);
   assert.match(workflow, /opengraph-image/);
+  assert.match(workflow, /\$SITE_URL\\/opengraph-image/);
   assert.match(workflow, /test "\$status" = "401"/);
 });
