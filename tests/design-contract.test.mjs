@@ -367,7 +367,8 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.doesNotMatch(materialVerificationDoc, /androidx-main/);
   assert.ok(materialVerificationDoc.includes("b03ef34bb53a15c3ba41bf963eb3e2c5c353c85f"));
   assert.ok(materialVerificationDoc.includes("5c7b286a7684599f275a0f7b4b77752ae751b6bd"));
-  assert.ok(materialVerificationDoc.includes("b4de401eb665ec63474f39319a4ba8f2145974cc"));
+  assert.ok(materialVerificationDoc.includes("d4f63c567f73b16717f4c04b57fa6390d0b2312d"));
+  assert.doesNotMatch(materialVerificationDoc, /b4de401/);
   assert.doesNotMatch(materialVerificationDoc, /(?:blob|tree)[/]main[/]/);
   assert.match(agents, /Avant de créer ou refondre une page, lire/);
 });
