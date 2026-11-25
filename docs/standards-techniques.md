@@ -1,8 +1,8 @@
 # Standards techniques et règles de maintenabilité — Namesia
 
 - **Statut :** règle canonique
-- **Version :** 1.1
-- **Mis à jour :** 2026-11-22
+- **Version :** 1.2
+- **Mis à jour :** 2026-11-25
 - **Portée :** application web, styles, composants, données et outillage
 
 Ce document définit le niveau de qualité attendu pour les évolutions techniques de Namesia. Il complète [AGENTS.md](../AGENTS.md), qui définit la méthode de travail et le challenge obligatoire.
@@ -85,6 +85,7 @@ Extraire un composant lorsqu'au moins un bénéfice concret existe : réutilisat
 - Valider les données externes à leur frontière d'entrée ; un type TypeScript seul ne valide pas les données à l'exécution.
 - Gérer les erreurs explicitement et distinguer une absence légitime de données d'une panne technique.
 - Les métadonnées, liens, formulaires et contrôles doivent respecter les conventions d'accessibilité et de SEO de Next.js.
+- Toute donnée JSON-LD injectée dans un élément `script` passe par `lib/json-ld.ts` : la sérialisation échappe le caractère `<` avant `dangerouslySetInnerHTML`, sans modifier la valeur JSON après analyse.
 
 ## 5. Données et intégrations
 
