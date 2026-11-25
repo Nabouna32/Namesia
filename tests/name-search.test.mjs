@@ -81,27 +81,27 @@ function distanceReference(a, b) {
   return previousRow[right.length];
 }
 
-function generateStrings(alphabet, longueurMax) {
+function generateStrings(alphabet, maxLength) {
   const strings = [""];
-  for (let longueur = 1; longueur <= longueurMax; longueur += 1) {
-    const prefixes = strings.filter((chaine) => Array.from(chaine).length === longueur - 1);
-    for (const string of prefixes) {
-      for (const character of alphabet) chaines.push(string + character);
+  for (let length = 1; length <= maxLength; length += 1) {
+    const prefixes = strings.filter((string) => Array.from(string).length === length - 1);
+    for (const prefix of prefixes) {
+      for (const character of alphabet) strings.push(prefix + character);
     }
   }
-  return chaines;
+  return strings;
 }
 
 test("la distance bornée correspond à Levenshtein sur un ensemble exhaustif de petites chaînes", () => {
   const strings = generateStrings(["a", "b"], 4);
-  for (const gauche of chaines) {
-    for (const droite of chaines) {
-      const referenceDistance = distanceReference(gauche, droite);
+  for (const left of strings) {
+    for (const right of strings) {
+      const referenceDistance = distanceReference(left, right);
       for (const limit of [0, 1, 2, 3]) {
         assert.equal(
           boundedEditDistance(left, right, limit),
-          referenceDistance <= limit ? reference : limit + 1,
-          `distance inattendue entre « ${gauche} » et « ${droite} » avec limite ${limite}`
+          referenceDistance <= limit ? referenceDistance : limit + 1,
+          `distance inattendue entre « ${left} » et « ${right} » avec limite ${limit}`
         );
       }
     }
