@@ -42,7 +42,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 ### Administration
 - Connexion via Supabase Auth par lien e-mail.
 - Les clients serveur, navigateur et administrateur sont typés avec `Database`, généré depuis le schéma PostgreSQL actif dans `lib/supabase/database.types.ts`. Les relations, colonnes et RPC sont donc contrôlées à la compilation ; les lectures du catalogue utilisent les types inférés, sans cast non vérifié.
-- `lib/supabase/config.ts` est l'unique frontière de configuration publique : elle exige l'URL et la clé, valide l'origine et impose HTTPS en production. Les clients serveur, navigateur et administrateur partagent ce contrat, sans assertion non nulle ni fallback.
+- `lib/supabase/config.ts` est l'unique frontière de configuration publique : elle exige l'URL et la clé, valide l'origine et impose HTTPS en production et réserve HTTP aux hôtes loopback en développement. Les clients serveur, navigateur et administrateur partagent ce contrat, sans assertion non nulle ni fallback.
 - Autorisation fondée sur la présence de l'identifiant Auth dans private.admin_users.
 - Import d'un fichier JSON ou d'un contenu collé.
 - Validation du contrat avant envoi.
