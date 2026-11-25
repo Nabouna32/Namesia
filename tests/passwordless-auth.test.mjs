@@ -1,11 +1,31 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 
-const adminClient = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
+async function readTypeScriptSources(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const sources = await Promise.all(entries.map(async (entry) => {
+    const path = new URL(entry.isDirectory() ? entry.name + "/" : entry.name, directory);
+    if (entry.isDirectory()) return readTypeScriptSources(path);
+    if (/\.(ts|tsx)$/.test(entry.name)) return readFile(path, "utf8");
+    return "";
+  }));
+  return sources.join("\n");
+}
 
-test("l'administration conserve une authentification passwordless par lien OTP", () => {
-  assert.match(adminClient, /signInWithOtp/);
-  assert.match(adminClient, /shouldCreateUser: false/);
-  assert.doesNotMatch(adminClient, /signInWithPassword|updateUser|signUp/);
+const applicationSource = (
+  await Promise.all([
+    readTypeScriptSources(new URL("../app/", import.meta.url)),
+    readTypeScriptSources(new URL("../components/", import.meta.url)),
+    readTypeScriptSources(new URL("../lib/", import.meta.url))
+  ])
+).join("\n");
+
+test("l'application conserve une authentification passwordless par lien OTP", () => {
+  assert.match(applicationSource, /signInWithOtp/);
+  assert.match(applicationSource, /shouldCreateUser: false/);
+  assert.doesNotMatch(
+    applicationSource,
+    /\.auth\.signInWithPassword\s*\(|\.auth\.signUp\s*\(|\.auth\.updateUser\s*\(\s*\{[\s\S]{0,200}\bpassword\s*:/
+  );
 });
