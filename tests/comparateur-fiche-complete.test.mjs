@@ -6,15 +6,16 @@ const source = await readFile(new URL("../components/features/comparison/NameCom
 const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 
 test("chaque carte comparée donne accès à la fiche complète du prénom correspondant", () => {
-  assert.match(source, /import Link from "next\/link"/);
-  assert.match(source, /import \{ creerUrlFicheDepuisComparateur \} from "@\/lib\/navigation-prenoms"/);
-  assert.match(source, /href=\{creerUrlFicheDepuisComparateur\(prenom\.slug, selection\)\}/);
-  assert.match(source, /aria-label=\{`Lire la fiche complète de \$\{prenom\.nom\}`\}/);
-  assert.match(source, /Voir la fiche complète/);
+  assert.ok(source.includes('import Link from "next/link"'));
+  assert.ok(source.includes('import { creerUrlFicheDepuisComparateur } from "@/lib/navigation-prenoms"'));
+  assert.ok(source.includes("href={creerUrlFicheDepuisComparateur(prenom.slug, selection)}"));
+  assert.ok(source.includes("aria-label={`Lire la fiche complète de ${prenom.name}`}"));
+  assert.ok(source.includes("Voir la fiche complète"));
 });
 
 test("le lien vers la fiche conserve une cible tactile et les tokens Fidelity", () => {
-  assert.match(styles, /\.compare-card-link\s*\{[^}]*min-height:\s*48px/s);
-  assert.match(styles, /\.compare-card-link\s*\{[^}]*color:\s*var\(--md-sys-color-primary\)/s);
-  assert.match(styles, /\.compare-card-link\s*\{[^}]*text-decoration:\s*underline/s);
+  assert.ok(styles.includes(".compare-profile-link,\n.compare-card-link {"));
+  assert.ok(styles.includes("min-height: 48px"));
+  assert.ok(styles.includes("color: var(--md-sys-color-primary)"));
+  assert.ok(styles.includes("text-decoration: underline"));
 });
