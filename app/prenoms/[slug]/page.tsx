@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
-import type { NameGender } from "@/lib/name-types";
+import type { NameGender } from "@/lib/gender-icons";
 import { Button } from "@/components/material3/Button";
 import { Icon } from "@/components/material3/Icon";
 import { categoryTone } from "@/lib/category-color";
