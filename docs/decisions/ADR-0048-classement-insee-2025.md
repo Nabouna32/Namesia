@@ -3,6 +3,7 @@
 - **Statut :** acceptée
 - **Date :** 2026-11-25
 - **Portée :** classement de popularité des prénoms en France
+- **Remplace partiellement :** [ADR-0002](ADR-0002-statistiques-insee.md)
 
 ## Contexte
 
