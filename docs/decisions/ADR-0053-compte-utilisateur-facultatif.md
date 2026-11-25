@@ -1,7 +1,9 @@
 # ADR-0053 — Compte utilisateur facultatif
 
 - **Statut :** accepté
-- **Date :** 2026-11-25
+- **Version :** 1.0
+- **Décision prise le :** 2026-11-25 (heure non consignée)
+- **Mis à jour le :** 2026-11-25 09:22:27 (Europe/Paris)
 - **Décideur :** propriétaire de Namesia
 
 ## Contexte
