@@ -32,8 +32,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-.metric span,
-.popularitySource {
+.metric span {
   color: var(--md-sys-color-on-surface-variant);
   font-size: var(--md-sys-typescale-body-small-size);
   line-height: var(--md-sys-typescale-body-small-line-height);
@@ -41,6 +40,9 @@
 
 .popularitySource {
   margin: 0;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-body-small-size);
+  line-height: var(--md-sys-typescale-body-small-line-height);
 }
 
 .popularitySource a {
