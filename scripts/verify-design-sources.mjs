@@ -133,8 +133,10 @@ const additionalAndroidxSources = [
   ["ButtonSmallTokens.kt", "ButtonSmallTokens"],
   ["OutlinedButtonTokens.kt", "OutlinedButtonTokens"],
   ["TextButtonTokens.kt", "TextButtonTokens"],
-  ["IconButton.kt", "IconButton"],
+  ["IconButton.kt", ["IconButton", "minimumInteractiveComponentSize", "smallContainerSize", "48 x 48dp", "24 x 24 dp"]],
+  ["IconButtonDefaults.kt", ["smallContainerSize", "standardShape"]],
   ["IconButtonTokens.kt", "StandardIconButtonTokens"],
+  ["SmallIconButtonTokens.kt", ["ContainerHeight", "40.0.dp", "IconSize", "24.0.dp", "ContainerShapeRound", "CornerFull", "PressedContainerShape", "CornerSmall"]],
   ["ElevatedCardTokens.kt", "ElevatedCardTokens"],
   ["FilledCardTokens.kt", "FilledCardTokens"],
   ["OutlinedCardTokens.kt", "OutlinedCardTokens"],
@@ -149,7 +151,7 @@ const additionalAndroidxSources = [
   ["ElevationTokens.kt", ["ElevationTokens", "Level3", "get() = 6.0.dp"]],
 ].map(([file, marker]) => ({
   name: `AndroidX ${file}`,
-  url: `https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/${["IconButton.kt", "AlertDialog.kt"].includes(file) ? file : `tokens/${file}`}`,
+  url: `https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/${["IconButton.kt", "IconButtonDefaults.kt", "AlertDialog.kt"].includes(file) ? file : `tokens/${file}`}`,
   markers: Array.isArray(marker) ? marker : [marker],
 }));
 
@@ -201,6 +203,6 @@ async function verifySourcesWithLimit(items, concurrency) {
 
 const verifiedSources = [...sources, ...additionalAndroidxSources];
 const androidxSourceCount = verifiedSources.filter(({ name }) => name.startsWith("AndroidX ")).length;
-assert.equal(androidxSourceCount, 37, "Le registre doit vérifier exactement les 37 fichiers AndroidX documentés");
+assert.equal(androidxSourceCount, 39, "Le registre doit vérifier exactement les 37 fichiers AndroidX documentés");
 
 await verifySourcesWithLimit(verifiedSources, 4);
