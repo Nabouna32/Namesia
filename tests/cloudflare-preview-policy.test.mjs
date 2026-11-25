@@ -26,5 +26,8 @@ test("les previews sont déployées uniquement pour les PR du dépôt et supprim
   assert.match(workflow, /wrangler preview --name "pr-/);
   assert.match(workflow, /wrangler preview delete --name "pr-/);
   assert.match(workflow, /x-robots-tag:.*noindex/);
+  assert.match(workflow, /sed -n '\/\^\{/);
+  assert.match(workflow, /Administration indisponible/);
+  assert.match(workflow, /test "\$admin_status" = "403"/);
   assert.match(workflow, /gh pr comment/);
 });
