@@ -26,9 +26,9 @@
 }
 
 .metric strong {
-  font-size: 28px;
+  font-size: var(--md-sys-typescale-headline-small-size);
   font-weight: 500;
-  line-height: 1.2;
+  line-height: var(--md-sys-typescale-headline-small-line-height);
   font-variant-numeric: tabular-nums;
 }
 
