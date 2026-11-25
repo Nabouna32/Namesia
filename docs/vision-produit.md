@@ -1,7 +1,7 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.56
+- **Version :** 3.57
 - **Mis à jour :** 2026-11-25
 
 ## 1. Positionnement
@@ -59,7 +59,7 @@ Ces principes de transparence ne constituent pas un processus de vérification f
 
 - Génération IA déclenchée directement depuis l'administration.
 - Vérification indépendante des affirmations et workflow de claims/preuves.
-- Statistiques de popularité et données Insee.
+- Statistiques de popularité en temps réel, historiques de classement pluriannuels et autres jeux de données Insee au-delà du classement 2025 décrit ci-dessus.
 - Workflow multi-relecteurs, rôles complexes ou validation par spécialiste.
 - Gestion multi-pays et multilingue.
 - Historique détaillé des coûts, tokens et exécutions de génération.
