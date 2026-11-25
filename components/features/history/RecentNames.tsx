@@ -10,14 +10,14 @@ import { Button } from "@/components/material3/Button";
 import { IconButton } from "@/components/material3/IconButton";
 import { Card } from "@/components/material3/Card";
 
-export function RecentNames({ prenoms }: { prenoms: NameIndexEntry[] }) {
+export function RecentNames({ names }: { names: NameIndexEntry[] }) {
   const { slugs, removeVisit, clearHistory, error } = useHistory();
   if (slugs.length === 0 && !error) return null;
 
-  const index = new Map(prenoms.map((prenom) => [prenom.slug, prenom] as const));
+  const index = new Map(names.map((name) => [name.slug, name] as const));
   const recentNames = slugs.flatMap((slug) => {
-    const prenom = index.get(slug);
-    return prenom ? [prenom] : [];
+    const name = index.get(slug);
+    return name ? [name] : [];
   });
 
   return (
@@ -42,19 +42,19 @@ export function RecentNames({ prenoms }: { prenoms: NameIndexEntry[] }) {
         {recentNames.length > 0 ? (
           <>
             <div className={styles.grid}>
-              {recentNames.map((prenom) => (
-                <article className={styles.card} key={prenom.slug}>
-                  <Card as={Link} variant="elevated" interactive className={`name-card ${styles.link}`} href={`/prenoms/${prenom.slug}`}>
-                    <span className="name-initial">{prenom.initial}</span>
+              {recentNames.map((name) => (
+                <article className={styles.card} key={name.slug}>
+                  <Card as={Link} variant="elevated" interactive className={`name-card ${styles.link}`} href={`/prenoms/${name.slug}`}>
+                    <span className="name-initial">{name.initial}</span>
                     <span>
-                      <strong>{prenom.name}</strong>
-                      <GenderIcon gender={prenom.gender} />
+                      <strong>{name.name}</strong>
+                      <GenderIcon gender={name.gender} />
                     </span>
                     <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                   </Card>
                   <IconButton
-                    label={`Retirer ${prenom.name} de l’historique`}
-                    onClick={() => removeVisit(prenom.slug)}
+                    label={`Retirer ${name.name} de l’historique`}
+                    onClick={() => removeVisit(name.slug)}
                   >
                     <span aria-hidden="true"><Icon name="close" size={24} /></span>
                   </IconButton>
