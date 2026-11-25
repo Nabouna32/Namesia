@@ -12,7 +12,7 @@ export async function requireAdmin(request: Request): Promise<AdminAccess> {
   }
 
   const authorization = request.headers.get("authorization");
-  const token = authorization?.match(/^Bearer\\s+(.+)$/i)?.[1];
+  const token = authorization?.match(/^Bearer\s+(.+)$/i)?.[1];
 
   if (!token) {
     return { supabase: null, user: null, error: { message: "Authentification requise.", status: 401 } };
