@@ -54,15 +54,17 @@
 }
 
 .button:focus-visible::after { opacity: var(--md-sys-state-focus-state-layer-opacity); }
-.button:active:not(:disabled)::after { opacity: var(--md-sys-state-pressed-state-layer-opacity); }
+.button:active:not(:disabled)::after {
+  border-radius: var(--md-sys-shape-corner-small);
+  opacity: var(--md-sys-state-pressed-state-layer-opacity);
+}
 
 .filled:focus-visible::before,
 .tonal:focus-visible::before,
 .filled:active::before,
 .tonal:active::before { box-shadow: none; }
 
-.button:active:not(:disabled)::before,
-.button:active:not(:disabled)::after { border-radius: var(--md-sys-shape-corner-small); }
+.button:active:not(:disabled)::before { border-radius: var(--md-sys-shape-corner-small); }
 
 .filled { color: var(--md-sys-color-on-primary); }
 .filled::before { background: var(--md-sys-color-primary); }
