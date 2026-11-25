@@ -16,7 +16,7 @@ test("le partage ne transmet que les paramètres explicitement autorisés", () =
 test("le catalogue partage sa recherche, ses filtres et le lot révélé", () => {
   assert.match(catalogue, /label="Partager cette recherche"/);
   assert.match(catalogue, /queryParameters=\{\["q", "genre", "lettre", "limite"\]\}/);
-  assert.match(catalogue, /synchroniserUrl && \(filtresActifs \|\| nombreVisible > 24\)/);
+  assert.match(catalogue, /syncUrl && \(filtresActifs \|\| nombreVisible > 24\)/);
 });
 
 test("le comparateur conserve uniquement sa sélection lors du partage", () => {
