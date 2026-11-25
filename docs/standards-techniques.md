@@ -1,7 +1,7 @@
 # Standards techniques et règles de maintenabilité — Namesia
 
 - **Statut :** règle canonique
-- **Version :** 1.4
+- **Version :** 1.5
 - **Mis à jour :** 2026-11-25
 - **Portée :** application web, styles, composants, données et outillage
 
@@ -105,6 +105,7 @@ Extraire un composant lorsqu'au moins un bénéfice concret existe : réutilisat
 Chaque changement est validé au niveau adapté à son risque :
 
 - Tests unitaires pour les règles métier et transformations isolées.
+- Les tests Node natifs importent les modules TypeScript avec des chemins relatifs et l'extension `.ts`. Les fonctions pures testées par Node vivent dans des modules cœur sans alias `@/`, client Supabase ou runtime Next.js ; la couche applicative peut les réexporter.
 - Tests d'intégration pour les accès aux données, contrats et interactions entre modules.
 - Tests de composants ou E2E pour les parcours utilisateur critiques.
 - Vérifications statiques et build dans la CI GitHub Actions.
