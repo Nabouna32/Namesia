@@ -3,7 +3,7 @@
 import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { PrenomIndex } from "@/lib/prenoms";
-import { GenreIcon } from "@/components/features/names/GenreIcon";
+import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { GENRE_ICONS } from "@/lib/genre-icons";
 import styles from "./NameSearch.module.css";
 import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
@@ -262,7 +262,7 @@ export function NameSearch({
                       <span className="name-initial">{prenom.lettre}</span>
                       <span>
                         <strong>{prenom.nom}</strong>
-                        <GenreIcon genre={prenom.genre} />
+                        <GenderIcon gender={prenom.genre} />
                       </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Card>
@@ -297,7 +297,7 @@ export function NameSearch({
                       <span className="name-initial">{prenom.lettre}</span>
                       <span>
                         <strong>{prenom.nom}</strong>
-                        <GenreIcon genre={prenom.genre} />
+                        <GenderIcon gender={prenom.genre} />
                       </span>
                       <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
                     </Card>
