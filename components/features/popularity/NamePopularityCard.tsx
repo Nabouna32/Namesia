@@ -29,7 +29,7 @@ export function NamePopularityCard({ slug, name, gender }: { slug: string; name:
           <span>naissances (effectif arrondi)</span>
         </div>
       </div>
-      <p className={styles.source}>
+      <p className={styles.popularitySource}>
         <Link href="/tendances">Voir le classement complet</Link>
         {" · "}
         <a href={NAME_POPULARITY_2025_SOURCE_URL} target="_blank" rel="noreferrer">Source Insee</a>
