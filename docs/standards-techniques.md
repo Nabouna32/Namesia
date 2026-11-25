@@ -1,7 +1,7 @@
 # Standards techniques et règles de maintenabilité — Namesia
 
 - **Statut :** règle canonique
-- **Version :** 1.3
+- **Version :** 1.4
 - **Mis à jour :** 2026-11-25
 - **Portée :** application web, styles, composants, données et outillage
 
@@ -83,6 +83,7 @@ Extraire un composant lorsqu'au moins un bénéfice concret existe : réutilisat
 - Donner des clés stables aux listes et éviter les états dérivés dupliqués.
 - TypeScript doit exprimer les contrats réels ; éviter any, les assertions non justifiées et les conversions de type qui masquent une incertitude.
 - Les clients Supabase utilisent `createClient<Database>` et `SupabaseClient<Database>` avec `lib/supabase/database.types.ts`, généré depuis le schéma actif après chaque migration.
+- Lire et valider `NEXT_PUBLIC_SUPABASE_URL` et `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` exclusivement via `getSupabasePublicConfig()` ; refuser toute configuration invalide et exiger HTTPS en production, sans assertion non nulle ni origine de secours.
 - Les résultats des requêtes SQL utilisent les types inférés ou des `Pick<Tables<...>>` dérivés du schéma ; proscrire `as unknown as` pour contourner une requête Supabase non typée.
 - Valider les données externes à leur frontière d'entrée ; un type TypeScript seul ne valide pas les données à l'exécution.
 - Gérer les erreurs explicitement et distinguer une absence légitime de données d'une panne technique.
