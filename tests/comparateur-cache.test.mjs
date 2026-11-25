@@ -11,7 +11,7 @@ test("les fiches publiques du comparateur ont une durée de cache courte et expl
 
 test("le navigateur peut réutiliser une réponse de comparaison identique", () => {
   assert.doesNotMatch(comparateur, /cache:\s*"no-store"/);
-  assert.match(comparateur, /fetch\(`\/api\/prenoms\?\$\{parametres\.toString\(\)\}`/);
+  assert.match(comparateur, /fetch\(`\/api\/prenoms\?\$\{params\.toString\(\)\}`/);
 });
 
 test("la route du comparateur refuse une fiche isolée et borne la sélection à trois", () => {

@@ -19,9 +19,9 @@ export async function GET(request: Request) {
   }
 
   try {
-    const prenoms = await getNamesBySlugs(slugs);
+    const names = await getNamesBySlugs(slugs);
     return NextResponse.json(
-      { prenoms },
+      { prenoms: names },
       { headers: { "Cache-Control": "public, max-age=30, s-maxage=60, stale-while-revalidate=60" } }
     );
   } catch {
