@@ -1,14 +1,45 @@
 .root {
   position: relative;
+  isolation: isolate;
   display: inline-grid;
   width: 40px;
   height: 40px;
   flex: 0 0 40px;
   place-items: center;
+  color: var(--md-sys-color-on-surface);
+}
+
+.root:has(.input:checked) {
+  color: var(--md-sys-color-primary);
+}
+
+.root::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: var(--md-sys-shape-corner-full);
+  background: currentColor;
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.root::after {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border: 2px solid var(--md-sys-color-secondary);
+  border-radius: 25%;
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
 }
 
 .input {
   position: absolute;
+  z-index: 2;
   inset: 0;
   width: 40px;
   height: 40px;
@@ -19,6 +50,7 @@
 
 .indicator {
   position: relative;
+  z-index: 1;
   width: 18px;
   height: 18px;
   border: 2px solid var(--md-sys-color-on-surface-variant);
@@ -26,8 +58,7 @@
   background: transparent;
   transition:
     background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
-    border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
-    box-shadow var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
 }
 
 .indicator::after {
@@ -41,6 +72,7 @@
   content: "";
   opacity: 0;
   transform: rotate(-45deg);
+  transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
 }
 
 .input:checked + .indicator {
@@ -54,12 +86,18 @@
 
 .input:focus-visible + .indicator {
   border-color: var(--md-sys-color-on-surface);
-  outline: 3px solid var(--md-sys-color-secondary);
-  outline-offset: 2px;
 }
 
 .input:checked:focus-visible + .indicator {
   border-color: var(--md-sys-color-primary);
+}
+
+.root:has(.input:focus-visible)::before {
+  opacity: var(--md-sys-state-focus-state-layer-opacity);
+}
+
+.root:has(.input:focus-visible)::after {
+  opacity: 1;
 }
 
 .input:disabled {
@@ -80,14 +118,21 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .root:has(.input:hover:not(:disabled))::before {
+    opacity: var(--md-sys-state-hover-state-layer-opacity);
+  }
+
   .input:not(:disabled):hover + .indicator {
     border-color: var(--md-sys-color-on-surface);
   }
 
   .input:checked:not(:disabled):hover + .indicator {
     border-color: var(--md-sys-color-primary);
-    box-shadow: 0 0 0 11px color-mix(in srgb, var(--md-sys-color-primary) var(--md-sys-state-hover-state-layer-opacity), transparent);
   }
+}
+
+.root:has(.input:active:not(:disabled))::before {
+  opacity: var(--md-sys-state-pressed-state-layer-opacity);
 }
 
 .input:not(:disabled):active + .indicator {
@@ -96,5 +141,13 @@
 
 .input:checked:not(:disabled):active + .indicator {
   border-color: var(--md-sys-color-primary);
-  box-shadow: 0 0 0 11px color-mix(in srgb, var(--md-sys-color-primary) var(--md-sys-state-pressed-state-layer-opacity), transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root::before,
+  .root::after,
+  .indicator,
+  .indicator::after {
+    transition: none;
+  }
 }
