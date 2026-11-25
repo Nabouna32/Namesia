@@ -156,3 +156,7 @@ Toute nouvelle page doit composer le shell partagé, les primitives officielles 
 ## Ajouter un composant
 
 Avant toute création, vérifier le nom officiel, l'anatomie, les tokens, les variantes, les états et la source AndroidX versionnée dans [Vérification Material 3](material-3-verification.md). Si le besoin est métier, placer la composition dans `components/features/` et la construire avec les composants Material 3 existants. Ne jamais créer une nouvelle primitive générique Namesia pour contourner un composant existant.
+
+## Contrats des props
+
+Les compositions de catalogue utilisent des props anglaises : `names`, `initialSearch`, `initialGender`, `initialLetter`, `initialVisibleCount` et `syncUrl` pour `NameSearch` ; `names` pour `FeaturedNames`, `RelatedNames`, `RecentNames` et `RandomDiscovery`. `FavoritesList` reçoit `names`, `initialSearch`, `initialGender`, `initialSort` et `initialVisibleCount`. `NameComparator` reçoit `names` et `initialSelection`. `RelatedNames` reçoit également `returnContext`. Les noms des routes, paramètres d'URL et clés de réponse API restent français lorsqu'ils font partie d'un contrat public.
