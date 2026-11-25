@@ -11,6 +11,7 @@ const page = await readFile(new URL("../app/tendances/page.tsx", import.meta.url
 const sitemap = await readFile(new URL("../app/sitemap.ts", import.meta.url), "utf8");
 const profileCard = await readFile(new URL("../components/features/popularity/NamePopularityCard.tsx", import.meta.url), "utf8");
 const trendsCss = await readFile(new URL("../app/tendances/trends.module.css", import.meta.url), "utf8");
+const popularityCss = await readFile(new URL("../components/features/popularity/NamePopularityCard.module.css", import.meta.url), "utf8");
 
 test("le classement Insee 2025 contient dix prénoms par genre", () => {
   const femaleNames = NAME_POPULARITY_2025.filter((entry) => entry.gender === "Féminin");
@@ -36,6 +37,10 @@ test("la page expose les profils publiés sans masquer les entrées hors catalog
   assert.match(page, /export const dynamic = "force-dynamic"/);
   assert.ok(trendsCss.includes("@media (max-width: 839px)"));
   assert.ok(!trendsCss.includes("max-width: 900px"));
+  assert.ok(trendsCss.includes("gap: 4px;"));
+  assert.ok(!trendsCss.includes("gap: 2px;"));
+  assert.ok(popularityCss.includes(".popularitySource"));
+  assert.ok(!popularityCss.includes(".source"));
   assert.match(page, /publishedSlugs\.has\(entry\.slug\)/);
   assert.match(page, /Fiche non publiée sur Namesia/);
   assert.match(page, /NAME_POPULARITY_2025_SOURCE_URL/);
