@@ -30,3 +30,11 @@ test("la police Open Graph est incluse dans le système de fichiers virtuel du W
   ));
   await readFile(new URL("../assets/fonts/Roboto-Regular.ttf.base64", import.meta.url), "utf8");
 });
+
+
+test("l'image d'une fiche évite les composants SVG interactifs et rend le genre en texte", async () => {
+  const profileImage = await readFile(new URL("../app/prenoms/[slug]/opengraph-image.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(profileImage, /components\/material3\/Icon/);
+  assert.doesNotMatch(profileImage, /GENDER_ICONS/);
+  assert.match(profileImage, /\{name\.gender\}/);
+});
