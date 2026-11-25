@@ -91,21 +91,18 @@ jobs:
       - name: Installer Chromium
         if: steps.preview.outputs.preview_url != ''
         run: npx playwright install --with-deps chromium
-      - name: Capturer et auditer les pages publiques
+      - name: Vérifier les parcours publics avec Playwright
         if: steps.preview.outputs.preview_url != ''
         env:
           PLAYWRIGHT_BASE_URL: ${{ steps.preview.outputs.preview_url }}
         run: npx playwright test --config=playwright.config.mjs
-      - name: Publier les captures et rapports visuels
-        if: always() && steps.preview.outputs.preview_url != ''
+      - name: Publier les traces Playwright en cas d’échec
+        if: failure() && steps.preview.outputs.preview_url != ''
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: audit-visuel-pr-${{ github.event.pull_request.number }}
-          path: |
-            artifacts/visual/
-            playwright-report/
-            test-results/
-          if-no-files-found: warn
+          name: diagnostic-playwright-pr-${{ github.event.pull_request.number }}
+          path: test-results/
+          if-no-files-found: ignore
           retention-days: 3
       - name: Publier l’URL de Preview dans la PR
         if: steps.preview.outputs.preview_url != ''

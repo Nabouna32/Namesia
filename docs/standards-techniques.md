@@ -1,7 +1,7 @@
 # Standards techniques et règles de maintenabilité — Namesia
 
 - **Statut :** règle canonique
-- **Version :** 1.6
+- **Version :** 1.7
 - **Mis à jour :** 2026-11-25
 - **Portée :** application web, styles, composants, données et outillage
 
@@ -108,8 +108,11 @@ Chaque changement est validé au niveau adapté à son risque :
 - Les tests Node natifs importent les modules TypeScript avec des chemins relatifs et l'extension `.ts`. Les fonctions pures testées par Node vivent dans des modules cœur sans alias `@/`, client Supabase ou runtime Next.js ; la couche applicative peut les réexporter.
 - Tests d'intégration pour les accès aux données, contrats et interactions entre modules.
 - Tests de composants ou E2E pour les parcours utilisateur critiques.
-- Pour chaque PR interne, Playwright Chromium capture l'accueil, le catalogue et une fiche sur mobile (390 px), tablette (768 px) et bureau (1440 px). Les captures, le rapport HTML et les traces d'échec sont publiés en artefacts GitHub à rétention de trois jours.
-- axe-core analyse les pages publiques sur les trois formats ; les violations WCAG de sévérité sérieuse ou critique bloquent la vérification. Les autres niveaux restent visibles dans les rapports pour permettre leur priorisation.
+- Playwright Chromium couvre quelques parcours représentatifs sur la Preview interne : routes publiques essentielles sur bureau, responsive mobile/tablette sur l'accueil et assertions ciblées pour les composants dont le comportement est à risque.
+- **Pas de captures systématiques, de rapport HTML ni de galerie d'images en CI.** Une capture ponctuelle peut être produite pour diagnostiquer une anomalie ou documenter une évolution visuelle importante ; elle n'est pas archivée après vérification.
+- Les traces Playwright et diagnostics ne sont publiés qu'en cas d'échec, avec une rétention de trois jours. Aucun artefact de réussite n'est conservé.
+- axe-core est exécuté comme diagnostic consultatif ; ses constats sont consignés dans les logs sans bloquer le rendu. Les erreurs HTTP, JavaScript et les débordements responsive restent bloquants.
+- Les tests sont choisis selon le risque : métier et parcours critiques d'abord. Éviter les assertions sur les textes éditoriaux, les détails CSS transitoires et les implémentations internes susceptibles d'évoluer. Retirer les tests devenus sans objet au lieu d'accumuler des contrats historiques.
 - Les tests E2E n'ouvrent aucune route d'administration et n'utilisent aucune session ni donnée privée. Les PR issues de forks ne reçoivent pas de Preview Cloudflare ni de secrets.
 - Vérifications statiques et build dans la CI GitHub Actions.
 - Contrôles manuels ciblés lorsque l'accessibilité, le responsive ou le rendu visuel ne sont pas couverts par l'automatisation.
