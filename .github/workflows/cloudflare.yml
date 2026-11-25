@@ -54,7 +54,7 @@ jobs:
         run: |
           set -euo pipefail
           output="$(./node_modules/.bin/wrangler preview --name "pr-${{ github.event.pull_request.number }}" --json)"
-          printf '%s\\n' "$output"
+          printf '%s\n' "$output"
           preview_json="$(printf '%s\n' "$output" | sed -n '/^{/,$p')"
           preview_url="$(printf '%s\n' "$preview_json" | jq -er '.preview.urls[0]')"
           echo "preview_url=$preview_url" >> "$GITHUB_OUTPUT"
