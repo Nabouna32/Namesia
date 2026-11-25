@@ -8,7 +8,7 @@ const fontLoader = await readFile(new URL("../lib/polices-open-graph.ts", import
 const fontAsset = await readFile(new URL("../assets/fonts/Roboto-Regular.ttf.base64", import.meta.url), "utf8");
 const icon = await readFile(new URL("../app/icon.svg", import.meta.url), "utf8");
 
-test("les deux aperçus chargent la même Roboto locale sans police de substitution", () => {
+test("l’aperçu Open Graph commun charge Roboto locale sans police de substitution", () => {
   for (const source of [rootOg]) {
     assert.match(source, /fontFamily: "Roboto"/);
     assert.match(source, /fonts: await chargerPolicesOpenGraph\(\)/);
