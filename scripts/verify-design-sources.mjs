@@ -79,7 +79,17 @@ const sources = [
   {
     name: "Material Color Utilities Fidelity",
     url: "https://raw.githubusercontent.com/material-foundation/material-color-utilities/b03ef34bb53a15c3ba41bf963eb3e2c5c353c85f/typescript/dynamiccolor/dynamic_scheme.ts",
-    markers: ["Variant.FIDELITY", "specVersion"],
+    markers: ["Variant.FIDELITY", "specVersion", "maybeFallbackSpecVersion", "case Variant.EXPRESSIVE", "case Variant.NEUTRAL", "2021"],
+  },
+  {
+    name: "Material Color Utilities ColorSpec versions",
+    url: "https://raw.githubusercontent.com/material-foundation/material-color-utilities/b03ef34bb53a15c3ba41bf963eb3e2c5c353c85f/typescript/dynamiccolor/color_spec.ts",
+    markers: ["SpecVersion", "2025", "Unsupported spec version"],
+  },
+  {
+    name: "Material Color Utilities ColorSpec 2025",
+    url: "https://raw.githubusercontent.com/material-foundation/material-color-utilities/b03ef34bb53a15c3ba41bf963eb3e2c5c353c85f/typescript/dynamiccolor/color_spec_2025.ts",
+    markers: ["ColorSpecDelegateImpl2025", "extends ColorSpecDelegateImpl2021"],
   },
   {
     name: "Angular Material elevation",
