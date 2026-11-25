@@ -57,11 +57,12 @@
 .actionOnNewLine {
   min-height: 68px;
   flex-wrap: wrap;
+  row-gap: 0;
 }
 
 .actionOnNewLine .message {
   flex: 1 1 100%;
-  padding-block: 8px 0;
+  padding-block: 4px 0;
 }
 
 .actionOnNewLine .actions {
