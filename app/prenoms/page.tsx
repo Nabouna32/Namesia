@@ -47,8 +47,8 @@ export default async function NamesPage({ searchParams }: Props) {
   const [parametres, prenoms] = await Promise.all([searchParams, getNamesIndex()]);
   const rechercheInitiale = premierParametre(parametres.q);
   const nombreVisibleInitial = lireNombreVisible(parametres.limite, Math.max(24, Math.ceil(prenoms.length / 24) * 24));
-  const genreDemande = premierParametre(parametres.gender);
-  const lettreDemandee = normaliserFiltre(premierParametre(parametres.initial));
+  const genreDemande = premierParametre(parametres.genre);
+  const lettreDemandee = normaliserFiltre(premierParametre(parametres.lettre));
 
   const lettresDisponibles = new Set(prenoms.map((prenom) => normaliserFiltre(prenom.initial)));
   const genreInitial = prenoms.find((prenom) => prenom.gender === genreDemande)?.gender ?? null;
