@@ -51,8 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `/prenoms/${name.slug}`
     },
     twitter: {
-      card: "summary_large_image",
-      images: [`/prenoms/${name.slug}/opengraph-image`]
+      card: "summary_large_image"
     }
   } : {};
 }
