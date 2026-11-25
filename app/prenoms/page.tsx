@@ -44,11 +44,11 @@ function normalizeFilter(value: string): string {
 }
 
 export default async function NamesPage({ searchParams }: Props) {
-  const [searchParams, names] = await Promise.all([searchParams, getNamesIndex()]);
-  const initialSearch = getFirstParam(searchParams.q);
-  const initialVisibleCount = lireNombreVisible(searchParams.limite, Math.max(24, Math.ceil(names.length / 24) * 24));
-  const requestedGender = getFirstParam(searchParams.genre);
-  const requestedLetter = normalizeFilter(getFirstParam(searchParams.lettre));
+  const [params, names] = await Promise.all([searchParams, getNamesIndex()]);
+  const initialSearch = getFirstParam(params.q);
+  const initialVisibleCount = lireNombreVisible(params.limite, Math.max(24, Math.ceil(names.length / 24) * 24));
+  const requestedGender = getFirstParam(params.genre);
+  const requestedLetter = normalizeFilter(getFirstParam(params.lettre));
 
   const availableInitials = new Set(names.map((name) => normalizeFilter(name.initial)));
   const initialGender = names.find((name) => name.gender === requestedGender)?.gender ?? null;
