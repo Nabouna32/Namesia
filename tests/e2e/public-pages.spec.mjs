@@ -42,7 +42,7 @@ for (const route of routes) {
 
         expect(response?.status(), `HTTP ${route.path} en ${viewport.name}`).toBeLessThan(400);
         await expect(page.locator("main h1").first()).toBeVisible();
-        await page.evaluate(() => document.fonts.ready);
+        await page.evaluate(async () => { await document.fonts.ready; });
 
         const hasHorizontalOverflow = await page.evaluate(
           () => document.documentElement.scrollWidth > document.documentElement.clientWidth
