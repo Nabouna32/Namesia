@@ -1,38 +1,22 @@
 version: 2
 
 updates:
+  # npm couvre les dépendances de production, de développement et transitives.
+  # Chaque mise à jour reste une PR distincte pour permettre une revue explicite.
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: weekly
-      day: monday
-      time: "08:00"
+      interval: daily
+      time: "12:00"
       timezone: Europe/Paris
-    open-pull-requests-limit: 1
-    cooldown:
-      default-days: 7
-    groups:
-      npm-minor-and-patch:
-        patterns:
-          - "*"
-        update-types:
-          - minor
-          - patch
+    open-pull-requests-limit: 1000
 
+  # Les actions des workflows CI, de contrôle et de déploiement sont suivies
+  # individuellement ; leurs SHA complets restent à vérifier avant fusion.
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: weekly
-      day: monday
-      time: "08:00"
+      interval: daily
+      time: "12:00"
       timezone: Europe/Paris
-    open-pull-requests-limit: 1
-    cooldown:
-      default-days: 7
-    groups:
-      actions-minor-and-patch:
-        patterns:
-          - "*"
-        update-types:
-          - minor
-          - patch
+    open-pull-requests-limit: 1000
