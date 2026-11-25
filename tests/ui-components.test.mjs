@@ -376,6 +376,8 @@ test("les options de comparaison ont des états tactiles Material sans survol co
   assert.match(globalStyles, /\.compare-option:has\(input:checked\)\s*\{[^}]*primary-container/s);
   assert.match(globalStyles, /\.compare-option:has\(input:checked\) \.compare-option-initial\s*\{[^}]*on-primary/s);
   assert.doesNotMatch(globalStyles, /\.compare-option input\s*\{[^}]*accent-color:/s);
+  assert.doesNotMatch(globalStyles, /\.compare-option:has\(input:disabled\)\s*\{[^}]*opacity:/s);
+  assert.match(globalStyles, /\.compare-option:has\(input:disabled\)\s*\{[^}]*color: color-mix\(in srgb, var\(--md-sys-color-on-surface\) 38%, transparent\)/s);
 });
 
 
