@@ -22,5 +22,5 @@ test("la lecture du sitemap est complète, stable et paginée", () => {
   assert.match(namesSource, /readAllPages<JoinedNameSitemap>/);
   assert.match(namesSource, /\.order\("slug", \{ ascending: true \}\)/);
   assert.match(namesSource, /\.order\("id", \{ ascending: true \}\)/);
-  assert.match(namesSource, /compter \? \{ count: "exact" \} : undefined/);
+  assert.match(namesSource, /countExact \? \{ count: "exact" \} : undefined/);
 });
