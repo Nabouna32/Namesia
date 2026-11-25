@@ -30,7 +30,7 @@ function lireTri(value: string): TriFavoris {
 }
 
 export default async function FavoritesPage({ searchParams }: Props) {
-  const [searchParams, names] = await Promise.all([searchParams, getNamesIndex()]);
+  const [params, names] = await Promise.all([searchParams, getNamesIndex()]);
 
   return (
     <main id="contenu" tabIndex={-1} className="page-main">
@@ -40,10 +40,10 @@ export default async function FavoritesPage({ searchParams }: Props) {
         <p className="page-intro">Retrouvez ici les prénoms enregistrés dans ce navigateur. Votre sélection reste privée, sans compte ni synchronisation entre appareils.</p>
         <FavoritesList
           names={names}
-          initialSearch={getFirstParam(searchParams.q)}
-          initialGender={getFirstParam(searchParams.genre)}
-          initialSort={lireTri(getFirstParam(searchParams.tri))}
-          initialVisibleCount={lireNombreVisible(searchParams.limite)}
+          initialSearch={getFirstParam(params.q)}
+          initialGender={getFirstParam(params.genre)}
+          initialSort={lireTri(getFirstParam(params.tri))}
+          initialVisibleCount={lireNombreVisible(params.limite)}
         />
       </div>
     </main>
