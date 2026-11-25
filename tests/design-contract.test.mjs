@@ -333,7 +333,6 @@ test("les couleurs sémantiques sont des extensions M3 avec annonces accessibles
   assert.ok(messageStyles.includes("box-shadow:") && messageStyles.includes("color-mix"));
   assert.match(messageComponent, /severity = "neutral"/);
   assert.match(messageComponent, /role={urgent \? "alert" : "status"}/);
-  assert.match(messageComponent, /aria-live={urgent \? "assertive" : "polite"}/);
   assert.doesNotMatch(allCss, /--md-sys-color-(?:success|warning|info)\b/);
 });
 

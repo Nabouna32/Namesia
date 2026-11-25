@@ -25,7 +25,6 @@ export function Snackbar({
     <p
       className={[styles.snackbar, severityClass[severity], className].filter(Boolean).join(" ")}
       role={urgent ? "alert" : "status"}
-      aria-live={urgent ? "assertive" : "polite"}
     >
       {children}
     </p>
