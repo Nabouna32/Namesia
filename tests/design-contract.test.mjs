@@ -18,6 +18,7 @@ const schema = await readFile(join(root, "schemas/fiche-prenom.schema.json"), "u
 const messageComponent = await readFile(join(root, "components/material3/Snackbar.tsx"), "utf8");
 const messageStyles = await readFile(join(root, "components/material3/Snackbar.module.css"), "utf8");
 const composantsDoc = await readFile(join(root, "docs/composants.md"), "utf8");
+const designDoc = await readFile(join(root, "docs/design.md"), "utf8");
 const architectureDoc = await readFile(join(root, "docs/architecture.md"), "utf8");
 const materialVerificationDoc = await readFile(join(root, "docs/material-3-verification.md"), "utf8");
 const navigationComponent = await readFile(join(root, "components/material3/NavigationDestinations.tsx"), "utf8");
