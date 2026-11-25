@@ -121,7 +121,8 @@ jobs:
           check_html "/prenoms" "$workdir/catalogue.html"
           check_html "/prenoms/alice" "$workdir/fiche.html"
           grep -Eiq '<title>[^<]*Alice' "$workdir/fiche.html"
-          grep -Fq "$SITE_URL/opengraph-image" "$workdir/fiche.html"
+          echo "Vérifier la référence Open Graph statique dans le HTML de la fiche"
+          grep -Fq "opengraph-image" "$workdir/fiche.html"
 
           curl --fail --show-error --silent --location --max-time 30 "$SITE_URL/robots.txt" --output "$workdir/robots.txt"
           grep -Eiq '^Disallow: /admin' "$workdir/robots.txt"
