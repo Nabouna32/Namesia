@@ -1,4 +1,4 @@
-import type { PrenomIndex } from "@/lib/prenoms";
+import type { NameIndexEntry } from "@/lib/names";
 
 export function normaliserRecherche(value: string): string {
   const normalisee = value.trim()
@@ -16,10 +16,10 @@ export function normaliserRecherche(value: string): string {
     : normalisee;
 }
 
-export function comparerPertinence(a: PrenomIndex, b: PrenomIndex, terme: string): number {
-  if (!terme) return a.nom.localeCompare(b.nom, "fr");
-  const nomA = normaliserRecherche(a.nom);
-  const nomB = normaliserRecherche(b.nom);
+export function comparerPertinence(a: NameIndexEntry, b: NameIndexEntry, terme: string): number {
+  if (!terme) return a.name.localeCompare(b.name, "fr");
+  const nomA = normaliserRecherche(a.name);
+  const nomB = normaliserRecherche(b.name);
   const positionA = nomA.indexOf(terme);
   const positionB = nomB.indexOf(terme);
   const rangA = nomA === terme ? 0 : positionA === 0 ? 1 : 2;
@@ -27,7 +27,7 @@ export function comparerPertinence(a: PrenomIndex, b: PrenomIndex, terme: string
 
   return rangA - rangB
     || (rangA === 2 ? positionA - positionB : 0)
-    || a.nom.localeCompare(b.nom, "fr");
+    || a.name.localeCompare(b.name, "fr");
 }
 
 export function distanceEditionBornee(a: string, b: string, limite: number): number {
@@ -77,21 +77,21 @@ export function distanceEditionBornee(a: string, b: string, limite: number): num
  * Retourne jusqu'à cinq prénoms proches d'une recherche sans correspondance.
  * Les candidats doivent déjà respecter les filtres actifs de l'écran appelant.
  */
-export function suggererPrenomsProches(prenoms: PrenomIndex[], recherche: string): PrenomIndex[] {
+export function suggererPrenomsProches(prenoms: NameIndexEntry[], recherche: string): NameIndexEntry[] {
   const terme = normaliserRecherche(recherche);
   if (terme.length < 4) return [];
 
-  if (prenoms.some((prenom) => normaliserRecherche(prenom.nom) === terme)) return [];
+  if (prenoms.some((prenom) => normaliserRecherche(prenom.name) === terme)) return [];
 
   const limite = terme.length >= 8 ? 2 : 1;
   return prenoms
     .flatMap((prenom) => {
-      const nom = normaliserRecherche(prenom.nom);
+      const nom = normaliserRecherche(prenom.name);
       if (nom.includes(terme)) return [];
       const distance = distanceEditionBornee(terme, nom, limite);
       return distance <= limite ? [{ prenom, distance }] : [];
     })
-    .sort((a, b) => a.distance - b.distance || a.prenom.nom.localeCompare(b.prenom.nom, "fr"))
+    .sort((a, b) => a.distance - b.distance || a.prenom.name.localeCompare(b.prenom.name, "fr"))
     .slice(0, 5)
     .map(({ prenom }) => prenom);
 }
