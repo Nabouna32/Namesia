@@ -14,6 +14,7 @@ test("les migrations locales restent alignées sur les versions Supabase appliqu
   assert.ok(migrationFiles.includes("20261122002440_finaliser_nettoyage_modele.sql"));
   assert.ok(migrationFiles.includes("20261125005358_consolider_policies_lecture_associations.sql"));
   assert.equal(new Set(migrationVersions).size, migrationVersions.length);
+  assert.ok(migrationFiles.every((file) => /^\\d{14}_[a-z0-9_]+\\.sql$/.test(file)));
   assert.ok(migrationVersions.every((version) => /^\d{14}$/.test(version)));
   assert.equal(migrationFiles.some((file) => /20261122140000|references_editoriales|versionner_reprise_editoriale/.test(file)), false);
 });
