@@ -6,7 +6,7 @@ import type { NameIndexEntry } from "@/lib/names";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { GENDER_ICONS } from "@/lib/gender-icons";
 import styles from "./NameSearch.module.css";
-import { comparerPertinence, normaliserRecherche, suggererNamesProches } from "@/lib/recherche-prenoms";
+import { comparerPertinence, normaliserRecherche, suggererPrenomsProches } from "@/lib/recherche-prenoms";
 import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
 import { Icon } from "@/components/material3/Icon";
 import { SearchBar } from "@/components/material3/SearchBar";
@@ -72,7 +72,7 @@ export function NameSearch({
       (!genreActif || prenom.gender === genreActif)
       && (!lettreActive || normaliserRecherche(prenom.initial) === lettreActive)
     ));
-    return suggererNamesProches(candidats, recherche);
+    return suggererPrenomsProches(candidats, recherche);
   }, [genreActif, lettreActive, prenoms, recherche, resultats.length]);
 
   const filtresActifs = Boolean(recherche.trim() || genreActif || lettreActive);
