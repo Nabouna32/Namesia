@@ -17,12 +17,12 @@ Les mises à jour de dépendances doivent être visibles et proposées réguliè
 
 Retenir l'option 3 pour les écosystèmes présents dans le dépôt :
 
-- **npm**, à la racine : dépendances directes et transitives, de production comme de développement. Dependabot suit les manifestes et le fichier de verrouillage ; les dépendances de développement ne sont pas exclues.
-- **GitHub Actions**, à la racine : actions référencées par les workflows de CI, de contrôle et de déploiement.
+- **npm**, à la racine : toutes les dépendances déclarées directement dans les manifestes, y compris `dependencies` et `devDependencies`, sans filtre de type ni de niveau SemVer. Dependabot met à jour le lockfile avec chaque proposition. Il ne crée pas de proposition de version autonome pour chaque dépendance transitive npm non déclarée ; celles-ci évoluent via la résolution du lockfile ou les mises à jour de sécurité lorsqu'elles sont vulnérables.
+- **GitHub Actions**, à la racine : actions référencées par les workflows de CI, de contrôle et de déploiement. Les références épinglées sur SHA restent soumises à vérification du tag et du commit amont.
 
-Les deux écosystèmes sont vérifiés **tous les jours calendaires à 12 h, fuseau `Europe/Paris`**, avec le calendrier cron `0 12 * * *`. Le choix de cron est intentionnel : l'intervalle Dependabot `daily` ne s'exécute que du lundi au vendredi. Chaque mise à jour est proposée dans une PR distincte : aucun groupe, aucune période de refroidissement et une limite de PR suffisamment haute pour ne pas réduire artificiellement le flux de propositions (1 000 par écosystème).
+Les deux écosystèmes sont vérifiés **tous les jours calendaires à 12 h, fuseau `Europe/Paris`**, avec le calendrier cron `0 12 * * *`. Le choix de cron est intentionnel : l'intervalle Dependabot `daily` ne s'exécute que du lundi au vendredi. Chaque mise à jour est proposée dans une PR distincte : aucun groupe et une limite de PR suffisamment haute pour ne pas réduire artificiellement le flux de propositions (1 000 par écosystème).
 
-Les mises à jour de sécurité Dependabot restent également activables par les mécanismes de sécurité GitHub et ne sont pas retardées par la cadence planifiée.
+La fenêtre de sécurité par défaut de **3 jours** sur les mises à jour de version est conservée : elle laisse le temps de détecter une publication compromise. Les mises à jour de sécurité, lorsqu'elles sont activées dans les paramètres GitHub du dépôt, ne sont pas retardées par cette fenêtre ni par le calendrier planifié.
 
 ## Revue et garde-fous
 
