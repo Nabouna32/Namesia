@@ -1,33 +1,44 @@
 # ADR-0002 — Statistiques de prénoms issues de l'Insee
 
-- **Statut :** en suspens, non implémenté
+- **Statut :** partiellement remplacée par [ADR-0048](ADR-0048-classement-insee-2025.md)
 - **Décision initiale :** 2026-11-21
-- **Réexamen :** 2026-11-22
+- **Réexamen :** 2026-11-25
 
 ## Contexte initial
 
-Une intégration des statistiques de naissances françaises avait été envisagée à partir du fichier des prénoms publié par l'Insee.
+Une intégration des statistiques historiques de naissances françaises avait été envisagée à partir du fichier des prénoms publié par l'Insee.
 
 ## Réexamen
 
-Le périmètre éditorial actuel repose sur des fiches générées par IA puis importées en JSON. Namesia ne dispose pas encore d'un processus d'import, de mise à jour et de présentation des statistiques sourcées.
+Le périmètre éditorial de Namesia repose sur des fiches générées en amont puis importées en JSON. Le produit ne dispose pas d'un pipeline d'import, de mise à jour et de contrôle d'un historique statistique complet.
 
-Conserver une décision d'intégration statistique comme si elle faisait partie du produit actuel serait trompeur et pousserait à ajouter prématurément des tables, des sources et des processus qui ne sont pas exploités.
+Conserver une décision d'intégration de l'ensemble des séries Insee comme si elle faisait partie du produit actuel pousserait à ajouter prématurément des tables, des sources et des processus qui ne sont pas exploités.
+
+Un besoin plus limité est apparu : donner un repère récent et vérifiable sur les prénoms les plus attribués. Ce besoin est couvert par un snapshot annuel des deux top 10 2025, décrit précisément dans l'ADR-0048.
 
 ## Décision actuelle
 
-Aucune statistique de popularité ni donnée Insee n'est intégrée au modèle de fiche actuel. L'ancienne décision est mise en suspens, pas supprimée : elle pourra être réexaminée si le produit adopte un véritable pipeline de données statistiques.
+L'intégration d'un historique statistique complet, d'un pipeline de synchronisation et de tables statistiques en base reste en suspens.
 
-## Conditions de réactivation
+Le produit accepte uniquement le périmètre restreint de l'ADR-0048 :
+- un snapshot typé du top 10 féminin et masculin pour un millésime publié ;
+- les rangs et effectifs issus de la source officielle, avec leurs règles d'arrondi ;
+- une page éditoriale distincte du modèle des fiches ;
+- aucune synchronisation réseau, table statistique ou table de références.
 
-Avant toute réintégration, définir et implémenter :
+Aucune statistique Insee n'est ajoutée au modèle de fiche `name_profiles`. Le classement reste une donnée de produit distincte, sourcée et versionnée dans le dépôt. L'ADR-0048 est la décision courante pour cette fonctionnalité.
+
+## Conditions de réactivation du périmètre historique complet
+
+Avant toute intégration d'un historique ou d'un pipeline automatisé, définir et implémenter :
 - le fichier source et son édition exacte ;
-- la méthode d'import et de contrôle ;
+- la méthode d'import, de mise à jour et de contrôle ;
 - le territoire, la période, la mesure et l'unité ;
 - les règles de diffusion et d'arrondi ;
-- l'affichage des limites de couverture et de comparabilité.
+- les limites de couverture et de comparabilité ;
+- la politique de conservation et de correction des millésimes.
 
-Références conservées pour une éventuelle reprise :
+Références conservées pour une éventuelle reprise du fichier historique :
 - https://www.insee.fr/fr/statistiques/8595130
 - https://www.insee.fr/fr/metadonnees/source/serie/s2236
 - https://www.data.gouv.fr/datasets/fichier-des-prenoms-depuis-1900
