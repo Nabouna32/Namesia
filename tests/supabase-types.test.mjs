@@ -32,6 +32,8 @@ test("tous les clients Supabase utilisent le type Database généré", () => {
 test("les lectures du catalogue dérivent du schéma sans casts non vérifiés", () => {
   assert.match(prenoms, /Pick<Tables<"names">/);
   assert.match(publication, /Tables<"name_profiles">/);
+  assert.match(adminCatalog, /Pick<Tables<"name_profiles">/);
+  assert.match(adminCatalog, /Pick<Tables<"names">/);
   assert.doesNotMatch(prenoms, /as unknown as/);
   assert.doesNotMatch(adminCatalog, /as number/);
 });
