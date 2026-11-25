@@ -82,7 +82,7 @@ La CI doit garantir les points suivants via `tests/material-theme.test.mjs` et `
 2. **Toutes les feuilles CSS Modules et la feuille globale** sont parcourues : chaque rôle couleur `--md-sys-color-*` utilisé doit appartenir au registre officiel fermé. Une faute de nom ou un rôle absent fait échouer la CI.
 3. Les extensions de catégories Rainbow et les couleurs sémantiques success/warning/info portent `--namesia-*`, jamais `--md-sys-*` ; chacune possède ses rôles de premier plan et de conteneur en clair et sombre.
 4. Un rôle Fidelity ou Rainbow absent provoque une erreur explicite ; il n'est ni ignoré ni remplacé.
-5. Le CSS initial du document est calculé depuis les mêmes schémas que ceux réappliqués après hydratation. Il n'existe pas de seconde palette statique dans `globals.css`.
+5. Le CSS initial du document contient les deux schémas générés côté serveur ; `@media (prefers-color-scheme: dark)` sélectionne le schéma actif et suit les changements de préférence sans JavaScript. Il n'existe pas de seconde palette statique dans `globals.css`.
 6. Les couleurs de la barre du navigateur utilisent les rôles de fond calculés pour les deux modes.
 7. **Aucun CSS ne peut définir de couleur hexadécimale, redéfinir un rôle système ou fournir un fallback dans `var()`.** Un défaut de token doit être visible et corrigé à sa source.
 8. Motion, état et forme utilisent les noms système M3 ; aucun alias Namesia n'usurpe ces familles. Les ombres non nécessaires sont retirées au lieu de simuler des niveaux d'élévation.
