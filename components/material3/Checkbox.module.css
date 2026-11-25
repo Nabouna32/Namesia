@@ -7,6 +7,7 @@
   flex: 0 0 40px;
   place-items: center;
   color: var(--md-sys-color-on-surface);
+  transition: color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
 }
 
 .root:has(.input:checked) {
@@ -144,6 +145,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .root,
   .root::before,
   .root::after,
   .indicator,
