@@ -181,7 +181,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      contents: read
       pull-requests: write
     steps:
       - name: Publier l’URL de Preview dans la PR
