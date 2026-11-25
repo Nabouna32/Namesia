@@ -6,7 +6,7 @@ import type { NameGender, NameIndexEntry } from "@/lib/names";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { GENDER_ICONS } from "@/lib/gender-icons";
 import { LIMITE_FAVORIS, creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
-import { normaliserRecherche, suggererNamesProches } from "@/lib/recherche-prenoms";
+import { normalizeSearchTerm, suggestSimilarNames } from "@/lib/name-search";
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
 import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
 import styles from "./FavoritesList.module.css";
@@ -54,7 +54,7 @@ export function FavoritesList({
   const slugsIndisponibles = slugs.filter((slug) => !parSlug.has(slug));
   if (!pret) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
 
-  const termeNormalise = normaliserRecherche(recherche);
+  const termeNormalise = normalizeSearchTerm(recherche);
   const genres: NameGender[] = [...new Set(favoris.map((prenom) => prenom.gender))]
     .sort((a, b) => a.localeCompare(b, "fr"));
   const genreActifValide = genres.find((genre) => genre === genreActif) ?? "";
@@ -104,7 +104,7 @@ export function FavoritesList({
   }
 
   const favorisFiltres = favoris.filter((prenom) => (
-    (!termeNormalise || normaliserRecherche(prenom.name).includes(termeNormalise))
+    (!termeNormalise || normalizeSearchTerm(prenom.name).includes(termeNormalise))
     && (!genreActifValide || prenom.gender === genreActifValide)
   ));
   if (triActif !== "enregistrement") {
@@ -114,7 +114,7 @@ export function FavoritesList({
     });
   }
   const favorisProches = favorisFiltres.length === 0 && termeNormalise
-    ? suggererNamesProches(
+    ? suggestSimilarNames(
       favoris.filter((prenom) => !genreActifValide || prenom.gender === genreActifValide),
       recherche
     )
