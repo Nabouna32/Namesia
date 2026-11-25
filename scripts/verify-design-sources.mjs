@@ -49,7 +49,7 @@ const sources = [
   {
     name: "AndroidX Snackbar implementation",
     url: "https://raw.githubusercontent.com/androidx/androidx/919e948eaa351c590e7e6fc89d4014fad7a6e78c/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/Snackbar.kt",
-    markers: ["Snackbar", "SnackbarTokens"],
+    markers: ["Snackbar", "SnackbarTokens", "actionOnNewLine", "dismissAction", "OneRowSnackbar", "NewLineButtonSnackbar", "SnackbarTokens.SingleLineContainerHeight", "SnackbarTokens.TwoLinesContainerHeight", "SnackbarTokens.ActionLabelTextColor"],
   },
   {
     name: "AndroidX Checkbox tokens",
@@ -147,7 +147,7 @@ const additionalAndroidxSources = [
   ["NavigationRailColorTokens.kt", "NavigationRailColorTokens"],
   ["NavigationRailBaselineItemTokens.kt", "NavigationRailBaselineItemTokens"],
   ["NavigationRailVerticalItemTokens.kt", "NavigationRailVerticalItemTokens"],
-  ["SnackbarTokens.kt", ["SnackbarTokens", "ContainerElevation", "CornerExtraSmall", "InverseSurface", "InverseOnSurface", "SingleLineContainerHeight", "TwoLinesContainerHeight"]],
+  ["SnackbarTokens.kt", ["SnackbarTokens", "ActionLabelTextColor", "InversePrimary", "ContainerColor", "InverseSurface", "ContainerElevation", "Level3", "ContainerShape", "CornerExtraSmall", "SupportingTextColor", "InverseOnSurface", "IconSize", "24.0.dp", "SingleLineContainerHeight", "48.0.dp", "TwoLinesContainerHeight", "68.0.dp"]],
   ["ElevationTokens.kt", ["ElevationTokens", "Level3", "get() = 6.0.dp"]],
 ].map(([file, marker]) => ({
   name: `AndroidX ${file}`,
