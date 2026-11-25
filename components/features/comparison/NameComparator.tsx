@@ -49,7 +49,7 @@ export function NameComparator({ names, initialSelection }: Props) {
       setErreur(false);
 
       try {
-        const response = await fetch(`/api/names?${params.toString()}`, {
+        const response = await fetch(`/api/prenoms?${params.toString()}`, {
           signal: controleur.signal
         });
         if (!response.ok) throw new Error("Chargement impossible.");
@@ -80,12 +80,12 @@ export function NameComparator({ names, initialSelection }: Props) {
     () => results.length > 0 ? [] : suggestSimilarNames(names, searchTerm),
     [names, searchTerm, results.length]
   );
-  const selectedNames = selection.flatMap((slug) => {
+  const selectedEntries = selection.flatMap((slug) => {
     const name = names.find((candidat) => candidat.slug === slug);
     return name ? [name] : [];
   });
-  const selectedNames = selection.flatMap((slug) => profiles[slug] ? [profiles[slug]] : []);
-  const selectionComplete = selectedNames.length === selection.length;
+  const selectedProfiles = selection.flatMap((slug) => profiles[slug] ? [profiles[slug]] : []);
+  const selectionComplete = selectedProfiles.length === selection.length;
 
   function syncUrl(slugs: string[]) {
     const url = new URL(window.location.href);
@@ -164,13 +164,13 @@ export function NameComparator({ names, initialSelection }: Props) {
               )}
             </>
           ) : (
-            <p className="compare-status">{names.length === 0 ? "Aucun prénom n’est encore publié." : "Aucun prénom ne correspond à cette searchTerm. Essayez une autre orthographe."}</p>
+            <p className="compare-status">{names.length === 0 ? "Aucun prénom n’est encore publié." : "Aucun prénom ne correspond à cette recherche. Essayez une autre orthographe."}</p>
           )}
         </fieldset>
 
         <div className="compare-selection-footer">
           <ComparisonSelection
-            names={selectedNames.map((name) => ({ slug: name.slug, name: name.name }))}
+            names={selectedEntries.map((name) => ({ slug: name.slug, name: name.name }))}
             label="Prénoms sélectionnés"
             onRemove={(slug) => changeSelection(slug, false)}
           />
@@ -188,16 +188,16 @@ export function NameComparator({ names, initialSelection }: Props) {
             : "Choisissez encore un prénom pour lancer la comparaison."}
         </p>
       ) : chargement ? (
-        <p className="compare-status" role="status">Chargement des profiles sélectionnées…</p>
+        <p className="compare-status" role="status">Chargement des fiches sélectionnées…</p>
       ) : erreur ? (
         <div className="compare-status" role="alert">
-          <p>Les profiles sélectionnées n’ont pas pu être chargées.</p>
+          <p>Les fiches sélectionnées n’ont pas pu être chargées.</p>
           <Button onClick={() => setTentative((value) => value + 1)}>
             Réessayer
           </Button>
         </div>
       ) : !selectionComplete ? (
-        <p className="compare-status" role="status">Une des profiles sélectionnées n’est plus publiée. Modifiez votre sélection pour continuer.</p>
+        <p className="compare-status" role="status">Une des fiches sélectionnées n’est plus publiée. Modifiez votre sélection pour continuer.</p>
       ) : (
         <section aria-label="Comparaison des prénoms" className="compare-table-section">
           <div
@@ -208,12 +208,12 @@ export function NameComparator({ names, initialSelection }: Props) {
           >
             <table className="compare-table">
               <caption className="sr-only">
-                Comparaison de {selectedNames.map((name) => name.name).join(", ")}
+                Comparaison de {selectedProfiles.map((name) => name.name).join(", ")}
               </caption>
               <thead>
                 <tr>
                   <th scope="col" className="compare-criterion-heading">Critères</th>
-                  {selectedNames.map((name) => (
+                  {selectedProfiles.map((name) => (
                     <th scope="col" key={name.slug}>
                       <strong className="compare-name">{name.name}</strong>
                       <span className="compare-header-meta">
@@ -234,11 +234,11 @@ export function NameComparator({ names, initialSelection }: Props) {
               <tbody>
                 <tr>
                   <th scope="row">Introduction</th>
-                  {selectedNames.map((name) => <td key={name.slug}><p>{name.introduction}</p></td>)}
+                  {selectedProfiles.map((name) => <td key={name.slug}><p>{name.introduction}</p></td>)}
                 </tr>
                 <tr>
                   <th scope="row">Origine & signification</th>
-                  {selectedNames.map((name) => (
+                  {selectedProfiles.map((name) => (
                     <td key={name.slug}>
                       <p className={name.origin ? "" : "compare-missing"}>
                         {name.origin ?? "Non renseignée dans cette fiche."}
@@ -248,7 +248,7 @@ export function NameComparator({ names, initialSelection }: Props) {
                 </tr>
                 <tr>
                   <th scope="row">Histoire</th>
-                  {selectedNames.map((name) => (
+                  {selectedProfiles.map((name) => (
                     <td key={name.slug}>
                       <p className={name.history ? "" : "compare-missing"}>
                         {name.history ?? "Non renseignée dans cette fiche."}
@@ -258,7 +258,7 @@ export function NameComparator({ names, initialSelection }: Props) {
                 </tr>
                 <tr>
                   <th scope="row">Variantes & usages</th>
-                  {selectedNames.map((name) => (
+                  {selectedProfiles.map((name) => (
                     <td key={name.slug}>
                       <p className={name.usage ? "" : "compare-missing"}>
                         {name.usage ?? "Non renseignés dans cette fiche."}
@@ -268,7 +268,7 @@ export function NameComparator({ names, initialSelection }: Props) {
                 </tr>
                 <tr>
                   <th scope="row">Associations symboliques</th>
-                  {selectedNames.map((name) => (
+                  {selectedProfiles.map((name) => (
                     <td key={name.slug}>
                       {name.symbolic_associations.length > 0 ? (
                         <div className="compare-associations">
@@ -295,8 +295,8 @@ export function NameComparator({ names, initialSelection }: Props) {
         <div className="compare-share">
           <p>Cette sélection est enregistrée dans l’adresse de la page : vous pouvez partager la comparaison.</p>
           <ShareLink
-            title={`Comparaison de ${selectedNames.length} prénoms · Namesia`}
-            text={`Comparez ${selectedNames.map((name) => name.name).join(", ")} sur Namesia.`}
+            title={`Comparaison de ${selectedProfiles.length} prénoms · Namesia`}
+            text={`Comparez ${selectedProfiles.map((name) => name.name).join(", ")} sur Namesia.`}
             label="Partager cette comparaison"
             queryParameters={["prenoms"]}
           />
