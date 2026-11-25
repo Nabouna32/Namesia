@@ -44,10 +44,10 @@ jobs:
           echo "NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL" >> "$GITHUB_ENV"
           echo "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY" >> "$GITHUB_ENV"
       - name: Construire l’application pour Cloudflare
-        run: npx --no-install opennextjs-cloudflare build
+        run: ./node_modules/.bin/opennextjs-cloudflare build
       - name: Déployer la production Cloudflare
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') && vars.CLOUDFLARE_DEPLOY_ENABLED == 'true'
-        run: npx --no-install opennextjs-cloudflare deploy
+        run: ./node_modules/.bin/opennextjs-cloudflare deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
