@@ -19,7 +19,7 @@ test("le sitemap expose la date réelle de publication de chaque fiche", () => {
 });
 
 test("la lecture du sitemap est complète, stable et paginée", () => {
-  assert.match(namesSource, /lireToutesLesPages<JoinedNameSitemap>/);
+  assert.match(namesSource, /readAllPages<JoinedNameSitemap>/);
   assert.match(namesSource, /\.order\("slug", \{ ascending: true \}\)/);
   assert.match(namesSource, /\.order\("id", \{ ascending: true \}\)/);
   assert.match(namesSource, /compter \? \{ count: "exact" \} : undefined/);
