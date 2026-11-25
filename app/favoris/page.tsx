@@ -21,7 +21,7 @@ type Props = {
   }>;
 };
 
-function premierParametre(value: ParametreUrl): string {
+function getFirstParam(value: ParametreUrl): string {
   return Array.isArray(value) ? value[0] ?? "" : value ?? "";
 }
 
@@ -30,7 +30,7 @@ function lireTri(value: string): TriFavoris {
 }
 
 export default async function FavoritesPage({ searchParams }: Props) {
-  const [parametres, prenoms] = await Promise.all([searchParams, getNamesIndex()]);
+  const [searchParams, names] = await Promise.all([searchParams, getNamesIndex()]);
 
   return (
     <main id="contenu" tabIndex={-1} className="page-main">
@@ -39,11 +39,11 @@ export default async function FavoritesPage({ searchParams }: Props) {
         <h1>Vos prénoms<br /><em>préférés.</em></h1>
         <p className="page-intro">Retrouvez ici les prénoms enregistrés dans ce navigateur. Votre sélection reste privée, sans compte ni synchronisation entre appareils.</p>
         <FavoritesList
-          prenoms={prenoms}
-          initialRecherche={premierParametre(parametres.q)}
-          initialGenre={premierParametre(parametres.genre)}
-          initialTri={lireTri(premierParametre(parametres.tri))}
-          initialNombreVisible={lireNombreVisible(parametres.limite)}
+          names={names}
+          initialSearch={getFirstParam(searchParams.q)}
+          initialGender={getFirstParam(searchParams.genre)}
+          initialSort={lireTri(getFirstParam(searchParams.tri))}
+          initialVisibleCount={lireNombreVisible(searchParams.limite)}
         />
       </div>
     </main>
