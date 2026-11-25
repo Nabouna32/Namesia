@@ -47,6 +47,7 @@ export function TextField({
   const containerClassName = [
     styles.container,
     styles[variant],
+    multiline ? styles.multiline : "",
     error ? styles.invalid : "",
     disabled ? styles.disabled : ""
   ].filter(Boolean).join(" ");
