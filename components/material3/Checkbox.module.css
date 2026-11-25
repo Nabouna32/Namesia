@@ -93,10 +93,6 @@
   border-color: var(--md-sys-color-primary);
 }
 
-.root:has(.input:focus-visible)::before {
-  opacity: var(--md-sys-state-focus-state-layer-opacity);
-}
-
 .root:has(.input:focus-visible)::after {
   opacity: 1;
 }
