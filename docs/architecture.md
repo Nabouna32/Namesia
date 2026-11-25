@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 3.86
+- **Version :** 3.87
 - **Mis à jour :** 2026-11-25
 
 ## Structure de la page
@@ -113,6 +113,7 @@ Aucune table de sources, références ou preuves n'est nécessaire. Les associat
 - Le schéma private n'est pas exposé à la Data API ; les droits de lecture de la liste sont limités au rôle authenticated et à sa propre ligne.
 - Les routes API vérifient le jeton et l'autorisation côté serveur.
 - RLS est activé sur toutes les tables exposées.
+- Les lectures publiques et authentifiées sont séparées par rôle : `anon` ne lit que les fiches publiées ; `authenticated` lit les fiches publiées et les brouillons uniquement si l'utilisateur figure dans `private.admin_users`. Une seule policy permissive `SELECT` est définie par table et rôle afin d'éviter l'évaluation répétée de policies concurrentes.
 - Les privilèges SQL sont accordés au strict nécessaire, indépendamment des politiques RLS.
 - Les fonctions SQL restent SECURITY INVOKER et vérifient elles-mêmes le rôle administrateur.
 - Aucun secret ou clé service_role / secret key dans le code client.
@@ -139,7 +140,7 @@ Le stockage métier est relationnel et repose sur trois tables :
 
 Le JSON est uniquement un contrat d'échange à l'import. L'API le valide, puis une fonction SQL crée atomiquement une version brouillon et ses associations. La publication reste une opération distincte et explicite.
 
-Les anciennes tables documentaires, l'ancienne colonne JSONB et les colonnes redondantes ont été supprimées. Le schéma exposé conserve RLS et des privilèges SQL minimaux : lecture publique des seules fiches publiées, opérations d'écriture réservées aux administrateurs autorisés.
+Les anciennes tables documentaires, l'ancienne colonne JSONB et les colonnes redondantes ont été supprimées. Le schéma exposé conserve RLS et des privilèges SQL minimaux : lecture publique des seules fiches publiées, opérations d'écriture réservées aux administrateurs autorisés. Les fichiers de `supabase/migrations/` reprennent les versions réellement enregistrées dans `supabase_migrations.schema_migrations` ; les migrations temporaires du modèle de références éditoriales, jamais appliquées à cette instance, ne font pas partie du schéma cible.
 ## 9. Stack
 
 - Next.js App Router, React et TypeScript.
