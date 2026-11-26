@@ -52,20 +52,21 @@ export function normaliserContenuGroq(value) {
   if (unknown.length > 0) throw new Error("La réponse Groq contient des propriétés inconnues.");
 
   if (typeof value.introduction !== "string") throw new Error("L’introduction générée est invalide.");
+  const optionalContent = {};
   for (const field of ["origin", "history", "usage"]) {
-    if (value[field] !== null && typeof value[field] !== "string") {
-      throw new Error("La rubrique " + field + " doit être une chaîne ou null.");
+    if (typeof value[field] !== "string") {
+      throw new Error("La rubrique " + field + " doit être une chaîne.");
     }
+    const normalized = value[field].trim();
+    if (normalized) optionalContent[field] = normalized;
   }
   if (!Array.isArray(value.symbolic_associations)) {
     throw new Error("Les associations symboliques doivent être une liste.");
   }
 
   return {
-    introduction: value.introduction,
-    ...(value.origin === null ? {} : { origin: value.origin }),
-    ...(value.history === null ? {} : { history: value.history }),
-    ...(value.usage === null ? {} : { usage: value.usage }),
+    introduction: value.introduction.trim(),
+    ...optionalContent,
     symbolic_associations: value.symbolic_associations
   };
 }
