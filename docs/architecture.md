@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 4.01
+- **Version :** 4.02
 - **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
 
 ## Structure de la page
@@ -12,7 +12,7 @@ Le layout racine utilise une colonne flex de hauteur minimale égale à la fenê
 
 Namesia publie un catalogue de fiches de prénoms. Le contenu est généré en dehors de l'application, soit par une API de modèle, soit dans une conversation avec un assistant. Il est ensuite fourni à Namesia sous la forme d'un JSON conforme au contrat du projet.
 
-Namesia n'intègre pas actuellement de moteur de génération, de collecte documentaire ni de vérification factuelle. L'application importe, conserve, prévisualise et publie le contenu. La génération par IA ne constitue pas une validation de l'exactitude.
+Namesia n'intègre pas actuellement de moteur de génération, de collecte documentaire ni de vérification factuelle. L'application importe, conserve, prévisualise et publie le contenu. La génération par IA ne constitue pas une validation de l'exactitude. Les orientations de qualité éditoriale, de provenance, de cycle de vie et de pipeline futur sont décrites dans [Gouvernance éditoriale et génération](qualite-editoriale.md).
 
 ## 2. Architecture retenue
 
