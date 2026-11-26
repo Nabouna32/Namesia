@@ -1,8 +1,8 @@
 # Standards techniques et règles de maintenabilité — Namesia
 
 - **Statut :** règle canonique
-- **Version :** 1.13
-- **Mis à jour :** 2026-11-25
+- **Version :** 1.14
+- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
 - **Portée :** application web, styles, composants, données et outillage
 
 Ce document définit le niveau de qualité attendu pour les évolutions techniques de Namesia. Il complète [AGENTS.md](../AGENTS.md), qui définit la méthode de travail et le challenge obligatoire.

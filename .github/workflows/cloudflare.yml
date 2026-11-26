@@ -52,7 +52,7 @@ jobs:
       - name: Construire l’application pour Cloudflare
         run: ./node_modules/.bin/opennextjs-cloudflare build
       - name: Créer ou mettre à jour la Preview Cloudflare
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && vars.CLOUDFLARE_DEPLOY_ENABLED == 'true'
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'dependabot[bot]' && vars.CLOUDFLARE_DEPLOY_ENABLED == 'true'
         id: preview
         shell: bash
         env:
@@ -188,7 +188,7 @@ jobs:
         run: gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --body "Preview Cloudflare — $PREVIEW_URL"
   cleanup:
     name: Nettoyer la Preview Cloudflare
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'dependabot[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
