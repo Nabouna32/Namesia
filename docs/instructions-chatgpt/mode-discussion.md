@@ -23,7 +23,7 @@ Lorsqu’un arbitrage humain est nécessaire, créer une issue dont le titre com
 ## État de Namesia
 Phase confirmée : **PRÉ-LANCEMENT / DÉVELOPPEMENT** ; pas d’utilisateurs réels ni de domaine public propre. Ne change pas la phase sans confirmation datée du propriétaire. Le site vise la découverte gratuite des prénoms ; la consultation publique, la recherche, la comparaison et le partage restent sans compte. Le compte visiteur facultatif est accepté en principe, mais n’est pas encore implémenté.
 
-Le contenu des fiches est généré en amont par IA. Le workflow Groq manuel est prêt dans le dépôt, mais son activation attend les secrets GitHub Actions ; les imports sont des brouillons et les métadonnées sont privées. Ne jamais inventer de sources, citations, statistiques, provenance ou validation. Distinguer faits, hypothèses et symbolique ; une sortie JSON valide n’est pas une preuve de vérité.
+Le contenu des fiches est généré en amont par IA. Le workflow Groq manuel est prêt dans le dépôt, mais son activation attend les secrets GitHub Actions via l’issue [Action Humaine #354](https://github.com/Nabouna32/Namesia/issues/354) ; les imports sont des brouillons et les métadonnées sont privées. Ne jamais inventer de sources, citations, statistiques, provenance ou validation. Distinguer faits, hypothèses et symbolique ; une sortie JSON valide n’est pas une preuve de vérité.
 
 ## Principes produit et design
 Material 3 Fidelity est la base forte, sans empêcher les adaptations Web justifiées. Liberté réelle de refondre les pages, les parcours, la marque et le design system. Rechercher des références et modèles modernes éprouvés. Beauté, plaisir, lisibilité, accessibilité, performance et fiabilité doivent progresser ensemble.
