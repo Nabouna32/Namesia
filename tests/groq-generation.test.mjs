@@ -51,7 +51,7 @@ test("la version du prompt est explicite", async () => {
   const prompt = await readFile(new URL("../prompts/fiche-prenom-v1.md", import.meta.url), "utf8");
   assert.equal(lireVersionPrompt(prompt), "1.0.0");
   assert.match(prompt, /N'invente jamais/);
-  assert.match(prompt, /retourne null/);
+  assert.match(prompt, /retourne une chaîne vide/);
 });
 
 test("le schéma Groq est strict et toutes ses propriétés sont requises", async () => {
@@ -63,7 +63,7 @@ test("le schéma Groq est strict et toutes ses propriétés sont requises", asyn
   assert.deepEqual(association.required, Object.keys(association.properties));
 });
 
-test("les champs facultatifs null sont retirés avant validation Namesia", () => {
+test("les chaînes vides des champs facultatifs sont retirées avant validation Namesia", () => {
   const normalized = normaliserContenuGroq(contentValide);
   assert.equal(Object.hasOwn(normalized, "origin"), false);
   assert.deepEqual(normalized.symbolic_associations, []);
