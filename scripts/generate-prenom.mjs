@@ -16,7 +16,8 @@ const SCHEMA_URL = new URL("../schemas/fiche-prenom.groq.schema.json", import.me
 
 export function normaliserNom(displayName) {
   if (typeof displayName !== "string") throw new Error("Le prénom doit être une chaîne.");
-  const normalizedName = displayName.trim().replace(/\s+/gu, " ");
+  if (/[\r\n\t]/u.test(displayName)) throw new Error("Le prénom ne peut pas contenir de retour à la ligne ou de tabulation.");
+  const normalizedName = displayName.trim().replace(/ {2,}/g, " ");
   if (!normalizedName || normalizedName.length > 100 || !/^[\p{L}\p{M} .’'-]+$/u.test(normalizedName)) {
     throw new Error("Le prénom contient des caractères non autorisés ou dépasse 100 caractères.");
   }
