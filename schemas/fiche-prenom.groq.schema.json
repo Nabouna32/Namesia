@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "introduction": { "type": "string" },
+    "origin": { "type": ["string", "null"] },
+    "history": { "type": ["string", "null"] },
+    "usage": { "type": ["string", "null"] },
+    "symbolic_associations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "category": { "type": "string" },
+          "value": { "type": "string" },
+          "context_note": { "type": "string" }
+        },
+        "required": ["category", "value", "context_note"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["introduction", "origin", "history", "usage", "symbolic_associations"],
+  "additionalProperties": false
+}
