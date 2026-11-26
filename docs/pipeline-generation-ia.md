@@ -16,7 +16,7 @@ Références fournisseur : [Structured Outputs](https://console.groq.com/docs/st
 
 Le modèle répond au schéma strict [fiche-prenom.groq.schema.json](../schemas/fiche-prenom.groq.schema.json). Les propriétés sont toutes requises ; les rubriques facultatives utilisent une chaîne vide lorsqu’elles ne peuvent pas être formulées avec une confiance raisonnable.
 
-Le script normalise ensuite les valeurs null en propriétés absentes et construit le contrat d’import Namesia 2.0.0 défini par [fiche-prenom.schema.json](../schemas/fiche-prenom.schema.json). Le parseur partagé parseFichePrenom vérifie les types, les propriétés autorisées, les longueurs, le slug, le genre et les associations avant toute écriture.
+Le script normalise ensuite les chaînes vides en propriétés absentes et construit le contrat d’import Namesia 2.0.0 défini par [fiche-prenom.schema.json](../schemas/fiche-prenom.schema.json). Le parseur partagé parseFichePrenom vérifie les types, les propriétés autorisées, les longueurs, le slug, le genre et les associations avant toute écriture.
 
 Le modèle ne produit ni identité technique, ni slug, ni version de schéma, ni statut, ni identifiant de base. Le script construit l’identité de façon déterministe depuis le prénom fourni. Aucun champ source ou citation n’est demandé au modèle.
 
@@ -24,7 +24,7 @@ Le modèle ne produit ni identité technique, ni slug, ni version de schéma, ni
 
 1. **Déclenchement :** un propriétaire ayant accès au dépôt lance le workflow sur main et saisit une graphie et un genre.
 2. **Génération :** le script charge le prompt versionné et le schéma strict, appelle Groq et exige une réponse JSON complète.
-3. **Normalisation :** les champs facultatifs null sont retirés ; les propriétés inconnues, réponses incomplètes, refus et JSON invalide sont rejetés.
+3. **Normalisation :** les champs facultatifs vides sont retirées ; les propriétés inconnues, réponses incomplètes, refus et JSON invalide sont rejetés.
 4. **Validation :** le parseur Namesia valide le contrat d’import existant. Une sortie invalide ne peut jamais atteindre Supabase.
 5. **Artefact :** un JSON contrôlé est conservé comme artefact GitHub Actions pendant sept jours.
 6. **Import facultatif :** par défaut, le workflow est en dry-run. Si l’option d’import est explicitement activée, la fiche est importée en brouillon dans Supabase.
