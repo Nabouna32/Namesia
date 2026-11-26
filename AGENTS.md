@@ -96,6 +96,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - **Audit de fraîcheur :** une date ancienne est un signal pour réexaminer la pertinence, les liens, les hypothèses et les décisions ; elle ne rend pas automatiquement le document obsolète. Une décision reste applicable tant qu'elle n'est pas explicitement remplacée, retirée ou révisée dans un ADR. Les documents de référence doivent être audités lorsque leur contexte change et lors des passages d'audit documentaire, en priorisant les plus anciens et les plus structurants.
 
 - Le dépôt Git est la mémoire durable du projet.
+- Utiliser les outils, intégrations et connecteurs disponibles lorsqu'ils apportent une valeur réelle ; rechercher et recommander des intégrations complémentaires si elles sont utiles. Toute installation ou connexion exige l'action explicite du propriétaire.
 - `docs/etat-du-projet.md` décrit l'état courant ; `docs/gouvernance.md`, `docs/operations.md`, `docs/qualite-editoriale.md` et `docs/mesure-et-croissance.md` portent les règles thématiques. Les deux fichiers `docs/instructions-chatgpt/` sont des résumés à copier manuellement dans les projets correspondants ; chacun reste sous 8 000 caractères, espaces compris.
 - Toute PR qui change un comportement, un contrat, une architecture ou une décision met à jour les documents concernés dans la même PR.
 - Éviter les doublons et désigner un emplacement canonique par information structurante.
