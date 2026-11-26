@@ -51,11 +51,11 @@ L’import est transactionnel : prénom, version brouillon, associations et mét
 ## 5. Secrets et sécurité
 
 - GROQ_API_KEY est un secret GitHub Actions.
-- SUPABASE_SERVICE_ROLE_KEY est nécessaire uniquement lorsque l’import est activé ; il reste limité à l’étape du workflow qui effectue l’appel RPC.
+- SUPABASE_SECRET_KEY est nécessaire uniquement lorsque l’import est activé ; il reste limité à l’étape du workflow qui effectue l’appel RPC.
 - L’URL Supabase est publique et lue depuis .env.example.
 - Aucun secret privilégié n’est exposé dans le navigateur, une route publique, le dépôt, le prompt ou les artefacts.
 - Le workflow ne se déclenche pas sur les pull requests et son job est limité à main.
-- La fonction SQL accepte les métadonnées uniquement lorsque auth.role() vaut service_role. Un administrateur authentifié ne peut pas fabriquer de provenance.
+- La fonction SQL accepte les métadonnées uniquement lorsque current_user vaut service_role. Un administrateur authentifié ne peut pas fabriquer de provenance.
 - Le rôle service_role est privilégié : les secrets correspondants doivent être protégés et renouvelés en cas d’exposition.
 
 L’activation opérationnelle attend l’ajout des secrets par le propriétaire dans les paramètres GitHub Actions. Ne jamais demander qu’un secret soit envoyé dans une issue, une PR ou une conversation.
