@@ -1,8 +1,8 @@
 # Principes éditoriaux — Namesia
 
 - **Statut :** document canonique
-- **Version :** 2.0
-- **Mis à jour :** 2026-11-22
+- **Version :** 2.1
+- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
 
 ## 1. Nature des contenus
 
@@ -45,7 +45,13 @@ Les associations symboliques sont des contenus éditoriaux ou culturels. Elles n
 - Ne pas présenter la numérologie ou une association culturelle comme une vérité scientifique ou prédictive.
 - Conserver un avertissement explicite à proximité de ces contenus.
 
-## 5. Publication
+## 5. Provenance et retours
+
+Une fiche générée doit pouvoir être reliée à son fournisseur, son modèle, sa version de prompt, son empreinte de prompt, son schéma de sortie et sa requête de génération. Ces métadonnées techniques sont stockées dans une table relationnelle privée, séparée du contenu éditorial. Leur présence ne constitue pas une validation factuelle.
+
+Les visiteurs pourront signaler une erreur ou proposer une correction. Ces retours restent privés par défaut, sont contextualisés et vérifiés avant toute modification ; aucune contribution n’est publiée automatiquement. Le traitement et le cycle de vie des fiches sont décrits dans docs/qualite-editoriale.md.
+
+## 6. Publication
 
 La publication est une décision d'administration distincte de la génération :
 - toute importation crée un brouillon ;
