@@ -151,7 +151,7 @@ test("le workflow est manuel, limité à main et ne s’exécute pas sur les PR"
 
 test("l’import SQL réserve les métadonnées au service_role et protège l’idempotence", async () => {
   const migration = await readFile(new URL("../supabase/migrations/20261126210000_ajouter_provenance_generation_groq.sql", import.meta.url), "utf8");
-  assert.match(migration, /auth\.role\(\)/);
+  assert.match(migration, /current_user = 'service_role'/);
   assert.match(migration, /service_role/);
   assert.match(migration, /request_id text not null unique/);
   assert.match(migration, /private\.name_profile_generation_metadata/);
