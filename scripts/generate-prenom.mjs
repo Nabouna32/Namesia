@@ -27,6 +27,11 @@ export function normaliserNom(displayName) {
 export function slugifierPrenom(displayName) {
   const normalizedName = normaliserNom(displayName);
   const slug = normalizedName
+    .replace(/[œŒ]/g, "oe")
+    .replace(/[æÆ]/g, "ae")
+    .replace(/ß/g, "ss")
+    .replace(/[øØ]/g, "o")
+    .replace(/[łŁ]/g, "l")
     .normalize("NFKD")
     .replace(/\p{M}/gu, "")
     .toLowerCase()
