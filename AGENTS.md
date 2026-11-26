@@ -1,7 +1,7 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.0
-- **Mis à jour le :** 2026-11-25 09:22:27 (Europe/Paris)
+- **Version :** 1.1
+- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
 
 Cette charte s'applique à tout le dépôt, aux contributions humaines et aux agents IA.
 
@@ -66,7 +66,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 ### Déploiement et CI
 
 - Cloudflare Workers est l'unique hébergement de production ; GitHub Actions est l'unique moteur de build, de vérification et de déploiement.
-- Les PR internes peuvent créer une Workers Preview isolée ; les secrets Cloudflare ne sont jamais exposés aux forks.
+- Les PR internes humaines peuvent créer une Workers Preview isolée ; les secrets Cloudflare ne sont jamais exposés aux forks ni aux PR créées par Dependabot. Ces dernières conservent les vérifications de build et de qualité, mais ne tentent pas de créer ou supprimer une Preview.
 - Seule la branche `main`, après fusion d'une PR, déploie la production. Le lancement manuel du workflow est réservé à `main`.
 - Les vérifications de PR et les contrôles visuels s'exécutent dans GitHub Actions ; aucun hébergeur tiers de build ou de déploiement n'est requis.
 
