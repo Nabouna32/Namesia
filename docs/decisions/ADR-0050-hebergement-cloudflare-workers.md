@@ -1,7 +1,9 @@
 # ADR-0050 — Hébergement Next.js sur Cloudflare Workers
 
 - **Statut :** production Cloudflare active ; migration d'hébergement terminée ; validation manuelle OTP encore en attente
-- **Date :** 2026-11-25
+- **Version :** 1.1
+- **Décision prise le :** 2026-11-25 (heure non consignée)
+- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
 - **Portée :** hébergement, builds, déploiements et previews de Namesia
 
 ## Contexte
@@ -24,8 +26,8 @@ Utiliser **Cloudflare Workers Free**, avec **GitHub Actions comme moteur de buil
 - Le Worker de production s'appelle `namesia` et utilise le sous-domaine `nabouna.workers.dev` du compte Cloudflare.
 - Le build est produit dans GitHub Actions avec des versions d'outils explicitement épinglées dans les workflows.
 - La branche `main` déploie le Worker de production via `opennextjs-cloudflare deploy`, uniquement après fusion d'une PR. Le workflow peut aussi être lancé manuellement sur `main`.
-- Les Pull Requests internes créent ou mettent à jour une **Workers Preview** nommée `pr-<numéro>` via `wrangler preview`. Le workflow `.github/workflows/cloudflare.yml` commente l'URL dans la PR, vérifie le HTML, le catalogue public et l'en-tête `X-Robots-Tag: noindex`, puis supprime la Preview à la fermeture de la PR.
-- Les secrets Cloudflare ne sont jamais exposés aux PR provenant de forks : seuls les événements dont le dépôt source est le dépôt courant peuvent créer ou supprimer une Preview.
+- Les Pull Requests internes humaines créent ou mettent à jour une **Workers Preview** nommée `pr-<numéro>` via `wrangler preview`. Le workflow `.github/workflows/cloudflare.yml` commente l'URL dans la PR, vérifie le HTML, le catalogue public et l'en-tête `X-Robots-Tag: noindex`, puis supprime la Preview à la fermeture de la PR.
+- Les secrets Cloudflare ne sont jamais exposés aux PR provenant de forks ni aux PR créées par Dependabot. Les PR Dependabot exécutent toujours le build et les vérifications qualité, mais ne créent ni ne suppriment de Preview, car leurs exécutions ne disposent pas des secrets Cloudflare. Cette exclusion évite un échec de déploiement attendu sans affaiblir les contrôles de code.
 - Les previews sont publiques par défaut sur `workers.dev`. Elles ne contiennent que le catalogue public ; leur URL reçoit le signal `noindex` de Cloudflare.
 - Le bloc Wrangler `previews` définit explicitement `NAMESIA_DEPLOYMENT_ENVIRONMENT=preview`, distinct de `production`. La page d'administration n'affiche pas son client d'authentification et toutes les routes d'administration refusent les requêtes en Preview. Aucune clé privilégiée Supabase n'est fournie.
 - Les fichiers lus à l'exécution via `node:fs` doivent être inclus explicitement dans le système de fichiers virtuel du Worker. Wrangler utilise `find_additional_modules`, une règle `Text` et `preserve_file_names` pour embarquer la police Open Graph à son chemin attendu ; les fichiers non importés ne sont pas présents automatiquement dans `/bundle`.
@@ -53,7 +55,7 @@ Aucune clé Supabase privilégiée n'est ajoutée au Worker ou à GitHub Actions
 ## Conséquences
 
 - Les builds de contrôle, de Preview et de production Cloudflare sont exécutés par GitHub Actions, sans dépendre de Workers Builds.
-- Les PR internes disposent d'une URL stable de Preview et d'une URL de déploiement propre à chaque mise à jour.
+- Les PR internes éligibles disposent d'une URL stable de Preview et d'une URL de déploiement propre à chaque mise à jour. Les PR Dependabot conservent les vérifications de build et de qualité, sans Preview faute de secrets disponibles.
 - Les previews ouvertes peuvent être consultées publiquement ; leur suppression automatique évite de conserver les environnements de PR fermées.
 - Les quotas Cloudflare d'exécution, de requêtes, de taille de Worker et d'observabilité restent applicables.
 - Le transfert d'hébergement est terminé et le contrôle HTTP post-déploiement couvre les parcours publics. La validation manuelle de l'OTP, de la redirection et de la session reste une limite connue ; elle ne remet pas en cause l'hébergement Cloudflare.
