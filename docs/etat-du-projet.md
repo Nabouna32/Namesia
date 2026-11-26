@@ -1,0 +1,55 @@
+# État du projet — Namesia
+
+- **Statut :** source de vérité de l’état courant
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
+
+## Phase
+
+**PRÉ-LANCEMENT / DÉVELOPPEMENT** — phase confirmée par le propriétaire. Namesia n’a pas encore été ouvert publiquement sous son domaine propre et ne compte pas d’utilisateurs réels. La présence d’un Worker accessible techniquement ne vaut pas lancement public.
+
+## Produit
+
+Namesia est un site gratuit de découverte et de fiches de prénoms, avec recherche, catalogue, fiches, comparaison, favoris et parcours de découverte. Le contenu éditorial est produit en amont, importé sous forme de JSON puis réparti dans les colonnes dédiées de Supabase. Les contenus sont générés par IA et peuvent comporter des erreurs ; ils ne disposent pas actuellement d’un système de vérification documentaire automatisé.
+
+L’accès public aux fiches ne doit pas dépendre d’un compte. Le compte visiteur facultatif est une orientation produit acceptée, mais son authentification et sa persistance ne sont pas encore implémentées.
+
+## Architecture et exploitation
+
+- **Application :** Next.js App Router, TypeScript et React.
+- **Données :** Supabase Auth et PostgreSQL ; schéma et types versionnés dans le dépôt.
+- **Hébergement :** Cloudflare Workers avec OpenNext.
+- **CI/CD :** GitHub Actions ; les vérifications, previews et déploiements suivent les règles de AGENTS.md.
+- **Administration :** espace privé protégé par Supabase Auth, liens OTP e-mail.
+- **Production technique :** URL workers.dev ; aucun domaine public propre n’est encore déclaré pour le lancement.
+
+## Contenu et génération IA
+
+La génération est actuellement externe à l’application. Un pipeline automatisé, avec Groq comme option de départ à challenger, est autorisé mais doit être conçu et documenté avant de devenir une capacité de production. Il devra valider les sorties, tracer les prompts et modèles et importer les champs structurés sans colonne JSON fourre-tout. Seules quelques fiches d’exemple sont nécessaires en pré-lancement.
+
+## Décisions structurantes
+
+- Material 3 Fidelity est la base forte du design system.
+- Le compte utilisateur est facultatif ; les fonctions publiques restent accessibles sans inscription.
+- Le dépôt Git est la mémoire durable ; les décisions et l’état courant sont documentés dans docs/.
+- Le propriétaire autorise l’étude d’une monétisation, mais aucun modèle, publicité, partenariat ou service payant n’est activé sans arbitrage.
+- Les sujets de gouvernance 1 à 75 ont été discutés ; les décisions acceptées sont consolidées dans les documents canoniques et ADR référencés par le registre.
+
+## Chantiers et limites connus
+
+- Issue ouverte : #331 — avis modérés glob et minimatch transitifs via OpenNext. Attendre la publication effective du correctif amont avant de modifier les contraintes de dépendances ; ne pas forcer d’override hors plage.
+- Les retours visiteurs, le pipeline de génération automatisé et le compte visiteur facultatif sont des capacités à concevoir ou implémenter, pas des fonctionnalités déjà disponibles.
+- Les critères précis de transition entre les phases du produit restent soumis à confirmation du propriétaire ; aucune transition automatique n’est permise.
+
+## Sources canoniques
+
+- [Contrat de travail](../AGENTS.md)
+- [Gouvernance et autonomie](gouvernance.md)
+- [Exploitation, sécurité et qualité](operations.md)
+- [Gouvernance éditoriale et génération](qualite-editoriale.md)
+- [Mesure et croissance](mesure-et-croissance.md)
+- [Vision produit](vision-produit.md)
+- [Architecture](architecture.md)
+- [Système de design](design.md)
+- [Standards techniques](standards-techniques.md)
+- [Registre des ADR](decisions/README.md)
