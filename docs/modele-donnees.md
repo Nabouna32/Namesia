@@ -120,18 +120,15 @@ Le JSON entrant ne contient aucun statut, date de publication ou identifiant int
 ## 5. Données volontairement absentes
 
 Les éléments suivants ne sont pas modélisés dans la V1 :
-- sources, références documentaires et statuts de vérification ;
+
+- sources et références documentaires vérifiées ;
 - affirmations atomiques et statuts de preuve ;
 - statistiques structurées ;
-- sources, références documentaires et statuts de vérification ;
-- affirmations atomiques et statuts de preuve ;
-- statistiques structurées ;
-- formes linguistiques et marchés multilingues ;
-- historique exhaustif des tentatives échouées et coûts monétaires par fournisseur.
+- historique exhaustif des tentatives de génération échouées ;
+- coûts monétaires détaillés par fournisseur ;
+- formes linguistiques et marchés multilingues.
 
-La génération Groq est désormais déclenchée par un workflow manuel. Les métadonnées des fiches importées avec succès sont conservées dans private.name_profile_generation_metadata ; les tentatives échouées et coûts monétaires ne sont pas persistés.
-
-Ils ne seront ajoutés que lorsqu'un besoin produit concret et un processus réellement appliqué le justifieront. Ne pas créer de tables anticipant un workflow inexistant.
+La provenance technique des fiches Groq importées avec succès est désormais conservée dans private.name_profile_generation_metadata. Cette table ne contient que les métadonnées nécessaires à la traçabilité ; elle ne stocke ni prompt brut ni document JSON complet. Les autres éléments absents ne seront ajoutés que lorsqu’un processus concret et contrôlé les justifiera.
 
 ## 6. Schéma en production
 
