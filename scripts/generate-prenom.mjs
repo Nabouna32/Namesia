@@ -14,9 +14,18 @@ export const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const PROMPT_URL = new URL("../prompts/fiche-prenom-v1.md", import.meta.url);
 const SCHEMA_URL = new URL("../schemas/fiche-prenom.groq.schema.json", import.meta.url);
 
-export function slugifierPrenom(displayName) {
+export function normaliserNom(displayName) {
   if (typeof displayName !== "string") throw new Error("Le prénom doit être une chaîne.");
-  const slug = displayName
+  const normalizedName = displayName.trim().replace(/\\s+/gu, " ");
+  if (!normalizedName || normalizedName.length > 100 || !/^[\\p{L}\\p{M} .’'-]+$/u.test(normalizedName)) {
+    throw new Error("Le prénom contient des caractères non autorisés ou dépasse 100 caractères.");
+  }
+  return normalizedName;
+}
+
+export function slugifierPrenom(displayName) {
+  const normalizedName = normaliserNom(displayName);
+  const slug = normalizedName
     .normalize("NFKD")
     .replace(/\p{M}/gu, "")
     .toLowerCase()
@@ -61,7 +70,7 @@ export function normaliserContenuGroq(value) {
 }
 
 export function construireFicheImport(displayName, gender, generatedContent) {
-  const normalizedName = typeof displayName === "string" ? displayName.trim() : "";
+  const normalizedName = normaliserNom(displayName);
   return parseFichePrenom({
     schema_version: FICHE_SCHEMA_VERSION,
     identity: {
@@ -217,10 +226,7 @@ export async function genererFiche({
   fetchImpl = fetch,
   outputDirectory = resolve("artifacts")
 }) {
-  const normalizedName = typeof displayName === "string" ? displayName.trim() : "";
-  if (!normalizedName || normalizedName.length > 100) {
-    throw new Error("Le prénom doit contenir entre 1 et 100 caractères.");
-  }
+  const normalizedName = normaliserNom(displayName);
   if (!["feminin", "masculin", "mixte", "inconnu"].includes(gender)) {
     throw new Error("Le genre fourni n’est pas pris en charge.");
   }
