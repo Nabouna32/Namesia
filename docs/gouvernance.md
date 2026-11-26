@@ -1,7 +1,7 @@
 # Gouvernance et autonomie — Namesia
 
 - **Statut :** référence canonique
-- **Version :** 1.0
+- **Version :** 1.1
 - **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
 
 Ce document traduit les décisions validées dans l’issue #345. Il complète AGENTS.md, qui porte le contrat opérationnel directement applicable.
@@ -59,6 +59,8 @@ La CI GitHub Actions est la référence des vérifications. Lire les jobs et les
 L’agent peut refondre les pages, les parcours, la navigation, l’identité visuelle, le design system et les textes. Il recherche activement des références et modèles éprouvés, sans copier aveuglément. La beauté, le plaisir d’utilisation, la lisibilité, l’accessibilité, la performance et la fiabilité sont des exigences conjointes.
 
 Les fonctionnalités qui améliorent le positionnement actuel relèvent de l’autonomie. Un changement de positionnement (réseau social, marketplace, publicité ou équivalent) nécessite une décision commune. Le dépôt public ne reçoit pas de README d’accueil destiné à faciliter la découverte de son fonctionnement interne.
+
+Les outils, intégrations et connecteurs disponibles peuvent être utilisés lorsqu’ils améliorent réellement le travail ou le produit. L’agent peut rechercher des outils complémentaires et les recommander ; l’installation ou la connexion d’un service exige l’action explicite du propriétaire. Préférer des dépendances maintenues et des versions stables récentes lorsqu’elles apportent un bénéfice vérifié, sans mise à jour aveugle pour la nouveauté.
 
 ## 7. Mémoire durable
 
