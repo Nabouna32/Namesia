@@ -37,8 +37,8 @@ La génération est actuellement externe à l’application. Un workflow manuel 
 
 ## Chantiers et limites connus
 
-- Issue ouverte : #331 — avis modérés glob et minimatch transitifs via OpenNext. Attendre la publication effective du correctif amont avant de modifier les contraintes de dépendances ; ne pas forcer d’override hors plage.
-- Le pipeline Groq est implémenté dans le dépôt mais son activation attend les secrets ; les retours visiteurs et le compte visiteur facultatif restent à concevoir ou implémenter.
+- Les avis glob/minimatch suivis dans l’issue #331 ont été corrigés par OpenNext 1.20.19 ; la CI confirme zéro vulnérabilité dans l’audit complet.
+- Le workflow Groq est implémenté ; son activation attend les secrets décrits dans [l’issue Action Humaine #354](https://github.com/Nabouna32/Namesia/issues/354). Les retours visiteurs et le compte visiteur facultatif restent à concevoir ou implémenter.
 - Les critères précis de transition entre les phases du produit restent soumis à confirmation du propriétaire via [l’issue Action Humaine #350](https://github.com/Nabouna32/Namesia/issues/350) ; aucune transition automatique n’est permise.
 
 ## Sources canoniques
