@@ -1,6 +1,6 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.2
+- **Version :** 1.3
 - **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
 
 Cette charte s'applique à tout le dépôt, aux contributions humaines et aux agents IA.
@@ -146,7 +146,8 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 
 ## 7. Exigences propres à Namesia
 
-- Le cycle de vie des fiches, la provenance, la validation éditoriale, les corrections et les retours visiteurs suivent `docs/qualite-editoriale.md`. Le JSON est un format d'échange ; les champs structurés sont stockés dans des colonnes dédiées.
+- Le cycle de vie des fiches, la provenance, la validation éditoriale, les corrections et les retours visiteurs suivent `docs/qualite-editoriale.md`, `docs/politique-editoriale.md` et `docs/pipeline-generation-ia.md`. Le JSON est un format d'échange ; les champs structurés sont stockés dans des colonnes dédiées.
+- Le workflow manuel Groq est limité à main, une fiche par exécution, dry-run par défaut et import en brouillon uniquement. Les secrets Groq et Supabase restent dans GitHub Actions ; aucun secret privilégié n'est exposé au navigateur.
 - La mesure, le SEO, les expérimentations, la compatibilité, l'internationalisation et les pistes de croissance suivent `docs/mesure-et-croissance.md`. Analytics est autorisé lorsqu'il est utile et proportionné ; consentement et obligations applicables restent requis.
 - La fiabilité opérationnelle, la sécurité, la stratégie QA, l'accessibilité, l'éco-conception et la conformité suivent `docs/operations.md`.
 
