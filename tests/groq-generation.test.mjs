@@ -157,3 +157,47 @@ test("l’import SQL réserve les métadonnées au service_role et protège l’
   assert.match(migration, /private\.name_profile_generation_metadata/);
   assert.match(migration, /grant execute on function public\.import_name_profile/);
 });
+
+test("l’import explicite transmet la provenance via la clé Supabase privée", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "namesia-groq-import-"));
+  let calls = 0;
+  try {
+    const result = await genererFiche({
+      displayName: "Éloïse",
+      gender: "feminin",
+      importAsDraft: true,
+      env: {
+        GROQ_API_KEY: "groq-test-key",
+        SUPABASE_URL: "https://example.supabase.co",
+        SUPABASE_SECRET_KEY: "sb_secret_test"
+      },
+      outputDirectory: directory,
+      fetchImpl: async (url, options) => {
+        calls += 1;
+        if (url === GROQ_API_URL) return mockGroqResponse();
+        assert.equal(url, "https://example.supabase.co/rest/v1/rpc/import_name_profile");
+        assert.equal(options.headers.apikey, "sb_secret_test");
+        assert.equal(options.headers.Authorization, undefined);
+        const body = JSON.parse(options.body);
+        assert.equal(body.p_generation_provider, "groq");
+        assert.equal(body.p_generation_model, GROQ_MODEL);
+        assert.equal(body.p_generation_request_id, "chatcmpl-test-123");
+        assert.equal(body.p_generation_schema_version, "1.0.0");
+        assert.equal(body.p_generation_input_tokens, 140);
+        assert.equal(body.p_generation_output_tokens, 220);
+        assert.equal(body.p_generation_temperature, 0.2);
+        assert.equal(body.p_generation_max_completion_tokens, 5000);
+        assert.match(body.p_generation_prompt_sha256, /^[a-f0-9]{64}$/);
+        return {
+          ok: true,
+          status: 200,
+          json: async () => [{ profile_id: "profile-test-id", version: 1 }]
+        };
+      }
+    });
+    assert.equal(calls, 2);
+    assert.deepEqual(result.imported, { profileId: "profile-test-id", version: 1 });
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
