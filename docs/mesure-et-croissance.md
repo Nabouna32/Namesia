@@ -1,7 +1,7 @@
 # Découvrabilité, mesure et croissance — Namesia
 
 - **Statut :** référence canonique
-- **Version :** 1.0
+- **Version :** 1.1
 - **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
 
 ## SEO et découvrabilité
@@ -21,6 +21,10 @@ Les indicateurs distinguent audience, découverte, engagement utile, satisfactio
 Les tests A/B et comparaisons de variantes sont possibles lorsque le trafic et la maturité les rendent utiles. Formuler une hypothèse, définir les variantes et indicateurs, prévoir des conditions d’arrêt et documenter les limites. Distinguer preuve statistique, signal faible et simple observation ; avec peu de trafic, préférer les évaluations qualitatives ou heuristiques.
 
 Aucune expérimentation ne doit dégrader délibérément accessibilité, sécurité, fiabilité, confidentialité ou expérience. Elle ne peut modifier silencieusement le positionnement ou le modèle économique.
+
+## Recherche utilisateur et compréhension des besoins
+
+L’agent peut mener des recherches qualitatives proportionnées : analyse des parcours, tests d’utilisabilité, examen des retours visiteurs, comparaison de modèles éprouvés et observation des points de friction. Distinguer observations, hypothèses et résultats étayés ; ne pas transformer quelques retours en représentativité statistique. La recherche doit éclairer des décisions concrètes et améliorer les parcours, pas accumuler des données sans usage.
 
 ## Compatibilité et internationalisation
 
