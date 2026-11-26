@@ -152,7 +152,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - La fiabilité opérationnelle, la sécurité, la stratégie QA, l'accessibilité, l'éco-conception et la conformité suivent `docs/operations.md`.
 
 - Les fiches peuvent être générées en amont par conversation ou par le workflow manuel Groq décrit dans `docs/pipeline-generation-ia.md`. Le workflow est limité à `main`, une fiche par exécution, dry-run par défaut et import facultatif en brouillon.
-- Les secrets Groq et Supabase privilégié restent dans GitHub Actions ; aucun secret privilégié n'est exposé au navigateur. L'activation attend l'action du propriétaire dans l'issue #354.
+- Les secrets GROQ_API_KEY et SUPABASE_SECRET_KEY (clé Supabase moderne sb_secret_) restent dans GitHub Actions ; la clé Supabase est envoyée uniquement dans l’en-tête apikey et aucun secret privilégié n'est exposé au navigateur. L'activation attend l'action du propriétaire dans l'issue #354.
 - La génération, la validation du schéma, la prévisualisation, l'import en brouillon et la publication sont des opérations distinctes. Aucune ne prouve l'exactitude factuelle du contenu.
 - Ne jamais inventer de sources, références, citations, statistiques ou statuts de vérification.
 - Ne pas présenter une origine, une étymologie ou une tradition incertaine comme une certitude.
