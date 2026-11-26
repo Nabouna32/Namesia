@@ -16,7 +16,7 @@ L’application publique ne doit pas recevoir de clé Groq ou de clé Supabase p
 1. Utiliser un workflow GitHub Actions déclenché manuellement depuis main, pour un seul prénom par exécution.
 2. Appeler Groq avec openai/gpt-oss-20b et Structured Outputs en mode strict ; le schéma de génération est distinct du contrat d’import Namesia.
 3. Garder le prompt versionné dans le dépôt. Toute modification substantielle du prompt incrémente sa version.
-4. Normaliser les champs facultatifs null, construire l’identité et le slug côté script, puis valider la fiche avec le parseur Namesia avant toute écriture.
+4. Normaliser les chaînes vides des champs facultatifs, construire l’identité et le slug côté script, puis valider la fiche avec le parseur Namesia avant toute écriture.
 5. Le dry-run est le comportement par défaut. L’import explicite crée uniquement un brouillon. La publication reste une action humaine distincte.
 6. Les métadonnées techniques sont stockées dans private.name_profile_generation_metadata, table relationnelle privée : fournisseur, modèle, version et empreinte du prompt, version du schéma de génération, identifiant de requête, date, paramètres et usage en tokens.
 7. L’identifiant de requête Groq est unique et sert de clé d’idempotence pour les reprises réseau.
