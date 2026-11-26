@@ -14,7 +14,7 @@ Références fournisseur : [Structured Outputs](https://console.groq.com/docs/st
 
 ## 2. Séparation des contrats
 
-Le modèle répond au schéma strict [fiche-prenom.groq.schema.json](../schemas/fiche-prenom.groq.schema.json). Les propriétés sont toutes requises ; les rubriques facultatives utilisent null lorsqu’elles ne peuvent pas être formulées avec une confiance raisonnable.
+Le modèle répond au schéma strict [fiche-prenom.groq.schema.json](../schemas/fiche-prenom.groq.schema.json). Les propriétés sont toutes requises ; les rubriques facultatives utilisent une chaîne vide lorsqu’elles ne peuvent pas être formulées avec une confiance raisonnable.
 
 Le script normalise ensuite les valeurs null en propriétés absentes et construit le contrat d’import Namesia 2.0.0 défini par [fiche-prenom.schema.json](../schemas/fiche-prenom.schema.json). Le parseur partagé parseFichePrenom vérifie les types, les propriétés autorisées, les longueurs, le slug, le genre et les associations avant toute écriture.
 
