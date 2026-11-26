@@ -21,7 +21,7 @@ L’application publique ne doit pas recevoir de clé Groq ou de clé Supabase p
 6. Les métadonnées techniques sont stockées dans private.name_profile_generation_metadata, table relationnelle privée : fournisseur, modèle, version et empreinte du prompt, version du schéma de génération, identifiant de requête, date, paramètres et usage en tokens.
 7. L’identifiant de requête Groq est unique et sert de clé d’idempotence pour les reprises réseau.
 8. La fonction SQL d’import conserve le parcours administrateur authentifié et autorise le rôle service_role uniquement avec des métadonnées Groq complètes. Le secret service_role est utilisé exclusivement dans l’étape GitHub Actions d’import.
-9. Les clés GROQ_API_KEY et SUPABASE_SERVICE_ROLE_KEY sont des secrets GitHub Actions ; elles ne sont jamais stockées dans le dépôt, les artefacts ou le navigateur.
+9. Les clés GROQ_API_KEY et SUPABASE_SECRET_KEY sont des secrets GitHub Actions ; elles ne sont jamais stockées dans le dépôt, les artefacts ou le navigateur.
 10. Rester sur le niveau gratuit Groq. Aucun moyen de paiement, passage au plan Developer, service payant ou dépense sans arbitrage préalable.
 
 ## Alternatives écartées
