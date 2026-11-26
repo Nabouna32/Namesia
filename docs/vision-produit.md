@@ -1,8 +1,8 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.60
-- **Mis à jour le :** 2026-11-25 09:22:27 (Europe/Paris)
+- **Version :** 3.61
+- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
 
 ## 1. Positionnement
 
@@ -40,6 +40,14 @@ La consultation de Namesia ne nécessite jamais de compte. Toute personne peut l
 Le compte est facultatif et apporte du confort : paramètres et préférences personnels, favoris persistants, historique de consultation synchronisé entre les appareils et autres fonctions personnelles clairement identifiées. L'absence de compte ne doit pas dégrader artificiellement l'accès au contenu ni multiplier les demandes d'inscription.
 
 Les données personnelles liées au compte restent sous le contrôle de leur titulaire : accès, modification et suppression doivent être prévus dans la conception. Les choix d'authentification, de confidentialité, de conservation et de suppression seront détaillés dans un ADR d'architecture avant l'implémentation.
+
+### Retours et corrections
+
+Namesia a vocation à permettre aux visiteurs de signaler une erreur ou de proposer une correction de fiche au moyen d'un parcours simple, accessible et contextualisé. Les contributions restent privées par défaut, sont vérifiées avant toute correction et ne sont jamais publiées automatiquement. Le mécanisme, ses protections anti-abus et sa conservation sont décrits dans [Gouvernance éditoriale et génération](qualite-editoriale.md). Il s'agit d'une capacité à concevoir, pas d'une fonction déjà disponible.
+
+### Gratuité et modèle économique
+
+L'accès public aux fiches reste gratuit. Le projet peut étudier des pistes de financement modestes et cohérentes, mais aucun modèle de monétisation, publicité, contenu sponsorisé, partenariat, fonction payante ou changement d'accès n'est activé sans arbitrage préalable du propriétaire. La mesure et les pistes de croissance suivent [Mesure et croissance](mesure-et-croissance.md).
 
 
 ### Inclus
