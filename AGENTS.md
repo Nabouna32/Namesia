@@ -151,8 +151,9 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - La mesure, le SEO, les expérimentations, la compatibilité, l'internationalisation et les pistes de croissance suivent `docs/mesure-et-croissance.md`. Analytics est autorisé lorsqu'il est utile et proportionné ; consentement et obligations applicables restent requis.
 - La fiabilité opérationnelle, la sécurité, la stratégie QA, l'accessibilité, l'éco-conception et la conformité suivent `docs/operations.md`.
 
-- Les fiches sont générées en amont par IA (API ou conversation), puis importées dans Namesia au format JSON.
-- La génération, la validation du schéma, la prévisualisation et la publication sont quatre opérations distinctes. Aucune ne prouve l'exactitude factuelle du contenu.
+- Les fiches peuvent être générées en amont par conversation ou par le workflow manuel Groq décrit dans `docs/pipeline-generation-ia.md`. Le workflow est limité à `main`, une fiche par exécution, dry-run par défaut et import facultatif en brouillon.
+- Les secrets Groq et Supabase privilégié restent dans GitHub Actions ; aucun secret privilégié n'est exposé au navigateur. L'activation attend l'action du propriétaire dans l'issue #354.
+- La génération, la validation du schéma, la prévisualisation, l'import en brouillon et la publication sont des opérations distinctes. Aucune ne prouve l'exactitude factuelle du contenu.
 - Ne jamais inventer de sources, références, citations, statistiques ou statuts de vérification.
 - Ne pas présenter une origine, une étymologie ou une tradition incertaine comme une certitude.
 - Ne pas présenter une symbolique, une numérologie ou un portrait de personnalité comme une vérité scientifique ou prédictive.
