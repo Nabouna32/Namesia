@@ -57,7 +57,7 @@ declare
   v_version integer;
   v_association jsonb;
   v_position integer := 0;
-  v_is_service_role boolean := coalesce(auth.role(), '') = 'service_role';
+  v_is_service_role boolean := coalesce(current_user, '') = 'service_role';
 begin
   if v_is_service_role then
     if p_generation_provider is distinct from 'groq'
