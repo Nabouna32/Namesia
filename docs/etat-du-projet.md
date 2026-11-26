@@ -25,7 +25,7 @@ L’accès public aux fiches ne doit pas dépendre d’un compte. Le compte visi
 
 ## Contenu et génération IA
 
-La génération est actuellement externe à l’application. Un workflow manuel GitHub Actions de génération Groq est présent dans le dépôt. Il utilise un schéma JSON strict, le parseur Namesia et un import facultatif en brouillon. Son activation opérationnelle attend les secrets GitHub GROQ_API_KEY et SUPABASE_SERVICE_ROLE_KEY ; aucune clé n’est dans le dépôt. Le dry-run est le comportement par défaut et aucune publication n’est automatique. Seules quelques fiches d’exemple sont nécessaires en pré-lancement.
+La génération est actuellement externe à l’application. Un workflow manuel GitHub Actions de génération Groq est présent dans le dépôt. Il utilise un schéma JSON strict, le parseur Namesia et un import facultatif en brouillon. Son activation opérationnelle attend les secrets GitHub GROQ_API_KEY et SUPABASE_SECRET_KEY ; aucune clé n’est dans le dépôt. Le dry-run est le comportement par défaut et aucune publication n’est automatique. Seules quelques fiches d’exemple sont nécessaires en pré-lancement.
 
 ## Décisions structurantes
 
