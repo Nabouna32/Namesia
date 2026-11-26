@@ -17,9 +17,9 @@ import {
 
 const contentValide = {
   introduction: "Éloïse est un prénom féminin utilisé dans plusieurs espaces francophones.",
-  origin: null,
-  history: null,
-  usage: null,
+  origin: "",
+  history: "",
+  usage: "",
   symbolic_associations: []
 };
 
