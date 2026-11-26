@@ -21,7 +21,7 @@ L’application publique ne doit pas recevoir de clé Groq ou de clé Supabase p
 6. Les métadonnées techniques sont stockées dans private.name_profile_generation_metadata, table relationnelle privée : fournisseur, modèle, version et empreinte du prompt, version du schéma de génération, identifiant de requête, date, paramètres et usage en tokens.
 7. L’identifiant de requête Groq est unique et sert de clé d’idempotence pour les reprises réseau.
 8. La fonction SQL d’import conserve le parcours administrateur authentifié et autorise le rôle service_role uniquement avec des métadonnées Groq complètes. Le secret service_role est utilisé exclusivement dans l’étape GitHub Actions d’import.
-9. Les clés GROQ_API_KEY et SUPABASE_SECRET_KEY sont des secrets GitHub Actions ; elles ne sont jamais stockées dans le dépôt, les artefacts ou le navigateur.
+9. Les clés GROQ_API_KEY et SUPABASE_SECRET_KEY (clé moderne sb_secret_) sont des secrets GitHub Actions ; la clé Supabase est transmise uniquement dans l’en-tête apikey, puis la passerelle la mappe vers service_role. Elles ne sont jamais stockées dans le dépôt, les artefacts ou le navigateur.
 10. Rester sur le niveau gratuit Groq. Aucun moyen de paiement, passage au plan Developer, service payant ou dépense sans arbitrage préalable.
 
 ## Alternatives écartées
@@ -48,5 +48,7 @@ L’application publique ne doit pas recevoir de clé Groq ou de clé Supabase p
 - [Génération et import des fiches](../pipeline-generation-ia.md)
 - [Politique éditoriale](../politique-editoriale.md)
 - [Modèle de données](../modele-donnees.md)
+- [Clés API Supabase](https://supabase.com/docs/guides/api/api-keys)
+- [Rôles PostgreSQL Supabase](https://supabase.com/docs/guides/database/postgres/roles)
 - [Documentation Groq — Structured Outputs](https://console.groq.com/docs/structured-outputs)
 - [Documentation Groq — modèles](https://console.groq.com/docs/models)
