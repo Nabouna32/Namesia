@@ -1,0 +1,157 @@
+import assert from "node:assert/strict";
+import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { test } from "node:test";
+import {
+  GROQ_API_URL,
+  GROQ_MODEL,
+  construireFicheImport,
+  construireRequeteGroq,
+  genererFiche,
+  lireVersionPrompt,
+  normaliserContenuGroq,
+  slugifierPrenom
+} from "../scripts/generate-prenom.mjs";
+
+const contentValide = {
+  introduction: "Éloïse est un prénom féminin utilisé dans plusieurs espaces francophones.",
+  origin: null,
+  history: null,
+  usage: null,
+  symbolic_associations: []
+};
+
+function mockGroqResponse(content = contentValide) {
+  return {
+    ok: true,
+    status: 200,
+    headers: { get: () => null },
+    json: async () => ({
+      id: "chatcmpl-test-123",
+      model: GROQ_MODEL,
+      choices: [{
+        finish_reason: "stop",
+        message: { content: JSON.stringify(content) }
+      }],
+      usage: { prompt_tokens: 140, completion_tokens: 220 }
+    })
+  };
+}
+
+test("le slug est déterministe et normalise les accents", () => {
+  assert.equal(slugifierPrenom("Éloïse-Marie"), "eloise-marie");
+  assert.equal(slugifierPrenom("Jean Luc"), "jean-luc");
+  assert.throws(() => slugifierPrenom("   "));
+});
+
+test("la version du prompt est explicite", async () => {
+  const prompt = await readFile(new URL("../prompts/fiche-prenom-v1.md", import.meta.url), "utf8");
+  assert.equal(lireVersionPrompt(prompt), "1.0.0");
+  assert.match(prompt, /N'invente jamais/);
+  assert.match(prompt, /retourne null/);
+});
+
+test("le schéma Groq est strict et toutes ses propriétés sont requises", async () => {
+  const schema = JSON.parse(await readFile(new URL("../schemas/fiche-prenom.groq.schema.json", import.meta.url), "utf8"));
+  assert.equal(schema.additionalProperties, false);
+  assert.deepEqual(schema.required, Object.keys(schema.properties));
+  const association = schema.properties.symbolic_associations.items;
+  assert.equal(association.additionalProperties, false);
+  assert.deepEqual(association.required, Object.keys(association.properties));
+});
+
+test("les champs facultatifs null sont retirés avant validation Namesia", () => {
+  const normalized = normaliserContenuGroq(contentValide);
+  assert.equal(Object.hasOwn(normalized, "origin"), false);
+  assert.deepEqual(normalized.symbolic_associations, []);
+  assert.throws(() => normaliserContenuGroq({ ...contentValide, unexpected: true }));
+  assert.throws(() => normaliserContenuGroq({ ...contentValide, origin: 42 }));
+});
+
+test("la fiche générée respecte le contrat d’import existant", () => {
+  const fiche = construireFicheImport("Éloïse", "feminin", contentValide);
+  assert.equal(fiche.schema_version, "2.0.0");
+  assert.equal(fiche.identity.slug, "eloise");
+  assert.equal(fiche.content.origin, undefined);
+  assert.deepEqual(fiche.content.symbolic_associations, []);
+  assert.throws(() => construireFicheImport("Éloïse", "feminin", {
+    ...contentValide,
+    introduction: "x".repeat(601)
+  }));
+});
+
+test("la requête Groq exige un JSON Schema strict sur le modèle prévu", async () => {
+  const prompt = await readFile(new URL("../prompts/fiche-prenom-v1.md", import.meta.url), "utf8");
+  const schema = JSON.parse(await readFile(new URL("../schemas/fiche-prenom.groq.schema.json", import.meta.url), "utf8"));
+  const request = construireRequeteGroq({ displayName: "Éloïse", gender: "feminin", prompt, schema });
+  assert.equal(request.model, GROQ_MODEL);
+  assert.equal(request.response_format.type, "json_schema");
+  assert.equal(request.response_format.json_schema.strict, true);
+  assert.equal(request.max_completion_tokens, 5000);
+});
+
+test("le dry-run génère un artefact validé sans contacter Supabase", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "namesia-groq-"));
+  let calls = 0;
+  try {
+    const result = await genererFiche({
+      displayName: "Éloïse",
+      gender: "feminin",
+      importAsDraft: false,
+      env: { GROQ_API_KEY: "test-key" },
+      outputDirectory: directory,
+      fetchImpl: async (url, options) => {
+        calls += 1;
+        assert.equal(url, GROQ_API_URL);
+        assert.equal(options.headers.Authorization, "Bearer test-key");
+        const body = JSON.parse(options.body);
+        assert.equal(body.response_format.json_schema.strict, true);
+        return mockGroqResponse();
+      }
+    });
+    const artifact = JSON.parse(await readFile(result.artifactPath, "utf8"));
+    assert.equal(calls, 1);
+    assert.equal(result.imported, null);
+    assert.equal(artifact.identity.slug, "eloise");
+    assert.equal(artifact.content.origin, undefined);
+    assert.equal(result.inputTokens, 140);
+    assert.equal(result.outputTokens, 220);
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test("l’import exige les secrets Supabase avant tout appel Groq", async () => {
+  let calls = 0;
+  await assert.rejects(() => genererFiche({
+    displayName: "Éloïse",
+    gender: "feminin",
+    importAsDraft: true,
+    env: { GROQ_API_KEY: "test-key" },
+    fetchImpl: async () => {
+      calls += 1;
+      return mockGroqResponse();
+    }
+  }), /SUPABASE_SERVICE_ROLE_KEY/);
+  assert.equal(calls, 0);
+});
+
+test("le workflow est manuel, limité à main et ne s’exécute pas sur les PR", async () => {
+  const workflow = await readFile(new URL("../.github/workflows/generer-fiche-groq.yml", import.meta.url), "utf8");
+  assert.match(workflow, /workflow_dispatch:/);
+  assert.match(workflow, /github\.ref == 'refs\/heads\/main'/);
+  assert.doesNotMatch(workflow, /^  pull_request:/m);
+  assert.match(workflow, /secrets\.GROQ_API_KEY/);
+  assert.match(workflow, /secrets\.SUPABASE_SERVICE_ROLE_KEY/);
+  assert.match(workflow, /retention-days: 7/);
+});
+
+test("l’import SQL réserve les métadonnées au service_role et protège l’idempotence", async () => {
+  const migration = await readFile(new URL("../supabase/migrations/20261126210000_ajouter_provenance_generation_groq.sql", import.meta.url), "utf8");
+  assert.match(migration, /auth\.role\(\)/);
+  assert.match(migration, /service_role/);
+  assert.match(migration, /request_id text not null unique/);
+  assert.match(migration, /private\.name_profile_generation_metadata/);
+  assert.match(migration, /grant execute on function public\.import_name_profile/);
+});
