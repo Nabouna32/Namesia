@@ -137,6 +137,17 @@ export type Database = {
           p_gender: string
           p_schema_version: string
           p_slug: string
+          p_generation_provider?: string | null
+          p_generation_model?: string | null
+          p_generation_prompt_version?: string | null
+          p_generation_prompt_sha256?: string | null
+          p_generation_schema_version?: string | null
+          p_generation_request_id?: string | null
+          p_generation_input_tokens?: number | null
+          p_generation_output_tokens?: number | null
+          p_generation_temperature?: number | null
+          p_generation_max_completion_tokens?: number | null
+          p_generated_at?: string | null
         }
         Returns: {
           profile_id: string
