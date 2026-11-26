@@ -34,10 +34,12 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 ## 3. Responsabilités
 
 ### Production du contenu
-- Génération réalisée à l'extérieur de Namesia, par API ou conversation.
-- La sortie attendue est un JSON strict conforme à schemas/fiche-prenom.schema.json.
-- Le modèle ne choisit jamais le statut de publication.
-- Aucun champ de source, référence, preuve ou vérification n'appartient au contrat.
+- Génération réalisée en amont : conversation ou workflow GitHub Actions manuel via l’API Groq.
+- Le workflow utilise un schéma de réponse strict distinct, normalise puis valide le contrat d’import 2.0.0 avec le parseur partagé.
+- Une génération peut être exécutée en dry-run ; l’import explicite crée un brouillon et stocke sa provenance dans une table privée relationnelle.
+- Aucun moteur de génération ni secret Groq/Supabase privilégié n’est présent dans le runtime public.
+- Le modèle ne choisit jamais le statut de publication ; aucune publication automatique.
+- Aucun champ de source, référence, preuve ou vérification n'appartient au contrat, car aucune recherche documentaire n’est effectuée.
 
 ### Administration
 - Connexion via Supabase Auth par lien e-mail.
@@ -55,6 +57,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Routes Next.js côté serveur pour les opérations administratives.
 - Vérification du jeton Supabase et de l'autorisation par RPC sur chaque requête.
 - Fonctions SQL transactionnelles pour créer une version et publier une version.
+- La fonction d’import accepte soit un administrateur authentifié sans métadonnées de génération, soit le rôle service_role avec une provenance Groq complète ; les métadonnées privées sont idempotentes par identifiant de requête.
 - Les fonctions sont SECURITY INVOKER ; elles ne contournent pas RLS.
 - Aucune clé privilégiée Supabase dans le navigateur.
 - Les visiteurs disposent uniquement de la lecture des identités ayant une version publiée et de ces versions publiées.
