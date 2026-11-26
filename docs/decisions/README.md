@@ -1,6 +1,6 @@
 # Registre des décisions d'architecture
 
-- **Version :** 1.2
+- **Version :** 1.3
 - **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
 
 Les ADR conservent les décisions structurelles, y compris celles qui ont été remplacées. Une ADR marquée « remplacée » est une trace historique et ne décrit pas l'état courant du produit.
@@ -22,3 +22,4 @@ Chaque ADR possède un identifiant unique. Le test `tests/adr-registry.test.mjs`
 - [ADR-0054 — Métadonnées et fraîcheur documentaire](ADR-0054-metadonnees-fraicheur-documentaire.md)
 
 - [ADR-0055 — Gouvernance et autonomie de Namesia](ADR-0055-gouvernance-autonomie.md)
+- [ADR-0056 — Génération contrôlée des fiches via Groq](ADR-0056-generation-groq.md)
