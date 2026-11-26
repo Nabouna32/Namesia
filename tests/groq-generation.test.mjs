@@ -135,7 +135,7 @@ test("l’import exige les secrets Supabase avant tout appel Groq", async () => 
       calls += 1;
       return mockGroqResponse();
     }
-  }), /SUPABASE_SERVICE_ROLE_KEY/);
+  }), /SUPABASE_SECRET_KEY/);
   assert.equal(calls, 0);
 });
 
@@ -145,7 +145,7 @@ test("le workflow est manuel, limité à main et ne s’exécute pas sur les PR"
   assert.match(workflow, /github\.ref == 'refs\/heads\/main'/);
   assert.doesNotMatch(workflow, /^  pull_request:/m);
   assert.match(workflow, /secrets\.GROQ_API_KEY/);
-  assert.match(workflow, /secrets\.SUPABASE_SERVICE_ROLE_KEY/);
+  assert.match(workflow, /secrets\.SUPABASE_SECRET_KEY/);
   assert.match(workflow, /retention-days: 7/);
 });
 
