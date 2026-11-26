@@ -23,7 +23,7 @@ test("les previews ne peuvent pas accéder aux opérations d'administration", ()
 test("les previews sont déployées uniquement pour les PR internes humaines et supprimées à leur fermeture", () => {
   assert.match(workflow, /pull_request:\n    types: \[opened, synchronize, reopened, labeled, closed\]/);
   assert.match(workflow, /github\.event\.pull_request\.head\.repo\.full_name == github\.repository/);
-  assert.equal((workflow.match(/github\.event\.pull_request\.user\.login != 'dependabot\\[bot\\]'/g) ?? []).length, 2);
+  assert.equal(workflow.split("github.event.pull_request.user.login != 'dependabot[bot]'").length - 1, 2);
   assert.match(workflow, /github\.event\.action != 'labeled' \|\| github\.event\.label\.name == 'diagnostic-playwright'/);
   assert.match(workflow, /wrangler preview --name "pr-/);
   assert.match(workflow, /wrangler preview delete --name "pr-/);
