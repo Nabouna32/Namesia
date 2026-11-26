@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 4.02
+- **Version :** 4.03
 - **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
 
 ## Structure de la page
