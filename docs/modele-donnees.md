@@ -1,8 +1,8 @@
 # Modèle de données — Namesia
 
 - **Statut :** modèle cible retenu pour la V1
-- **Version :** 2.5
-- **Mis à jour :** 2026-11-22
+- **Version :** 2.6
+- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
 
 ## 1. Principes
 
@@ -77,9 +77,26 @@ Liste d'autorisation des comptes Supabase Auth. La table réside dans le schéma
 
 RLS est activé. Un utilisateur authentifié peut uniquement lire sa propre autorisation. L'ajout et le retrait d'un administrateur passent par le SQL Editor Supabase, pas par le navigateur.
 
+### private.name_profile_generation_metadata
+
+Une ligne de provenance technique privée par version importée par le pipeline IA. La table est dans le schéma PostgreSQL private, non exposé à la Data API.
+
+| Colonne | Rôle |
+|---|---|
+| profile_id | Clé primaire et référence à name_profiles.id, suppression en cascade |
+| provider, model | Fournisseur et modèle effectivement utilisés |
+| prompt_version, prompt_sha256 | Version et empreinte du prompt exécuté |
+| response_schema_version | Version du schéma strict de génération |
+| request_id | Identifiant de réponse Groq unique, clé d’idempotence |
+| input_tokens, output_tokens | Usage retourné par le fournisseur, nullable |
+| temperature, max_completion_tokens | Paramètres effectifs de génération |
+| generated_at, created_at | Date de génération et date d’enregistrement |
+
+RLS est activé ; aucun droit n’est accordé à anon ou authenticated. Seul service_role peut lire et insérer ces métadonnées via le workflow contrôlé. Aucune donnée de provenance n’est stockée dans une colonne JSON.
+
 ## 3. Contrat JSON
 
-Le contrat canonique d'entrée est [fiche-prenom.schema.json](../schemas/fiche-prenom.schema.json). L'API le valide avant d'appeler une fonction SQL transactionnelle qui répartit le contenu dans les colonnes `name_profiles` et les lignes `name_profile_associations`.
+Le contrat canonique d'import est [fiche-prenom.schema.json](../schemas/fiche-prenom.schema.json). Le générateur Groq utilise un contrat de réponse strict séparé, puis normalise sa sortie vers le contrat d'import. L'API le valide avant d'appeler une fonction SQL transactionnelle qui répartit le contenu dans les colonnes `name_profiles` et les lignes `name_profile_associations`.
 
 Structure du contrat 2.0.0 :
 - schema_version : version du schéma ;
@@ -106,9 +123,13 @@ Les éléments suivants ne sont pas modélisés dans la V1 :
 - sources, références documentaires et statuts de vérification ;
 - affirmations atomiques et statuts de preuve ;
 - statistiques structurées ;
-- génération IA intégrée et métadonnées de fournisseur ;
+- sources, références documentaires et statuts de vérification ;
+- affirmations atomiques et statuts de preuve ;
+- statistiques structurées ;
 - formes linguistiques et marchés multilingues ;
-- exécutions de génération et coûts par fournisseur.
+- historique exhaustif des tentatives échouées et coûts monétaires par fournisseur.
+
+La génération Groq est désormais déclenchée par un workflow manuel. Les métadonnées des fiches importées avec succès sont conservées dans private.name_profile_generation_metadata ; les tentatives échouées et coûts monétaires ne sont pas persistés.
 
 Ils ne seront ajoutés que lorsqu'un besoin produit concret et un processus réellement appliqué le justifieront. Ne pas créer de tables anticipant un workflow inexistant.
 
