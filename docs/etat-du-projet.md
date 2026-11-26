@@ -1,7 +1,7 @@
 # État du projet — Namesia
 
 - **Statut :** source de vérité de l’état courant
-- **Version :** 1.1
+- **Version :** 1.2
 - **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
 
 ## Phase
@@ -25,7 +25,7 @@ L’accès public aux fiches ne doit pas dépendre d’un compte. Le compte visi
 
 ## Contenu et génération IA
 
-La génération est actuellement externe à l’application. Un pipeline automatisé, avec Groq comme option de départ à challenger, est autorisé mais doit être conçu et documenté avant de devenir une capacité de production. Il devra valider les sorties, tracer les prompts et modèles et importer les champs structurés sans colonne JSON fourre-tout. Seules quelques fiches d’exemple sont nécessaires en pré-lancement.
+La génération est actuellement externe à l’application. Un workflow manuel GitHub Actions de génération Groq est présent dans le dépôt. Il utilise un schéma JSON strict, le parseur Namesia et un import facultatif en brouillon. Son activation opérationnelle attend les secrets GitHub GROQ_API_KEY et SUPABASE_SERVICE_ROLE_KEY ; aucune clé n’est dans le dépôt. Le dry-run est le comportement par défaut et aucune publication n’est automatique. Seules quelques fiches d’exemple sont nécessaires en pré-lancement.
 
 ## Décisions structurantes
 
@@ -38,7 +38,7 @@ La génération est actuellement externe à l’application. Un pipeline automat
 ## Chantiers et limites connus
 
 - Issue ouverte : #331 — avis modérés glob et minimatch transitifs via OpenNext. Attendre la publication effective du correctif amont avant de modifier les contraintes de dépendances ; ne pas forcer d’override hors plage.
-- Les retours visiteurs, le pipeline de génération automatisé et le compte visiteur facultatif sont des capacités à concevoir ou implémenter, pas des fonctionnalités déjà disponibles.
+- Le pipeline Groq est implémenté dans le dépôt mais son activation attend les secrets ; les retours visiteurs et le compte visiteur facultatif restent à concevoir ou implémenter.
 - Les critères précis de transition entre les phases du produit restent soumis à confirmation du propriétaire via [l’issue Action Humaine #350](https://github.com/Nabouna32/Namesia/issues/350) ; aucune transition automatique n’est permise.
 
 ## Sources canoniques
