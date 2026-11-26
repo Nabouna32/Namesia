@@ -1,6 +1,6 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.1
+- **Version :** 1.2
 - **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
 
 Cette charte s'applique à tout le dépôt, aux contributions humaines et aux agents IA.
@@ -30,6 +30,11 @@ Le challenge doit être argumenté et proportionné. Il ne s'agit pas de contred
 Pour un arbitrage significatif, expliciter le constat, le challenge, les options, la recommandation, les conséquences et la validation. Ne jamais fabriquer une certitude faute d'éléments.
 
 ## 3. Vision et décisions
+
+- **Phase courante : PRÉ-LANCEMENT / DÉVELOPPEMENT.** L'état détaillé et les critères de transition sont dans [docs/etat-du-projet.md](docs/etat-du-projet.md) et [docs/gouvernance.md](docs/gouvernance.md). Ne jamais changer de phase sans confirmation datée du propriétaire.
+- Le niveau d'autonomie dépend des conséquences, de la gravité et de la réversibilité, pas de la difficulté technique. L'agent décide des moyens techniques ; les engagements sur le positionnement, les promesses fondamentales, la monétisation activée, les dépenses, les partenariats, les fonctions payantes et les collectes sensibles exigent un arbitrage préalable.
+- Une donnée personnelle ordinaire peut être traitée de façon autonome si elle est strictement utile à une fonction facultative et privée, minimisée, protégée, expliquée, conservée pour une durée cohérente et supprimable. Les données sensibles, inférences sensibles, profilages substantiels et partages non évidents exigent un arbitrage préalable.
+- Si un arbitrage humain est requis, créer une issue dont le titre commence exactement par `[Action Humaine]`. Suspendre uniquement le chantier dépendant ; poursuivre les travaux indépendants et préférer une solution provisoire réversible lorsqu'elle ne préjuge pas de la décision.
 
 - Challenger régulièrement le problème utilisateur, le périmètre, la proposition de valeur et les indicateurs.
 - Ne pas confondre préférence, intuition et besoin démontré.
@@ -91,6 +96,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - **Audit de fraîcheur :** une date ancienne est un signal pour réexaminer la pertinence, les liens, les hypothèses et les décisions ; elle ne rend pas automatiquement le document obsolète. Une décision reste applicable tant qu'elle n'est pas explicitement remplacée, retirée ou révisée dans un ADR. Les documents de référence doivent être audités lorsque leur contexte change et lors des passages d'audit documentaire, en priorisant les plus anciens et les plus structurants.
 
 - Le dépôt Git est la mémoire durable du projet.
+- `docs/etat-du-projet.md` décrit l'état courant ; `docs/gouvernance.md`, `docs/operations.md`, `docs/qualite-editoriale.md` et `docs/mesure-et-croissance.md` portent les règles thématiques. Les deux fichiers `docs/instructions-chatgpt/` sont des résumés à copier manuellement dans les projets correspondants ; chacun reste sous 8 000 caractères, espaces compris.
 - Toute PR qui change un comportement, un contrat, une architecture ou une décision met à jour les documents concernés dans la même PR.
 - Éviter les doublons et désigner un emplacement canonique par information structurante.
 - Distinguer les faits, hypothèses, propositions, décisions acceptées et décisions obsolètes.
@@ -138,6 +144,10 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Avant de créer ou refondre une page, lire `docs/design.md` et `docs/composants.md`. Réutiliser les primitives M3 uniques du registre ; ne jamais créer une seconde implémentation concurrente, un wrapper nominal ou un alias de compatibilité. Un composant local n'est admis que comme port Web principal d'un contrat M3 sans équivalent Web officiel répondant aux exigences de maintenance, de couverture et d'accessibilité. Toute nouvelle primitive doit être ajoutée au registre avec son mapping M3, ses variantes, ses états, ses usages et sa justification face aux alternatives Web officielles. Toute adaptation doit correspondre à une limite réelle du navigateur et être documentée.
 
 ## 7. Exigences propres à Namesia
+
+- Le cycle de vie des fiches, la provenance, la validation éditoriale, les corrections et les retours visiteurs suivent `docs/qualite-editoriale.md`. Le JSON est un format d'échange ; les champs structurés sont stockés dans des colonnes dédiées.
+- La mesure, le SEO, les expérimentations, la compatibilité, l'internationalisation et les pistes de croissance suivent `docs/mesure-et-croissance.md`. Analytics est autorisé lorsqu'il est utile et proportionné ; consentement et obligations applicables restent requis.
+- La fiabilité opérationnelle, la sécurité, la stratégie QA, l'accessibilité, l'éco-conception et la conformité suivent `docs/operations.md`.
 
 - Les fiches sont générées en amont par IA (API ou conversation), puis importées dans Namesia au format JSON.
 - La génération, la validation du schéma, la prévisualisation et la publication sont quatre opérations distinctes. Aucune ne prouve l'exactitude factuelle du contenu.
