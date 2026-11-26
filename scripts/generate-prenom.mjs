@@ -18,7 +18,7 @@ export function slugifierPrenom(displayName) {
   if (typeof displayName !== "string") throw new Error("Le prénom doit être une chaîne.");
   const slug = displayName
     .normalize("NFKD")
-    .replace(/\\p{M}/gu, "")
+    .replace(/\p{M}/gu, "")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
@@ -27,7 +27,7 @@ export function slugifierPrenom(displayName) {
 }
 
 export function lireVersionPrompt(prompt) {
-  const match = prompt.match(/^Version du prompt : ([0-9]+\\.[0-9]+\\.[0-9]+)$/m);
+  const match = prompt.match(/^Version du prompt : ([0-9]+\.[0-9]+\.[0-9]+)$/m);
   if (!match) throw new Error("La version du prompt est absente ou invalide.");
   return match[1];
 }
@@ -90,7 +90,7 @@ export function construireRequeteGroq({ displayName, gender, prompt, schema }) {
       { role: "system", content: prompt },
       {
         role: "user",
-        content: "Prénom : " + displayName + "\\nGenre : " + gender + "\\nLangue de rédaction : français."
+        content: "Prénom : " + displayName + "\nGenre : " + gender + "\nLangue de rédaction : français."
       }
     ]
   };
@@ -158,7 +158,7 @@ async function appelerGroq(apiKey, requestBody, fetchImpl) {
 }
 
 async function importerDansSupabase({ supabaseUrl, serviceRoleKey, fiche, metadata, fetchImpl }) {
-  const endpoint = supabaseUrl.replace(/\\/+$/, "") + "/rest/v1/rpc/import_name_profile";
+  const endpoint = supabaseUrl.replace(/\/+$/, "") + "/rest/v1/rpc/import_name_profile";
   const body = {
     p_slug: fiche.identity.slug,
     p_display_name: fiche.identity.display_name,
@@ -251,7 +251,7 @@ export async function genererFiche({
   const artifactPath = resolve(outputDirectory, "fiche-" + slug + ".json");
 
   await mkdir(outputDirectory, { recursive: true });
-  await writeFile(artifactPath, JSON.stringify(fiche, null, 2) + "\\n", "utf8");
+  await writeFile(artifactPath, JSON.stringify(fiche, null, 2) + "\n", "utf8");
 
   let imported = null;
   if (importAsDraft) {
