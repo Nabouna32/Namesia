@@ -39,7 +39,7 @@ La génération est actuellement externe à l’application. Un pipeline automat
 
 - Issue ouverte : #331 — avis modérés glob et minimatch transitifs via OpenNext. Attendre la publication effective du correctif amont avant de modifier les contraintes de dépendances ; ne pas forcer d’override hors plage.
 - Les retours visiteurs, le pipeline de génération automatisé et le compte visiteur facultatif sont des capacités à concevoir ou implémenter, pas des fonctionnalités déjà disponibles.
-- Les critères précis de transition entre les phases du produit restent soumis à confirmation du propriétaire ; aucune transition automatique n’est permise.
+- Les critères précis de transition entre les phases du produit restent soumis à confirmation du propriétaire via [l’issue Action Humaine #350](https://github.com/Nabouna32/Namesia/issues/350) ; aucune transition automatique n’est permise.
 
 ## Sources canoniques
 
