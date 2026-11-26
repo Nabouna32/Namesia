@@ -10,7 +10,7 @@ La génération est effectuée en amont de l’application publique. Le workflow
 
 Le modèle utilisé par défaut est openai/gpt-oss-20b via l’API Groq. Ce modèle est choisi parce qu’il prend en charge les sorties structurées strictes de Groq. Le workflow doit rester sur le niveau gratuit ; aucune mise à niveau, aucun moyen de paiement ni aucune dépense ne sont autorisés sans arbitrage préalable du propriétaire.
 
-Références fournisseur : [Structured Outputs](https://console.groq.com/docs/structured-outputs), [Models](https://console.groq.com/docs/models), [Rate Limits](https://console.groq.com/docs/rate-limits).
+Références fournisseur : [Clés API Supabase](https://supabase.com/docs/guides/api/api-keys), [Rôles PostgreSQL Supabase](https://supabase.com/docs/guides/database/postgres/roles), [Structured Outputs](https://console.groq.com/docs/structured-outputs), [Models](https://console.groq.com/docs/models), [Rate Limits](https://console.groq.com/docs/rate-limits).
 
 ## 2. Séparation des contrats
 
@@ -51,11 +51,11 @@ L’import est transactionnel : prénom, version brouillon, associations et mét
 ## 5. Secrets et sécurité
 
 - GROQ_API_KEY est un secret GitHub Actions.
-- SUPABASE_SECRET_KEY est nécessaire uniquement lorsque l’import est activé ; il reste limité à l’étape du workflow qui effectue l’appel RPC.
+- SUPABASE_SECRET_KEY (clé moderne sb_secret_) est nécessaire uniquement lorsque l’import est activé ; elle est envoyée uniquement dans l’en-tête apikey de l’appel RPC. La passerelle Supabase la mappe vers le rôle SQL service_role.
 - L’URL Supabase est publique et lue depuis .env.example.
 - Aucun secret privilégié n’est exposé dans le navigateur, une route publique, le dépôt, le prompt ou les artefacts.
 - Le workflow ne se déclenche pas sur les pull requests et son job est limité à main.
-- La fonction SQL accepte les métadonnées uniquement lorsque current_user vaut service_role. Un administrateur authentifié ne peut pas fabriquer de provenance.
+- La fonction SQL accepte les métadonnées uniquement lorsque current_user vaut service_role. Elle reste SECURITY INVOKER ; le rôle effectif est fourni par la passerelle Supabase, sans utiliser auth.role(). Un administrateur authentifié ne peut pas fabriquer de provenance.
 - Le rôle service_role est privilégié : les secrets correspondants doivent être protégés et renouvelés en cas d’exposition.
 
 L’activation opérationnelle attend l’ajout des secrets par le propriétaire dans les paramètres GitHub Actions. Ne jamais demander qu’un secret soit envoyé dans une issue, une PR ou une conversation.
