@@ -167,7 +167,7 @@ async function appelerGroq(apiKey, requestBody, fetchImpl) {
   return { result, generatedContent };
 }
 
-async function importerDansSupabase({ supabaseUrl, serviceRoleKey, fiche, metadata, fetchImpl }) {
+async function importerDansSupabase({ supabaseUrl, secretKey, fiche, metadata, fetchImpl }) {
   const endpoint = supabaseUrl.replace(/\/+$/, "") + "/rest/v1/rpc/import_name_profile";
   const body = {
     p_slug: fiche.identity.slug,
@@ -194,8 +194,7 @@ async function importerDansSupabase({ supabaseUrl, serviceRoleKey, fiche, metada
       response = await fetchImpl(endpoint, {
         method: "POST",
         headers: {
-          apikey: serviceRoleKey,
-          Authorization: "Bearer " + serviceRoleKey,
+          apikey: secretKey,
           "Content-Type": "application/json"
         },
         body: JSON.stringify(body),
@@ -234,8 +233,8 @@ export async function genererFiche({
   slugifierPrenom(normalizedName);
 
   if (!env.GROQ_API_KEY) throw new Error("Le secret GitHub GROQ_API_KEY n’est pas configuré.");
-  if (importAsDraft && (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY)) {
-    throw new Error("L’import exige SUPABASE_URL et le secret SUPABASE_SERVICE_ROLE_KEY.");
+  if (importAsDraft && (!env.SUPABASE_URL || !env.SUPABASE_SECRET_KEY)) {
+    throw new Error("L’import exige SUPABASE_URL et le secret SUPABASE_SECRET_KEY.");
   }
 
   const [prompt, schemaText] = await Promise.all([
@@ -264,7 +263,7 @@ export async function genererFiche({
   if (importAsDraft) {
     imported = await importerDansSupabase({
       supabaseUrl: env.SUPABASE_URL,
-      serviceRoleKey: env.SUPABASE_SERVICE_ROLE_KEY,
+      secretKey: env.SUPABASE_SECRET_KEY,
       fiche,
       metadata: {
         provider: GROQ_PROVIDER,
