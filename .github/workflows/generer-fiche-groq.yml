@@ -65,7 +65,7 @@ jobs:
           GENDER: ${{ inputs.gender }}
           IMPORT_AS_DRAFT: ${{ inputs.import_as_draft }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ inputs.import_as_draft && secrets.SUPABASE_SERVICE_ROLE_KEY || '' }}
+          SUPABASE_SECRET_KEY: ${{ inputs.import_as_draft && secrets.SUPABASE_SECRET_KEY || '' }}
         run: npm run generate:fiche
 
       - name: Conserver le JSON généré temporairement
