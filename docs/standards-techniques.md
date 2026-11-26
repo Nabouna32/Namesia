@@ -1,7 +1,7 @@
 # Standards techniques et règles de maintenabilité — Namesia
 
 - **Statut :** règle canonique
-- **Version :** 1.14
+- **Version :** 1.15
 - **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
 - **Portée :** application web, styles, composants, données et outillage
 
@@ -198,3 +198,13 @@ Les en-têtes sont appliqués au niveau Next.js à l'ensemble des routes, y comp
 La session Supabase et le droit d'accès administrateur sont deux états distincts. La vérification de rôle rejette toute réponse autre qu'un booléen explicite et propage les erreurs réseau ou RPC vers l'interface. Le client affiche un état d'erreur au lieu de rester indéfiniment en chargement ou de confondre une panne avec un refus d'accès.
 
 Les changements de session peuvent se chevaucher (lecture initiale et événements d'authentification). Chaque vérification est versionnée : seule la réponse correspondant au dernier événement peut modifier l'état. Le démontage du composant invalide les opérations encore en cours. Aucune session ancienne ou réponse tardive ne doit rétablir un accès révoqué.
+
+
+## 12. Données, génération et mesure
+
+- Le JSON des fiches est un format d'échange validé à la frontière d'import ; les champs métier sont stockés dans des colonnes dédiées et des relations, jamais dans une colonne JSON fourre-tout.
+- Une validation de schéma ne prouve pas l'exactitude éditoriale. Les sources, la provenance, les incertitudes et les statuts de vérification ne sont jamais inventés.
+- Les imports doivent être idempotents, explicites sur les erreurs et empêcher qu'une réponse invalide écrase un contenu valide.
+- Les retours visiteurs sont privés par défaut, contextualisés, modérés et protégés contre les abus ; ils ne deviennent pas automatiquement du contenu public.
+- La mesure analytics est autorisée lorsqu'elle apporte une valeur identifiable ; minimiser les données, protéger les accès, définir une conservation et recueillir le consentement lorsqu'il est requis.
+- Les règles détaillées figurent dans [Gouvernance éditoriale et génération](qualite-editoriale.md), [Mesure et croissance](mesure-et-croissance.md) et [Exploitation, sécurité et qualité](operations.md).
