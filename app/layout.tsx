@@ -63,22 +63,22 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <a className="skip-link" href="#contenu">Aller au contenu</a>
     <FavoritesProvider>
       <div className="app-shell">
-          <TopAppBar />
-          <NavigationBar />
-          <NavigationRail />
-          <div className="app-content">
-            {children}
-            <footer className="site-footer">
-              <div className="footer-inner">
-                <Link className="brand footer-brand" href="/">
-                  <span className="brand-mark">n.</span>
-                  <span>namesia</span>
-                </Link>
-                <p>Les prénoms ont des histoires. Prenons le temps de les raconter.</p>
-                <span className="footer-note">© {new Date().getFullYear()} Namesia</span>
-              </div>
-            </footer>
-          </div>
+        <TopAppBar />
+        <NavigationBar />
+        <NavigationRail />
+        <div className="app-content">
+          {children}
+          <footer className="site-footer">
+            <div className="footer-inner">
+              <Link className="brand footer-brand" href="/">
+                <span className="brand-mark">n.</span>
+                <span>namesia</span>
+              </Link>
+              <p>Les prénoms ont des histoires. Prenons le temps de les raconter.</p>
+              <span className="footer-note">© {new Date().getFullYear()} Namesia</span>
+            </div>
+          </footer>
+        </div>
       </div>
     </FavoritesProvider>
   </body></html>;
