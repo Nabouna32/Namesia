@@ -28,6 +28,14 @@ function getInitialMode(value: string): AccountMode {
 }
 
 export default async function AccountPage({ searchParams }: Props) {
+  if (process.env.NAMESIA_DEPLOYMENT_ENVIRONMENT === "preview") {
+    return <main id="contenu" tabIndex={-1} className="page-main"><div className="container">
+      <span className="eyebrow">Environnement de test</span>
+      <h1>Comptes indisponibles</h1>
+      <p className="page-intro">Les opérations de compte sont désactivées dans les previews Cloudflare pour éviter de créer des utilisateurs dans le projet Supabase de production.</p>
+    </div></main>;
+  }
+
   const params = await searchParams;
   const redirectTo = firstParam(params.redirect) === "/admin" ? "/admin" : "/";
   const initialMode = getInitialMode(firstParam(params.mode));
