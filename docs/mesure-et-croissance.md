@@ -1,8 +1,8 @@
 # Découvrabilité, mesure et croissance — Namesia
 
 - **Statut :** référence canonique
-- **Version :** 1.1
-- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
+- **Version :** 1.2
+- **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
 
 ## SEO et découvrabilité
 
@@ -28,7 +28,9 @@ L’agent peut mener des recherches qualitatives proportionnées : analyse des p
 
 ## Compatibilité et internationalisation
 
-Définir une matrice de support réaliste pour navigateurs, appareils, systèmes, tailles d’écran et réseaux à partir des usages et des besoins. Ne pas viser une compatibilité universelle irréaliste ; documenter les environnements abandonnés et leurs conséquences. Une émulation ne vaut pas un test sur appareil réel.
+Définir une matrice de support réaliste pour navigateurs (Chrome, Safari, Firefox, Edge), appareils, systèmes, tailles d’écran, densités, méthodes d’interaction et réseaux à partir des usages et besoins. Ne pas viser une compatibilité universelle irréaliste ; documenter les environnements abandonnés et leurs conséquences. Combiner tests automatisés, émulation et tests réels lorsque disponibles ; une émulation ne vaut pas une validation sur appareil réel.
+
+L’internationalisation peut être préparée techniquement sans annoncer un lancement multilingue : architecture de localisation, paramètres régionaux, URL localisées, traductions d’interface, contenus éditoriaux par langue, métadonnées SEO et liens entre versions linguistiques. Le français reste la langue principale tant qu'une ouverture effective à d'autres langues ou marchés n'a pas été décidée. Toute version localisée doit conserver les exigences de fiabilité éditoriale et ne pas être une duplication automatique de faible qualité.
 
 Le français reste la langue de lancement. L’agent peut préparer une architecture localisable et éviter les choix qui rendraient l’internationalisation inutilement coûteuse. L’ajout effectif d’autres langues, marchés ou corpus doit répondre à un besoin produit démontré et préserver la qualité éditoriale et culturelle.
 
