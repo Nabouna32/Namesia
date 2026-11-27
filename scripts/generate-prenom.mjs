@@ -350,6 +350,7 @@ export async function genererFiche({
         contentSha256,
         schemaVersion: GENERATION_SCHEMA_VERSION,
         requestId: groq.result.id,
+        workflowRunId: generationMetadata.workflowRunId,
         inputTokens: Number.isInteger(groq.result.usage && groq.result.usage.prompt_tokens)
           ? groq.result.usage.prompt_tokens
           : null,
