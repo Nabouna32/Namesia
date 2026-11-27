@@ -73,7 +73,7 @@ test("les pages publiques ne débordent pas sur un écran de 320 pixels", async 
   }
 });
 
-test("les tendances régionales ouvrent les fiches Namesia déjà publiées", async ({ page }) =>
+test("les tendances régionales ouvrent les fiches Namesia déjà publiées", async ({ page }) => {
   const response = await page.goto("/tendances", {
     waitUntil: "domcontentloaded",
     timeout: 30_000
