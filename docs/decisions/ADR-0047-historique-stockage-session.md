@@ -8,7 +8,7 @@
 
 ## Contexte
 
-L’historique de consultation est défini comme une donnée de session, conservée dans `sessionStorage`. Le fournisseur maintenait pourtant un état React indépendant et continuait à accepter les consultations lorsque le navigateur refusait le stockage. L’interface affichait alors un historique en mémoire, perdu au rechargement, tout en signalant cette dégradation.
+L’historique de consultation avait été défini comme une donnée de session, conservée dans `sessionStorage`. Le fournisseur maintenait pourtant un état React indépendant et continuait à accepter les consultations lorsque le navigateur refusait le stockage. L’interface affichait alors un historique en mémoire, perdu au rechargement, tout en signalant cette dégradation.
 
 Cette seconde source de vérité rendait le comportement moins prévisible : une action pouvait sembler enregistrée sans l’être durablement dans la session.
 
