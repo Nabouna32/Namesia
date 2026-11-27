@@ -5,14 +5,15 @@ import { Icon } from "@/components/material3/Icon";
 import { getNamesIndex } from "@/lib/names";
 import {
   NAME_POPULARITY_2025,
-  NAME_POPULARITY_2025_SOURCE_URL
+  NAME_POPULARITY_2025_SOURCE_URL,
+  NAME_REGIONAL_LEADERS_2025
 } from "@/lib/name-popularity";
 import { jsonLd } from "@/lib/json-ld";
 import { siteUrl } from "@/lib/site-url";
 import styles from "./trends.module.css";
 
 const pageTitle = "Les prénoms les plus donnés en France en 2025";
-const pageDescription = "Le classement officiel des dix prénoms féminins et masculins les plus attribués en France en 2025, publié par l’Insee.";
+const pageDescription = "Les classements nationaux des prénoms les plus attribués en France en 2025 et les prénoms arrivés en tête dans les régions, selon l’Insee.";
 
 export const dynamic = "force-dynamic";
 
@@ -105,7 +106,7 @@ export default async function NameTrendsPage() {
         <span className="eyebrow">Données nationales · Insee</span>
         <h1>Les prénoms les plus donnés <em>en 2025.</em></h1>
         <p className="page-intro">
-          En France, Louise et Gabriel arrivent en tête des prénoms attribués en 2025. Voici les dix premiers de chaque classement, avec les effectifs publiés par l’Insee.
+          En France, Louise et Gabriel arrivent en tête des prénoms attribués en 2025. Voici les dix premiers de chaque classement national, puis les prénoms qui dominent selon les régions.
         </p>
 
         <div className={styles.rankings}>
@@ -125,8 +126,33 @@ export default async function NameTrendsPage() {
           </section>
         </div>
 
+        <section className={styles.regionalSection} aria-labelledby="regional-ranking-title">
+          <div className={styles.sectionHeading}>
+            <h2 id="regional-ranking-title">Le palmarès varie aussi selon les régions</h2>
+            <span>France · 2025</span>
+          </div>
+          <p className={styles.regionalIntro}>
+            Le prénom masculin numéro un est Gabriel dans 12 régions sur 18. Pour les autres territoires, et pour les prénoms féminins, les premiers choix sont plus variés.
+          </p>
+          <div className={styles.regionalGrid}>
+            {(["Féminin", "Masculin"] as const).map((gender) => (
+              <section className={styles.regionalGroup} aria-labelledby={gender === "Féminin" ? "regional-female-title" : "regional-male-title"} key={gender}>
+                <h3 id={gender === "Féminin" ? "regional-female-title" : "regional-male-title"}>Prénoms {gender === "Féminin" ? "féminins" : "masculins"}</h3>
+                <ul className={styles.regionalList}>
+                  {NAME_REGIONAL_LEADERS_2025.filter((entry) => entry.gender === gender).map((entry) => (
+                    <li key={entry.slug}>
+                      <strong>{entry.name}</strong>
+                      <span>{entry.distinction ?? entry.regions.join(", ")}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
+        </section>
+
         <p className={styles.source}>
-          Les effectifs sont arrondis au multiple de cinq. Les fiches Namesia disponibles sont accessibles depuis leur ligne.
+          Les effectifs nationaux sont arrondis au multiple de cinq. Le classement régional reprend les premiers prénoms cités par l’Insee. Les fiches Namesia disponibles sont accessibles depuis leur ligne. Étude publiée le 16 septembre 2026.
           {" "}
           <a href={NAME_POPULARITY_2025_SOURCE_URL} target="_blank" rel="noreferrer">
             Consulter l’étude de l’Insee <Icon name="arrow-up-right" size={16} />
