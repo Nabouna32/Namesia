@@ -1,7 +1,7 @@
 # Composants et interactions — Namesia
 
-- **Version :** 1.0
-- **Mis à jour le :** 2026-11-27 20:01:15 (Europe/Paris)
+- **Version :** 1.1
+- **Mis à jour le :** 2026-11-27 20:07:03 (Europe/Paris)
 
 
 Pour les API et recettes d'implémentation, consulter la [bibliothèque de composants](COMPONENTS.md). La source des contrats M3 est détaillée dans la [vérification Material 3](../MATERIAL-3-VERIFICATION.md).
