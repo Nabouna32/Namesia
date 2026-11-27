@@ -82,6 +82,29 @@ test("l’accueil reste utilisable sur mobile et tablette", async ({ page }) => 
 });
 
 
+test("le comparateur restaure et synchronise sa sélection depuis l’URL", async ({ page }) => {
+  const response = await page.goto("/comparer?prenoms=alice,gabriel", {
+    waitUntil: "domcontentloaded",
+    timeout: 30_000
+  });
+
+  expect(response?.status(), "HTTP comparateur préselectionné").toBeLessThan(400);
+  const alice = page.locator(".compare-option").filter({ hasText: "Alice" }).locator("input");
+  const gabriel = page.locator(".compare-option").filter({ hasText: "Gabriel" }).locator("input");
+
+  await expect(alice).toBeChecked();
+  await expect(gabriel).toBeChecked();
+  await expect(page.getByRole("table")).toBeVisible();
+  await expect(page.getByRole("rowheader", { name: "Origine & signification" })).toBeVisible();
+
+  await page.getByRole("button", { name: "Retirer Gabriel de la sélection" }).click();
+  await expect(page).toHaveURL(/\/comparer\?prenoms=alice$/);
+  await expect(alice).toBeChecked();
+  await expect(gabriel).not.toBeChecked();
+  await expect(page.getByRole("table")).toHaveCount(0);
+  await expect(page.getByText("Choisissez encore un prénom pour lancer la comparaison.")).toBeVisible();
+});
+
 test("un favori peut être annulé ou fermé depuis sa Snackbar sur mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   const response = await page.goto("/prenoms/alice", {

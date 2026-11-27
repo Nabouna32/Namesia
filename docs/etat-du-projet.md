@@ -1,8 +1,8 @@
 # État du projet — Namesia
 
 - **Statut :** source de vérité de l’état courant
-- **Version :** 1.8
-- **Mis à jour le :** 2026-11-27 07:22:05 (Europe/Paris)
+- **Version :** 1.9
+- **Mis à jour le :** 2026-11-27 08:52:00 (Europe/Paris)
 
 ## Phase
 
