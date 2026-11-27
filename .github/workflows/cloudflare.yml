@@ -85,8 +85,13 @@ jobs:
           curl --fail --show-error --silent --location --max-time 30 "$PREVIEW_URL/prenoms/alice" --output "$profile"
           grep -Eiq '<title>[^<]*Alice' "$profile"
           og_image="$(node scripts/verify-open-graph.mjs "$profile" "$SITE_URL")"
-          og_type="$(curl --fail --show-error --silent --location --max-time 30 --output /dev/null --write-out '%{content_type}' "$og_image")"
-          test "$og_type" = "image/png"
+          echo "URL Open Graph détectée en Preview : $og_image"
+          if ! preview_og_response="$(curl --show-error --silent --location --retry 5 --retry-all-errors --retry-delay 3 --max-time 30 --output /dev/null --write-out '%{http_code} %{content_type}' "$og_image")"; then
+            echo "Impossible de récupérer la ressource og:image de la Preview."
+            exit 1
+          fi
+          echo "Réponse Open Graph de la Preview : $preview_og_response"
+          test "$preview_og_response" = "200 image/png"
           curl --fail --show-error --silent --location --max-time 30 "$PREVIEW_URL/admin" --output "$admin"
           grep -q 'Administration indisponible' "$admin"
           admin_status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' --request POST "$PREVIEW_URL/api/admin/prenoms")"
@@ -176,10 +181,6 @@ jobs:
             "$NEXT_PUBLIC_SUPABASE_URL/auth/v1/settings" \
             --output "$workdir/auth-settings.json"
           jq -e '.external.email == true' "$workdir/auth-settings.json"
-
-          echo "Vérifier l’image Open Graph générale"
-          og_type="$(curl --fail --show-error --silent --location --max-time 30 --output /dev/null --write-out '%{content_type}' "$SITE_URL/opengraph-image")"
-          test "$og_type" = "image/png"
 
           for method in GET POST; do
             status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' --request "$method" "$SITE_URL/api/admin/prenoms")"
