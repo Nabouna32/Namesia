@@ -61,7 +61,7 @@ jobs:
         run: |
           set -euo pipefail
           log_file="$RUNNER_TEMP/namesia-wrangler.log"
-          ./node_modules/.bin/wrangler dev --local --ip 127.0.0.1 --port 8787 >"$log_file" 2>&1 &
+          ./node_modules/.bin/wrangler dev --ip 127.0.0.1 --port 8787 >"$log_file" 2>&1 &
           server_pid=$!
           echo "$server_pid" > "$RUNNER_TEMP/namesia-wrangler.pid"
 
