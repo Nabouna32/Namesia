@@ -10,8 +10,8 @@ const adminClient = await readFile(new URL("../app/admin/admin-client.tsx", impo
 const namesSource = await readFile(new URL("../lib/names.ts", import.meta.url), "utf8");
 const publication = await readFile(new URL("../lib/publication-prenom.ts", import.meta.url), "utf8");
 const adminCatalog = await readFile(new URL("../lib/admin-catalog.ts", import.meta.url), "utf8");
-const architecture = await readFile(new URL("../docs/architecture.md", import.meta.url), "utf8");
-const standards = await readFile(new URL("../docs/standards-techniques.md", import.meta.url), "utf8");
+const architecture = await readFile(new URL("../docs/ARCHITECTURE.md", import.meta.url), "utf8");
+const standards = await readFile(new URL("../docs/TECHNICAL-STANDARDS.md", import.meta.url), "utf8");
 const agents = await readFile(new URL("../AGENTS.md", import.meta.url), "utf8");
 
 test("les types générés décrivent exactement le modèle relationnel actif", () => {
