@@ -6,7 +6,6 @@ import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { Button } from "@/components/material3/Button";
 import { Icon } from "@/components/material3/Icon";
 import { categoryTone } from "@/lib/category-color";
-import { RecordVisit } from "@/components/features/history/RecordVisit";
 import { RelatedNames } from "@/components/features/catalog/RelatedNames";
 import { ShareProfile } from "@/components/features/sharing/ShareLink";
 import { NamePopularityCard } from "@/components/features/popularity/NamePopularityCard";
@@ -108,7 +107,6 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
   return (
     <main id="contenu" tabIndex={-1} className="page-main profile-main">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ficheData) }} />
-      <RecordVisit slug={name.slug} />
       <div className="container profile">
         <nav className="breadcrumb" aria-label="Fil d’Ariane">
           <ol>
