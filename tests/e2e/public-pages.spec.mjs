@@ -49,6 +49,28 @@ test("les pages publiques essentielles sont disponibles sur bureau", async ({ pa
   expect(pageErrors, "Erreurs JavaScript sur les parcours publics").toEqual([]);
 });
 
+test("la recherche d’accueil propose une correction et ouvre la fiche", async ({ page }) => {
+  const response = await page.goto("/", {
+    waitUntil: "domcontentloaded",
+    timeout: 30_000
+  });
+
+  expect(response?.status(), "HTTP accueil pour la recherche").toBeLessThan(400);
+  const search = page.getByRole("searchbox", { name: "Rechercher un prénom" });
+  await search.fill("Alicee");
+
+  await expect(
+    page.getByText("Aucun résultat exact pour « Alicee ». Voici les prénoms les plus proches :")
+  ).toBeVisible();
+
+  const suggestion = page.locator('.search-compact a[href="/prenoms/alice"]');
+  await expect(suggestion).toBeVisible();
+  await suggestion.click();
+
+  await expect(page).toHaveURL(/\/prenoms\/alice$/);
+  await expect(page.locator("main h1").first()).toContainText("Alice");
+});
+
 test("les pages publiques ne débordent pas sur un écran de 320 pixels", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 740 });
 
