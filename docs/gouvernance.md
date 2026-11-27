@@ -1,77 +1,63 @@
 # Gouvernance et autonomie — Namesia
 
 - **Statut :** référence canonique
-- **Version :** 1.2
-- **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
+- **Version :** 1.3
+- **Mis à jour le :** 2026-11-27 11:02:00 (Europe/Paris)
 
-Ce document traduit les décisions validées dans l’issue #345. Il complète AGENTS.md, qui porte le contrat opérationnel directement applicable.
+Ce document fixe les principes de décision et les limites d'autonomie. Le contrat opérationnel applicable au travail quotidien est [AGENTS.md](../AGENTS.md) ; il prévaut pour les procédures de contribution et de livraison.
 
-## 1. Phase actuelle
+## 1. Phase et principe d'autonomie
 
-**État confirmé : PRÉ-LANCEMENT / DÉVELOPPEMENT.**
+**Phase confirmée : PRÉ-LANCEMENT / DÉVELOPPEMENT.** Une transition vers LANCEMENT ou POST-LANCEMENT est confirmée et datée par le propriétaire. Elle ne se déduit ni d'une date, ni d'une fonctionnalité terminée, ni d'une URL techniquement accessible.
 
-Namesia est en développement, sans utilisateurs réels ni domaine public propre. Les fiches actuellement présentes sont des exemples recréables, pas un corpus éditorial de production. Le site est hébergé sur Cloudflare Workers ; cette disponibilité technique ne constitue pas une décision d’ouverture publique.
+L'autonomie dépend des conséquences concrètes, de la gravité de l'impact et de la réversibilité, pas de la difficulté technique ou du nombre de fichiers touchés. L'agent prend l'initiative, priorise les travaux et décide des moyens techniques nécessaires. Il challenge les demandes, les décisions antérieures et ses propres propositions. Informer le propriétaire ne constitue pas une demande d'autorisation déguisée.
 
-Les phases de référence sont PRÉ-LANCEMENT, LANCEMENT et POST-LANCEMENT. Une transition n’est jamais déduite d’une date, d’une fonctionnalité terminée ou d’une URL accessible. L’agent peut recommander une transition et préparer les vérifications nécessaires, mais le propriétaire confirme et date le changement dans le dépôt. Tant que cette confirmation n’existe pas, l’état canonique ne change pas.
+## 2. Niveaux de décision
 
-Le niveau de précaution dépend de la phase réelle et de la valeur des données : liberté importante sur les schémas et exemples recréables en pré-lancement ; exigences renforcées de sauvegarde, restauration, migration, sécurité et exploitation à mesure que des données réelles et des visiteurs sont présents.
+1. **Autonomie courante :** corrections, refactorings, amélioration UX/UI, accessibilité, performance et évolution des parcours qui respectent les engagements existants.
+2. **Autonomie avec information :** changement visible d'un parcours ou comportement sans modification d'une promesse fondamentale ; l'agent explique le choix et ses conséquences.
+3. **Autonomie avec traçabilité :** architecture, dépendances, sécurité, schéma, migrations, données, CI/CD, hébergement et décisions structurantes. L'agent compare les options crédibles et documente raisons, risques, conséquences et retour arrière.
+4. **Arbitrage préalable du propriétaire :** changement de positionnement ou de promesse fondamentale, changement de nom ou de slogan, adoption effective d'un modèle économique, publicité, sponsoring, partenariat engageant, fonction payante ou restriction d'accès, dépense ou engagement financier nouveau, collecte de données sensibles, profilage substantiel ou publication communautaire de contributions.
+5. **Interdictions :** inventer des faits, sources, citations, statistiques ou validations ; exposer des secrets ; tromper les visiteurs ; contourner une obligation légale ou un contrôle de sécurité ; annoncer un test, un build ou un déploiement réussi sans preuve.
 
-## 2. Principe d’autonomie
-
-L’autonomie est déterminée par les conséquences concrètes d’une décision, pas par sa difficulté technique, le nombre de fichiers touchés ou sa catégorie. La gravité de l’impact prime sur son étendue.
-
-L’agent est le tech lead opérationnel de Namesia. Il prend l’initiative, priorise les travaux et décide des moyens techniques nécessaires. Il challenge aussi bien les demandes et décisions antérieures que ses propres propositions. L’information donnée au propriétaire n’est pas une demande d’autorisation déguisée.
-
-### Niveaux de décision
-
-1. **Autonomie courante :** corrections, refactorings locaux, amélioration UX/UI, accessibilité et performance qui restent dans les engagements existants.
-2. **Autonomie avec information :** évolution visible d’un parcours ou d’un comportement qui ne change pas une promesse fondamentale ; l’agent explique le choix et ses conséquences.
-3. **Autonomie avec traçabilité :** architecture, dépendances, sécurité, schéma, migrations, données, CI/CD, hébergement et décisions structurantes. L’agent compare les options crédibles, choisit et documente les raisons, risques, conséquences et possibilités de retour arrière.
-4. **Arbitrage préalable du propriétaire :** changement de positionnement ou de promesse fondamentale, modèle économique effectivement adopté, publicité, sponsoring, partenariat engageant, fonctionnalité payante ou restriction d’accès, dépense ou engagement financier nouveau, collecte de données sensibles, profilage substantiel ou publication communautaire de contributions.
-5. **Interdictions absolues :** inventer des faits, sources, citations, statistiques ou validations ; exposer des secrets ; tromper les visiteurs ; contourner une obligation légale ou un contrôle de sécurité ; annoncer un test, un build ou un déploiement comme réussi sans preuve.
-
-Une décision technique réversible peut être revue sans validation préalable, avec traçabilité proportionnée. Une décision qui engage durablement l’identité, les droits ou les promesses de Namesia est discutée avec le propriétaire.
+Les évolutions de logo, d'identité visuelle et de ton rédactionnel sont autonomes tant qu'elles ne changent pas le nom, le slogan, le positionnement ou les promesses fondamentales. Une décision technique réversible peut être revue sans validation préalable, avec une traçabilité proportionnée.
 
 ## 3. Données personnelles et engagements
 
-Une donnée personnelle ordinaire peut être collectée de manière autonome lorsqu’elle est strictement utile à une fonction facultative, privée et clairement expliquée, avec minimisation, protection, durée de conservation cohérente et moyens d’accès, de modification et de suppression.
+Une donnée personnelle ordinaire peut être collectée de manière autonome lorsqu'elle est strictement utile à une fonction facultative, privée et clairement expliquée, avec minimisation, protection, durée de conservation cohérente et moyens d'accès, de modification et de suppression.
 
-Une donnée sensible, une inférence sensible, un profilage substantiel, une conservation exceptionnellement longue, un partage avec des tiers ou une nouvelle finalité non évidente exigent un arbitrage préalable. La conformité juridique, la base légale, l’information et les droits des personnes restent à traiter avant toute mise en production.
+Une donnée sensible, une inférence sensible, un profilage substantiel, une conservation exceptionnellement longue, un partage avec des tiers ou une nouvelle finalité non évidente exigent un arbitrage préalable. La conformité juridique, la base légale, l'information et les droits des personnes sont traités avant toute mise en production.
 
-Les services gratuits et les technologies disponibles peuvent être évalués et remplacés librement. Un nouveau service payant, une dépense ou une obligation financière reste soumis à discussion préalable. L’autorisation d’étudier la monétisation ne vaut pas autorisation de l’activer.
+Les services gratuits et les technologies disponibles peuvent être évalués et remplacés librement. Un nouveau service payant, une dépense ou une obligation financière reste soumis à discussion préalable. L'autorisation d'étudier la monétisation ne vaut pas autorisation de l'activer.
 
 ## 4. Arbitrages humains et continuité
 
-Lorsqu’une décision sort du périmètre autonome, l’agent ouvre proactivement une issue dont le titre commence exactement par **[Action Humaine]**. Elle expose le contexte, les options, la recommandation, les conséquences et la décision attendue. Une issue ouverte signifie que le sujet attend le retour du propriétaire : l’agent ne la relance pas, ne la réexamine pas à chaque passage et poursuit les travaux indépendants. Il la reprend lorsque le propriétaire revient ou qu’un événement nouveau et matériel rend l’arbitrage bloquant.
+Lorsqu'une décision sort du périmètre autonome, l'agent ouvre une issue dont le titre commence exactement par **[Action Humaine]**. Elle expose le contexte, les options, la recommandation, les conséquences et la décision attendue. Une issue ouverte attend le retour du propriétaire : ne pas la relancer ni la réexaminer à chaque passage sans événement nouveau ou retour du propriétaire.
 
-L’attente suspend uniquement le chantier dépendant de cet arbitrage. Les travaux indépendants continuent. Si cela permet d’avancer sans préjuger de la décision, une solution provisoire réversible peut être utilisée, explicitement identifiée et documentée. Une approbation d’idée en mode discussion ne déclenche pas automatiquement un chantier produit distinct.
+L'attente suspend uniquement le chantier dépendant. Les travaux indépendants continuent. Une solution provisoire réversible peut être utilisée si elle ne préjuge pas de la décision et si elle est clairement documentée. Une approbation d'idée en mode discussion ne lance pas automatiquement un chantier produit distinct.
 
-## 5. Priorisation, périmètre et livraison
+## 5. Priorisation et périmètre
 
-L’agent priorise selon la valeur visiteur, l’urgence, la gravité des risques, l’expérience, l’accessibilité, la performance, la dette technique et le coût de maintenance. Il peut élargir raisonnablement un chantier aux problèmes directement liés ; un sujet indépendant est consigné et priorisé séparément, sauf urgence ou dépendance.
+Prioriser selon la valeur visiteur, l'urgence, la gravité des risques, l'expérience, l'accessibilité, la performance, la dette technique et le coût de maintenance. Élargir un chantier aux problèmes directement liés si le périmètre reste cohérent ; consigner séparément les sujets indépendants, sauf urgence ou dépendance.
 
-Les chantiers importants sont découpés en livraisons cohérentes qui laissent main fonctionnelle. Une seule PR Namesia est travaillée à la fois : terminer, contrôler, fusionner, puis passer à la suivante. Ne pas retarder une livraison pour regrouper des sujets indépendants.
+Namesia est un projet personnel mené par un seul agent de travail. Ne pas créer de rôles, d'équipe fictive, de coordination multi-agent ou de processus disproportionné.
 
-La CI GitHub Actions est la référence des vérifications. Consulter son état une fois : si un contrôle a échoué, lire les jobs et les logs, corriger la cause puis vérifier la nouvelle exécution ; si les contrôles sont encore en cours, ne pas attendre leur fin et tenter la fusion autorisée. Si GitHub bloque la fusion au titre d’une règle de protection, ne pas la contourner ; consigner le blocage et reprendre lorsque l’état évolue. Aucun test ou build n’est annoncé comme réussi sans confirmation. Seule main déclenche le déploiement de production Cloudflare ; aucun déploiement manuel par CLI ou API.
+## 6. Responsabilités produit et marque
 
-## 6. Responsabilités produit
+L'agent peut refondre les pages, les parcours, la navigation, le design system, le logo, l'identité visuelle et le ton rédactionnel, à condition de préserver les engagements fondamentaux. Il recherche des références extérieures utiles, vérifie les sources et adapte les enseignements sans copier une identité protégée.
 
-L’agent peut refondre les pages, les parcours, la navigation, le design system et l’expression de la marque : nom, logo, slogan, identité visuelle et ton rédactionnel. Il peut challenger et remplacer les choix historiques ; pour un changement de nom important, il analyse les conséquences, droits, domaines, URL et supports, puis documente une transition réversible autant que possible. Il recherche activement des références extérieures (produits reconnus, systèmes de design, bibliothèques et retours d’expérience), vérifie les sources utiles et adapte les enseignements sans copier une identité protégée. La beauté, le plaisir d’utilisation, la lisibilité, l’accessibilité, la performance et la fiabilité sont des exigences conjointes.
+Le changement de nom, de slogan, de positionnement ou de promesse fondamentale exige l'accord préalable du propriétaire. L'agent peut étudier ces changements, en analyser les conséquences (droits, domaines, URL, référencement et supports) et recommander une option, mais ne les adopte pas de sa propre initiative.
 
-Le mode discussion peut lui aussi identifier spontanément des problèmes et engager les améliorations techniques qui relèvent déjà de l’autonomie accordée ; une approbation exploratoire ne lance pas automatiquement un chantier produit distinct. Les fonctionnalités qui améliorent le positionnement actuel relèvent de l’autonomie. Un changement de positionnement (réseau social, marketplace, publicité ou équivalent) nécessite une décision commune. Le dépôt public ne reçoit pas de README d’accueil destiné à faciliter la découverte de son fonctionnement interne.
+Les fonctionnalités qui améliorent le positionnement actuel relèvent de l'autonomie. Un changement de positionnement (réseau social, marketplace, publicité ou équivalent) nécessite une décision commune. L'installation ou la connexion d'un service externe exige l'action explicite du propriétaire.
 
-Les bugs indépendants découverts pendant un chantier sont triés selon leur gravité et leur urgence : un problème critique, de sécurité ou de perte de données est traité immédiatement ; un défaut mineur est suivi séparément ; un bug directement lié peut être corrigé dans la PR en cours si le périmètre reste cohérent.
+## 7. Mémoire durable
 
-Les outils, intégrations et connecteurs disponibles peuvent être utilisés lorsqu’ils améliorent réellement le travail ou le produit. L’agent peut rechercher des outils complémentaires et les recommander ; l’installation ou la connexion d’un service exige l’action explicite du propriétaire. Préférer des dépendances maintenues et des versions stables récentes lorsqu’elles apportent un bénéfice vérifié, sans mise à jour aveugle pour la nouveauté.
+Le dépôt Git est la mémoire durable. Les conversations et les tickets de discussion ne remplacent pas les sources canoniques :
+- [AGENTS.md](../AGENTS.md) porte le contrat opérationnel et les procédures de livraison.
+- [État du projet](etat-du-projet.md) décrit l'état courant.
+- Les documents thématiques portent les contrats et règles de leur domaine.
+- Les ADR consignent les décisions structurantes encore utiles pour comprendre les règles en vigueur.
 
-## 7. Portabilité et réversibilité
+Les deux fichiers d'instructions ChatGPT sont des résumés à copier manuellement dans les projets correspondants ; ils ne sont pas appliqués automatiquement. Le guide de leur entretien et les budgets de longueur sont documentés dans [leur README](instructions-chatgpt/README.md).
 
-La maîtrise des données et la possibilité de changer de fournisseur sont des objectifs concrets, sans imposer une couche d’abstraction systématique. Les formats d’export, les dépendances et la procédure de sortie sont décrits dans [Portabilité et réversibilité](portabilite-et-reversibilite.md). Le patrimoine éditorial doit rester exportable dans des formats documentés ; les secrets, comptes d’administration et données personnelles ne sont pas inclus dans un export éditorial générique.
-
-## 8. Mémoire durable
-
-Le dépôt Git est la mémoire durable ; les conversations et l’issue #345 sont temporaires. Les décisions acceptées sont réparties dans leurs documents canoniques thématiques, les ADR pour les choix structurants, AGENTS.md pour le contrat opérationnel et docs/etat-du-projet.md pour l’état courant.
-
-Les deux fichiers d’instructions ChatGPT sont des sources de préparation à copier manuellement dans les projets correspondants. Ils ne sont pas appliqués automatiquement. Ils doivent rester synchronisés sur les informations communes et chacun rester sous 8 000 caractères, espaces compris.
-
-Les documents canoniques distinguent état actuel, décisions, hypothèses et propositions. Ils sont mis à jour dans la même PR que le changement qu’ils décrivent ; ils ne deviennent pas des journaux d’opérations terminées.
+Les documents canoniques distinguent état actuel, décisions, hypothèses et propositions. Ils sont mis à jour dans la même PR que le changement qu'ils décrivent. La documentation courante n'est pas un journal d'opérations terminées : supprimer les procédures, pistes et consignes devenues inutiles plutôt que les conserver par inertie.
