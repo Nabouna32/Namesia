@@ -121,6 +121,7 @@ begin
     or p_display_name is null
     or p_display_name is distinct from btrim(p_display_name)
     or char_length(p_display_name) not between 1 and 100
+    or p_gender is null
     or p_gender not in ('feminin', 'masculin', 'mixte', 'inconnu')
     or p_schema_version is distinct from '2.0.0'
     or jsonb_typeof(p_content) is distinct from 'object'
