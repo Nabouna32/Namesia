@@ -13,7 +13,8 @@ test("l'origine canonique est explicite, validée et sans fallback", () => {
   assert.match(siteUrl, /new URL\(configuredSiteUrl\)/);
   assert.match(siteUrl, /siteUrl\.protocol !== "https:"/);
   assert.doesNotMatch(siteUrl, /\?\?/);
-  assert.match(readme, /NEXT_PUBLIC_SITE_URL` \(requise/);
+  assert.match(environments, /`NEXT_PUBLIC_SITE_URL`/);
+  assert.match(environments, /origine canonique du site/);
   assert.match(envExample, /NEXT_PUBLIC_SITE_URL=https:\/\/namesia\.nabouna\.workers\.dev/);
   assert.match(workflow, /NEXT_PUBLIC_SITE_URL: https:\/\/namesia\.nabouna\.workers\.dev/);
 });
