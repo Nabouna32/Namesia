@@ -1,83 +1,73 @@
 # Génération et import des fiches — Namesia
 
-- **Statut :** procédure cible de la V1
-- **Version :** 2.0
-- **Mis à jour :** 2026-11-22
+- **Statut :** procédure opérationnelle
+- **Version :** 3.1
+- **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
 
-## 1. Périmètre réel
+## 1. Périmètre
 
-Namesia ne génère pas actuellement les fiches dans son application. Le contenu est produit en amont :
-- par une API de modèle IA ;
-- ou dans une conversation avec un assistant.
+La génération est effectuée en amont de l’application publique. Le workflow GitHub Actions « Générer une fiche avec Groq » est déclenché manuellement depuis main, pour un seul prénom par exécution. Il n’existe aucune route publique de génération et aucun traitement planifié ou massif.
 
-Le résultat est ensuite fourni à Namesia au format JSON. Ce JSON est un format d'échange, pas le format de stockage : l'API le valide puis une fonction SQL unique répartit les rubriques dans les colonnes relationnelles et les associations symboliques dans leurs lignes dédiées. La création du prénom, de sa version et de ses associations est atomique : tout est enregistré ou rien ne l'est. L'application assure ensuite la prévisualisation et la publication explicite.
+Le modèle utilisé par défaut est openai/gpt-oss-20b via l’API Groq. Ce modèle est choisi parce qu’il prend en charge les sorties structurées strictes de Groq. Le workflow doit rester sur le niveau gratuit ; aucune mise à niveau, aucun moyen de paiement ni aucune dépense ne sont autorisés sans arbitrage préalable du propriétaire.
 
-La génération par IA n'est pas une vérification documentaire. La validation technique du JSON ne confirme pas l'exactitude des étymologies, dates, traditions ou usages.
+Références fournisseur : [Clés API Supabase](https://supabase.com/docs/guides/api/api-keys), [Rôles PostgreSQL Supabase](https://supabase.com/docs/guides/database/postgres/roles), [Structured Outputs](https://console.groq.com/docs/structured-outputs), [Models](https://console.groq.com/docs/models), [Rate Limits](https://console.groq.com/docs/rate-limits).
 
-## 2. Contrat de sortie
+## 2. Séparation des contrats
 
-Le fichier doit respecter exactement [schemas/fiche-prenom.schema.json](../schemas/fiche-prenom.schema.json).
+Le modèle répond au schéma strict [fiche-prenom.groq.schema.json](../schemas/fiche-prenom.groq.schema.json). Les propriétés sont toutes requises ; les rubriques facultatives utilisent une chaîne vide lorsqu’elles ne peuvent pas être formulées avec une confiance raisonnable.
 
-Règles :
-- JSON strict, sans commentaire ni texte avant/après ;
-- schema_version doit correspondre à une version prise en charge ;
-- identity contient le slug, le nom affiché et le genre ;
-- content contient l'introduction et les rubriques disponibles ;
-- aucune propriété inconnue ;
-- aucun statut de publication, date interne, identifiant de base ou rôle administrateur ;
-- ne pas inventer de contenu pour remplir les rubriques facultatives ;
+Le script normalise ensuite les chaînes vides en propriétés absentes et construit le contrat d’import Namesia 2.0.0 défini par [fiche-prenom.schema.json](../schemas/fiche-prenom.schema.json). Le parseur partagé parseFichePrenom vérifie les types, les propriétés autorisées, les longueurs, le slug, le genre et les associations avant toute écriture.
 
-## 3. Import dans Namesia
+Le modèle ne produit ni identité technique, ni slug, ni version de schéma, ni statut, ni identifiant de base. Le script construit l’identité de façon déterministe depuis le prénom fourni. Aucun champ source ou citation n’est demandé au modèle.
 
-1. Se connecter à /admin avec un compte autorisé.
-2. Sélectionner un fichier JSON ou coller son contenu.
-3. Prévisualiser le document et contrôler les textes et associations.
-4. Corriger le JSON en amont si nécessaire.
-5. Importer : l'API valide de nouveau le contrat côté serveur.
-6. La base crée une nouvelle version en brouillon.
-7. Après relecture de la prévisualisation, publier explicitement.
+## 3. Étapes du pipeline
 
-L'import ne remplace jamais directement la version publiée. La page d'administration liste les fiches et leurs versions, ce qui permet de retrouver un brouillon après reconnexion, de le prévisualiser et de le publier. Dès la création, l'identité du prénom (slug, graphie et genre) est stable ; un changement d'identité ne passe pas par un simple import de contenu.
+1. **Déclenchement :** un propriétaire ayant accès au dépôt lance le workflow sur main et saisit une graphie et un genre.
+2. **Génération :** le script charge le prompt versionné et le schéma strict, appelle Groq et exige une réponse JSON complète.
+3. **Normalisation :** les champs facultatifs vides sont retirées ; les propriétés inconnues, réponses incomplètes, refus et JSON invalide sont rejetés.
+4. **Validation :** le parseur Namesia valide le contrat d’import existant. Une sortie invalide ne peut jamais atteindre Supabase.
+5. **Artefact :** le JSON d’import et un fichier JSON de métadonnées de génération sont conservés comme artefacts GitHub Actions pendant sept jours. Ils ne contiennent aucun secret.
+6. **Import facultatif :** par défaut, le workflow est en dry-run. Si l’option d’import est explicitement activée, la fiche est importée en brouillon dans Supabase.
+7. **Publication :** elle reste une action humaine distincte dans l’administration. Le workflow n’a aucun chemin de publication.
 
-## 4. Contrôles effectués par l'application
+Le script applique des tentatives limitées aux erreurs réseau, 429 et 5xx. Il ne réessaie pas une réponse invalide ou un refus du modèle. Les secrets ne sont jamais écrits dans les logs ou l’artefact.
 
-Les contrôles automatiques portent sur :
-- la syntaxe JSON ;
-- la version du schéma ;
-- les propriétés autorisées ;
-- les types et longueurs des champs ;
-- le format du slug ;
-- les valeurs autorisées du genre ;
-- la taille maximale de l'import ;
-- l'autorisation administrateur ;
-- l'unicité et la numérotation des versions ;
-- les transitions de publication.
+## 4. Provenance et idempotence
 
-Ces contrôles sont des contrôles de structure et de cohérence applicative. Ils ne constituent pas un contrôle factuel.
+Pour chaque fiche effectivement importée par le pipeline, les métadonnées sont stockées dans la table relationnelle privée private.name_profile_generation_metadata :
 
-À l'import, les champs éditoriaux deviennent des colonnes SQL distinctes (`introduction`, `origin_text`, `history_text`, `usage_text`). Chaque association symbolique devient une ligne de `name_profile_associations`, liée à la version. Les filtres SQL peuvent ainsi cibler le genre, la graphie, les rubriques ou les catégories/valeurs symboliques sans extraire des propriétés d'un JSONB global.
+- fournisseur et modèle effectivement retourné ;
+- version et empreinte SHA-256 du prompt ;
+- version du schéma de génération ;
+- empreinte SHA-256 du contenu normalisé ;
+- identifiant de requête Groq ;
+- date de génération ;
+- température et limite de sortie ;
+- tokens d’entrée et de sortie lorsque fournis.
 
-## 5. Publication
+Aucune colonne JSON de métadonnées n’est ajoutée. La table est dans le schéma PostgreSQL privé, non exposé à la Data API, et accessible en écriture/lecture uniquement au rôle service_role. L’identifiant de requête unique rend l’import idempotent : un nouvel essai réseau avec le même identifiant, la même identité et la même empreinte du contenu retourne la version déjà créée. La réutilisation du même identifiant pour une autre fiche ou un autre contenu est rejetée.
 
-- La publication est une action humaine explicite.
-- Le backend vérifie le compte administrateur.
-- La fonction SQL n'accepte qu'une version existante en brouillon.
-- L'ancienne version publiée est archivée dans la même transaction.
-- Une seule version est publique par prénom.
-- Les dates et statuts sont définis par Namesia, jamais par le JSON.
+L’import est transactionnel : prénom, version brouillon, associations et métadonnées sont créés ensemble ou pas du tout. Les imports administrateur habituels continuent de fonctionner sans métadonnées de génération.
 
-## 6. Sécurité
+## 5. Secrets et sécurité
 
-- La page d'administration n'est pas une frontière de sécurité.
-- Chaque route administrative vérifie le jeton Supabase et l'autorisation présente dans private.admin_users, dans le schéma PostgreSQL privé.
-- Les fonctions SQL vérifient également le rôle administrateur.
-- Aucune clé privilégiée Supabase n'est envoyée au navigateur.
-- L'auto-inscription publique n'est pas nécessaire : seuls les comptes Auth préalablement autorisés peuvent administrer le catalogue.
-- Les tables internes ne doivent pas être exposées à anon.
-- Les réponses contenant les brouillons et l'historique sont privées et non mises en cache.
+- GROQ_API_KEY est un secret GitHub Actions.
+- SUPABASE_SECRET_KEY (clé moderne `sb_secret_`) est nécessaire uniquement lorsque l’import est activé ; le script rejette les anciennes clés et l’envoie uniquement dans l’en-tête `apikey` de l’appel RPC. La passerelle Supabase la mappe vers le rôle SQL `service_role`.
+- L’URL publique est extraite de `.env.example` sans exécuter ce fichier comme un script shell ; le script valide HTTPS et le domaine Supabase avant d’envoyer la clé.
+- L’URL Supabase est publique et lue depuis .env.example.
+- Aucun secret privilégié n’est exposé dans le navigateur, une route publique, le dépôt, le prompt ou les artefacts.
+- Le workflow ne se déclenche pas sur les pull requests et son job est limité à main.
+- La fonction SQL accepte les métadonnées uniquement lorsque current_user vaut service_role. Elle reste SECURITY INVOKER ; le rôle effectif est fourni par la passerelle Supabase, sans utiliser auth.role(). Un administrateur authentifié ne peut pas fabriquer de provenance.
+- Le rôle service_role est privilégié : les secrets correspondants doivent être protégés et renouvelés en cas d’exposition.
 
-## 7. Limites et évolutions
+L’activation opérationnelle attend l’ajout des secrets par le propriétaire dans les paramètres GitHub Actions. Ne jamais demander qu’un secret soit envoyé dans une issue, une PR ou une conversation.
 
-Ne pas ajouter de pipeline de génération, de journal de tokens, de coût fournisseur, de stockage de prompts ou de gestion de sources tant que Namesia n'exécute pas réellement ces opérations et qu'un besoin concret n'existe pas.
+## 6. Limites éditoriales
 
-Si une génération automatisée est intégrée plus tard, elle devra produire le même contrat JSON et rester séparée de l'import et de la publication.
+La génération ne réalise aucune recherche documentaire et ne constitue pas une vérification factuelle. Le prompt interdit l’invention de sources, citations, statistiques, dates, traditions et étymologies ; les champs incertains peuvent rester absents. Cette consigne réduit le risque mais ne garantit pas l’exactitude.
+
+Toute fiche importée reste en brouillon. L’administrateur doit contrôler le contenu, les formulations prudentes, les variantes et les associations symboliques avant une éventuelle publication. Les règles complètes sont dans [politique-editoriale.md](politique-editoriale.md).
+
+## 7. Évolutions non incluses
+
+Pas de génération massive, de planification automatique, de publication automatique, de recherche documentaire, de citations générées, de stockage des prompts bruts, ni de coût fournisseur. Toute évolution doit répondre à un besoin réel, être documentée et respecter les arbitrages de [gouvernance.md](gouvernance.md).
