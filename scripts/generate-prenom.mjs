@@ -54,7 +54,7 @@ export function slugifierPrenom(displayName) {
   const slug = normalizedName
     .replace(/[œŒ]/g, "oe")
     .replace(/[æÆ]/g, "ae")
-    .replace(/ß/g, "ss")
+    .replace(/[ßẞ]/g, "ss")
     .replace(/[øØ]/g, "o")
     .replace(/[łŁ]/g, "l")
     .replace(/[đĐðÐ]/g, "d")
@@ -67,7 +67,7 @@ export function slugifierPrenom(displayName) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
-  if (!slug || slug.length > 120) throw new Error("Le prénom ne permet pas de créer un slug valide.");
+  if (!slug || slug.length > 120) throw new Error("Impossible de créer un slug ASCII à partir de cette graphie. Fournir une translittération latine explicite plutôt que d’en inventer une.");
   return slug;
 }
 
