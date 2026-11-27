@@ -105,7 +105,7 @@ test("le comparateur restaure et synchronise sa sélection depuis l’URL", asyn
   await expect(page.getByText("Choisissez encore un prénom pour lancer la comparaison.")).toBeVisible();
 });
 
-test("un favori peut être annulé ou fermé depuis sa Snackbar sur mobile", async ({ page }) => {
+test("un favori peut être annulé puis retrouvé après rechargement sur mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   const response = await page.goto("/prenoms/alice", {
     waitUntil: "domcontentloaded",
@@ -130,4 +130,11 @@ test("un favori peut être annulé ou fermé depuis sa Snackbar sur mobile", asy
   await page.getByRole("button", { name: "Fermer le message" }).click();
   await expect(favoriteButton).toHaveAttribute("aria-pressed", "true");
   await expect(snackbar).toHaveCount(0);
+
+  await page.goto("/favoris", { waitUntil: "domcontentloaded" });
+  const favoriteCard = page.locator(".name-grid").getByText("Alice", { exact: true });
+  await expect(favoriteCard).toBeVisible();
+
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await expect(favoriteCard).toBeVisible();
 });
