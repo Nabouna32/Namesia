@@ -84,6 +84,7 @@ test("l’URL Supabase est validée avant d’envoyer une clé privilégiée", (
   assert.throws(() => normaliserSupabaseUrl("http://example.supabase.co"));
   assert.throws(() => normaliserSupabaseUrl("https://example.supabase.co/path"));
   assert.throws(() => normaliserSupabaseUrl("https://attacker.example"));
+  assert.throws(() => normaliserSupabaseUrl("https://supabase.co"));
   assert.throws(() => normaliserSupabaseUrl("https://user:pass@example.supabase.co"));
 });
 
@@ -109,6 +110,7 @@ test("les chaînes vides des champs facultatifs sont retirées avant validation 
   assert.deepEqual(normalized.symbolic_associations, []);
   assert.throws(() => normaliserContenuGroq({ ...contentValide, unexpected: true }));
   assert.throws(() => normaliserContenuGroq({ ...contentValide, origin: 42 }));
+  assert.throws(() => normaliserContenuGroq({ introduction: "Texte" }));
 });
 
 test("la fiche générée respecte le contrat d’import existant", () => {
@@ -213,6 +215,7 @@ test("l’import SQL réserve les métadonnées au service_role et protège l’
 test("l’import explicite transmet la provenance via la clé Supabase privée", async () => {
   const directory = await mkdtemp(join(tmpdir(), "namesia-groq-import-"));
   let calls = 0;
+  let supabaseAttempts = 0;
   try {
     const result = await genererFiche({
       displayName: "Éloïse",
@@ -227,6 +230,7 @@ test("l’import explicite transmet la provenance via la clé Supabase privée",
       fetchImpl: async (url, options) => {
         calls += 1;
         if (url === GROQ_API_URL) return mockGroqResponse();
+        supabaseAttempts += 1;
         assert.equal(url, "https://example.supabase.co/rest/v1/rpc/import_name_profile");
         assert.equal(options.headers.apikey, "sb_secret_test");
         assert.equal(options.headers.Authorization, undefined);
@@ -243,6 +247,9 @@ test("l’import explicite transmet la provenance via la clé Supabase privée",
         assert.match(body.p_generation_prompt_sha256, /^[a-f0-9]{64}$/);
         const metadata = JSON.parse(await readFile(join(directory, "fiche-eloise.metadata.json"), "utf8"));
         assert.equal(metadata.contentSha256, body.p_generation_content_sha256);
+        if (supabaseAttempts === 1) {
+          return { ok: false, status: 503, json: async () => ({ code: "temporary" }) };
+        }
         return {
           ok: true,
           status: 200,
@@ -250,7 +257,8 @@ test("l’import explicite transmet la provenance via la clé Supabase privée",
         };
       }
     });
-    assert.equal(calls, 2);
+    assert.equal(calls, 3);
+    assert.equal(supabaseAttempts, 2);
     assert.deepEqual(result.imported, { profileId: "profile-test-id", version: 1 });
   } finally {
     await rm(directory, { recursive: true, force: true });
