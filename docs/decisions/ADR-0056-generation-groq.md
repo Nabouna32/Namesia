@@ -21,7 +21,7 @@ L’application publique ne doit pas recevoir de clé Groq ou de clé Supabase p
 6. Les métadonnées techniques sont stockées dans private.name_profile_generation_metadata, table relationnelle privée : fournisseur, modèle, version et empreinte du prompt, empreinte du contenu normalisé, version du schéma de génération, identifiants de requête et d’exécution GitHub, nombre d’alertes éditoriales heuristiques, date, paramètres et usage en tokens.
 7. Un contrôle heuristique non bloquant signale les URL, citations, références à des études, statistiques, années précises et phrases répétées. Le nombre d’alertes est persisté ; leur détail reste dans l’artefact temporaire. Il ne s’agit pas d’une vérification factuelle.
 
-L’identifiant de requête Groq et l’identifiant stable du workflow GitHub servent de clés d’idempotence. Une relance du même workflow ne retourne la fiche existante que si l’identité et l’empreinte du contenu correspondent ; une sortie différente est rejetée plutôt que d’ajouter une seconde version. Une nouvelle génération volontaire nécessite un nouveau déclenchement manuel.
+L’identifiant de requête Groq et l’identifiant stable du workflow GitHub servent de clés d’idempotence. Une relance du même workflow ne retourne la fiche existante que si l’identité, l’empreinte du contenu et le nombre d’alertes correspondent ; une sortie différente est rejetée plutôt que d’ajouter une seconde version. Une nouvelle génération volontaire nécessite un nouveau déclenchement manuel.
 8. La fonction SQL d’import conserve le parcours administrateur authentifié et autorise le rôle service_role uniquement avec des métadonnées Groq complètes. La clé secrète Supabase moderne `sb_secret_` est utilisée uniquement dans l’en-tête `apikey` de l’étape GitHub Actions d’import ; la passerelle mappe cette clé vers le rôle SQL `service_role`.
 9. Les clés GROQ_API_KEY et SUPABASE_SECRET_KEY (clé moderne sb_secret_) sont des secrets GitHub Actions ; la clé Supabase est transmise uniquement dans l’en-tête apikey, puis la passerelle la mappe vers service_role. Elles ne sont jamais stockées dans le dépôt, les artefacts ou le navigateur.
 10. Rester sur le niveau gratuit Groq. Si le modèle ou les quotas ne sont pas disponibles sur ce niveau, arrêter le processus. Aucun moyen de paiement, passage au plan Developer, service payant ou dépense sans arbitrage préalable.
@@ -55,4 +55,4 @@ L’identifiant de requête Groq et l’identifiant stable du workflow GitHub se
 - [Rôles PostgreSQL Supabase](https://supabase.com/docs/guides/database/postgres/roles)
 - [Documentation Groq — Structured Outputs](https://console.groq.com/docs/structured-outputs)
 - [Documentation Groq — modèles]
-- [Documentation Groq — facturation](https://console.groq.com/docs/models)
+- [Documentation Groq — facturation](https://console.groq.com/docs/billing-faqs)
