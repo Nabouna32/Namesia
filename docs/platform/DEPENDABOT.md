@@ -1,7 +1,7 @@
 # Exploitation de Dependabot
 
-- **Version :** 1.0
-- **Mis à jour le :** 2026-11-27 20:00:48 (Europe/Paris)
+- **Version :** 1.1
+- **Mis à jour le :** 2026-11-27 20:07:03 (Europe/Paris)
 
 ## Périmètre
 
