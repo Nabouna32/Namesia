@@ -25,7 +25,7 @@ Ce document résume l'état opérationnel et les arbitrages actifs. Les détails
 
 ## Données personnelles
 
-- **Favoris :** table `public.user_favorites` créée dans Supabase, versionnée par les migrations `20261127133138` et `20261127133505`. RLS isole les lignes par `auth.uid()`, l'insertion exige un prénom publié et les suppressions de compte/prénom déclenchent les cascades.
+- **Favoris :** table `public.user_favorites` créée dans Supabase, versionnée par les migrations `20261127133138`, `20261127133505` et `20261127134241`. RLS isole les lignes par `auth.uid()`, l'insertion exige un prénom publié et les suppressions de compte/prénom déclenchent les cascades.
 - Les favoris locaux existants ne sont transférés qu'après une action explicite depuis la page Favoris ; la copie locale n'est effacée qu'après transfert complet confirmé.
 - **Historique :** suspendu. L'ancien stockage `sessionStorage` est supprimé et aucune visite n'est enregistrée. L'activation explicite, la rétention proposée de 30 jours et la limite de huit entrées attendent l'arbitrage humain [#405](https://github.com/Nabouna32/Namesia/issues/405).
 - La suppression autonome du compte et la gestion complète des données personnelles restent à développer dans [#404](https://github.com/Nabouna32/Namesia/issues/404).
