@@ -1,9 +1,9 @@
 # ADR-0055 — Authentification des comptes Namesia par mot de passe
 
 - **Statut :** acceptée
-- **Version :** 1.4
+- **Version :** 1.5
 - **Décision prise le :** 2026-11-27 13:20:36 (Europe/Paris)
-- **Mis à jour le :** 2026-11-27 13:28:12 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 13:28:41 (Europe/Paris)
 - **Décideur :** propriétaire de Namesia
 - **Portée :** comptes visiteurs, sessions et autorisations administrateur
 
@@ -46,6 +46,7 @@ L'ancienne ADR-0049 imposait la protection HIBP de Supabase avant toute introduc
 - Le flux PKCE de Supabase Auth est utilisé avec `@supabase/ssr` et des cookies de même origine.
 - Les routes API lisent la session depuis les cookies et vérifient l'identité avec `auth.getUser()` ; l'interface ne transmet plus les jetons d'accès dans des en-têtes Bearer.
 - Les mutations administrateur exigent un en-tête `Origin` strictement égal à l'origine de la requête ; les routes GET restent en lecture seule.
+- Le proxy Next.js rafraîchit la session sur les routes de compte et d'administration, puis impose `Cache-Control: private, no-store` pour éviter qu'une réponse contenant des cookies de session soit mise en cache.
 - Les cookies sont de même origine, `SameSite=Lax` et `Secure` en production. Ils ne sont pas `HttpOnly`, car le client navigateur Supabase doit les lire ; la prévention des XSS reste donc essentielle.
 - Les erreurs de connexion et de récupération sont formulées de manière générique pour limiter l'énumération des comptes.
 - La confirmation de l'adresse e-mail reste activée.
