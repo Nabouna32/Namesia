@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 const workflow = await readFile(new URL("../.github/workflows/ci.yml", import.meta.url), "utf8");
-const agents = await readFile(new URL("../AGENTS.md", import.meta.url), "utf8");
+const agents = await readFile(new URL("../AGENTS.md", import.meta.url), "utf8");\nconst actionsGuide = await readFile(new URL("../docs/platform/GITHUB-ACTIONS.md", import.meta.url), "utf8");
 
 test("les actions GitHub sont épinglées sur des commits immuables", () => {
   const references = [...workflow.matchAll(/^\s*uses:\s*([^@\s]+)@([^\s#]+)(?:\s+#\s*(v[\w.-]+))?\s*$/gm)];
@@ -12,7 +12,7 @@ test("les actions GitHub sont épinglées sur des commits immuables", () => {
     assert.match(sha, /^[a-f0-9]{40}$/, `Référence mutable pour ${action}`);
     assert.match(version ?? "", /^v\d+(?:\.\d+(?:\.\d+)?)?$/, `Version amont absente pour ${action}`);
   }
-  assert.match(agents, /Toutes les actions GitHub.*SHA de commit complet à 40 caractères/);
+  assert.match(actionsGuide, /Les actions tierces sont épinglées sur un SHA complet/);
   assert.match(workflow, /persist-credentials: false/);
   assert.match(workflow, /npm audit --omit=dev --audit-level=high/);
   assert.match(workflow, /npm audit --audit-level=high/);
