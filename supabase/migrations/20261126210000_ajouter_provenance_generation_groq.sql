@@ -75,20 +75,24 @@ begin
     if p_generation_provider is distinct from 'groq'
       or p_generation_model is null
       or char_length(btrim(p_generation_model)) not between 1 and 120
+      or p_generation_model is distinct from btrim(p_generation_model)
       or p_generation_prompt_version is null
       or char_length(btrim(p_generation_prompt_version)) not between 1 and 80
+      or p_generation_prompt_version is distinct from btrim(p_generation_prompt_version)
       or p_generation_prompt_sha256 is null
       or p_generation_prompt_sha256 !~ '^[0-9a-f]{64}$'
       or p_generation_content_sha256 is null
       or p_generation_content_sha256 !~ '^[0-9a-f]{64}$'
       or p_generation_schema_version is null
       or char_length(btrim(p_generation_schema_version)) not between 1 and 80
+      or p_generation_schema_version is distinct from btrim(p_generation_schema_version)
       or p_generation_request_id is null
       or p_generation_workflow_run_id is null
       or p_generation_workflow_run_id <= 0
       or p_generation_editorial_warning_count is null
       or p_generation_editorial_warning_count < 0
       or char_length(btrim(p_generation_request_id)) not between 1 and 200
+      or p_generation_request_id is distinct from btrim(p_generation_request_id)
       or (p_generation_input_tokens is not null and p_generation_input_tokens < 0)
       or (p_generation_output_tokens is not null and p_generation_output_tokens < 0)
       or p_generation_temperature is null
@@ -185,6 +189,7 @@ begin
 
     if found then
       if v_existing_content_sha256 is distinct from p_generation_content_sha256
+        or v_existing_editorial_warning_count is distinct from p_generation_editorial_warning_count
         or v_existing_slug is distinct from p_slug
         or v_existing_display_name is distinct from p_display_name
         or v_existing_gender is distinct from p_gender
