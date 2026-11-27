@@ -36,7 +36,7 @@ Ce README est le portail de navigation du dépôt. Les documents détaillés son
 | --- | --- |
 | [Architecture](docs/ARCHITECTURE.md) | Vue d'ensemble des systèmes, responsabilités et flux |
 | [Modèle de données](docs/DATA-MODEL.md) | Tables, relations, publication, RLS et données personnelles |
-| [Standards techniques](docs/TECHNICAL-STANDARDS.md) | Maintenabilité, modularité, TypeScript, intégrations et qualité |
+| [Standards techniques](docs/TECHNICAL-STANDARDS.md) | Maintenabilité, modularité, TypeScript et intégrations |\n| [Tests et validation](docs/TESTING-AND-VALIDATION.md) | Stratégie de tests, parcours critiques et diagnostics |\n| [Sécurité Web](docs/platform/WEB-SECURITY.md) | En-têtes HTTP, protections navigateur et sessions administrateur |
 
 ### Design et expérience
 
