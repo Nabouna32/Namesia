@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { NameGender, NameIndexEntry } from "@/lib/names";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { GENDER_ICONS } from "@/lib/gender-icons";
-import { LIMITE_FAVORIS, creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
+import { LIMITE_FAVORIS, creerSauvegardeFavoris, lireSauvegardeFavoris, normaliserSlugsFavoris } from "@/lib/sauvegarde-favoris";
 import { normalizeSearchTerm, suggestSimilarNames } from "@/lib/name-search";
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
 import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
@@ -26,6 +26,7 @@ type Props = {
 };
 
 const TAILLE_MAX_SAUVEGARDE = 1_000_000;
+const CLE_FAVORIS_LEGACY = "namesia:favoris:v1";
 
 export function FavoritesList({
   names,
@@ -34,7 +35,8 @@ export function FavoritesList({
   initialSort = "enregistrement",
   initialVisibleCount = 24
 }: Props) {
-  const { slugs, pret, erreur, retirerPlusieurs, ajouterPlusieurs } = useFavorites();
+  const { slugs, authenticated, ready, error, unavailableCount, retirerIndisponibles, ajouterPlusieurs } = useFavorites();
+  const [migrationBusy, setMigrationBusy] = useState(false);
   const [messageImport, setMessageImport] = useState("");
   const [erreurImport, setErreurImport] = useState("");
   const [importPartiel, setImportPartiel] = useState(false);
@@ -51,8 +53,16 @@ export function FavoritesList({
     const name = parSlug.get(slug);
     return name ? [name] : [];
   });
-  const slugsIndisponibles = slugs.filter((slug) => !parSlug.has(slug));
-  if (!pret) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
+  if (!ready) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
+  if (!authenticated) {
+    return (
+      <div className={styles.empty}>
+        <p>Vos favoris sont désormais conservés dans votre compte et synchronisés entre vos appareils. Vous pouvez continuer à explorer toutes les fiches sans vous connecter.</p>
+        <Button href="/compte?redirect=%2Ffavoris">Se connecter</Button>
+        <Button variant="text" href="/compte?mode=register&redirect=%2Ffavoris">Créer un compte</Button>
+      </div>
+    );
+  }
 
   const termeNormalise = normalizeSearchTerm(recherche);
   const genres: NameGender[] = [...new Set(favoris.map((name) => name.gender))]
@@ -184,9 +194,9 @@ export function FavoritesList({
     try {
       const contenu: unknown = JSON.parse(await fichier.text());
       const slugsImportes = lireSauvegardeFavoris(contenu);
-      const resultat = ajouterPlusieurs(slugsImportes);
+      const resultat = await ajouterPlusieurs(slugsImportes);
       if (resultat === null) return;
-      setImportPartiel(resultat.nombreIgnoreLimite > 0);
+      setImportPartiel(resultat.nombreIgnoreLimite > 0 || resultat.nombreIgnoreIndisponible > 0);
 
       const messages = resultat.nombreAjoute > 0
         ? [`${resultat.nombreAjoute} ${resultat.nombreAjoute > 1 ? "favoris ajoutés" : "favori ajouté"} à votre sélection.`]
@@ -228,21 +238,27 @@ export function FavoritesList({
           <input type="file" accept=".json,application/json" onChange={importerFavoris} />
         </label>
       </div>
-      <p className={styles.help}>La sauvegarde contient uniquement les identifiants de vos favoris. L’import les ajoute à votre sélection actuelle, sans remplacer vos favoris existants. La copie reprend les noms de tous les résultats correspondant aux filtres, même au-delà des 24 premiers affichés.</p>
+      <p className={styles.help}>Vos favoris sont enregistrés dans votre compte, pas dans le stockage local du navigateur. Les sauvegardes JSON restent disponibles pour exporter ou importer votre sélection.</p>
+      <div className={styles.migration}>
+        <p>Si vous aviez déjà enregistré des favoris sur cet appareil, vous pouvez les transférer vers votre compte. Le transfert ne démarre qu’après votre clic ; la copie locale n’est effacée qu’une fois le transfert complet confirmé.</p>
+        <Button variant="tonal" type="button" disabled={migrationBusy} onClick={() => void migrerFavorisLocaux()}>
+          {migrationBusy ? "Transfert…" : "Importer mes anciens favoris de cet appareil"}
+        </Button>
+      </div>
       {messageCopie && <Snackbar severity="success">{messageCopie}</Snackbar>}
       {erreurCopie && <Snackbar severity="error">{erreurCopie}</Snackbar>}
 
       {messageImport && <Snackbar severity={importPartiel ? "warning" : "success"}>{messageImport}</Snackbar>}
       {erreurImport && <Snackbar severity="error">{erreurImport}</Snackbar>}
-      {erreur && favoris.length > 0 && (
+      {error && favoris.length > 0 && (
         <Snackbar severity="error">
-          Le stockage des favoris est indisponible ou contient des données illisibles. Vos modifications ne sont pas enregistrées.
+          Le service des favoris est momentanément indisponible. Vos modifications ne sont pas confirmées.
         </Snackbar>
       )}
 
       {favoris.length === 0 ? (
         <div className={styles.empty}>
-          <p className={erreur ? styles.error : undefined} role={erreur ? "alert" : undefined}>{erreur
+          <p className={error ? styles.error : undefined} role={error ? "alert" : undefined}>{error
             ? "Vos favoris ne peuvent pas être lus pour le moment."
             : slugs.length === 0
               ? "Vous n’avez pas encore enregistré de prénom."
@@ -355,15 +371,15 @@ export function FavoritesList({
           )}
         </>
       )}
-      {slugsIndisponibles.length > 0 && !erreur && (
+      {unavailableCount > 0 && !error && (
         <div className={styles.stale}>
           <p className={styles.note} role="status">
-            {slugsIndisponibles.length} {slugsIndisponibles.length > 1 ? "favoris ne sont plus" : "favori n’est plus"} publiés.
+            {unavailableCount} {unavailableCount > 1 ? "favoris ne sont plus" : "favori n’est plus"} publiés.
           </p>
           <Button variant="text"
             className="filter-action"
             type="button"
-            onClick={() => retirerPlusieurs(slugsIndisponibles)}
+            onClick={() => void retirerIndisponibles()}
           >
             Retirer les favoris indisponibles
           </Button>
