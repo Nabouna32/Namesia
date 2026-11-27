@@ -1,6 +1,6 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.4
+- **Version :** 1.5
 - **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
 
 Cette charte s'applique à tout le dépôt, aux contributions humaines et aux agents IA.
@@ -154,7 +154,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 
 - Les fiches peuvent être générées en amont par conversation ou par le workflow GitHub Actions manuel via Groq décrit dans `docs/pipeline-generation-ia.md`. Il est limité à `main`, une fiche par exécution, utilise un schéma de réponse strict distinct du contrat d'import 2.0.0, fonctionne en dry-run par défaut et n'importe qu'en brouillon sur action explicite.
 - L'activation du workflow attend les secrets GitHub Actions documentés dans l'issue [Action Humaine #354](https://github.com/Nabouna32/Namesia/issues/354). `GROQ_API_KEY` et `SUPABASE_SECRET_KEY` (clé moderne `sb_secret_`) restent dans GitHub Actions ; la clé Supabase n'est envoyée que dans l'en-tête `apikey`. Aucun secret privilégié n'est exposé au navigateur.
-- Les métadonnées des fiches importées sont conservées dans une table relationnelle privée, jamais dans une colonne JSON. La génération, la validation du schéma, la prévisualisation, l'import en brouillon et la publication sont des opérations distinctes. Aucune ne prouve l'exactitude factuelle du contenu ; le workflow ne fait pas de recherche documentaire.
+- Les métadonnées des fiches importées sont conservées dans une table relationnelle privée, jamais dans une colonne JSON. Un contrôle heuristique signale les liens, citations, statistiques, années et répétitions ; il ne vérifie pas les faits et ne remplace pas la revue humaine. La génération, la validation du schéma, la prévisualisation, l'import en brouillon et la publication sont des opérations distinctes. Aucune ne prouve l'exactitude factuelle du contenu ; le workflow ne fait pas de recherche documentaire.
 - Ne jamais inventer de sources, références, citations, statistiques ou statuts de vérification.
 - Ne pas présenter une origine, une étymologie ou une tradition incertaine comme une certitude.
 - Ne pas présenter une symbolique, une numérologie ou un portrait de personnalité comme une vérité scientifique ou prédictive.
