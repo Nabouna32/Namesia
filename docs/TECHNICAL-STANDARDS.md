@@ -1,11 +1,8 @@
 # Standards techniques et règles de maintenabilité — Namesia
 
-- **Statut ## 6. Qualité, tests et validation
-
-La stratégie de tests, les critères de choix et les diagnostics sont détaillés dans [TESTING-AND-VALIDATION.md](TESTING-AND-VALIDATION.md). Les déclencheurs, jobs et audits de la CI sont décrits dans [GitHub Actions](platform/GITHUB-ACTIONS.md).
-
-:** 1.14
-- **Mis à jour le :** 2026-11-27 20:06:22 (Europe/Paris)
+- **Statut :** règle canonique
+- **Version :** 1.15
+- **Mis à jour le :** 2026-11-27 20:06:37 (Europe/Paris)
 - **Portée :** application web, styles, composants, données et outillage
 
 Ce document définit le niveau de qualité attendu pour les évolutions techniques de Namesia. Il complète [AGENTS.md](../AGENTS.md), qui définit la méthode de travail et le challenge obligatoire.
@@ -76,35 +73,7 @@ Les règles détaillées de tokens, CSS, responsive, lisibilité et accessibilit
 
 ## 6. Qualité, tests et validation
 
-Chaque changement est validé au niveau adapté à son risque :
-
-- Tests unitaires pour les règles métier et transformations isolées.
-- Les tests Node natifs importent les modules TypeScript avec des chemins relatifs et l'extension `.ts`. Les fonctions pures testées par Node vivent dans des modules cœur sans alias `@/`, client Supabase ou runtime Next.js ; la couche applicative peut les réexporter.
-- Tests d'intégration pour les accès aux données, contrats et interactions entre modules.
-- Tests de composants ou E2E pour les parcours utilisateur critiques.
-- Playwright Chromium couvre uniquement des parcours fonctionnels stables sur la Preview interne : disponibilité des routes publiques essentielles, absence d'erreurs JavaScript et débordements responsive représentatifs. Les assertions de CSS, de géométrie ou de rendu propres à une correction sont temporaires et supprimées après validation.
-- **Aucune capture, vidéo, trace ou rapport Playwright n'est produit ou publié systématiquement.** La configuration normale désactive les captures, vidéos et traces.
-- Pour un diagnostic ponctuel sur une PR interne, le label `diagnostic-playwright` active les captures sur échec, les traces d'échec et la publication conditionnelle de `test-results/` comme artefact GitHub Actions avec une rétention d'un jour. Un appel temporaire à `page.screenshot()` permet de capturer aussi un rendu qui passe. L'artefact est consultable depuis le run Actions ; le supprimer dès que le diagnostic est terminé, ou le laisser expirer au plus tard après un jour.
-- Retirer le label, le code de diagnostic, les assertions temporaires et les captures une fois le rendu validé. Aucune galerie, baseline visuelle ou collection historique n'est maintenue ; l'upload ne s'exécute jamais sans le label explicite.
-- axe-core est exécuté comme diagnostic consultatif ; ses constats sont consignés dans les logs sans bloquer le rendu. Les erreurs HTTP, JavaScript et les débordements responsive restent bloquants.
-- Les tests sont choisis selon le risque : métier et parcours critiques d'abord. Éviter les assertions sur les textes éditoriaux, les détails CSS transitoires et les implémentations internes susceptibles d'évoluer. Retirer les tests devenus sans objet au lieu d'accumuler des contrats historiques.
-- Les tests E2E n'ouvrent aucune route d'administration et n'utilisent aucune session ni donnée privée. Les PR issues de forks ne reçoivent pas de Preview Cloudflare ni de secrets.
-- Vérifications statiques et build dans la CI GitHub Actions.
-- Les outils de build Cloudflare et de test navigateur (`@opennextjs/cloudflare`, `wrangler`, `@playwright/test`, `@axe-core/playwright`) sont des dépendances de développement exactes, verrouillées dans `package-lock.json`. Chaque job utilise `npm ci`. La CI exécute deux périmètres distincts : `npm audit --omit=dev --audit-level=high` bloque sur les vulnérabilités hautes ou critiques du graphe de production ; `npm audit --audit-level=high` audite aussi les dépendances de développement à titre diagnostique non bloquant. Ce second résultat apparaît dans les logs et le résumé du job pour suivre les vulnérabilités de l’outillage sans confondre leur présence avec une exposition du Worker. Il ne constitue pas une acceptation définitive : les avis restent à corriger et à réévaluer, notamment pour Wrangler/Miniflare.
-- Le workflow dédié `.github/workflows/workflow-security.yml` ne s'exécute que lorsque `.github/workflows/` ou `.github/dependabot.yml` change. Il vérifie les workflows avec `actionlint` 1.7.12 et ShellCheck, puis audite workflows et configuration Dependabot avec `zizmor` 1.33.1 en persona `pedantic`. Les actions et versions des outils sont épinglées.
-- Dependabot vérifie npm et les actions GitHub chaque jour calendaire à 12 h (`Europe/Paris`), propose chaque mise à jour dans une PR distincte et conserve un délai de refroidissement de 7 jours ; les correctifs de sécurité suivent leur mécanisme dédié.
-- Contrôles manuels ciblés lorsque l'accessibilité, le responsive ou le rendu visuel ne sont pas couverts par l'automatisation.
-Ne pas ajouter des tests purement décoratifs. Les tests doivent protéger un comportement ou une règle identifiable. Ne jamais déclarer un contrôle exécuté s'il ne l'a pas été.
-
-Pour une refonte CSS ou de composants, vérifier au minimum :
-- l'absence de régression fonctionnelle ;
-- les tailles d'écran étroites, intermédiaires et larges ;
-- le zoom et les tailles de texte augmentées ;
-- les états focus, hover, disabled et erreurs lorsqu'ils existent ;
-- les contrastes et la navigation clavier ;
-- les pages représentatives, pas uniquement la page d'accueil.
-
-Les builds de PR et les déploiements de production sont exécutés par GitHub Actions vers Cloudflare Workers. Les Previews internes servent aussi de cible aux tests navigateur ; aucune plateforme tierce de build ou de déploiement n'est requise.
+La stratégie de tests, les critères de choix et les diagnostics sont détaillés dans [TESTING-AND-VALIDATION.md](TESTING-AND-VALIDATION.md). Les déclencheurs, jobs et audits de la CI sont décrits dans [GitHub Actions](platform/GITHUB-ACTIONS.md).
 
 ## 7. Refactorisation et dette technique
 
@@ -148,8 +117,6 @@ Une dérogation est acceptable si elle est plus simple, plus sûre ou mieux adap
 
 Les en-têtes HTTP, protections navigateur et vérifications de session sont détaillés dans [WEB-SECURITY.md](platform/WEB-SECURITY.md).
 
-
-
 ## 11. Environnement d'exécution et dépendances
 
 - La version de référence de Node.js est définie une seule fois dans `.nvmrc` (26.13.1), sur la branche majeure 26.x ; le runtime Cloudflare/OpenNext et le runner GitHub Actions doivent rester compatibles avec cette branche.
@@ -165,5 +132,3 @@ Les en-têtes HTTP, protections navigateur et vérifications de session sont dé
 ## 12. Vérification de session administrateur
 
 La gestion des courses de vérification de session et du droit administrateur est détaillée dans [WEB-SECURITY.md](platform/WEB-SECURITY.md).
-
-
