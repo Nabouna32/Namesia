@@ -11,7 +11,9 @@ type HistoryContextValue = {
   clearHistory: () => void;
 };
 
-const LEGACY_HISTORY_KEY = "namesia:historique-session:v1";\n\nconst HistoryContext = createContext<HistoryContextValue>({
+const LEGACY_HISTORY_KEY = "namesia:historique-session:v1";
+
+const HistoryContext = createContext<HistoryContextValue>({
   slugs: [],
   ready: true,
   error: false,
@@ -21,6 +23,14 @@ const LEGACY_HISTORY_KEY = "namesia:historique-session:v1";\n\nconst HistoryCont
 });
 
 export function HistoryProvider({ children }: { children: ReactNode }) {
+  useEffect(() => {
+    try {
+      window.sessionStorage.removeItem(LEGACY_HISTORY_KEY);
+    } catch {
+      // L'ancien historique n'est plus utilisé ; un stockage inaccessible ne bloque pas l'exploration.
+    }
+  }, []);
+
   return (
     <HistoryContext.Provider value={{
       slugs: [],
