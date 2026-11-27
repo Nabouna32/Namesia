@@ -36,14 +36,19 @@ export function FavoriteButton({ slug, name }: Props) {
   if (!authenticated) {
     return (
       <div className={styles.container}>
-        <Button
-          variant="outlined"
-          href={`/compte?redirect=${encodeURIComponent(pathname || "/")}`}
-          disabled={!ready}
-        >
-          <Icon name="favorite" size={18} />
-          Se connecter pour enregistrer
-        </Button>
+        {ready ? (
+          <Button
+            variant="outlined"
+            href={`/compte?redirect=${encodeURIComponent(pathname || "/")}`}
+          >
+            <Icon name="favorite" size={18} />
+            Se connecter pour enregistrer
+          </Button>
+        ) : (
+          <Button variant="outlined" disabled>
+            Vérification du compte…
+          </Button>
+        )}
         <p className={styles.help}>Les favoris sont conservés dans votre compte et synchronisés entre vos appareils.</p>
       </div>
     );
