@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, useContext, useEffect, type ReactNode } from "react";
 
 type HistoryContextValue = {
   slugs: string[];
@@ -11,7 +11,7 @@ type HistoryContextValue = {
   clearHistory: () => void;
 };
 
-const HistoryContext = createContext<HistoryContextValue>({
+const LEGACY_HISTORY_KEY = "namesia:historique-session:v1";\n\nconst HistoryContext = createContext<HistoryContextValue>({
   slugs: [],
   ready: true,
   error: false,
