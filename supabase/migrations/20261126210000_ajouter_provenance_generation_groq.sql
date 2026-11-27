@@ -10,6 +10,7 @@ create table private.name_profile_generation_metadata (
   content_sha256 text not null check (content_sha256 ~ '^[0-9a-f]{64}$'),
   response_schema_version text not null check (char_length(btrim(response_schema_version)) between 1 and 80),
   request_id text not null unique check (char_length(btrim(request_id)) between 1 and 200),
+  workflow_run_id bigint not null unique check (workflow_run_id > 0),
   input_tokens integer check (input_tokens is null or input_tokens >= 0),
   output_tokens integer check (output_tokens is null or output_tokens >= 0),
   temperature numeric(3, 2) not null check (temperature between 0 and 2),
@@ -42,6 +43,7 @@ create function public.import_name_profile(
   p_generation_content_sha256 text default null,
   p_generation_schema_version text default null,
   p_generation_request_id text default null,
+  p_generation_workflow_run_id bigint default null,
   p_generation_input_tokens integer default null,
   p_generation_output_tokens integer default null,
   p_generation_temperature numeric default null,
@@ -61,6 +63,7 @@ declare
   v_position integer := 0;
   v_is_service_role boolean := current_user = 'service_role';
   v_existing_content_sha256 text;
+  v_existing_workflow_run_id bigint;
   v_existing_slug text;
   v_existing_display_name text;
   v_existing_gender text;
@@ -78,6 +81,8 @@ begin
       or p_generation_schema_version is null
       or char_length(btrim(p_generation_schema_version)) not between 1 and 80
       or p_generation_request_id is null
+      or p_generation_workflow_run_id is null
+      or p_generation_workflow_run_id <= 0
       or char_length(btrim(p_generation_request_id)) not between 1 and 200
       or (p_generation_input_tokens is not null and p_generation_input_tokens < 0)
       or (p_generation_output_tokens is not null and p_generation_output_tokens < 0)
@@ -105,6 +110,7 @@ begin
       or p_generation_content_sha256 is not null
       or p_generation_schema_version is not null
       or p_generation_request_id is not null
+      or p_generation_workflow_run_id is not null
       or p_generation_input_tokens is not null
       or p_generation_output_tokens is not null
       or p_generation_temperature is not null
@@ -141,13 +147,13 @@ begin
   end if;
 
   if v_is_service_role then
-    -- Une reprise réseau ne peut réutiliser un identifiant Groq pour un contenu différent.
-    select m.profile_id, p.version, m.content_sha256, n.slug, n.display_name, n.gender
-    into v_profile_id, v_version, v_existing_content_sha256, v_existing_slug, v_existing_display_name, v_existing_gender
+    -- Une relance du même workflow ne crée jamais une seconde version.
+    select m.profile_id, p.version, m.content_sha256, m.workflow_run_id, n.slug, n.display_name, n.gender
+    into v_profile_id, v_version, v_existing_content_sha256, v_existing_workflow_run_id, v_existing_slug, v_existing_display_name, v_existing_gender
     from private.name_profile_generation_metadata m
     join public.name_profiles p on p.id = m.profile_id
     join public.names n on n.id = p.name_id
-    where m.request_id = p_generation_request_id;
+    where m.workflow_run_id = p_generation_workflow_run_id;
 
     if found then
       if v_existing_content_sha256 is distinct from p_generation_content_sha256
@@ -155,7 +161,28 @@ begin
         or v_existing_display_name is distinct from p_display_name
         or v_existing_gender is distinct from p_gender
       then
-        raise exception 'Identifiant de requête Groq déjà associé à une autre fiche.' using errcode = '22023';
+        raise exception 'Cette exécution GitHub a déjà importé une autre fiche.' using errcode = '22023';
+      end if;
+      return query select v_profile_id, v_version;
+      return;
+    end if;
+
+    -- Une reprise réseau avec le même identifiant Groq reste également idempotente.
+    select m.profile_id, p.version, m.content_sha256, m.workflow_run_id, n.slug, n.display_name, n.gender
+    into v_profile_id, v_version, v_existing_content_sha256, v_existing_workflow_run_id, v_existing_slug, v_existing_display_name, v_existing_gender
+    from private.name_profile_generation_metadata m
+    join public.name_profiles p on p.id = m.profile_id
+    join public.names n on n.id = p.name_id
+    where m.request_id = p_generation_request_id;
+
+    if found then
+      if v_existing_workflow_run_id is distinct from p_generation_workflow_run_id
+        or v_existing_content_sha256 is distinct from p_generation_content_sha256
+        or v_existing_slug is distinct from p_slug
+        or v_existing_display_name is distinct from p_display_name
+        or v_existing_gender is distinct from p_gender
+      then
+        raise exception 'Identifiant de requête Groq déjà associé à une autre exécution ou fiche.' using errcode = '22023';
       end if;
       return query select v_profile_id, v_version;
       return;
@@ -232,13 +259,13 @@ begin
   if v_is_service_role then
     insert into private.name_profile_generation_metadata (
       profile_id, provider, model, prompt_version, prompt_sha256, content_sha256,
-      response_schema_version, request_id, input_tokens, output_tokens,
+      response_schema_version, request_id, workflow_run_id, input_tokens, output_tokens,
       temperature, max_completion_tokens, generated_at
     )
     values (
       v_profile_id, p_generation_provider, p_generation_model, p_generation_prompt_version,
       p_generation_prompt_sha256, p_generation_content_sha256, p_generation_schema_version, p_generation_request_id,
-      p_generation_input_tokens, p_generation_output_tokens, p_generation_temperature,
+      p_generation_workflow_run_id, p_generation_input_tokens, p_generation_output_tokens, p_generation_temperature,
       p_generation_max_completion_tokens, p_generated_at
     );
   end if;
@@ -249,12 +276,12 @@ $$;
 
 revoke all on function public.import_name_profile(
   text, text, text, jsonb, text, text, text, text, text, text, text, text,
-  integer, integer, numeric, integer, timestamptz
+  bigint, integer, integer, numeric, integer, timestamptz
 ) from public, anon;
 
 grant execute on function public.import_name_profile(
   text, text, text, jsonb, text, text, text, text, text, text, text, text,
-  integer, integer, numeric, integer, timestamptz
+  bigint, integer, integer, numeric, integer, timestamptz
 ) to authenticated, service_role;
 
 
