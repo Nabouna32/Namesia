@@ -38,4 +38,3 @@ export async function requireAdmin(_request: Request): Promise<AdminAccess> {
   return { supabase, user, error: null };
 }
 
-export { verifyAdminAccess } from "./admin-auth-core";
