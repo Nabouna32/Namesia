@@ -14,7 +14,7 @@ Les documents canoniques qui décrivent l'état actuel sont :
 - [Gouvernance et autonomie](../gouvernance.md)
 - [Exploitation, sécurité et qualité](../operations.md)
 - [Gouvernance éditoriale et génération](../qualite-editoriale.md)
-- [Génération et import Groq](../pipeline-generation-ia.md)
+- [Génération et import des fiches](../pipeline-generation-ia.md)
 - [Portabilité et réversibilité](../portabilite-et-reversibilite.md)
 - [Mesure et croissance](../mesure-et-croissance.md)
 
