@@ -2,6 +2,8 @@
 
 - **Statut :** acceptée
 - **Date :** 2026-11-24
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-27 20:10:47 (Europe/Paris)
 
 ## Contexte
 
@@ -22,7 +24,7 @@ Les spécifications officielles Material 3 restent la référence normative. Les
 - Material Web 2.5.0, utilisé uniquement pour recouper la convention des tokens CSS : commit `b4de401eb665ec63474f39319a4ba8f2145974cc`.
 - Angular Material 22.3.0, utilisé comme référence secondaire pour les tokens M3 de mouvement, d'état, d'élévation et de forme : commit `5c7b286a7684599f275a0f7b4b77752ae751b6bd`, fichiers déclarant Material Design system v0.161.
 
-Les versions, commits, fichiers concernés et limites d'interprétation sont centralisés dans [Vérification Material 3](../material-3-verification.md). Aucun lien vers `main` ou `androidx-main` ne doit servir de preuve de conformité dans ce contrat.
+Les versions, commits, fichiers concernés et limites d'interprétation sont centralisés dans [Vérification Material 3](../MATERIAL-3-VERIFICATION.md). Aucun lien vers `main` ou `androidx-main` ne doit servir de preuve de conformité dans ce contrat.
 
 ## Conséquences
 
