@@ -63,7 +63,7 @@ Les procédures détaillées sont dans [GitHub Actions](docs/platform/GITHUB-ACT
 - Privilégier la sémantique HTML native et l'accessibilité clavier. Ne pas ajouter d'ARIA redondant.
 - Traiter explicitement les erreurs ; ne pas transformer une panne en résultat vide ou fictif.
 - Ne pas ajouter de dépendance sans besoin concret, alternatives et coût de maintenance.
-- Les standards d'ingénierie sont détaillés dans [TECHNICAL-STANDARDS.md](docs/TECHNICAL-STANDARDS.md).
+- Les standards d'ingénierie sont détaillés dans [TECHNICAL-STANDARDS.md](docs/TECHNICAL-STANDARDS.md). Les règles de conception et de composants sont regroupées dans [DESIGN-SYSTEM.md](docs/DESIGN-SYSTEM.md) et ses guides spécialisés.
 
 ## 7. Contraintes propres à Namesia
 
