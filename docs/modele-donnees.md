@@ -88,7 +88,7 @@ Une ligne de provenance technique privée par version importée par le pipeline 
 | prompt_version, prompt_sha256 | Version et empreinte du prompt exécuté |
 | content_sha256 | Empreinte SHA-256 du contenu normalisé, pour vérifier l’idempotence |
 | response_schema_version | Version du schéma strict de génération |
-| request_id | Identifiant de réponse Groq unique, clé d’idempotence |
+| request_id, workflow_run_id | Identifiant Groq unique et identifiant stable de l’exécution GitHub, clés d’idempotence |
 | input_tokens, output_tokens | Usage retourné par le fournisseur, nullable |
 | temperature, max_completion_tokens | Paramètres effectifs de génération |
 | generated_at, created_at | Date de génération et date d’enregistrement |
