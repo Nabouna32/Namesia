@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 
 const databaseTypes = await readFile(new URL("../lib/supabase/database.types.ts", import.meta.url), "utf8");
 const serverClient = await readFile(new URL("../lib/supabase/server.ts", import.meta.url), "utf8");
+const browserClient = await readFile(new URL("../lib/supabase/browser.ts", import.meta.url), "utf8");
 const adminAuth = await readFile(new URL("../lib/admin-auth.ts", import.meta.url), "utf8");
 const adminClient = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
 const namesSource = await readFile(new URL("../lib/names.ts", import.meta.url), "utf8");
@@ -25,10 +26,11 @@ test("les types générés décrivent exactement le modèle relationnel actif", 
 });
 
 test("tous les clients Supabase utilisent le type Database généré", () => {
-  for (const source of [serverClient, adminClient]) {
-    assert.match(source, /createClient<Database>/);
-    assert.ok(source.includes("database.types"));
-  }
+  assert.match(serverClient, /createClient<Database>/);
+  assert.ok(serverClient.includes("database.types"));
+  assert.match(browserClient, /createBrowserClient<Database>/);
+  assert.ok(browserClient.includes("database.types"));
+  assert.match(adminClient, /createSupabaseBrowserClient\(\)/);
   assert.match(adminAuth, /createSupabaseSessionClient\(\)/);
   assert.match(adminAuth, /SupabaseClient<Database>/);
   assert.ok(adminAuth.includes("database.types"));
