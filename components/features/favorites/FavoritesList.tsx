@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { NameGender, NameIndexEntry } from "@/lib/names";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { GENDER_ICONS } from "@/lib/gender-icons";
-import { LIMITE_FAVORIS, creerSauvegardeFavoris, lireSauvegardeFavoris, normaliserSlugsFavoris } from "@/lib/sauvegarde-favoris";
+import { LIMITE_FAVORIS, creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
 import { normalizeSearchTerm, suggestSimilarNames } from "@/lib/name-search";
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
 import { useFavorites } from "@/components/features/favorites/FavoritesProvider";
@@ -26,7 +26,6 @@ type Props = {
 };
 
 const TAILLE_MAX_SAUVEGARDE = 1_000_000;
-const CLE_FAVORIS_LEGACY = "namesia:favoris:v1";
 
 export function FavoritesList({
   names,
@@ -36,7 +35,6 @@ export function FavoritesList({
   initialVisibleCount = 24
 }: Props) {
   const { slugs, authenticated, ready, error, unavailableCount, retirerIndisponibles, ajouterPlusieurs } = useFavorites();
-  const [migrationBusy, setMigrationBusy] = useState(false);
   const [messageImport, setMessageImport] = useState("");
   const [erreurImport, setErreurImport] = useState("");
   const [importPartiel, setImportPartiel] = useState(false);
@@ -218,49 +216,6 @@ export function FavoritesList({
     }
   }
 
-  async function migrerFavorisLocaux() {
-    setMigrationBusy(true);
-    setMessageImport("");
-    setErreurImport("");
-    setImportPartiel(false);
-
-    try {
-      const stored = window.localStorage.getItem(CLE_FAVORIS_LEGACY);
-      if (stored === null) {
-        setMessageImport("Aucun ancien favori local n’a été trouvé sur cet appareil.");
-        return;
-      }
-
-      const parsed: unknown = JSON.parse(stored);
-      const legacySlugs = normaliserSlugsFavoris(parsed);
-      if (!legacySlugs) {
-        setErreurImport("Les anciens favoris locaux sont illisibles. Ils ont été conservés sur cet appareil.");
-        return;
-      }
-
-      const result = await ajouterPlusieurs(legacySlugs);
-      if (result === null) {
-        setErreurImport("Le transfert n’a pas pu être confirmé. Les anciens favoris locaux ont été conservés.");
-        return;
-      }
-
-      const partial = result.nombreIgnoreLimite > 0 || result.nombreIgnoreIndisponible > 0;
-      setImportPartiel(partial);
-      if (partial) {
-        setMessageImport(`${result.nombreAjoute} favoris transférés. ${result.nombreIgnoreLimite + result.nombreIgnoreIndisponible} éléments n’ont pas été transférés ; la copie locale est conservée pour éviter toute perte.`);
-        return;
-      }
-
-      window.localStorage.removeItem(CLE_FAVORIS_LEGACY);
-      setMessageImport(result.nombreAjoute > 0
-        ? `${result.nombreAjoute} favoris transférés vers votre compte. La copie locale a été effacée.`
-        : "Ces favoris étaient déjà présents dans votre compte. La copie locale a été effacée.");
-    } catch {
-      setErreurImport("Le transfert a échoué. Les anciens favoris locaux ont été conservés.");
-    } finally {
-      setMigrationBusy(false);
-    }
-  }
 
   return (
     <div className={styles.content}>
@@ -286,12 +241,6 @@ export function FavoritesList({
         </label>
       </div>
       <p className={styles.help}>Vos favoris sont enregistrés dans votre compte, pas dans le stockage local du navigateur. Les sauvegardes JSON restent disponibles pour exporter ou importer votre sélection.</p>
-      <div className={styles.migration}>
-        <p>Si vous aviez déjà enregistré des favoris sur cet appareil, vous pouvez les transférer vers votre compte. Le transfert ne démarre qu’après votre clic ; la copie locale n’est effacée qu’une fois le transfert complet confirmé.</p>
-        <Button variant="tonal" type="button" disabled={migrationBusy} onClick={() => void migrerFavorisLocaux()}>
-          {migrationBusy ? "Transfert…" : "Importer mes anciens favoris de cet appareil"}
-        </Button>
-      </div>
       {messageCopie && <Snackbar severity="success">{messageCopie}</Snackbar>}
       {erreurCopie && <Snackbar severity="error">{erreurCopie}</Snackbar>}
 
