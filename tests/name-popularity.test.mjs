@@ -64,6 +64,8 @@ test("la page expose les profils publiés sans masquer les entrées hors catalog
   assert.ok(page.includes("NAME_REGIONAL_LEADERS_2025"));
   assert.ok(page.includes("regional-ranking-title"));
   assert.ok(page.includes("publishedSlugs.has(entry.slug) ? ("));
+  assert.ok(page.includes("NAME_REGIONAL_LEADERS_2025")); 
+  assert.ok(page.includes("Le classement régional Insee ne correspond pas à la fiche publiée"));
   assert.ok(page.includes('href={`/prenoms/${entry.slug}`}'));
   assert.ok(trendsCss.includes(".regionalList a:focus-visible"));
   assert.ok(trendsCss.includes(".regionalGrid"));

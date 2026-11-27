@@ -40,6 +40,12 @@ export default async function NameTrendsPage() {
       throw new Error(`Le classement Insee ne correspond pas à la fiche publiée : ${entry.slug}.`);
     }
   }
+  for (const entry of NAME_REGIONAL_LEADERS_2025) {
+    const publishedName = publishedNamesBySlug.get(entry.slug);
+    if (publishedName && (publishedName.name !== entry.name || publishedName.gender !== entry.gender)) {
+      throw new Error(`Le classement régional Insee ne correspond pas à la fiche publiée : ${entry.slug}.`);
+    }
+  }
   const publishedSlugs = new Set(publishedNamesBySlug.keys());
   const femaleNames = NAME_POPULARITY_2025.filter((entry) => entry.gender === "Féminin");
   const maleNames = NAME_POPULARITY_2025.filter((entry) => entry.gender === "Masculin");
