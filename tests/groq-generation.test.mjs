@@ -169,6 +169,7 @@ test("le dry-run génère un artefact validé sans contacter Supabase", async ()
     assert.equal(result.outputTokens, 220);
     assert.match(result.contentSha256, /^[a-f0-9]{64}$/);
     assert.equal(metadata.requestId, "chatcmpl-test-123");
+    assert.equal(metadata.workflowRunId, 12345);
     assert.equal(metadata.displayName, "Éloïse");
     assert.equal(metadata.slug, "eloise");
     assert.equal(metadata.gender, "feminin");
@@ -235,7 +236,8 @@ test("l’import explicite transmet la provenance via la clé Supabase privée",
       env: {
         GROQ_API_KEY: "groq-test-key",
         SUPABASE_URL: "https://example.supabase.co",
-        SUPABASE_SECRET_KEY: "sb_secret_test"
+        SUPABASE_SECRET_KEY: "sb_secret_test",
+        NAMESIA_WORKFLOW_RUN_ID: "12345"
       },
       outputDirectory: directory,
       fetchImpl: async (url, options) => {
@@ -249,6 +251,7 @@ test("l’import explicite transmet la provenance via la clé Supabase privée",
         assert.equal(body.p_generation_provider, "groq");
         assert.equal(body.p_generation_model, GROQ_MODEL);
         assert.equal(body.p_generation_request_id, "chatcmpl-test-123");
+        assert.equal(body.p_generation_workflow_run_id, 12345);
         assert.match(body.p_generation_content_sha256, /^[a-f0-9]{64}$/);
         assert.equal(body.p_generation_schema_version, "1.0.0");
         assert.equal(body.p_generation_input_tokens, 140);
@@ -345,7 +348,8 @@ test("une clé Supabase non moderne est rejetée avant tout appel réseau", asyn
     env: {
       GROQ_API_KEY: "test-key",
       SUPABASE_URL: "https://example.supabase.co",
-      SUPABASE_SECRET_KEY: "legacy-service-role-jwt"
+      SUPABASE_SECRET_KEY: "legacy-service-role-jwt",
+      NAMESIA_WORKFLOW_RUN_ID: "12345"
     },
     fetchImpl: async () => {
       calls += 1;
