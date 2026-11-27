@@ -1,7 +1,7 @@
 # Gouvernance éditoriale et génération des fiches — Namesia
 
 - **Statut :** référence canonique
-- **Version :** 1.2
+- **Version :** 1.3
 - **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
 
 ## Source et limites du contenu
@@ -36,7 +36,7 @@ Une sortie invalide ne doit jamais écraser une fiche valide. Les erreurs sont e
 
 ## Provenance et cycle de vie des fiches
 
-Pour chaque génération importée, la table privée `private.name_profile_generation_metadata` conserve fournisseur, modèle, version et empreinte SHA-256 du prompt, empreinte du contenu normalisé, version du schéma de réponse, identifiants de requête et d’exécution GitHub, date, paramètres et usage en tokens lorsqu’il est fourni. Elle ne stocke ni prompt brut, ni secret, ni document JSON complet. Un artefact de métadonnées distinct accompagne le JSON de fiche pendant sept jours. Cette traçabilité technique ne constitue pas une validation éditoriale ; le statut de revue humaine et un historique détaillé des modifications ne sont pas encore modélisés. Relier les sources aux affirmations uniquement lorsqu’un véritable processus documentaire existe. Ne jamais inventer ces métadonnées après coup.
+Pour chaque génération importée, la table privée `private.name_profile_generation_metadata` conserve fournisseur, modèle, version et empreinte SHA-256 du prompt, empreinte du contenu normalisé, version du schéma de réponse, identifiants de requête et d’exécution GitHub, nombre d’alertes heuristiques, date, paramètres et usage en tokens lorsqu’il est fourni. Elle ne stocke ni prompt brut, ni secret, ni document JSON complet. Un artefact de métadonnées distinct accompagne le JSON de fiche pendant sept jours et contient le détail des alertes heuristiques. Cette traçabilité technique ne constitue pas une validation éditoriale ; le statut de revue humaine et un historique détaillé des modifications ne sont pas encore modélisés. Relier les sources aux affirmations uniquement lorsqu’un véritable processus documentaire existe. Ne jamais inventer ces métadonnées après coup.
 
 Le cycle de vie couvre génération, validation, import, brouillon, publication, mise à jour, correction, dépublication, archivage et suppression. Les changements ciblés doivent éviter de régénérer inutilement toute une fiche. Prévenir doublons, écrasements accidentels, incohérences et publications incomplètes.
 
