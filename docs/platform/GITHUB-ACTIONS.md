@@ -1,7 +1,7 @@
 # GitHub Actions — CI et automatisation
 
 - **Version :** 1.1
-- **Mis à jour le :** 2026-11-27 20:26:08 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 20:26:49 (Europe/Paris)
 
 ## Sources de vérité
 
@@ -33,7 +33,7 @@ Déclencheurs : PR ouvertes, synchronisées, réouvertes, labellisées ou fermé
 - La Preview est contrôlée par HTTP et Playwright sur des parcours publics ; elle doit rester sans données privées et porter `X-Robots-Tag: noindex`.
 - Le job publie l'URL de Preview dans la conversation de la PR.
 
-Sur les Previews et après le déploiement de production, le workflow extrait la balise `og:image` du HTML de la fiche avec `scripts/verify-open-graph.mjs`. Le script exige une URL HTTPS absolue de même origine ; le workflow récupère ensuite cette URL et vérifie le type MIME `image/png`. Ce contrôle valide la ressource réellement annoncée par la page plutôt que de rechercher un nom de route codé en dur.
+Sur les Previews et après le déploiement de production, le workflow extrait la balise `og:image` du HTML de la fiche avec `scripts/verify-open-graph.mjs`. Le script exige une URL HTTPS absolue de même origine que l'origine canonique configurée (`NEXT_PUBLIC_SITE_URL`). En Preview, cette origine canonique reste celle de production ; le workflow récupère ensuite l'URL annoncée et vérifie le type MIME `image/png`. Ce contrôle valide la ressource réellement annoncée par la page plutôt que de rechercher un nom de route codé en dur.
 - La fermeture d'une PR déclenche le nettoyage de sa Preview.
 - Seul un push sur `main` ou un lancement manuel ciblant `main`, avec le déploiement activé, peut déployer la production.
 
