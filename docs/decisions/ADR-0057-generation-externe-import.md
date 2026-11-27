@@ -3,7 +3,7 @@
 - **Statut :** acceptée
 - **Version :** 1.0
 - **Décision prise le :** 2026-11-27 (heure non consignée)
-- **Mis à jour le :** 2026-11-27 10:40:53 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 10:42:38 (Europe/Paris)
 - **Décideur :** propriétaire de Namesia
 - **Périmètre :** production des fiches, outils de génération et administration
 
