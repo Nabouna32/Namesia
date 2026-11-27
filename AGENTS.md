@@ -1,7 +1,7 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.14
-- **Mis à jour le :** 2026-11-27 07:57:44 (Europe/Paris)
+- **Version :** 1.15
+- **Mis à jour le :** 2026-11-27 07:59:30 (Europe/Paris)
 
 Cette charte fixe les règles communes du dépôt. Les procédures détaillées restent dans les documents spécialisés : ne pas les recopier ici.
 
@@ -37,7 +37,7 @@ Ne pas contredire par principe, mais ne rien conserver par inertie. Corriger la 
 - Les fiches sont préparées en amont, puis importées en JSON dans les colonnes relationnelles dédiées de Supabase. Le JSON est un format d'échange, pas le modèle de stockage.
 - L'import crée un brouillon ; la publication est une action explicite de l'administrateur. Aucune génération ne publie automatiquement.
 - Un JSON valide prouve uniquement la conformité structurelle. Le contenu IA n'est pas vérifié automatiquement : distinguer faits, hypothèses, usages et symbolique ; nuancer ou omettre ce qui n'est pas établi.
-- Le parcours actuel est la génération assistée hors application, puis l'import et la revue. **L'ancien workflow GitHub Actions Groq est abandonné et ne doit pas être activé.** Une page privée d'administration appelant Groq reste une piste différée, non prioritaire ; aucun secret Groq ou Supabase associé à l'ancien workflow n'est requis.
+- Le parcours actuel est la génération assistée hors application, puis l'import et la revue. Toute future génération intégrée doit être une fonction privée d'administration, séparée du déploiement, documentée et soumise à une revue humaine avant import. Elle ne doit jamais publier automatiquement.
 - Ne jamais exposer de secret privilégié dans le navigateur, le dépôt, les logs ou une réponse publique.
 
 Références : [qualité éditoriale](docs/qualite-editoriale.md), [pipeline de génération et import](docs/pipeline-generation-ia.md), [modèle de données](docs/modele-donnees.md), [politique éditoriale](docs/politique-editoriale.md).
