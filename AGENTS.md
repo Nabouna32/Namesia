@@ -1,7 +1,7 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.11
-- **Mis à jour le :** 2026-11-27 07:49:50 (Europe/Paris)
+- **Version :** 1.12
+- **Mis à jour le :** 2026-11-27 07:52:30 (Europe/Paris)
 
 Cette charte fixe les règles communes du dépôt. Les procédures détaillées restent dans les documents spécialisés : ne pas les recopier ici.
 
@@ -64,7 +64,7 @@ Références : [qualité éditoriale](docs/qualite-editoriale.md), [pipeline de 
 - Toute évolution passe par une branche et une PR ; aucun push direct sur `main`. Garder une seule PR de travail ouverte à la fois. Avant un chantier, consulter les PR ouvertes, les issues ouvertes et les runs récents de `main`. Consulter une fois l'état de la CI GitHub Actions pour chaque PR.
 - Les PR, issues, titres, descriptions et commentaires sont en français. Une PR explique le besoin, la solution, les options, les compromis, les risques, la documentation, les vérifications et les limites restantes. Relire son diff complet avant fusion.
 - Le propriétaire autorise en permanence la fusion des PR vers `main`. Ne jamais contourner une règle de protection GitHub.
-- Toutes les actions GitHub du workflow sont épinglées sur un SHA de commit complet à 40 caractères, avec la version amont conservée en commentaire. **La CI GitHub Actions est l'unique mécanisme de test, de build et de vérification : aucune commande locale de test ou de compilation.** Si un contrôle échoue, lire les jobs et leurs logs, corriger la cause puis vérifier la nouvelle exécution. Si la CI est encore en cours, tenter la fusion autorisée sans attendre ; ne jamais annoncer un résultat non confirmé.
+- Toutes les actions GitHub du workflow sont épinglées sur un SHA de commit complet à 40 caractères, avec la version amont conservée en commentaire. **La CI GitHub Actions est l'unique mécanisme de test, de build et de vérification : aucune commande locale de test ou de compilation.** Si un contrôle a échoué, lire ses jobs et ses logs, corriger la cause, puis vérifier la nouvelle exécution. Si la CI est encore en cours, tenter la fusion autorisée sans attendre ; ne jamais annoncer un résultat non confirmé.
 - Si la CI de `main` est rouge au début d'un passage, corriger cette régression avant un nouveau chantier.
 - Seule la branche `main`, après fusion, déploie la production. Les Workers Previews et le déploiement de production sont gérés par GitHub Actions avec **Wrangler**, conformément à la configuration existante. Aucun déploiement manuel ou autre plateforme de production.
 - Décrire factuellement les résultats de CI, de Preview et de déploiement. Une fusion ne prouve pas à elle seule que les tests ou le déploiement ont réussi.
