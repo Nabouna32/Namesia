@@ -1,8 +1,8 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 4.03
-- **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
+- **Version :** 4.06
+- **Mis à jour le :** 2026-11-27 01:56:00 (Europe/Paris)
 
 ## Structure de la page
 
@@ -34,10 +34,12 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 ## 3. Responsabilités
 
 ### Production du contenu
-- Génération réalisée à l'extérieur de Namesia, par API ou conversation.
-- La sortie attendue est un JSON strict conforme à schemas/fiche-prenom.schema.json.
-- Le modèle ne choisit jamais le statut de publication.
-- Aucun champ de source, référence, preuve ou vérification n'appartient au contrat.
+- Génération réalisée en amont : conversation ou workflow GitHub Actions manuel via l’API Groq, limité à main et à un prénom par exécution.
+- Le workflow utilise un schéma de réponse strict distinct, normalise puis valide le contrat d’import Namesia 2.0.0 avec le parseur partagé.
+- Le dry-run est le comportement par défaut ; l’import explicite crée un brouillon et stocke sa provenance dans une table relationnelle privée. Un contrôle heuristique signale les URL, citations, statistiques, années et répétitions ; seul le nombre d’alertes est persisté. Les artefacts de fiche et de métadonnées sont conservés sept jours.
+- Aucun moteur de génération ni secret Groq/Supabase privilégié n’est présent dans le runtime public.
+- Le modèle ne choisit jamais le statut de publication ; aucune publication automatique.
+- Aucun champ de source, référence, preuve ou vérification n'appartient au contrat, car aucune recherche documentaire n’est effectuée.
 
 ### Administration
 - Connexion via Supabase Auth par lien e-mail.
@@ -55,6 +57,8 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Routes Next.js côté serveur pour les opérations administratives.
 - Vérification du jeton Supabase et de l'autorisation par RPC sur chaque requête.
 - Fonctions SQL transactionnelles pour créer une version et publier une version.
+- La fonction d’import accepte soit un administrateur authentifié sans métadonnées de génération, soit le rôle `service_role` avec une provenance Groq complète ; les reprises et relances sont idempotentes par identifiants de requête Groq et d’exécution GitHub, identité et empreinte du contenu.
+- Les métadonnées sont conservées dans `private.name_profile_generation_metadata`, inaccessible à anon et authenticated ; seul le rôle `service_role` peut les lire et les insérer. Le nombre d’alertes éditoriales heuristiques y est conservé, sans les détails qui restent dans l’artefact temporaire.
 - Les fonctions sont SECURITY INVOKER ; elles ne contournent pas RLS.
 - Aucune clé privilégiée Supabase dans le navigateur.
 - Les visiteurs disposent uniquement de la lecture des identités ayant une version publiée et de ces versions publiées.
@@ -84,7 +88,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Métadonnées canoniques fondées sur NEXT_PUBLIC_SITE_URL obligatoire et validée ; aucune origine de secours ni date de mise à jour inventée.
 - Données structurées Schema.org pour le site, le catalogue et les fiches ; aucune date, popularité ou affirmation non disponible n'est ajoutée.
 - `lib/site-url.ts` centralise l'origine canonique ; `lib/json-ld.ts` sérialise les données structurées en échappant les chevrons.
-- La génération des fichiers d'indexation ne modifie pas les contrôles d'accès ; le domaine de production est public. Les Workers Previews Cloudflare sont également publiques sur `workers.dev`, reçoivent `X-Robots-Tag: noindex` et désactivent l'interface ainsi que les routes d'administration.
+- La génération des fichiers d'indexation ne modifie pas les contrôles d'accès ; le domaine de production est public. Les PR ne créent aucune Workers Preview distante. Les diagnostics Playwright éventuels tournent sur un Worker local Wrangler, inaccessible depuis Internet.
 - Pas d'appel à un modèle IA lors de l'affichage.
 - Initiale calculée à partir du nom affiché ; elle n'est pas stockée.
 - Mention visible indiquant que le contenu est généré par IA et peut comporter des erreurs.
@@ -154,7 +158,7 @@ Les anciennes tables documentaires, l'ancienne colonne JSONB et les colonnes red
 - Supabase Auth et PostgreSQL.
 - JSON Schema comme contrat d'échange ; validation TypeScript à la frontière de l'API.
 - Les cartes Open Graph chargent localement `assets/fonts/Roboto-Regular.ttf.base64` depuis le runtime Node ; le fichier TTF est distribué sous licence Apache 2.0 avec sa notice dans `licenses/Roboto-Apache-2.0.txt`. Le décodage en mémoire évite un appel réseau au moment de générer les aperçus.
-- GitHub Actions pour les contrôles des PR, le build OpenNext, les previews Cloudflare, le déploiement Cloudflare et les smoke tests HTTP.
+- GitHub Actions pour les contrôles des PR, le build OpenNext, les diagnostics Playwright sur Worker local, le déploiement Cloudflare depuis main et les smoke tests HTTP.
 - Cloudflare Workers avec OpenNext pour l'hébergement de production.
 - Vercel est conservé temporairement comme retour arrière ; ses previews restent désactivées.
 
@@ -165,8 +169,8 @@ Le modèle métier est relationnel et le contrat JSON est un format d’échange
 ## 11. Déploiement et retour arrière
 
 - Cloudflare Workers est la cible de production. Le workflow `.github/workflows/cloudflare.yml` construit avec OpenNext, déploie uniquement depuis `main` et vérifie ensuite que l'URL du Worker renvoie une page HTML.
-- Pour chaque PR humaine issue du dépôt courant, `.github/workflows/cloudflare.yml` exécute `wrangler preview` après le build, publie l'URL dans la PR, vérifie le rendu SSR et le catalogue public, puis supprime l'environnement à la fermeture. Les PR de forks et celles créées par Dependabot ne reçoivent pas le jeton Cloudflare : elles conservent le build et les vérifications qualité, mais ignorent les étapes de création, de commentaire et de nettoyage de Preview.
-- Les previews utilisent le sous-domaine `workers.dev` et sont publiques. Cloudflare ajoute `X-Robots-Tag: noindex`. La configuration Preview fixe `NAMESIA_DEPLOYMENT_ENVIRONMENT=preview` ; la page et toutes les routes d'administration sont désactivées, les seules lectures disponibles concernent le catalogue publié.
+- Le workflow Cloudflare ne s’exécute sur une PR que lorsqu’on ajoute le label `diagnostic-playwright`. Il construit alors l’application et lance `wrangler dev` (mode local par défaut ; ne pas utiliser `--remote`) sur le runner GitHub pour les contrôles SSR et Playwright ; aucune URL publique, aucun commentaire de Preview et aucun secret Cloudflare ne sont utilisés. Les PR ouvertes, synchronisées ou rouvertes ne déclenchent aucun déploiement Cloudflare.
+- Le bloc de configuration `previews` a été supprimé de `wrangler.jsonc`. Le job de fermeture conserve uniquement la suppression défensive d’anciennes Previews créées avant cette règle ; il ne crée aucun environnement.
 - Le workflow `.github/workflows/ci.yml` contrôle les tests, TypeScript et le build Next.js ; les deux workflows sont indépendants de Vercel.
 - Vercel reste temporairement configuré comme retour arrière jusqu'à la validation des parcours SSR, Route Handlers, OTP, cookies, catalogue, sitemap et images Open Graph sur Cloudflare, puis jusqu'à la bascule du domaine public.
 - Les previews Vercel restent désactivées et le script `scripts/vercel-ignore-build.sh` limite le déploiement résiduel à `main` tant que le projet existe.
