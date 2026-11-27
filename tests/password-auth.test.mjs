@@ -42,6 +42,8 @@ test("l'administration réutilise le compte Namesia sans créer une connexion di
   assert.match(adminAuth, /createSupabaseSessionClient\(\)/);
   assert.match(adminAuth, /auth\.getUser\(\)/);
   assert.doesNotMatch(adminAuth, /Bearer/);
+  assert.match(adminAuth, /request\.headers\.get\("origin"\)/);
+  assert.match(adminAuth, /new URL\(request\.url\)\.origin/);
   assert.match(sessionClient, /createServerClient/);
   assert.match(sessionClient, /getAll\(\)/);
   assert.match(sessionClient, /setAll\(cookiesToSet\)/);
