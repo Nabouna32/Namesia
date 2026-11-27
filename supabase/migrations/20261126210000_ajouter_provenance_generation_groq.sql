@@ -23,7 +23,7 @@ comment on table private.name_profile_generation_metadata is
 
 alter table private.name_profile_generation_metadata enable row level security;
 
-revoke all on table private.name_profile_generation_metadata from public, anon, authenticated;
+revoke all on table private.name_profile_generation_metadata from public, anon, authenticated, service_role;
 grant usage on schema private to service_role;
 grant select, insert on table private.name_profile_generation_metadata to service_role;
 
