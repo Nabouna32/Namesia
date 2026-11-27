@@ -49,7 +49,7 @@ test("tous les liens Markdown locaux du dépôt pointent vers une cible existant
       if (!target) continue;
       const absolute = resolve(root, dirname(source), target);
       await assert.doesNotReject(
-        stat(absolute),
+        () => stat(absolute),
         source + " contient un lien local cassé : " + href
       );
     }
