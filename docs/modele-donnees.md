@@ -1,8 +1,8 @@
 # Modèle de données — Namesia
 
 - **Statut :** modèle cible retenu pour la V1
-- **Version :** 2.7
-- **Mis à jour :** 2026-11-27 14:34:10 (Europe/Paris)
+- **Version :** 2.8
+- **Mis à jour :** 2026-11-27 14:43:35 (Europe/Paris)
 
 ## 1. Principes
 
