@@ -152,8 +152,13 @@ jobs:
           echo "Extraire l'URL Open Graph absolue de la fiche"
           og_image="$(node scripts/verify-open-graph.mjs "$workdir/fiche.html" "$SITE_URL")"
           echo "Vérifier l'image Open Graph annoncée par la fiche"
-          profile_og_type="$(curl --fail --show-error --silent --location --max-time 30 --output /dev/null --write-out '%{content_type}' "$og_image")"
-          test "$profile_og_type" = "image/png"
+          echo "URL Open Graph détectée : $og_image"
+          if ! profile_og_response="$(curl --show-error --silent --location --retry 5 --retry-all-errors --retry-delay 3 --max-time 30 --output /dev/null --write-out '%{http_code} %{content_type}' "$og_image")"; then
+            echo "Impossible de récupérer la ressource og:image."
+            exit 1
+          fi
+          echo "Réponse de la ressource og:image : $profile_og_response"
+          test "$profile_og_response" = "200 image/png"
 
           curl --fail --show-error --silent --location --max-time 30 "$SITE_URL/robots.txt" --output "$workdir/robots.txt"
           grep -Eiq '^Disallow: /admin' "$workdir/robots.txt"
