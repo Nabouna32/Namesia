@@ -59,6 +59,6 @@ test("l'administration réutilise le compte Namesia sans créer une connexion di
   assert.match(accountPage, /NAMESIA_DEPLOYMENT_ENVIRONMENT === "preview"/);
   assert.match(accountPage, /function getRedirectTo/);
   assert.match(accountPage, /value === "\/admin" \|\| value === "\/favoris"/);
-  assert.match(accountPage, /\/prenoms\/\[a-z0-9\]/);
+  assert.match(accountPage, /a-z0-9\]\+\(\?:-/);
   assert.match(accountClient, /router\.replace\(redirectTo\)/);
 });
