@@ -1,8 +1,8 @@
 # ADR-0047 — Ancienne décision de stockage local de l’historique
 
 - **Statut :** remplacée par ADR-0053 et suspendue dans l'attente de l'arbitrage #405
-- **Version :** 1.1
-- **Mis à jour le :** 2026-11-27 15:13:01 (Europe/Paris)
+- **Version :** 1.2
+- **Mis à jour le :** 2026-11-27 15:19:54 (Europe/Paris)
 - **Date :** 2026-11-25
 - **Portée :** historique de navigation du site public
 
@@ -23,7 +23,7 @@ Cette seconde source de vérité rendait le comportement moins prévisible : une
 
 ## État actuel
 
-- Le code de stockage `sessionStorage` et ses utilitaires sont supprimés. Aucune ancienne donnée n'est lue, supprimée, migrée ou récupérée.
+- Le code de stockage `sessionStorage`, ses composants et ses utilitaires sont supprimés. L'ancienne clé de session est effacée au prochain chargement ; aucune donnée n'est migrée ou récupérée.
 - Aucune visite n'est actuellement enregistrée, localement ou côté serveur.
 - L'historique cible doit être privé, associé au compte, activé explicitement, limité dans le temps et effaçable.
 - L'activation et la durée de conservation proposées sont suivies dans l'issue [#405](https://github.com/Nabouna32/Namesia/issues/405).
@@ -35,4 +35,4 @@ Cette seconde source de vérité rendait le comportement moins prévisible : une
 
 ## Validation
 
-La CI GitHub Actions vérifie que le code historique ne lit ni n'écrit plus dans le stockage local. Aucun contrôle local n'est exécuté conformément à `AGENTS.md`.
+La CI GitHub Actions vérifie que les anciennes clés sont uniquement supprimées et qu'aucune donnée n'est lue ou migrée. Aucun contrôle local n'est exécuté conformément à `AGENTS.md`.
