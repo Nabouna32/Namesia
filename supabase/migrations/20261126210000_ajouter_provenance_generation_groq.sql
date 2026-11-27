@@ -176,8 +176,8 @@ begin
     end if;
 
     -- Une relance du même workflow ne crée jamais une seconde version.
-    select m.profile_id, p.version, m.content_sha256, m.workflow_run_id, n.slug, n.display_name, n.gender
-    into v_profile_id, v_version, v_existing_content_sha256, v_existing_workflow_run_id, v_existing_slug, v_existing_display_name, v_existing_gender
+    select m.profile_id, p.version, m.content_sha256, m.workflow_run_id, m.editorial_warning_count, n.slug, n.display_name, n.gender
+    into v_profile_id, v_version, v_existing_content_sha256, v_existing_workflow_run_id, v_existing_editorial_warning_count, v_existing_slug, v_existing_display_name, v_existing_gender
     from private.name_profile_generation_metadata m
     join public.name_profiles p on p.id = m.profile_id
     join public.names n on n.id = p.name_id
