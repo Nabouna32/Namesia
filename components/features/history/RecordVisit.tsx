@@ -1,14 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
-import { useHistory } from "@/components/features/history/HistoryProvider";
-
-export function RecordVisit({ slug }: { slug: string }) {
-  const { ready, error, recordVisit } = useHistory();
-
-  useEffect(() => {
-    if (ready && !error) recordVisit(slug);
-  }, [slug, ready, error, recordVisit]);
-
+// Aucune visite n'est enregistrée avant l'activation explicite de l'historique lié au compte.
+export function RecordVisit(_props: { slug: string }) {
   return null;
 }
