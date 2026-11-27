@@ -41,6 +41,7 @@ test("la génération du schéma fait partie du contrat d'architecture", () => {
   assert.match(standards, /createClient<Database>/);
   assert.match(supabaseGuide, /database\\.types\\.ts/);
   assert.match(supabaseGuide, /est généré depuis le schéma actif/);
+  assert.match(supabaseGuide, /est généré depuis le schéma actif/);
 });
 
 test("les lectures du catalogue dérivent du schéma sans casts non vérifiés", () => {
