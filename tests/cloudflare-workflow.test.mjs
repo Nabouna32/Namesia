@@ -32,7 +32,7 @@ test("la production reste déployée uniquement depuis main par OpenNext", () =>
   assert.match(workflow, /github\.event_name == 'workflow_dispatch' && github\.ref == 'refs\/heads\/main'/);
   assert.match(workflow, /opennextjs-cloudflare deploy/);
   assert.doesNotMatch(workflow, /wrangler deploy/);
-  assert.match(workflow, /cancel-in-progress: true/);
+  assert.match(workflow, /cancel-in-progress: \$\{\{ github\.event\.action != 'closed' \}\}/);
 });
 
 test("les variables Wrangler séparent explicitement production et Preview", () => {
