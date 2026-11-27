@@ -6,7 +6,7 @@
 
 Ce document décrit les protections applicatives côté navigateur. Les politiques Auth, RLS et données sont détaillées dans [Supabase](platform/SUPABASE.md) ; l'architecture globale est décrite dans [ARCHITECTURE.md](ARCHITECTURE.md).
 
-## 10. En-têtes HTTP et sécurité du navigateur
+## En-têtes HTTP et sécurité du navigateur
 
 Next.js applique les en-têtes de sécurité communs à toutes les routes dans `next.config.ts` :
 
@@ -17,7 +17,7 @@ Next.js applique les en-têtes de sécurité communs à toutes les routes dans `
 
 Les en-têtes sont appliqués au niveau Next.js à l'ensemble des routes, y compris les routes API. Ne pas ajouter de politique CSP restrictive sans inventorier d'abord les scripts et styles inline produits par Next.js et les intégrations réellement utilisées. HSTS relève du domaine HTTPS et de sa configuration d'hébergement ; ne pas activer `includeSubDomains` ou `preload` sans maîtriser tous les sous-domaines concernés.
 
-## 12. Vérification de session administrateur
+## Vérification de session administrateur
 
 La session Supabase et le droit d'accès administrateur sont deux états distincts. La vérification de rôle rejette toute réponse autre qu'un booléen explicite et propage les erreurs réseau ou RPC vers l'interface. Le client affiche un état d'erreur au lieu de rester indéfiniment en chargement ou de confondre une panne avec un refus d'accès.
 
