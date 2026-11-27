@@ -2,7 +2,7 @@ name: Déploiement Cloudflare
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, closed]
+    types: [opened, synchronize, reopened, labeled, closed]
   push:
     branches:
       - main
@@ -21,7 +21,7 @@ jobs:
     outputs:
       preview_url: ${{ steps.preview.outputs.preview_url }}
     if: >-
-      (github.event_name == 'pull_request' && github.event.action != 'closed') ||
+      (github.event_name == 'pull_request' && github.event.action != 'closed' && (github.event.action != 'labeled' || github.event.label.name == 'diagnostic-playwright')) ||
       (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
@@ -87,6 +87,29 @@ jobs:
           grep -q 'Administration indisponible' "$admin"
           admin_status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' --request POST "$PREVIEW_URL/api/admin/prenoms")"
           test "$admin_status" = "403"
+      - name: Restaurer le cache Chromium
+        if: steps.preview.outputs.preview_url != ''
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-chromium-1.65.1
+      - name: Installer Chromium
+        if: steps.preview.outputs.preview_url != ''
+        run: npx playwright install --with-deps chromium
+      - name: Vérifier les parcours publics avec Playwright
+        if: steps.preview.outputs.preview_url != ''
+        env:
+          PLAYWRIGHT_BASE_URL: ${{ steps.preview.outputs.preview_url }}
+          PLAYWRIGHT_DIAGNOSTICS: ${{ contains(github.event.pull_request.labels.*.name, 'diagnostic-playwright') && 'true' || 'false' }}
+        run: npx playwright test --config=playwright.config.mjs
+      - name: Publier les diagnostics Playwright ponctuels
+        if: always() && github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'diagnostic-playwright')
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: diagnostics-playwright-pr-${{ github.event.pull_request.number }}
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 1
       - name: Déployer la production Cloudflare
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') && vars.CLOUDFLARE_DEPLOY_ENABLED == 'true'
         run: ./node_modules/.bin/opennextjs-cloudflare deploy
