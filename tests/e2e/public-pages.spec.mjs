@@ -4,7 +4,8 @@ import { expect, test } from "@playwright/test";
 const routes = [
   { name: "accueil", path: "/" },
   { name: "catalogue", path: "/prenoms" },
-  { name: "fiche-alice", path: "/prenoms/alice" }
+  { name: "fiche-alice", path: "/prenoms/alice" },
+  { name: "tendances", path: "/tendances" }
 ];
 
 const responsiveViewports = [
@@ -44,6 +45,20 @@ test("les trois parcours publics essentiels sont disponibles sur bureau", async 
   }
 
   expect(pageErrors, "Erreurs JavaScript sur les parcours publics").toEqual([]);
+});
+
+test("les tendances régionales ouvrent les fiches Namesia déjà publiées", async ({ page }) => {
+  const response = await page.goto("/tendances", {
+    waitUntil: "domcontentloaded",
+    timeout: 30_000
+  });
+
+  expect(response?.status(), "HTTP tendances").toBeLessThan(400);
+  const regionalSection = page.locator("section").filter({
+    has: page.getByRole("heading", { name: "Le palmarès varie aussi selon les régions" })
+  });
+  await expect(regionalSection.getByRole("link", { name: "Gabriel", exact: true }))
+    .toHaveAttribute("href", "/prenoms/gabriel");
 });
 
 test("l’accueil reste utilisable sur mobile et tablette", async ({ page }) => {
