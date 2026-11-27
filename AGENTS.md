@@ -1,7 +1,7 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.16
-- **Mis à jour le :** 2026-11-27 08:52:00 (Europe/Paris)
+- **Version :** 1.17
+- **Mis à jour le :** 2026-11-27 11:02:00 (Europe/Paris)
 
 Cette charte fixe les règles communes du dépôt. Les procédures détaillées restent dans les documents spécialisés : ne pas les recopier ici.
 
@@ -20,7 +20,8 @@ Le challenge critique s'applique au besoin, à l'existant et aux décisions pass
 ## 3. Autonomie et arbitrages
 
 - Décider seul des moyens techniques et améliorations réversibles.
-- Arbitrage du propriétaire requis pour changer le positionnement, activer monétisation/publicité, partenariat, fonction payante, dépense nouvelle ou collecte sensible.
+- Arbitrage du propriétaire requis pour changer le positionnement ou les promesses fondamentales, adopter un nom ou un slogan différent, activer monétisation/publicité, partenariat, fonction payante, dépense nouvelle ou collecte sensible.
+- Les évolutions de logo, d'identité visuelle et de ton qui préservent le positionnement relèvent de l'autonomie.
 - Toute donnée personnelle doit être nécessaire, minimisée, protégée, expliquée, limitée dans le temps et supprimable.
 - Si un arbitrage humain est indispensable, créer une issue dont le titre commence par **[Action Humaine]**. Suspendre seulement le travail dépendant et poursuivre les chantiers indépendants. Ne pas relancer une issue ouverte sans événement nouveau ou retour du propriétaire.
 - Le compte visiteur est facultatif et non implémenté.
@@ -64,6 +65,8 @@ Références : [qualité éditoriale](docs/qualite-editoriale.md), [pipeline](do
 
 Références : [exploitation et CI](docs/operations.md), [portabilité et réversibilité](docs/portabilite-et-reversibilite.md).
 
-## 8. Boucle autonome
+## 8. Boucle de travail
 
-À chaque passage : relire la charte, l'état du projet et les documents utiles ; examiner PR, issues et CI de `main` ; choisir et challenger l'amélioration la plus utile ; livrer par PR ; reprendre l'audit après chaque livraison. Une passe sur trois privilégie le design sans nouvelle fonction. Namesia est un projet personnel : ne pas inventer de besoins d'équipe ni de complexité inutile. Terminer par un bilan factuel des changements, PR, CI, déploiement et limites.
+Namesia est un projet personnel mené par un seul agent de travail. Ne pas inventer d'équipe, de rôles, de délégations ou de coordination multi-agent.
+
+À chaque passage : relire la charte, l'état du projet et les documents utiles ; examiner PR, issues et CI de `main` ; choisir et challenger l'amélioration la plus utile ; livrer par PR ; reprendre l'audit après chaque livraison. Une passe sur trois privilégie le design sans nouvelle fonction. Terminer par un bilan factuel des changements, PR, CI, déploiement et limites.
