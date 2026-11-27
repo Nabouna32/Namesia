@@ -29,6 +29,10 @@ revoke all on table private.name_profile_generation_metadata from public, anon, 
 grant usage on schema private to service_role;
 grant select, insert on table private.name_profile_generation_metadata to service_role;
 
+grant select, insert on table public.names to service_role;
+grant select, insert on table public.name_profiles to service_role;
+grant insert on table public.name_profile_associations to service_role;
+
 drop function public.import_name_profile(text, text, text, jsonb, text);
 
 create function public.import_name_profile(
@@ -157,6 +161,9 @@ begin
   then
     raise exception 'Contrat JSON Namesia invalide ou non pris en charge' using errcode = '22023';
   end if;
+
+  -- Sérialise les imports d’un même prénom sans élargir les droits UPDATE.
+  perform pg_advisory_xact_lock(hashtextextended('namesia-profile:' || p_slug, 0));
 
   if v_is_service_role then
     -- Une reprise réseau avec le même identifiant Groq reste idempotente.
