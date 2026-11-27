@@ -1,8 +1,8 @@
 # Gouvernance et autonomie — Namesia
 
 - **Statut :** référence canonique
-- **Version :** 1.1
-- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
+- **Version :** 1.2
+- **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
 
 Ce document traduit les décisions validées dans l’issue #345. Il complète AGENTS.md, qui porte le contrat opérationnel directement applicable.
 
@@ -42,7 +42,7 @@ Les services gratuits et les technologies disponibles peuvent être évalués et
 
 ## 4. Arbitrages humains et continuité
 
-Lorsqu’une décision sort du périmètre autonome, l’agent ouvre proactivement une issue dont le titre commence exactement par **[Action Humaine]**. Elle expose le contexte, les options, la recommandation, les conséquences et la décision attendue.
+Lorsqu’une décision sort du périmètre autonome, l’agent ouvre proactivement une issue dont le titre commence exactement par **[Action Humaine]**. Elle expose le contexte, les options, la recommandation, les conséquences et la décision attendue. Une issue ouverte signifie que le sujet attend le retour du propriétaire : l’agent ne la relance pas, ne la réexamine pas à chaque passage et poursuit les travaux indépendants. Il la reprend lorsque le propriétaire revient ou qu’un événement nouveau et matériel rend l’arbitrage bloquant.
 
 L’attente suspend uniquement le chantier dépendant de cet arbitrage. Les travaux indépendants continuent. Si cela permet d’avancer sans préjuger de la décision, une solution provisoire réversible peut être utilisée, explicitement identifiée et documentée. Une approbation d’idée en mode discussion ne déclenche pas automatiquement un chantier produit distinct.
 
@@ -52,17 +52,23 @@ L’agent priorise selon la valeur visiteur, l’urgence, la gravité des risque
 
 Les chantiers importants sont découpés en livraisons cohérentes qui laissent main fonctionnelle. Une seule PR Namesia est travaillée à la fois : terminer, contrôler, fusionner, puis passer à la suivante. Ne pas retarder une livraison pour regrouper des sujets indépendants.
 
-La CI GitHub Actions est la référence des vérifications. Lire les jobs et les logs en cas d’échec, corriger la cause et attendre la fin de tous les contrôles requis avant fusion. Aucun résultat n’est annoncé sans confirmation. Seule main déclenche le déploiement de production Cloudflare ; aucun déploiement manuel par CLI ou API.
+La CI GitHub Actions est la référence des vérifications. Consulter son état une fois : si un contrôle a échoué, lire les jobs et les logs, corriger la cause puis vérifier la nouvelle exécution ; si les contrôles sont encore en cours, ne pas attendre leur fin et tenter la fusion autorisée. Si GitHub bloque la fusion au titre d’une règle de protection, ne pas la contourner ; consigner le blocage et reprendre lorsque l’état évolue. Aucun test ou build n’est annoncé comme réussi sans confirmation. Seule main déclenche le déploiement de production Cloudflare ; aucun déploiement manuel par CLI ou API.
 
 ## 6. Responsabilités produit
 
-L’agent peut refondre les pages, les parcours, la navigation, l’identité visuelle, le design system et les textes. Il recherche activement des références et modèles éprouvés, sans copier aveuglément. La beauté, le plaisir d’utilisation, la lisibilité, l’accessibilité, la performance et la fiabilité sont des exigences conjointes.
+L’agent peut refondre les pages, les parcours, la navigation, le design system et l’expression de la marque : nom, logo, slogan, identité visuelle et ton rédactionnel. Il peut challenger et remplacer les choix historiques ; pour un changement de nom important, il analyse les conséquences, droits, domaines, URL et supports, puis documente une transition réversible autant que possible. Il recherche activement des références extérieures (produits reconnus, systèmes de design, bibliothèques et retours d’expérience), vérifie les sources utiles et adapte les enseignements sans copier une identité protégée. La beauté, le plaisir d’utilisation, la lisibilité, l’accessibilité, la performance et la fiabilité sont des exigences conjointes.
 
-Les fonctionnalités qui améliorent le positionnement actuel relèvent de l’autonomie. Un changement de positionnement (réseau social, marketplace, publicité ou équivalent) nécessite une décision commune. Le dépôt public ne reçoit pas de README d’accueil destiné à faciliter la découverte de son fonctionnement interne.
+Le mode discussion peut lui aussi identifier spontanément des problèmes et engager les améliorations techniques qui relèvent déjà de l’autonomie accordée ; une approbation exploratoire ne lance pas automatiquement un chantier produit distinct. Les fonctionnalités qui améliorent le positionnement actuel relèvent de l’autonomie. Un changement de positionnement (réseau social, marketplace, publicité ou équivalent) nécessite une décision commune. Le dépôt public ne reçoit pas de README d’accueil destiné à faciliter la découverte de son fonctionnement interne.
+
+Les bugs indépendants découverts pendant un chantier sont triés selon leur gravité et leur urgence : un problème critique, de sécurité ou de perte de données est traité immédiatement ; un défaut mineur est suivi séparément ; un bug directement lié peut être corrigé dans la PR en cours si le périmètre reste cohérent.
 
 Les outils, intégrations et connecteurs disponibles peuvent être utilisés lorsqu’ils améliorent réellement le travail ou le produit. L’agent peut rechercher des outils complémentaires et les recommander ; l’installation ou la connexion d’un service exige l’action explicite du propriétaire. Préférer des dépendances maintenues et des versions stables récentes lorsqu’elles apportent un bénéfice vérifié, sans mise à jour aveugle pour la nouveauté.
 
-## 7. Mémoire durable
+## 7. Portabilité et réversibilité
+
+La maîtrise des données et la possibilité de changer de fournisseur sont des objectifs concrets, sans imposer une couche d’abstraction systématique. Les formats d’export, les dépendances et la procédure de sortie sont décrits dans [Portabilité et réversibilité](portabilite-et-reversibilite.md). Le patrimoine éditorial doit rester exportable dans des formats documentés ; les secrets, comptes d’administration et données personnelles ne sont pas inclus dans un export éditorial générique.
+
+## 8. Mémoire durable
 
 Le dépôt Git est la mémoire durable ; les conversations et l’issue #345 sont temporaires. Les décisions acceptées sont réparties dans leurs documents canoniques thématiques, les ADR pour les choix structurants, AGENTS.md pour le contrat opérationnel et docs/etat-du-projet.md pour l’état courant.
 

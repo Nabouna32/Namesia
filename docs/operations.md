@@ -1,8 +1,8 @@
 # Exploitation, sécurité et qualité — Namesia
 
 - **Statut :** référence canonique
-- **Version :** 1.0
-- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
+- **Version :** 1.1
+- **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
 
 Ce document rassemble les décisions opérationnelles validées dans l’issue #345. Les règles de réalisation et de CI restent détaillées dans AGENTS.md et docs/standards-techniques.md.
 
@@ -37,6 +37,8 @@ Une fonctionnalité est terminée lorsqu’elle apporte une valeur réelle et es
 ## Accessibilité et éco-conception
 
 L’accessibilité est une exigence de conception permanente : sémantique, clavier, focus, lecteur d’écran, contrastes, zoom, reflow, formulaires, mouvements réduits et compatibilité avec les technologies d’assistance. Les écarts sont évalués et corrigés sans sacrifier arbitrairement Material 3 Fidelity ; un conflit réel est documenté et arbitré.
+
+La performance technique et perçue se mesure notamment par les Core Web Vitals, le chargement des pages et médias, la fluidité des interactions, le poids JavaScript/CSS, le réseau, le cache et les accès Supabase. Les évaluations doivent couvrir des conditions représentatives : mobile, appareils modestes et réseaux plus lents. Les scores synthétiques ne remplacent pas l'observation des parcours réels. Une optimisation ne justifie jamais de dégrader lisibilité, hiérarchie visuelle, accessibilité, animations utiles ou cohérence du design system.
 
 L’éco-conception réduit le poids des pages, ressources, scripts, images, polices, dépendances, requêtes et traitements inutiles. Elle vise les appareils modestes et les réseaux lents sans rendre l’interface fade ni sacrifier la qualité UX/UI.
 

@@ -1,8 +1,8 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 4.02
-- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
+- **Version :** 4.03
+- **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
 
 ## Structure de la page
 
@@ -158,7 +158,11 @@ Les anciennes tables documentaires, l'ancienne colonne JSONB et les colonnes red
 - Cloudflare Workers avec OpenNext pour l'hébergement de production.
 - Vercel est conservé temporairement comme retour arrière ; ses previews restent désactivées.
 
-## 10. Déploiement et retour arrière
+## 10. Portabilité et sortie fournisseur
+
+Le modèle métier est relationnel et le contrat JSON est un format d’échange. La portabilité et les formats d’export sont décrits dans [docs/portabilite-et-reversibilite.md](portabilite-et-reversibilite.md). Ne pas ajouter d’abstraction multi-fournisseur tant qu’un besoin concret ne le justifie ; préserver les identifiants, versions, associations et métadonnées nécessaires à une migration.
+
+## 11. Déploiement et retour arrière
 
 - Cloudflare Workers est la cible de production. Le workflow `.github/workflows/cloudflare.yml` construit avec OpenNext, déploie uniquement depuis `main` et vérifie ensuite que l'URL du Worker renvoie une page HTML.
 - Pour chaque PR humaine issue du dépôt courant, `.github/workflows/cloudflare.yml` exécute `wrangler preview` après le build, publie l'URL dans la PR, vérifie le rendu SSR et le catalogue public, puis supprime l'environnement à la fermeture. Les PR de forks et celles créées par Dependabot ne reçoivent pas le jeton Cloudflare : elles conservent le build et les vérifications qualité, mais ignorent les étapes de création, de commentaire et de nettoyage de Preview.

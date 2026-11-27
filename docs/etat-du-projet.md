@@ -1,8 +1,8 @@
 # État du projet — Namesia
 
 - **Statut :** source de vérité de l’état courant
-- **Version :** 1.1
-- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
+- **Version :** 1.2
+- **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
 
 ## Phase
 
@@ -25,7 +25,7 @@ L’accès public aux fiches ne doit pas dépendre d’un compte. Le compte visi
 
 ## Contenu et génération IA
 
-La génération est actuellement externe à l’application. Un pipeline automatisé, avec Groq comme option de départ à challenger, est autorisé mais doit être conçu et documenté avant de devenir une capacité de production. Il devra valider les sorties, tracer les prompts et modèles et importer les champs structurés sans colonne JSON fourre-tout. Seules quelques fiches d’exemple sont nécessaires en pré-lancement.
+La génération est actuellement externe à l’application. Un pipeline automatisé via Groq est autorisé et son implémentation est suivie dans l’issue #353 ; aucune génération Groq n’est encore disponible sur main. Son activation reste conditionnée à la validation du code, de la migration, de la CI et à la configuration des secrets par le propriétaire. Il devra valider les sorties, tracer les prompts et modèles et importer les champs structurés sans colonne JSON fourre-tout. Seules quelques fiches d’exemple sont nécessaires en pré-lancement.
 
 ## Décisions structurantes
 
@@ -37,7 +37,7 @@ La génération est actuellement externe à l’application. Un pipeline automat
 
 ## Chantiers et limites connus
 
-- Issue ouverte : #331 — avis modérés glob et minimatch transitifs via OpenNext. Attendre la publication effective du correctif amont avant de modifier les contraintes de dépendances ; ne pas forcer d’override hors plage.
+- Issue #331 clôturée par la [PR #352](https://github.com/Nabouna32/Namesia/pull/352) : OpenNext 1.20.19 intègre le correctif amont pour glob/minimatch ; aucun override hors plage n’a été ajouté.
 - Les retours visiteurs, le pipeline de génération automatisé et le compte visiteur facultatif sont des capacités à concevoir ou implémenter, pas des fonctionnalités déjà disponibles.
 - Les critères précis de transition entre les phases du produit restent soumis à confirmation du propriétaire via [l’issue Action Humaine #350](https://github.com/Nabouna32/Namesia/issues/350) ; aucune transition automatique n’est permise.
 
@@ -47,6 +47,7 @@ La génération est actuellement externe à l’application. Un pipeline automat
 - [Gouvernance et autonomie](gouvernance.md)
 - [Exploitation, sécurité et qualité](operations.md)
 - [Gouvernance éditoriale et génération](qualite-editoriale.md)
+- [Portabilité et réversibilité](portabilite-et-reversibilite.md)
 - [Mesure et croissance](mesure-et-croissance.md)
 - [Vision produit](vision-produit.md)
 - [Architecture](architecture.md)

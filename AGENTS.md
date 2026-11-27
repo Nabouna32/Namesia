@@ -1,7 +1,7 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.2
-- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
+- **Version :** 1.3
+- **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
 
 Cette charte s'applique à tout le dépôt, aux contributions humaines et aux agents IA.
 
@@ -34,7 +34,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - **Phase courante : PRÉ-LANCEMENT / DÉVELOPPEMENT.** L'état détaillé et les critères de transition sont dans [docs/etat-du-projet.md](docs/etat-du-projet.md) et [docs/gouvernance.md](docs/gouvernance.md). Ne jamais changer de phase sans confirmation datée du propriétaire.
 - Le niveau d'autonomie dépend des conséquences, de la gravité et de la réversibilité, pas de la difficulté technique. L'agent décide des moyens techniques ; les engagements sur le positionnement, les promesses fondamentales, la monétisation activée, les dépenses, les partenariats, les fonctions payantes et les collectes sensibles exigent un arbitrage préalable.
 - Une donnée personnelle ordinaire peut être traitée de façon autonome si elle est strictement utile à une fonction facultative et privée, minimisée, protégée, expliquée, conservée pour une durée cohérente et supprimable. Les données sensibles, inférences sensibles, profilages substantiels et partages non évidents exigent un arbitrage préalable.
-- Si un arbitrage humain est requis, créer une issue dont le titre commence exactement par `[Action Humaine]`. Suspendre uniquement le chantier dépendant ; poursuivre les travaux indépendants et préférer une solution provisoire réversible lorsqu'elle ne préjuge pas de la décision.
+- Si un arbitrage humain est requis, créer une issue dont le titre commence exactement par `[Action Humaine]`. Suspendre uniquement le chantier dépendant ; poursuivre les travaux indépendants et préférer une solution provisoire réversible lorsqu'elle ne préjuge pas de la décision. Une issue ouverte attend le retour du propriétaire : ne pas la relancer ni la réexaminer en boucle à chaque passage. La reprendre lorsque le propriétaire revient ou lorsqu'un événement nouveau et matériel rend l'arbitrage bloquant.
 
 - Challenger régulièrement le problème utilisateur, le périmètre, la proposition de valeur et les indicateurs.
 - Ne pas confondre préférence, intuition et besoin démontré.
@@ -44,6 +44,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 
 ## 4. Issues et pull requests
 
+- Lorsqu'un bug indépendant est découvert pendant un chantier, évaluer sa gravité, son urgence et son impact : corriger immédiatement un problème critique, de sécurité ou de perte de données ; consigner et prioriser séparément un défaut mineur indépendant ; intégrer un défaut directement lié seulement si le périmètre reste cohérent.
 - Toute évolution passe par une branche et une PR ; aucun push direct sur main.
 - Titres, descriptions, commentaires, issues et revues sont en français.
 - Une PR explique le besoin, la solution, les choix, les compromis, les risques, les vérifications et les limites restantes.
@@ -53,7 +54,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Autorisation permanente : fusionner les PR vers main sans demander d'autorisation supplémentaire.
 - Autorisation permanente : supprimer des données, effectuer les migrations nécessaires et faire évoluer ou refondre la base de données lorsque cela sert l'objectif du projet. Préserver l'intégrité des données et documenter les opérations structurantes.
 - La CI GitHub Actions est l'unique mécanisme de vérification : ne pas exécuter de commandes de test, de build ou de contrôle localement.
-- Consulter l'état de la CI GitHub Actions pour chaque PR et attendre la fin de tous les contrôles requis avant de fusionner. Ne jamais fusionner tant qu'un contrôle est en cours ou en attente. Si un contrôle échoue, lire ses jobs et ses logs, corriger la cause puis attendre une nouvelle exécution complète. Si la CI de main est rouge, la corriger en priorité avant tout autre chantier.
+- Consulter une fois l'état de la CI GitHub Actions pour chaque PR. Si un contrôle a échoué, lire ses jobs et ses logs, corriger la cause, puis vérifier la nouvelle exécution. Si les contrôles sont encore en cours, ne pas attendre leur fin : tenter la fusion autorisée. Si GitHub bloque la fusion en raison d'une règle de protection, ne pas contourner cette protection ; consigner le blocage et reprendre lorsque l'état évolue. Si la CI de main est rouge au début d'un passage, la corriger en priorité. Ne jamais annoncer un test, build ou contrôle réussi sans confirmation explicite de la CI.
 - Pour consulter un run, utiliser l'API REST GitHub Actions par SHA : `GET /repos/{owner}/{repo}/actions/runs?head_sha={sha}&per_page=10`. Si aucun résultat n'est retourné, recouper une seule fois avec `GET /repos/{owner}/{repo}/actions/runs?per_page=10` et filtrer le SHA exact ; certaines vues spécialisées peuvent retourner une liste vide alors qu'un run existe. Une liste vide ne prouve donc pas que la CI n'a pas démarré.
 - Pour un run en échec, lire les jobs puis les logs du job en échec avant toute correction. Ne pas se limiter au résumé du statut : les logs distinguent une régression de code d'un contrat de test devenu obsolète.
 - Le job `quality` bloque sur l'audit des dépendances de production (`npm audit --omit=dev --audit-level=high`) et exécute aussi un audit complet du graphe (`npm audit --audit-level=high`) à titre diagnostique non bloquant, pour suivre les vulnérabilités des outils de développement. Il exécute ensuite les tests, le contrôle TypeScript et le build même si l'un échoue. La synthèse finale distingue l'audit bloquant de production, le diagnostic complet, les tests, les types et le build ; sur un run rouge, lire chaque `outcome` et ses logs avant de corriger afin de traiter toutes les causes indépendantes dans la même boucle. Une vulnérabilité de développement n'est pas une exposition directe du Worker, mais elle reste une dette de sécurité à corriger, jamais un résultat à masquer.
@@ -149,6 +150,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Le cycle de vie des fiches, la provenance, la validation éditoriale, les corrections et les retours visiteurs suivent `docs/qualite-editoriale.md`. Le JSON est un format d'échange ; les champs structurés sont stockés dans des colonnes dédiées.
 - La mesure, le SEO, les expérimentations, la compatibilité, l'internationalisation et les pistes de croissance suivent `docs/mesure-et-croissance.md`. Analytics est autorisé lorsqu'il est utile et proportionné ; consentement et obligations applicables restent requis.
 - La fiabilité opérationnelle, la sécurité, la stratégie QA, l'accessibilité, l'éco-conception et la conformité suivent `docs/operations.md`.
+- Les exports, la portabilité et les migrations entre fournisseurs suivent `docs/portabilite-et-reversibilite.md`.
 
 - Les fiches sont générées en amont par IA (API ou conversation), puis importées dans Namesia au format JSON.
 - La génération, la validation du schéma, la prévisualisation et la publication sont quatre opérations distinctes. Aucune ne prouve l'exactitude factuelle du contenu.
@@ -164,7 +166,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 
 ### Objectif permanent
 
-Faire de Namesia un site de fiches de prénoms agréable, joli et fonctionnel. Carte blanche totale sur le design, le style, les textes du site, la structure, la base de données (migrations, refonte), l'optimisation et la création. L'objectif est améliorable en continu.
+Faire de Namesia un site de fiches de prénoms agréable, joli et fonctionnel. Carte blanche totale sur le design, le style, les textes du site, la structure, la marque (nom, logo, slogan et expression visuelle ou verbale), la base de données (migrations, refonte), l'optimisation et la création. Cette liberté sur la marque ne permet pas de modifier unilatéralement le positionnement, la proposition de valeur ou les engagements fondamentaux. L'objectif est améliorable en continu.
 
 ### Boucle de travail
 
