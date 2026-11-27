@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import { createClient, type Session } from "@supabase/supabase-js";
-import type { Database } from "@/lib/supabase/database.types";
-import { getSupabasePublicConfig } from "@/lib/supabase/config";
+import { type Session } from "@supabase/supabase-js";
+import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { FICHE_SCHEMA_VERSION, parseFichePrenom, type FichePrenomImport } from "@/lib/fiche-prenom";
 import styles from "./admin.module.css";
 import { AlertDialog } from "@/components/material3/AlertDialog";
@@ -11,10 +10,9 @@ import { Button } from "@/components/material3/Button";
 import { TextField } from "@/components/material3/TextField";
 import { Snackbar, type SnackbarSeverity } from "@/components/material3/Snackbar";
 import { parseAdminCatalog, type AdminName, type AdminProfile } from "@/lib/admin-catalog";
-import { verifyAdminAccess } from "@/lib/admin-auth";
+import { verifyAdminAccess } from "@/lib/admin-auth-core";
 
-const { url, key } = getSupabasePublicConfig();
-const supabase = createClient<Database>(url, key);
+const supabase = createSupabaseBrowserClient();
 
 type ImportResult = { profileId: string; version: number };
 type ProfileRow = AdminProfile;
@@ -30,7 +28,6 @@ export function AdminClient() {
   const [session, setSession] = useState<Session | null>(null);
   const [checking, setChecking] = useState(true);
   const [authorized, setAuthorized] = useState(false);
-  const [email, setEmail] = useState("");
   const [json, setJson] = useState("");
   const [preview, setPreview] = useState<FichePrenomImport | null>(null);
   const [message, setMessage] = useState<{ text: string; type: SnackbarSeverity } | null>(null);
@@ -113,7 +110,6 @@ export function AdminClient() {
 
   useEffect(() => {
     if (!session || !authorized) return;
-    const accessToken = session.access_token;
     let active = true;
     const offset = catalogOffset;
 
@@ -121,7 +117,7 @@ export function AdminClient() {
       setCatalogLoading(true);
       try {
         const response = await fetch(`/api/admin/prenoms?offset=${offset}`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          credentials: "same-origin",
           cache: "no-store"
         });
         const payload: unknown = await response.json();
@@ -148,24 +144,7 @@ export function AdminClient() {
     return () => {
       active = false;
     };
-  }, [session?.access_token, authorized, refreshKey, catalogOffset]);
-
-  async function connecter(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setBusy(true);
-    setMessage(null);
-    try {
-      const { error } = await supabase.auth.signInWithOtp({
-        email: email.trim(),
-        options: { emailRedirectTo: `${window.location.origin}/admin`, shouldCreateUser: false }
-      });
-      afficherMessage(error ? "Le lien de connexion n'a pas pu être envoyé." : "Un lien de connexion vient d'être envoyé si cette adresse existe et est autorisée.", error ? "error" : "info");
-    } catch {
-      afficherMessage("Le service de connexion est momentanément indisponible.", "error");
-    } finally {
-      setBusy(false);
-    }
-  }
+  }, [session?.user.id, authorized, refreshKey, catalogOffset]);
 
   function previsualiser() {
     try {
@@ -180,13 +159,12 @@ export function AdminClient() {
 
   async function previsualiserVersion(profile: ProfileRow) {
     if (!session) return;
-    const accessToken = session.access_token;
     setBusy(true);
     setMessage(null);
     try {
       const response = await fetch(`/api/admin/prenoms/${profile.id}`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-        cache: "no-store"
+        credentials: "same-origin",
+          cache: "no-store"
       });
       const result = await response.json() as {
         fiche?: FichePrenomImport;
@@ -242,11 +220,9 @@ export function AdminClient() {
     try {
       const response = await fetch("/api/admin/prenoms", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session.access_token}`
-        },
-        body: JSON.stringify(fiche)
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(fiche),
+        credentials: "same-origin"
       });
       const result = await response.json() as ImportResult & { error?: string };
       if (!response.ok) throw new Error(result.error ?? "Import impossible.");
@@ -267,7 +243,7 @@ export function AdminClient() {
     try {
       const response = await fetch(`/api/admin/prenoms/${imported.profileId}/publication`, {
         method: "POST",
-        headers: { Authorization: `Bearer ${session.access_token}` }
+        credentials: "same-origin"
       });
       const result = await response.json() as { error?: string };
       if (!response.ok) throw new Error(result.error ?? "Publication impossible.");
@@ -297,12 +273,9 @@ export function AdminClient() {
 
   if (!session) {
     return <section className={styles.panel}>
-      <h2>Connexion administrateur</h2>
-      <p>Recevez un lien de connexion par e-mail. Seuls les comptes autorisés dans Namesia peuvent administrer le catalogue.</p>
-      <form className={styles.form} onSubmit={connecter}>
-        <TextField id="admin-email" label="Adresse e-mail" variant="outlined" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
-        <Button type="submit" disabled={busy}>{busy ? "Envoi…" : "Recevoir un lien de connexion"}</Button>
-      </form>
+      <h2>Connexion à l'administration</h2>
+      <p>Utilisez votre compte Namesia habituel. Les droits d'administration sont attribués séparément et ne sont pas accordés à la création du compte.</p>
+      <Button href="/compte?redirect=%2Fadmin">Se connecter avec mon compte</Button>
       {message && <Snackbar severity={message.type}>{message.text}</Snackbar>}
     </section>;
   }

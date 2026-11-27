@@ -1,7 +1,8 @@
 # Bibliothèque Material 3 — Namesia
 
 - **Statut :** référence canonique des composants d'interface
-- **Mis à jour :** 2026-11-25
+- **Version :** 1.2
+- **Mis à jour le :** 2026-11-27 15:17:05 (Europe/Paris)
 
 Ce document est le point d'entrée unique pour composer l'interface. Les ports Web des contrats Material 3 sont centralisés dans `components/material3/` ; les fonctions propres au produit sont isolées dans `components/features/`. Il n'existe pas de seconde bibliothèque de primitives ni de wrappers de convenance. Les ports locaux sont nécessaires parce qu'AndroidX Compose cible Android/Kotlin et que Material Web ne couvre pas le besoin stable complet ; ils ne sont pas présentés comme des composants AndroidX exécutés dans le navigateur. La décision, les alternatives et les limites sont détaillées dans [ADR-0037](decisions/ADR-0037-architecture-composants-material3.md).
 
@@ -39,10 +40,6 @@ components/
     Snackbar.module.css
     index.ts
   features/                  # Composition métier, jamais une seconde bibliothèque UI
-    history/
-      HistoryProvider.tsx
-      RecentNames.tsx
-      RecordVisit.tsx
     catalog/
       NameSearch.tsx
       FeaturedNames.tsx
@@ -104,11 +101,8 @@ Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques 
 
 | Composant | Fichier | Responsabilité |
 |---|---|---|
-| `FavoritesProvider` | `features/favorites/FavoritesProvider.tsx` | État partagé des favoris et synchronisation inter-onglets. |
-| `FavoritesList` | `features/favorites/FavoritesList.tsx` | Recherche, FilterChip icon-only pour le genre, tri natif, import/export et liste des favoris. |
-| `HistoryProvider` | `features/history/HistoryProvider.tsx` | Historique de navigation conservé dans la session. |
-| `RecentNames` | `features/history/RecentNames.tsx` | Liste des fiches récemment consultées. |
-| `RecordVisit` | `features/history/RecordVisit.tsx` | Enregistre une consultation dans l'historique de session. |
+| `FavoritesProvider` | `features/favorites/FavoritesProvider.tsx` | Chargement et mutations des favoris liés au compte via Supabase et RLS. |
+| `FavoritesList` | `features/favorites/FavoritesList.tsx` | Recherche, FilterChip icon-only pour le genre, tri natif, import/export JSON des favoris du compte et liste des favoris ; aucune migration locale. |
 | `NameSearch` | `features/catalog/NameSearch.tsx` | Recherche, filtres et pagination du catalogue. |
 | `GenderIcon` | `features/names/GenderIcon.tsx` | Pictogramme SVG exhaustif des quatre genres, avec nom accessible ; la correspondance est centralisée dans `lib/gender-icons.ts`. |
 | `FeaturedNames` | `features/catalog/FeaturedNames.tsx` | Présentation des prénoms mis en avant. |
@@ -120,7 +114,7 @@ Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques 
 | `ComparisonSelection` | `features/comparison/ComparisonSelection.tsx` | Liste des prénoms retenus ; compose InputChip pour le retrait individuel. |
 | `ShareLink` | `features/sharing/ShareLink.tsx` | Partage natif ou copie d'une URL reconstruite avec une liste explicite de paramètres autorisés. |
 
-Les cartes de résultats, de suggestions, de favoris et d'historique utilisent le lien `Card` comme surface de navigation. Le résultat textuel de la découverte aléatoire associe également le nom à `GenderIcon` avant d'ouvrir la fiche. Le genre est représenté exclusivement par `GenderIcon`, dont la correspondance exhaustive est centralisée dans `lib/gender-icons.ts` : `gender-female`, `gender-male`, `gender-mixed` et `gender-unknown`. Le pictogramme masculin sépare le contour circulaire de la flèche diagonale afin de conserver une épaisseur et une lecture équilibrées à 20 px comme à 24 px. Le nom du genre est fourni à l'arbre d'accessibilité par le pictogramme, sans libellé visible redondant. Les filtres de genre utilisent la même iconographie dans des `FilterChip` icon-only, avec nom accessible et état sélectionné. La flèche suffit à signaler l'ouverture de la fiche ; aucun texte « Découvrir » n'est ajouté au catalogue. Les cartes de découverte ne portent ni action de favori ni action de comparaison : ces deux actions sont regroupées sur la fiche du prénom. Le comparateur compose `Checkbox` pour chaque choix ; la limite de trois éléments est exprimée par son état désactivé.
+Les cartes de résultats, de suggestions et de favoris utilisent le lien `Card` comme surface de navigation. Le résultat textuel de la découverte aléatoire associe également le nom à `GenderIcon` avant d'ouvrir la fiche. Le genre est représenté exclusivement par `GenderIcon`, dont la correspondance exhaustive est centralisée dans `lib/gender-icons.ts` : `gender-female`, `gender-male`, `gender-mixed` et `gender-unknown`. Le pictogramme masculin sépare le contour circulaire de la flèche diagonale afin de conserver une épaisseur et une lecture équilibrées à 20 px comme à 24 px. Le nom du genre est fourni à l'arbre d'accessibilité par le pictogramme, sans libellé visible redondant. Les filtres de genre utilisent la même iconographie dans des `FilterChip` icon-only, avec nom accessible et état sélectionné. La flèche suffit à signaler l'ouverture de la fiche ; aucun texte « Découvrir » n'est ajouté au catalogue. Les cartes de découverte ne portent ni action de favori ni action de comparaison : ces deux actions sont regroupées sur la fiche du prénom. Le comparateur compose `Checkbox` pour chaque choix ; la limite de trois éléments est exprimée par son état désactivé.
 
 
 Les composants métier peuvent être propres à Namesia, mais ils ne redéfinissent jamais les styles, états ou interactions d'un composant Material 3 générique. Les règles de disposition restent dans leurs CSS Modules ; les variantes et états M3 restent dans `components/material3/`.
@@ -157,4 +151,4 @@ Avant toute création, vérifier le nom officiel, l'anatomie, les tokens, les va
 
 ## Contrats des props
 
-Les compositions de catalogue utilisent des props anglaises : `names`, `initialSearch`, `initialGender`, `initialLetter`, `initialVisibleCount` et `syncUrl` pour `NameSearch` ; `names` pour `FeaturedNames`, `RelatedNames`, `RecentNames` et `RandomDiscovery`. `FavoritesList` reçoit `names`, `initialSearch`, `initialGender`, `initialSort` et `initialVisibleCount`. `NameComparator` reçoit `names` et `initialSelection`. `RelatedNames` reçoit également `returnContext`. Les noms des routes, paramètres d'URL et clés de réponse API restent français lorsqu'ils font partie d'un contrat public.
+Les compositions de catalogue utilisent des props anglaises : `names`, `initialSearch`, `initialGender`, `initialLetter`, `initialVisibleCount` et `syncUrl` pour `NameSearch` ; `names` pour `FeaturedNames`, `RelatedNames` et `RandomDiscovery`. `FavoritesList` reçoit `names`, `initialSearch`, `initialGender`, `initialSort` et `initialVisibleCount`. `NameComparator` reçoit `names` et `initialSelection`. `RelatedNames` reçoit également `returnContext`. Les noms des routes, paramètres d'URL et clés de réponse API restent français lorsqu'ils font partie d'un contrat public.

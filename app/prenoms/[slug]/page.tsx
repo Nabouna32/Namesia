@@ -6,7 +6,6 @@ import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { Button } from "@/components/material3/Button";
 import { Icon } from "@/components/material3/Icon";
 import { categoryTone } from "@/lib/category-color";
-import { RecordVisit } from "@/components/features/history/RecordVisit";
 import { RelatedNames } from "@/components/features/catalog/RelatedNames";
 import { ShareProfile } from "@/components/features/sharing/ShareLink";
 import { NamePopularityCard } from "@/components/features/popularity/NamePopularityCard";
@@ -38,6 +37,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const name = await getNameBySlug(slug);
+  const imageUrl = new URL("/opengraph-image", siteUrl).toString();
   return name ? {
     title: name.name,
     description: name.introduction,
@@ -49,11 +49,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: name.name,
       description: name.introduction,
       url: `/prenoms/${name.slug}`,
-      images: ["/opengraph-image"]
+      images: [{ url: imageUrl, width: 1200, height: 630, alt: "Namesia — Le sens derrière chaque prénom" }]
     },
     twitter: {
       card: "summary_large_image",
-      images: ["/opengraph-image"]
+      images: [imageUrl]
     }
   } : {};
 }
@@ -107,7 +107,6 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
   return (
     <main id="contenu" tabIndex={-1} className="page-main profile-main">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ficheData) }} />
-      <RecordVisit slug={name.slug} />
       <div className="container profile">
         <nav className="breadcrumb" aria-label="Fil d’Ariane">
           <ol>

@@ -1,6 +1,7 @@
-import { createClient, type SupabaseClient, type User } from "@supabase/supabase-js";
+import type { SupabaseClient, User } from "@supabase/supabase-js";
+import "server-only";
 import type { Database } from "@/lib/supabase/database.types";
-import { getSupabasePublicConfig } from "@/lib/supabase/config";
+import { createSupabaseSessionClient } from "@/lib/supabase/session";
 
 type AdminAccess =
   | { supabase: SupabaseClient<Database>; user: User; error: null }
@@ -11,35 +12,24 @@ export async function requireAdmin(request: Request): Promise<AdminAccess> {
     return { supabase: null, user: null, error: { message: "L’administration est désactivée dans les environnements Preview.", status: 403 } };
   }
 
-  const authorization = request.headers.get("authorization");
-  const token = authorization?.match(/^Bearer\s+(.+)$/i)?.[1];
-
-  if (!token) {
-    return { supabase: null, user: null, error: { message: "Authentification requise.", status: 401 } };
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    const origin = request.headers.get("origin");
+    if (!origin || origin !== new URL(request.url).origin) {
+      return { supabase: null, user: null, error: { message: "Origine de requête non autorisée.", status: 403 } };
+    }
   }
 
-  let config: ReturnType<typeof getSupabasePublicConfig>;
+  let supabase: SupabaseClient<Database>;
   try {
-    config = getSupabasePublicConfig();
+    supabase = await createSupabaseSessionClient();
   } catch {
     console.error("Configuration Supabase invalide pour une route administrateur.");
     return { supabase: null, user: null, error: { message: "Service momentanément indisponible.", status: 503 } };
   }
 
-  const supabase = createClient<Database>(config.url, config.key, {
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false,
-      detectSessionInUrl: false
-    },
-    global: {
-      headers: { Authorization: `Bearer ${token}` }
-    }
-  });
-
-  const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
   if (authError || !user) {
-    return { supabase: null, user: null, error: { message: "Session invalide ou expirée.", status: 401 } };
+    return { supabase: null, user: null, error: { message: "Authentification requise ou session expirée.", status: 401 } };
   }
 
   const { data: authorized, error: authorizationError } = await supabase.rpc("is_namesia_admin");
@@ -55,4 +45,3 @@ export async function requireAdmin(request: Request): Promise<AdminAccess> {
   return { supabase, user, error: null };
 }
 
-export { verifyAdminAccess } from "./admin-auth-core";

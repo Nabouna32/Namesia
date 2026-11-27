@@ -65,7 +65,7 @@ test("l’accueil reste utilisable sur mobile et tablette", async ({ page }) => 
 });
 
 
-test("un favori peut être annulé ou fermé depuis sa Snackbar sur mobile", async ({ page }) => {
+test("les fiches restent consultables sans compte et les favoris renvoient vers la connexion sur mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   const response = await page.goto("/prenoms/alice", {
     waitUntil: "domcontentloaded",
@@ -73,21 +73,11 @@ test("un favori peut être annulé ou fermé depuis sa Snackbar sur mobile", asy
   });
 
   expect(response?.status(), "HTTP fiche Alice").toBeLessThan(400);
-  const favoriteButton = page.locator("button[aria-pressed]").first();
-  await expect(favoriteButton).toBeEnabled();
+  await expect(page.locator("main h1").first()).toBeVisible();
 
-  await favoriteButton.click();
-  await expect(favoriteButton).toHaveAttribute("aria-pressed", "true");
-  const snackbar = page.locator('[role="status"]').filter({ hasText: "Alice ajouté aux favoris" });
-  await expect(snackbar).toBeVisible();
-  await page.getByRole("button", { name: "Annuler" }).click();
-  await expect(favoriteButton).toHaveAttribute("aria-pressed", "false");
-  await expect(snackbar).toHaveCount(0);
-
-  await favoriteButton.click();
-  await expect(favoriteButton).toHaveAttribute("aria-pressed", "true");
-  await expect(snackbar).toBeVisible();
-  await page.getByRole("button", { name: "Fermer le message" }).click();
-  await expect(favoriteButton).toHaveAttribute("aria-pressed", "true");
-  await expect(snackbar).toHaveCount(0);
+  const favoriteLink = page.getByRole("link", { name: "Se connecter pour enregistrer" });
+  await expect(favoriteLink).toBeVisible();
+  await expect(favoriteLink).toBeEnabled();
+  await expect(favoriteLink).toHaveAttribute("href", "/compte?redirect=%2Fprenoms%2Falice");
+  await expect(page.getByText("Les favoris sont conservés dans votre compte et synchronisés entre vos appareils.")).toBeVisible();
 });

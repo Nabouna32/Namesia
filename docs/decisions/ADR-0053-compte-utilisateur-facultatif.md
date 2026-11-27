@@ -1,9 +1,9 @@
 # ADR-0053 — Compte utilisateur facultatif
 
 - **Statut :** accepté
-- **Version :** 1.0
+- **Version :** 1.3
 - **Décision prise le :** 2026-11-25 (heure non consignée)
-- **Mis à jour le :** 2026-11-25 09:22:27 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 15:13:01 (Europe/Paris)
 - **Décideur :** propriétaire de Namesia
 
 ## Contexte
@@ -21,7 +21,7 @@ Namesia doit proposer des fonctions personnelles utiles sans transformer la cons
 L'option 3 est retenue.
 
 - La recherche, la découverte, la lecture des fiches publiques, la comparaison et le partage restent accessibles sans inscription ni connexion.
-- Le compte est facultatif et sert au confort personnel : préférences et paramètres, favoris persistants et historique synchronisé entre appareils.
+- Le compte est facultatif pour explorer Namesia, mais il est nécessaire pour utiliser les fonctions personnelles persistantes : favoris et historique synchronisés entre appareils. Ces données sont liées au compte, pas à un stockage local durable du navigateur.
 - L'absence de compte ne doit pas être utilisée pour dégrader l'expérience publique ni déclencher des sollicitations d'inscription bloquantes.
 - Les fonctionnalités personnelles liées au compte doivent prévoir l'accès, la modification et la suppression des données par leur titulaire.
 
@@ -29,8 +29,8 @@ L'option 3 est retenue.
 
 - Les pages et parcours publics ne dépendent pas de l'état d'authentification.
 - L'architecture doit séparer clairement les données publiques du catalogue et les données privées propres à chaque compte.
-- Les favoris et l'historique persistants nécessitent une conception de sécurité, de confidentialité, de rétention et de suppression avant leur implémentation.
-- Les choix précis d'authentification, de récupération de compte, de conservation de l'historique et de migration des favoris existants restent à définir dans un ADR technique dédié.
+- Les favoris sont implémentés dans `public.user_favorites`, stockés côté serveur et isolés par compte via RLS. Aucun mode local-only ne constitue le comportement cible. L'historique reste suspendu jusqu'à l'arbitrage #405 ; il devra être soumis à une activation claire, à une durée de conservation définie et à un effacement simple.
+- Aucun transfert des anciennes données locales n'est proposé : le stockage local des favoris et de l'historique est supprimé sans migration, ce projet étant encore en développement. Les anciennes sélections locales sont abandonnées. L'import/export JSON reste disponible pour sauvegarder explicitement les favoris déjà associés au compte. La connexion n'est jamais requise pour consulter le catalogue, rechercher, lire ou partager une fiche.
 
 ## Réexamen
 

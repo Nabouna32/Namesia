@@ -33,6 +33,7 @@ test("la police Open Graph est incluse dans le système de fichiers virtuel du W
 
 test("les fiches héritent de l’image Open Graph statique commune", async () => {
   const profilePage = await readFile(new URL("../app/prenoms/[slug]/page.tsx", import.meta.url), "utf8");
-  assert.match(profilePage, /images:\s*\["\/opengraph-image"\]/);
+  assert.match(profilePage, /new URL\("\/opengraph-image", siteUrl\)/);
+  assert.match(profilePage, /images: \[\{ url: imageUrl, width: 1200, height: 630/);
   await assert.rejects(readFile(new URL("../app/prenoms/[slug]/opengraph-image.tsx", import.meta.url)));
 });

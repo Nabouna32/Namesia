@@ -11,7 +11,6 @@ const discovery = await readFile(new URL("../components/features/discovery/Rando
 const featured = await readFile(new URL("../components/features/catalog/FeaturedNames.tsx", import.meta.url), "utf8");
 const notFound = await readFile(new URL("../app/not-found.tsx", import.meta.url), "utf8");
 const errorBoundary = await readFile(new URL("../app/error.tsx", import.meta.url), "utf8");
-const history = await readFile(new URL("../components/features/history/RecentNames.tsx", import.meta.url), "utf8");
 const globalStyles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 const materialTokens = await readFile(new URL("../styles/material3/tokens.css", import.meta.url), "utf8");
 const styles = buttonStyles;
@@ -73,7 +72,6 @@ test("les fonctions métier composent les composants Material 3 sans réimpléme
   assert.match(discovery, /<Button/);
   assert.doesNotMatch(featured, /<FavoriteButton/);
   assert.match(featured, /<GenderIcon/);
-  assert.match(history, /<IconButton/);
   assert.match(notFound, /<Button href=/);
   assert.doesNotMatch(discovery, /<button/);
 });
@@ -403,18 +401,6 @@ test("la fiche prénom applique Material 3 dans ses règles canoniques", () => {
   assert.doesNotMatch(globalStyles, /linear-gradient\(125deg, var\(--md-sys-color-surface-container/);
 });
 
-const historiqueActions = await readFile(new URL("../components/features/history/RecentNames.tsx", import.meta.url), "utf8");
-test("les actions de découverte sont concentrées sur la fiche et le comparateur garde sa sélection native", () => {
-  assert.match(historiqueActions, /<Button variant="text"[^>]*onClick=/);
-  assert.doesNotMatch(historiqueActions, /<FavoriteButton/);
-  assert.match(comparatorActions, /<ComparisonSelection/);
-  assert.match(comparatorActions, /<Checkbox/);
-  assert.doesNotMatch(comparatorActions, /type="checkbox"/);
-  assert.doesNotMatch(comparatorActions, /ComparisonBar|ComparisonToggle/);
-  assert.match(comparisonSelection, /<InputChip/);
-});
-
-
 const checkbox = await readFile(new URL("../components/material3/Checkbox.tsx", import.meta.url), "utf8");
 const checkboxStyles = await readFile(new URL("../components/material3/Checkbox.module.css", import.meta.url), "utf8");
 
@@ -468,7 +454,6 @@ test("Card centralise les surfaces AndroidX et préserve l’élément HTML choi
     "../components/features/catalog/RelatedNames.tsx",
     "../components/features/catalog/FeaturedNames.tsx",
     "../components/features/catalog/NameSearch.tsx",
-    "../components/features/history/RecentNames.tsx",
     "../components/features/favorites/FavoritesList.tsx"
   ]) {
     const source = await readFile(new URL(file, import.meta.url), "utf8");

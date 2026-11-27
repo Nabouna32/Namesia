@@ -1,2 +1,4 @@
 .container { display: grid; justify-items: start; gap: 8px; }
 .error { margin: 0; color: var(--md-sys-color-error); font-size: var(--md-sys-typescale-body-small-size); }
+
+.help { margin: 0; color: var(--md-sys-color-on-surface-variant); font-size: var(--md-sys-typescale-body-small-size); }

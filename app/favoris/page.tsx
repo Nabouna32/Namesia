@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Vos favoris",
-  description: "Retrouvez les prénoms que vous avez enregistrés dans votre navigateur.",
+  description: "Retrouvez les prénoms que vous avez enregistrés dans votre compte Namesia.",
   robots: { index: false, follow: false }
 };
 
@@ -37,7 +37,7 @@ export default async function FavoritesPage({ searchParams }: Props) {
       <div className="container catalogue">
         <span className="eyebrow">Votre sélection</span>
         <h1>Vos prénoms<br /><em>préférés.</em></h1>
-        <p className="page-intro">Retrouvez ici les prénoms enregistrés dans ce navigateur. Votre sélection reste privée, sans compte ni synchronisation entre appareils.</p>
+        <p className="page-intro">Retrouvez les prénoms enregistrés dans votre compte Namesia. Votre sélection reste privée et vous suit sur vos appareils.</p>
         <FavoritesList
           names={names}
           initialSearch={getFirstParam(params.q)}

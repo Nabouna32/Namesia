@@ -1,39 +1,28 @@
 # ADR-0049 — Authentification administrateur passwordless
 
-- **Statut :** acceptée
-- **Date :** 2026-11-25
-- **Portée :** authentification des administrateurs dans l'application Namesia
+- **Statut :** remplacée par [ADR-0055 — Authentification des comptes Namesia par mot de passe](ADR-0055-authentification-comptes-partages.md)
+- **Version :** 1.1
+- **Décision prise le :** 2026-11-25 (heure non consignée)
+- **Mis à jour le :** 2026-11-27 13:20:36 (Europe/Paris)
+- **Portée :** historique de l'authentification administrateur avant l'ouverture des comptes visiteurs
 
-## Contexte
+## Contexte historique
 
-L'administration utilise Supabase Auth avec \`signInWithOtp\` et des liens de connexion envoyés par e-mail. \`shouldCreateUser: false\` impose que le compte administrateur existe déjà ; l'application ne crée pas de compte depuis l'écran de connexion.
+L'administration utilisait Supabase Auth avec `signInWithOtp` et des liens de connexion envoyés par e-mail. `shouldCreateUser: false` imposait que le compte administrateur existe déjà ; l'application ne créait pas de compte depuis l'écran de connexion.
 
-Le Security Advisor Supabase signale \`auth_leaked_password_protection\` parce que la protection contre les mots de passe compromis est désactivée. Cette fonction concerne les mots de passe lors de leur création ou de leur modification. L'application n'expose actuellement aucun flux de connexion, de création ou de modification par mot de passe.
+Le Security Advisor Supabase signalait `auth_leaked_password_protection` parce que la protection contre les mots de passe compromis était désactivée.
 
-## Challenge
+## Décision historique
 
-- **Passer au forfait Pro pour activer la protection :** coût récurrent pour une capacité qui ne protège aucun parcours utilisé par l'application aujourd'hui.
-- **Activer une authentification par mot de passe sans protection :** ajoute une surface d'attaque sans bénéfice produit et aggrave l'alerte actuelle.
-- **Conserver le lien OTP et réexaminer avant toute évolution :** maintient un parcours simple, sans secret de mot de passe à gérer dans l'application.
+La décision initiale consistait à conserver une authentification administrateur passwordless par lien OTP e-mail et à ne pas introduire de mot de passe sans activer préalablement la protection HIBP sur un forfait compatible.
 
-## Décision
+Cette décision est désormais remplacée. Elle ne constitue plus une contrainte applicable au code courant.
 
-Conserver l'authentification administrateur passwordless par lien OTP e-mail.
+## Motif du remplacement
 
-- Les comptes administrateurs sont créés explicitement hors de l'écran de connexion.
-- L'application utilise \`signInWithOtp\` avec \`shouldCreateUser: false\`.
-- Aucun écran ou appel \`signInWithPassword\`, \`signUp\` ou \`updateUser\` pour définir un mot de passe n'est autorisé.
-- Ne pas faire évoluer le forfait Supabase uniquement pour supprimer l'alerte \`auth_leaked_password_protection\` tant que l'application n'expose aucun flux mot de passe.
-- Avant toute introduction d'un flux mot de passe, activer la protection contre les mots de passe compromis sur un forfait compatible, vérifier les parcours et relancer le Security Advisor.
-
-## Conséquences
-
-- L'alerte \`auth_leaked_password_protection\` reste visible dans Supabase Advisor ; elle est documentée comme non applicable au parcours OTP actuel, pas comme résolue.
-- L'application ne gère aucun mot de passe administrateur.
-- Toute évolution vers un flux mot de passe doit réexaminer cette décision et sa condition de sécurité.
-- `tests/passwordless-auth.test.mjs` parcourt `app/`, `components/` et `lib/` pour empêcher l'introduction silencieuse d'un flux mot de passe.
+Le propriétaire a confirmé le besoin d'un système de comptes classique par adresse e-mail et mot de passe, commun aux visiteurs et aux administrateurs. Le coût récurrent de Supabase Pro uniquement pour activer HIBP n'est pas retenu. La politique actuelle et ses compromis sont consignés dans ADR-0055.
 
 ## Références
 
-- Supabase Auth — Password Security : https://supabase.com/docs/guides/auth/password-security
-- Supabase Auth — Passwordless email logins : https://supabase.com/docs/guides/auth/auth-email-passwordless
+- [ADR-0055 — Authentification des comptes Namesia par mot de passe](ADR-0055-authentification-comptes-partages.md)
+- Supabase Auth — Password security : https://supabase.com/docs/guides/auth/password-security

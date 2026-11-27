@@ -1,5 +1,8 @@
 # Namesia
 
+- **Version :** 1.4
+- **Mis à jour le :** 2026-11-27 14:34:10 (Europe/Paris)
+
 Namesia est une plateforme française de découverte des prénoms. Les fiches sont générées à l'aide d'une IA, importées en JSON puis publiées depuis une administration privée. Les contenus peuvent comporter des erreurs ; Namesia ne promet pas de vérification documentaire.
 
 ## Application web
@@ -36,11 +39,15 @@ Le stockage est relationnel : `names` porte l'identité stable, `name_profiles` 
 
 Les anciennes tables documentaires, l'ancien stockage JSONB et les colonnes redondantes ont été supprimés. Les règles RLS et les privilèges SQL limitent la lecture publique aux fiches publiées et réservent les écritures aux administrateurs autorisés.
 
-### Administration
+### Comptes et administration
 
-L'administration est disponible sur `/admin`. L'accès utilise Supabase Auth par lien e-mail et la liste privée `private.admin_users`. Le compte propriétaire initial est déjà autorisé en production. L'auto-inscription reste désactivée.
+Le compte Namesia est facultatif et accessible depuis `/compte`. L'inscription, la connexion, la confirmation de l'adresse e-mail, la récupération et la modification du mot de passe utilisent un système unique Supabase Auth par e-mail et mot de passe. Les sessions sont gérées en cookies de même origine via `@supabase/ssr` et PKCE. La consultation du catalogue et des fiches publiques ne demande jamais de compte. Les favoris sont désormais stockés dans `public.user_favorites`, protégés par RLS et synchronisés entre appareils. Les anciennes sélections locales ne sont transférées qu'après une action explicite dans la page Favoris. L'historique est temporairement désactivé : son activation explicite et sa durée de conservation attendent l'arbitrage [#405](https://github.com/Nabouna32/Namesia/issues/405).
 
-Tout nouveau compte doit être invité dans Supabase Auth puis ajouté explicitement à la liste d'autorisation. Un compte Auth non autorisé ne dispose d'aucun droit d'administration.
+La politique des formulaires impose 8 caractères minimum, au moins une majuscule et un chiffre ; aucun symbole n'est obligatoire. Les espaces sont acceptés. Supabase Auth limite actuellement les mots de passe à 72 octets UTF-8. Les préréglages serveur Supabase ne permettent pas d'exiger exactement cette paire sans imposer aussi une minuscule ; les règles choisies sont donc vérifiées par l'interface Namesia et peuvent être contournées par un appel direct à son API. La protection HIBP des mots de passe compromis n'est pas activée et aucun passage à Supabase Pro n'est requis ; ce compromis ne constitue pas une conformité complète au NIST.
+
+L'administration est disponible sur `/admin` et utilise exactement le même compte que le site public. Le droit administrateur est attribué séparément dans la liste privée `private.admin_users`. Créer un compte ne donne jamais de droit d'administration. Le compte propriétaire existant conserve son autorisation et doit définir son premier mot de passe via le parcours « Mot de passe oublié ».
+
+Le SMTP Supabase par défaut (deux e-mails par heure, destinataires limités à l'équipe) suffit aux essais internes de développement. Un SMTP transactionnel personnalisé reste nécessaire avant l'ouverture publique des confirmations et récupérations. La configuration de ce fournisseur et des paramètres Auth est suivie dans [l'issue #402](https://github.com/Nabouna32/Namesia/issues/402).
 
 ### Contrat JSON
 

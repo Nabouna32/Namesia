@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/material3/Button";
 import { IconButton } from "@/components/material3/IconButton";
 import { Snackbar } from "@/components/material3/Snackbar";
@@ -11,22 +12,47 @@ import styles from "./FavoriteButton.module.css";
 type Props = { slug: string; name: string };
 
 export function FavoriteButton({ slug, name }: Props) {
-  const { slugs, pret, erreur, basculer } = useFavorites();
+  const pathname = usePathname();
+  const { slugs, authenticated, ready, error, basculer } = useFavorites();
   const [limiteAtteinte, setLimiteAtteinte] = useState(false);
   const [ajoutAnnulable, setAjoutAnnulable] = useState(false);
+  const [busy, setBusy] = useState(false);
   const selected = slugs.includes(slug);
   const action = selected ? "Retirer des favoris" : "Ajouter aux favoris";
-  const label = pret ? `${action} : ${name}` : `Chargement des favoris pour ${name}`;
+  const label = `${action} : ${name}`;
 
-  function basculerFavori() {
-    const resultat = basculer(slug);
+  async function basculerFavori() {
+    setBusy(true);
+    const resultat = await basculer(slug);
+    setBusy(false);
     setLimiteAtteinte(resultat === "limite");
     setAjoutAnnulable(resultat === "ajoute");
   }
 
-  function annulerAjout() {
-    if (slugs.includes(slug)) basculer(slug);
+  async function annulerAjout() {
+    if (slugs.includes(slug)) await basculer(slug);
     setAjoutAnnulable(false);
+  }
+
+  if (!authenticated) {
+    return (
+      <div className={styles.container}>
+        {ready ? (
+          <Button
+            variant="outlined"
+            href={`/compte?redirect=${encodeURIComponent(pathname || "/")}`}
+          >
+            <Icon name="favorite" size={18} />
+            Se connecter pour enregistrer
+          </Button>
+        ) : (
+          <Button variant="outlined" disabled>
+            Vérification du compte…
+          </Button>
+        )}
+        <p className={styles.help}>Les favoris sont conservés dans votre compte et synchronisés entre vos appareils.</p>
+      </div>
+    );
   }
 
   return (
@@ -35,16 +61,16 @@ export function FavoriteButton({ slug, name }: Props) {
         variant="outlined"
         aria-label={label}
         aria-pressed={selected}
-        disabled={!pret}
-        onClick={basculerFavori}
+        disabled={!ready || error || busy}
+        onClick={() => void basculerFavori()}
       >
         <Icon name={selected ? "favorite-filled" : "favorite"} size={18} />
-        {pret ? action : "Chargement…"}
+        {busy ? "Enregistrement…" : action}
       </Button>
       {ajoutAnnulable && (
         <Snackbar
           severity="success"
-          action={<Button variant="text" onClick={annulerAjout}>Annuler</Button>}
+          action={<Button variant="text" onClick={() => void annulerAjout()}>Annuler</Button>}
           dismissAction={<IconButton label="Fermer le message" onClick={() => setAjoutAnnulable(false)}><Icon name="close" size={24} /></IconButton>}
         >
           {name} ajouté aux favoris.
@@ -55,9 +81,9 @@ export function FavoriteButton({ slug, name }: Props) {
           Vous avez atteint la limite de 10 000 favoris. Retirez-en un avant d’en ajouter un autre.
         </Snackbar>
       )}
-      {erreur && (
+      {error && (
         <p className={styles.error} role="alert">
-          Le stockage des favoris est indisponible ou contient des données illisibles. Vérifiez les paramètres de votre navigateur.
+          Le service des favoris est momentanément indisponible. Vos modifications ne sont pas confirmées.
         </p>
       )}
     </div>

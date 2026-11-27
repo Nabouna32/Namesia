@@ -11,7 +11,6 @@ const filterChip = await read("../components/material3/FilterChip.tsx");
 const catalogue = await read("../components/features/catalog/NameSearch.tsx");
 const featured = await read("../components/features/catalog/FeaturedNames.tsx");
 const related = await read("../components/features/catalog/RelatedNames.tsx");
-const history = await read("../components/features/history/RecentNames.tsx");
 const favorites = await read("../components/features/favorites/FavoritesList.tsx");
 const discovery = await read("../components/features/discovery/RandomDiscovery.tsx");
 const discoveryStyles = await read("../components/features/discovery/RandomDiscovery.module.css");
@@ -43,12 +42,13 @@ test("les quatre genres ont une correspondance SVG exhaustive et centralisée", 
 });
 
 test("les vues de prénoms affichent le pictogramme sans libellé visible", () => {
-  for (const source of [catalogue, featured, related, history, favorites, comparator, profile]) {
+  for (const source of [catalogue, featured, related, favorites, comparator, profile]) {
     assert.match(source, /<GenderIcon[^>]*gender=\{name\.gender\}/);
     assert.doesNotMatch(source, /<small>\{name\.gender\}<\/small>/);
     assert.doesNotMatch(source, /className="profile-tag">\{name\.gender\}/);
   }
-  assert.match(profile, /images:\s*\["\/opengraph-image"\]/);
+  assert.match(profile, /new URL\("\/opengraph-image", siteUrl\)/);
+  assert.match(profile, /images: \[\{ url: imageUrl/);
 });
 
 test("la découverte aléatoire affiche le pictogramme du prénom sélectionné", () => {
@@ -66,7 +66,7 @@ test("les filtres de genre utilisent les pictogrammes et conservent un nom acces
 });
 
 test("les cartes de découverte ne portent plus d'actions de favori ou de comparaison", () => {
-  for (const source of [catalogue, featured, related, history, favorites, discovery, comparator]) {
+  for (const source of [catalogue, featured, related, favorites, discovery, comparator]) {
     assert.doesNotMatch(source, /<FavoriteButton/);
     assert.doesNotMatch(source, /<ComparisonToggle/);
     assert.doesNotMatch(source, /<ComparisonBar/);
