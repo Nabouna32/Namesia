@@ -9,16 +9,26 @@ const associationPolicyMigration = await readFile(
   new URL("../supabase/migrations/20261125005358_consolider_policies_lecture_associations.sql", import.meta.url),
   "utf8"
 );
-const architecture = await readFile(new URL("../docs/architecture.md", import.meta.url), "utf8");
-const favoritesMigration = await readFile(\n  new URL("../supabase/migrations/20261127133138_user_favorites.sql", import.meta.url),\n  "utf8"\n);\nconst favoritesPolicyFixMigration = await readFile(\n  new URL("../supabase/migrations/20261127133505_fix_user_favorites_insert_policy.sql", import.meta.url),\n  "utf8"\n);\nconst associationPolicyNamingMigration = await readFile(
+const associationPolicyNamingMigration = await readFile(
   new URL("../supabase/migrations/20261125011430_rename_association_policies_english.sql", import.meta.url),
   "utf8"
 );
+const favoritesMigration = await readFile(
+  new URL("../supabase/migrations/20261127133138_user_favorites.sql", import.meta.url),
+  "utf8"
+);
+const favoritesPolicyFixMigration = await readFile(
+  new URL("../supabase/migrations/20261127133505_fix_user_favorites_insert_policy.sql", import.meta.url),
+  "utf8"
+);
+const architecture = await readFile(new URL("../docs/architecture.md", import.meta.url), "utf8");
 
 test("les migrations locales restent alignées sur les versions Supabase appliquées", () => {
   assert.ok(migrationFiles.includes("20261122002440_finaliser_nettoyage_modele.sql"));
   assert.ok(migrationFiles.includes("20261125005358_consolider_policies_lecture_associations.sql"));
-  assert.ok(migrationFiles.includes("20261125011430_rename_association_policies_english.sql"));\n  assert.ok(migrationFiles.includes("20261127133138_user_favorites.sql"));\n  assert.ok(migrationFiles.includes("20261127133505_fix_user_favorites_insert_policy.sql"));
+  assert.ok(migrationFiles.includes("20261125011430_rename_association_policies_english.sql"));
+  assert.ok(migrationFiles.includes("20261127133138_user_favorites.sql"));
+  assert.ok(migrationFiles.includes("20261127133505_fix_user_favorites_insert_policy.sql"));
   assert.equal(new Set(migrationVersions).size, migrationVersions.length);
   assert.ok(migrationFiles.every((file) => /^\d{14}_[a-z0-9_]+\.sql$/.test(file)));
   assert.ok(migrationVersions.every((version) => /^\d{14}$/.test(version)));
@@ -51,9 +61,9 @@ test("les favoris sont privés, liés au compte et limités aux prénoms publié
   assert.match(favoritesMigration, /references public\.names \(id\) on delete cascade/);
   assert.match(favoritesMigration, /primary key \(user_id, name_id\)/);
   assert.match(favoritesMigration, /alter table public\.user_favorites enable row level security/);
-  assert.match(favoritesMigration, /for select to authenticated/);
-  assert.match(favoritesMigration, /for insert to authenticated/);
-  assert.match(favoritesMigration, /for delete to authenticated/);
+  assert.match(favoritesMigration, /for select\s+to authenticated/);
+  assert.match(favoritesMigration, /for insert\s+to authenticated/);
+  assert.match(favoritesMigration, /for delete\s+to authenticated/);
   assert.match(favoritesMigration, /grant select, insert, delete on table public\.user_favorites to authenticated/);
   assert.doesNotMatch(favoritesMigration, /grant .* to anon/);
   assert.match(favoritesPolicyFixMigration, /n\.id = user_favorites\.name_id/);
