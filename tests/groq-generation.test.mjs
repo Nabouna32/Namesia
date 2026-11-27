@@ -212,9 +212,9 @@ test("le workflow est manuel, limité à main et ne s’exécute pas sur les PR"
 });
 
 test("l’import SQL réserve les métadonnées au service_role et protège l’idempotence", async () => {
-  const migration = await readFile(new URL("../supabase/migrations/20261126210000_ajouter_provenance_generation_groq.sql", import.meta.url), "utf8");
-  const privilegeMigration = await readFile(new URL("../supabase/migrations/20261127014048_ameliorer_import_groq_et_verrouillage.sql", import.meta.url), "utf8");
-  const restrictionMigration = await readFile(new URL("../supabase/migrations/20261127014216_restreindre_droits_import_groq.sql", import.meta.url), "utf8");
+  const migration = await readFile(new URL("../supabase/migrations/20261127003841_ajouter_provenance_generation_groq.sql", import.meta.url), "utf8");
+  const privilegeMigration = await readFile(new URL("../supabase/migrations/20261127004113_ameliorer_import_groq_et_verrouillage.sql", import.meta.url), "utf8");
+  const restrictionMigration = await readFile(new URL("../supabase/migrations/20261127004226_restreindre_droits_import_groq.sql", import.meta.url), "utf8");
   assert.match(migration, /current_user = 'service_role'/);
   assert.match(migration, /service_role/);
   assert.match(migration, /request_id text not null unique/);
