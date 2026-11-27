@@ -33,9 +33,18 @@ test("les comptes Namesia utilisent une authentification e-mail et mot de passe"
 test("l'administration réutilise le compte Namesia sans créer une connexion distincte", async () => {
   const adminClient = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
   const accountPage = await readFile(new URL("../app/compte/page.tsx", import.meta.url), "utf8");
+  const adminAuth = await readFile(new URL("../lib/admin-auth.ts", import.meta.url), "utf8");
+  const sessionClient = await readFile(new URL("../lib/supabase/session.ts", import.meta.url), "utf8");
   assert.match(adminClient, /createSupabaseBrowserClient\(\)/);
   assert.match(adminClient, /\/compte\?redirect=%2Fadmin/);
   assert.doesNotMatch(adminClient, /signInWithOtp/);
+  assert.doesNotMatch(adminClient, /Authorization/);
+  assert.match(adminAuth, /createSupabaseSessionClient\(\)/);
+  assert.match(adminAuth, /auth\.getUser\(\)/);
+  assert.doesNotMatch(adminAuth, /Bearer/);
+  assert.match(sessionClient, /createServerClient/);
+  assert.match(sessionClient, /getAll\(\)/);
+  assert.match(sessionClient, /setAll\(cookiesToSet\)/);
   assert.match(accountPage, /NAMESIA_DEPLOYMENT_ENVIRONMENT === "preview"/);
   assert.match(accountPage, /firstParam\(params\.redirect\) === "\/admin" \? "\/admin" : "\/"/);
 });
