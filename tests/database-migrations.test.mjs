@@ -63,7 +63,8 @@ test("les favoris sont privés, liés au compte et limités aux prénoms publié
   assert.match(favoritesMigration, /alter table public\.user_favorites enable row level security/);
   assert.match(favoritesMigration, /for select\s+to authenticated/);
   assert.match(favoritesMigration, /for insert\s+to authenticated/);
-  assert.match(favoritesMigration, /for delete\s+to authenticated/);\n  assert.match(favoritesMigration, /n\\.id = user_favorites\\.name_id/);
+  assert.match(favoritesMigration, /for delete\s+to authenticated/);
+  assert.match(favoritesMigration, /n\.id = user_favorites\.name_id/);
   assert.match(favoritesMigration, /grant select, insert, delete on table public\.user_favorites to authenticated/);
   assert.doesNotMatch(favoritesMigration, /grant .* to anon/);
   assert.match(favoritesPolicyFixMigration, /n\.id = user_favorites\.name_id/);
