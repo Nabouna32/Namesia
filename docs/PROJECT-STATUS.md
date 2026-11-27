@@ -1,8 +1,8 @@
 # État du projet — Namesia
 
 - **Statut :** PRÉ-LANCEMENT / DÉVELOPPEMENT
-- **Version :** 1.7
-- **Mis à jour le :** 2026-11-27 20:16:35 (Europe/Paris)
+- **Version :** 1.8
+- **Mis à jour le :** 2026-11-27 20:25:06 (Europe/Paris)
 
 Ce document résume l'état opérationnel et les arbitrages actifs. Les détails d'architecture, de sécurité et de données restent dans les ADR et documents spécialisés.
 
@@ -42,8 +42,9 @@ Ce document résume l'état opérationnel et les arbitrages actifs. Les détails
 ## Travaux en cours
 
 - **PR #403 —** [Comptes Namesia et favoris liés au compte](https://github.com/Nabouna32/Namesia/pull/403) fusionnée dans `main` le 27 novembre 2026, commit `36a9e90c8cb35564d38109daead535eb48a5c775`.
-- La CI de vérification de `main` sur ce commit a réussi. Le déploiement Cloudflare a publié le Worker, mais son contrôle final a échoué sur la référence Open Graph de la fiche Alice ; ne pas assimiler le succès de l'étape de déploiement à une validation complète du site.
-- **PR #407 —** [Refondre et structurer la documentation du dépôt](https://github.com/Nabouna32/Namesia/pull/407) en cours. Elle transforme le README racine en index, réduit AGENTS.md au socle commun et répartit les procédures par domaine.
+- **PR #407 —** [Refonte et structuration de la documentation](https://github.com/Nabouna32/Namesia/pull/407) fusionnée dans `main` le 27 novembre 2026, commit `34b8f3a12b054d6cdcf4667e71cd5a9d2d71170e`. L'issue [#406](https://github.com/Nabouna32/Namesia/issues/406) est clôturée.
+- La CI de vérification de `main` sur le commit `34b8f3a12b054d6cdcf4667e71cd5a9d2d71170e` a réussi. Le Worker Cloudflare a été déployé (version `efea3f64-ae55-4a9d-b930-dddf1ecce35d`), mais le contrôle post-déploiement a échoué sur la présence de la chaîne `opengraph-image` dans le HTML de `/prenoms/alice`.
+- L'issue [#408](https://github.com/Nabouna32/Namesia/issues/408) suit l'investigation et la correction de ce contrôle Open Graph. Le déploiement est effectué, mais la validation complète de la production n'est pas encore verte.
 - Les favoris sont désormais liés au compte dans `public.user_favorites`. Les anciens stockages locaux de favoris et d'historique sont supprimés sans migration ; l'historique reste suspendu.
 - L'issue [#402](https://github.com/Nabouna32/Namesia/issues/402) suit la configuration du SMTP transactionnel après acquisition d'un domaine.
 - L'issue [#404](https://github.com/Nabouna32/Namesia/issues/404) reste ouverte pour la suppression du compte et la gestion complète des données personnelles.
