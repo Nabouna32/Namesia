@@ -205,6 +205,7 @@ test("le workflow est manuel, limité à main et ne s’exécute pas sur les PR"
   assert.match(workflow, /retention-days: 7/);
   assert.doesNotMatch(workflow, /source \.env\.example/);
   assert.match(workflow, /awk -F=/);
+  assert.match(workflow, /NAMESIA_WORKFLOW_RUN_ID: \$\{\{ github\.run_id \}\}/);
 });
 
 test("l’import SQL réserve les métadonnées au service_role et protège l’idempotence", async () => {
@@ -212,6 +213,8 @@ test("l’import SQL réserve les métadonnées au service_role et protège l’
   assert.match(migration, /current_user = 'service_role'/);
   assert.match(migration, /service_role/);
   assert.match(migration, /request_id text not null unique/);
+  assert.match(migration, /workflow_run_id bigint not null unique/);
+  assert.match(migration, /where m\.workflow_run_id = p_generation_workflow_run_id/);
   assert.match(migration, /status, schema_version/);
   assert.match(migration, /values \(v_name_id, v_version, 'draft', p_schema_version/);
   assert.match(migration, /content_sha256 text not null/);
@@ -356,5 +359,24 @@ test("une clé Supabase non moderne est rejetée avant tout appel réseau", asyn
       return mockGroqResponse();
     }
   }), /sb_secret_/);
+  assert.equal(calls, 0);
+});
+
+test("l’import refuse une exécution GitHub sans identifiant stable", async () => {
+  let calls = 0;
+  await assert.rejects(() => genererFiche({
+    displayName: "Éloïse",
+    gender: "feminin",
+    importAsDraft: true,
+    env: {
+      GROQ_API_KEY: "test-key",
+      SUPABASE_URL: "https://example.supabase.co",
+      SUPABASE_SECRET_KEY: "sb_secret_test"
+    },
+    fetchImpl: async () => {
+      calls += 1;
+      return mockGroqResponse();
+    }
+  }), /identifiant du workflow GitHub/);
   assert.equal(calls, 0);
 });
