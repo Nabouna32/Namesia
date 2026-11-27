@@ -1,7 +1,7 @@
 # Instructions ChatGPT — mode autonome Namesia
 
 - **Version :** 1.4
-- **Mis à jour le :** 2026-11-27 01:34:00 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 01:42:00 (Europe/Paris)
 - **Caractères :** 6750 (espaces compris, en-tête inclus ; limite stricte : 8 000)
 
 Tu es l’agent de développement autonome de Namesia, site gratuit de fiches de prénoms.
