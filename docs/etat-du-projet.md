@@ -1,8 +1,8 @@
 # État du projet — Namesia
 
 - **Statut :** source de vérité de l’état courant
-- **Version :** 1.2
-- **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
+- **Version :** 1.6
+- **Mis à jour le :** 2026-11-27 01:44:00 (Europe/Paris)
 
 ## Phase
 
@@ -19,13 +19,13 @@ L’accès public aux fiches ne doit pas dépendre d’un compte. Le compte visi
 - **Application :** Next.js App Router, TypeScript et React.
 - **Données :** Supabase Auth et PostgreSQL ; schéma et types versionnés dans le dépôt.
 - **Hébergement :** Cloudflare Workers avec OpenNext (@opennextjs/cloudflare 1.20.19, @opennextjs/aws 4.2.1).
-- **CI/CD :** GitHub Actions ; les vérifications, previews et déploiements suivent les règles de AGENTS.md.
+- **CI/CD :** GitHub Actions ; vérifications des PR, diagnostics Playwright sur Worker Wrangler local via label, déploiement Cloudflare réservé à `main`. Aucune Preview distante n’est créée.
 - **Administration :** espace privé protégé par Supabase Auth, liens OTP e-mail.
 - **Production technique :** URL workers.dev ; aucun domaine public propre n’est encore déclaré pour le lancement.
 
 ## Contenu et génération IA
 
-La génération est actuellement externe à l’application. Un pipeline automatisé via Groq est autorisé et son implémentation est suivie dans l’issue #353 ; aucune génération Groq n’est encore disponible sur main. Son activation reste conditionnée à la validation du code, de la migration, de la CI et à la configuration des secrets par le propriétaire. Il devra valider les sorties, tracer les prompts et modèles et importer les champs structurés sans colonne JSON fourre-tout. Seules quelques fiches d’exemple sont nécessaires en pré-lancement.
+La génération reste externe au runtime public. Le workflow GitHub Actions manuel via Groq est disponible sur main : une fiche par exécution, schéma de réponse strict, validation par le parseur Namesia, alertes éditoriales heuristiques, dry-run par défaut et import facultatif en brouillon. Il ne publie jamais et n’effectue aucune recherche documentaire ni vérification factuelle. Les métadonnées des imports sont conservées dans une table relationnelle privée. Les migrations de provenance et de privilèges sont appliquées sur l’instance Supabase active et `lib/supabase/database.types.ts` a été régénéré. L’activation opérationnelle attend les secrets GitHub Actions décrits dans l’issue [Action Humaine #354](https://github.com/Nabouna32/Namesia/issues/354). Seules quelques fiches d’exemple sont nécessaires en pré-lancement.
 
 ## Décisions structurantes
 
@@ -38,7 +38,7 @@ La génération est actuellement externe à l’application. Un pipeline automat
 ## Chantiers et limites connus
 
 - Issue #331 clôturée par la [PR #352](https://github.com/Nabouna32/Namesia/pull/352) : OpenNext 1.20.19 intègre le correctif amont pour glob/minimatch ; aucun override hors plage n’a été ajouté.
-- Les retours visiteurs, le pipeline de génération automatisé et le compte visiteur facultatif sont des capacités à concevoir ou implémenter, pas des fonctionnalités déjà disponibles.
+- Les retours visiteurs et le compte visiteur facultatif restent à concevoir ou implémenter. Le pipeline Groq est implémenté ; seule son activation attend les secrets GitHub Actions de l’issue #354.
 - Les critères précis de transition entre les phases du produit restent soumis à confirmation du propriétaire via [l’issue Action Humaine #350](https://github.com/Nabouna32/Namesia/issues/350) ; aucune transition automatique n’est permise.
 
 ## Sources canoniques
@@ -47,6 +47,7 @@ La génération est actuellement externe à l’application. Un pipeline automat
 - [Gouvernance et autonomie](gouvernance.md)
 - [Exploitation, sécurité et qualité](operations.md)
 - [Gouvernance éditoriale et génération](qualite-editoriale.md)
+- [Génération et import Groq](pipeline-generation-ia.md)
 - [Portabilité et réversibilité](portabilite-et-reversibilite.md)
 - [Mesure et croissance](mesure-et-croissance.md)
 - [Vision produit](vision-produit.md)
