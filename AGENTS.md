@@ -1,7 +1,7 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.13
-- **Mis à jour le :** 2026-11-27 07:54:30 (Europe/Paris)
+- **Version :** 1.14
+- **Mis à jour le :** 2026-11-27 07:57:44 (Europe/Paris)
 
 Cette charte fixe les règles communes du dépôt. Les procédures détaillées restent dans les documents spécialisés : ne pas les recopier ici.
 
@@ -63,7 +63,7 @@ Références : [qualité éditoriale](docs/qualite-editoriale.md), [pipeline de 
 
 - Toute évolution passe par une branche et une PR ; aucun push direct sur `main`. Garder une seule PR de travail ouverte à la fois. Avant un chantier, consulter les PR ouvertes, les issues ouvertes et les runs récents de `main`. Consulter une fois l'état de la CI GitHub Actions pour chaque PR.
 - Les PR, issues, titres, descriptions et commentaires sont en français. Une PR explique le besoin, la solution, les options, les compromis, les risques, la documentation, les vérifications et les limites restantes. Relire son diff complet avant fusion.
-- Le propriétaire autorise en permanence la fusion des PR vers `main`. Ne jamais contourner une règle de protection GitHub.
+- Le propriétaire autorise en permanence la fusion des PR vers `main`. Si GitHub bloque la fusion en raison d'une règle de protection, ne pas contourner cette protection ; consigner le blocage et reprendre lorsque l'état évolue.
 - Toutes les actions GitHub du workflow sont épinglées sur un SHA de commit complet à 40 caractères, avec la version amont conservée en commentaire. **La CI GitHub Actions est l'unique mécanisme de test, de build et de vérification : aucune commande locale de test ou de compilation.** Si un contrôle a échoué, lire ses jobs et ses logs, corriger la cause, puis vérifier la nouvelle exécution. Si les contrôles sont encore en cours, ne pas attendre leur fin : tenter la fusion autorisée ; ne jamais annoncer un résultat non confirmé.
 - Si la CI de `main` est rouge au début d'un passage, corriger cette régression avant un nouveau chantier.
 - Seule la branche `main`, après fusion, déploie la production. Les Workers Previews et le déploiement de production sont gérés par GitHub Actions avec **Wrangler**, conformément à la configuration existante. Aucun déploiement manuel ou autre plateforme de production.
