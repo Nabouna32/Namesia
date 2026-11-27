@@ -15,5 +15,5 @@ test("les robots peuvent lire le noindex de l’administration sans explorer les
 test("le contrôle post-déploiement respecte la politique noindex de l'administration", () => {
   assert.doesNotMatch(workflow, /Disallow: \/admin/);
   assert.match(workflow, /Disallow: \/api/);
-  assert.match(workflow, /Sitemap: \\$SITE_URL\\/sitemap\\.xml/);
+  assert.match(workflow, /Sitemap: \$SITE_URL\/sitemap\.xml/);
 });
