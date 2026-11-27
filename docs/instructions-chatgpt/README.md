@@ -1,7 +1,7 @@
 # Instructions ChatGPT de Namesia
 
-- **Version :** 1.1
-- **Mis à jour le :** 2026-11-27 (Europe/Paris)
+- **Version :** 1.2
+- **Mis à jour le :** 2026-11-27 10:38:00 (Europe/Paris)
 
 Ce dossier contient deux modes d’instructions à copier dans les instructions du projet ChatGPT. Choisir le mode adapté à la mission ; ne pas fusionner les deux par défaut.
 
