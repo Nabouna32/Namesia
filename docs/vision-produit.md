@@ -1,8 +1,8 @@
 # Vision produit — Namesia
 
 - **Statut :** document canonique
-- **Version :** 3.61
-- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
+- **Version :** 3.62
+- **Mis à jour le :** 2026-11-27 (Europe/Paris)
 
 ## 1. Positionnement
 
@@ -53,7 +53,7 @@ L'accès public aux fiches reste gratuit. Le projet peut étudier des pistes de 
 ### Inclus
 
 - Catalogue de prénoms utilisé en France, avec un accès direct depuis la vitrine de découverte de l’accueil.
-- Page `/tendances` présentant les dix prénoms féminins et masculins les plus attribués en France en 2025, avec leur rang et leur effectif arrondi. Le classement est un instantané annuel issu de l'Insee, pas une donnée temps réel. Les entrées sans fiche publiée restent visibles et sont explicitement signalées ; les fiches disponibles ouvrent leur page Namesia.
+- Page `/tendances` présentant les dix prénoms féminins et masculins les plus attribués en France en 2025, avec leur rang et leur effectif arrondi, ainsi que les premiers prénoms par région selon la publication Insee du 16 septembre 2026. Le classement est un instantané annuel, pas une donnée temps réel. Les variantes accentuées et orthographiques sont comptées séparément par l'Insee ; les effectifs nationaux sont arrondis au multiple de cinq. Les entrées sans fiche publiée restent visibles et sont explicitement signalées ; les fiches disponibles ouvrent leur page Namesia.
 - Page dédiée par prénom avec URL stable.
 - Recherche de prénoms avec prise en compte des accents, des variantes de casse et des séparateurs des prénoms composés (espace, tiret, apostrophe), y compris lorsqu'un séparateur est saisi en fin de préfixe ; classement des résultats par pertinence (correspondance exacte, puis préfixe, puis occurrence la plus proche du début du prénom), avec filtres combinables par genre et initiale. La recherche compacte de l'accueil affiche au plus six résultats ; un lien ouvre le catalogue avec le terme déjà saisi dès que d'autres correspondances existent. En l'absence de résultat normal, proposer jusqu'à cinq suggestions proches pour les recherches d'au moins quatre caractères, avec une tolérance d'une ou deux modifications selon la longueur et en respectant les filtres actifs. Les résultats et suggestions affichent aussi le genre associé à chaque fiche. Le catalogue présente 24 résultats au départ et révèle les suivants par lots de 24 pour garder une liste facile à parcourir. Les résultats filtrés du catalogue peuvent être copiés sous forme de liste de noms, y compris ceux qui ne sont pas encore visibles dans les lots de 24. Le retour de copie disparaît quand la recherche ou un filtre change, et une réponse asynchrone issue de l’ancienne sélection n’est pas affichée.
 - URL partageable du catalogue : la recherche, les filtres actifs et le nombre de résultats déjà révélés (paramètre limite) sont conservés dans l'URL. Lorsque ces critères sont actifs, une action partage le lien avec uniquement q, genre, lettre et limite. Le retour depuis une fiche et ses suggestions restaure ces critères et le lot visible, sans les intégrer à l'URL canonique de la fiche. Modifier la recherche ou un filtre repart du premier lot.

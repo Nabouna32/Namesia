@@ -87,6 +87,62 @@
   white-space: nowrap;
 }
 
+.regionalSection {
+  margin-block: 40px 0;
+}
+
+.regionalIntro {
+  max-width: 760px;
+  margin-block: -4px 20px;
+  color: var(--md-sys-color-on-surface-variant);
+  line-height: var(--md-sys-typescale-body-large-line-height);
+}
+
+.regionalGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.regionalGroup {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-large);
+  background: var(--md-sys-color-surface-container-low);
+}
+
+.regionalGroup h3 {
+  margin: 0 0 12px;
+  font-size: var(--md-sys-typescale-title-medium-size);
+  font-weight: 500;
+  line-height: var(--md-sys-typescale-title-medium-line-height);
+}
+
+.regionalList {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.regionalList li {
+  display: grid;
+  gap: 2px;
+}
+
+.regionalList strong {
+  font-size: var(--md-sys-typescale-body-large-size);
+  font-weight: 500;
+}
+
+.regionalList span {
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-body-medium-size);
+  line-height: var(--md-sys-typescale-body-medium-line-height);
+}
+
 .source {
   margin-block: 24px 0;
   color: var(--md-sys-color-on-surface-variant);
@@ -109,6 +165,10 @@
   .rankings {
     grid-template-columns: 1fr;
     gap: 24px;
+  }
+
+  .regionalGrid {
+    grid-template-columns: 1fr;
   }
 }
 
