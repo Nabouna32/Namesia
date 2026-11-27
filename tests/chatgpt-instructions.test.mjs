@@ -17,6 +17,7 @@ for (const file of instructionFiles) {
     assert.doesNotMatch(content, /[*#`]/, "Le texte copiable reste sans marqueurs Markdown.");
     assert.match(content, /challenge critique est obligatoire|challenge obligatoirement/i);
     assert.match(content, /Réponds en français/);
+    assert.match(content, /Toute communication durable dans le dépôt et sur GitHub est en français/i);
     assert.match(content, /Le dépôt Git est la (?:source de vérité|mémoire durable)/);
   });
 }
