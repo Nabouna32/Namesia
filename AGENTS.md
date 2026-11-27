@@ -1,6 +1,6 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.3
+- **Version :** 1.4
 - **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
 
 Cette charte s'applique à tout le dépôt, aux contributions humaines et aux agents IA.
@@ -147,13 +147,14 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 
 ## 7. Exigences propres à Namesia
 
-- Le cycle de vie des fiches, la provenance, la validation éditoriale, les corrections et les retours visiteurs suivent `docs/qualite-editoriale.md`. Le JSON est un format d'échange ; les champs structurés sont stockés dans des colonnes dédiées.
+- Le cycle de vie des fiches, la provenance, la validation éditoriale, les corrections et les retours visiteurs suivent `docs/qualite-editoriale.md`, `docs/politique-editoriale.md` et `docs/pipeline-generation-ia.md`. Le JSON est un format d'échange ; les champs structurés sont stockés dans des colonnes dédiées.
 - La mesure, le SEO, les expérimentations, la compatibilité, l'internationalisation et les pistes de croissance suivent `docs/mesure-et-croissance.md`. Analytics est autorisé lorsqu'il est utile et proportionné ; consentement et obligations applicables restent requis.
 - La fiabilité opérationnelle, la sécurité, la stratégie QA, l'accessibilité, l'éco-conception et la conformité suivent `docs/operations.md`.
 - Les exports, la portabilité et les migrations entre fournisseurs suivent `docs/portabilite-et-reversibilite.md`.
 
-- Les fiches sont générées en amont par IA (API ou conversation), puis importées dans Namesia au format JSON.
-- La génération, la validation du schéma, la prévisualisation et la publication sont quatre opérations distinctes. Aucune ne prouve l'exactitude factuelle du contenu.
+- Les fiches peuvent être générées en amont par conversation ou par le workflow GitHub Actions manuel via Groq décrit dans `docs/pipeline-generation-ia.md`. Il est limité à `main`, une fiche par exécution, utilise un schéma de réponse strict distinct du contrat d'import 2.0.0, fonctionne en dry-run par défaut et n'importe qu'en brouillon sur action explicite.
+- L'activation du workflow attend les secrets GitHub Actions documentés dans l'issue [Action Humaine #354](https://github.com/Nabouna32/Namesia/issues/354). `GROQ_API_KEY` et `SUPABASE_SECRET_KEY` (clé moderne `sb_secret_`) restent dans GitHub Actions ; la clé Supabase n'est envoyée que dans l'en-tête `apikey`. Aucun secret privilégié n'est exposé au navigateur.
+- Les métadonnées des fiches importées sont conservées dans une table relationnelle privée, jamais dans une colonne JSON. La génération, la validation du schéma, la prévisualisation, l'import en brouillon et la publication sont des opérations distinctes. Aucune ne prouve l'exactitude factuelle du contenu ; le workflow ne fait pas de recherche documentaire.
 - Ne jamais inventer de sources, références, citations, statistiques ou statuts de vérification.
 - Ne pas présenter une origine, une étymologie ou une tradition incertaine comme une certitude.
 - Ne pas présenter une symbolique, une numérologie ou un portrait de personnalité comme une vérité scientifique ou prédictive.
