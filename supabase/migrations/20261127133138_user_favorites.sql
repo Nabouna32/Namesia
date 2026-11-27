@@ -31,7 +31,7 @@ create policy user_favorites_insert_own_published
       select 1
       from public.names n
       join public.name_profiles p on p.name_id = n.id
-      where n.id = name_id
+      where n.id = user_favorites.name_id
         and p.status = 'publie'
     )
   );
