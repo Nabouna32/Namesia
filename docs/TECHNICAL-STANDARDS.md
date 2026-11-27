@@ -5,7 +5,7 @@
 La stratégie de tests, les critères de choix et les diagnostics sont détaillés dans [TESTING-AND-VALIDATION.md](TESTING-AND-VALIDATION.md). Les déclencheurs, jobs et audits de la CI sont décrits dans [GitHub Actions](platform/GITHUB-ACTIONS.md).
 
 :** 1.14
-- **Mis à jour le :** 2026-11-27 20:02:31 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 20:06:22 (Europe/Paris)
 - **Portée :** application web, styles, composants, données et outillage
 
 Ce document définit le niveau de qualité attendu pour les évolutions techniques de Namesia. Il complète [AGENTS.md](../AGENTS.md), qui définit la méthode de travail et le challenge obligatoire.
