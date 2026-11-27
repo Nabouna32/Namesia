@@ -7,12 +7,12 @@ Les ADR conservent les décisions structurelles, y compris celles qui ont été 
 
 Les documents canoniques qui décrivent l'état actuel sont :
 
-- [Design system](../design.md)
-- [Registre des composants](../composants.md)
-- [Vérification Material 3 et sources AndroidX](../material-3-verification.md)
-- [Architecture](../architecture.md)
+- [Design system](../DESIGN-SYSTEM.md)
+- [Registre des composants](../design/COMPONENTS.md)
+- [Vérification Material 3 et sources AndroidX](../MATERIAL-3-VERIFICATION.md)
+- [Architecture](../ARCHITECTURE.md)
 
-Chaque ADR possède un identifiant unique. Le test `tests/adr-registry.test.mjs` vérifie l'unicité des identifiants, la cohérence entre nom de fichier et titre, ainsi que l'existence des liens internes vers d'autres ADR.
+Les références opérationnelles sont décrites dans les guides [Dependabot](../platform/DEPENDABOT.md), [GitHub Actions](../platform/GITHUB-ACTIONS.md), [Supabase](../platform/SUPABASE.md) et [Cloudflare Workers](../platform/CLOUDFLARE-WORKERS.md).\n\nChaque ADR possède un identifiant unique. Le test `tests/adr-registry.test.mjs` vérifie l'unicité des identifiants, la cohérence entre nom de fichier et titre, ainsi que l'existence des liens internes vers d'autres ADR.
 
 - [ADR-0053 — Compte utilisateur facultatif](ADR-0053-compte-utilisateur-facultatif.md)
 - [ADR-0054 — Métadonnées et fraîcheur documentaire](ADR-0054-metadonnees-fraicheur-documentaire.md)
