@@ -219,7 +219,7 @@ test("l’import SQL réserve les métadonnées au service_role et protège l’
   assert.match(migration, /values \(v_name_id, v_version, 'draft', p_schema_version/);
   assert.match(migration, /content_sha256 text not null/);
   assert.match(migration, /v_existing_content_sha256 is distinct from p_generation_content_sha256/);
-  assert.match(migration, /revoke all on table private\.name_profile_generation_metadata from public, anon, authenticated/);
+  assert.match(migration, /revoke all on table private\\.name_profile_generation_metadata from public, anon, authenticated, service_role/);
   assert.match(migration, /notify pgrst, 'reload schema'/);
   assert.match(migration, /else true/);
   assert.doesNotMatch(migration, /auth\.role\(\)/);
