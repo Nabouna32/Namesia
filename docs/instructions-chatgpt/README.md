@@ -1,7 +1,7 @@
 # Instructions ChatGPT de Namesia
 
 Version : 2.0
-Mis à jour le : 2026-11-27 02:10:00 (Europe/Paris)
+Mis à jour le : 2026-11-27 02:03:49 (Europe/Paris)
 
 ## Fichiers à copier
 
