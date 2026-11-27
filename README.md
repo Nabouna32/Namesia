@@ -1,5 +1,8 @@
 # Namesia
 
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-27 13:20:36 (Europe/Paris)
+
 Namesia est une plateforme française de découverte des prénoms. Les fiches sont générées à l'aide d'une IA, importées en JSON puis publiées depuis une administration privée. Les contenus peuvent comporter des erreurs ; Namesia ne promet pas de vérification documentaire.
 
 ## Application web
