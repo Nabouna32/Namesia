@@ -32,18 +32,17 @@ test("les pages publiques essentielles sont disponibles sur bureau", async ({ pa
       .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
       .analyze();
 
-    if (accessibility.violations.length > 0) {
-      console.warn(
-        `Audit axe-core consultatif pour ${route.path} : ${JSON.stringify(
-          accessibility.violations.map(({ id, impact, help, nodes }) => ({
-            id,
-            impact,
-            help,
-            targets: nodes.map((node) => node.target)
-          }))
-        )}`
-      );
-    }
+    expect(
+      accessibility.violations,
+      `Violations axe-core sur ${route.path} : ${JSON.stringify(
+        accessibility.violations.map(({ id, impact, help, nodes }) => ({
+          id,
+          impact,
+          help,
+          targets: nodes.map((node) => node.target)
+        }))
+      )}`
+    ).toEqual([]);
   }
 
   expect(pageErrors, "Erreurs JavaScript sur les parcours publics").toEqual([]);
@@ -78,6 +77,22 @@ test("l’accueil reste utilisable sur mobile et tablette", async ({ page }) => 
       () => document.documentElement.scrollWidth > document.documentElement.clientWidth
     );
     expect(hasHorizontalOverflow, `Débordement horizontal en ${viewport.name}`).toBe(false);
+
+    const accessibility = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+      .analyze();
+
+    expect(
+      accessibility.violations,
+      `Violations axe-core sur l’accueil en ${viewport.name} : ${JSON.stringify(
+        accessibility.violations.map(({ id, impact, help, nodes }) => ({
+          id,
+          impact,
+          help,
+          targets: nodes.map((node) => node.target)
+        }))
+      )}`
+    ).toEqual([]);
   }
 });
 
