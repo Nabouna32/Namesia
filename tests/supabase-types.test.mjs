@@ -25,11 +25,13 @@ test("les types générés décrivent exactement le modèle relationnel actif", 
 });
 
 test("tous les clients Supabase utilisent le type Database généré", () => {
-  for (const source of [serverClient, adminAuth, adminClient]) {
+  for (const source of [serverClient, adminClient]) {
     assert.match(source, /createClient<Database>/);
     assert.ok(source.includes("database.types"));
   }
+  assert.match(adminAuth, /createSupabaseSessionClient\(\)/);
   assert.match(adminAuth, /SupabaseClient<Database>/);
+  assert.ok(adminAuth.includes("database.types"));
 });
 
 test("la génération du schéma fait partie du contrat d'architecture", () => {
