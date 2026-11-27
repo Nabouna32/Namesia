@@ -307,9 +307,9 @@ export function FavoritesList({
         <div className={styles.empty}>
           <p className={error ? styles.error : undefined} role={error ? "alert" : undefined}>{error
             ? "Vos favoris ne peuvent pas être lus pour le moment."
-            : slugs.length === 0
-              ? "Vous n’avez pas encore enregistré de prénom."
-              : "Aucun de vos favoris n’est actuellement publié."}</p>
+            : unavailableCount > 0
+              ? "Aucun de vos favoris n’est actuellement publié."
+              : "Vous n’avez pas encore enregistré de prénom."}</p>
           <Button href="/prenoms">Explorer les prénoms</Button>
         </div>
       ) : (
