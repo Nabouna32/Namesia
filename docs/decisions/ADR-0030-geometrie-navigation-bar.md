@@ -2,6 +2,8 @@
 
 - **Statut :** remplacée par [ADR-0031](ADR-0031-hauteur-navigation-bar-compose-1-5.md)
 - **Date :** 2026-11-24
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-27 20:10:47 (Europe/Paris)
 
 ## Contexte
 
@@ -23,4 +25,4 @@ La barre retrouve la hauteur Material 3 et libère 16 px de hauteur utile. Sur l
 
 ## Vérification
 
-La CI vérifie la hauteur, l'absence de bordure/padding artificiels et la cohérence du dégagement du contenu. La source AndroidX est répertoriée dans [Vérification Material 3](../material-3-verification.md).
+La CI vérifie la hauteur, l'absence de bordure/padding artificiels et la cohérence du dégagement du contenu. La source AndroidX est répertoriée dans [Vérification Material 3](../MATERIAL-3-VERIFICATION.md).
