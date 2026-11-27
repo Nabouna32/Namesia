@@ -148,7 +148,7 @@ test("le dry-run génère un artefact validé sans contacter Supabase", async ()
       displayName: "Éloïse",
       gender: "feminin",
       importAsDraft: false,
-      env: { GROQ_API_KEY: "test-key" },
+      env: { GROQ_API_KEY: "test-key", NAMESIA_WORKFLOW_RUN_ID: "12345" },
       outputDirectory: directory,
       fetchImpl: async (url, options) => {
         calls += 1;
