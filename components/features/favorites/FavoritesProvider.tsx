@@ -38,7 +38,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   const [userId, setUserId] = useState<string | null>(null);
   const [initialized, setInitialized] = useState(false);
   const [records, setRecords] = useState<FavoriteRecord[]>([]);
-  const [ready, setReady] = useState(false);
+  const [ready, setReady] = useState(false);\n  const [loadedUserId, setLoadedUserId] = useState<string | null | undefined>(undefined);
   const [error, setError] = useState(false);
 
   const refresh = useCallback(async (targetUserId: string | null = userId) => {
@@ -237,14 +237,14 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     slugs,
     unavailableCount: records.filter((record) => record.slug === null).length,
     authenticated: Boolean(userId),
-    ready: initialized && ready,
+    ready: initialized && ready && loadedUserId === userId,
     error,
     basculer,
     retirerPlusieurs,
     retirerIndisponibles,
     ajouterPlusieurs
   }), [
-    slugs, records, userId, initialized, ready, error,
+    slugs, records, userId, initialized, ready, loadedUserId, error,
     basculer, retirerPlusieurs, retirerIndisponibles, ajouterPlusieurs
   ]);
 
