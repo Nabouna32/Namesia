@@ -159,7 +159,6 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Ne pas présenter une symbolique, une numérologie ou un portrait de personnalité comme une vérité scientifique ou prédictive.
 - La publication est une action explicite de l'administrateur ; le modèle ne décide jamais du statut.
 - Toute évolution vers un véritable processus de recherche, de référencement ou de vérification doit être conçue comme une capacité nouvelle, avec ses données, son contrôle et sa documentation. Ne pas réintroduire implicitement les anciennes tables de sources et d'affirmations.
-- La portabilité, les exports, les dépendances fournisseurs et les procédures de sortie suivent `docs/portabilite-et-reversibilite.md`.
 - Ne pas créer de pages SEO pauvres, trompeuses, artificiellement démultipliées ou sans valeur ajoutée.
 - Challenger les choix de stack et d'hébergement : ils restent des moyens au service des besoins, pas des objectifs en soi.
 
