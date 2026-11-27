@@ -1,7 +1,7 @@
 # Namesia
 
-- **Version :** 1.2
-- **Mis à jour le :** 2026-11-27 14:20:04 (Europe/Paris)
+- **Version :** 1.3
+- **Mis à jour le :** 2026-11-27 14:23:11 (Europe/Paris)
 
 Namesia est une plateforme française de découverte des prénoms. Les fiches sont générées à l'aide d'une IA, importées en JSON puis publiées depuis une administration privée. Les contenus peuvent comporter des erreurs ; Namesia ne promet pas de vérification documentaire.
 
@@ -43,7 +43,7 @@ Les anciennes tables documentaires, l'ancien stockage JSONB et les colonnes redo
 
 Le compte Namesia est facultatif et accessible depuis `/compte`. L'inscription, la connexion, la confirmation de l'adresse e-mail, la récupération et la modification du mot de passe utilisent un système unique Supabase Auth par e-mail et mot de passe. Les sessions sont gérées en cookies de même origine via `@supabase/ssr` et PKCE. La consultation du catalogue et des fiches publiques ne demande jamais de compte. Les favoris et l'historique ont vocation à être liés au compte et synchronisés entre appareils ; ils ne seront pas conservés comme fonctions personnelles persistantes uniquement dans le navigateur. Leur migration est suivie dans l'issue #404.
 
-La politique des formulaires impose 8 caractères minimum, au moins une majuscule et un chiffre ; aucun symbole n'est obligatoire. Les espaces sont acceptés. Supabase Auth limite actuellement les mots de passe à 72 octets UTF-8. Les règles de composition sont vérifiées par l'interface Namesia, mais ne sont pas imposées côté serveur par Supabase Auth et peuvent être contournées par un appel direct à son API. La protection HIBP des mots de passe compromis n'est pas activée et aucun passage à Supabase Pro n'est requis ; ce compromis ne constitue pas une conformité complète au NIST.
+La politique des formulaires impose 8 caractères minimum, au moins une majuscule et un chiffre ; aucun symbole n'est obligatoire. Les espaces sont acceptés. Supabase Auth limite actuellement les mots de passe à 72 octets UTF-8. Les préréglages serveur Supabase ne permettent pas d'exiger exactement cette paire sans imposer aussi une minuscule ; les règles choisies sont donc vérifiées par l'interface Namesia et peuvent être contournées par un appel direct à son API. La protection HIBP des mots de passe compromis n'est pas activée et aucun passage à Supabase Pro n'est requis ; ce compromis ne constitue pas une conformité complète au NIST.
 
 L'administration est disponible sur `/admin` et utilise exactement le même compte que le site public. Le droit administrateur est attribué séparément dans la liste privée `private.admin_users`. Créer un compte ne donne jamais de droit d'administration. Le compte propriétaire existant conserve son autorisation et doit définir son premier mot de passe via le parcours « Mot de passe oublié ».
 
