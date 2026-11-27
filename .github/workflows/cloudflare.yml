@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: cloudflare-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event.action != 'closed' }}
 
 jobs:
   build:
