@@ -7,9 +7,16 @@ type AdminAccess =
   | { supabase: SupabaseClient<Database>; user: User; error: null }
   | { supabase: null; user: null; error: { message: string; status: number } };
 
-export async function requireAdmin(_request: Request): Promise<AdminAccess> {
+export async function requireAdmin(request: Request): Promise<AdminAccess> {
   if (process.env.NAMESIA_DEPLOYMENT_ENVIRONMENT === "preview") {
     return { supabase: null, user: null, error: { message: "L’administration est désactivée dans les environnements Preview.", status: 403 } };
+  }
+
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    const origin = request.headers.get("origin");
+    if (!origin || origin !== new URL(request.url).origin) {
+      return { supabase: null, user: null, error: { message: "Origine de requête non autorisée.", status: 403 } };
+    }
   }
 
   let supabase: SupabaseClient<Database>;
