@@ -22,6 +22,11 @@ function firstParam(value: ParametreUrl): string {
   return Array.isArray(value) ? value[0] ?? "" : value ?? "";
 }
 
+function getRedirectTo(value: string): string {
+  if (value === "/admin" || value === "/favoris") return value;
+  return /^\/prenoms\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value) ? value : "/";
+}
+
 function getInitialMode(value: string): AccountMode {
   if (value === "register" || value === "forgot" || value === "recovery") return value;
   return "login";
@@ -37,7 +42,7 @@ export default async function AccountPage({ searchParams }: Props) {
   }
 
   const params = await searchParams;
-  const redirectTo = firstParam(params.redirect) === "/admin" ? "/admin" : "/";
+  const redirectTo = getRedirectTo(firstParam(params.redirect));
   const initialMode = getInitialMode(firstParam(params.mode));
 
   return (
