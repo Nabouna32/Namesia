@@ -12,16 +12,15 @@ Namesia est une application Next.js rendue côté serveur. Supabase fournit l'au
 
 ```mermaid
 flowchart TD
-  A["Préparation éditoriale hors application"] --> B["JSON conforme au schéma"]
-  B --> C["Administration privée"]
-  C --> D["Validation et prévisualisation"]
-  D --> E["API Next.js protégée"]
-  E --> F["Supabase Auth et contrôle administrateur"]
-  E --> G["Fonctions SQL transactionnelles"]
-  G --> H[("PostgreSQL / Supabase")]
-  H --> I["Lectures publiques des fiches publiées"]
-  I --> J["Application Next.js"]
-  J --> K["Cloudflare Workers / OpenNext"]
+  V["Visiteur"] --> CF["Cloudflare Workers / OpenNext"]
+  CF --> APP["Application Next.js"]
+  APP --> DB[("PostgreSQL / Supabase")]
+  P["Préparation éditoriale hors application"] --> JSON["JSON conforme au schéma"]
+  JSON --> ADMIN["Administration privée"]
+  ADMIN --> API["API Next.js protégée"]
+  API --> AUTH["Supabase Auth et contrôle administrateur"]
+  API --> SQL["Fonctions SQL transactionnelles"]
+  SQL --> DB
 ```
 
 Aucun modèle IA n'est appelé pendant l'affichage du site. La génération des fiches a lieu en amont ; l'application contrôle le contrat reçu, importe un brouillon et laisse la publication à une action administrative distincte.
