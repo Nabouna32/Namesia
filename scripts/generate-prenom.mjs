@@ -42,7 +42,7 @@ export function normaliserSupabaseUrl(value) {
     (parsed.pathname !== "/" && parsed.pathname !== "") ||
     parsed.search ||
     parsed.hash ||
-    !/(?:^|\.)supabase\.(?:co|in)$/i.test(parsed.hostname)
+    !/^[a-z0-9-]+\.supabase\.(?:co|in)$/i.test(parsed.hostname)
   ) {
     throw new Error("L’URL Supabase doit être une origine HTTPS officielle, sans chemin ni identifiants.");
   }
