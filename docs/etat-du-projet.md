@@ -38,7 +38,7 @@ La génération reste externe au runtime public. Le workflow GitHub Actions manu
 ## Chantiers et limites connus
 
 - Issue #331 clôturée par la [PR #352](https://github.com/Nabouna32/Namesia/pull/352) : OpenNext 1.20.19 intègre le correctif amont pour glob/minimatch ; aucun override hors plage n’a été ajouté.
-- Les retours visiteurs, le pipeline de génération automatisé et le compte visiteur facultatif sont des capacités à concevoir ou implémenter, pas des fonctionnalités déjà disponibles.
+- Les retours visiteurs et le compte visiteur facultatif restent à concevoir ou implémenter. Le pipeline Groq est implémenté ; seule son activation attend les secrets GitHub Actions de l’issue #354.
 - Les critères précis de transition entre les phases du produit restent soumis à confirmation du propriétaire via [l’issue Action Humaine #350](https://github.com/Nabouna32/Namesia/issues/350) ; aucune transition automatique n’est permise.
 
 ## Sources canoniques
