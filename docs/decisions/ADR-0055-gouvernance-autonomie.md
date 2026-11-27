@@ -1,9 +1,9 @@
 # ADR-0055 — Gouvernance et autonomie de Namesia
 
 - **Statut :** accepté
-- **Version :** 1.0
+- **Version :** 1.1
 - **Décision prise le :** 2026-11-26 (heure non consignée)
-- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 01:34:00 (Europe/Paris)
 - **Décideur :** propriétaire de Namesia
 
 ## Contexte
@@ -36,7 +36,7 @@ Le dépôt Git est la mémoire durable. AGENTS.md porte le contrat opérationnel
 
 - L’agent prend les initiatives et décisions techniques nécessaires sans demander une permission à chaque étape.
 - Les décisions produit, économiques et personnelles qui engagent le propriétaire sont soumises à arbitrage.
-- Les PR sont séquentielles, la CI est attendue jusqu’à la fin des contrôles requis, et aucune réussite n’est annoncée sans preuve.
+- Les PR sont séquentielles. L’état de la CI est consulté une fois par PR : si un contrôle échoue, ses jobs et logs sont examinés, la cause est corrigée et la nouvelle exécution est vérifiée ; si les contrôles sont encore en cours, l’agent tente la fusion autorisée sans attendre. Une règle de protection GitHub n’est jamais contournée. Aucun test, build ou déploiement n’est annoncé comme réussi sans preuve.
 - Les règles détaillées et exemples sont maintenus dans gouvernance.md et AGENTS.md.
 
 ## Réexamen
