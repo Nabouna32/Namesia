@@ -18,14 +18,6 @@
   "observability": {
     "enabled": true
   },
-  "previews": {
-    "vars": {
-      "NAMESIA_DEPLOYMENT_ENVIRONMENT": "preview"
-    },
-    "observability": {
-      "enabled": true
-    }
-  },
   "find_additional_modules": true,
   "base_dir": ".",
   "preserve_file_names": true,

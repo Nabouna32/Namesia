@@ -1,13 +1,13 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.4
-- **Mis à jour le :** 2026-11-27 (Europe/Paris)
+- **Version :** 1.7
+- **Mis à jour le :** 2026-11-27 02:04:28 (Europe/Paris)
 
 Cette charte s'applique à tout le dépôt, aux contributions humaines et aux agents IA.
 
 ## 1. Langue et traçabilité
 
-- Toute communication durable dans le dépôt et sur GitHub est en français : documentation, demandes de fusion (PR), issues, commentaires, revues, décisions d’architecture et suivi. Les commentaires de code et les textes de tests sont également en français. Seuls les noms officiels des technologies, bibliothèques, interfaces de programmation et outils peuvent conserver leur appellation d’origine.
+- Toute communication durable dans le dépôt et sur GitHub est en français : documentation, demandes de fusion, tickets, commentaires, revues, décisions d’architecture et suivi. Les commentaires de code et les textes de tests sont également en français. Seuls les noms officiels des technologies, bibliothèques, interfaces de programmation et outils peuvent conserver leur appellation d’origine.
 - Les identifiants, noms de fichiers, modules, types, variables, fonctions et exports créés ou modifiés sont en anglais ; les commentaires de code, textes de tests, documentation, issues, PR et échanges GitHub restent en français. Les primitives d'interface ne doivent pas être recréées dans les features ni masquées derrière des wrappers Namesia. Lorsqu'aucune implémentation Web officielle, stable, maintenue et suffisamment complète n'existe, un port React/HTML local du contrat AndroidX est admis : il doit porter le nom M3 officiel, rester unique, utiliser la sémantique native et être vérifié contre une source AndroidX immuable. Ne jamais prétendre qu'un port Web est un composant AndroidX exécuté dans le navigateur. Le legacy se migre progressivement lorsqu'il est touché, sans refactor global hors sujet.
 - Les segments de routes, paramètres de requête et chemins d'API publics peuvent rester en français pour préserver le SEO et les contrats existants ; ne pas les renommer sans migration explicite des URL canoniques, du sitemap, des redirections et des liens entrants.
 - La conversation est éphémère : toute décision utile doit être inscrite dans le dépôt.
@@ -60,7 +60,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Le job `quality` bloque sur l'audit des dépendances de production (`npm audit --omit=dev --audit-level=high`) et exécute aussi un audit complet du graphe (`npm audit --audit-level=high`) à titre diagnostique non bloquant, pour suivre les vulnérabilités des outils de développement. Il exécute ensuite les tests, le contrôle TypeScript et le build même si l'un échoue. La synthèse finale distingue l'audit bloquant de production, le diagnostic complet, les tests, les types et le build ; sur un run rouge, lire chaque `outcome` et ses logs avant de corriger afin de traiter toutes les causes indépendantes dans la même boucle. Une vulnérabilité de développement n'est pas une exposition directe du Worker, mais elle reste une dette de sécurité à corriger, jamais un résultat à masquer.
 - Ne jamais déclarer un test, build ou contrôle réussi sans que la CI GitHub Actions l'ait confirmé.
 
-- Playwright vérifie un petit nombre de parcours publics représentatifs sur la Workers Preview des PR internes, jamais sur un environnement authentifié ou contenant des données privées : disponibilité des routes essentielles, erreurs JavaScript et débordements responsive représentatifs. Les contrôles visuels temporaires ne deviennent pas des tests permanents.
+- Playwright vérifie un petit nombre de parcours publics représentatifs sur un Worker Wrangler local (`wrangler dev` (mode local par défaut ; ne pas utiliser `--remote`)) lancé dans GitHub Actions uniquement par le label `diagnostic-playwright`. Aucune PR ne crée de Workers Preview distante ; le diagnostic ne cible jamais un environnement authentifié ou contenant des données privées. Les contrôles visuels temporaires ne deviennent pas des tests permanents.
 - **Aucune capture d'écran systématique en CI.** Les captures sont réservées au diagnostic ponctuel d'un défaut visuel ou à une comparaison explicitement demandée ; elles ne sont ni générées ni publiées à chaque PR.
 - **Aucun artefact Playwright n'est produit ou publié systématiquement.** Par défaut, captures, vidéos et traces sont désactivées et aucun rapport n'est archivé.
 - Pour un diagnostic visuel ponctuel sur une PR interne, ajouter temporairement le label `diagnostic-playwright` : le workflow réactive les captures sur échec et les traces d'échec, et publie `test-results/` uniquement pour ce run, avec une rétention d'un jour. Un `page.screenshot()` ajouté temporairement permet aussi de capturer un rendu qui passe. Retirer le label, le code de diagnostic et les fichiers de capture dès validation ; supprimer immédiatement l'artefact depuis Actions si le diagnostic est terminé avant son expiration. Ne jamais créer de galerie, baseline visuelle ou historique de captures.
@@ -72,7 +72,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 ### Déploiement et CI
 
 - Cloudflare Workers est l'unique hébergement de production ; GitHub Actions est l'unique moteur de build, de vérification et de déploiement.
-- Les PR internes humaines peuvent créer une Workers Preview isolée ; les secrets Cloudflare ne sont jamais exposés aux forks ni aux PR créées par Dependabot. Ces dernières conservent les vérifications de build et de qualité, mais ne tentent pas de créer ou supprimer une Preview.
+- Les PR ne créent jamais de Workers Preview distante et ne reçoivent aucun secret Cloudflare. Le label `diagnostic-playwright` déclenche uniquement un Worker local Wrangler, sans appel de déploiement Cloudflare. Seul `main`, après fusion, déploie la production. À la fermeture, le workflow peut supprimer une ancienne Preview héritée de la configuration précédente ; il n’en crée aucune.
 - Seule la branche `main`, après fusion d'une PR, déploie la production. Le lancement manuel du workflow est réservé à `main`.
 - Les vérifications de PR et les contrôles visuels s'exécutent dans GitHub Actions ; aucun hébergeur tiers de build ou de déploiement n'est requis.
 
@@ -98,7 +98,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 
 - Le dépôt Git est la mémoire durable du projet.
 - Utiliser les outils, intégrations et connecteurs disponibles lorsqu'ils apportent une valeur réelle ; rechercher et recommander des intégrations complémentaires si elles sont utiles. Toute installation ou connexion exige l'action explicite du propriétaire.
-- `docs/etat-du-projet.md` décrit l'état courant ; `docs/gouvernance.md`, `docs/operations.md`, `docs/qualite-editoriale.md` et `docs/mesure-et-croissance.md` portent les règles thématiques. Les deux fichiers `docs/instructions-chatgpt/` sont des résumés à copier manuellement dans les projets correspondants ; chacun reste sous 8 000 caractères, espaces compris.
+- `docs/etat-du-projet.md` décrit l'état courant ; `docs/gouvernance.md`, `docs/operations.md`, `docs/qualite-editoriale.md` et `docs/mesure-et-croissance.md` portent les règles thématiques. Les fichiers `mode-autonome.txt` et `mode-discussion.txt` dans `docs/instructions-chatgpt/` sont les textes bruts à copier dans les projets ChatGPT. Leur organisation et leur entretien sont expliqués dans `organisation.txt` ; les détails de référence restent dans les documents canoniques.
 - Toute PR qui change un comportement, un contrat, une architecture ou une décision met à jour les documents concernés dans la même PR.
 - Éviter les doublons et désigner un emplacement canonique par information structurante.
 - Distinguer les faits, hypothèses, propositions, décisions acceptées et décisions obsolètes.
@@ -147,13 +147,14 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 
 ## 7. Exigences propres à Namesia
 
-- Le cycle de vie des fiches, la provenance, la validation éditoriale, les corrections et les retours visiteurs suivent `docs/qualite-editoriale.md`. Le JSON est un format d'échange ; les champs structurés sont stockés dans des colonnes dédiées.
+- Le cycle de vie des fiches, la provenance, la validation éditoriale, les corrections et les retours visiteurs suivent `docs/qualite-editoriale.md`, `docs/politique-editoriale.md` et `docs/pipeline-generation-ia.md`. Le JSON est un format d'échange ; les champs structurés sont stockés dans des colonnes dédiées.
 - La mesure, le SEO, les expérimentations, la compatibilité, l'internationalisation et les pistes de croissance suivent `docs/mesure-et-croissance.md`. Analytics est autorisé lorsqu'il est utile et proportionné ; consentement et obligations applicables restent requis.
 - La fiabilité opérationnelle, la sécurité, la stratégie QA, l'accessibilité, l'éco-conception et la conformité suivent `docs/operations.md`.
 - Les exports, la portabilité et les migrations entre fournisseurs suivent `docs/portabilite-et-reversibilite.md`.
 
-- Les fiches sont générées en amont par IA (API ou conversation), puis importées dans Namesia au format JSON.
-- La génération, la validation du schéma, la prévisualisation et la publication sont quatre opérations distinctes. Aucune ne prouve l'exactitude factuelle du contenu.
+- Les fiches peuvent être générées en amont par conversation ou par le workflow GitHub Actions manuel via Groq décrit dans `docs/pipeline-generation-ia.md`. Il est limité à `main`, une fiche par exécution, utilise un schéma de réponse strict distinct du contrat d'import 2.0.0, fonctionne en dry-run par défaut et n'importe qu'en brouillon sur action explicite.
+- L'activation du workflow attend les secrets GitHub Actions documentés dans l'issue [Action Humaine #354](https://github.com/Nabouna32/Namesia/issues/354). `GROQ_API_KEY` et `SUPABASE_SECRET_KEY` (clé moderne `sb_secret_`) restent dans GitHub Actions ; la clé Supabase n'est envoyée que dans l'en-tête `apikey`. Aucun secret privilégié n'est exposé au navigateur.
+- Les métadonnées des fiches importées sont conservées dans une table relationnelle privée, jamais dans une colonne JSON. Un contrôle heuristique signale les liens, citations, statistiques, années et répétitions ; il ne vérifie pas les faits et ne remplace pas la revue humaine. La génération, la validation du schéma, la prévisualisation, l'import en brouillon et la publication sont des opérations distinctes. Aucune ne prouve l'exactitude factuelle du contenu ; le workflow ne fait pas de recherche documentaire.
 - Ne jamais inventer de sources, références, citations, statistiques ou statuts de vérification.
 - Ne pas présenter une origine, une étymologie ou une tradition incertaine comme une certitude.
 - Ne pas présenter une symbolique, une numérologie ou un portrait de personnalité comme une vérité scientifique ou prédictive.
