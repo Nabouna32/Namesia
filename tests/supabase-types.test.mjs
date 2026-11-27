@@ -16,7 +16,7 @@ const agents = await readFile(new URL("../AGENTS.md", import.meta.url), "utf8");
 
 test("les types générés décrivent exactement le modèle relationnel actif", () => {
   assert.ok(databaseTypes.includes('PostgrestVersion: "14.18"'));
-  for (const table of ["names", "name_profiles", "name_profile_associations"]) {
+  for (const table of ["names", "name_profiles", "name_profile_associations", "user_favorites"]) {
     assert.ok(databaseTypes.includes(`${table}: {`));
   }
   assert.doesNotMatch(databaseTypes, /name_profile_references/);
