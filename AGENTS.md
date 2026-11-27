@@ -1,7 +1,7 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.4
-- **Mis à jour le :** 2026-11-27 (Europe/Paris)
+- **Version :** 1.6
+- **Mis à jour le :** 2026-11-27 01:56:00 (Europe/Paris)
 
 Cette charte s'applique à tout le dépôt, aux contributions humaines et aux agents IA.
 
@@ -60,7 +60,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Le job `quality` bloque sur l'audit des dépendances de production (`npm audit --omit=dev --audit-level=high`) et exécute aussi un audit complet du graphe (`npm audit --audit-level=high`) à titre diagnostique non bloquant, pour suivre les vulnérabilités des outils de développement. Il exécute ensuite les tests, le contrôle TypeScript et le build même si l'un échoue. La synthèse finale distingue l'audit bloquant de production, le diagnostic complet, les tests, les types et le build ; sur un run rouge, lire chaque `outcome` et ses logs avant de corriger afin de traiter toutes les causes indépendantes dans la même boucle. Une vulnérabilité de développement n'est pas une exposition directe du Worker, mais elle reste une dette de sécurité à corriger, jamais un résultat à masquer.
 - Ne jamais déclarer un test, build ou contrôle réussi sans que la CI GitHub Actions l'ait confirmé.
 
-- Playwright vérifie un petit nombre de parcours publics représentatifs sur la Workers Preview des PR internes, jamais sur un environnement authentifié ou contenant des données privées : disponibilité des routes essentielles, erreurs JavaScript et débordements responsive représentatifs. Les contrôles visuels temporaires ne deviennent pas des tests permanents.
+- Playwright vérifie un petit nombre de parcours publics représentatifs sur un Worker Wrangler local (`wrangler dev`, local par défaut et sans `--remote`) lancé dans GitHub Actions uniquement par le label `diagnostic-playwright`. Aucune PR ne crée de Workers Preview distante ; le diagnostic ne cible jamais un environnement authentifié ou contenant des données privées. Les contrôles visuels temporaires ne deviennent pas des tests permanents.
 - **Aucune capture d'écran systématique en CI.** Les captures sont réservées au diagnostic ponctuel d'un défaut visuel ou à une comparaison explicitement demandée ; elles ne sont ni générées ni publiées à chaque PR.
 - **Aucun artefact Playwright n'est produit ou publié systématiquement.** Par défaut, captures, vidéos et traces sont désactivées et aucun rapport n'est archivé.
 - Pour un diagnostic visuel ponctuel sur une PR interne, ajouter temporairement le label `diagnostic-playwright` : le workflow réactive les captures sur échec et les traces d'échec, et publie `test-results/` uniquement pour ce run, avec une rétention d'un jour. Un `page.screenshot()` ajouté temporairement permet aussi de capturer un rendu qui passe. Retirer le label, le code de diagnostic et les fichiers de capture dès validation ; supprimer immédiatement l'artefact depuis Actions si le diagnostic est terminé avant son expiration. Ne jamais créer de galerie, baseline visuelle ou historique de captures.
@@ -72,7 +72,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 ### Déploiement et CI
 
 - Cloudflare Workers est l'unique hébergement de production ; GitHub Actions est l'unique moteur de build, de vérification et de déploiement.
-- Les PR internes humaines peuvent créer une Workers Preview isolée ; les secrets Cloudflare ne sont jamais exposés aux forks ni aux PR créées par Dependabot. Ces dernières conservent les vérifications de build et de qualité, mais ne tentent pas de créer ou supprimer une Preview.
+- Les PR ne créent jamais de Workers Preview distante et ne reçoivent aucun secret Cloudflare. Le label `diagnostic-playwright` déclenche uniquement un Worker local Wrangler, sans appel de déploiement Cloudflare. Seul `main`, après fusion, déploie la production. À la fermeture, le workflow peut supprimer une ancienne Preview héritée de la configuration précédente ; il n’en crée aucune.
 - Seule la branche `main`, après fusion d'une PR, déploie la production. Le lancement manuel du workflow est réservé à `main`.
 - Les vérifications de PR et les contrôles visuels s'exécutent dans GitHub Actions ; aucun hébergeur tiers de build ou de déploiement n'est requis.
 
@@ -151,6 +151,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - La mesure, le SEO, les expérimentations, la compatibilité, l'internationalisation et les pistes de croissance suivent `docs/mesure-et-croissance.md`. Analytics est autorisé lorsqu'il est utile et proportionné ; consentement et obligations applicables restent requis.
 - La fiabilité opérationnelle, la sécurité, la stratégie QA, l'accessibilité, l'éco-conception et la conformité suivent `docs/operations.md`.
 - Les exports, la portabilité et les migrations entre fournisseurs suivent `docs/portabilite-et-reversibilite.md`.
+- Le workflow manuel de génération Groq est disponible sur `main` : une fiche par exécution, schéma strict, validation par le parseur, dry-run par défaut et import explicite en brouillon uniquement. Les secrets restent dans GitHub Actions ; la provenance des imports est privée et relationnelle. Voir `docs/pipeline-generation-ia.md`.
 
 - Les fiches sont générées en amont par IA (API ou conversation), puis importées dans Namesia au format JSON.
 - La génération, la validation du schéma, la prévisualisation et la publication sont quatre opérations distinctes. Aucune ne prouve l'exactitude factuelle du contenu.
