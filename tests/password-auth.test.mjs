@@ -42,11 +42,14 @@ test("l'administration réutilise le compte Namesia sans créer une connexion di
   assert.match(adminAuth, /createSupabaseSessionClient\(\)/);
   assert.match(adminAuth, /auth\.getUser\(\)/);
   assert.doesNotMatch(adminAuth, /Bearer/);
+  assert.match(adminAuth, /Origine de requête non autorisée/);
   assert.match(adminAuth, /request\.headers\.get\("origin"\)/);
   assert.match(adminAuth, /new URL\(request\.url\)\.origin/);
   assert.match(sessionClient, /createServerClient/);
   assert.match(sessionClient, /getAll\(\)/);
   assert.match(sessionClient, /setAll\(cookiesToSet\)/);
+  assert.match(sessionClient, /sameSite: "lax"/);
+  assert.match(sessionClient, /secure: process\.env\.NODE_ENV === "production"/);
   assert.match(accountPage, /NAMESIA_DEPLOYMENT_ENVIRONMENT === "preview"/);
   assert.match(accountPage, /firstParam\(params\.redirect\) === "\/admin" \? "\/admin" : "\/"/);
 });
