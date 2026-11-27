@@ -1,7 +1,7 @@
 # État du projet — Namesia
 
 - **Statut :** source de vérité de l’état courant
-- **Version :** 1.10
+- **Version :** 1.11
 - **Mis à jour le :** 2026-11-27 (Europe/Paris)
 
 ## Phase
@@ -19,7 +19,7 @@ L’accès public aux fiches ne doit pas dépendre d’un compte. Le compte visi
 - **Application :** Next.js App Router, TypeScript et React.
 - **Données :** Supabase Auth et PostgreSQL ; schéma et types versionnés dans le dépôt.
 - **Hébergement :** Cloudflare Workers avec OpenNext (@opennextjs/cloudflare 1.20.19, @opennextjs/aws 4.2.1).
-- **CI/CD :** GitHub Actions ; les PR internes humaines éligibles créent une Workers Preview via Wrangler, avec vérification et nettoyage à la fermeture ; les forks et PR Dependabot n'obtiennent pas de Preview. Playwright contrôle les parcours publics et bloque aussi les violations axe-core sur six pages essentielles en bureau et l’accueil en mobile/tablette. La fusion sur `main` déclenche le déploiement de production via OpenNext/Cloudflare.
+- **CI/CD :** GitHub Actions ; les PR internes humaines éligibles créent une Workers Preview via Wrangler, avec vérification et nettoyage à la fermeture ; les forks et PR Dependabot n'obtiennent pas de Preview. Playwright contrôle les parcours publics, les débordements horizontaux des six pages essentielles à 320 px et les violations axe-core en bureau ainsi que sur l’accueil à 320, 390 et 768 px. La fusion sur `main` déclenche le déploiement de production via OpenNext/Cloudflare.
 - **Administration :** espace privé protégé par Supabase Auth, liens OTP e-mail.
 - **Production technique :** URL workers.dev ; aucun domaine public propre n’est encore déclaré pour le lancement.
 
