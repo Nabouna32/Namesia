@@ -147,11 +147,13 @@ begin
     or (p_content ? 'origin' and (jsonb_typeof(p_content -> 'origin') is distinct from 'string' or char_length(p_content ->> 'origin') > 3000))
     or (p_content ? 'history' and (jsonb_typeof(p_content -> 'history') is distinct from 'string' or char_length(p_content ->> 'history') > 3000))
     or (p_content ? 'usage' and (jsonb_typeof(p_content -> 'usage') is distinct from 'string' or char_length(p_content ->> 'usage') > 3000))
-    or case
-      when jsonb_typeof(p_content -> 'symbolic_associations') = 'array'
-      then jsonb_array_length(p_content -> 'symbolic_associations') > 12
-      else true
-    end
+    or (
+      case
+        when jsonb_typeof(p_content -> 'symbolic_associations') = 'array'
+        then jsonb_array_length(p_content -> 'symbolic_associations') > 12
+        else true
+      end
+    )
   then
     raise exception 'Contrat JSON Namesia invalide ou non pris en charge' using errcode = '22023';
   end if;
