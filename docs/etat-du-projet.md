@@ -1,8 +1,8 @@
 # État du projet — Namesia
 
 - **Statut :** source de vérité de l’état courant
-- **Version :** 1.4
-- **Mis à jour le :** 2026-11-27 01:34:00 (Europe/Paris)
+- **Version :** 1.5
+- **Mis à jour le :** 2026-11-27 01:42:00 (Europe/Paris)
 
 ## Phase
 
@@ -25,7 +25,7 @@ L’accès public aux fiches ne doit pas dépendre d’un compte. Le compte visi
 
 ## Contenu et génération IA
 
-La génération reste externe au runtime public. Le workflow GitHub Actions manuel via Groq est disponible sur main : une fiche par exécution, schéma de réponse strict, validation par le parseur Namesia, alertes éditoriales heuristiques, dry-run par défaut et import facultatif en brouillon. Il ne publie jamais et n’effectue aucune recherche documentaire ni vérification factuelle. Les métadonnées des imports sont conservées dans une table relationnelle privée. Son activation opérationnelle attend les secrets GitHub Actions décrits dans l’issue [Action Humaine #354](https://github.com/Nabouna32/Namesia/issues/354). Seules quelques fiches d’exemple sont nécessaires en pré-lancement.
+La génération reste externe au runtime public. Le workflow GitHub Actions manuel via Groq est disponible sur main : une fiche par exécution, schéma de réponse strict, validation par le parseur Namesia, alertes éditoriales heuristiques, dry-run par défaut et import facultatif en brouillon. Il ne publie jamais et n’effectue aucune recherche documentaire ni vérification factuelle. Les métadonnées des imports sont conservées dans une table relationnelle privée. Les migrations de provenance et de privilèges sont appliquées sur l’instance Supabase active et `lib/supabase/database.types.ts` a été régénéré. L’activation opérationnelle attend les secrets GitHub Actions décrits dans l’issue [Action Humaine #354](https://github.com/Nabouna32/Namesia/issues/354). Seules quelques fiches d’exemple sont nécessaires en pré-lancement.
 
 ## Décisions structurantes
 
