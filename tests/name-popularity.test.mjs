@@ -54,9 +54,17 @@ test("la page expose les profils publiés sans masquer les entrées hors catalog
   assert.ok(!trendsCss.includes("gap: 2px;"));
   assert.ok(popularityCss.includes(".popularitySource"));
   assert.ok(!popularityCss.includes(".source"));
+  assert.match(page, /publishedSlugs\\.has\\(entry\\.slug\\)/);
+  assert.match(page, /Fiche non publiée sur Namesia/);
+  assert.match(page, /NAME_POPULARITY_2025_SOURCE_URL/);
+  assert.match(sitemap, /new URL\\("\\/tendances", siteUrl\\)/);
+  assert.match(profileCard, /getNamePopularity2025\\(slug\\)/);
+  assert.match(profileCard, /popularity\\.name !== name \\|\\| popularity\\.gender !== gender/);
+  assert.match(page, /publishedName\\.name !== entry\\.name \\|\\| publishedName\\.gender !== entry\\.gender/);
+  assert.match(page, /NAME_REGIONAL_LEADERS_2025/);
+  assert.match(page, /regional-ranking-title/);
   assert.ok(page.includes("publishedSlugs.has(entry.slug) ? ("));
   assert.ok(page.includes("href={` + "/prenoms/" + "${entry.slug}" + "}`}"));
-  assert.ok(page.includes("Fiche non publiée sur Namesia"));
   assert.ok(trendsCss.includes(".regionalName:focus-visible"));
   assert.ok(trendsCss.includes(".regionalGrid"));
   assert.ok(trendsCss.includes("grid-template-columns: 1fr;"));
