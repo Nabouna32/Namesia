@@ -1,9 +1,9 @@
 # ADR-0055 — Authentification des comptes Namesia par mot de passe
 
 - **Statut :** acceptée
-- **Version :** 1.5
+- **Version :** 1.6
 - **Décision prise le :** 2026-11-27 13:20:36 (Europe/Paris)
-- **Mis à jour le :** 2026-11-27 13:28:41 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 14:20:04 (Europe/Paris)
 - **Décideur :** propriétaire de Namesia
 - **Portée :** comptes visiteurs, sessions et autorisations administrateur
 
@@ -66,12 +66,12 @@ L'ancienne ADR-0049 imposait la protection HIBP de Supabase avant toute introduc
 - La table privée `private.admin_users` ne stocke que l'attribution du droit administrateur ; elle n'est pas un système d'authentification distinct.
 - L'ancienne ADR-0049 est remplacée.
 - Les e-mails de confirmation et de récupération nécessitent un SMTP transactionnel personnalisé pour délivrer les messages à des adresses externes à l'équipe Supabase. Le service SMTP par défaut est réservé aux membres de l'équipe et limité à deux messages par heure au moment de la décision. La configuration est suivie dans l'issue #402.
-- Les favoris et l'historique restent régis par leurs décisions et leur stockage actuels ; leur synchronisation serveur, la suppression de compte et les contrôles de conservation ne sont pas réputés livrés par cette ADR.
+- Les favoris et l'historique doivent être liés au compte et synchronisés côté serveur ; ils ne doivent pas rester des fonctions persistantes locales. Leur mise en œuvre, la migration éventuelle des favoris déjà stockés dans le navigateur, la rétention de l'historique et la suppression complète des données sont suivies dans l'issue #404. Le compte reste facultatif pour explorer le catalogue et consulter les fiches.
 
 ## Validation
 
 - Les tests de contrat vérifient la présence des flux e-mail/mot de passe et l'absence du flux OTP de connexion.
-- Les tests unitaires vérifient le minimum de 15 caractères, le comptage Unicode et la limite de 72 octets UTF-8.
+- Les tests unitaires vérifient le minimum de 8 caractères, la présence d'une majuscule et d'un chiffre, le comptage Unicode et la limite de 72 octets UTF-8.
 - La CI GitHub Actions reste l'unique mécanisme de vérification du code.
 
 ## Références
