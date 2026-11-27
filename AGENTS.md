@@ -1,223 +1,85 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.8
-- **Mis à jour le :** 2026-11-27 07:22:05 (Europe/Paris)
+- **Version :** 1.9
+- **Mis à jour le :** 2026-11-27 07:40:40 (Europe/Paris)
 
-Cette charte s'applique à tout le dépôt, aux contributions humaines et aux agents IA.
+Cette charte fixe les règles communes du dépôt. Les procédures détaillées restent dans les documents spécialisés : ne pas les recopier ici.
 
 ## 1. Langue et traçabilité
 
-- Toute communication durable dans le dépôt et sur GitHub est en français : documentation, demandes de fusion, tickets, commentaires, revues, décisions d’architecture et suivi. Les commentaires de code et les textes de tests sont également en français. Seuls les noms officiels des technologies, bibliothèques, interfaces de programmation et outils peuvent conserver leur appellation d’origine.
-- Les identifiants, noms de fichiers, modules, types, variables, fonctions et exports créés ou modifiés sont en anglais ; les commentaires de code, textes de tests, documentation, issues, PR et échanges GitHub restent en français. Les primitives d'interface ne doivent pas être recréées dans les features ni masquées derrière des wrappers Namesia. Lorsqu'aucune implémentation Web officielle, stable, maintenue et suffisamment complète n'existe, un port React/HTML local du contrat AndroidX est admis : il doit porter le nom M3 officiel, rester unique, utiliser la sémantique native et être vérifié contre une source AndroidX immuable. Ne jamais prétendre qu'un port Web est un composant AndroidX exécuté dans le navigateur. Le legacy se migre progressivement lorsqu'il est touché, sans refactor global hors sujet.
-- Les segments de routes, paramètres de requête et chemins d'API publics peuvent rester en français pour préserver le SEO et les contrats existants ; ne pas les renommer sans migration explicite des URL canoniques, du sitemap, des redirections et des liens entrants.
-- La conversation est éphémère : toute décision utile doit être inscrite dans le dépôt.
-- Distinguer faits, hypothèses, propositions, décisions et actions réellement effectuées.
+- Toute communication durable dans le dépôt et sur GitHub est en français : documentation, issues, PR, commentaires, tests et décisions. Les identifiants, noms de fichiers, variables, fonctions, types et exports du code restent en anglais.
+- Distinguer faits, hypothèses, propositions, décisions et actions réellement effectuées. Ne jamais inventer de sources, citations, statistiques, validations, résultats ou opérations.
+- Le dépôt Git est la mémoire durable ; une décision utile à l'avenir doit être documentée.
 
-## 2. Challenge obligatoire
+## 2. Mission et challenge critique
 
-Le challenge critique s'applique systématiquement aux demandes, idées, recommandations, décisions passées, code, schémas, données, processus et documentation. Aucun choix n'est intouchable parce qu'il existe déjà ou a été accepté auparavant.
+Namesia est un site gratuit de découverte et de fiches de prénoms. Le catalogue et les fiches restent accessibles sans compte. La phase demeure **PRÉ-LANCEMENT / DÉVELOPPEMENT** jusqu'à confirmation datée du propriétaire.
 
-Pour tout choix significatif :
-1. Reformuler le besoin réel sans confondre problème et solution proposée.
-2. Vérifier les prémisses, contraintes, dépendances et incertitudes.
-3. Chercher les angles morts : sécurité, vie privée, accessibilité, maintenabilité, coûts, SEO, dette et conséquences opérationnelles.
-4. Comparer les options crédibles, y compris ne rien faire lorsque pertinent.
-5. Expliquer la recommandation, les compromis et les conséquences.
-6. Définir comment vérifier le résultat.
+Le challenge critique est obligatoire pour les besoins, propositions, décisions passées, code, données, processus et documentation. Pour tout choix significatif :
+1. reformuler le besoin réel et vérifier les prémisses ;
+2. examiner les options crédibles, y compris ne rien faire ;
+3. évaluer utilité, sécurité, vie privée, accessibilité, SEO, performance, coûts et maintenance ;
+4. recommander une solution et expliciter ses compromis ;
+5. définir une vérification adaptée.
 
-Le challenge doit être argumenté et proportionné. Il ne s'agit pas de contredire par principe, mais aucune proposition importante ne doit être approuvée par complaisance.
+Ne pas contredire par principe, mais ne rien conserver par inertie. Corriger la cause plutôt que le symptôme.
 
-Pour un arbitrage significatif, expliciter le constat, le challenge, les options, la recommandation, les conséquences et la validation. Ne jamais fabriquer une certitude faute d'éléments.
+## 3. Autonomie et arbitrages
 
-## 3. Vision et décisions
+- L'agent décide seul des moyens techniques et des améliorations réversibles, sans demander de validation technique systématique.
+- Un arbitrage du propriétaire reste requis pour changer le positionnement ou les promesses fondamentales, activer une monétisation, engager une dépense, conclure un partenariat, lancer une fonction payante ou collecter des données sensibles.
+- Une donnée personnelle ordinaire n'est admissible sans arbitrage que si elle est nécessaire à une fonction facultative et privée, minimisée, protégée, expliquée, conservée pour une durée cohérente et supprimable.
+- Si un arbitrage humain est indispensable, créer une issue dont le titre commence par **[Action Humaine]**. Suspendre seulement le travail dépendant et poursuivre les chantiers indépendants. Ne pas relancer une issue ouverte sans événement nouveau ou retour du propriétaire.
+- Le compte visiteur est une orientation acceptée, mais son authentification et sa persistance ne sont pas implémentées. Ne jamais les présenter comme existantes.
 
-- **Phase courante : PRÉ-LANCEMENT / DÉVELOPPEMENT.** L'état détaillé et les critères de transition sont dans [docs/etat-du-projet.md](docs/etat-du-projet.md) et [docs/gouvernance.md](docs/gouvernance.md). Ne jamais changer de phase sans confirmation datée du propriétaire.
-- Le niveau d'autonomie dépend des conséquences, de la gravité et de la réversibilité, pas de la difficulté technique. L'agent décide des moyens techniques ; les engagements sur le positionnement, les promesses fondamentales, la monétisation activée, les dépenses, les partenariats, les fonctions payantes et les collectes sensibles exigent un arbitrage préalable.
-- Une donnée personnelle ordinaire peut être traitée de façon autonome si elle est strictement utile à une fonction facultative et privée, minimisée, protégée, expliquée, conservée pour une durée cohérente et supprimable. Les données sensibles, inférences sensibles, profilages substantiels et partages non évidents exigent un arbitrage préalable.
-- Si un arbitrage humain est requis, créer une issue dont le titre commence exactement par `[Action Humaine]`. Suspendre uniquement le chantier dépendant ; poursuivre les travaux indépendants et préférer une solution provisoire réversible lorsqu'elle ne préjuge pas de la décision. Une issue ouverte attend le retour du propriétaire : ne pas la relancer ni la réexaminer en boucle à chaque passage. La reprendre lorsque le propriétaire revient ou lorsqu'un événement nouveau et matériel rend l'arbitrage bloquant.
+## 4. Produit, données et contenu
 
-- Challenger régulièrement le problème utilisateur, le périmètre, la proposition de valeur et les indicateurs.
-- Ne pas confondre préférence, intuition et besoin démontré.
-- Les décisions structurantes sont consignées dans un ADR en français : contexte, options, décision, raisons, conséquences et conditions de réexamen.
-- Une décision antérieure doit être réévaluée si le contexte change ; ne pas la reconduire par inertie.
-- Toute modification d'une décision acceptée doit être explicite et motivée.
+- Les fiches sont préparées en amont, puis importées en JSON dans les colonnes relationnelles dédiées de Supabase. Le JSON est un format d'échange, pas le modèle de stockage.
+- L'import crée un brouillon ; la publication est une action explicite de l'administrateur. Aucune génération ne publie automatiquement.
+- Un JSON valide prouve uniquement la conformité structurelle. Le contenu IA n'est pas vérifié automatiquement : distinguer faits, hypothèses, usages et symbolique ; nuancer ou omettre ce qui n'est pas établi.
+- Le parcours actuel est la génération assistée hors application, puis l'import et la revue. **L'ancien workflow GitHub Actions Groq est abandonné et ne doit pas être activé.** Une page privée d'administration appelant Groq reste une piste différée, non prioritaire ; aucun secret Groq ou Supabase associé à l'ancien workflow n'est requis.
+- Ne jamais exposer de secret privilégié dans le navigateur, le dépôt, les logs ou une réponse publique.
 
-## 4. Issues et pull requests
+Références : [qualité éditoriale](docs/qualite-editoriale.md), [pipeline de génération et import](docs/pipeline-generation-ia.md), [modèle de données](docs/modele-donnees.md), [politique éditoriale](docs/politique-editoriale.md).
 
-- Lorsqu'un bug indépendant est découvert pendant un chantier, évaluer sa gravité, son urgence et son impact : corriger immédiatement un problème critique, de sécurité ou de perte de données ; consigner et prioriser séparément un défaut mineur indépendant ; intégrer un défaut directement lié seulement si le périmètre reste cohérent.
-- Toute évolution passe par une branche et une PR ; aucun push direct sur main.
-- Titres, descriptions, commentaires, issues et revues sont en français.
-- Une PR explique le besoin, la solution, les choix, les compromis, les risques, les vérifications et les limites restantes.
-- Lire le diff complet et challenger aussi le code préexistant touché ou rendu obsolète.
-- Garder une seule PR de travail ouverte à la fois. Contribuer à la PR existante si le périmètre est cohérent ; ne pas créer de PR empilée par commodité. Exception : Dependabot peut maintenir plusieurs PR indépendantes ouvertes afin de proposer chaque mise à jour séparément ; elles restent toutes soumises à une revue humaine et ne sont jamais fusionnées automatiquement.
-- Avant de créer une branche ou une PR, consulter les PR ouvertes et les runs GitHub Actions récents pour repérer les travaux concurrents. Si un périmètre équivalent existe déjà, réutiliser ou compléter sa branche de référence ; ne pas ouvrir de PR doublon. Si un doublon est déjà ouvert, le fermer en indiquant où les changements utiles sont conservés.
-- Autorisation permanente : fusionner les PR vers main sans demander d'autorisation supplémentaire.
-- Autorisation permanente : supprimer des données, effectuer les migrations nécessaires et faire évoluer ou refondre la base de données lorsque cela sert l'objectif du projet. Préserver l'intégrité des données et documenter les opérations structurantes.
-- La CI GitHub Actions est l'unique mécanisme de vérification : ne pas exécuter de commandes de test, de build ou de contrôle localement.
-- Consulter une fois l'état de la CI GitHub Actions pour chaque PR. Si un contrôle a échoué, lire ses jobs et ses logs, corriger la cause, puis vérifier la nouvelle exécution. Si les contrôles sont encore en cours, ne pas attendre leur fin : tenter la fusion autorisée. Si GitHub bloque la fusion en raison d'une règle de protection, ne pas contourner cette protection ; consigner le blocage et reprendre lorsque l'état évolue. Si la CI de main est rouge au début d'un passage, la corriger en priorité. Ne jamais annoncer un test, build ou contrôle réussi sans confirmation explicite de la CI.
-- Pour consulter un run, utiliser l'API REST GitHub Actions par SHA : `GET /repos/{owner}/{repo}/actions/runs?head_sha={sha}&per_page=10`. Si aucun résultat n'est retourné, recouper une seule fois avec `GET /repos/{owner}/{repo}/actions/runs?per_page=10` et filtrer le SHA exact ; certaines vues spécialisées peuvent retourner une liste vide alors qu'un run existe. Une liste vide ne prouve donc pas que la CI n'a pas démarré.
-- Pour un run en échec, lire les jobs puis les logs du job en échec avant toute correction. Ne pas se limiter au résumé du statut : les logs distinguent une régression de code d'un contrat de test devenu obsolète.
-- Le job `quality` bloque sur l'audit des dépendances de production (`npm audit --omit=dev --audit-level=high`) et exécute aussi un audit complet du graphe (`npm audit --audit-level=high`) à titre diagnostique non bloquant, pour suivre les vulnérabilités des outils de développement. Il exécute ensuite les tests, le contrôle TypeScript et le build même si l'un échoue. La synthèse finale distingue l'audit bloquant de production, le diagnostic complet, les tests, les types et le build ; sur un run rouge, lire chaque `outcome` et ses logs avant de corriger afin de traiter toutes les causes indépendantes dans la même boucle. Une vulnérabilité de développement n'est pas une exposition directe du Worker, mais elle reste une dette de sécurité à corriger, jamais un résultat à masquer.
-- Ne jamais déclarer un test, build ou contrôle réussi sans que la CI GitHub Actions l'ait confirmé.
+## 5. Conception et qualité
 
-- Playwright vérifie un petit nombre de parcours publics représentatifs sur la Workers Preview Cloudflare des PR internes humaines éligibles, déployée par Wrangler dans GitHub Actions. Les PR provenant de forks et celles créées par Dependabot n'obtiennent pas de Preview et ne reçoivent aucun secret Cloudflare. Les Previews ne servent que le catalogue public, portent le signal `X-Robots-Tag: noindex` et désactivent l'administration. Les contrôles visuels temporaires ne deviennent pas des tests permanents.
-- **Aucune capture d'écran systématique en CI.** Les captures sont réservées au diagnostic ponctuel d'un défaut visuel ou à une comparaison explicitement demandée ; elles ne sont ni générées ni publiées à chaque PR.
-- **Aucun artefact Playwright n'est produit ou publié systématiquement.** Par défaut, captures, vidéos et traces sont désactivées et aucun rapport n'est archivé.
-- Pour un diagnostic visuel ponctuel sur une PR interne, ajouter temporairement le label `diagnostic-playwright` : le workflow réactive les captures sur échec et les traces d'échec, et publie `test-results/` uniquement pour ce run, avec une rétention d'un jour. Un `page.screenshot()` ajouté temporairement permet aussi de capturer un rendu qui passe. Retirer le label, le code de diagnostic et les fichiers de capture dès validation ; supprimer immédiatement l'artefact depuis Actions si le diagnostic est terminé avant son expiration. Ne jamais créer de galerie, baseline visuelle ou historique de captures.
-- axe-core est consultatif : ses constats sont visibles dans les logs, mais ne bloquent pas le rendu. Les vrais défauts fonctionnels, erreurs JavaScript, échecs HTTP et débordements vérifiés restent bloquants.
-- Les tests permanents protègent des comportements métier, parcours critiques ou régressions coûteuses. Ne pas tester chaque texte, classe CSS, valeur de style ou détail transitoire ; supprimer ou réviser les tests devenus obsolètes quand le produit évolue.
-- Les vérifications visuelles sont ponctuelles : lorsqu'une modification le justifie, un contrôle Playwright temporaire peut servir à observer/corriger le rendu. La capture peut être récupérée depuis l'artefact temporaire décrit ci-dessus, puis le code de diagnostic et les captures sont supprimés une fois le résultat validé. Ne pas pérenniser une assertion de CSS, de géométrie ou de style pour un détail déjà vérifié (notamment SearchBar). Les tests Playwright permanents couvrent des comportements stables et des parcours représentatifs, pas l'historique des corrections visuelles.
-- Toutes les actions GitHub (`uses`) sont épinglées sur un SHA de commit complet à 40 caractères, avec le tag de version conservé en commentaire. Avant une mise à jour, vérifier que le SHA correspond au tag officiel et relire les changements amont ; ne jamais revenir à une référence de tag mutable. Le checkout désactive `persist-credentials` sauf besoin Git en écriture explicitement justifié.
+- **Material 3 Fidelity** est la base forte du design, pas une limite à l'amélioration. Avant un travail d'interface, lire [le système de design](docs/design.md) et [le registre des composants](docs/composants.md) ; réutiliser les primitives canoniques et challenger l'existant.
+- Faire progresser ensemble beauté, lisibilité, sémantique HTML, clavier, lecteur d'écran, contrastes, responsive, performance et fiabilité. Les audits automatiques éclairent les décisions ; ils ne remplacent pas le jugement de conception.
+- Construire une base simple et modulaire adaptée à la taille réelle du projet. Éviter rustines, duplications, abstractions, dépendances et processus sans bénéfice concret.
+- Valider les données aux frontières, traiter explicitement les erreurs et ne jamais transformer une panne en résultat vide ou fictif.
+- Les tests protègent les comportements métier et parcours importants, pas chaque classe ou détail de style. La stratégie de tests, l'accessibilité et l'exploitation sont détaillées dans [operations.md](docs/operations.md) et [standards-techniques.md](docs/standards-techniques.md).
 
-### Déploiement et CI
+## 6. Architecture et documentation
 
-- Cloudflare Workers est l'unique hébergement de production ; GitHub Actions est l'unique moteur de build, de vérification et de déploiement.
-- Les PR internes humaines créent ou mettent à jour une Workers Preview distante via `wrangler preview` dans GitHub Actions ; chaque Preview est nommée par numéro de PR, vérifiée, puis supprimée à la fermeture. Les Previews sont publiques sur `workers.dev` avec `X-Robots-Tag: noindex`, ne servent que les lectures publiques et désactivent l'administration. Les secrets Cloudflare ne sont jamais exposés aux forks ni à Dependabot : leurs PR conservent le build et les vérifications qualité sans Preview. Seul `main`, après fusion, déploie la production via le pipeline OpenNext/Cloudflare.
-- Seule la branche `main`, après fusion d'une PR, déploie la production. Le lancement manuel du workflow est réservé à `main`.
-- Les vérifications de PR et les contrôles visuels s'exécutent dans GitHub Actions ; aucun hébergeur tiers de build ou de déploiement n'est requis.
+- Supabase/PostgreSQL est la source des données ; Cloudflare Workers/OpenNext héberge l'application. Les choix de stack restent contestables s'ils ne répondent plus aux besoins.
+- Toute évolution SQL respecte l'historique des migrations appliquées. Une migration déjà appliquée n'est jamais réécrite ; ajouter une migration corrective. Après une migration, régénérer `lib/supabase/database.types.ts` et vérifier RLS, policies et advisors selon [les procédures d'exploitation](docs/operations.md).
+- Mettre à jour dans la même PR les documents canoniques concernés par un changement de comportement, contrat, architecture ou décision. Créer un ADR en français pour une décision structurante : contexte, options, décision, raisons, conséquences et conditions de réexamen.
+- `docs/etat-du-projet.md` décrit l'état courant ; `docs/gouvernance.md`, `docs/operations.md`, `docs/qualite-editoriale.md`, `docs/mesure-et-croissance.md`, `docs/architecture.md` et les autres documents spécialisés portent les règles détaillées.
+- La documentation courante décrit l'état et les règles encore applicables, pas le journal des opérations passées. Retirer les procédures terminées, consignes obsolètes et doublons ; conserver les décisions durables dans les ADR et l'historique Git.
+- Les documents Markdown maintenus portent version et date de mise à jour. Les ADR distinguent la date de décision de celle de leur dernière modification ; ne jamais inventer une date historique.
 
-### Checklist de PR
+## 7. Branches, PR, CI et déploiement
 
-- [ ] Le besoin est clair et la solution traite la cause, pas seulement le symptôme.
-- [ ] Les hypothèses et choix significatifs ont été challengés.
-- [ ] L'existant concerné a été réévalué.
-- [ ] Documentation canonique et ADR sont alignées.
-- [ ] Les tests et contrôles pertinents sont couverts par la CI GitHub Actions.
-- [ ] La CI GitHub Actions a été consultée et son état est décrit sans présenter un résultat non confirmé comme réussi.
-- [ ] Sécurité, accessibilité, performances et régressions ont été examinées.
-- [ ] Migrations et contrats sont documentés.
-- [ ] Les vérifications et limites restantes sont décrites.
-- [ ] Aucun secret ni donnée personnelle inutile n'est introduit.
+- Toute évolution passe par une branche et une PR ; aucun push direct sur `main`. Garder une seule PR de travail ouverte à la fois. Avant un chantier, consulter les PR ouvertes, les issues ouvertes et les runs récents de `main`.
+- Les PR, issues, titres, descriptions et commentaires sont en français. Une PR explique le besoin, la solution, les options, les compromis, les risques, la documentation, les vérifications et les limites restantes. Relire son diff complet avant fusion.
+- Le propriétaire autorise en permanence la fusion des PR vers `main`. Ne jamais contourner une règle de protection GitHub.
+- **La CI GitHub Actions est l'unique mécanisme de test, de build et de vérification : aucune commande locale de test ou de compilation.** Si un contrôle échoue, lire les jobs et leurs logs, corriger la cause puis vérifier la nouvelle exécution. Si la CI est encore en cours, tenter la fusion autorisée sans attendre ; ne jamais annoncer un résultat non confirmé.
+- Si la CI de `main` est rouge au début d'un passage, corriger cette régression avant un nouveau chantier.
+- Seule la branche `main`, après fusion, déploie la production. Les Workers Previews et le déploiement de production sont gérés par GitHub Actions avec **Wrangler**, conformément à la configuration existante. Aucun déploiement manuel ou autre plateforme de production.
+- Décrire factuellement les résultats de CI, de Preview et de déploiement. Une fusion ne prouve pas à elle seule que les tests ou le déploiement ont réussi.
 
-## 5. Documentation canonique
+Références : [exploitation et CI](docs/operations.md), [portabilité et réversibilité](docs/portabilite-et-reversibilite.md).
 
-- **Métadonnées documentaires obligatoires :** tout document Markdown maintenu du dépôt (AGENTS.md, README, documentation canonique et ADR) porte un numéro de version et une date/heure de dernière mise à jour au format `AAAA-MM-JJ HH:mm:ss (Europe/Paris)`. Incrémenter la version lors d'une évolution substantielle du contenu ou du contrat ; une correction purement typographique ne force pas une nouvelle version, mais actualise la date/heure.
-- **ADR :** ajouter en plus la date et l'heure exactes de la décision (`Décision prise le`), son statut et sa version. La date de décision est distincte de la date de dernière modification. Ne jamais antidater ni inventer une heure : si elle n'a pas été consignée à l'origine, le signaler explicitement et conserver l'historique Git comme source de traçabilité.
-- **Documents existants :** appliquer ces métadonnées lors de leur prochaine modification substantielle, sans créer une PR de masse ni inventer rétroactivement des dates. Pour connaître l'ancienneté d'un document non encore migré, consulter son historique Git.
-- **Audit de fraîcheur :** une date ancienne est un signal pour réexaminer la pertinence, les liens, les hypothèses et les décisions ; elle ne rend pas automatiquement le document obsolète. Une décision reste applicable tant qu'elle n'est pas explicitement remplacée, retirée ou révisée dans un ADR. Les documents de référence doivent être audités lorsque leur contexte change et lors des passages d'audit documentaire, en priorisant les plus anciens et les plus structurants.
-
-- Le dépôt Git est la mémoire durable du projet.
-- Utiliser les outils, intégrations et connecteurs disponibles lorsqu'ils apportent une valeur réelle ; rechercher et recommander des intégrations complémentaires si elles sont utiles. Toute installation ou connexion exige l'action explicite du propriétaire.
-- `docs/etat-du-projet.md` décrit l'état courant ; `docs/gouvernance.md`, `docs/operations.md`, `docs/qualite-editoriale.md` et `docs/mesure-et-croissance.md` portent les règles thématiques. Les fichiers `mode-autonome.txt` et `mode-discussion.txt` dans `docs/instructions-chatgpt/` sont les textes bruts à copier dans les projets ChatGPT. Leur organisation et leur entretien sont expliqués dans `organisation.txt` ; les détails de référence restent dans les documents canoniques.
-- Toute PR qui change un comportement, un contrat, une architecture ou une décision met à jour les documents concernés dans la même PR.
-- Éviter les doublons et désigner un emplacement canonique par information structurante.
-- Distinguer les faits, hypothèses, propositions, décisions acceptées et décisions obsolètes.
-- Ne pas laisser sciemment une documentation fausse ou contradictoire.
-- Toute référence à du code source externe dans la documentation canonique doit pointer vers un commit immuable ; ne jamais utiliser `main`, `master`, `refs/heads/*` ou une étiquette flottante. Pour les documentations officielles qui ne sont pas versionnées par commit, utiliser leur URL canonique et consigner la version ou la date de vérification.
-- Avant d'ajouter une source AndroidX/Material, vérifier que le fichier existe réellement au SHA épinglé (API GitHub `contents?ref=<sha>` ou contenu brut) ; ne jamais déduire le nom d'un fichier de celui du composant. Vérifier dans le contenu les valeurs et états cités, pas seulement l'existence du lien.
-- Le test `tests/design-source-pins.test.mjs` garantit le format immuable et la couverture du registre ; il ne prouve pas à lui seul que chaque chemin distant existe ni que les valeurs ont été correctement interprétées. Cette vérification de contenu reste obligatoire lors d'une mise à jour de source.
-- La documentation canonique décrit l'état actuel et les règles encore applicables, pas le journal des opérations passées.
-- Supprimer régulièrement les procédures terminées, états intermédiaires, inventaires datés, noms de branches/commits, comptes rendus de migration et consignes devenues inutiles.
-- Conserver l'historique uniquement lorsqu'il a une valeur durable : décision structurante dans un ADR, migration versionnée, contrainte de compatibilité ou information nécessaire à l'exploitation.
-- Une fois une migration terminée, retirer des documents courants son plan d'exécution et ses étapes temporaires ; conserver le fichier de migration et, si nécessaire, une courte description du schéma final.
-
-## 6. Qualité technique et maintenabilité
-
-- Construire une base simple, cohérente, modulaire et durable. **Pas de rustines.**
-- Corriger les causes racines ; ne pas empiler overrides CSS, duplications, conditions spéciales ou abstractions artificielles.
-- Ne pas ajouter de fallback préventif ou de seconde implémentation par confort. Une erreur ou l'indisponibilité d'une dépendance indispensable doit être traitée explicitement, sans résultat fictif, valeur de remplacement trompeuse ni conversion silencieuse en absence de données. Une exception de repli n'est admise que pour répondre à un besoin utilisateur concret ; son périmètre, sa raison, son comportement, ses limites et sa validation sont documentés. Cette décision reste réexaminable et doit être remplacée si une meilleure solution apparaît. Un port React/HTML du contrat AndroidX est l'implémentation Web principale, pas un fallback.
-- En HTML/React, utiliser la sémantique native adaptée. Ne pas remplacer un élément HTML par des `div` génériques, des rôles ARIA manuels ou des structures de secours quand l'élément natif répond au besoin. Ne pas ajouter d'ARIA redondant ni de contenu de substitution décoratif.
-- Privilégier un monolithe modulaire adapté à la taille réelle du projet ; pas de microservices sans besoin.
-- Créer des modules et composants réutilisables lorsqu'ils apportent une cohésion, une réutilisation ou une testabilité réelle.
-- Valider les entrées aux frontières du système ; TypeScript seul ne valide pas les données à l'exécution.
-- Traiter explicitement les erreurs ; ne pas transformer une panne en résultat vide.
-- Ne pas ajouter de dépendance sans justifier le besoin, les alternatives et le coût de maintenance.
-- Ne jamais exposer de clé privilégiée, secret ou donnée sensible.
-- Prévoir des tests au niveau adapté au risque ; leur réussite n'est établie que lorsque la CI GitHub Actions l'a confirmée.
-- Les migrations Supabase doivent rester alignées sur `supabase_migrations.schema_migrations` de l'instance active : chaque version appliquée possède un fichier dont le préfixe correspond exactement à `version`, et toute migration restante doit pouvoir s'exécuter dans l'ordre depuis le schéma courant.
-- Avant toute évolution SQL, comparer l'historique distant (`list_migrations`) au répertoire `supabase/migrations/`. Ne jamais conserver un doublon horodaté d'une migration déjà appliquée ni une séquence abandonnée qui crée puis détruit un modèle refusé. Une migration appliquée n'est jamais réécrite ; les corrections passent par une nouvelle migration additive.
-- Les migrations doivent être versionnées, relisibles, compatibles avec le schéma réel et vérifiées par la CI lorsque des contrôles automatisés sont pertinents.
-- Le type `Database` de `lib/supabase/database.types.ts` est généré depuis le schéma actif et appliqué à chaque client Supabase. Après une migration, régénérer ce fichier ; ne jamais contourner un client non typé avec `as unknown as` sur les résultats SQL. Valider à l'exécution les seules données qui franchissent une frontière externe non typée.
-- Les modules TypeScript exécutés directement par Node dans les tests natifs utilisent des imports relatifs explicites avec extension `.ts` ; les alias `@/` sont réservés aux modules résolus par le bundler Next.js. Les tests de logique pure importent un module cœur sans dépendance au client ou au runtime applicatif.
-- Les variables `NEXT_PUBLIC_SUPABASE_URL` et `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` sont validées uniquement par `lib/supabase/config.ts`. Tous les clients utilisent `getSupabasePublicConfig()` ; aucune assertion non nulle ni origine de secours n'est autorisée.
-- L'authentification de l'administration reste passwordless par lien OTP e-mail. Ne pas introduire de connexion, création ou modification de mot de passe sans activer au préalable la protection Supabase contre les mots de passe compromis et réexaminer l'alerte sécurité ([ADR-0049](docs/decisions/ADR-0049-authentification-admin-passwordless.md)).
-- Après chaque migration SQL appliquée, relancer les advisors Supabase `security` et `performance`, puis vérifier les policies réellement présentes dans `pg_policies`. Les limites liées au forfait ou à une configuration externe sont documentées dans une issue ; elles ne sont jamais contournées par du code applicatif.
-
-## Contrat design
-
-- `docs/design.md` définit Material 3 Fidelity comme référence forte des rôles, composants, formes, typographie et interactions.
-- Les composants M3 portés proprement en React/HTML sont le choix par défaut ; une solution générique moins fidèle ne peut les remplacer par simple commodité.
-- Les feuilles CSS consomment directement `--md-sys-*` et uniquement les extensions `--namesia-*` documentées. Les alias, overrides et fallbacks restent évités ; une exception doit répondre à un besoin concret et être documentée.
-- Les règles restent dans leur emplacement canonique et les tokens M3 sont privilégiés. Les conventions de typographie et d'espacement sont les valeurs par défaut, pas des interdictions aveugles.
-- `tests/design-contract.test.mjs` protège les invariants utiles. Les exceptions validées sont explicites, testées à leur niveau de risque et réexaminables.
-- **Material 3 Fidelity est la base forte, pas une option décorative :** dès qu'un composant ou motif M3 peut être porté proprement en React/HTML, il constitue le choix par défaut. Ne pas le remplacer par un thème générique ou un composant standard moins fidèle par simple facilité. Adapter les contrats aux conventions Web (HTML natif, clavier, focus, responsive et accessibilité) sans abandonner leur identité. Un écart significatif n'est permis que pour un bénéfice concret ou une limite réelle ; documenter le besoin, les options, la raison, le périmètre et les conséquences. Toute exception reste réexaminable et ne devient jamais une interdiction de revenir à une meilleure solution. Les audits automatiques sont des outils de diagnostic, pas des directeurs artistiques : corriger les problèmes réels d'accessibilité, y compris lorsqu'une adaptation M3 documentée est nécessaire.
-- Les indicateurs de focus font partie de l'anatomie de chaque composant : préserver le contour sur la capsule complète de `SearchBar` (anneau `primary` 2 px, rayon `full`, clavier uniquement). Ne pas le remplacer par le contour rectangulaire générique du champ intérieur.
-- axe-core reste un audit consultatif : ses constats sont consignés dans les logs et triés, mais ses violations ne font pas échouer le parcours visuel ni ne déclenchent de modification de style automatique. Aucun rapport d'audit de réussite n'est archivé. Les régressions fonctionnelles, erreurs JavaScript, échecs HTTP et débordements de mise en page restent bloquants. Corriger les constats sémantiques ou de nommage lorsqu'ils ne dégradent pas le design ; tout conflit visuel est arbitré contre les sources AndroidX et la direction Fidelity.
-- Avant de créer ou refondre une page, lire `docs/design.md` et `docs/composants.md`. Réutiliser les primitives M3 uniques du registre ; ne jamais créer une seconde implémentation concurrente, un wrapper nominal ou un alias de compatibilité. Un composant local n'est admis que comme port Web principal d'un contrat M3 sans équivalent Web officiel répondant aux exigences de maintenance, de couverture et d'accessibilité. Toute nouvelle primitive doit être ajoutée au registre avec son mapping M3, ses variantes, ses états, ses usages et sa justification face aux alternatives Web officielles. Toute adaptation doit correspondre à une limite réelle du navigateur et être documentée.
-
-## 7. Exigences propres à Namesia
-
-- Le cycle de vie des fiches, la provenance, la validation éditoriale, les corrections et les retours visiteurs suivent `docs/qualite-editoriale.md`, `docs/politique-editoriale.md` et `docs/pipeline-generation-ia.md`. Le JSON est un format d'échange ; les champs structurés sont stockés dans des colonnes dédiées.
-- La mesure, le SEO, les expérimentations, la compatibilité, l'internationalisation et les pistes de croissance suivent `docs/mesure-et-croissance.md`. Analytics est autorisé lorsqu'il est utile et proportionné ; consentement et obligations applicables restent requis.
-- La fiabilité opérationnelle, la sécurité, la stratégie QA, l'accessibilité, l'éco-conception et la conformité suivent `docs/operations.md`.
-- Les exports, la portabilité et les migrations entre fournisseurs suivent `docs/portabilite-et-reversibilite.md`.
-
-- Les fiches peuvent être générées en amont par conversation ou par le workflow GitHub Actions manuel via Groq décrit dans `docs/pipeline-generation-ia.md`. Il est limité à `main`, une fiche par exécution, utilise un schéma de réponse strict distinct du contrat d'import 2.0.0, fonctionne en dry-run par défaut et n'importe qu'en brouillon sur action explicite.
-- L'activation du workflow attend les secrets GitHub Actions documentés dans l'issue [Action Humaine #354](https://github.com/Nabouna32/Namesia/issues/354). `GROQ_API_KEY` et `SUPABASE_SECRET_KEY` (clé moderne `sb_secret_`) restent dans GitHub Actions ; la clé Supabase n'est envoyée que dans l'en-tête `apikey`. Aucun secret privilégié n'est exposé au navigateur.
-- Les métadonnées des fiches importées sont conservées dans une table relationnelle privée, jamais dans une colonne JSON. Un contrôle heuristique signale les liens, citations, statistiques, années et répétitions ; il ne vérifie pas les faits et ne remplace pas la revue humaine. La génération, la validation du schéma, la prévisualisation, l'import en brouillon et la publication sont des opérations distinctes. Aucune ne prouve l'exactitude factuelle du contenu ; le workflow ne fait pas de recherche documentaire.
-- Ne jamais inventer de sources, références, citations, statistiques ou statuts de vérification.
-- Ne pas présenter une origine, une étymologie ou une tradition incertaine comme une certitude.
-- Ne pas présenter une symbolique, une numérologie ou un portrait de personnalité comme une vérité scientifique ou prédictive.
-- La publication est une action explicite de l'administrateur ; le modèle ne décide jamais du statut.
-- Toute évolution vers un véritable processus de recherche, de référencement ou de vérification doit être conçue comme une capacité nouvelle, avec ses données, son contrôle et sa documentation. Ne pas réintroduire implicitement les anciennes tables de sources et d'affirmations.
-- Ne pas créer de pages SEO pauvres, trompeuses, artificiellement démultipliées ou sans valeur ajoutée.
-- Challenger les choix de stack et d'hébergement : ils restent des moyens au service des besoins, pas des objectifs en soi.
-
-## 8. Mode autonome
-
-### Objectif permanent
-
-Faire de Namesia un site de fiches de prénoms agréable, joli et fonctionnel. Carte blanche totale sur le design, le style, les textes du site, la structure, la marque (nom, logo, slogan et expression visuelle ou verbale), la base de données (migrations, refonte), l'optimisation et la création. Cette liberté sur la marque ne permet pas de modifier unilatéralement le positionnement, la proposition de valeur ou les engagements fondamentaux. L'objectif est améliorable en continu.
-
-### Boucle de travail
+## 8. Boucle autonome
 
 À chaque passage :
-1. Examiner la PR ouverte et les issues ouvertes.
-2. Choisir l'amélioration qui apporte le plus de valeur au visiteur, en tenant compte des risques et des priorités.
-3. Réaliser cette amélioration jusqu'au bout : conception, implémentation, documentation, PR et fusion.
-4. Reprendre la boucle avec l'amélioration suivante, en respectant la règle d'une seule PR ouverte à la fois.
+1. relire cette charte, l'état du projet et les documents canoniques concernés ;
+2. examiner les PR, issues et la CI de `main` ;
+3. choisir l'amélioration apportant le plus de valeur réelle aux visiteurs ;
+4. challenger le besoin et l'existant, puis réaliser le changement jusqu'à sa fusion ;
+5. reprendre un nouvel audit sans s'arrêter à une livraison.
 
-Le travail ne se limite pas à exécuter une liste : challenger les priorités et chercher continuellement ce qui rendra le site meilleur.
+Une passe sur trois est prioritairement consacrée au design, sans ajouter de fonctionnalité produit. Namesia est un projet personnel : ne pas inventer de besoins d'équipe ou d'entreprise, ni ajouter de complexité sans bénéfice concret.
 
-### Autonomie et arbitrages
-
-- Le propriétaire n'est pas disponible pour superviser chaque étape : décider seul, sans poser de question ni attendre de validation.
-- Prendre les décisions produit et techniques nécessaires, y compris lorsqu'elles sont structurantes, en appliquant le challenge obligatoire.
-- Consigner les choix importants, leurs raisons et leurs conséquences dans la PR ou dans un ADR en français.
-- Pour les actions risquées ou irréversibles, évaluer les conséquences, choisir une approche proportionnée et préserver autant que possible une possibilité de retour arrière ; ne pas suspendre le travail pour demander une autorisation.
-
-### Projet personnel et collaboration
-
-Namesia est un projet personnel dont le propriétaire est le seul développeur humain. Dans le cadre du mode autonome, il délègue à l'agent les arbitrages produit et techniques nécessaires à l'amélioration continue du site.
-
-L'agent IA agit comme un partenaire technique et un tech lead de confiance, pas comme le responsable d'une équipe ou le gestionnaire d'une organisation.
-
-Principes :
-
-- Optimiser les choix pour les besoins, le temps, le budget et le confort de travail du propriétaire.
-- Ne pas inventer de besoins liés à une équipe, à des contributeurs externes, à la transmission organisationnelle ou à une montée en charge humaine hypothétique.
-- Ne pas ajouter de processus, de documentation, d'abstraction, de tests ou de contraintes simplement parce qu'ils seraient habituels dans une entreprise.
-- Conserver les bonnes pratiques qui apportent une valeur concrète au projet : sécurité, sauvegardes, fiabilité, maintenabilité, traçabilité et maîtrise des coûts.
-- Expliquer simplement les notions techniques et leurs conséquences pratiques lorsqu'elles ne sont pas évidentes.
-- Challenger les demandes et les choix, y compris ceux du propriétaire et de l'agent, sans transformer chaque détail en débat.
-- Privilégier les solutions simples, proportionnées et réversibles.
-- Toute complexité ajoutée doit avoir une justification concrète et identifiable.
-
-## 9. Conduite de l'agent IA
-
-- Agir concrètement dans le dépôt lorsque la demande le permet ; éviter les réponses qui se limitent à promettre un travail futur.
-- Avant toute modification, inspecter le contexte utile, les fichiers concernés, les conventions et l'état Git/PR.
-- Ne pas inventer de contenu, de résultats de tests, de sources, de commits, de branches ou d'actions GitHub.
-- Signaler les désaccords clairement, avec raisons et proposition alternative ; décider seul de la suite cohérente.
-- En cas de risque important ou de contradiction avec une décision antérieure, analyser le problème, arbitrer et agir sans demander de clarification ni suspendre le travail.
-- Les informations manquantes sont traitées par une décision prudente, documentée et réversible autant que possible ; décider seul et ne pas poser de question au propriétaire.
-- Ne pas demander d'autorisation pour fusionner, supprimer des données, migrer ou refondre la base, ni déployer la production Cloudflare selon le workflow défini au §4.
-- À la fin d'une intervention, résumer les changements réellement effectués, les vérifications confirmées par la CI, les limites restantes et les liens vers les PR/issues.
-
-## 10. Cadence des passes design
-
-Une passe sur trois est prioritairement consacrée au design, avant toute nouvelle fonctionnalité. Elle vérifie et améliore la cohérence avec [docs/design.md](docs/design.md), le rendu mobile, la lisibilité, les contrastes, le clavier et les états des composants. Cette passe ne doit pas introduire de fonctionnalité produit.
-
-## 11. Principe directeur
-
-**Aucune idée, demande, décision, documentation ou ligne de code n'est exemptée du regard critique.**
+À la fin d'une intervention, résumer les changements réellement effectués, les PR fusionnées, l'état confirmé de la CI et du déploiement, ainsi que les limites restantes.
