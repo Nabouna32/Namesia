@@ -65,7 +65,7 @@ test("la page expose les profils publiés sans masquer les entrées hors catalog
   assert.ok(page.includes("regional-ranking-title"));
   assert.ok(page.includes("publishedSlugs.has(entry.slug) ? ("));
   assert.ok(page.includes('href={`/prenoms/${entry.slug}`}'));
-  assert.ok(trendsCss.includes(".regionalName:focus-visible"));
+  assert.ok(trendsCss.includes(".regionalList a:focus-visible"));
   assert.ok(trendsCss.includes(".regionalGrid"));
   assert.ok(trendsCss.includes("grid-template-columns: 1fr;"));
 });
