@@ -22,7 +22,12 @@ test("une fiche reste consultable sans compte et propose une connexion pour ajou
   assert.match(list, /Vous pouvez continuer à explorer toutes les fiches sans vous connecter/);
 });
 
-test("aucune migration des anciens favoris locaux n’est proposée", () => {\n  assert.doesNotMatch(list, /localStorage|migrerFavorisLocaux|anciens favoris/);\n  assert.match(list, /Importer une sauvegarde/);\n});\n\ntest("la table des favoris est protégée par des policies de propriété et de publication", () => {
+test("aucune migration des anciens favoris locaux n’est proposée", () => {
+  assert.doesNotMatch(list, /localStorage|migrerFavorisLocaux|anciens favoris/);
+  assert.match(list, /Importer une sauvegarde/);
+});
+
+test("la table des favoris est protégée par des policies de propriété et de publication", () => {
   assert.match(migration, /enable row level security/);
   assert.match(migration, /auth\.uid\(\)\) = user_id/);
   assert.match(migration, /p\.status = 'publie'/);
