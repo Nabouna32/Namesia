@@ -58,7 +58,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Vérification du jeton Supabase et de l'autorisation par RPC sur chaque requête.
 - Fonctions SQL transactionnelles pour créer une version et publier une version.
 - La fonction d’import accepte soit un administrateur authentifié sans métadonnées de génération, soit le rôle `service_role` avec une provenance Groq complète ; les reprises et relances sont idempotentes par identifiants de requête Groq et d’exécution GitHub, identité et empreinte du contenu.
-- Les métadonnées sont conservées dans `private.name_profile_generation_metadata`, inaccessible à anon et authenticated ; seul le rôle `service_role` peut les lire et les insérer.
+- Les métadonnées sont conservées dans `private.name_profile_generation_metadata`, inaccessible à anon et authenticated ; seul le rôle `service_role` peut les lire et les insérer. Le nombre d’alertes éditoriales heuristiques y est conservé, sans les détails qui restent dans l’artefact temporaire.
 - Les fonctions sont SECURITY INVOKER ; elles ne contournent pas RLS.
 - Aucune clé privilégiée Supabase dans le navigateur.
 - Les visiteurs disposent uniquement de la lecture des identités ayant une version publiée et de ces versions publiées.
