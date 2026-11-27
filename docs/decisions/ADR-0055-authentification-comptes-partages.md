@@ -1,9 +1,9 @@
 # ADR-0055 — Authentification des comptes Namesia par mot de passe
 
 - **Statut :** acceptée
-- **Version :** 1.6
+- **Version :** 1.7
 - **Décision prise le :** 2026-11-27 13:20:36 (Europe/Paris)
-- **Mis à jour le :** 2026-11-27 14:20:04 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 14:23:11 (Europe/Paris)
 - **Décideur :** propriétaire de Namesia
 - **Portée :** comptes visiteurs, sessions et autorisations administrateur
 
@@ -15,7 +15,7 @@ L'ancienne ADR-0049 imposait la protection HIBP de Supabase avant toute introduc
 
 ## Challenge
 
-- **Règles de composition :** elles ne sont pas recommandées par NIST/OWASP comme substitut à la longueur et aux contrôles de mots de passe compromis. Le propriétaire choisit néanmoins de les imposer dans les formulaires Namesia pour répondre à sa préférence et aux habitudes attendues par les utilisateurs.
+- **Règles de composition :** elles ne sont pas recommandées par NIST/OWASP comme substitut à la longueur et aux contrôles de mots de passe compromis. Supabase Auth propose des préréglages serveur, mais `lower_upper_letters_digits` impose aussi une minuscule et `letters_digits` ne garantit pas une majuscule. Le propriétaire choisit de conserver exactement la règle « majuscule + chiffre » dans les formulaires, sans ajouter une exigence de minuscule.
 - **Minimum de 8 caractères :** seuil inférieur aux 15 caractères recommandés par NIST pour un mot de passe utilisé seul. Il est retenu pour réduire la friction à l'inscription et augmente le risque en cas de mot de passe faible ou réutilisé.
 - **Minimum de 15 caractères :** option plus robuste, mais écartée pour cette version.
 - **Protection HIBP obligatoire :** elle nécessite un forfait Supabase payant et n'est pas une condition universelle pour mettre en place une authentification par mot de passe. Le propriétaire ne souhaite pas souscrire à ce forfait pour cette seule fonctionnalité.
@@ -56,7 +56,7 @@ L'ancienne ADR-0049 imposait la protection HIBP de Supabase avant toute introduc
 
 ### Compromis assumé
 
-- Le minimum de 8 caractères peut être configuré côté Supabase Auth. Les exigences de majuscule et de chiffre sont vérifiées dans les formulaires Namesia, mais ne sont pas imposées par le moteur Auth côté serveur dans la configuration standard : un client qui appelle directement l'API Supabase peut les contourner.
+- Le minimum de 8 caractères peut être configuré côté Supabase Auth. Les exigences exactes de majuscule et de chiffre sont vérifiées dans les formulaires Namesia, mais aucun préréglage serveur ne les impose sans exiger aussi une minuscule ; un client qui appelle directement l'API Supabase peut donc contourner ces deux règles.
 - La protection HIBP des mots de passe compromis n'est pas activée et n'est pas un prérequis. Aucun passage à Supabase Pro n'est imposé.
 - Namesia ne revendique donc pas une conformité complète à NIST SP 800-63B-4 : le minimum choisi est inférieur au seuil NIST pour un mot de passe seul, et le contrôle des mots de passe communs, attendus ou compromis n'est pas activé.
 - Cette décision est réexaminable si le risque, le volume d'utilisateurs ou le contexte économique évolue.
@@ -81,7 +81,8 @@ L'ancienne ADR-0049 imposait la protection HIBP de Supabase avant toute introduc
 - NIST SP 800-63B-4 — FAQ : https://pages.nist.gov/800-63-4-Implementation-Resources/faqs/
 - OWASP Authentication Cheat Sheet : https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html
 - Supabase Auth — Password-based Auth : https://supabase.com/docs/guides/auth/passwords
-- Supabase Auth — Password Security : https://supabase.com/docs/guides/auth/password-security
+- Supabase Auth — Password Security et préréglages de composition : https://supabase.com/docs/guides/auth/password-security
+- Supabase Auth — Mise à jour de la configuration Auth : https://supabase.com/docs/reference/api/v1-update-auth-service-config
 - Supabase Auth — Custom SMTP : https://supabase.com/docs/guides/auth/auth-smtp
 - Supabase Auth — Server-Side Rendering : https://supabase.com/docs/guides/auth/server-side
 - Implémentation Supabase Auth — limite bcrypt de 72 octets, commit immuable : https://github.com/supabase/auth/blob/d7955e9eb54003c4abbd7808e774c810d5d3e6cc/internal/api/password.go
