@@ -1,4 +1,5 @@
 import type { SupabaseClient, User } from "@supabase/supabase-js";
+import "server-only";
 import type { Database } from "@/lib/supabase/database.types";
 import { createSupabaseSessionClient } from "@/lib/supabase/session";
 
