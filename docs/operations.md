@@ -1,8 +1,8 @@
 # Exploitation, sécurité et qualité — Namesia
 
 - **Statut :** référence canonique
-- **Version :** 1.1
-- **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
+- **Version :** 1.2
+- **Mis à jour le :** 2026-11-27 (Europe/Paris)
 
 Ce document rassemble les décisions opérationnelles validées dans l’issue #345. Les règles de réalisation et de CI restent détaillées dans AGENTS.md et docs/standards-techniques.md.
 
@@ -26,11 +26,11 @@ La sécurité est intégrée à la conception : contrôle d’accès, RLS, valid
 
 La stratégie de tests vise les risques et les parcours réellement importants, pas le volume de tests. Combiner tests unitaires, intégration, contrats, types, build et E2E selon le besoin. Supprimer les tests redondants, fragiles ou devenus sans objet.
 
-- Playwright couvre des parcours publics représentatifs et des régressions coûteuses.
+- Playwright couvre des parcours publics représentatifs et des régressions coûteuses. Les audits axe-core sur les six pages publiques essentielles en bureau, ainsi que sur l’accueil en mobile et tablette, sont bloquants dans la CI : toute violation détectée sur les critères WCAG ciblés doit être corrigée avant fusion.
 - Les captures, vidéos et traces ne sont pas produites systématiquement.
 - Le label diagnostic-playwright active ponctuellement les diagnostics temporaires prévus par le workflow ; les artefacts ont une rétention courte et sont supprimés dès qu’ils ne sont plus utiles.
 - Les snapshots ne sont pas régénérés pour des composants déjà vérifiés lorsqu’ils n’ont pas changé.
-- Les audits automatisés sont des outils de diagnostic ; ils ne doivent pas provoquer de dégradation silencieuse du design ou de l’expérience.
+- Les audits automatisés complètent les contrôles manuels et les tests clavier/lecteur d’écran ; ils ne prouvent pas à eux seuls la conformité WCAG. Une correction doit préserver Material 3 Fidelity et l’expérience, et non masquer un problème en supprimant le contenu ou sa sémantique.
 
 Une fonctionnalité est terminée lorsqu’elle apporte une valeur réelle et est suffisamment aboutie pour être livrée sereinement, sans exiger une perfection abstraite. L’évaluation couvre l’utilité, l’expérience, le design, la fiabilité, la maintenabilité et la proportionnalité du coût et du risque.
 
