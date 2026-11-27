@@ -79,11 +79,14 @@ test("la configuration refuse les chemins, paramètres, identifiants et protocol
 test("les clients Supabase partagent la configuration validée sans assertion non nulle", async () => {
   const server = await readFile(new URL("../lib/supabase/server.ts", import.meta.url), "utf8");
   const adminAuth = await readFile(new URL("../lib/admin-auth.ts", import.meta.url), "utf8");
+  const browser = await readFile(new URL("../lib/supabase/browser.ts", import.meta.url), "utf8");
   const adminClient = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
 
-  for (const source of [server, adminAuth, adminClient]) {
+  for (const source of [server, adminAuth, browser]) {
     assert.match(source, /getSupabasePublicConfig\(\)/);
     assert.doesNotMatch(source, /NEXT_PUBLIC_SUPABASE_(?:URL|PUBLISHABLE_KEY)!/);
     assert.doesNotMatch(source, /process\.env\.NEXT_PUBLIC_SUPABASE_/);
   }
+  assert.match(adminClient, /createSupabaseBrowserClient\(\)/);
+  assert.doesNotMatch(adminClient, /NEXT_PUBLIC_SUPABASE_/);
 });
