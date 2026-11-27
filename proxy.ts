@@ -3,6 +3,10 @@ import { NextResponse, type NextRequest } from "next/server";
 import { getSupabasePublicConfig } from "@/lib/supabase/config";
 
 export async function proxy(request: NextRequest) {
+  if (process.env.NAMESIA_DEPLOYMENT_ENVIRONMENT === "preview") {
+    return NextResponse.next();
+  }
+
   const { url, key } = getSupabasePublicConfig();
   let response = NextResponse.next({ request });
 
