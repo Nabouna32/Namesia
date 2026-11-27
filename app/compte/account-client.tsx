@@ -216,12 +216,12 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
         <p className={styles.accountEmail}>{session.user.email}</p>
         <form className={styles.form} onSubmit={changePassword}>
           <TextField id="account-current-password" label="Mot de passe actuel" variant="outlined" type="password" autoComplete="current-password" required value={currentPassword} onChange={(event) => setCurrentPassword(event.target.value)} />
-          <TextField id="account-new-password" label="Nouveau mot de passe" variant="outlined" type="password" autoComplete="new-password" required value={password} onChange={(event) => setPassword(event.target.value)} supportingText="15 caractères minimum. Les majuscules, chiffres et symboles ne sont pas imposés." />
+          <TextField id="account-new-password" label="Nouveau mot de passe" variant="outlined" type="password" autoComplete="new-password" required value={password} onChange={(event) => setPassword(event.target.value)} supportingText="8 caractères minimum, avec au moins une majuscule et un chiffre." />
           <TextField id="account-confirm-password" label="Confirmer le nouveau mot de passe" variant="outlined" type="password" autoComplete="new-password" required value={confirmation} onChange={(event) => setConfirmation(event.target.value)} />
           <Button type="submit" disabled={busy}>{busy ? "Enregistrement…" : "Enregistrer le mot de passe"}</Button>
           <Button variant="text" type="button" disabled={busy} onClick={() => setMode("login")}>Annuler</Button>
         </form>
-        {feedback && <p className={feedback.type === "error" ? styles.error : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
+        {feedback && <p className={feedback.type === "error" ? `${styles.feedback} ${styles.error}` : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
       </section>
     );
   }
@@ -241,7 +241,7 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
           }}>Modifier le mot de passe</Button>
           <Button variant="text" type="button" disabled={busy} onClick={() => void signOut()}>Se déconnecter</Button>
         </div>
-        {feedback && <p className={feedback.type === "error" ? styles.error : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
+        {feedback && <p className={feedback.type === "error" ? `${styles.feedback} ${styles.error}` : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
       </section>
     );
   }
@@ -252,7 +252,7 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
         <section className={styles.panel}>
           <h2>Réinitialiser le mot de passe</h2>
           <p>Ouvrez le lien reçu par e-mail pour accéder à cette étape. Si le formulaire ne s'active pas, demandez un nouveau lien de récupération.</p>
-          {feedback && <p className={feedback.type === "error" ? styles.error : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
+          {feedback && <p className={feedback.type === "error" ? `${styles.feedback} ${styles.error}` : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
           <Button variant="outlined" href="/compte?mode=forgot">Demander un nouveau lien</Button>
         </section>
       );
@@ -262,11 +262,11 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
       <section className={styles.panel}>
         <h2>Choisir un nouveau mot de passe</h2>
         <form className={styles.form} onSubmit={submit}>
-          <TextField id="account-recovery-password" label="Nouveau mot de passe" variant="outlined" type="password" autoComplete="new-password" required value={password} onChange={(event) => setPassword(event.target.value)} supportingText="15 caractères minimum. Les majuscules, chiffres et symboles ne sont pas imposés." />
+          <TextField id="account-recovery-password" label="Nouveau mot de passe" variant="outlined" type="password" autoComplete="new-password" required value={password} onChange={(event) => setPassword(event.target.value)} supportingText="8 caractères minimum, avec au moins une majuscule et un chiffre." />
           <TextField id="account-recovery-confirm" label="Confirmer le nouveau mot de passe" variant="outlined" type="password" autoComplete="new-password" required value={confirmation} onChange={(event) => setConfirmation(event.target.value)} />
           <Button type="submit" disabled={busy}>{busy ? "Enregistrement…" : "Réinitialiser le mot de passe"}</Button>
         </form>
-        {feedback && <p className={feedback.type === "error" ? styles.error : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
+        {feedback && <p className={feedback.type === "error" ? `${styles.feedback} ${styles.error}` : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
       </section>
     );
   }
@@ -280,7 +280,7 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
       <form className={styles.form} onSubmit={submit}>
         <TextField id="account-email" label="Adresse e-mail" variant="outlined" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
         {mode !== "forgot" && <>
-          <TextField id="account-password" label="Mot de passe" variant="outlined" type="password" autoComplete={mode === "login" ? "current-password" : "new-password"} required value={password} onChange={(event) => setPassword(event.target.value)} supportingText={mode === "login" ? undefined : "15 caractères minimum. Aucune majuscule, aucun chiffre ni symbole obligatoire."} />
+          <TextField id="account-password" label="Mot de passe" variant="outlined" type="password" autoComplete={mode === "login" ? "current-password" : "new-password"} required value={password} onChange={(event) => setPassword(event.target.value)} supportingText={mode === "login" ? undefined : "8 caractères minimum, avec au moins une majuscule et un chiffre."} />
           {mode === "register" && <TextField id="account-password-confirm" label="Confirmer le mot de passe" variant="outlined" type="password" autoComplete="new-password" required value={confirmation} onChange={(event) => setConfirmation(event.target.value)} />}
         </>}
         <Button type="submit" disabled={busy}>{busy ? "Veuillez patienter…" : submitLabel}</Button>
@@ -305,7 +305,7 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
           }}>Mot de passe oublié ?</Button>
         </>}
       </div>
-      {feedback && <p className={feedback.type === "error" ? styles.error : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
+      {feedback && <p className={feedback.type === "error" ? `${styles.feedback} ${styles.error}` : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
     </section>
   );
 }
