@@ -1,7 +1,7 @@
 # Sécurité du navigateur et des sessions — Namesia
 
-- **Version :** 1.0
-- **Mis à jour le :** 2026-11-27 20:08:09 (Europe/Paris)
+- **Version :** 1.1
+- **Mis à jour le :** 2026-11-27 20:45:42 (Europe/Paris)
 - **Portée :** en-têtes HTTP, protections navigateur et état de session administrateur
 
 Ce document décrit les protections applicatives côté navigateur. Les politiques Auth, RLS et données sont détaillées dans [Supabase](SUPABASE.md) ; l'architecture globale est décrite dans [ARCHITECTURE.md](../ARCHITECTURE.md).
@@ -22,3 +22,11 @@ Les en-têtes sont appliqués au niveau Next.js à l'ensemble des routes, y comp
 La session Supabase et le droit d'accès administrateur sont deux états distincts. La vérification de rôle rejette toute réponse autre qu'un booléen explicite et propage les erreurs réseau ou RPC vers l'interface. Le client affiche un état d'erreur au lieu de rester indéfiniment en chargement ou de confondre une panne avec un refus d'accès.
 
 Les changements de session peuvent se chevaucher (lecture initiale et événements d'authentification). Chaque vérification est versionnée : seule la réponse correspondant au dernier événement peut modifier l'état. Le démontage du composant invalide les opérations encore en cours. Aucune session ancienne ou réponse tardive ne doit rétablir un accès révoqué.
+
+
+Les routes administrateur appliquent le contrôle d'origine avant la vérification de session pour toute mutation :
+- GET sans session : 401 (authentification requise) ;
+- POST sans en-tête Origin valide : 403 (protection CSRF) ;
+- POST avec Origin correspondant à l'origine de la requête mais sans session : 401.
+
+Cette différence est intentionnelle. Un POST sans Origin ne doit pas être attendu à 401 : le contrôle CSRF le rejette avant l'authentification. Le workflow post-déploiement vérifie séparément ces trois cas.
