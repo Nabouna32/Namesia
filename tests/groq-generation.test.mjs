@@ -235,6 +235,11 @@ test("l’import SQL réserve les métadonnées au service_role et protège l’
   assert.match(migration, /bigint, integer, integer, integer, numeric, integer, timestamptz/);
   assert.match(migration, /grant usage on schema private to service_role/);
   assert.match(migration, /grant select, insert on table private\.name_profile_generation_metadata to service_role/);
+  assert.match(migration, /grant select, insert on table public\.names to service_role/);
+  assert.match(migration, /grant select, insert on table public\.name_profiles to service_role/);
+  assert.match(migration, /grant insert on table public\.name_profile_associations to service_role/);
+  assert.match(migration, /pg_advisory_xact_lock\(hashtextextended/);
+  assert.doesNotMatch(migration, /for update/i);
   assert.match(migration, /security invoker/i);
   assert.doesNotMatch(migration, /security definer/i);
 });
