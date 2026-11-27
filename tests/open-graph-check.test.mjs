@@ -52,7 +52,8 @@ test("refuse une origine de site non HTTPS", () => {
 });
 
 test("le contrôle post-déploiement extrait og:image et vérifie le type MIME", () => {
-  assert.equal(workflow.match(/node scripts\/verify-open-graph\.mjs/g)?.length, 2);\n  assert.doesNotMatch(workflow, /grep -Fq "opengraph-image"/);
+  assert.equal(workflow.match(/node scripts\\/verify-open-graph\\.mjs/g)?.length, 2);
+  assert.doesNotMatch(workflow, /grep -Fq "opengraph-image"/);
   assert.match(workflow, /profile_og_type/);
   assert.match(workflow, /test "\$profile_og_type" = "image\/png"/);
 });
