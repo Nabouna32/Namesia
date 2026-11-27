@@ -4,6 +4,7 @@ import test from "node:test";
 import {
   NAME_POPULARITY_2025,
   NAME_POPULARITY_2025_SOURCE_URL,
+  NAME_REGIONAL_LEADERS_2025,
   getNamePopularity2025
 } from "../lib/name-popularity.ts";
 
@@ -22,6 +23,18 @@ test("le classement Insee 2025 contient dix prénoms par genre", () => {
   assert.deepEqual(maleNames.map((entry) => entry.rank), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
   assert.deepEqual(femaleNames.map((entry) => entry.births), [3070, 2925, 2805, 2500, 2360, 2320, 2310, 2245, 2225, 2130]);
   assert.deepEqual(maleNames.map((entry) => entry.births), [4625, 3465, 3420, 3285, 3260, 3040, 2875, 2840, 2810, 2700]);
+});
+
+test("les leaders régionaux couvrent les 18 régions et correspondent au classement Insee", () => {
+  const female = NAME_REGIONAL_LEADERS_2025.filter((entry) => entry.gender === "Féminin");
+  const male = NAME_REGIONAL_LEADERS_2025.filter((entry) => entry.gender === "Masculin");
+  assert.equal(new Set(female.flatMap((entry) => entry.regions)).size, 18);
+  assert.equal(male.reduce((total, entry) => total + entry.regions.length, 0) + 12, 18);
+  assert.equal(male.find((entry) => entry.name === "Gabriel")?.distinction, "12 régions sur 18");
+  assert.deepEqual(female.find((entry) => entry.name === "Louise")?.regions, [
+    "Nouvelle-Aquitaine", "Bourgogne-Franche-Comté", "Bretagne", "Occitanie"
+  ]);
+  assert.deepEqual(male.find((entry) => entry.name === "Noah")?.regions, ["Guadeloupe", "Martinique"]);
 });
 
 test("les entrées du classement ont des slugs uniques et des effectifs positifs", () => {
@@ -48,6 +61,10 @@ test("la page expose les profils publiés sans masquer les entrées hors catalog
   assert.match(profileCard, /getNamePopularity2025\(slug\)/);
   assert.match(profileCard, /popularity\.name !== name \|\| popularity\.gender !== gender/);
   assert.match(page, /publishedName\.name !== entry\.name \|\| publishedName\.gender !== entry\.gender/);
+  assert.match(page, /NAME_REGIONAL_LEADERS_2025/);
+  assert.match(page, /regional-ranking-title/);
+  assert.ok(trendsCss.includes(".regionalGrid"));
+  assert.ok(trendsCss.includes("grid-template-columns: 1fr;"));
 });
 
 test("le classement renvoie directement vers la publication officielle de l’Insee", () => {
