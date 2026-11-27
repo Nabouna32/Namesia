@@ -92,7 +92,7 @@ Favoris personnels d'un compte Namesia, synchronisés entre appareils.
 Contraintes et sécurité :
 - clé primaire composite `(user_id, name_id)`, sans doublon ;
 - suppression en cascade lorsque le compte ou le prénom est supprimé ;
-- RLS activé ; seules les opérations `SELECT`, `INSERT` et `DELETE` sont accordées à `authenticated` ;
+- RLS activé ; `SELECT` et `DELETE` sont accordés à `authenticated`, tandis que `INSERT` est limité aux colonnes `user_id` et `name_id` ; `created_at` est exclusivement fourni par défaut par PostgreSQL ;
 - chaque policy vérifie que `auth.uid() = user_id` ;
 - l'insertion exige qu'une version publiée du prénom existe ;
 - aucun accès n'est accordé au rôle `anon` ;
