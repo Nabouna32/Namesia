@@ -6,7 +6,7 @@
 
 Ce guide définit quels comportements protéger et comment valider les changements. Les workflows exécutés et les résultats CI sont décrits dans [GitHub Actions](platform/GITHUB-ACTIONS.md). Les diagnostics visuels s'exécutent sur les Previews Cloudflare décrites dans [Cloudflare Workers](platform/CLOUDFLARE-WORKERS.md).
 
-## 6. Qualité, tests et validation
+## Stratégie de validation
 
 Chaque changement est validé au niveau adapté à son risque :
 
