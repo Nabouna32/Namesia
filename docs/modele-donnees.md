@@ -1,8 +1,8 @@
 # Modèle de données — Namesia
 
 - **Statut :** modèle cible retenu pour la V1
-- **Version :** 2.6
-- **Mis à jour :** 2026-11-27 13:20:36 (Europe/Paris)
+- **Version :** 2.7
+- **Mis à jour :** 2026-11-27 14:34:10 (Europe/Paris)
 
 ## 1. Principes
 
@@ -78,6 +78,29 @@ Affectation du droit administrateur à un compte Supabase Auth ordinaire. La tab
 Cette table ne stocke aucun mot de passe et ne constitue pas un second système d'identité : Supabase Auth gère l'identité et la session, tandis que `private.admin_users` représente uniquement l'autorisation d'administrer le catalogue. Un compte qui n'y figure pas reste un compte utilisateur ordinaire.
 
 RLS est activé. Un utilisateur authentifié peut uniquement lire sa propre autorisation. L'ajout et le retrait d'un administrateur passent par le SQL Editor Supabase, jamais par le navigateur ni par des métadonnées modifiables par l'utilisateur.
+
+### user_favorites
+
+Favoris personnels d'un compte Namesia, synchronisés entre appareils.
+
+| Colonne | Rôle |
+|---|---|
+| user_id | Référence à `auth.users.id`, propriétaire du favori |
+| name_id | Référence à `names.id` |
+| created_at | Date d'enregistrement du favori |
+
+Contraintes et sécurité :
+- clé primaire composite `(user_id, name_id)`, sans doublon ;
+- suppression en cascade lorsque le compte ou le prénom est supprimé ;
+- RLS activé ; seules les opérations `SELECT`, `INSERT` et `DELETE` sont accordées à `authenticated` ;
+- chaque policy vérifie que `auth.uid() = user_id` ;
+- l'insertion exige qu'une version publiée du prénom existe ;
+- aucun accès n'est accordé au rôle `anon` ;
+- l'index sur `name_id` sert aux recherches inverses et aux suppressions en cascade d'un prénom.
+
+Les favoris sont lus et modifiés depuis le client Supabase public, dont les requêtes restent soumises à RLS. Aucune clé privilégiée n'est utilisée. Les anciens favoris `localStorage` ne sont envoyés qu'après une action explicite de migration ; la clé locale n'est effacée qu'après confirmation du transfert complet.
+
+L'historique de consultation n'a pas encore de table. Son activation, sa rétention et sa limite sont soumises à l'arbitrage humain #405 ; aucune visite n'est actuellement enregistrée.
 
 ## 3. Contrat JSON
 
