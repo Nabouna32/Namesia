@@ -2,7 +2,7 @@
 
 - **Statut :** document canonique
 - **Version :** 3.60
-- **Mis à jour le :** 2026-11-27 20:02:15 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 20:18:27 (Europe/Paris)
 
 ## 1. Positionnement
 
