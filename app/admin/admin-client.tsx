@@ -243,7 +243,7 @@ export function AdminClient() {
     try {
       const response = await fetch(`/api/admin/prenoms/${imported.profileId}/publication`, {
         method: "POST",
-        headers: { Authorization: `Bearer ${session.access_token}` }
+        credentials: "same-origin"
       });
       const result = await response.json() as { error?: string };
       if (!response.ok) throw new Error(result.error ?? "Publication impossible.");
