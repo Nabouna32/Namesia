@@ -215,6 +215,50 @@ export function FavoritesList({
     }
   }
 
+  async function migrerFavorisLocaux() {
+    setMigrationBusy(true);
+    setMessageImport("");
+    setErreurImport("");
+    setImportPartiel(false);
+
+    try {
+      const stored = window.localStorage.getItem(CLE_FAVORIS_LEGACY);
+      if (stored === null) {
+        setMessageImport("Aucun ancien favori local n’a été trouvé sur cet appareil.");
+        return;
+      }
+
+      const parsed: unknown = JSON.parse(stored);
+      const legacySlugs = normaliserSlugsFavoris(parsed);
+      if (!legacySlugs) {
+        setErreurImport("Les anciens favoris locaux sont illisibles. Ils ont été conservés sur cet appareil.");
+        return;
+      }
+
+      const result = await ajouterPlusieurs(legacySlugs);
+      if (result === null) {
+        setErreurImport("Le transfert n’a pas pu être confirmé. Les anciens favoris locaux ont été conservés.");
+        return;
+      }
+
+      const partial = result.nombreIgnoreLimite > 0 || result.nombreIgnoreIndisponible > 0;
+      setImportPartiel(partial);
+      if (partial) {
+        setMessageImport(\`${result.nombreAjoute} favoris transférés. \${result.nombreIgnoreLimite + result.nombreIgnoreIndisponible} éléments n’ont pas été transférés ; la copie locale est conservée pour éviter toute perte.\`);
+        return;
+      }
+
+      window.localStorage.removeItem(CLE_FAVORIS_LEGACY);
+      setMessageImport(result.nombreAjoute > 0
+        ? \`${result.nombreAjoute} favoris transférés vers votre compte. La copie locale a été effacée.\`
+        : "Ces favoris étaient déjà présents dans votre compte. La copie locale a été effacée.");
+    } catch {
+      setErreurImport("Le transfert a échoué. Les anciens favoris locaux ont été conservés.");
+    } finally {
+      setMigrationBusy(false);
+    }
+  }
+
   return (
     <div className={styles.content}>
       <div className={styles.tools}>
