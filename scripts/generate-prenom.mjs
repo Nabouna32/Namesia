@@ -154,7 +154,7 @@ export function findEditorialWarnings(content) {
     },
     {
       code: "citation_marker",
-      pattern: /\[\s*\d+\s*\]|\(\s*[^)]{1,60},\s*(?:18|19|20)\d{2}\s*\)/u,
+      pattern: /\[\s*\d+\s*\]|\(\s*[^)]{1,60},\s*(?:18|19|20)\d{2}\s*\)|\b(?:source|référence|bibliographie)\s*:/iu,
       message: "Marqueur de citation détecté : aucune source n’est actuellement reliée à cette affirmation."
     },
     {
