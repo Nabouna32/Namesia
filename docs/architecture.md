@@ -2,7 +2,7 @@
 
 - **Statut :** architecture cible retenue pour la V1
 - **Version :** 4.06
-- **Mis à jour le :** 2026-11-27 01:44:00 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 01:56:00 (Europe/Paris)
 
 ## Structure de la page
 
