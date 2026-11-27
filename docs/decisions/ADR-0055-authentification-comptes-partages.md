@@ -15,9 +15,9 @@ L'ancienne ADR-0049 imposait la protection HIBP de Supabase avant toute introduc
 
 ## Challenge
 
-- **Majuscule, chiffre et symbole obligatoires :** ces règles sont encore courantes dans des formulaires, mais elles ne constituent pas la recommandation actuelle du NIST ou de l'OWASP. Elles favorisent des transformations prévisibles et compliquent la mémorisation.
-- **Minimum de 8 caractères :** c'est un seuil historique encore fréquent et le minimum recommandé par Supabase dans ses réglages génériques. Il est inférieur au seuil NIST actuel pour un mot de passe utilisé seul.
-- **Minimum de 15 caractères :** cohérent avec NIST SP 800-63B-4 pour un mot de passe constituant le seul facteur de connexion. Il augmente la longueur minimale sans imposer de composition arbitraire.
+- **Règles de composition :** elles ne sont pas recommandées par NIST/OWASP comme substitut à la longueur et aux contrôles de mots de passe compromis. Le propriétaire choisit néanmoins de les imposer dans les formulaires Namesia pour répondre à sa préférence et aux habitudes attendues par les utilisateurs.
+- **Minimum de 8 caractères :** seuil inférieur aux 15 caractères recommandés par NIST pour un mot de passe utilisé seul. Il est retenu pour réduire la friction à l'inscription et augmente le risque en cas de mot de passe faible ou réutilisé.
+- **Minimum de 15 caractères :** option plus robuste, mais écartée pour cette version.
 - **Protection HIBP obligatoire :** elle nécessite un forfait Supabase payant et n'est pas une condition universelle pour mettre en place une authentification par mot de passe. Le propriétaire ne souhaite pas souscrire à ce forfait pour cette seule fonctionnalité.
 - **Authentification distincte pour l'administration :** elle dupliquerait les identités, les sessions et la récupération de compte. Les droits doivent être séparés de l'identité.
 
@@ -34,9 +34,9 @@ L'ancienne ADR-0049 imposait la protection HIBP de Supabase avant toute introduc
 
 ### Politique de mot de passe
 
-- Minimum de **15 caractères Unicode**.
-- Aucune obligation de majuscule, chiffre ou symbole.
-- Espaces et phrases de passe acceptés.
+- Minimum de **8 caractères Unicode**.
+- Au moins une lettre majuscule Unicode et un chiffre sont exigés par les formulaires Namesia. Aucun symbole n'est obligatoire.
+- Espaces et phrases de passe acceptés lorsqu'ils respectent ces deux critères.
 - Pas de renouvellement périodique imposé.
 - Limite technique de **72 octets UTF-8** appliquée par l'implémentation actuelle de Supabase Auth ; l'application la vérifie sans tronquer le mot de passe.
 - Le mot de passe est transmis à Supabase Auth via HTTPS ; Namesia ne le stocke jamais et ne réalise pas son propre hachage.
@@ -56,8 +56,9 @@ L'ancienne ADR-0049 imposait la protection HIBP de Supabase avant toute introduc
 
 ### Compromis assumé
 
+- Le minimum de 8 caractères peut être configuré côté Supabase Auth. Les exigences de majuscule et de chiffre sont vérifiées dans les formulaires Namesia, mais ne sont pas imposées par le moteur Auth côté serveur dans la configuration standard : un client qui appelle directement l'API Supabase peut les contourner.
 - La protection HIBP des mots de passe compromis n'est pas activée et n'est pas un prérequis. Aucun passage à Supabase Pro n'est imposé.
-- Namesia ne revendique donc pas une conformité complète à NIST SP 800-63B-4 : le référentiel demande également un contrôle des mots de passe communs, attendus ou compromis.
+- Namesia ne revendique donc pas une conformité complète à NIST SP 800-63B-4 : le minimum choisi est inférieur au seuil NIST pour un mot de passe seul, et le contrôle des mots de passe communs, attendus ou compromis n'est pas activé.
 - Cette décision est réexaminable si le risque, le volume d'utilisateurs ou le contexte économique évolue.
 
 ## Conséquences
@@ -65,7 +66,7 @@ L'ancienne ADR-0049 imposait la protection HIBP de Supabase avant toute introduc
 - Les comptes visiteurs et administrateurs partagent la même identité et les mêmes parcours.
 - La table privée `private.admin_users` ne stocke que l'attribution du droit administrateur ; elle n'est pas un système d'authentification distinct.
 - L'ancienne ADR-0049 est remplacée.
-- Les e-mails de confirmation et de récupération nécessitent un SMTP transactionnel personnalisé pour délivrer les messages à des adresses externes à l'équipe Supabase. Le service SMTP par défaut est réservé aux membres de l'équipe et limité à deux messages par heure au moment de la décision. La configuration est suivie dans l'issue #402.
+- Les e-mails de confirmation et de récupération nécessitent un SMTP transactionnel personnalisé pour délivrer les messages à des adresses externes à l'équipe Supabase. Le service SMTP par défaut est réservé aux membres de l'équipe et limité à deux messages par heure : cela suffit aux essais internes de développement, mais pas à l'inscription publique. La configuration d'un SMTP transactionnel reste un prérequis avant l'ouverture publique et est suivie dans l'issue #402.
 - Les favoris et l'historique doivent être liés au compte et synchronisés côté serveur ; ils ne doivent pas rester des fonctions persistantes locales. Leur mise en œuvre, la migration éventuelle des favoris déjà stockés dans le navigateur, la rétention de l'historique et la suppression complète des données sont suivies dans l'issue #404. Le compte reste facultatif pour explorer le catalogue et consulter les fiches.
 
 ## Validation
