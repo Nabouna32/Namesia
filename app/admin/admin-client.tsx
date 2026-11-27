@@ -10,7 +10,7 @@ import { Button } from "@/components/material3/Button";
 import { TextField } from "@/components/material3/TextField";
 import { Snackbar, type SnackbarSeverity } from "@/components/material3/Snackbar";
 import { parseAdminCatalog, type AdminName, type AdminProfile } from "@/lib/admin-catalog";
-import { verifyAdminAccess } from "@/lib/admin-auth";
+import { verifyAdminAccess } from "@/lib/admin-auth-core";
 
 const supabase = createSupabaseBrowserClient();
 
