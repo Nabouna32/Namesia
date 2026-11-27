@@ -18,13 +18,13 @@ Le modèle répond au schéma strict [fiche-prenom.groq.schema.json](../schemas/
 
 Le script normalise ensuite les chaînes vides en propriétés absentes et construit le contrat d’import Namesia 2.0.0 défini par [fiche-prenom.schema.json](../schemas/fiche-prenom.schema.json). Le parseur partagé parseFichePrenom vérifie les types, les propriétés autorisées, les longueurs, le slug, le genre et les associations avant toute écriture.
 
-Le modèle ne produit ni identité technique, ni slug, ni version de schéma, ni statut, ni identifiant de base. Le script construit l’identité de façon déterministe depuis le prénom fourni. Aucun champ source ou citation n’est demandé au modèle.
+Le modèle ne produit ni identité technique, ni slug, ni version de schéma, ni statut, ni identifiant de base. Le script construit l’identité de façon déterministe depuis le prénom fourni. L’entrée doit être une graphie latine convertible en slug ASCII ; si ce n’est pas possible, le script s’arrête et demande une translittération explicite plutôt que d’en inventer une. Aucun champ source ou citation n’est demandé au modèle.
 
 ## 3. Étapes du pipeline
 
 1. **Déclenchement :** un propriétaire ayant accès au dépôt lance le workflow sur main et saisit une graphie et un genre.
 2. **Génération :** le script charge le prompt versionné et le schéma strict, appelle Groq et exige une réponse JSON complète.
-3. **Normalisation :** les champs facultatifs vides sont retirées ; les propriétés inconnues, réponses incomplètes, refus et JSON invalide sont rejetés.
+3. **Normalisation :** les propriétés facultatives vides sont retirées ; les propriétés inconnues, réponses incomplètes, refus et JSON invalide sont rejetés.
 4. **Validation :** le parseur Namesia valide le contrat d’import existant. Une sortie invalide ne peut jamais atteindre Supabase.
 5. **Contrôle éditorial heuristique :** le script signale les URL, marqueurs de citation, références à des études sans source, statistiques, années précises et phrases répétées. Le compteur est conservé avec la provenance ; le détail des alertes accompagne l’artefact. Ces alertes ne bloquent pas le brouillon et ne constituent pas une vérification factuelle.
 6. **Artefact :** le JSON d’import et un fichier JSON de métadonnées de génération (dont l’identifiant d’exécution GitHub) sont conservés comme artefacts GitHub Actions pendant sept jours. Ils ne contiennent aucun secret.
@@ -47,7 +47,7 @@ Pour chaque fiche effectivement importée par le pipeline, les métadonnées son
 - température et limite de sortie ;
 - tokens d’entrée et de sortie lorsque fournis.
 
-Aucune colonne JSON de métadonnées n’est ajoutée. La table est dans le schéma PostgreSQL privé, non exposé à la Data API, et accessible en écriture/lecture uniquement au rôle service_role. Le nombre d’alertes éditoriales est conservé ; le détail des alertes est dans l’artefact temporaire. L’identifiant de requête Groq et l’identifiant stable de l’exécution GitHub rendent l’import idempotent. Une relance du même workflow retourne la version déjà créée si l’identité et l’empreinte du contenu correspondent ; si le contenu a changé, elle est rejetée au lieu de créer une seconde version. Une nouvelle génération volontaire doit partir d’un nouveau déclenchement manuel, donc d’un nouvel identifiant d’exécution.
+Aucune colonne JSON de métadonnées n’est ajoutée. La table est dans le schéma PostgreSQL privé, non exposé à la Data API, et accessible uniquement au rôle `service_role`, avec les droits `SELECT` et `INSERT` ; aucun droit direct n’est accordé à `anon` ou `authenticated`. Le nombre d’alertes éditoriales est conservé ; le détail des alertes est dans l’artefact temporaire. L’identifiant de requête Groq et l’identifiant stable de l’exécution GitHub rendent l’import idempotent. Une relance du même workflow retourne la version déjà créée si l’identité et l’empreinte du contenu correspondent ; si le contenu a changé, elle est rejetée au lieu de créer une seconde version. Une nouvelle génération volontaire doit partir d’un nouveau déclenchement manuel, donc d’un nouvel identifiant d’exécution.
 
 L’import est transactionnel : prénom, version brouillon, associations et métadonnées sont créés ensemble ou pas du tout. Les imports administrateur habituels continuent de fonctionner sans métadonnées de génération.
 
@@ -56,7 +56,6 @@ L’import est transactionnel : prénom, version brouillon, associations et mét
 - GROQ_API_KEY est un secret GitHub Actions.
 - SUPABASE_SECRET_KEY (clé moderne `sb_secret_`) est nécessaire uniquement lorsque l’import est activé ; le script rejette les anciennes clés et l’envoie uniquement dans l’en-tête `apikey` de l’appel RPC. La passerelle Supabase la mappe vers le rôle SQL `service_role`.
 - L’URL publique est extraite de `.env.example` sans exécuter ce fichier comme un script shell ; le script valide HTTPS et le domaine Supabase avant d’envoyer la clé.
-- L’URL Supabase est publique et lue depuis .env.example.
 - Aucun secret privilégié n’est exposé dans le navigateur, une route publique, le dépôt, le prompt ou les artefacts.
 - Le workflow ne se déclenche pas sur les pull requests et son job est limité à main.
 - La fonction SQL accepte les métadonnées uniquement lorsque current_user vaut service_role. Elle reste SECURITY INVOKER ; le rôle effectif est fourni par la passerelle Supabase, sans utiliser auth.role(). Un administrateur authentifié ne peut pas fabriquer de provenance.
@@ -72,4 +71,4 @@ Toute fiche importée reste en brouillon. L’administrateur doit contrôler le 
 
 ## 7. Évolutions non incluses
 
-Pas de génération massive, de planification automatique, de publication automatique, de recherche documentaire, de citations générées, de stockage des prompts bruts, ni de coût fournisseur. Toute évolution doit répondre à un besoin réel, être documentée et respecter les arbitrages de [gouvernance.md](gouvernance.md).
+Pas de génération massive, de planification automatique, de publication automatique, de recherche documentaire, de citations générées, de stockage des prompts bruts, ni de dépense fournisseur sans arbitrage. Toute évolution doit répondre à un besoin réel, être documentée et respecter les arbitrages de [gouvernance.md](gouvernance.md).
