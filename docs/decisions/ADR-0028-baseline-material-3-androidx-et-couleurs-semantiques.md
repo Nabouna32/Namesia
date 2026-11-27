@@ -2,6 +2,8 @@
 
 - **Statut :** acceptée, partiellement remplacée par [ADR-0045](ADR-0045-source-google-blue-material-3.md) pour la couleur source uniquement
 - **Date :** 2026-11-24
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-27 20:10:47 (Europe/Paris)
 - **Remplace :** les choix de couleur source et de génération des ADR-0006, ADR-0015 et ADR-0027
 
 ## Contexte
@@ -31,7 +33,7 @@ Les décisions précédentes ont introduit une couleur source `#005AC1` qualifi�
 - Restaurer les sources sémantiques existantes : success `#386A20`, warning `#795900`, info `#005B9A`. Les générer via l'utilitaire officiel `customColor` de Material Color Utilities en conservant leur teinte (`blend: false`) et produire les rôles `color`, `onColor`, `colorContainer`, `onColorContainer` pour clair et sombre.
 - Exposer ces rôles sous `--namesia-color-*`. Ils ne sont pas des rôles système M3 et ne doivent jamais utiliser `--md-sys-color-*`. Les erreurs continuent d'utiliser `error`/`on-error`/leurs conteneurs M3.
 - Utiliser la spécification Material 3 comme référence normative et les sources AndroidX Jetpack Compose Material 3 comme référence d'implémentation des composants, de leurs variantes, états, dimensions et rôles. Ne pas importer Compose dans Next.js : reproduire ses contrats en React/HTML natif.
-- Consigner la correspondance des composants et les recettes de composition des pages dans [Bibliothèque de composants](../composants.md). Toute nouvelle page doit suivre cette bibliothèque et le contrat décrit dans `AGENTS.md`.
+- Consigner la correspondance des composants et les recettes de composition des pages dans [Bibliothèque de composants](../design/COMPONENTS.md). Toute nouvelle page doit suivre cette bibliothèque et le contrat décrit dans `AGENTS.md`.
 - Ne conserver aucune couleur source, dégradé ou style de marque hors des rôles M3 et des extensions sémantiques déclarées.
 
 ## Conséquences
