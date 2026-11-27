@@ -1,8 +1,8 @@
 # État du projet — Namesia
 
 - **Statut :** source de vérité de l’état courant
-- **Version :** 1.5
-- **Mis à jour le :** 2026-11-27 01:42:00 (Europe/Paris)
+- **Version :** 1.6
+- **Mis à jour le :** 2026-11-27 01:44:00 (Europe/Paris)
 
 ## Phase
 
@@ -19,7 +19,7 @@ L’accès public aux fiches ne doit pas dépendre d’un compte. Le compte visi
 - **Application :** Next.js App Router, TypeScript et React.
 - **Données :** Supabase Auth et PostgreSQL ; schéma et types versionnés dans le dépôt.
 - **Hébergement :** Cloudflare Workers avec OpenNext (@opennextjs/cloudflare 1.20.19, @opennextjs/aws 4.2.1).
-- **CI/CD :** GitHub Actions ; les vérifications, previews et déploiements suivent les règles de AGENTS.md.
+- **CI/CD :** GitHub Actions ; vérifications des PR, diagnostics Playwright sur Worker Wrangler local via label, déploiement Cloudflare réservé à `main`. Aucune Preview distante n’est créée.
 - **Administration :** espace privé protégé par Supabase Auth, liens OTP e-mail.
 - **Production technique :** URL workers.dev ; aucun domaine public propre n’est encore déclaré pour le lancement.
 
