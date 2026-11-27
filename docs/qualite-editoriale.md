@@ -1,8 +1,8 @@
 # Gouvernance éditoriale et génération des fiches — Namesia
 
 - **Statut :** référence canonique
-- **Version :** 1.4
-- **Mis à jour le :** 2026-11-27 (Europe/Paris)
+- **Version :** 1.5
+- **Mis à jour le :** 2026-11-27 10:40:53 (Europe/Paris)
 
 ## Source et limites du contenu
 
