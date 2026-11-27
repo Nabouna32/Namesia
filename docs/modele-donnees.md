@@ -1,8 +1,8 @@
 # Modèle de données — Namesia
 
 - **Statut :** modèle cible retenu pour la V1
-- **Version :** 2.9
-- **Mis à jour le :** 2026-11-27 01:42:00 (Europe/Paris)
+- **Version :** 3.0
+- **Mis à jour le :** 2026-11-27 10:40:53 (Europe/Paris)
 
 ## 1. Principes
 
@@ -79,7 +79,7 @@ RLS est activé. Un utilisateur authentifié peut uniquement lire sa propre auto
 
 ### private.name_profile_generation_metadata
 
-Une ligne de provenance technique privée par version importée par le pipeline IA. La table est dans le schéma PostgreSQL private, non exposé à la Data API.
+Cette table conserve uniquement les métadonnées du chemin expérimental de génération Groq. Elle n'est pas alimentée par le parcours courant de génération assistée par conversation puis d'import manuel. La table réside dans le schéma PostgreSQL `private`, non exposé à la Data API.
 
 | Colonne | Rôle |
 |---|---|
@@ -90,12 +90,11 @@ Une ligne de provenance technique privée par version importée par le pipeline 
 | response_schema_version | Version du schéma strict de génération |
 | request_id, workflow_run_id | Identifiant Groq unique et identifiant stable de l’exécution GitHub, clés d’idempotence |
 | editorial_warning_count | Nombre d’alertes éditoriales heuristiques détectées avant import |
-| editorial_warning_count | Nombre d’alertes éditoriales heuristiques détectées avant import |
 | input_tokens, output_tokens | Usage retourné par le fournisseur, nullable |
 | temperature, max_completion_tokens | Paramètres effectifs de génération |
 | generated_at, created_at | Date de génération et date d’enregistrement |
 
-RLS est activé ; aucun droit n’est accordé à anon ou authenticated. Seul service_role peut lire et insérer ces métadonnées via le workflow contrôlé. Aucune donnée de provenance n’est stockée dans une colonne JSON.
+RLS est activé ; aucun droit n’est accordé à `anon` ou `authenticated`. Le rôle `service_role` peut lire et insérer ces métadonnées uniquement par la branche d'import Groq expérimentale de la fonction SQL. L'import manuel par l'administration ne transmet ni ne stocke ces métadonnées. Aucune donnée de provenance n’est stockée dans une colonne JSON.
 
 ## 3. Contrat JSON
 
@@ -131,7 +130,7 @@ Les éléments suivants ne sont pas modélisés dans la V1 :
 - coûts monétaires détaillés par fournisseur ;
 - formes linguistiques et marchés multilingues.
 
-La provenance technique des fiches Groq importées avec succès est désormais conservée dans private.name_profile_generation_metadata. Cette table ne contient que les métadonnées nécessaires à la traçabilité ; elle ne stocke ni prompt brut ni document JSON complet. Les autres éléments absents ne seront ajoutés que lorsqu’un processus concret et contrôlé les justifiera.
+La table `private.name_profile_generation_metadata` conserve les métadonnées des fiches importées par l'ancien chemin Groq avec `service_role`. Ce mécanisme est expérimental et n'est pas utilisé par le parcours d'import manuel actuel. Il ne stocke ni prompt brut ni document JSON complet. Les imports manuels ne disposent pas de provenance technique structurée ; aucune métadonnée ne doit être inventée après coup. Les autres éléments absents ne seront ajoutés que lorsqu’un processus concret et contrôlé les justifiera.
 
 ## 6. Schéma en production
 
