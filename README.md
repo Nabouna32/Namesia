@@ -36,11 +36,15 @@ Le stockage est relationnel : `names` porte l'identité stable, `name_profiles` 
 
 Les anciennes tables documentaires, l'ancien stockage JSONB et les colonnes redondantes ont été supprimés. Les règles RLS et les privilèges SQL limitent la lecture publique aux fiches publiées et réservent les écritures aux administrateurs autorisés.
 
-### Administration
+### Comptes et administration
 
-L'administration est disponible sur `/admin`. L'accès utilise Supabase Auth par lien e-mail et la liste privée `private.admin_users`. Le compte propriétaire initial est déjà autorisé en production. L'auto-inscription reste désactivée.
+Le compte Namesia est facultatif et accessible depuis `/compte`. L'inscription, la connexion, la confirmation de l'adresse e-mail, la récupération et la modification du mot de passe utilisent un système unique Supabase Auth par e-mail et mot de passe. La consultation du catalogue et des fiches publiques ne demande jamais de compte.
 
-Tout nouveau compte doit être invité dans Supabase Auth puis ajouté explicitement à la liste d'autorisation. Un compte Auth non autorisé ne dispose d'aucun droit d'administration.
+La politique de mot de passe impose 15 caractères minimum, sans majuscule, chiffre ni symbole obligatoire. Les phrases de passe et les espaces sont acceptés. Supabase Auth limite actuellement les mots de passe à 72 octets UTF-8. La protection HIBP des mots de passe compromis n'est pas activée et aucun passage à Supabase Pro n'est requis ; ce compromis ne constitue pas une conformité complète au NIST.
+
+L'administration est disponible sur `/admin` et utilise exactement le même compte que le site public. Le droit administrateur est attribué séparément dans la liste privée `private.admin_users`. Créer un compte ne donne jamais de droit d'administration. Le compte propriétaire existant conserve son autorisation et doit définir son premier mot de passe via le parcours « Mot de passe oublié ».
+
+Les e-mails de confirmation et de récupération nécessitent un SMTP transactionnel personnalisé pour fonctionner avec des adresses externes à l'équipe Supabase. La configuration de ce fournisseur et des paramètres Auth est suivie dans [l'issue #402](https://github.com/Nabouna32/Namesia/issues/402).
 
 ### Contrat JSON
 
