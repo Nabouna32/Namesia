@@ -32,7 +32,7 @@ test("les comptes Namesia utilisent une authentification e-mail et mot de passe"
 
 test("l'administration réutilise le compte Namesia sans créer une connexion distincte", async () => {
   const adminClient = await readFile(new URL("../app/admin/admin-client.tsx", import.meta.url), "utf8");
-  const accountPage = await readFile(new URL("../app/compte/page.tsx", import.meta.url), "utf8");
+  const accountPage = await readFile(new URL("../app/compte/page.tsx", import.meta.url), "utf8");\n  const accountClient = await readFile(new URL("../app/compte/account-client.tsx", import.meta.url), "utf8");
   const adminAuth = await readFile(new URL("../lib/admin-auth.ts", import.meta.url), "utf8");
   const sessionClient = await readFile(new URL("../lib/supabase/session.ts", import.meta.url), "utf8");
   const proxy = await readFile(new URL("../proxy.ts", import.meta.url), "utf8");
@@ -56,5 +56,5 @@ test("l'administration réutilise le compte Namesia sans créer une connexion di
   assert.match(proxy, /Cache-Control/);
   assert.match(proxy, /\/api\/admin\/:path\*/);
   assert.match(accountPage, /NAMESIA_DEPLOYMENT_ENVIRONMENT === "preview"/);
-  assert.match(accountPage, /firstParam\(params\.redirect\) === "\/admin" \? "\/admin" : "\/"/);
+  assert.match(accountPage, /function getRedirectTo/);\n  assert.match(accountPage, /value === "\/admin" \|\| value === "\/favoris"/);\n  assert.match(accountPage, /\/prenoms\/\[a-z0-9\]/);\n  assert.match(accountClient, /router\.replace\(redirectTo\)/);
 });
