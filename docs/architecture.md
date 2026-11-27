@@ -1,7 +1,7 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 4.04
+- **Version :** 4.05
 - **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
 
 ## Structure de la page
@@ -36,7 +36,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 ### Production du contenu
 - Génération réalisée en amont : conversation ou workflow GitHub Actions manuel via l’API Groq, limité à main et à un prénom par exécution.
 - Le workflow utilise un schéma de réponse strict distinct, normalise puis valide le contrat d’import Namesia 2.0.0 avec le parseur partagé.
-- Le dry-run est le comportement par défaut ; l’import explicite crée un brouillon et stocke sa provenance dans une table relationnelle privée. Les artefacts de fiche et de métadonnées sont conservés sept jours.
+- Le dry-run est le comportement par défaut ; l’import explicite crée un brouillon et stocke sa provenance dans une table relationnelle privée. Un contrôle heuristique signale les URL, citations, statistiques, années et répétitions ; seul le nombre d’alertes est persisté. Les artefacts de fiche et de métadonnées sont conservés sept jours.
 - Aucun moteur de génération ni secret Groq/Supabase privilégié n’est présent dans le runtime public.
 - Le modèle ne choisit jamais le statut de publication ; aucune publication automatique.
 - Aucun champ de source, référence, preuve ou vérification n'appartient au contrat, car aucune recherche documentaire n’est effectuée.
