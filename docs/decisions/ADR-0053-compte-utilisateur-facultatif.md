@@ -1,9 +1,9 @@
 # ADR-0053 — Compte utilisateur facultatif
 
 - **Statut :** accepté
-- **Version :** 1.1
+- **Version :** 1.2
 - **Décision prise le :** 2026-11-25 (heure non consignée)
-- **Mis à jour le :** 2026-11-27 14:20:04 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 14:34:10 (Europe/Paris)
 - **Décideur :** propriétaire de Namesia
 
 ## Contexte
@@ -29,8 +29,8 @@ L'option 3 est retenue.
 
 - Les pages et parcours publics ne dépendent pas de l'état d'authentification.
 - L'architecture doit séparer clairement les données publiques du catalogue et les données privées propres à chaque compte.
-- Les favoris et l'historique persistants sont stockés côté serveur et isolés par compte ; aucun mode local-only ne constitue le comportement cible. L'historique doit être soumis à une activation claire, à une durée de conservation définie et à un effacement simple.
-- La migration éventuelle des favoris déjà enregistrés localement doit être explicite et ne jamais envoyer silencieusement les anciennes données. La connexion n'est jamais requise pour consulter le catalogue, rechercher, lire ou partager une fiche.
+- Les favoris sont implémentés dans `public.user_favorites`, stockés côté serveur et isolés par compte via RLS. Aucun mode local-only ne constitue le comportement cible. L'historique reste suspendu jusqu'à l'arbitrage #405 ; il devra être soumis à une activation claire, à une durée de conservation définie et à un effacement simple.
+- La migration des favoris déjà enregistrés localement est proposée dans la page Favoris et ne démarre qu'après une action explicite. La copie locale n'est effacée qu'après transfert complet confirmé. La connexion n'est jamais requise pour consulter le catalogue, rechercher, lire ou partager une fiche.
 
 ## Réexamen
 
