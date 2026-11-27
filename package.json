@@ -8,10 +8,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "test": "node --test tests/*.test.mjs",
     "start": "next start",
-    "typecheck": "tsc --noEmit",
-    "generate:fiche": "node scripts/generate-prenom.mjs"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@material/material-color-utilities": "0.4.0",
@@ -21,9 +19,7 @@
     "react-dom": "19.3.1"
   },
   "devDependencies": {
-    "@axe-core/playwright": "4.14.0",
     "@opennextjs/cloudflare": "1.20.19",
-    "@playwright/test": "1.65.1",
     "@types/node": "26.6.6",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
