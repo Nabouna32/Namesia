@@ -1,9 +1,9 @@
 # ADR-0055 — Authentification des comptes Namesia par mot de passe
 
 - **Statut :** acceptée
-- **Version :** 1.0
+- **Version :** 1.1
 - **Décision prise le :** 2026-11-27 13:20:36 (Europe/Paris)
-- **Mis à jour le :** 2026-11-27 13:20:36 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 13:22:25 (Europe/Paris)
 - **Décideur :** propriétaire de Namesia
 - **Portée :** comptes visiteurs, sessions et autorisations administrateur
 
@@ -79,3 +79,4 @@ L'ancienne ADR-0049 imposait la protection HIBP de Supabase avant toute introduc
 - Supabase Auth — Password Security : https://supabase.com/docs/guides/auth/password-security
 - Supabase Auth — Custom SMTP : https://supabase.com/docs/guides/auth/auth-smtp
 - Supabase Auth — Server-Side Rendering : https://supabase.com/docs/guides/auth/server-side
+- Implémentation Supabase Auth — limite bcrypt de 72 octets, commit immuable : https://github.com/supabase/auth/blob/d7955e9eb54003c4abbd7808e774c810d5d3e6cc/internal/api/password.go
