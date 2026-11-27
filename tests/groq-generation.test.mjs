@@ -251,7 +251,7 @@ test("l’import explicite transmet la provenance via la clé Supabase privée",
       outputDirectory: directory,
       fetchImpl: async (url, options) => {
         calls += 1;
-        if (url === GROQ_API_URL) return mockGroqResponse();
+        if (url === GROQ_API_URL) return mockGroqResponse({ ...contentValide, introduction: "Selon une étude de 2021, 25 % des exemples sont recensés [1] : https://example.com." });
         supabaseAttempts += 1;
         assert.equal(url, "https://example.supabase.co/rest/v1/rpc/import_name_profile");
         assert.equal(options.headers.apikey, "sb_secret_test");
@@ -262,7 +262,7 @@ test("l’import explicite transmet la provenance via la clé Supabase privée",
         assert.equal(body.p_generation_request_id, "chatcmpl-test-123");
         assert.equal(body.p_generation_workflow_run_id, 12345);
         assert.match(body.p_generation_content_sha256, /^[a-f0-9]{64}$/);
-        assert.equal(body.p_generation_editorial_warning_count, 0);
+        assert.ok(body.p_generation_editorial_warning_count >= 5);
         assert.equal(body.p_generation_schema_version, "1.0.0");
         assert.equal(body.p_generation_input_tokens, 140);
         assert.equal(body.p_generation_output_tokens, 220);
@@ -271,6 +271,8 @@ test("l’import explicite transmet la provenance via la clé Supabase privée",
         assert.match(body.p_generation_prompt_sha256, /^[a-f0-9]{64}$/);
         const metadata = JSON.parse(await readFile(join(directory, "fiche-eloise.metadata.json"), "utf8"));
         assert.equal(metadata.contentSha256, body.p_generation_content_sha256);
+        assert.equal(metadata.editorialWarningCount, body.p_generation_editorial_warning_count);
+        assert.ok(metadata.editorialWarnings.some((warning) => warning.code === "url_or_link"));
         if (supabaseAttempts === 1) {
           return { ok: false, status: 503, json: async () => ({ code: "temporary" }) };
         }
