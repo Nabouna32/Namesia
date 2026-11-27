@@ -232,6 +232,11 @@ test("l’import SQL réserve les métadonnées au service_role et protège l’
   assert.doesNotMatch(migration, /auth\.role\(\)/);
   assert.match(migration, /private\.name_profile_generation_metadata/);
   assert.match(migration, /grant execute on function public\.import_name_profile/);
+  assert.match(migration, /bigint, integer, integer, integer, numeric, integer, timestamptz/);
+  assert.match(migration, /grant usage on schema private to service_role/);
+  assert.match(migration, /grant select, insert on table private\.name_profile_generation_metadata to service_role/);
+  assert.match(migration, /security invoker/i);
+  assert.doesNotMatch(migration, /security definer/i);
 });
 
 test("l’import explicite transmet la provenance via la clé Supabase privée", async () => {
