@@ -2,6 +2,8 @@
 
 - **Statut :** remplacée par [ADR-0028](ADR-0028-baseline-material-3-androidx-et-couleurs-semantiques.md)
 - **Date :** 2026-11-23
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-27 20:10:47 (Europe/Paris)
 - **Remplace :** [ADR-0005](ADR-0005-material-3-expressive.md)
 
 ## Contexte
@@ -39,7 +41,7 @@ La documentation officielle de Material Color Utilities distingue les variantes 
 
 ## Références
 
-- [Vérification Material 3 — sources, versions et paramètres épinglés](../material-3-verification.md)
+- [Vérification Material 3 — sources, versions et paramètres épinglés](../MATERIAL-3-VERIFICATION.md)
 
 ## Validation
 

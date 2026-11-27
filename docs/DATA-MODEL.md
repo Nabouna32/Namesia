@@ -2,7 +2,7 @@
 
 - **Statut :** modèle cible retenu pour la V1
 - **Version :** 2.8
-- **Mis à jour :** 2026-11-27 14:43:35 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 20:05:03 (Europe/Paris)
 
 ## 1. Principes
 

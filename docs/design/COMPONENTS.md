@@ -2,9 +2,9 @@
 
 - **Statut :** référence canonique des composants d'interface
 - **Version :** 1.2
-- **Mis à jour le :** 2026-11-27 15:17:05 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 20:01:28 (Europe/Paris)
 
-Ce document est le point d'entrée unique pour composer l'interface. Les ports Web des contrats Material 3 sont centralisés dans `components/material3/` ; les fonctions propres au produit sont isolées dans `components/features/`. Il n'existe pas de seconde bibliothèque de primitives ni de wrappers de convenance. Les ports locaux sont nécessaires parce qu'AndroidX Compose cible Android/Kotlin et que Material Web ne couvre pas le besoin stable complet ; ils ne sont pas présentés comme des composants AndroidX exécutés dans le navigateur. La décision, les alternatives et les limites sont détaillées dans [ADR-0037](decisions/ADR-0037-architecture-composants-material3.md).
+Ce document est le point d'entrée unique pour composer l'interface. Les ports Web des contrats Material 3 sont centralisés dans `components/material3/` ; les fonctions propres au produit sont isolées dans `components/features/`. Il n'existe pas de seconde bibliothèque de primitives ni de wrappers de convenance. Les ports locaux sont nécessaires parce qu'AndroidX Compose cible Android/Kotlin et que Material Web ne couvre pas le besoin stable complet ; ils ne sont pas présentés comme des composants AndroidX exécutés dans le navigateur. La décision, les alternatives et les limites sont détaillées dans [ADR-0037](../decisions/ADR-0037-architecture-composants-material3.md).
 
 ## Architecture
 
@@ -128,7 +128,7 @@ Toute nouvelle page doit composer le shell partagé, les primitives officielles 
 - Employer exactement les noms Material 3 pour les composants correspondants : `AlertDialog`, `Button`, `IconButton`, `SearchBar`, `FilterChip`, `InputChip`, `Checkbox`, `Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`, `Icon`, `Card`, `TextField`.
 - Ne pas créer de traduction, alias, wrapper ou fallback parallèle pour ces composants.
 - Garder les éléments HTML natifs adaptés : `button`, `a`, `input`, `select`, `nav`, `header`, titres et listes sémantiques. Ne pas remplacer leur sémantique par des `div` et des rôles ARIA redondants.
-- Les CSS Modules de `components/material3/` consomment directement les tokens `--md-sys-*` et les seules extensions `--namesia-*` déclarées dans [le système de design](design.md).
+- Les CSS Modules de `components/material3/` consomment directement les tokens `--md-sys-*` et les seules extensions `--namesia-*` déclarées dans [le système de design](../DESIGN-SYSTEM.md).
 - Aucun fallback dans `var()`, alias de tokens, palette CSS parallèle, hex arbitraire ou couche d'overrides finale.
 - Les dimensions visuelles et les cibles tactiles sont distinctes lorsqu'AndroidX les distingue : ne jamais agrandir une capsule pour atteindre 48 dp si la cible native peut porter cette dimension.
 - Les états hover sont limités aux pointeurs fins ; focus, pressed, selected et disabled utilisent les tokens AndroidX et les rôles de premier plan appropriés.
@@ -147,7 +147,7 @@ Toute nouvelle page doit composer le shell partagé, les primitives officielles 
 
 ## Ajouter un composant
 
-Avant toute création, vérifier le nom officiel, l'anatomie, les tokens, les variantes, les états et la source AndroidX versionnée dans [Vérification Material 3](material-3-verification.md). Si le besoin est métier, placer la composition dans `components/features/` et la construire avec les composants Material 3 existants. Ne jamais créer une nouvelle primitive générique Namesia pour contourner un composant existant.
+Avant toute création, vérifier le nom officiel, l'anatomie, les tokens, les variantes, les états et la source AndroidX versionnée dans [Vérification Material 3](../MATERIAL-3-VERIFICATION.md). Si le besoin est métier, placer la composition dans `components/features/` et la construire avec les composants Material 3 existants. Ne jamais créer une nouvelle primitive générique Namesia pour contourner un composant existant.
 
 ## Contrats des props
 

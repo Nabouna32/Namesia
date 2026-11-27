@@ -25,7 +25,7 @@ const favoritesPrivilegeMigration = await readFile(
   new URL("../supabase/migrations/20261127134241_limit_user_favorites_insert_columns.sql", import.meta.url),
   "utf8"
 );
-const architecture = await readFile(new URL("../docs/architecture.md", import.meta.url), "utf8");
+const supabaseGuide = await readFile(new URL("../docs/platform/SUPABASE.md", import.meta.url), "utf8");
 
 test("les migrations locales restent alignées sur les versions Supabase appliquées", () => {
   assert.ok(migrationFiles.includes("20261122002440_finaliser_nettoyage_modele.sql"));
@@ -40,10 +40,10 @@ test("les migrations locales restent alignées sur les versions Supabase appliqu
   assert.equal(migrationFiles.some((file) => /20261122140000|references_editoriales|versionner_reprise_editoriale/.test(file)), false);
 });
 
-test("l'architecture documente les policies RLS actives des associations", () => {
-  assert.match(architecture, /read_published_profile_associations/);
-  assert.match(architecture, /read_published_or_admin_profile_associations/);
-  assert.match(architecture, /admin_insert_profile_associations/);
+test("le guide Supabase documente les policies RLS actives des associations", () => {
+  assert.match(supabaseGuide, /read_published_profile_associations/);
+  assert.match(supabaseGuide, /read_published_or_admin_profile_associations/);
+  assert.match(supabaseGuide, /admin_insert_profile_associations/);
 });
 
 test("les policies de la table des associations utilisent des identifiants anglais", () => {

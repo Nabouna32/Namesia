@@ -2,9 +2,9 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
-const verification = await readFile(new URL("../docs/material-3-verification.md", import.meta.url), "utf8");
-const design = await readFile(new URL("../docs/design.md", import.meta.url), "utf8");
-const components = await readFile(new URL("../docs/composants.md", import.meta.url), "utf8");
+const verification = await readFile(new URL("../docs/MATERIAL-3-VERIFICATION.md", import.meta.url), "utf8");
+const design = await readFile(new URL("../docs/design/FOUNDATIONS.md", import.meta.url), "utf8");
+const components = await readFile(new URL("../docs/design/COMPONENTS.md", import.meta.url), "utf8");
 const sourceVerifier = await readFile(new URL("../scripts/verify-design-sources.mjs", import.meta.url), "utf8");
 const packageJson = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
 const lock = JSON.parse(await readFile(new URL("../package-lock.json", import.meta.url), "utf8"));

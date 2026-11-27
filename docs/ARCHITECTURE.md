@@ -1,8 +1,8 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 4.13
-- **Mis à jour le :** 2026-11-27 15:19:54 (Europe/Paris)
+- **Version :** 4.14
+- **Mis à jour le :** 2026-11-27 20:16:46 (Europe/Paris)
 
 ## Structure de la page
 
@@ -93,14 +93,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 
 ## 4. Modèle de données
 
-Le modèle cible comporte trois tables métier :
-- names : identité stable du prénom (id, slug, display_name, gender, created_at).
-- name_profiles : versions éditoriales (id, name_id, version, schema_version, introduction, origin_text, history_text, usage_text, status, created_at, published_at).
-- name_profile_associations : associations symboliques structurées, une ligne par association (profile_id, position, category, value, context_note).
-
-L'autorisation administrateur est stockée dans private.admin_users, un schéma PostgreSQL non exposé par la Data API. Les détails et contraintes sont décrits dans [Modèle de données](modele-donnees.md).
-
-Aucune table de sources, références ou preuves n'est nécessaire. Les associations symboliques sont conservées dans une table relationnelle dédiée, car elles sont répétables et filtrables.
+Le stockage métier est relationnel. L'identité stable des prénoms, les versions éditoriales, les associations symboliques et les favoris liés aux comptes sont décrits dans [DATA-MODEL.md](DATA-MODEL.md). Ce document d'architecture ne duplique pas le détail des tables, colonnes, index, contraintes et policies RLS.
 
 ## 5. Publication et historique
 
@@ -113,17 +106,9 @@ Aucune table de sources, références ou preuves n'est nécessaire. Les associat
 
 ## 6. Sécurité
 
-- Supabase Auth authentifie l'administrateur.
-- private.admin_users autorise explicitement les comptes administrateurs ; les métadonnées utilisateur modifiables ne servent jamais à décider des droits.
-- Le schéma private n'est pas exposé à la Data API ; les droits de lecture de la liste sont limités au rôle authenticated et à sa propre ligne.
-- Les routes API vérifient le jeton et l'autorisation côté serveur.
-- RLS est activé sur toutes les tables exposées.
-- Sur `name_profile_associations`, les policies sont `read_published_profile_associations` (`anon`), `read_published_or_admin_profile_associations` (`authenticated`) et `admin_insert_profile_associations` (`authenticated`). Les noms sont en anglais ; les policies legacy des autres tables seront renommées uniquement lorsqu'elles seront retravaillées.
-- Les lectures publiques et authentifiées sont séparées par rôle : `anon` ne lit que les fiches publiées ; `authenticated` lit les fiches publiées et les brouillons uniquement si l'utilisateur figure dans `private.admin_users`. Une seule policy permissive `SELECT` est définie par table et rôle afin d'éviter l'évaluation répétée de policies concurrentes.
-- Les privilèges SQL sont accordés au strict nécessaire, indépendamment des politiques RLS.
-- Les fonctions SQL restent SECURITY INVOKER et vérifient elles-mêmes le rôle administrateur.
-- Aucun secret ou clé service_role / secret key dans le code client.
-- L'administration n'est pas protégée par le simple masquage d'une page : chaque opération d'écriture vérifie l'autorisation.
+Les frontières de sécurité reposent sur plusieurs contrôles complémentaires : identité Supabase Auth, autorisation administrateur séparée, vérifications serveur, RLS et privilèges SQL minimaux. Aucune clé privilégiée n'est exposée au navigateur.
+
+Les règles opérationnelles de base et d'authentification sont décrites dans [SUPABASE.md](platform/SUPABASE.md) ; les en-têtes HTTP, protections navigateur et courses de session sont détaillés dans [WEB-SECURITY.md](platform/WEB-SECURITY.md).
 
 ## 7. Choix écartés pour la V1
 
@@ -137,16 +122,11 @@ Aucune table de sources, références ou preuves n'est nécessaire. Les associat
 | Microservices / orchestrateur | Écartés | Complexité sans besoin démontré |
 | Clé privilégiée dans le navigateur | Interdite | Risque de compromission des données |
 
-## 8. Schéma en production
+## 8. Import et schéma en production
 
-Le stockage métier est relationnel et repose sur trois tables :
-- `names` porte l'identité stable du prénom ;
-- `name_profiles` porte les versions éditoriales et leurs rubriques textuelles ;
-- `name_profile_associations` porte les associations symboliques répétables.
+Le JSON est un contrat d'échange à l'import, pas le format de stockage des fiches. L'API valide le document puis crée atomiquement une version brouillon et ses associations ; la publication reste une opération distincte et explicite.
 
-Le JSON est uniquement un contrat d'échange à l'import. L'API le valide, puis une fonction SQL crée atomiquement une version brouillon et ses associations. La publication reste une opération distincte et explicite.
-
-Les anciennes tables documentaires, l'ancienne colonne JSONB et les colonnes redondantes ont été supprimées. Le schéma exposé conserve RLS et des privilèges SQL minimaux : lecture publique des seules fiches publiées, opérations d'écriture réservées aux administrateurs autorisés. Les fichiers de `supabase/migrations/` reprennent les versions réellement enregistrées dans `supabase_migrations.schema_migrations` ; les migrations temporaires du modèle de références éditoriales, jamais appliquées à cette instance, ne font pas partie du schéma cible.
+Le modèle relationnel et les migrations appliquées sont documentés dans [DATA-MODEL.md](DATA-MODEL.md) et [SUPABASE.md](platform/SUPABASE.md). La production des fiches, la validation du contrat JSON et le processus d'import sont décrits dans [AI-GENERATION-PIPELINE.md](AI-GENERATION-PIPELINE.md).
 
 ## 9. Stack
 
@@ -161,10 +141,8 @@ Les anciennes tables documentaires, l'ancienne colonne JSONB et les colonnes red
 
 ## 10. Déploiement et retour arrière
 
-- Cloudflare Workers est la cible de production. Le workflow `.github/workflows/cloudflare.yml` construit avec OpenNext, déploie uniquement depuis `main` et vérifie ensuite que l'URL du Worker renvoie une page HTML.
-- Pour chaque PR humaine issue du dépôt courant, `.github/workflows/cloudflare.yml` exécute `wrangler preview` après le build, publie l'URL dans la PR, vérifie le rendu SSR et le catalogue public, puis supprime l'environnement à la fermeture. Les PR de forks et celles créées par Dependabot ne reçoivent pas le jeton Cloudflare : elles conservent le build et les vérifications qualité, mais ignorent les étapes de création, de commentaire et de nettoyage de Preview.
-- Les previews utilisent le sous-domaine `workers.dev` et sont publiques. Cloudflare ajoute `X-Robots-Tag: noindex`. La configuration Preview fixe `NAMESIA_DEPLOYMENT_ENVIRONMENT=preview` ; la page et toutes les routes d'administration sont désactivées, les seules lectures disponibles concernent le catalogue publié.
-- Le workflow `.github/workflows/ci.yml` contrôle les tests, TypeScript et le build Next.js ; les deux workflows sont indépendants de Vercel.
-- Vercel reste temporairement configuré comme retour arrière jusqu'à la validation des parcours SSR, Route Handlers, OTP, cookies, catalogue, sitemap et images Open Graph sur Cloudflare, puis jusqu'à la bascule du domaine public.
-- Les previews Vercel restent désactivées et le script `scripts/vercel-ignore-build.sh` limite le déploiement résiduel à `main` tant que le projet existe.
-- La suppression du projet Vercel intervient seulement après confirmation que le domaine public, les DNS et les éventuelles intégrations ne dépendent plus de ce projet.
+Cloudflare Workers est la cible de production actuelle. OpenNext construit l'application Next.js pour le Worker `namesia`. Seule la branche `main` déclenche le déploiement de production ; les PR internes peuvent obtenir une Preview isolée, sans sessions ni données privées de production. Les Previews sont indexées comme `noindex` et supprimées à la fermeture de la PR.
+
+Les déclencheurs, contrôles, permissions et étapes de validation sont détaillés dans [GITHUB-ACTIONS.md](platform/GITHUB-ACTIONS.md) et [CLOUDFLARE-WORKERS.md](platform/CLOUDFLARE-WORKERS.md). Les variables et secrets sont décrits dans [ENVIRONMENTS-AND-SECRETS.md](platform/ENVIRONMENTS-AND-SECRETS.md).
+
+Une configuration Vercel résiduelle est encore mentionnée dans les anciens documents et scripts. Elle ne doit pas être considérée comme le chemin actif de production ni supprimée avant vérification indépendante des DNS, du domaine et des intégrations éventuelles.

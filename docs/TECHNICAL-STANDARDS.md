@@ -1,8 +1,8 @@
 # Standards techniques et règles de maintenabilité — Namesia
 
 - **Statut :** règle canonique
-- **Version :** 1.14
-- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
+- **Version :** 1.15
+- **Mis à jour le :** 2026-11-27 20:06:37 (Europe/Paris)
 - **Portée :** application web, styles, composants, données et outillage
 
 Ce document définit le niveau de qualité attendu pour les évolutions techniques de Namesia. Il complète [AGENTS.md](../AGENTS.md), qui définit la méthode de travail et le challenge obligatoire.
@@ -43,36 +43,7 @@ Extraire un composant lorsqu'au moins un bénéfice concret existe : réutilisat
 
 ## 3. CSS et système de design
 
-- Éviter les numérotations décoratives (01, 02, 03…) lorsqu'elles n'expriment ni ordre fonctionnel ni étape utile. La hiérarchie doit venir des titres, de la sémantique et de la mise en page ; ne pas ajouter de repères visuels qui ne transmettent aucune information.
-
-### 3.1 Source de vérité
-
-- Maintenir un système de design centralisé : couleurs, typographie, espacements, rayons, ombres, largeurs de contenu et niveaux d'élévation sont définis sous forme de variables/tokens CSS.
-- Les valeurs de design récurrentes ne doivent pas être recopiées arbitrairement dans chaque règle.
-- Organiser les styles par couches et responsabilités : fondations/tokens, styles globaux, composants, pages ou domaines et adaptations responsive.
-- Utiliser des conventions de nommage cohérentes et des sélecteurs limités au composant ou domaine concerné.
-- Éviter les sélecteurs globaux qui affectent involontairement des composants éloignés.
-- Éviter les règles dupliquées, les déclarations contradictoires et les overrides accumulés en fin de fichier. Lors d'une modification, intégrer la règle à son emplacement canonique et supprimer les anciennes règles remplacées.
-- Ne pas ajouter de framework CSS ou de préprocesseur sans analyse du besoin, du coût et des alternatives natives.
-
-### 3.2 Responsive et unités
-
-- Concevoir les interfaces en approche mobile-first lorsque cela convient au contenu, puis enrichir les mises en page pour les écrans plus larges.
-- Utiliser Flexbox et Grid pour la structure ; les media queries doivent répondre à des ruptures dictées par le contenu, non à une liste arbitraire d'appareils.
-- Préférer les unités relatives (rem, em, %, vw, dvh/svh selon le cas) pour les dimensions qui doivent s'adapter.
-- Utiliser clamp(), min() et max() pour les échelles fluides lorsqu'elles simplifient réellement les règles.
-- Les pixels CSS restent pertinents pour des détails précis (bordures fines, traits, ombres ou contraintes physiques du composant). Ils ne sont pas interdits, mais ne doivent pas être le choix automatique pour toute dimension ou typographie.
-- Ne pas confondre unités CSS et pixels physiques : le zoom, les préférences utilisateur et les caractéristiques d'affichage restent à respecter.
-- Vérifier les contenus longs, les traductions futures, les tailles de texte augmentées et les largeurs intermédiaires ; ne pas cibler uniquement quelques dimensions d'écran fixes.
-
-### 3.3 Lisibilité et accessibilité
-
-- Respecter les contrastes WCAG pertinents, les états de focus visibles, la navigation clavier et les zones interactives suffisamment grandes.
-- Ne pas utiliser la couleur seule pour transmettre une information.
-- Prévoir les préférences de réduction des animations et éviter les mouvements non essentiels.
-- La hiérarchie typographique doit être cohérente ; les informations nécessaires (sources, avertissements, statuts, aides) ne doivent pas être rendues illisibles par une taille minuscule.
-- Préserver la lisibilité à 200 % de zoom et lors de l'augmentation de la taille de texte lorsque le parcours le permet.
-- Utiliser les éléments HTML sémantiques avant de reproduire leur comportement avec des éléments génériques.
+Les règles détaillées de tokens, CSS, responsive, lisibilité et accessibilité visuelle sont définies dans [les règles d'implémentation du design](design/IMPLEMENTATION-STANDARDS.md). Ce document reste la référence pour les principes transversaux de qualité technique.
 
 ## 4. React, Next.js et TypeScript
 
@@ -102,35 +73,7 @@ Extraire un composant lorsqu'au moins un bénéfice concret existe : réutilisat
 
 ## 6. Qualité, tests et validation
 
-Chaque changement est validé au niveau adapté à son risque :
-
-- Tests unitaires pour les règles métier et transformations isolées.
-- Les tests Node natifs importent les modules TypeScript avec des chemins relatifs et l'extension `.ts`. Les fonctions pures testées par Node vivent dans des modules cœur sans alias `@/`, client Supabase ou runtime Next.js ; la couche applicative peut les réexporter.
-- Tests d'intégration pour les accès aux données, contrats et interactions entre modules.
-- Tests de composants ou E2E pour les parcours utilisateur critiques.
-- Playwright Chromium couvre uniquement des parcours fonctionnels stables sur la Preview interne : disponibilité des routes publiques essentielles, absence d'erreurs JavaScript et débordements responsive représentatifs. Les assertions de CSS, de géométrie ou de rendu propres à une correction sont temporaires et supprimées après validation.
-- **Aucune capture, vidéo, trace ou rapport Playwright n'est produit ou publié systématiquement.** La configuration normale désactive les captures, vidéos et traces.
-- Pour un diagnostic ponctuel sur une PR interne, le label `diagnostic-playwright` active les captures sur échec, les traces d'échec et la publication conditionnelle de `test-results/` comme artefact GitHub Actions avec une rétention d'un jour. Un appel temporaire à `page.screenshot()` permet de capturer aussi un rendu qui passe. L'artefact est consultable depuis le run Actions ; le supprimer dès que le diagnostic est terminé, ou le laisser expirer au plus tard après un jour.
-- Retirer le label, le code de diagnostic, les assertions temporaires et les captures une fois le rendu validé. Aucune galerie, baseline visuelle ou collection historique n'est maintenue ; l'upload ne s'exécute jamais sans le label explicite.
-- axe-core est exécuté comme diagnostic consultatif ; ses constats sont consignés dans les logs sans bloquer le rendu. Les erreurs HTTP, JavaScript et les débordements responsive restent bloquants.
-- Les tests sont choisis selon le risque : métier et parcours critiques d'abord. Éviter les assertions sur les textes éditoriaux, les détails CSS transitoires et les implémentations internes susceptibles d'évoluer. Retirer les tests devenus sans objet au lieu d'accumuler des contrats historiques.
-- Les tests E2E n'ouvrent aucune route d'administration et n'utilisent aucune session ni donnée privée. Les PR issues de forks ne reçoivent pas de Preview Cloudflare ni de secrets.
-- Vérifications statiques et build dans la CI GitHub Actions.
-- Les outils de build Cloudflare et de test navigateur (`@opennextjs/cloudflare`, `wrangler`, `@playwright/test`, `@axe-core/playwright`) sont des dépendances de développement exactes, verrouillées dans `package-lock.json`. Chaque job utilise `npm ci`. La CI exécute deux périmètres distincts : `npm audit --omit=dev --audit-level=high` bloque sur les vulnérabilités hautes ou critiques du graphe de production ; `npm audit --audit-level=high` audite aussi les dépendances de développement à titre diagnostique non bloquant. Ce second résultat apparaît dans les logs et le résumé du job pour suivre les vulnérabilités de l’outillage sans confondre leur présence avec une exposition du Worker. Il ne constitue pas une acceptation définitive : les avis restent à corriger et à réévaluer, notamment pour Wrangler/Miniflare.
-- Le workflow dédié `.github/workflows/workflow-security.yml` ne s'exécute que lorsque `.github/workflows/` ou `.github/dependabot.yml` change. Il vérifie les workflows avec `actionlint` 1.7.12 et ShellCheck, puis audite workflows et configuration Dependabot avec `zizmor` 1.33.1 en persona `pedantic`. Les actions et versions des outils sont épinglées.
-- Dependabot vérifie npm et les actions GitHub chaque jour calendaire à 12 h (`Europe/Paris`), propose chaque mise à jour dans une PR distincte et conserve un délai de refroidissement de 7 jours ; les correctifs de sécurité suivent leur mécanisme dédié.
-- Contrôles manuels ciblés lorsque l'accessibilité, le responsive ou le rendu visuel ne sont pas couverts par l'automatisation.
-Ne pas ajouter des tests purement décoratifs. Les tests doivent protéger un comportement ou une règle identifiable. Ne jamais déclarer un contrôle exécuté s'il ne l'a pas été.
-
-Pour une refonte CSS ou de composants, vérifier au minimum :
-- l'absence de régression fonctionnelle ;
-- les tailles d'écran étroites, intermédiaires et larges ;
-- le zoom et les tailles de texte augmentées ;
-- les états focus, hover, disabled et erreurs lorsqu'ils existent ;
-- les contrastes et la navigation clavier ;
-- les pages représentatives, pas uniquement la page d'accueil.
-
-Les builds de PR et les déploiements de production sont exécutés par GitHub Actions vers Cloudflare Workers. Les Previews internes servent aussi de cible aux tests navigateur ; aucune plateforme tierce de build ou de déploiement n'est requise.
+La stratégie de tests, les critères de choix et les diagnostics sont détaillés dans [TESTING-AND-VALIDATION.md](TESTING-AND-VALIDATION.md). Les déclencheurs, jobs et audits de la CI sont décrits dans [GitHub Actions](platform/GITHUB-ACTIONS.md).
 
 ## 7. Refactorisation et dette technique
 
@@ -172,14 +115,7 @@ Une dérogation est acceptable si elle est plus simple, plus sûre ou mieux adap
 
 ## 10. En-têtes HTTP et sécurité du navigateur
 
-Next.js applique les en-têtes de sécurité communs à toutes les routes dans `next.config.ts` :
-
-- `X-Content-Type-Options: nosniff` empêche le navigateur de deviner un type MIME différent de celui annoncé.
-- `X-Frame-Options: DENY` interdit l'intégration de Namesia dans une frame, qui n'est pas un parcours produit pris en charge.
-- `Referrer-Policy: strict-origin-when-cross-origin` limite les informations de navigation transmises aux autres origines sans supprimer le référent sur les liens internes.
-- `Permissions-Policy` désactive caméra, microphone et géolocalisation, fonctionnalités que l'application ne demande pas.
-
-Les en-têtes sont appliqués au niveau Next.js à l'ensemble des routes, y compris les routes API. Ne pas ajouter de politique CSP restrictive sans inventorier d'abord les scripts et styles inline produits par Next.js et les intégrations réellement utilisées. HSTS relève du domaine HTTPS et de sa configuration d'hébergement ; ne pas activer `includeSubDomains` ou `preload` sans maîtriser tous les sous-domaines concernés.
+Les en-têtes HTTP, protections navigateur et vérifications de session sont détaillés dans [WEB-SECURITY.md](platform/WEB-SECURITY.md).
 
 ## 11. Environnement d'exécution et dépendances
 
@@ -195,6 +131,4 @@ Les en-têtes sont appliqués au niveau Next.js à l'ensemble des routes, y comp
 
 ## 12. Vérification de session administrateur
 
-La session Supabase et le droit d'accès administrateur sont deux états distincts. La vérification de rôle rejette toute réponse autre qu'un booléen explicite et propage les erreurs réseau ou RPC vers l'interface. Le client affiche un état d'erreur au lieu de rester indéfiniment en chargement ou de confondre une panne avec un refus d'accès.
-
-Les changements de session peuvent se chevaucher (lecture initiale et événements d'authentification). Chaque vérification est versionnée : seule la réponse correspondant au dernier événement peut modifier l'état. Le démontage du composant invalide les opérations encore en cours. Aucune session ancienne ou réponse tardive ne doit rétablir un accès révoqué.
+La gestion des courses de vérification de session et du droit administrateur est détaillée dans [WEB-SECURITY.md](platform/WEB-SECURITY.md).

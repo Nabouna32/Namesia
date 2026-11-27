@@ -2,7 +2,7 @@
 
 - **Statut :** procédure cible de la V1
 - **Version :** 2.0
-- **Mis à jour :** 2026-11-22
+- **Mis à jour le :** 2026-11-27 20:05:03 (Europe/Paris)
 
 ## 1. Périmètre réel
 
