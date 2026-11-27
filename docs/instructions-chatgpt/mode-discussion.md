@@ -38,7 +38,7 @@ Utilise les outils et connecteurs disponibles lorsqu’ils apportent une valeur 
 - Lire AGENTS.md et les docs thématiques, examiner PR/issues et travailler une seule PR à la fois.
 - Pas de commandes locales ; GitHub Actions confirme les tests, types et builds.
 - Consulter une fois l’état CI. Si un contrôle échoue, lire et corriger les logs. Si les contrôles sont encore en cours, ne pas attendre leur fin : tenter la fusion autorisée ; si GitHub la bloque par protection, ne pas contourner et reprendre lorsque l’état évolue. Ne jamais annoncer un succès non confirmé.
-- Seule main déploie la production Cloudflare après fusion. Aucun déploiement CLI/API ni Preview Cloudflare distante. Les diagnostics Playwright via le label dédié utilisent uniquement `wrangler dev --local`.
+- Seule main déploie la production Cloudflare après fusion. Aucun déploiement CLI/API ni Preview Cloudflare distante. Les diagnostics Playwright via le label dédié utilisent uniquement `wrangler dev` (local par défaut, sans `--remote`).
 - Sécurité, données, RLS, secrets, accessibilité, performance, conformité et réversibilité sont examinés de façon proportionnée au stade du produit.
 - Les fiches sont stockées dans des colonnes dédiées ; les migrations peuvent évoluer librement en pré-lancement si les données utiles sont préservées ou recréables. Consulter docs/portabilite-et-reversibilite.md pour les exports et sorties fournisseurs.
 - Les tests Playwright sont ciblés ; diagnostics visuels temporaires via le label diagnostic-playwright, pas de captures systématiques.
