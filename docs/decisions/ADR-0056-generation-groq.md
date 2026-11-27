@@ -14,7 +14,7 @@ L’application publique ne doit pas recevoir de clé Groq ou de clé Supabase p
 ## Décision
 
 1. Utiliser un workflow GitHub Actions déclenché manuellement depuis main, pour un seul prénom par exécution.
-2. Appeler Groq avec openai/gpt-oss-20b et Structured Outputs en mode strict ; le schéma de génération est distinct du contrat d’import Namesia.
+2. Appeler Groq avec `openai/gpt-oss-20b` et Structured Outputs en mode strict ; le modèle est listé parmi les modèles de production et les modèles compatibles avec le mode strict. Le schéma de génération est distinct du contrat d’import Namesia.
 3. Garder le prompt versionné dans le dépôt. Toute modification substantielle du prompt incrémente sa version.
 4. Normaliser les chaînes vides des champs facultatifs, construire l’identité et le slug côté script, puis valider la fiche avec le parseur Namesia avant toute écriture.
 5. Le dry-run est le comportement par défaut. L’import explicite crée uniquement un brouillon. La publication reste une action humaine distincte.
@@ -22,7 +22,7 @@ L’application publique ne doit pas recevoir de clé Groq ou de clé Supabase p
 7. L’identifiant de requête Groq est unique et sert de clé d’idempotence pour les reprises réseau. Une reprise ne retourne la fiche existante que si l’identité et l’empreinte du contenu correspondent ; toute réutilisation incohérente est rejetée.
 8. La fonction SQL d’import conserve le parcours administrateur authentifié et autorise le rôle service_role uniquement avec des métadonnées Groq complètes. La clé secrète Supabase moderne `sb_secret_` est utilisée uniquement dans l’en-tête `apikey` de l’étape GitHub Actions d’import ; la passerelle mappe cette clé vers le rôle SQL `service_role`.
 9. Les clés GROQ_API_KEY et SUPABASE_SECRET_KEY (clé moderne sb_secret_) sont des secrets GitHub Actions ; la clé Supabase est transmise uniquement dans l’en-tête apikey, puis la passerelle la mappe vers service_role. Elles ne sont jamais stockées dans le dépôt, les artefacts ou le navigateur.
-10. Rester sur le niveau gratuit Groq. Aucun moyen de paiement, passage au plan Developer, service payant ou dépense sans arbitrage préalable.
+10. Rester sur le niveau gratuit Groq. Si le modèle ou les quotas ne sont pas disponibles sur ce niveau, arrêter le processus. Aucun moyen de paiement, passage au plan Developer, service payant ou dépense sans arbitrage préalable.
 
 ## Alternatives écartées
 
@@ -52,4 +52,5 @@ L’application publique ne doit pas recevoir de clé Groq ou de clé Supabase p
 - [Clés API Supabase](https://supabase.com/docs/guides/api/api-keys)
 - [Rôles PostgreSQL Supabase](https://supabase.com/docs/guides/database/postgres/roles)
 - [Documentation Groq — Structured Outputs](https://console.groq.com/docs/structured-outputs)
-- [Documentation Groq — modèles](https://console.groq.com/docs/models)
+- [Documentation Groq — modèles]
+- [Documentation Groq — facturation](https://console.groq.com/docs/models)
