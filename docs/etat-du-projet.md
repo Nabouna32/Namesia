@@ -1,8 +1,8 @@
 # État du projet — Namesia
 
 - **Statut :** PRÉ-LANCEMENT / DÉVELOPPEMENT
-- **Version :** 1.5
-- **Mis à jour le :** 2026-11-27 15:19:54 (Europe/Paris)
+- **Version :** 1.6
+- **Mis à jour le :** 2026-11-27 15:21:56 (Europe/Paris)
 
 Ce document résume l'état opérationnel et les arbitrages actifs. Les détails d'architecture, de sécurité et de données restent dans les ADR et documents spécialisés.
 
@@ -41,7 +41,7 @@ Ce document résume l'état opérationnel et les arbitrages actifs. Les détails
 
 - **PR #403 —** [Comptes Namesia et favoris liés au compte](https://github.com/Nabouna32/Namesia/pull/403), en brouillon sur `feat/comptes-utilisateurs-mot-de-passe`.
 - La PR inclut l'authentification partagée, les favoris synchronisés, la suppression des anciens stockages locaux sans migration, la suspension de l'historique en attente de décision et la correction de la référence Open Graph des fiches.
-- Derniers contrôles GitHub Actions : tests, TypeScript, build, audit des workflows, Preview Cloudflare et parcours Playwright réussis.
+- La CI GitHub Actions est la source de vérité : chaque commit relance les audits, les tests, le contrôle TypeScript et le build ; les PR internes exécutent aussi une Preview Cloudflare et les parcours Playwright.
 - Le dernier contrôle post-déploiement Cloudflare de `main` avait échoué sur la présence de la référence Open Graph dans le HTML. La correction est vérifiée sur la Preview de la PR ; `main` reste inchangée tant que la PR n'est pas fusionnée.
 - Les migrations des favoris ont été appliquées au projet Supabase et sont présentes dans la branche de travail. Aucun favori de test n'a été conservé.
 - Le code n'est pas fusionné dans `main` et aucun déploiement de production n'a été effectué.
