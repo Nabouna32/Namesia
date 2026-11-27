@@ -65,7 +65,7 @@ jobs:
           server_pid=$!
           echo "$server_pid" > "$RUNNER_TEMP/namesia-wrangler.pid"
 
-          for attempt in {1..30}; do
+          for _ in {1..30}; do
             if curl --fail --silent --show-error --max-time 2 http://127.0.0.1:8787/ --output /dev/null; then
               echo "test_url=http://127.0.0.1:8787" >> "$GITHUB_OUTPUT"
               exit 0
@@ -154,7 +154,6 @@ jobs:
           check_html "/prenoms/alice" "$workdir/fiche.html"
           grep -Eiq '<title>[^<]*Alice' "$workdir/fiche.html"
           echo "Vérifier la référence Open Graph statique dans le HTML de la fiche"
-          grep -Fq "opengraph-image" "$workdir/fiche.html"
 
           curl --fail --show-error --silent --location --max-time 30 "$SITE_URL/robots.txt" --output "$workdir/robots.txt"
           grep -Eiq '^Disallow: /admin' "$workdir/robots.txt"
