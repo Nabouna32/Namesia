@@ -2,6 +2,8 @@
 
 - **Statut :** acceptée
 - **Date :** 2026-11-24
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-27 20:10:47 (Europe/Paris)
 
 ## Contexte
 
@@ -25,4 +27,4 @@ La NavigationBar et la NavigationRail partagent la même typographie officielle 
 
 ## Vérification
 
-La CI vérifie les quatre tokens label-medium dans la règle commune et interdit les substitutions body-small/label-small dans les règles de navigation. Les références de source sont consignées dans [Vérification Material 3](../material-3-verification.md).
+La CI vérifie les quatre tokens label-medium dans la règle commune et interdit les substitutions body-small/label-small dans les règles de navigation. Les références de source sont consignées dans [Vérification Material 3](../MATERIAL-3-VERIFICATION.md).
