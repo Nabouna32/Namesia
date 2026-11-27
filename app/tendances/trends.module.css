@@ -132,9 +132,23 @@
   gap: 4px;
 }
 
-.regionalList strong {
+.regionalList strong,
+.regionalName {
   font-size: var(--md-sys-typescale-body-large-size);
   font-weight: 500;
+}
+
+.regionalName {
+  width: fit-content;
+  color: var(--md-sys-color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.regionalName:focus-visible {
+  border-radius: var(--md-sys-shape-corner-extra-small);
+  outline: 2px solid var(--md-sys-color-primary);
+  outline-offset: 3px;
 }
 
 .regionalList span {

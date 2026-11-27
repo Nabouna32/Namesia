@@ -63,6 +63,10 @@ test("la page expose les profils publiés sans masquer les entrées hors catalog
   assert.match(page, /publishedName\.name !== entry\.name \|\| publishedName\.gender !== entry\.gender/);
   assert.match(page, /NAME_REGIONAL_LEADERS_2025/);
   assert.match(page, /regional-ranking-title/);
+  assert.match(page, /publishedSlugs\\.has\\(entry\\.slug\\) \\? \\(/);
+  assert.match(page, /href=\\{\x60\\/prenoms\\/\\$\\{entry\\.slug\\}\\x60\\}/);
+  assert.match(page, /Fiche non publiée sur Namesia/);
+  assert.match(trendsCss, /\\.regionalName:focus-visible/);
   assert.ok(trendsCss.includes(".regionalGrid"));
   assert.ok(trendsCss.includes("grid-template-columns: 1fr;"));
 });
