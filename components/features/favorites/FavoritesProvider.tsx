@@ -26,7 +26,6 @@ type FavoritesContextValue = {
   ready: boolean;
   error: boolean;
   basculer: (slug: string) => Promise<"ajoute" | "retire" | "limite" | "erreur" | "auth">;
-  retirerPlusieurs: (slugs: string[]) => Promise<void>;
   retirerIndisponibles: () => Promise<void>;
   ajouterPlusieurs: (slugs: string[]) => Promise<FavoriteImportResult | null>;
 };
@@ -146,30 +145,6 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     }
   }, [records, refresh, userId]);
 
-  const retirerPlusieurs = useCallback(async (slugsToRemove: string[]) => {
-    if (!userId || slugsToRemove.length === 0) return;
-    try {
-      const ids = records
-        .filter((record) => record.slug !== null && slugsToRemove.includes(record.slug))
-        .map((record) => record.nameId);
-      if (ids.length === 0) return;
-
-      const { error: deleteError } = await supabase
-        .from("user_favorites")
-        .delete()
-        .eq("user_id", userId)
-        .in("name_id", ids);
-
-      if (deleteError) {
-        setError(true);
-        return;
-      }
-      await refresh(userId);
-    } catch {
-      setError(true);
-    }
-  }, [records, refresh, userId]);
-
   const retirerIndisponibles = useCallback(async () => {
     if (!userId) return;
     try {
@@ -262,12 +237,11 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     ready: dataReady,
     error,
     basculer,
-    retirerPlusieurs,
     retirerIndisponibles,
     ajouterPlusieurs
   }), [
     slugs, records, userId, dataReady, error,
-    basculer, retirerPlusieurs, retirerIndisponibles, ajouterPlusieurs
+    basculer, retirerIndisponibles, ajouterPlusieurs
   ]);
 
   return (
