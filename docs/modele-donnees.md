@@ -70,12 +70,14 @@ Les rubriques textuelles restent des colonnes de `name_profiles` : une table sup
 
 ### private.admin_users
 
-Liste d'autorisation des comptes Supabase Auth. La table réside dans le schéma PostgreSQL privé, qui n'est pas exposé par la Data API.
+Affectation du droit administrateur à un compte Supabase Auth ordinaire. La table réside dans le schéma PostgreSQL privé, qui n'est pas exposé par la Data API.
 
 - user_id : clé primaire et référence à auth.users.id ;
-- created_at : date d'autorisation.
+- created_at : date d'attribution du droit.
 
-RLS est activé. Un utilisateur authentifié peut uniquement lire sa propre autorisation. L'ajout et le retrait d'un administrateur passent par le SQL Editor Supabase, pas par le navigateur.
+Cette table ne stocke aucun mot de passe et ne constitue pas un second système d'identité : Supabase Auth gère l'identité et la session, tandis que `private.admin_users` représente uniquement l'autorisation d'administrer le catalogue. Un compte qui n'y figure pas reste un compte utilisateur ordinaire.
+
+RLS est activé. Un utilisateur authentifié peut uniquement lire sa propre autorisation. L'ajout et le retrait d'un administrateur passent par le SQL Editor Supabase, jamais par le navigateur ni par des métadonnées modifiables par l'utilisateur.
 
 ## 3. Contrat JSON
 
