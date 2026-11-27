@@ -1,8 +1,8 @@
 # État du projet — Namesia
 
 - **Statut :** PRÉ-LANCEMENT / DÉVELOPPEMENT
-- **Version :** 1.0
-- **Mis à jour le :** 2026-11-27 14:40:13 (Europe/Paris)
+- **Version :** 1.1
+- **Mis à jour le :** 2026-11-27 14:43:35 (Europe/Paris)
 
 Ce document résume l'état opérationnel et les arbitrages actifs. Les détails d'architecture, de sécurité et de données restent dans les ADR et documents spécialisés.
 
@@ -25,7 +25,7 @@ Ce document résume l'état opérationnel et les arbitrages actifs. Les détails
 
 ## Données personnelles
 
-- **Favoris :** table `public.user_favorites` créée dans Supabase, versionnée par les migrations `20261127133138`, `20261127133505` et `20261127134241`. RLS isole les lignes par `auth.uid()`, l'insertion exige un prénom publié et les suppressions de compte/prénom déclenchent les cascades.
+- **Favoris :** table `public.user_favorites` créée dans Supabase, versionnée par les migrations `20261127133138`, `20261127133505` et `20261127134241`. RLS isole les lignes par `auth.uid()`, l'insertion exige un prénom publié et est limitée aux colonnes `user_id` et `name_id`, et les suppressions de compte/prénom déclenchent les cascades.
 - Les favoris locaux existants ne sont transférés qu'après une action explicite depuis la page Favoris ; la copie locale n'est effacée qu'après transfert complet confirmé.
 - **Historique :** suspendu. L'ancien stockage `sessionStorage` est supprimé et aucune visite n'est enregistrée. L'activation explicite, la rétention proposée de 30 jours et la limite de huit entrées attendent l'arbitrage humain [#405](https://github.com/Nabouna32/Namesia/issues/405).
 - La suppression autonome du compte et la gestion complète des données personnelles restent à développer dans [#404](https://github.com/Nabouna32/Namesia/issues/404).
