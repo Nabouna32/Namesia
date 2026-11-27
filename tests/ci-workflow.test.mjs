@@ -38,6 +38,6 @@ test("la CI restaure le cache Next.js avec une action épinglée", () => {
 
 test("la charte impose d'attendre la fin de la CI avant toute fusion", () => {
   assert.match(agents, /attendre la fin de tous les contrôles requis avant de fusionner/);
-  assert.match(agents, /Ne jamais fusionner tant qu'un contrôle est en cours ou en attente/);
+  assert.match(agents, /Ne jamais fusionner tant qu'un contrôle requis est en cours, en attente ou en échec/);
   assert.match(agents, /Si un contrôle échoue[\s\S]*corriger la cause puis attendre une nouvelle exécution complète/);
 });
