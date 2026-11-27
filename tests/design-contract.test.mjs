@@ -359,7 +359,7 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.match(composantsDoc, /SearchBar/);
   assert.match(composantsDoc, /components\/material3/);
   assert.match(composantsDoc, /noms, variantes, anatomie, dimensions et états suivent AndroidX Compose Material 3/);
-  assert.match(agents, /port React\/HTML local du contrat AndroidX est admis/);
+  assert.match(composantsDoc, /ports explicites des contrats AndroidX/);
   assert.match(composantsDoc, /pas de wrappers de convenance/);
   assert.doesNotMatch(composantsDoc, /ChampRecherche|ChipFiltre|MessageStatut/);
   assert.match(composantsDoc, /SearchBarTokens/);
@@ -387,7 +387,7 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.ok(materialVerificationDoc.includes("d4f63c567f73b16717f4c04b57fa6390d0b2312d"));
   assert.doesNotMatch(materialVerificationDoc, /b4de401/);
   assert.doesNotMatch(materialVerificationDoc, /(?:blob|tree)[/]main[/]/);
-  assert.match(agents, /docs\\/DESIGN-SYSTEM\\.md/);
+  assert.match(agents, /DESIGN-SYSTEM\.md/);
 });
 
 test("le hero d'accueil sépare le récit et les outils dans une composition Fidelity responsive", () => {
