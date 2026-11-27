@@ -1,7 +1,7 @@
 # AGENTS.md — Règles communes de Namesia
 
-- **Version :** 2.0
-- **Mis à jour le :** 2026-11-27 20:02:53 (Europe/Paris)
+- **Version :** 2.1
+- **Mis à jour le :** 2026-11-27 20:07:03 (Europe/Paris)
 
 Ce document est le socle impératif de toute contribution humaine ou assistée par IA. Il définit les règles communes ; les contrats et guides spécialisés détaillent leur application.
 
