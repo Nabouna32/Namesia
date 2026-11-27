@@ -38,18 +38,21 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   const [userId, setUserId] = useState<string | null>(null);
   const [initialized, setInitialized] = useState(false);
   const [records, setRecords] = useState<FavoriteRecord[]>([]);
-  const [ready, setReady] = useState(false);\n  const [loadedUserId, setLoadedUserId] = useState<string | null | undefined>(undefined);
+  const [ready, setReady] = useState(false);
+  const [loadedUserId, setLoadedUserId] = useState<string | null | undefined>(undefined);
   const [error, setError] = useState(false);
 
   const refresh = useCallback(async (targetUserId: string | null = userId) => {
+    setReady(false);
+    setError(false);
+    setRecords([]);
+
     if (!targetUserId) {
-      setRecords([]);
+      setLoadedUserId(null);
       setReady(true);
-      setError(false);
       return;
     }
 
-    setReady(false);
     const { data, error: queryError } = await supabase
       .from("user_favorites")
       .select("name_id, created_at, names(slug)")
@@ -57,6 +60,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
       .order("created_at", { ascending: true });
 
     if (queryError || !data) {
+      setLoadedUserId(targetUserId);
       setError(true);
       setReady(true);
       return;
@@ -66,7 +70,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
       nameId: row.name_id,
       slug: row.names?.slug ?? null
     })));
-    setError(false);
+    setLoadedUserId(targetUserId);
     setReady(true);
   }, [userId]);
 
@@ -75,13 +79,6 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
       const nextUserId = session?.user.id ?? null;
       setUserId((current) => current === nextUserId ? current : nextUserId);
       setInitialized(true);
-      if (!nextUserId) {
-        setRecords([]);
-        setReady(true);
-        setError(false);
-      } else {
-        setReady(false);
-      }
     });
 
     return () => subscription.unsubscribe();
