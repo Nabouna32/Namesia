@@ -1,7 +1,7 @@
 # Bibliothèque Material 3 — Namesia
 
 - **Statut :** référence canonique des composants d'interface
-- **Version :** 1.0
+- **Version :** 1.1
 - **Mis à jour le :** 2026-11-27 14:34:10 (Europe/Paris)
 
 Ce document est le point d'entrée unique pour composer l'interface. Les ports Web des contrats Material 3 sont centralisés dans `components/material3/` ; les fonctions propres au produit sont isolées dans `components/features/`. Il n'existe pas de seconde bibliothèque de primitives ni de wrappers de convenance. Les ports locaux sont nécessaires parce qu'AndroidX Compose cible Android/Kotlin et que Material Web ne couvre pas le besoin stable complet ; ils ne sont pas présentés comme des composants AndroidX exécutés dans le navigateur. La décision, les alternatives et les limites sont détaillées dans [ADR-0037](decisions/ADR-0037-architecture-composants-material3.md).
@@ -106,8 +106,8 @@ Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques 
 | Composant | Fichier | Responsabilité |
 |---|---|---|
 | `FavoritesProvider` | `features/favorites/FavoritesProvider.tsx` | Chargement et mutations des favoris liés au compte via Supabase et RLS. |
-| `FavoritesList` | `features/favorites/FavoritesList.tsx` | Recherche, FilterChip icon-only pour le genre, tri natif, import/export et liste des favoris. |
-| `HistoryProvider` | `features/history/HistoryProvider.tsx` | Garde-fou temporaire : aucune visite n'est stockée avant l'arbitrage #405 ; l'ancienne clé de session est effacée. |
+| `FavoritesList` | `features/favorites/FavoritesList.tsx` | Recherche, FilterChip icon-only pour le genre, tri natif, import/export JSON des favoris du compte et liste des favoris ; aucune migration locale. |
+| `HistoryProvider` | `features/history/HistoryProvider.tsx` | Fournisseur inactif : aucune visite n'est stockée avant l'arbitrage #405 ; aucun stockage local n'est consulté. |
 | `RecentNames` | `features/history/RecentNames.tsx` | Emplacement temporairement inactif en attendant l'historique lié au compte. |
 | `RecordVisit` | `features/history/RecordVisit.tsx` | Aucun enregistrement tant que l'historique lié au compte n'est pas activé. |
 | `NameSearch` | `features/catalog/NameSearch.tsx` | Recherche, filtres et pagination du catalogue. |
