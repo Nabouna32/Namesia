@@ -8,9 +8,10 @@ const recordVisit = await readFile(new URL("../components/features/history/Recor
 
 test("aucun historique n'est persisté localement avant la décision produit", () => {
   for (const source of [provider, component, recordVisit]) {
-    assert.doesNotMatch(source, /localStorage|sessionStorage\\.(?:getItem|setItem)/);
+    assert.doesNotMatch(source, /localStorage|sessionStorage\.(?:getItem|setItem)/);
   }
-  assert.match(provider, /sessionStorage\\.removeItem\\(LEGACY_HISTORY_KEY\\)/);\n  assert.match(recordVisit, /return null/);
+  assert.match(provider, /sessionStorage\.removeItem\(LEGACY_HISTORY_KEY\)/);
+  assert.match(recordVisit, /return null/);
   assert.match(component, /return null/);
 });
 
