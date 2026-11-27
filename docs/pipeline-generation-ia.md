@@ -1,7 +1,7 @@
 # Génération et import des fiches — Namesia
 
 - **Statut :** procédure opérationnelle
-- **Version :** 3.1
+- **Version :** 3.2
 - **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
 
 ## 1. Périmètre
@@ -26,9 +26,10 @@ Le modèle ne produit ni identité technique, ni slug, ni version de schéma, ni
 2. **Génération :** le script charge le prompt versionné et le schéma strict, appelle Groq et exige une réponse JSON complète.
 3. **Normalisation :** les champs facultatifs vides sont retirées ; les propriétés inconnues, réponses incomplètes, refus et JSON invalide sont rejetés.
 4. **Validation :** le parseur Namesia valide le contrat d’import existant. Une sortie invalide ne peut jamais atteindre Supabase.
-5. **Artefact :** le JSON d’import et un fichier JSON de métadonnées de génération (dont l’identifiant d’exécution GitHub) sont conservés comme artefacts GitHub Actions pendant sept jours. Ils ne contiennent aucun secret.
-6. **Import facultatif :** par défaut, le workflow est en dry-run. Si l’option d’import est explicitement activée, la fiche est importée en brouillon dans Supabase.
-7. **Publication :** elle reste une action humaine distincte dans l’administration. Le workflow n’a aucun chemin de publication.
+5. **Contrôle éditorial heuristique :** le script signale les URL, marqueurs de citation, références à des études sans source, statistiques, années précises et phrases répétées. Le compteur est conservé avec la provenance ; le détail des alertes accompagne l’artefact. Ces alertes ne bloquent pas le brouillon et ne constituent pas une vérification factuelle.
+6. **Artefact :** le JSON d’import et un fichier JSON de métadonnées de génération (dont l’identifiant d’exécution GitHub) sont conservés comme artefacts GitHub Actions pendant sept jours. Ils ne contiennent aucun secret.
+7. **Import facultatif :** par défaut, le workflow est en dry-run. Si l’option d’import est explicitement activée, la fiche est importée en brouillon dans Supabase.
+8. **Publication :** elle reste une action humaine distincte dans l’administration. Le workflow n’a aucun chemin de publication.
 
 Le script applique des tentatives limitées aux erreurs réseau, 429 et 5xx. Il ne réessaie pas une réponse invalide ou un refus du modèle. Les secrets ne sont jamais écrits dans les logs ou l’artefact.
 
@@ -40,12 +41,13 @@ Pour chaque fiche effectivement importée par le pipeline, les métadonnées son
 - version et empreinte SHA-256 du prompt ;
 - version du schéma de génération ;
 - empreinte SHA-256 du contenu normalisé ;
+- nombre d’alertes éditoriales heuristiques ;
 - identifiant de requête Groq et identifiant stable d’exécution GitHub ;
 - date de génération ;
 - température et limite de sortie ;
 - tokens d’entrée et de sortie lorsque fournis.
 
-Aucune colonne JSON de métadonnées n’est ajoutée. La table est dans le schéma PostgreSQL privé, non exposé à la Data API, et accessible en écriture/lecture uniquement au rôle service_role. L’identifiant de requête Groq et l’identifiant stable de l’exécution GitHub rendent l’import idempotent. Une relance du même workflow retourne la version déjà créée si l’identité et l’empreinte du contenu correspondent ; si le contenu a changé, elle est rejetée au lieu de créer une seconde version. Une nouvelle génération volontaire doit partir d’un nouveau déclenchement manuel, donc d’un nouvel identifiant d’exécution.
+Aucune colonne JSON de métadonnées n’est ajoutée. La table est dans le schéma PostgreSQL privé, non exposé à la Data API, et accessible en écriture/lecture uniquement au rôle service_role. Le nombre d’alertes éditoriales est conservé ; le détail des alertes est dans l’artefact temporaire. L’identifiant de requête Groq et l’identifiant stable de l’exécution GitHub rendent l’import idempotent. Une relance du même workflow retourne la version déjà créée si l’identité et l’empreinte du contenu correspondent ; si le contenu a changé, elle est rejetée au lieu de créer une seconde version. Une nouvelle génération volontaire doit partir d’un nouveau déclenchement manuel, donc d’un nouvel identifiant d’exécution.
 
 L’import est transactionnel : prénom, version brouillon, associations et métadonnées sont créés ensemble ou pas du tout. Les imports administrateur habituels continuent de fonctionner sans métadonnées de génération.
 
