@@ -1,8 +1,8 @@
 # État du projet — Namesia
 
 - **Statut :** PRÉ-LANCEMENT / DÉVELOPPEMENT
-- **Version :** 2.1
-- **Mis à jour le :** 2026-11-27 20:39:46 (Europe/Paris)
+- **Version :** 2.2
+- **Mis à jour le :** 2026-11-27 20:40:36 (Europe/Paris)
 
 Ce document résume l'état opérationnel et les arbitrages actifs. Les détails d'architecture, de sécurité et de données restent dans les ADR et documents spécialisés.
 
@@ -45,7 +45,7 @@ Ce document résume l'état opérationnel et les arbitrages actifs. Les détails
 - **PR #407 —** [Refonte et structuration de la documentation](https://github.com/Nabouna32/Namesia/pull/407) fusionnée dans `main` le 27 novembre 2026, commit `34b8f3a12b054d6cdcf4667e71cd5a9d2d71170e`. L'issue [#406](https://github.com/Nabouna32/Namesia/issues/406) est clôturée.
 - La CI de vérification de `main` sur le commit `34b8f3a12b054d6cdcf4667e71cd5a9d2d71170e` a réussi. Le Worker Cloudflare a été déployé (version `efea3f64-ae55-4a9d-b930-dddf1ecce35d`), mais le contrôle post-déploiement a échoué sur la présence de la chaîne `opengraph-image` dans le HTML de `/prenoms/alice`.
 - L'issue [#408](https://github.com/Nabouna32/Namesia/issues/408) est clôturée : après la PR #409 et la PR #410, la production confirme que la balise `og:image` est présente et que la ressource renvoie HTTP 200 avec le type MIME `image/png`.
-- Le workflow post-déploiement échoue désormais sur une attente contradictoire `Disallow: /admin` : `robots.txt` ne bloque volontairement pas `/admin`, car la page porte `noindex, nofollow` et doit rester explorable. L'issue [#411](https://github.com/Nabouna32/Namesia/issues/411) suit cet alignement ; la [PR #411](https://github.com/Nabouna32/Namesia/pull/411) retire l'assertion incorrecte et protège le contrat.
+- Le workflow post-déploiement échoue désormais sur une attente contradictoire `Disallow: /admin` : `robots.txt` ne bloque volontairement pas `/admin`, car la page porte `noindex, nofollow` et doit rester explorable. L'issue [#411](https://github.com/Nabouna32/Namesia/issues/411) suit cet alignement ; la [PR #412](https://github.com/Nabouna32/Namesia/pull/412) retire l'assertion incorrecte et protège le contrat.
 - Les favoris sont désormais liés au compte dans `public.user_favorites`. Les anciens stockages locaux de favoris et d'historique sont supprimés sans migration ; l'historique reste suspendu.
 - L'issue [#402](https://github.com/Nabouna32/Namesia/issues/402) suit la configuration du SMTP transactionnel après acquisition d'un domaine.
 - L'issue [#404](https://github.com/Nabouna32/Namesia/issues/404) reste ouverte pour la suppression du compte et la gestion complète des données personnelles.
