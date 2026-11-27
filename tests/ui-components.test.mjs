@@ -405,8 +405,9 @@ test("la fiche prénom applique Material 3 dans ses règles canoniques", () => {
 });
 
 const historiqueActions = await readFile(new URL("../components/features/history/RecentNames.tsx", import.meta.url), "utf8");
-test("les actions de découverte sont concentrées sur la fiche et le comparateur garde sa sélection native", () => {
-  assert.match(historiqueActions, /<Button variant="text"[^>]*onClick=/);
+test("l’historique reste inactif et le comparateur garde sa sélection native", () => {
+  assert.match(historiqueActions, /return null/);
+  assert.match(historiqueActions, /arbitrage #405/);
   assert.doesNotMatch(historiqueActions, /<FavoriteButton/);
   assert.match(comparatorActions, /<ComparisonSelection/);
   assert.match(comparatorActions, /<Checkbox/);
@@ -469,7 +470,6 @@ test("Card centralise les surfaces AndroidX et préserve l’élément HTML choi
     "../components/features/catalog/RelatedNames.tsx",
     "../components/features/catalog/FeaturedNames.tsx",
     "../components/features/catalog/NameSearch.tsx",
-    "../components/features/history/RecentNames.tsx",
     "../components/features/favorites/FavoritesList.tsx"
   ]) {
     const source = await readFile(new URL(file, import.meta.url), "utf8");
