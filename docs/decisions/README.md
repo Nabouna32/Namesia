@@ -1,11 +1,15 @@
 # Registre des décisions d'architecture
 
-- **Version :** 1.4
-- **Mis à jour le :** 2026-11-27 20:08:27 (Europe/Paris)
+- **Version :** 1.5
+- **Mis à jour le :** 2026-11-27 23:09:42 (Europe/Paris)
 
-Les ADR conservent les décisions structurelles, y compris celles qui ont été remplacées. Une ADR marquée « remplacée » est une trace historique et ne décrit pas l'état courant du produit.
+Ce registre indexe les décisions d'architecture encore applicables et les décisions historiques dont le contexte conserve une valeur utile.
+
+Une ADR remplacée, retirée ou obsolète n'est pas conservée automatiquement. Sa suppression est possible après vérification des dépendances et transfert des exigences encore applicables vers les documents canoniques.
 
 Les documents canoniques décrivant l'état courant sont accessibles depuis le [README racine](../../README.md). Les guides opérationnels sont [Dependabot](../platform/DEPENDABOT.md), [GitHub Actions](../platform/GITHUB-ACTIONS.md), [Supabase](../platform/SUPABASE.md) et [Cloudflare Workers](../platform/CLOUDFLARE-WORKERS.md).
+
+La politique complète de création, de révision, d'audit et de suppression est définie dans [ADR-MAINTENANCE.md](ADR-MAINTENANCE.md).
 
 Chaque ADR possède un identifiant unique. Le test `tests/adr-registry.test.mjs` vérifie l'unicité des identifiants, la cohérence entre nom de fichier et titre, ainsi que l'existence des liens internes vers d'autres ADR.
 
