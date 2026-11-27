@@ -43,7 +43,8 @@ test("la production vérifie SSR, catalogue, SEO, Open Graph et refuse l'adminis
   assert.match(workflow, /api\/prenoms\?slug=alice&slug=emma/);
   assert.match(workflow, /auth\/v1\/settings/);
   assert.match(workflow, /\.external\.email == true/);
-  assert.match(workflow, /opengraph-image/);
-  assert.match(workflow, /\$SITE_URL\/opengraph-image/);
+  assert.match(workflow, /node scripts\/verify-open-graph\.mjs/);
+  assert.match(workflow, /profile_og_response/);
+  assert.match(workflow, /200 image\/png/);
   assert.match(workflow, /test "\$status" = "401"/);
 });
