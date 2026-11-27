@@ -45,6 +45,13 @@ Aucun fournisseur externe n'est configuré tant que le domaine d'envoi n'est pas
 
 Consulter [`DATA-MODEL.md`](../DATA-MODEL.md) pour le schéma et les relations, et les ADR liés à l'authentification pour les raisons des choix.
 
+Sur `name_profile_associations`, les policies actives sont séparées par rôle :
+- `read_published_profile_associations` : lecture publique du contenu publié pour `anon` ;
+- `read_published_or_admin_profile_associations` : lecture des fiches publiées et des brouillons autorisés pour `authenticated` ;
+- `admin_insert_profile_associations` : insertion réservée aux administrateurs authentifiés.
+
+Les fichiers de migration restent la source de vérité des expressions SQL exactes. Les privilèges SQL et RLS doivent être examinés ensemble ; une policy ne remplace pas un privilège minimal.
+
 ## Migrations SQL
 
 Avant toute évolution :
