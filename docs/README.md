@@ -11,6 +11,7 @@ Ce répertoire rassemble les références produit, les contrats techniques, les 
 |---|---|---|
 | Contribuer et livrer | [AGENTS.md](../AGENTS.md) | Contrat opérationnel de travail et de livraison |
 | Connaître l'état réel du produit | [État du projet](etat-du-projet.md) | Phase, capacités présentes, limites et arbitrages ouverts |
+| Comprendre les limites d'autonomie | [Gouvernance](gouvernance.md) | Principes de décision et arbitrages humains |
 | Comprendre la direction produit | [Vision produit](vision-produit.md) | Positionnement, promesse et périmètre visé |
 | Connaître les comportements disponibles | [Fonctionnalités actuelles](fonctionnalites.md) | Inventaire des parcours et fonctions réellement présents |
 | Comprendre l'architecture technique | [Architecture](architecture.md) | Couches, flux, responsabilités et frontières de sécurité |
