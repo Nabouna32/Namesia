@@ -1,8 +1,8 @@
 # État du projet — Namesia
 
 - **Statut :** PRÉ-LANCEMENT / DÉVELOPPEMENT
-- **Version :** 2.3
-- **Mis à jour le :** 2026-11-27 20:45:58 (Europe/Paris)
+- **Version :** 2.4
+- **Mis à jour le :** 2026-11-27 20:52:00 (Europe/Paris)
 
 Ce document résume l'état opérationnel et les arbitrages actifs. Les détails d'architecture, de sécurité et de données restent dans les ADR et documents spécialisés.
 
@@ -37,18 +37,16 @@ Ce document résume l'état opérationnel et les arbitrages actifs. Les détails
 - Aucun SMTP transactionnel externe n'est configuré tant que le domaine d'envoi n'est pas disponible : [#402](https://github.com/Nabouna32/Namesia/issues/402).
 - Aucun fournisseur payant ni changement de plan n'est autorisé sans accord explicite.
 - Seule la branche `main` déploie la production.
-- Sur le commit `36a9e90c8cb35564d38109daead535eb48a5c775`, le build et le déploiement Cloudflare de production ont réussi, mais la vérification post-déploiement a échoué sur la présence de la référence Open Graph dans le HTML de `/prenoms/alice`. Le Worker a bien été déployé (version `cb4f2f93-dd5d-4b61-860c-a0a0051d5dcc`), mais la validation complète de la production n'est pas verte.
+- Le déploiement du commit `d9901bd26f23e5639fb893f60449a69a5d67dd3a` est validé. La CI de vérification, l'audit des workflows, le build Cloudflare et le contrôle post-déploiement ont tous réussi (run [#46059472795](https://github.com/Nabouna32/Namesia/actions/runs/46059472795)).
+- Le contrôle post-déploiement vérifie désormais la balise `og:image` réellement annoncée (HTTP 200, `image/png`), robots.txt et le sitemap, l'API publique, la configuration Auth et les statuts attendus de la frontière administrateur.
 
 ## Travaux en cours
 
-- **PR #403 —** [Comptes Namesia et favoris liés au compte](https://github.com/Nabouna32/Namesia/pull/403) fusionnée dans `main` le 27 novembre 2026, commit `36a9e90c8cb35564d38109daead535eb48a5c775`.
-- **PR #407 —** [Refonte et structuration de la documentation](https://github.com/Nabouna32/Namesia/pull/407) fusionnée dans `main` le 27 novembre 2026, commit `34b8f3a12b054d6cdcf4667e71cd5a9d2d71170e`. L'issue [#406](https://github.com/Nabouna32/Namesia/issues/406) est clôturée.
-- La CI de vérification de `main` sur le commit `34b8f3a12b054d6cdcf4667e71cd5a9d2d71170e` a réussi. Le Worker Cloudflare a été déployé (version `efea3f64-ae55-4a9d-b930-dddf1ecce35d`), mais le contrôle post-déploiement a échoué sur la présence de la chaîne `opengraph-image` dans le HTML de `/prenoms/alice`.
-- L'issue [#408](https://github.com/Nabouna32/Namesia/issues/408) est clôturée : après la PR #409 et la PR #410, la production confirme que la balise `og:image` est présente et que la ressource renvoie HTTP 200 avec le type MIME `image/png`.
-- L'issue [#411](https://github.com/Nabouna32/Namesia/issues/411) est clôturée : la PR #412 a aligné robots.txt sur la stratégie noindex de l'administration.
-- Le contrôle post-déploiement atteint maintenant la frontière administrateur. Le GET sans session répond 401 ; le POST sans Origin répond 403 par protection CSRF avant authentification ; le POST avec Origin valide mais sans session doit répondre 401. L'issue [#413](https://github.com/Nabouna32/Namesia/issues/413) suit l'alignement du workflow ; la [PR #414](https://github.com/Nabouna32/Namesia/pull/414) corrige ces attentes et documente les trois cas.
-- Les favoris sont désormais liés au compte dans `public.user_favorites`. Les anciens stockages locaux de favoris et d'historique sont supprimés sans migration ; l'historique reste suspendu.
-- L'issue [#402](https://github.com/Nabouna32/Namesia/issues/402) suit la configuration du SMTP transactionnel après acquisition d'un domaine.
+- **PR #403 —** [Comptes Namesia et favoris liés au compte](https://github.com/Nabouna32/Namesia/pull/403) fusionnée dans `main` le 27 novembre 2026.
+- **PR #407 —** [Refonte et structuration de la documentation](https://github.com/Nabouna32/Namesia/pull/407) fusionnée dans `main`. Le README racine sert d'index, AGENTS.md contient le socle commun et les procédures détaillées sont réparties par domaine.
+- Les PR #409, #410, #412 et #414 ont fiabilisé les contrôles post-déploiement Open Graph, robots.txt et CSRF ; la dernière exécution de production est entièrement verte.
+- Les issues #406, #408, #411 et #413 sont clôturées.
+- L'issue [#402](https://github.com/Nabouna32/Namesia/issues/402) reste ouverte pour la configuration du SMTP transactionnel après acquisition d'un domaine.
 - L'issue [#404](https://github.com/Nabouna32/Namesia/issues/404) reste ouverte pour la suppression du compte et la gestion complète des données personnelles.
 - L'issue [#405](https://github.com/Nabouna32/Namesia/issues/405) attend l'arbitrage sur l'activation et la rétention de l'historique.
 
