@@ -13,7 +13,8 @@ create index user_favorites_name_id_idx
 alter table public.user_favorites enable row level security;
 
 revoke all on table public.user_favorites from anon, authenticated;
-grant select, insert, delete on table public.user_favorites to authenticated;
+grant select, delete on table public.user_favorites to authenticated;
+grant insert (user_id, name_id) on table public.user_favorites to authenticated;
 
 create policy user_favorites_select_own
   on public.user_favorites
