@@ -11,17 +11,23 @@ type HistoryContextValue = {
   clearHistory: () => void;
 };
 
-const HistoryContext = createContext<HistoryContextValue>({
+const INACTIVE_HISTORY: HistoryContextValue = {
   slugs: [],
   ready: true,
   error: false,
   recordVisit: () => undefined,
   removeVisit: () => undefined,
   clearHistory: () => undefined
-});
+};
+
+const HistoryContext = createContext<HistoryContextValue>(INACTIVE_HISTORY);
 
 export function HistoryProvider({ children }: { children: ReactNode }) {
-  return <>{children}</>;
+  return (
+    <HistoryContext.Provider value={INACTIVE_HISTORY}>
+      {children}
+    </HistoryContext.Provider>
+  );
 }
 
 export function useHistory(): HistoryContextValue {
