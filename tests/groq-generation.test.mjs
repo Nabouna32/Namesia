@@ -9,6 +9,7 @@ import {
   buildImportProfile,
   buildGroqRequest,
   generateProfile,
+  findEditorialWarnings,
   readPromptVersion,
   normalizeGroqContent,
   slugifyFirstName,
@@ -175,6 +176,8 @@ test("le dry-run génère un artefact validé sans contacter Supabase", async ()
     assert.equal(metadata.gender, "feminin");
     assert.equal(metadata.contentSha256, result.contentSha256);
     assert.equal(metadata.promptSha256, result.promptSha256);
+    assert.equal(metadata.editorialWarningCount, 0);
+    assert.deepEqual(metadata.editorialWarnings, []);
   } finally {
     await rm(directory, { recursive: true, force: true });
   }
@@ -218,6 +221,9 @@ test("l’import SQL réserve les métadonnées au service_role et protège l’
   assert.match(migration, /name_id, version, schema_version, introduction/);
   assert.match(migration, /v_version,\s*p_schema_version,[\s\S]*'brouillon'/);
   assert.match(migration, /content_sha256 text not null/);
+  assert.match(migration, /editorial_warning_count integer not null/);
+  assert.match(migration, /p_generation_editorial_warning_count integer default null/);
+  assert.match(migration, /v_existing_editorial_warning_count is distinct from p_generation_editorial_warning_count/);
   assert.match(migration, /v_existing_content_sha256 is distinct from p_generation_content_sha256/);
   assert.match(migration, /revoke all on table private\.name_profile_generation_metadata from public, anon, authenticated, service_role/);
   assert.match(migration, /notify pgrst, 'reload schema'/);
@@ -256,6 +262,7 @@ test("l’import explicite transmet la provenance via la clé Supabase privée",
         assert.equal(body.p_generation_request_id, "chatcmpl-test-123");
         assert.equal(body.p_generation_workflow_run_id, 12345);
         assert.match(body.p_generation_content_sha256, /^[a-f0-9]{64}$/);
+        assert.equal(body.p_generation_editorial_warning_count, 0);
         assert.equal(body.p_generation_schema_version, "1.0.0");
         assert.equal(body.p_generation_input_tokens, 140);
         assert.equal(body.p_generation_output_tokens, 220);
@@ -379,4 +386,22 @@ test("l’import refuse une exécution GitHub sans identifiant stable", async ()
     }
   }), /identifiant du workflow GitHub/);
   assert.equal(calls, 0);
+});
+
+test("les contrôles éditoriaux signalent les indices de citation, statistiques et répétition", () => {
+  const repeated = "Cette phrase suffisamment longue doit être signalée lorsqu’elle apparaît plusieurs fois dans le même contenu éditorial.";
+  const warnings = findEditorialWarnings({
+    introduction: "Selon une étude de 2021, 25 % des cas sont recensés ici [1] : https://example.com. " + repeated + " " + repeated,
+    origin: "",
+    history: "",
+    usage: "",
+    symbolic_associations: []
+  });
+  const codes = new Set(warnings.map((warning) => warning.code));
+  assert.ok(codes.has("url_or_link"));
+  assert.ok(codes.has("citation_marker"));
+  assert.ok(codes.has("unsupported_source_claim"));
+  assert.ok(codes.has("statistical_claim"));
+  assert.ok(codes.has("specific_year"));
+  assert.ok(codes.has("repeated_sentence"));
 });
