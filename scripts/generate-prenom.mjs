@@ -18,7 +18,7 @@ export function normalizeName(displayName) {
   if (typeof displayName !== "string") throw new Error("Le prénom doit être une chaîne.");
   if (/[\r\n\t]/u.test(displayName)) throw new Error("Le prénom ne peut pas contenir de retour à la ligne ou de tabulation.");
   const normalizedName = displayName.trim().replace(/ {2,}/g, " ").normalize("NFC");
-  if (!normalizedName || normalizedName.length > 100 || !/^\p{L}\p{M}*(?:[ .’'-]\p{L}\p{M}*)*$/u.test(normalizedName)) {
+  if (!normalizedName || normalizedName.length > 100 || !/^\p{L}\p{M}*(?:\p{L}\p{M}*|[ .’'-]\p{L}\p{M}*)*$/u.test(normalizedName)) {
     throw new Error("Le prénom contient des caractères non autorisés ou dépasse 100 caractères.");
   }
   return normalizedName;
