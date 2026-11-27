@@ -26,7 +26,7 @@ Le modèle ne produit ni identité technique, ni slug, ni version de schéma, ni
 2. **Génération :** le script charge le prompt versionné et le schéma strict, appelle Groq et exige une réponse JSON complète.
 3. **Normalisation :** les champs facultatifs vides sont retirées ; les propriétés inconnues, réponses incomplètes, refus et JSON invalide sont rejetés.
 4. **Validation :** le parseur Namesia valide le contrat d’import existant. Une sortie invalide ne peut jamais atteindre Supabase.
-5. **Artefact :** le JSON d’import et un fichier JSON de métadonnées de génération sont conservés comme artefacts GitHub Actions pendant sept jours. Ils ne contiennent aucun secret.
+5. **Artefact :** le JSON d’import et un fichier JSON de métadonnées de génération (dont l’identifiant d’exécution GitHub) sont conservés comme artefacts GitHub Actions pendant sept jours. Ils ne contiennent aucun secret.
 6. **Import facultatif :** par défaut, le workflow est en dry-run. Si l’option d’import est explicitement activée, la fiche est importée en brouillon dans Supabase.
 7. **Publication :** elle reste une action humaine distincte dans l’administration. Le workflow n’a aucun chemin de publication.
 
@@ -40,12 +40,12 @@ Pour chaque fiche effectivement importée par le pipeline, les métadonnées son
 - version et empreinte SHA-256 du prompt ;
 - version du schéma de génération ;
 - empreinte SHA-256 du contenu normalisé ;
-- identifiant de requête Groq ;
+- identifiant de requête Groq et identifiant stable d’exécution GitHub ;
 - date de génération ;
 - température et limite de sortie ;
 - tokens d’entrée et de sortie lorsque fournis.
 
-Aucune colonne JSON de métadonnées n’est ajoutée. La table est dans le schéma PostgreSQL privé, non exposé à la Data API, et accessible en écriture/lecture uniquement au rôle service_role. L’identifiant de requête unique rend l’import idempotent : un nouvel essai réseau avec le même identifiant, la même identité et la même empreinte du contenu retourne la version déjà créée. La réutilisation du même identifiant pour une autre fiche ou un autre contenu est rejetée.
+Aucune colonne JSON de métadonnées n’est ajoutée. La table est dans le schéma PostgreSQL privé, non exposé à la Data API, et accessible en écriture/lecture uniquement au rôle service_role. L’identifiant de requête Groq et l’identifiant stable de l’exécution GitHub rendent l’import idempotent. Une relance du même workflow retourne la version déjà créée si l’identité et l’empreinte du contenu correspondent ; si le contenu a changé, elle est rejetée au lieu de créer une seconde version. Une nouvelle génération volontaire doit partir d’un nouveau déclenchement manuel, donc d’un nouvel identifiant d’exécution.
 
 L’import est transactionnel : prénom, version brouillon, associations et métadonnées sont créés ensemble ou pas du tout. Les imports administrateur habituels continuent de fonctionner sans métadonnées de génération.
 
