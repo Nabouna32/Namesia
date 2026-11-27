@@ -1,8 +1,8 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 4.07
-- **Mis à jour le :** 2026-11-27 (Europe/Paris)
+- **Version :** 4.08
+- **Mis à jour le :** 2026-11-27 07:22:05 (Europe/Paris)
 
 ## Structure de la page
 
@@ -88,7 +88,7 @@ La génération reste hors du runtime public et n'est pas nécessaire à l'admin
 - Métadonnées canoniques fondées sur NEXT_PUBLIC_SITE_URL obligatoire et validée ; aucune origine de secours ni date de mise à jour inventée.
 - Données structurées Schema.org pour le site, le catalogue et les fiches ; aucune date, popularité ou affirmation non disponible n'est ajoutée.
 - `lib/site-url.ts` centralise l'origine canonique ; `lib/json-ld.ts` sérialise les données structurées en échappant les chevrons.
-- La génération des fichiers d'indexation ne modifie pas les contrôles d'accès ; le domaine de production est public. Les PR ne créent aucune Workers Preview distante. Les diagnostics Playwright éventuels tournent sur un Worker local Wrangler, inaccessible depuis Internet.
+- La génération des fichiers d'indexation ne modifie pas les contrôles d'accès ; le domaine de production est public. Les PR internes humaines éligibles disposent d'une Workers Preview Cloudflare déployée via Wrangler par GitHub Actions. Les Previews restent publiques mais portent `X-Robots-Tag: noindex`, n'exposent que les lectures publiques et désactivent l'administration ; les forks et PR Dependabot n'obtiennent pas de Preview.
 - Pas d'appel à un modèle IA lors de l'affichage.
 - Initiale calculée à partir du nom affiché ; elle n'est pas stockée.
 - Mention visible indiquant que le contenu est généré par IA et peut comporter des erreurs.
@@ -158,9 +158,8 @@ Les anciennes tables documentaires, l'ancienne colonne JSONB et les colonnes red
 - Supabase Auth et PostgreSQL.
 - JSON Schema comme contrat d'échange ; validation TypeScript à la frontière de l'API.
 - Les cartes Open Graph chargent localement `assets/fonts/Roboto-Regular.ttf.base64` depuis le runtime Node ; le fichier TTF est distribué sous licence Apache 2.0 avec sa notice dans `licenses/Roboto-Apache-2.0.txt`. Le décodage en mémoire évite un appel réseau au moment de générer les aperçus.
-- GitHub Actions pour les contrôles des PR, le build OpenNext, les diagnostics Playwright sur Worker local, le déploiement Cloudflare depuis main et les smoke tests HTTP.
+- GitHub Actions pour les contrôles des PR, le build OpenNext, les Workers Previews des PR internes éligibles via Wrangler, les parcours Playwright et le déploiement Cloudflare de production depuis main.
 - Cloudflare Workers avec OpenNext pour l'hébergement de production.
-- Vercel est conservé temporairement comme retour arrière ; ses previews restent désactivées.
 
 ## 10. Portabilité et sortie fournisseur
 
@@ -168,10 +167,7 @@ Le modèle métier est relationnel et le contrat JSON est un format d’échange
 
 ## 11. Déploiement et retour arrière
 
-- Cloudflare Workers est la cible de production. Le workflow `.github/workflows/cloudflare.yml` construit avec OpenNext, déploie uniquement depuis `main` et vérifie ensuite que l'URL du Worker renvoie une page HTML.
-- Le workflow Cloudflare ne s’exécute sur une PR que lorsqu’on ajoute le label `diagnostic-playwright`. Il construit alors l’application et lance `wrangler dev` (mode local par défaut ; ne pas utiliser `--remote`) sur le runner GitHub pour les contrôles SSR et Playwright ; aucune URL publique, aucun commentaire de Preview et aucun secret Cloudflare ne sont utilisés. Les PR ouvertes, synchronisées ou rouvertes ne déclenchent aucun déploiement Cloudflare.
-- Le bloc de configuration `previews` a été supprimé de `wrangler.jsonc`. Le job de fermeture conserve uniquement la suppression défensive d’anciennes Previews créées avant cette règle ; il ne crée aucun environnement.
-- Le workflow `.github/workflows/ci.yml` contrôle les tests, TypeScript et le build Next.js ; les deux workflows sont indépendants de Vercel.
-- Vercel reste temporairement configuré comme retour arrière jusqu'à la validation des parcours SSR, Route Handlers, OTP, cookies, catalogue, sitemap et images Open Graph sur Cloudflare, puis jusqu'à la bascule du domaine public.
-- Les previews Vercel restent désactivées et le script `scripts/vercel-ignore-build.sh` limite le déploiement résiduel à `main` tant que le projet existe.
-- La suppression du projet Vercel intervient seulement après confirmation que le domaine public, les DNS et les éventuelles intégrations ne dépendent plus de ce projet.
+- Cloudflare Workers est l'hébergement de production. Le workflow `.github/workflows/cloudflare.yml` construit avec OpenNext ; il déploie les PR internes humaines éligibles dans une Workers Preview via `wrangler preview`, puis déploie la production uniquement depuis `main` avec `opennextjs-cloudflare deploy`.
+- À l'ouverture, à chaque mise à jour et à la réouverture d'une PR interne humaine, GitHub Actions construit l'application puis crée ou met à jour la Preview `pr-<numéro>` avec `wrangler preview`. Le workflow vérifie le HTML, le catalogue, le signal `noindex` et la désactivation de l'administration, exécute les parcours Playwright et publie l'URL dans la PR. Le label `diagnostic-playwright` n'active que les captures et traces temporaires ; il ne conditionne pas le déploiement de la Preview.
+- Le bloc `previews` de `wrangler.jsonc` fixe `NAMESIA_DEPLOYMENT_ENVIRONMENT=preview`, distinct de `production`. Les Previews utilisent uniquement la clé Supabase publique et les lectures publiques ; aucun secret privilégié ni binding mutable de production n'est ajouté. Les PR de forks et celles de Dependabot ne reçoivent aucun secret Cloudflare et n'ont pas de Preview. À la fermeture d'une PR interne, le workflow supprime son environnement.
+- Le workflow `.github/workflows/ci.yml` contrôle séparément les tests, TypeScript et le build Next.js. Le déploiement de production reste réservé à la fusion sur `main` ; le lancement manuel du workflow est limité à `main`.
