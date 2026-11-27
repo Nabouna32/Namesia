@@ -1,7 +1,7 @@
 # Principes éditoriaux — Namesia
 
 - **Statut :** document canonique
-- **Version :** 2.2
+- **Version :** 2.3
 - **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
 
 ## 1. Nature des contenus
