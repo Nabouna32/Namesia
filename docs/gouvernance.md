@@ -64,11 +64,11 @@ Les bugs indépendants découverts pendant un chantier sont triés selon leur gr
 
 Les outils, intégrations et connecteurs disponibles peuvent être utilisés lorsqu’ils améliorent réellement le travail ou le produit. L’agent peut rechercher des outils complémentaires et les recommander ; l’installation ou la connexion d’un service exige l’action explicite du propriétaire. Préférer des dépendances maintenues et des versions stables récentes lorsqu’elles apportent un bénéfice vérifié, sans mise à jour aveugle pour la nouveauté.
 
-## 8. Portabilité et réversibilité
+## 7. Portabilité et réversibilité
 
 La maîtrise des données et la possibilité de changer de fournisseur sont des objectifs concrets, sans imposer une couche d’abstraction systématique. Les formats d’export, les dépendances et la procédure de sortie sont décrits dans [Portabilité et réversibilité](portabilite-et-reversibilite.md). Le patrimoine éditorial doit rester exportable dans des formats documentés ; les secrets, comptes d’administration et données personnelles ne sont pas inclus dans un export éditorial générique.
 
-## 9. Mémoire durable
+## 8. Mémoire durable
 
 Le dépôt Git est la mémoire durable ; les conversations et l’issue #345 sont temporaires. Les décisions acceptées sont réparties dans leurs documents canoniques thématiques, les ADR pour les choix structurants, AGENTS.md pour le contrat opérationnel et docs/etat-du-projet.md pour l’état courant.
 
