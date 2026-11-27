@@ -85,6 +85,7 @@ test("l’URL Supabase est validée avant d’envoyer une clé privilégiée", (
   assert.throws(() => normaliserSupabaseUrl("https://example.supabase.co/path"));
   assert.throws(() => normaliserSupabaseUrl("https://attacker.example"));
   assert.throws(() => normaliserSupabaseUrl("https://supabase.co"));
+  assert.throws(() => normaliserSupabaseUrl("https://example.supabase.co.evil.test"));
   assert.throws(() => normaliserSupabaseUrl("https://user:pass@example.supabase.co"));
 });
 
@@ -165,6 +166,9 @@ test("le dry-run génère un artefact validé sans contacter Supabase", async ()
     assert.equal(result.outputTokens, 220);
     assert.match(result.contentSha256, /^[a-f0-9]{64}$/);
     assert.equal(metadata.requestId, "chatcmpl-test-123");
+    assert.equal(metadata.displayName, "Éloïse");
+    assert.equal(metadata.slug, "eloise");
+    assert.equal(metadata.gender, "feminin");
     assert.equal(metadata.contentSha256, result.contentSha256);
     assert.equal(metadata.promptSha256, result.promptSha256);
   } finally {
