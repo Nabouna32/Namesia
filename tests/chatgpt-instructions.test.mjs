@@ -21,7 +21,7 @@ for (const file of instructionFiles) {
     const content = await readFile(new URL("../docs/instructions-chatgpt/" + file, import.meta.url), "utf8");
 
     assert.doesNotMatch(content, /[*#\x60]/, "Les instructions ne doivent pas contenir de marqueurs Markdown.");
-    assert.match(content, /challenge critique est obligatoire à chaque passage/i);
+    assert.match(content, /À chaque passage, le challenge critique est obligatoire/i);
     assert.match(content, /Toute communication durable dans le dépôt et sur GitHub est en français/i);
     assert.match(content, /Le dépôt Git est la mémoire durable/i);
   });
