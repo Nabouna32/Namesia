@@ -31,7 +31,7 @@ Le modèle ne produit ni identité technique, ni slug, ni version de schéma, ni
 7. **Import facultatif :** par défaut, le workflow est en dry-run. Si l’option d’import est explicitement activée, la fiche est importée en brouillon dans Supabase.
 8. **Publication :** elle reste une action humaine distincte dans l’administration. Le workflow n’a aucun chemin de publication.
 
-Le script applique des tentatives limitées aux erreurs réseau, 429 et 5xx. Il ne réessaie pas une réponse invalide ou un refus du modèle. Les secrets ne sont jamais écrits dans les logs ou l’artefact.
+L’appel Groq retente de façon limitée les erreurs réseau, 429 et 5xx ; l’import Supabase retente les erreurs réseau et 5xx. Une réponse JSON invalide ou un refus du modèle n’est jamais réessayé. Les secrets ne sont jamais écrits dans les logs ou l’artefact.
 
 ## 4. Provenance et idempotence
 
