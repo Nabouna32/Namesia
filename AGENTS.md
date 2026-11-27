@@ -1,7 +1,7 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.2
-- **Mis à jour le :** 2026-11-27 13:20:36 (Europe/Paris)
+- **Version :** 1.3
+- **Mis à jour le :** 2026-11-27 14:20:04 (Europe/Paris)
 
 Cette charte s'applique à tout le dépôt, aux contributions humaines et aux agents IA.
 
@@ -122,7 +122,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 - Le type `Database` de `lib/supabase/database.types.ts` est généré depuis le schéma actif et appliqué à chaque client Supabase. Après une migration, régénérer ce fichier ; ne jamais contourner un client non typé avec `as unknown as` sur les résultats SQL. Valider à l'exécution les seules données qui franchissent une frontière externe non typée.
 - Les modules TypeScript exécutés directement par Node dans les tests natifs utilisent des imports relatifs explicites avec extension `.ts` ; les alias `@/` sont réservés aux modules résolus par le bundler Next.js. Les tests de logique pure importent un module cœur sans dépendance au client ou au runtime applicatif.
 - Les variables `NEXT_PUBLIC_SUPABASE_URL` et `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` sont validées uniquement par `lib/supabase/config.ts`. Tous les clients utilisent `getSupabasePublicConfig()` ; aucune assertion non nulle ni origine de secours n'est autorisée.
-- Les comptes Namesia utilisent un système unique Supabase Auth par e-mail et mot de passe, partagé entre visiteurs et administrateurs. Le mot de passe comporte au moins 15 caractères, sans règle de composition (pas de majuscule, chiffre ou symbole obligatoire) ; les phrases de passe sont acceptées. Supabase Auth limite actuellement les mots de passe à 72 octets UTF-8. La protection HIBP des mots de passe compromis n'est pas un prérequis et aucun passage à Supabase Pro n'est imposé ; cette dérogation ne doit pas être présentée comme une conformité complète au NIST. La confirmation e-mail, les réponses anti-énumération, les limites de débit Auth et la récupération de compte restent obligatoires. Les droits administrateur sont attribués séparément via `private.admin_users`, jamais via des métadonnées modifiables par l'utilisateur ([ADR-0055](docs/decisions/ADR-0055-authentification-comptes-partages.md)).
+- Les comptes Namesia utilisent un système unique Supabase Auth par e-mail et mot de passe, partagé entre visiteurs et administrateurs. La politique applicative exige au moins 8 caractères, une majuscule et un chiffre ; la limite technique Supabase Auth est de 72 octets UTF-8. Supabase Auth peut imposer le minimum de longueur côté serveur, mais les règles de composition sont contrôlées par les formulaires Namesia et peuvent être contournées par un appel direct à l'API Auth : ne pas les présenter comme une garantie serveur. La protection HIBP des mots de passe compromis n'est pas un prérequis et aucun passage à Supabase Pro n'est imposé ; cette dérogation ne doit pas être présentée comme une conformité complète au NIST. La confirmation e-mail, les réponses anti-énumération, les limites de débit Auth et la récupération de compte restent obligatoires. Les droits administrateur sont attribués séparément via `private.admin_users`, jamais via des métadonnées modifiables par l'utilisateur ([ADR-0055](docs/decisions/ADR-0055-authentification-comptes-partages.md)).
 - Après chaque migration SQL appliquée, relancer les advisors Supabase `security` et `performance`, puis vérifier les policies réellement présentes dans `pg_policies`. Les limites liées au forfait ou à une configuration externe sont documentées dans une issue ; elles ne sont jamais contournées par du code applicatif.
 
 ## Contrat design
