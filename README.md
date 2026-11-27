@@ -1,7 +1,7 @@
 # Namesia
 
-- **Version :** 2.2
-- **Mis à jour le :** 2026-11-27 20:09:24 (Europe/Paris)
+- **Version :** 2.3
+- **Mis à jour le :** 2026-11-27 23:09:42 (Europe/Paris)
 
 Namesia est un catalogue de fiches de prénoms. Le dépôt contient l'application web, les contrats de données, les règles éditoriales, les décisions d'architecture et les procédures d'exploitation.
 
@@ -19,6 +19,7 @@ Ce README est le portail de navigation du dépôt. Les documents détaillés son
 | [Contrat coopératif](docs/COOP-CONTRACT.md) | Dialogue, challenge, arbitrages humains et périmètre d'action |
 | [Contrat autonome](docs/AUTONOMOUS-CONTRACT.md) | Délégation, priorisation, autonomie et compte rendu |
 | [Registre des ADR](docs/decisions/README.md) | Index des décisions d'architecture |
+| [Politique de maintenance des ADR](docs/decisions/ADR-MAINTENANCE.md) | Cycle de vie, audit et suppression des décisions d'architecture |
 
 ### Produit et contenu
 
