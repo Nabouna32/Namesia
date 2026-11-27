@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { RandomDiscovery } from "@/components/features/discovery/RandomDiscovery";
-import { RecentNames } from "@/components/features/history/RecentNames";
 import { FeaturedNames } from "@/components/features/catalog/FeaturedNames";
 import { NameSearch } from "@/components/features/catalog/NameSearch";
 import { getNamesIndex, type NameIndexEntry } from "@/lib/names";
@@ -41,7 +40,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-      <RecentNames names={names} />
       <section className="section explore-section">
         <div className="container">
           <div className="section-heading">
