@@ -2,6 +2,8 @@
 
 - **Statut :** acceptée
 - **Date :** 2026-11-24
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-27 20:10:47 (Europe/Paris)
 - **Remplace :** [ADR-0030 — Géométrie du conteneur NavigationBar](ADR-0030-geometrie-navigation-bar.md)
 
 ## Contexte
@@ -35,4 +37,4 @@ La hauteur de 64 dp précédemment appliquée était une erreur de lecture du to
 
 ## Vérification
 
-La CI vérifie le padding vertical de 8 dp, les 64 dp minimum des destinations, le dégagement de 80 dp du contenu, l'absence de bordure ajoutée et la présence du commit AndroidX figé dans la bibliothèque de composants. La source canonique est [Vérification Material 3](../material-3-verification.md).
+La CI vérifie le padding vertical de 8 dp, les 64 dp minimum des destinations, le dégagement de 80 dp du contenu, l'absence de bordure ajoutée et la présence du commit AndroidX figé dans la bibliothèque de composants. La source canonique est [Vérification Material 3](../MATERIAL-3-VERIFICATION.md).
