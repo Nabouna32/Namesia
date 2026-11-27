@@ -1,7 +1,7 @@
 # GitHub Actions — CI et automatisation
 
-- **Version :** 1.2
-- **Mis à jour le :** 2026-11-27 20:32:16 (Europe/Paris)
+- **Version :** 1.3
+- **Mis à jour le :** 2026-11-27 20:39:43 (Europe/Paris)
 
 ## Sources de vérité
 
@@ -33,7 +33,7 @@ Déclencheurs : PR ouvertes, synchronisées, réouvertes, labellisées ou fermé
 - La Preview est contrôlée par HTTP et Playwright sur des parcours publics ; elle doit rester sans données privées et porter `X-Robots-Tag: noindex`.
 - Le job publie l'URL de Preview dans la conversation de la PR.
 
-Sur les Previews et après le déploiement de production, le workflow extrait la balise `og:image` du HTML de la fiche avec `scripts/verify-open-graph.mjs`. Le script exige une URL HTTPS absolue de même origine que l'origine canonique configurée (`NEXT_PUBLIC_SITE_URL`). En Preview, cette origine canonique reste celle de production ; le workflow récupère ensuite l'URL annoncée, affiche le statut HTTP et le type MIME, puis exige `200 image/png`. Les erreurs réseau sont également explicites dans les logs. Ce contrôle valide la ressource réellement annoncée par la page plutôt que de rechercher un nom de route codé en dur.
+Sur les Previews et après le déploiement de production, le workflow extrait la balise `og:image` du HTML de la fiche avec `scripts/verify-open-graph.mjs`. Le script exige une URL HTTPS absolue de même origine que l'origine canonique configurée (`NEXT_PUBLIC_SITE_URL`). En Preview, cette origine canonique reste celle de production ; le workflow récupère ensuite l'URL annoncée, affiche le statut HTTP et le type MIME, puis exige `200 image/png`. Les erreurs réseau sont également explicites dans les logs.\n\nLe contrôle de `robots.txt` vérifie l'interdiction d'explorer `/api` et la référence Sitemap. Il ne bloque pas `/admin` : la page d'administration porte `noindex, nofollow` et doit rester explorable pour que les moteurs lisent cette directive. La protection d'accès repose sur l'authentification serveur ; les endpoints admin non authentifiés doivent répondre `401`. Ce contrôle valide la ressource réellement annoncée par la page plutôt que de rechercher un nom de route codé en dur.
 - La fermeture d'une PR déclenche le nettoyage de sa Preview.
 - Seul un push sur `main` ou un lancement manuel ciblant `main`, avec le déploiement activé, peut déployer la production.
 
