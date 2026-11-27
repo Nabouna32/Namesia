@@ -1,8 +1,8 @@
 # Portabilité et réversibilité — Namesia
 
 - **Statut :** référence canonique
-- **Version :** 1.2
-- **Mis à jour le :** 2026-11-27 01:42:00 (Europe/Paris)
+- **Version :** 1.3
+- **Mis à jour le :** 2026-11-27 07:19:25 (Europe/Paris)
 
 ## Objectif
 
@@ -38,7 +38,7 @@ Ce format est une cible de conception, pas une fonctionnalité actuellement disp
 |---|---|---|
 | Base et authentification | Supabase / PostgreSQL / Auth | schéma, données, identifiants, contraintes, RLS, rôles, fonctions RPC, comptes et processus d’authentification |
 | Hébergement | Cloudflare Workers / OpenNext | routes, runtime, variables d’environnement, cache, domaines, DNS et comportements SSR |
-| Génération IA | Workflow GitHub Actions manuel via Groq | prompt et schéma versionnés, contrat d’import, empreintes de prompt/contenu, identifiants de requête et d’exécution, provenance, compteur d’alertes éditoriales et artefacts temporaires ; secrets à reconfigurer chez tout nouveau fournisseur |
+| Génération IA | Préparation hors application, notamment dans une conversation avec un assistant, puis import JSON dans l'administration | contrat JSON versionné, identités et versions de fiches, validation structurelle, brouillon et publication humaine ; une éventuelle page privée Groq reste différée et n'est pas une dépendance du parcours actuel |
 | CI/CD | GitHub Actions | workflows, secrets à reconfigurer, permissions, environnements et règles de déclenchement |
 | Mesure | Outil d’analytics éventuel | définition des événements, consentement, conservation et capacité d’export des mesures utiles |
 
