@@ -119,6 +119,91 @@ export function buildImportProfile(displayName, gender, generatedContent) {
   });
 }
 
+export function findEditorialWarnings(content) {
+  if (!content || typeof content !== "object" || Array.isArray(content)) {
+    throw new Error("Le contenu à contrôler est invalide.");
+  }
+
+  const fields = [
+    ["introduction", content.introduction],
+    ["origin", content.origin],
+    ["history", content.history],
+    ["usage", content.usage],
+    ...(Array.isArray(content.symbolic_associations)
+      ? content.symbolic_associations.map((item, index) => [
+          "symbolic_associations." + index + ".context_note",
+          item && item.context_note
+        ])
+      : [])
+  ].filter(([, value]) => typeof value === "string" && value.trim());
+
+  const warnings = [];
+  const seenWarnings = new Set();
+  const addWarning = (code, field, message) => {
+    const key = code + ":" + field;
+    if (seenWarnings.has(key)) return;
+    seenWarnings.add(key);
+    warnings.push({ code, field, message });
+  };
+
+  const rules = [
+    {
+      code: "url_or_link",
+      pattern: /https?:\/\/|www\./iu,
+      message: "Lien ou URL détecté : vérifier qu’aucune référence non contrôlée n’a été inventée."
+    },
+    {
+      code: "citation_marker",
+      pattern: /\[\s*\d+\s*\]|\(\s*[^)]{1,60},\s*(?:18|19|20)\d{2}\s*\)/u,
+      message: "Marqueur de citation détecté : aucune source n’est actuellement reliée à cette affirmation."
+    },
+    {
+      code: "unsupported_source_claim",
+      pattern: /\b(?:selon|d['’]après)\s+(?:une?\s+)?(?:étude|statistique|source|recensement|l['’]insee)\b/iu,
+      message: "Référence à une étude ou une source détectée sans processus documentaire associé."
+    },
+    {
+      code: "statistical_claim",
+      pattern: /\b\d+(?:[,.]\d+)?\s*%|\b(?:top\s*\d+|classement|statistiques?|recensement|nombre de naissances|taux de)\b/iu,
+      message: "Affirmation statistique ou de classement détectée : elle exige une source vérifiable."
+    },
+    {
+      code: "specific_year",
+      pattern: /\b(?:18|19|20)\d{2}\b/u,
+      message: "Année précise détectée : vérifier sa provenance avant toute publication."
+    }
+  ];
+
+  for (const [field, value] of fields) {
+    for (const rule of rules) {
+      if (rule.pattern.test(value)) addWarning(rule.code, field, rule.message);
+    }
+  }
+
+  const firstOccurrence = new Map();
+  for (const [field, value] of fields) {
+    const sentences = value.split(/(?<=[.!?])\s+/u);
+    for (const sentence of sentences) {
+      const normalized = sentence.normalize("NFKC").toLowerCase()
+        .replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+      if (normalized.length < 60) continue;
+      if (firstOccurrence.has(normalized)) {
+        addWarning(
+          "repeated_sentence",
+          field,
+          "Phrase répétée dans plusieurs rubriques : vérifier une éventuelle duplication générative."
+        );
+      } else {
+        firstOccurrence.set(normalized, field);
+      }
+    }
+  }
+
+  return warnings.sort((left, right) =>
+    left.field.localeCompare(right.field) || left.code.localeCompare(right.code)
+  );
+}
+
 export function buildGroqRequest({ displayName, gender, prompt, schema }) {
   return {
     model: GROQ_MODEL,
@@ -219,6 +304,7 @@ async function importIntoSupabase({ supabaseUrl, secretKey, fiche, metadata, fet
     p_generation_schema_version: metadata.schemaVersion,
     p_generation_request_id: metadata.requestId,
     p_generation_workflow_run_id: metadata.workflowRunId,
+    p_generation_editorial_warning_count: metadata.editorialWarningCount,
     p_generation_input_tokens: metadata.inputTokens,
     p_generation_output_tokens: metadata.outputTokens,
     p_generation_temperature: metadata.temperature,
@@ -308,6 +394,7 @@ export async function generateProfile({
   const generatedAt = new Date().toISOString();
   const slug = fiche.identity.slug;
   const contentSha256 = createHash("sha256").update(JSON.stringify(fiche.content)).digest("hex");
+  const editorialWarnings = findEditorialWarnings(fiche.content);
   const artifactPath = resolve(outputDirectory, "fiche-" + slug + ".json");
   const metadataArtifactPath = resolve(outputDirectory, "fiche-" + slug + ".metadata.json");
   const generationMetadata = {
@@ -323,6 +410,8 @@ export async function generateProfile({
     requestId: groq.result.id,
     workflowRunId: Number.isSafeInteger(workflowRunId) && workflowRunId > 0 ? workflowRunId : null,
     contentSha256,
+    editorialWarningCount: editorialWarnings.length,
+    editorialWarnings,
     inputTokens: Number.isInteger(groq.result.usage && groq.result.usage.prompt_tokens) ? groq.result.usage.prompt_tokens : null,
     outputTokens: Number.isInteger(groq.result.usage && groq.result.usage.completion_tokens) ? groq.result.usage.completion_tokens : null,
     temperature: GENERATION_TEMPERATURE,
@@ -351,6 +440,7 @@ export async function generateProfile({
         schemaVersion: GENERATION_SCHEMA_VERSION,
         requestId: groq.result.id,
         workflowRunId: generationMetadata.workflowRunId,
+        editorialWarningCount: generationMetadata.editorialWarningCount,
         inputTokens: Number.isInteger(groq.result.usage && groq.result.usage.prompt_tokens)
           ? groq.result.usage.prompt_tokens
           : null,
@@ -375,6 +465,8 @@ export async function generateProfile({
     contentSha256,
     requestId: groq.result.id,
     workflowRunId: generationMetadata.workflowRunId,
+    editorialWarningCount: generationMetadata.editorialWarningCount,
+    editorialWarnings,
     generatedAt,
     metadataArtifactPath,
     inputTokens: groq.result.usage && groq.result.usage.prompt_tokens,
@@ -401,6 +493,8 @@ async function main() {
     contentSha256: result.contentSha256,
     requestId: result.requestId,
     workflowRunId: result.workflowRunId,
+    editorialWarningCount: result.editorialWarningCount,
+    editorialWarnings: result.editorialWarnings,
     generatedAt: result.generatedAt,
     inputTokens: result.inputTokens,
     outputTokens: result.outputTokens,
