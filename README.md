@@ -41,7 +41,7 @@ Les anciennes tables documentaires, l'ancien stockage JSONB et les colonnes redo
 
 ### Comptes et administration
 
-Le compte Namesia est facultatif et accessible depuis `/compte`. L'inscription, la connexion, la confirmation de l'adresse e-mail, la récupération et la modification du mot de passe utilisent un système unique Supabase Auth par e-mail et mot de passe. La consultation du catalogue et des fiches publiques ne demande jamais de compte.
+Le compte Namesia est facultatif et accessible depuis `/compte`. L'inscription, la connexion, la confirmation de l'adresse e-mail, la récupération et la modification du mot de passe utilisent un système unique Supabase Auth par e-mail et mot de passe. Les sessions sont gérées en cookies de même origine via `@supabase/ssr` et PKCE. La consultation du catalogue et des fiches publiques ne demande jamais de compte.
 
 La politique de mot de passe impose 15 caractères minimum, sans majuscule, chiffre ni symbole obligatoire. Les phrases de passe et les espaces sont acceptés. Supabase Auth limite actuellement les mots de passe à 72 octets UTF-8. La protection HIBP des mots de passe compromis n'est pas activée et aucun passage à Supabase Pro n'est requis ; ce compromis ne constitue pas une conformité complète au NIST.
 
