@@ -3,17 +3,20 @@ import { readFile } from "node:fs/promises";
 import { test } from "node:test";
 
 const instructionFiles = [
-  "mode-autonome.md",
-  "mode-discussion.md",
+  "mode-autonome.txt",
+  "mode-discussion.txt",
 ];
 
 for (const file of instructionFiles) {
-  test(file + " respecte la limite de 8 000 caractères et son décompte déclaré", async () => {
+  test(file + " reste un texte brut concis et copiable", async () => {
     const content = await readFile(new URL("../docs/instructions-chatgpt/" + file, import.meta.url), "utf8");
-    const declared = content.match(/^- \*\*Caractères :\*\* (\d+) /m);
 
-    assert.ok(declared, "Le nombre de caractères doit être déclaré dans " + file);
-    assert.equal(content.length, Number(declared[1]), "Le décompte déclaré doit correspondre au fichier UTF-8 décodé.");
-    assert.ok(content.length <= 8000, file + " dépasse la limite de 8 000 caractères.");
+    assert.ok(content.length <= 5000, file + " doit conserver une marge confortable sous la limite ChatGPT.");
+    assert.doesNotMatch(content, /(?:Caractères\s*:|limite stricte|sous 8\s*000|8\s*000 caractères|Version\s*:|Mis à jour le\s*:)/i);
+    assert.doesNotMatch(content, /Groq|GROQ_API_KEY|SUPABASE_SECRET_KEY/);
+    assert.doesNotMatch(content, /[*#`]/, "Le texte copiable reste sans marqueurs Markdown.");
+    assert.match(content, /challenge critique est obligatoire|challenge obligatoirement/i);
+    assert.match(content, /Réponds en français/);
+    assert.match(content, /Le dépôt Git est la (?:source de vérité|mémoire durable)/);
   });
 }
