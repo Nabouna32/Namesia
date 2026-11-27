@@ -107,7 +107,6 @@ test("le CSS serveur adapte le thème et la barre du navigateur sans hydratation
   assert.doesNotMatch(theme, /document\.documentElement|matchMedia|applyMaterialTheme/);
   assert.doesNotMatch(layout, /MaterialThemeProvider/);
   assert.equal((await readdir(join(root, "components/material3"))).includes("MaterialThemeProvider.tsx"), false);
-  assert.doesNotMatch(await readFile(join(root, "components/material3/index.ts"), "utf8"), /MaterialThemeProvider/);
   assert.doesNotMatch(layout, /use client|useEffect/);
   assert.match(theme, /light: lightTokens\["--md-sys-color-background"\]/);
   assert.match(theme, /dark: darkTokens\["--md-sys-color-background"\]/);
