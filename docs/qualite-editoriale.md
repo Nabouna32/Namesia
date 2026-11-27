@@ -2,7 +2,7 @@
 
 - **Statut :** référence canonique
 - **Version :** 1.5
-- **Mis à jour le :** 2026-11-27 10:40:53 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 10:42:38 (Europe/Paris)
 
 ## Source et limites du contenu
 
