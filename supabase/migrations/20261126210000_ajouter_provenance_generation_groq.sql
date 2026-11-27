@@ -115,7 +115,14 @@ begin
     end if;
   end if;
 
-  if p_schema_version is distinct from '2.0.0'
+  if p_slug is null
+    or p_slug !~ '^[a-z0-9]+(?:-[a-z0-9]+)*$'
+    or char_length(p_slug) > 120
+    or p_display_name is null
+    or p_display_name is distinct from btrim(p_display_name)
+    or char_length(p_display_name) not between 1 and 100
+    or p_gender not in ('feminin', 'masculin', 'mixte', 'inconnu')
+    or p_schema_version is distinct from '2.0.0'
     or jsonb_typeof(p_content) is distinct from 'object'
     or (p_content - 'introduction' - 'origin' - 'history' - 'usage' - 'symbolic_associations') <> '{}'::jsonb
     or jsonb_typeof(p_content -> 'introduction') is distinct from 'string'
@@ -123,8 +130,11 @@ begin
     or (p_content ? 'origin' and (jsonb_typeof(p_content -> 'origin') is distinct from 'string' or char_length(p_content ->> 'origin') > 3000))
     or (p_content ? 'history' and (jsonb_typeof(p_content -> 'history') is distinct from 'string' or char_length(p_content ->> 'history') > 3000))
     or (p_content ? 'usage' and (jsonb_typeof(p_content -> 'usage') is distinct from 'string' or char_length(p_content ->> 'usage') > 3000))
-    or jsonb_typeof(coalesce(p_content -> 'symbolic_associations', '[]'::jsonb)) is distinct from 'array'
-    or jsonb_array_length(coalesce(p_content -> 'symbolic_associations', '[]'::jsonb)) > 12
+    or case
+      when jsonb_typeof(p_content -> 'symbolic_associations') = 'array'
+      then jsonb_array_length(p_content -> 'symbolic_associations') > 12
+      else true
+    end
   then
     raise exception 'Contrat JSON Namesia invalide ou non pris en charge' using errcode = '22023';
   end if;
@@ -191,7 +201,7 @@ begin
 
   for v_association in
     select value
-    from jsonb_array_elements(coalesce(p_content -> 'symbolic_associations', '[]'::jsonb))
+    from jsonb_array_elements(p_content -> 'symbolic_associations')
   loop
     if jsonb_typeof(v_association) is distinct from 'object'
       or (v_association - 'category' - 'value' - 'context_note') <> '{}'::jsonb
