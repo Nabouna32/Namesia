@@ -446,8 +446,6 @@ padding: 12px 12px;
   color: var(--md-sys-color-on-surface);
 }
 
-
-
 .name-card:active {
   background: color-mix(in srgb, var(--md-sys-color-primary) var(--md-sys-state-pressed-state-layer-opacity), var(--md-sys-color-surface-container-low));
 }
@@ -563,8 +561,6 @@ gap: 12px;
 padding: 20px;
   color: var(--md-sys-color-on-surface);
 }
-
-
 
 .featured-card:active {
   background: color-mix(in srgb, var(--md-sys-color-primary) var(--md-sys-state-pressed-state-layer-opacity), var(--md-sys-color-surface-container-low));
