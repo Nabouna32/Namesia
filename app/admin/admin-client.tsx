@@ -110,7 +110,6 @@ export function AdminClient() {
 
   useEffect(() => {
     if (!session || !authorized) return;
-    const accessToken = session.access_token;
     let active = true;
     const offset = catalogOffset;
 
@@ -118,7 +117,7 @@ export function AdminClient() {
       setCatalogLoading(true);
       try {
         const response = await fetch(`/api/admin/prenoms?offset=${offset}`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          credentials: "same-origin",
           cache: "no-store"
         });
         const payload: unknown = await response.json();
@@ -145,7 +144,7 @@ export function AdminClient() {
     return () => {
       active = false;
     };
-  }, [session?.access_token, authorized, refreshKey, catalogOffset]);
+  }, [session?.user.id, authorized, refreshKey, catalogOffset]);
 
   function previsualiser() {
     try {
@@ -160,13 +159,12 @@ export function AdminClient() {
 
   async function previsualiserVersion(profile: ProfileRow) {
     if (!session) return;
-    const accessToken = session.access_token;
     setBusy(true);
     setMessage(null);
     try {
       const response = await fetch(`/api/admin/prenoms/${profile.id}`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-        cache: "no-store"
+        credentials: "same-origin",
+          cache: "no-store"
       });
       const result = await response.json() as {
         fiche?: FichePrenomImport;
@@ -222,11 +220,9 @@ export function AdminClient() {
     try {
       const response = await fetch("/api/admin/prenoms", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session.access_token}`
-        },
-        body: JSON.stringify(fiche)
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(fiche),
+        credentials: "same-origin"
       });
       const result = await response.json() as ImportResult & { error?: string };
       if (!response.ok) throw new Error(result.error ?? "Import impossible.");
