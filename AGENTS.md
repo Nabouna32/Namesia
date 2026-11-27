@@ -1,7 +1,7 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.13
-- **Mis à jour le :** 2026-11-27 07:54:30 (Europe/Paris)
+- **Version :** 1.14
+- **Mis à jour le :** 2026-11-27 07:57:44 (Europe/Paris)
 
 Cette charte fixe les règles communes du dépôt. Les procédures détaillées restent dans les documents spécialisés : ne pas les recopier ici.
 
