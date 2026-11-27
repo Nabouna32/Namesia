@@ -2,6 +2,8 @@
 
 - **Statut :** remplacée par [ADR-0028](ADR-0028-baseline-material-3-androidx-et-couleurs-semantiques.md)
 - **Date :** 2026-11-24
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-27 20:10:47 (Europe/Paris)
 
 ## Contexte
 
@@ -27,7 +29,7 @@ Le contrat M3 existant présentait deux écarts. Des extensions Namesia (statuts
 - Employer les noms exacts `--md-sys-motion-easing-*`, `--md-sys-motion-duration-*`, `--md-sys-state-*-state-layer-opacity` et `--md-sys-shape-corner-*`.
 - Supprimer les ombres non nécessaires au lieu d'inventer `--md-sys-elevation-sm/md` ; les niveaux M3 d'élévation sont numériques et leur traduction en ombres Web exigerait une décision documentée.
 - Faire échouer explicitement le calcul si un rôle requis est absent. Aucun fallback de valeur ou de rôle.
-- Centraliser les références, les paramètres, les contrôles CI et les limites Web dans [Vérification Material 3](../material-3-verification.md).
+- Centraliser les références, les paramètres, les contrôles CI et les limites Web dans [Vérification Material 3](../MATERIAL-3-VERIFICATION.md).
 
 ## Conséquences
 
