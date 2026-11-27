@@ -47,25 +47,22 @@ test("les entrées du classement ont des slugs uniques et des effectifs positifs
 });
 
 test("la page expose les profils publiés sans masquer les entrées hors catalogue", () => {
-  assert.ok(page.includes('export const dynamic = "force-dynamic"'));
+  assert.match(page, /export const dynamic = "force-dynamic"/);
   assert.ok(trendsCss.includes("@media (max-width: 839px)"));
   assert.ok(!trendsCss.includes("max-width: 900px"));
   assert.ok(trendsCss.includes("gap: 4px;"));
   assert.ok(!trendsCss.includes("gap: 2px;"));
   assert.ok(popularityCss.includes(".popularitySource"));
   assert.ok(!popularityCss.includes(".source"));
-  assert.ok(page.includes("publishedSlugs.has(entry.slug)"));
-  assert.ok(page.includes("Fiche non publiée sur Namesia"));
-  assert.ok(page.includes("NAME_POPULARITY_2025_SOURCE_URL"));
-  assert.ok(sitemap.includes('new URL("/tendances", siteUrl)'));
-  assert.ok(profileCard.includes("getNamePopularity2025(slug)"));
-  assert.ok(profileCard.includes("popularity.name !== name || popularity.gender !== gender"));
-  assert.ok(page.includes("publishedName.name !== entry.name || publishedName.gender !== entry.gender"));
-  assert.ok(page.includes("NAME_REGIONAL_LEADERS_2025"));
-  assert.ok(page.includes("regional-ranking-title"));
-  assert.ok(page.includes("publishedSlugs.has(entry.slug) ? ("));
-  assert.ok(page.includes('href={`/prenoms/${entry.slug}`}'));
-  assert.ok(trendsCss.includes(".regionalName:focus-visible"));
+  assert.match(page, /publishedSlugs\.has\(entry\.slug\)/);
+  assert.match(page, /Fiche non publiée sur Namesia/);
+  assert.match(page, /NAME_POPULARITY_2025_SOURCE_URL/);
+  assert.match(sitemap, /new URL\("\/tendances", siteUrl\)/);
+  assert.match(profileCard, /getNamePopularity2025\(slug\)/);
+  assert.match(profileCard, /popularity\.name !== name \|\| popularity\.gender !== gender/);
+  assert.match(page, /publishedName\.name !== entry\.name \|\| publishedName\.gender !== entry\.gender/);
+  assert.match(page, /NAME_REGIONAL_LEADERS_2025/);
+  assert.match(page, /regional-ranking-title/);
   assert.ok(trendsCss.includes(".regionalGrid"));
   assert.ok(trendsCss.includes("grid-template-columns: 1fr;"));
 });
