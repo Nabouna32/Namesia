@@ -61,7 +61,7 @@ export function FavoriteButton({ slug, name }: Props) {
         variant="outlined"
         aria-label={label}
         aria-pressed={selected}
-        disabled={!ready || busy}
+        disabled={!ready || error || busy}
         onClick={() => void basculerFavori()}
       >
         <Icon name={selected ? "favorite-filled" : "favorite"} size={18} />
