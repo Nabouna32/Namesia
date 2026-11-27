@@ -218,6 +218,7 @@ async function importerDansSupabase({ supabaseUrl, secretKey, fiche, metadata, f
     p_generation_content_sha256: metadata.contentSha256,
     p_generation_schema_version: metadata.schemaVersion,
     p_generation_request_id: metadata.requestId,
+    p_generation_workflow_run_id: metadata.workflowRunId,
     p_generation_input_tokens: metadata.inputTokens,
     p_generation_output_tokens: metadata.outputTokens,
     p_generation_temperature: metadata.temperature,
@@ -274,6 +275,7 @@ export async function genererFiche({
 
   let supabaseUrl = null;
   let supabaseSecretKey = "";
+  const workflowRunId = Number(env.NAMESIA_WORKFLOW_RUN_ID);
   if (importAsDraft) {
     supabaseSecretKey = typeof env.SUPABASE_SECRET_KEY === "string" ? env.SUPABASE_SECRET_KEY.trim() : "";
     if (!env.SUPABASE_URL || !supabaseSecretKey) {
@@ -281,6 +283,9 @@ export async function genererFiche({
     }
     if (!supabaseSecretKey.startsWith("sb_secret_")) {
       throw new Error("SUPABASE_SECRET_KEY doit être une clé secrète Supabase moderne (sb_secret_).");
+    }
+    if (!Number.isSafeInteger(workflowRunId) || workflowRunId <= 0) {
+      throw new Error("L’identifiant du workflow GitHub est absent ou invalide.");
     }
     supabaseUrl = normaliserSupabaseUrl(env.SUPABASE_URL);
   }
@@ -316,6 +321,7 @@ export async function genererFiche({
     promptSha256,
     schemaVersion: GENERATION_SCHEMA_VERSION,
     requestId: groq.result.id,
+    workflowRunId: Number.isSafeInteger(workflowRunId) && workflowRunId > 0 ? workflowRunId : null,
     contentSha256,
     inputTokens: Number.isInteger(groq.result.usage && groq.result.usage.prompt_tokens) ? groq.result.usage.prompt_tokens : null,
     outputTokens: Number.isInteger(groq.result.usage && groq.result.usage.completion_tokens) ? groq.result.usage.completion_tokens : null,
@@ -367,6 +373,7 @@ export async function genererFiche({
     promptSha256,
     contentSha256,
     requestId: groq.result.id,
+    workflowRunId: generationMetadata.workflowRunId,
     generatedAt,
     metadataArtifactPath,
     inputTokens: groq.result.usage && groq.result.usage.prompt_tokens,
@@ -392,6 +399,7 @@ async function main() {
     promptSha256: result.promptSha256,
     contentSha256: result.contentSha256,
     requestId: result.requestId,
+    workflowRunId: result.workflowRunId,
     generatedAt: result.generatedAt,
     inputTokens: result.inputTokens,
     outputTokens: result.outputTokens,
