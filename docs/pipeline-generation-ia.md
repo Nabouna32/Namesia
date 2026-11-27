@@ -8,9 +8,9 @@
 
 La génération est effectuée en amont de l’application publique. Le workflow GitHub Actions « Générer une fiche avec Groq » est déclenché manuellement depuis main, pour un seul prénom par exécution. Il n’existe aucune route publique de génération et aucun traitement planifié ou massif.
 
-Le modèle utilisé par défaut est openai/gpt-oss-20b via l’API Groq. Ce modèle est choisi parce qu’il prend en charge les sorties structurées strictes de Groq. Le workflow doit rester sur le niveau gratuit ; aucune mise à niveau, aucun moyen de paiement ni aucune dépense ne sont autorisés sans arbitrage préalable du propriétaire.
+Le modèle utilisé par défaut est `openai/gpt-oss-20b` via l’API Groq. Ce modèle est choisi parce qu’il prend en charge les sorties structurées strictes de Groq et figure parmi les modèles de production documentés. Le workflow doit rester sur le niveau gratuit ; aucune mise à niveau, aucun moyen de paiement ni aucune dépense ne sont autorisés sans arbitrage préalable du propriétaire. Si le modèle ou les quotas ne sont pas accessibles sur le niveau gratuit du compte, arrêter le processus plutôt que changer d’offre.
 
-Références fournisseur : [Clés API Supabase](https://supabase.com/docs/guides/api/api-keys), [Rôles PostgreSQL Supabase](https://supabase.com/docs/guides/database/postgres/roles), [Structured Outputs](https://console.groq.com/docs/structured-outputs), [Models](https://console.groq.com/docs/models), [Rate Limits](https://console.groq.com/docs/rate-limits).
+Références fournisseur : [Clés API Supabase](https://supabase.com/docs/guides/api/api-keys), [Rôles PostgreSQL Supabase](https://supabase.com/docs/guides/database/postgres/roles), [Structured Outputs](https://console.groq.com/docs/structured-outputs), [Models](https://console.groq.com/docs/models), [Rate Limits](https://console.groq.com/docs/rate-limits), [Billing FAQs](https://console.groq.com/docs/billing-faqs).
 
 ## 2. Séparation des contrats
 
