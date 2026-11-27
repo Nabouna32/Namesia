@@ -5,7 +5,9 @@ const routes = [
   { name: "accueil", path: "/" },
   { name: "catalogue", path: "/prenoms" },
   { name: "fiche-alice", path: "/prenoms/alice" },
-  { name: "tendances", path: "/tendances" }
+  { name: "tendances", path: "/tendances" },
+  { name: "favoris", path: "/favoris" },
+  { name: "comparateur", path: "/comparer" }
 ];
 
 const responsiveViewports = [
@@ -13,7 +15,7 @@ const responsiveViewports = [
   { name: "tablette", width: 768, height: 1024 }
 ];
 
-test("les trois parcours publics essentiels sont disponibles sur bureau", async ({ page }) => {
+test("les pages publiques essentielles sont disponibles sur bureau", async ({ page }) => {
   const pageErrors = [];
   page.on("pageerror", (error) => pageErrors.push(error.message));
 
