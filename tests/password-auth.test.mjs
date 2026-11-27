@@ -51,6 +51,7 @@ test("l'administration réutilise le compte Namesia sans créer une connexion di
   assert.match(sessionClient, /setAll\(cookiesToSet\)/);
   assert.match(sessionClient, /sameSite: "lax"/);
   assert.match(sessionClient, /secure: process\.env\.NODE_ENV === "production"/);
+  assert.match(proxy, /NAMESIA_DEPLOYMENT_ENVIRONMENT === "preview"/);
   assert.match(proxy, /supabase\.auth\.getUser\(\)/);
   assert.match(proxy, /Cache-Control/);
   assert.match(proxy, /\/api\/admin\/:path\*/);
