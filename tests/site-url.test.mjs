@@ -7,11 +7,11 @@ const envExample = await readFile(new URL("../.env.example", import.meta.url), "
 const workflow = await readFile(new URL("../.github/workflows/ci.yml", import.meta.url), "utf8");
 
 test("l'origine canonique est explicite, validée et sans fallback", () => {
-  assert.match(siteUrl, /if \\(!configuredSiteUrl\\)/);
-  assert.match(siteUrl, /throw new Error\\("NEXT_PUBLIC_SITE_URL est obligatoire\\."/);
-  assert.match(siteUrl, /new URL\\(configuredSiteUrl\\)/);
-  assert.match(siteUrl, /siteUrl\\.protocol !== "https:"/);
-  assert.doesNotMatch(siteUrl, /\\?\\?/);
-  assert.match(envExample, /NEXT_PUBLIC_SITE_URL=https:\\/\\/namesia\\.nabouna\\.workers\\.dev/);
-  assert.match(workflow, /NEXT_PUBLIC_SITE_URL: https:\\/\\/namesia\\.nabouna\\.workers\\.dev/);
+  assert.match(siteUrl, /if \(!configuredSiteUrl\)/);
+  assert.match(siteUrl, /throw new Error\("NEXT_PUBLIC_SITE_URL est obligatoire\."/);
+  assert.match(siteUrl, /new URL\(configuredSiteUrl\)/);
+  assert.match(siteUrl, /siteUrl\.protocol !== "https:"/);
+  assert.doesNotMatch(siteUrl, /\?\?/);
+  assert.match(envExample, /NEXT_PUBLIC_SITE_URL=https:\/\/namesia\.nabouna\.workers\.dev/);
+  assert.match(workflow, /NEXT_PUBLIC_SITE_URL: https:\/\/namesia\.nabouna\.workers\.dev/);
 });

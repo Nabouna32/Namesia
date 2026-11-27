@@ -13,7 +13,7 @@ const adminCatalog = await readFile(new URL("../lib/admin-catalog.ts", import.me
 test("les types générés décrivent le modèle relationnel actif", () => {
   assert.ok(databaseTypes.includes('PostgrestVersion: "14.18"'));
   for (const table of ["names", "name_profiles", "name_profile_associations"]) {
-    assert.ok(databaseTypes.includes(`${table}: {`));
+    assert.ok(databaseTypes.includes(table + ": {"));
   }
   assert.doesNotMatch(databaseTypes, /name_profile_references/);
   assert.match(databaseTypes, /import_name_profile:/);
