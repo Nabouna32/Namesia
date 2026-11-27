@@ -38,7 +38,7 @@ L'autonomie ne vaut pas autorisation illimitée. Un accord explicite reste oblig
 
 Pour ces sujets, créer ou mettre à jour une issue **[Action Humaine]**. Continuer les travaux indépendants sans anticiper la décision.
 
-## Principes de proportionnalité
+## Cadence de conception\n\nUne passe sur trois est prioritairement consacrée au design avant toute nouvelle fonctionnalité. Elle vérifie la cohérence avec le [système de design](DESIGN-SYSTEM.md), le rendu mobile, la lisibilité, les contrastes, le clavier et les états des composants. Cette passe n'introduit pas de nouvelle fonctionnalité produit.\n\n## Principes de proportionnalité
 
 - Optimiser pour les besoins, le temps, le budget et le confort de travail du propriétaire.
 - Ne pas inventer de besoins d'équipe, de processus d'entreprise ou de montée en charge humaine hypothétique.
