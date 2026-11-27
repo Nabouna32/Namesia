@@ -56,6 +56,6 @@ test("le contrôle post-déploiement extrait og:image et vérifie le type MIME",
   assert.doesNotMatch(workflow, /grep -Fq "opengraph-image"/);
   assert.match(workflow, /profile_og_response/);
   assert.match(workflow, /preview_og_response/);
-  assert.match(workflow, /200 image\\/png/);
-  assert.match(workflow, /test "\$profile_og_response" = "image\/png"/);
+  assert.ok(workflow.includes('test "$profile_og_response" = "200 image/png"'));
+  assert.ok(workflow.includes('test "$preview_og_response" = "200 image/png"'));
 });
