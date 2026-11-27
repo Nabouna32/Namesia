@@ -77,10 +77,10 @@ function collectRules(css) {
   return rules;
 }
 
-test("Roboto est la seule police de l’interface, sans police de substitution", () => {
-  assert.match(layoutSource, /display: "block"/);
-  assert.match(layoutSource, /adjustFontFallback: false/);
-  assert.doesNotMatch(layoutSource, /display: "swap"/);
+test("Roboto reste prioritaire et le texte demeure visible pendant son chargement", () => {
+  assert.match(layoutSource, /display: "swap"/);
+  assert.match(layoutSource, /adjustFontFallback: true/);
+  assert.doesNotMatch(layoutSource, /display: "block"/);
   assert.match(tokensCss, /--md-sys-typescale-body-large-font: var\(--font-roboto\);/);
 });
 
@@ -204,7 +204,7 @@ test("aucun sélecteur n'est déclaré plusieurs fois dans un même contexte CSS
   }
 });
 
-test("Roboto est chargée une fois, auto-hébergée et sans police de substitution", () => {
+test("Roboto est chargée une fois et auto-hébergée dans l'application", () => {
   assert.match(layout, /import \{ Roboto \} from "next\/font\/google"/);
   assert.match(layout, /weight:\s*\[\s*"400",\s*"500"\s*\]/);
   assert.match(layout, /subsets:\s*\[\s*"latin",\s*"latin-ext"\s*\]/);
