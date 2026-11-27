@@ -1,8 +1,8 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 4.07
-- **Mis à jour le :** 2026-11-27 14:20:04 (Europe/Paris)
+- **Version :** 4.08
+- **Mis à jour le :** 2026-11-27 14:23:11 (Europe/Paris)
 
 ## Structure de la page
 
@@ -41,7 +41,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 
 ### Comptes et administration
 - Un seul système Supabase Auth par adresse e-mail et mot de passe sert les visiteurs et les administrateurs. Le parcours public est disponible sur `/compte` ; la connexion, l'inscription, la confirmation d'adresse et la récupération de mot de passe utilisent le même client navigateur partagé.
-- Les formulaires de compte imposent 8 caractères minimum, une majuscule et un chiffre ; la limite Supabase Auth de 72 octets UTF-8 est vérifiée. Le minimum de longueur peut être appliqué côté Supabase Auth, mais les règles de composition restent côté formulaire et peuvent être contournées par un appel direct à l'API Auth.
+- Les formulaires de compte imposent 8 caractères minimum, une majuscule et un chiffre ; la limite Supabase Auth de 72 octets UTF-8 est vérifiée. Le minimum de longueur peut être appliqué côté Supabase Auth. Ses préréglages de composition ne permettent pas d'exiger exactement une majuscule et un chiffre sans aussi imposer une minuscule ; la règle exacte est donc contrôlée dans le formulaire et peut être contournée par un appel direct à l'API Auth.
 - La vérification HIBP n'est pas activée et n'est pas un prérequis ; Namesia n'impose pas de passage à Supabase Pro. Cette décision est un compromis explicite et ne vaut pas déclaration de conformité complète au NIST.
 - Les réponses de connexion et de récupération restent génériques pour limiter l'énumération des comptes. Supabase Auth fournit les limites de débit des endpoints d'authentification ; les paramètres de production doivent être vérifiés.
 - Les sessions sont gérées par `@supabase/ssr` dans des cookies de même origine (`SameSite=Lax`, `Secure` en production) avec le flux PKCE. Ces cookies ne sont pas `HttpOnly`, car le client navigateur Supabase doit les lire ; la prévention des XSS reste donc essentielle. Les routes API lisent la session depuis les cookies et vérifient l'identité avec `auth.getUser()` avant de réévaluer les droits administrateur côté serveur ; aucun jeton Bearer n'est transmis manuellement par l'interface. Les mutations administrateur exigent un `Origin` identique à l'origine de la requête. Le navigateur ne décide jamais du rôle.
