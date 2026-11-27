@@ -27,10 +27,11 @@ Le workflow n’effectue aucune recherche documentaire : le modèle n’est pas 
 Le processus sépare explicitement :
 
 1. **Génération :** prompt versionné, modèle identifié, paramètres utiles, schéma de sortie strict et entrées documentées.
-2. **Validation :** syntaxe JSON, schéma, types, champs requis, longueurs, valeurs autorisées, cohérence inter-champs, doublons, qualité rédactionnelle et règles de non-invention.
-3. **Prévisualisation :** lecture humaine du contenu et de ses limites avant toute intégration ou publication.
-4. **Import :** transformation contrôlée vers les colonnes dédiées, transaction si nécessaire, import idempotent et mise à jour ciblée.
-5. **Publication :** action explicite de l’administrateur ; le modèle et le validateur ne choisissent jamais le statut public.
+2. **Validation structurelle :** syntaxe JSON, schéma, types, champs requis, longueurs, valeurs autorisées, slug et associations. Cette étape ne vérifie pas la vérité des affirmations.
+3. **Alertes heuristiques :** détection indicative des URL, marqueurs de citation, références à des études, statistiques, années précises et phrases répétées. Le compteur est persisté avec la provenance ; le détail reste dans l’artefact temporaire. Ces alertes ne bloquent pas l’import et ne constituent pas un détecteur général d’hallucinations.
+4. **Prévisualisation et revue humaine :** lecture du contenu, des alertes et de ses limites avant toute publication ; vérification de la cohérence, de la plausibilité étymologique, des variantes et de la qualité rédactionnelle.
+5. **Import :** transformation contrôlée vers les colonnes dédiées, transaction, import idempotent et création d’un brouillon uniquement.
+6. **Publication :** action explicite de l’administrateur ; le modèle et le validateur ne choisissent jamais le statut public.
 
 Une sortie invalide ne doit jamais écraser une fiche valide. Les erreurs sont explicites ; les reprises sont maîtrisées et ne doivent pas dupliquer ou publier partiellement les données.
 
