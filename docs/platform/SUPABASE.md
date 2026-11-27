@@ -1,7 +1,7 @@
 # Supabase — Données, authentification et exploitation
 
-- **Version :** 1.0
-- **Mis à jour le :** 2026-11-27 20:00:48 (Europe/Paris)
+- **Version :** 1.1
+- **Mis à jour le :** 2026-11-27 20:17:25 (Europe/Paris)
 
 ## Périmètre et sources de vérité
 
