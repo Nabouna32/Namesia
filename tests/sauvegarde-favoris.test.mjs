@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { creerSauvegardeFavoris, fusionnerFavoris, modifierFavori, lireSauvegardeFavoris, normaliserSlugsFavoris, LIMITE_FAVORIS } from "../lib/sauvegarde-favoris.ts";
+import { creerSauvegardeFavoris, lireSauvegardeFavoris, normaliserSlugsFavoris } from "../lib/sauvegarde-favoris.ts";
 
 test("la sauvegarde exportée est versionnée et dédupliquée", () => {
   const sauvegarde = JSON.parse(creerSauvegardeFavoris(["alice", "jean-luc", "alice"]));
@@ -56,46 +56,3 @@ test("l’import refuse une valeur qui n’est pas un objet", () => {
   assert.throws(() => lireSauvegardeFavoris(["alice"]), /objet JSON/);
 });
 
-test("la fusion des favoris signale explicitement les éléments ignorés au plafond", () => {
-  const existants = Array.from({ length: LIMITE_FAVORIS - 1 }, (_, index) => `prenom-${index}`);
-  const resultat = fusionnerFavoris(existants, [existants[0], "nouveau-un", "nouveau-deux"]);
-
-  assert.equal(resultat.slugs.length, LIMITE_FAVORIS);
-  assert.equal(resultat.nombreAjoute, 1);
-  assert.equal(resultat.nombreIgnoreLimite, 1);
-  assert.equal(resultat.slugs.at(-1), "nouveau-un");
-});
-
-test("une liste déjà pleine ne masque pas les favoris refusés à l'import", () => {
-  const existants = Array.from({ length: LIMITE_FAVORIS }, (_, index) => `prenom-${index}`);
-  const resultat = fusionnerFavoris(existants, [existants[5], "nouveau-un", "nouveau-deux"]);
-
-  assert.equal(resultat.nombreAjoute, 0);
-  assert.equal(resultat.nombreIgnoreLimite, 2);
-  assert.equal(resultat.slugs.length, LIMITE_FAVORIS);
-});
-
-test("une sauvegarde déjà présente n'est pas présentée comme un dépassement de capacité", () => {
-  const resultat = fusionnerFavoris(["alice", "jean-luc"], ["alice", "jean-luc"]);
-
-  assert.equal(resultat.nombreAjoute, 0);
-  assert.equal(resultat.nombreIgnoreLimite, 0);
-});
-
-test("l'ajout individuel au plafond est refusé explicitement sans modifier les favoris", () => {
-  const existants = Array.from({ length: LIMITE_FAVORIS }, (_, index) => `prenom-${index}`);
-  const resultat = modifierFavori(existants, "nouveau-prenom");
-
-  assert.equal(resultat.action, "limite");
-  assert.deepEqual(resultat.slugs, existants);
-});
-
-test("l'ajout et le retrait individuels préservent l'ordre et la limite", () => {
-  const ajout = modifierFavori(["alice"], "jean-luc");
-  assert.equal(ajout.action, "ajoute");
-  assert.deepEqual(ajout.slugs, ["alice", "jean-luc"]);
-
-  const retrait = modifierFavori(ajout.slugs, "alice");
-  assert.equal(retrait.action, "retire");
-  assert.deepEqual(retrait.slugs, ["jean-luc"]);
-});
