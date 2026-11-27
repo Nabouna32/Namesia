@@ -1,7 +1,7 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.9
-- **Mis à jour le :** 2026-11-27 07:40:40 (Europe/Paris)
+- **Version :** 1.10
+- **Mis à jour le :** 2026-11-27 07:45:10 (Europe/Paris)
 
 Cette charte fixe les règles communes du dépôt. Les procédures détaillées restent dans les documents spécialisés : ne pas les recopier ici.
 
@@ -44,7 +44,7 @@ Références : [qualité éditoriale](docs/qualite-editoriale.md), [pipeline de 
 
 ## 5. Conception et qualité
 
-- **Material 3 Fidelity** est la base forte du design, pas une limite à l'amélioration. Avant un travail d'interface, lire [le système de design](docs/design.md) et [le registre des composants](docs/composants.md) ; réutiliser les primitives canoniques et challenger l'existant.
+- **Material 3 Fidelity** est la base forte du design, pas une limite à l'amélioration. Avant un travail d'interface, lire [le système de design](docs/design.md) et [le registre des composants](docs/composants.md) ; réutiliser les primitives canoniques et challenger l'existant. Quand aucune implémentation Web officielle, stable, maintenue et suffisamment complète n'existe, un port React/HTML local du contrat AndroidX est admis : il doit porter le nom M3 officiel, rester unique, utiliser la sémantique native et être vérifié contre une source AndroidX immuable. Ne jamais le présenter comme un composant AndroidX exécuté dans le navigateur.
 - Faire progresser ensemble beauté, lisibilité, sémantique HTML, clavier, lecteur d'écran, contrastes, responsive, performance et fiabilité. Les audits automatiques éclairent les décisions ; ils ne remplacent pas le jugement de conception.
 - Construire une base simple et modulaire adaptée à la taille réelle du projet. Éviter rustines, duplications, abstractions, dépendances et processus sans bénéfice concret.
 - Valider les données aux frontières, traiter explicitement les erreurs et ne jamais transformer une panne en résultat vide ou fictif.
@@ -53,7 +53,7 @@ Références : [qualité éditoriale](docs/qualite-editoriale.md), [pipeline de 
 ## 6. Architecture et documentation
 
 - Supabase/PostgreSQL est la source des données ; Cloudflare Workers/OpenNext héberge l'application. Les choix de stack restent contestables s'ils ne répondent plus aux besoins.
-- Toute évolution SQL respecte l'historique des migrations appliquées. Une migration déjà appliquée n'est jamais réécrite ; ajouter une migration corrective. Après une migration, régénérer `lib/supabase/database.types.ts` et vérifier RLS, policies et advisors selon [les procédures d'exploitation](docs/operations.md).
+- Toute évolution SQL respecte l'historique des migrations appliquées. Une migration déjà appliquée n'est jamais réécrite ; ajouter une migration corrective. Le type `Database` de `lib/supabase/database.types.ts` est généré depuis le schéma actif et doit être régénéré après une migration. Vérifier RLS, policies et advisors selon [les procédures d'exploitation](docs/operations.md).
 - Mettre à jour dans la même PR les documents canoniques concernés par un changement de comportement, contrat, architecture ou décision. Créer un ADR en français pour une décision structurante : contexte, options, décision, raisons, conséquences et conditions de réexamen.
 - `docs/etat-du-projet.md` décrit l'état courant ; `docs/gouvernance.md`, `docs/operations.md`, `docs/qualite-editoriale.md`, `docs/mesure-et-croissance.md`, `docs/architecture.md` et les autres documents spécialisés portent les règles détaillées.
 - La documentation courante décrit l'état et les règles encore applicables, pas le journal des opérations passées. Retirer les procédures terminées, consignes obsolètes et doublons ; conserver les décisions durables dans les ADR et l'historique Git.
