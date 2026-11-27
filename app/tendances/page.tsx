@@ -141,8 +141,15 @@ export default async function NameTrendsPage() {
                 <ul className={styles.regionalList}>
                   {NAME_REGIONAL_LEADERS_2025.filter((entry) => entry.gender === gender).map((entry) => (
                     <li key={entry.slug}>
-                      <strong>{entry.name}</strong>
+                      {publishedSlugs.has(entry.slug) ? (
+                        <Link className={styles.regionalName} href={`/prenoms/${entry.slug}`}>
+                          {entry.name}
+                        </Link>
+                      ) : (
+                        <strong>{entry.name}</strong>
+                      )}
                       <span>{entry.distinction ?? entry.regions.join(", ")}</span>
+                      {!publishedSlugs.has(entry.slug) && <span>Fiche non publiée sur Namesia</span>}
                     </li>
                   ))}
                 </ul>
