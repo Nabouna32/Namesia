@@ -80,6 +80,20 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   }, [userId]);
 
   useEffect(() => {
+    try {
+      window.localStorage.removeItem("namesia:favoris:v1");
+    } catch {
+      // La suppression des anciennes données ne doit pas bloquer l'exploration.
+    }
+
+    try {
+      window.sessionStorage.removeItem("namesia:historique-session:v1");
+    } catch {
+      // Le stockage de session peut être inaccessible selon le navigateur.
+    }
+  }, []);
+
+  useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       const nextUserId = session?.user.id ?? null;
       setUserId((current) => current === nextUserId ? current : nextUserId);
