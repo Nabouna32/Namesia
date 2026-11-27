@@ -1,7 +1,7 @@
 # Namesia
 
-- **Version :** 2.0
-- **Mis à jour le :** 2026-11-27 20:02:53 (Europe/Paris)
+- **Version :** 2.1
+- **Mis à jour le :** 2026-11-27 20:07:03 (Europe/Paris)
 
 Namesia est un catalogue de fiches de prénoms. Le dépôt contient l'application web, les contrats de données, les règles éditoriales, les décisions d'architecture et les procédures d'exploitation.
 
