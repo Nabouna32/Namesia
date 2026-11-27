@@ -68,8 +68,8 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
   }, [initialMode]);
 
   useEffect(() => {
-    if (!checking && session && redirectTo === "/admin" && mode !== "recovery" && mode !== "change") {
-      router.replace("/admin");
+    if (!checking && session && redirectTo !== "/" && mode !== "recovery" && mode !== "change") {
+      router.replace(redirectTo);
     }
   }, [checking, mode, redirectTo, router, session]);
 
