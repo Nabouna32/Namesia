@@ -15,9 +15,9 @@ Deux écosystèmes sont surveillés à la racine du dépôt :
 
 ## Planification et regroupement
 
-Les deux écosystèmes sont vérifiés quotidiennement à 12 h, fuseau `Europe/Paris`, via une planification cron. Un délai de refroidissement de sept jours (`cooldown.default-days: 7`) est appliqué aux nouvelles versions.
+Les deux écosystèmes sont vérifiés chaque jour calendaire à 12 h, fuseau `Europe/Paris`, via une planification cron. Le choix de cron évite la limite de la fréquence `daily`, qui ne s'exécute que du lundi au vendredi. Un délai de refroidissement de sept jours (`cooldown.default-days: 7`) est appliqué aux mises à jour de version. Les mises à jour de sécurité, lorsqu'elles sont activées dans les paramètres GitHub du dépôt, restent traitées par le mécanisme distinct de security updates.
 
-La configuration ne regroupe pas les mises à jour en une seule PR : chaque mise à jour reste isolée.
+La configuration ne regroupe pas les mises à jour en une seule PR : chaque mise à jour est proposée dans une PR distincte et reste isolée.
 
 ## Limite de PR ouvertes
 
