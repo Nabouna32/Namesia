@@ -21,7 +21,7 @@ export function extractOpenGraphImageUrl(html, siteUrl) {
     throw new Error("L'origine du site doit utiliser HTTPS.");
   }
 
-  const tags = [...html.matchAll(/<meta\\b[^>]*>/gi)].map(([tag]) => tag);
+  const tags = [...html.matchAll(/<meta\b[^>]*>/gi)].map(([tag]) => tag);
   const imageTag = tags.find((tag) => readAttribute(tag, "property")?.toLowerCase() === "og:image");
   if (!imageTag) {
     const existing = tags.filter((tag) => /(?:og:|twitter:)/i.test(tag));
@@ -58,7 +58,7 @@ async function main() {
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   main().catch((error) => {
-    process.stderr.write(`${error.message}\\n`);
+    process.stderr.write(`${error.message}\n`);
     process.exitCode = 1;
   });
 }
