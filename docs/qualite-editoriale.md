@@ -18,9 +18,11 @@ Distinguer les faits documentés, hypothèses étymologiques concurrentes, varia
 
 La validation structurelle et les règles déterministes peuvent être automatisées. La cohérence éditoriale, la plausibilité étymologique et la qualité culturelle nécessitent des contrôles adaptés et, pour les cas ambigus, une revue humaine. Les scores ou classifications automatiques ne sont ni des preuves ni des garanties. Les limites de chaque contrôle doivent être documentées.
 
-## Pipeline cible
+## Pipeline de génération en place
 
-Le pipeline automatisé autorisé par le propriétaire peut s’appuyer sur Groq comme point de départ, sans obligation de conserver ce fournisseur si une autre option est objectivement meilleure. Aucun service payant ni engagement financier nouveau n’est activé sans arbitrage préalable.
+La génération est exécutée en amont par le workflow GitHub Actions manuel via Groq, limité à main et à un prénom par exécution. Le modèle configuré est `openai/gpt-oss-20b`, choisi pour son support des Structured Outputs stricts. Le workflow utilise un schéma de réponse dédié, normalise les champs facultatifs, puis valide le contrat d’import Namesia avec le parseur partagé. Le dry-run est le comportement par défaut ; un import explicite crée uniquement un brouillon. Aucun endpoint public, traitement massif, planification automatique ou publication par IA n’existe.
+
+Le workflow n’effectue aucune recherche documentaire : le modèle n’est pas une source et sa sortie ne prouve pas la vérité. Il doit rester sur le niveau gratuit Groq ; si l’accès au modèle ou les quotas nécessitent une offre payante, le processus s’arrête et aucun upgrade ou moyen de paiement n’est ajouté sans arbitrage préalable.
 
 Le processus sépare explicitement :
 
@@ -34,7 +36,7 @@ Une sortie invalide ne doit jamais écraser une fiche valide. Les erreurs sont e
 
 ## Provenance et cycle de vie des fiches
 
-Conserver les métadonnées utiles à la compréhension et à la correction : provenance réellement disponible, date de génération ou révision, fournisseur et modèle, version et empreinte du prompt, version du schéma, paramètres pertinents, statut de validation et historique des modifications lorsque sa valeur le justifie. Relier les sources aux affirmations qu'elles étayent lorsqu'un véritable processus documentaire existe. Ne jamais inventer ces métadonnées après coup.
+Pour chaque génération importée, la table privée `private.name_profile_generation_metadata` conserve fournisseur, modèle, version et empreinte SHA-256 du prompt, empreinte du contenu normalisé, version du schéma de réponse, identifiant de requête, date, paramètres et usage en tokens lorsqu’il est fourni. Elle ne stocke ni prompt brut, ni secret, ni document JSON complet. Un artefact de métadonnées distinct accompagne le JSON de fiche pendant sept jours. Cette traçabilité technique ne constitue pas une validation éditoriale ; le statut de revue humaine et un historique détaillé des modifications ne sont pas encore modélisés. Relier les sources aux affirmations uniquement lorsqu’un véritable processus documentaire existe. Ne jamais inventer ces métadonnées après coup.
 
 Le cycle de vie couvre génération, validation, import, brouillon, publication, mise à jour, correction, dépublication, archivage et suppression. Les changements ciblés doivent éviter de régénérer inutilement toute une fiche. Prévenir doublons, écrasements accidentels, incohérences et publications incomplètes.
 
