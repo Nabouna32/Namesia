@@ -9,7 +9,7 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { validatePassword } from "@/lib/auth-password";
 import styles from "./account.module.css";
 
-export type AccountMode = "login" | "register" | "forgot" | "recovery";
+export type AccountMode = "login" | "register" | "forgot" | "recovery" | "change";
 
 type Props = {
   redirectTo: string;
@@ -44,7 +44,7 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
       if (event === "PASSWORD_RECOVERY") {
         setMode("recovery");
         setFeedback({ text: "Choisissez votre nouveau mot de passe.", type: "info" });
-      } else if (nextSession && mode !== "recovery") {
+      } else if (event === "SIGNED_IN") {
         setMode("login");
       }
     });
@@ -65,10 +65,10 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
       active = false;
       subscription.unsubscribe();
     };
-  }, [initialMode, mode]);
+  }, [initialMode]);
 
   useEffect(() => {
-    if (!checking && session && redirectTo === "/admin" && mode !== "recovery") {
+    if (!checking && session && redirectTo === "/admin" && mode !== "recovery" && mode !== "change") {
       router.replace("/admin");
     }
   }, [checking, mode, redirectTo, router, session]);
@@ -96,7 +96,7 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
           email: email.trim(),
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/compte?redirect=${encodeURIComponent(redirectTo)}&confirmed=1`
+            emailRedirectTo: window.location.origin + "/compte?redirect=" + encodeURIComponent(redirectTo) + "&confirmed=1"
           }
         });
         if (error) {
@@ -126,7 +126,7 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
 
       if (mode === "forgot") {
         const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-          redirectTo: `${window.location.origin}/compte?redirect=${encodeURIComponent(redirectTo)}&mode=recovery`
+          redirectTo: window.location.origin + "/compte?redirect=" + encodeURIComponent(redirectTo) + "&mode=recovery"
         });
         setFeedback({
           text: error
@@ -145,7 +145,7 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
           setPassword("");
           setConfirmation("");
           setMode("login");
-          setFeedback({ text: "Votre mot de passe a été modifié. Vous pouvez vous connecter.", type: "success" });
+          setFeedback({ text: "Votre mot de passe a été modifié.", type: "success" });
         }
       }
     } catch {
@@ -183,6 +183,7 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
         setPassword("");
         setConfirmation("");
         setCurrentPassword("");
+        setMode("login");
         setFeedback({ text: "Votre mot de passe a été modifié.", type: "success" });
       }
     } catch {
@@ -208,6 +209,23 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
 
   if (checking) return <section className={styles.panel}><p role="status">Vérification de votre session…</p></section>;
 
+  if (session && mode === "change") {
+    return (
+      <section className={styles.panel}>
+        <h2>Modifier le mot de passe</h2>
+        <p className={styles.accountEmail}>{session.user.email}</p>
+        <form className={styles.form} onSubmit={changePassword}>
+          <TextField id="account-current-password" label="Mot de passe actuel" variant="outlined" type="password" autoComplete="current-password" required value={currentPassword} onChange={(event) => setCurrentPassword(event.target.value)} />
+          <TextField id="account-new-password" label="Nouveau mot de passe" variant="outlined" type="password" autoComplete="new-password" required value={password} onChange={(event) => setPassword(event.target.value)} supportingText="15 caractères minimum. Les majuscules, chiffres et symboles ne sont pas imposés." />
+          <TextField id="account-confirm-password" label="Confirmer le nouveau mot de passe" variant="outlined" type="password" autoComplete="new-password" required value={confirmation} onChange={(event) => setConfirmation(event.target.value)} />
+          <Button type="submit" disabled={busy}>{busy ? "Enregistrement…" : "Enregistrer le mot de passe"}</Button>
+          <Button variant="text" type="button" disabled={busy} onClick={() => setMode("login")}>Annuler</Button>
+        </form>
+        {feedback && <p className={feedback.type === "error" ? styles.error : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
+      </section>
+    );
+  }
+
   if (session && mode !== "recovery") {
     return (
       <section className={styles.panel}>
@@ -215,32 +233,40 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
         <p className={styles.accountEmail}>{session.user.email}</p>
         <div className={styles.actions}>
           <Button variant="outlined" type="button" onClick={() => {
-            setMode("recovery");
+            setMode("change");
             setPassword("");
             setConfirmation("");
-            setFeedback({ text: "Choisissez votre nouveau mot de passe.", type: "info" });
+            setCurrentPassword("");
+            setFeedback(null);
           }}>Modifier le mot de passe</Button>
           <Button variant="text" type="button" disabled={busy} onClick={() => void signOut()}>Se déconnecter</Button>
         </div>
-        {mode === "recovery" && <form className={styles.form} onSubmit={changePassword}>
-          <TextField id="account-current-password" label="Mot de passe actuel" variant="outlined" type="password" autoComplete="current-password" required value={currentPassword} onChange={(event) => setCurrentPassword(event.target.value)} />
-          <TextField id="account-new-password" label="Nouveau mot de passe" variant="outlined" type="password" autoComplete="new-password" required value={password} onChange={(event) => setPassword(event.target.value)} supportingText="15 caractères minimum. Les majuscules, chiffres et symboles ne sont pas imposés." />
-          <TextField id="account-confirm-password" label="Confirmer le nouveau mot de passe" variant="outlined" type="password" autoComplete="new-password" required value={confirmation} onChange={(event) => setConfirmation(event.target.value)} />
-          <Button type="submit" disabled={busy}>{busy ? "Enregistrement…" : "Enregistrer le mot de passe"}</Button>
-          <Button variant="text" type="button" disabled={busy} onClick={() => setMode("login")}>Annuler</Button>
-        </form>}
         {feedback && <p className={feedback.type === "error" ? styles.error : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
       </section>
     );
   }
 
-  if (mode === "recovery" && !session) {
+  if (mode === "recovery") {
+    if (!session) {
+      return (
+        <section className={styles.panel}>
+          <h2>Réinitialiser le mot de passe</h2>
+          <p>Ouvrez le lien reçu par e-mail pour accéder à cette étape. Si le formulaire ne s'active pas, demandez un nouveau lien de récupération.</p>
+          {feedback && <p className={feedback.type === "error" ? styles.error : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
+          <Button variant="outlined" href="/compte?mode=forgot">Demander un nouveau lien</Button>
+        </section>
+      );
+    }
+
     return (
       <section className={styles.panel}>
-        <h2>Réinitialiser le mot de passe</h2>
-        <p>Ouvrez le lien reçu par e-mail pour accéder à cette étape. Si le formulaire ne s'active pas, demandez un nouveau lien de récupération.</p>
+        <h2>Choisir un nouveau mot de passe</h2>
+        <form className={styles.form} onSubmit={submit}>
+          <TextField id="account-recovery-password" label="Nouveau mot de passe" variant="outlined" type="password" autoComplete="new-password" required value={password} onChange={(event) => setPassword(event.target.value)} supportingText="15 caractères minimum. Les majuscules, chiffres et symboles ne sont pas imposés." />
+          <TextField id="account-recovery-confirm" label="Confirmer le nouveau mot de passe" variant="outlined" type="password" autoComplete="new-password" required value={confirmation} onChange={(event) => setConfirmation(event.target.value)} />
+          <Button type="submit" disabled={busy}>{busy ? "Enregistrement…" : "Réinitialiser le mot de passe"}</Button>
+        </form>
         {feedback && <p className={feedback.type === "error" ? styles.error : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
-        <Button variant="outlined" href="/compte?mode=forgot">Demander un nouveau lien</Button>
       </section>
     );
   }
