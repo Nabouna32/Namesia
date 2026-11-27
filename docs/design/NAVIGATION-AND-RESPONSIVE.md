@@ -1,7 +1,7 @@
 # Navigation, responsive et accessibilité — Namesia
 
 - **Version :** 1.0
-- **Mis à jour le :** 2026-11-27 20:01:15 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 20:07:03 (Europe/Paris)
 
 
 Ce guide complète les [fondations visuelles](FOUNDATIONS.md), les [composants](COMPONENTS.md) et le [système de design](../DESIGN-SYSTEM.md).
