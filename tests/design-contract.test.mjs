@@ -16,10 +16,10 @@ const fiche = await readFile(join(root, "lib/fiche-prenom.ts"), "utf8");
 const schema = await readFile(join(root, "schemas/fiche-prenom.schema.json"), "utf8");
 const messageComponent = await readFile(join(root, "components/material3/Snackbar.tsx"), "utf8");
 const messageStyles = await readFile(join(root, "components/material3/Snackbar.module.css"), "utf8");
-const composantsDoc = await readFile(join(root, "docs/composants.md"), "utf8");
-const designDoc = await readFile(join(root, "docs/design.md"), "utf8");
-const architectureDoc = await readFile(join(root, "docs/architecture.md"), "utf8");
-const materialVerificationDoc = await readFile(join(root, "docs/material-3-verification.md"), "utf8");
+const composantsDoc = await readFile(join(root, "docs/design/COMPONENTS.md"), "utf8");
+const designDoc = await readFile(join(root, "docs/design/NAVIGATION-AND-RESPONSIVE.md"), "utf8");
+const architectureDoc = await readFile(join(root, "docs/ARCHITECTURE.md"), "utf8");
+const materialVerificationDoc = await readFile(join(root, "docs/MATERIAL-3-VERIFICATION.md"), "utf8");
 const navigationComponent = await readFile(join(root, "components/material3/NavigationDestinations.tsx"), "utf8");
 const comparisonSelectionComponent = await readFile(join(root, "components/features/comparison/ComparisonSelection.tsx"), "utf8");
 const agents = await readFile(join(root, "AGENTS.md"), "utf8");
@@ -358,9 +358,9 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.match(composantsDoc, /FilterChip/);
   assert.match(composantsDoc, /SearchBar/);
   assert.match(composantsDoc, /components\/material3/);
-  assert.match(agents, /doit porter le nom M3 officiel/);
+  assert.match(composantsDoc, /noms, variantes, anatomie, dimensions et états suivent AndroidX Compose Material 3/);
   assert.match(agents, /port React\/HTML local du contrat AndroidX est admis/);
-  assert.match(agents, /sans alias ni wrapper Namesia|wrappers Namesia/);
+  assert.match(composantsDoc, /pas de wrappers de convenance/);
   assert.doesNotMatch(composantsDoc, /ChampRecherche|ChipFiltre|MessageStatut/);
   assert.match(composantsDoc, /SearchBarTokens/);
   assert.match(composantsDoc, /ButtonSmallTokens/);
@@ -387,7 +387,7 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.ok(materialVerificationDoc.includes("d4f63c567f73b16717f4c04b57fa6390d0b2312d"));
   assert.doesNotMatch(materialVerificationDoc, /b4de401/);
   assert.doesNotMatch(materialVerificationDoc, /(?:blob|tree)[/]main[/]/);
-  assert.match(agents, /Avant de créer ou refondre une page, lire/);
+  assert.match(agents, /docs\\/DESIGN-SYSTEM\\.md/);
 });
 
 test("le hero d'accueil sépare le récit et les outils dans une composition Fidelity responsive", () => {
