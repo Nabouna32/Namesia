@@ -1,6 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import { extractOpenGraphImageUrl } from "../scripts/verify-open-graph.mjs";
+
+const workflow = await readFile(new URL("../.github/workflows/cloudflare.yml", import.meta.url), "utf8");
 
 const siteUrl = "https://namesia.nabouna.workers.dev";
 
@@ -46,4 +49,10 @@ test("refuse une origine de site non HTTPS", () => {
     () => extractOpenGraphImageUrl('<meta property="og:image" content="https://namesia.nabouna.workers.dev/image.png">', "http://namesia.nabouna.workers.dev"),
     /doit utiliser HTTPS/
   );
+});
+
+test("le contrôle post-déploiement extrait og:image et vérifie le type MIME", () => {
+  assert.match(workflow, /node scripts\/verify-open-graph\.mjs/);
+  assert.match(workflow, /profile_og_type/);
+  assert.match(workflow, /test "\$profile_og_type" = "image\/png"/);
 });
