@@ -254,18 +254,19 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     [records]
   );
 
+  const dataReady = initialized && ready && loadedUserId === userId;
   const value = useMemo(() => ({
-    slugs,
-    unavailableCount: records.filter((record) => record.slug === null).length,
+    slugs: dataReady ? slugs : [],
+    unavailableCount: dataReady ? records.filter((record) => record.slug === null).length : 0,
     authenticated: Boolean(userId),
-    ready: initialized && ready && loadedUserId === userId,
+    ready: dataReady,
     error,
     basculer,
     retirerPlusieurs,
     retirerIndisponibles,
     ajouterPlusieurs
   }), [
-    slugs, records, userId, initialized, ready, loadedUserId, error,
+    slugs, records, userId, dataReady, error,
     basculer, retirerPlusieurs, retirerIndisponibles, ajouterPlusieurs
   ]);
 
