@@ -1,6 +1,8 @@
-# ADR-0047 — Le stockage de session est la source de vérité de l’historique
+# ADR-0047 — Ancienne décision de stockage local de l’historique
 
-- **Statut :** acceptée
+- **Statut :** remplacée par ADR-0053 et suspendue dans l'attente de l'arbitrage #405
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-27 14:34:10 (Europe/Paris)
 - **Date :** 2026-11-25
 - **Portée :** historique de navigation du site public
 
@@ -15,23 +17,22 @@ Cette seconde source de vérité rendait le comportement moins prévisible : une
 - **Conserver l’état mémoire en cas d’échec :** l’historique reste temporairement utilisable, mais sa persistance devient conditionnelle et le contrat produit change silencieusement.
 - **Désactiver l’historique sans stockage :** l’action est explicite et l’état affiché correspond toujours à la donnée effectivement conservée.
 
-## Décision
+## Ancienne décision (historique)
 
-`sessionStorage` est l’unique source de vérité de l’historique.
+`sessionStorage` avait été retenu comme source de vérité pour l'historique temporaire de navigation. Cette décision n'est plus applicable depuis l'adoption du compte facultatif et des fonctions personnelles liées au compte dans ADR-0053.
 
-- Le fournisseur lit le stockage à son initialisation.
-- Chaque ajout, retrait ou effacement écrit la nouvelle valeur dans `sessionStorage` avant de modifier l’état React.
-- Si la lecture ou l’écriture échoue, l’erreur est exposée et aucune valeur volatile n’est présentée comme un historique conservé.
-- Une lecture invalide suspend les enregistrements automatiques : aucune visite ne remplace silencieusement la valeur illisible. L’utilisateur peut demander explicitement la réinitialisation ; si le stockage reste inaccessible, l’erreur demeure.
-- Une écriture réussie rétablit le fonctionnement et efface l’état d’erreur.
-- Aucune synchronisation inter-onglets ou persistance serveur n’est ajoutée.
+## État actuel
+
+- L'ancien historique `sessionStorage` n'est plus lu ni alimenté ; sa clé est supprimée au chargement de l'application.
+- Aucune visite n'est actuellement enregistrée, localement ou côté serveur.
+- L'historique cible doit être privé, associé au compte, activé explicitement, limité dans le temps et effaçable.
+- L'activation et la durée de conservation proposées sont suivies dans l'issue [#405](https://github.com/Nabouna32/Namesia/issues/405).
 
 ## Conséquences
 
-- L’interface n’affiche plus de résultat qui disparaîtra au prochain rechargement.
-- Les navigateurs qui bloquent le stockage désactivent cette fonction et reçoivent un message explicite.
-- Le contrat est couvert par un test qui vérifie l’ordre écriture/mise à jour et l’absence de mutation mémoire en cas d’échec.
+- L'ancienne persistance locale est désactivée et les visites ne sont plus enregistrées avant l'arbitrage #405.
+- La consultation des fiches reste libre, sans compte ni collecte d'historique.
 
 ## Validation
 
-La CI GitHub Actions exécute les tests de contrat, le contrôle TypeScript et le build. Aucun contrôle local n’est exécuté conformément à `AGENTS.md`.
+La CI GitHub Actions vérifie que l'ancien stockage local n'est plus lu ni alimenté. Aucun contrôle local n'est exécuté conformément à `AGENTS.md`.
