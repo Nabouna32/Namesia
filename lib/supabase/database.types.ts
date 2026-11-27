@@ -135,6 +135,20 @@ export type Database = {
           p_content: Json
           p_display_name: string
           p_gender: string
+          p_generated_at?: string
+          p_generation_content_sha256?: string
+          p_generation_editorial_warning_count?: number
+          p_generation_input_tokens?: number
+          p_generation_max_completion_tokens?: number
+          p_generation_model?: string
+          p_generation_output_tokens?: number
+          p_generation_prompt_sha256?: string
+          p_generation_prompt_version?: string
+          p_generation_provider?: string
+          p_generation_request_id?: string
+          p_generation_schema_version?: string
+          p_generation_temperature?: number
+          p_generation_workflow_run_id?: number
           p_schema_version: string
           p_slug: string
         }
