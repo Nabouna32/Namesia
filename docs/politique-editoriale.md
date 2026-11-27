@@ -2,7 +2,7 @@
 
 - **Statut :** document canonique
 - **Version :** 2.4
-- **Mis à jour le :** 2026-11-27 10:40:53 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 10:42:38 (Europe/Paris)
 
 ## 1. Nature des contenus
 
