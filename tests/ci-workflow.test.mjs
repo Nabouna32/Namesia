@@ -6,11 +6,11 @@ const workflow = await readFile(new URL("../.github/workflows/ci.yml", import.me
 const agents = await readFile(new URL("../AGENTS.md", import.meta.url), "utf8");
 
 test("les actions GitHub sont épinglées sur des commits immuables", () => {
-  const references = [...workflow.matchAll(/^\s*uses:\s*([^@\s]+)@([^\s#]+)(?:\s+#\s*(v[\w.-]+))?\s*$/gm)];
+  const references = [...workflow.matchAll(/^\\s*uses:\\s*([^@\\s]+)@([^\\s#]+)(?:\\s+#\\s*(v[\\w.-]+))?\\s*$/gm)];
   assert.ok(references.length > 0, "Le workflow doit déclarer ses actions explicitement");
   for (const [, action, sha, version] of references) {
     assert.match(sha, /^[a-f0-9]{40}$/, `Référence mutable pour ${action}`);
-    assert.match(version ?? "", /^v\d+(?:\.\d+(?:\.\d+)?)?$/, `Version amont absente pour ${action}`);
+    assert.match(version ?? "", /^v\\d+(?:\\.\\d+(?:\\.\\d+)?)?$/, `Version amont absente pour ${action}`);
   }
   assert.match(agents, /Toutes les actions GitHub.*SHA de commit complet à 40 caractères/);
   assert.match(workflow, /persist-credentials: false/);
@@ -21,12 +21,12 @@ test("les actions GitHub sont épinglées sur des commits immuables", () => {
 });
 
 test("la CI bloque sur un audit de production rouge et expose l'audit complet en diagnostic", () => {
-  assert.match(workflow, /id: audit[\s\S]*npm audit --omit=dev --audit-level=high[\s\S]*continue-on-error: true/);
-  assert.match(workflow, /id: audit_full[\s\S]*npm audit --audit-level=high[\s\S]*continue-on-error: true/);
-  assert.match(workflow, /AUDIT_OUTCOME: \$\{\{ steps\.audit\.outcome \}\}/);
-  assert.match(workflow, /AUDIT_FULL_OUTCOME: \$\{\{ steps\.audit_full\.outcome \}\}/);
-  assert.match(workflow, /if \[\[ "\$AUDIT_OUTCOME" != "success"/);
-  assert.doesNotMatch(workflow, /if \[\[ [^\n]*AUDIT_FULL_OUTCOME/);
+  assert.match(workflow, /id: audit[\\s\\S]*npm audit --omit=dev --audit-level=high[\\s\\S]*continue-on-error: true/);
+  assert.match(workflow, /id: audit_full[\\s\\S]*npm audit --audit-level=high[\\s\\S]*continue-on-error: true/);
+  assert.match(workflow, /AUDIT_OUTCOME: \\$\\{\\{ steps\\.audit\\.outcome \\}\\}/);
+  assert.match(workflow, /AUDIT_FULL_OUTCOME: \\$\\{\\{ steps\\.audit_full\\.outcome \\}\\}/);
+  assert.match(workflow, /if \\[\\[ "\\$AUDIT_OUTCOME" != "success"/);
+  assert.doesNotMatch(workflow, /if \\[\\[ [^\\n]*AUDIT_FULL_OUTCOME/);
 });
 
 test("la CI restaure le cache Next.js avec une action épinglée", () => {
@@ -36,8 +36,10 @@ test("la CI restaure le cache Next.js avec une action épinglée", () => {
   assert.ok(workflow.includes("restore-keys:"));
 });
 
-test("la charte impose d'attendre la fin de la CI avant toute fusion", () => {
-  assert.match(agents, /attendre la fin de tous les contrôles requis avant de fusionner/);
-  assert.match(agents, /Ne jamais fusionner tant qu'un contrôle est en cours ou en attente/);
-  assert.match(agents, /Si un contrôle échoue[\s\S]*corriger la cause puis attendre une nouvelle exécution complète/);
+test("la charte distingue les échecs CI des contrôles encore en cours", () => {
+  assert.match(agents, /Consulter une fois l'état de la CI GitHub Actions pour chaque PR/);
+  assert.match(agents, /Si un contrôle a échoué, lire ses jobs et ses logs, corriger la cause, puis vérifier la nouvelle exécution/);
+  assert.match(agents, /Si les contrôles sont encore en cours, ne pas attendre leur fin : tenter la fusion autorisée/);
+  assert.match(agents, /Si GitHub bloque la fusion en raison d'une règle de protection, ne pas contourner cette protection/);
+  assert.doesNotMatch(agents, /attendre la fin de tous les contrôles requis avant de fusionner/);
 });
