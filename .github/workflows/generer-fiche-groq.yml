@@ -70,7 +70,7 @@ jobs:
           SUPABASE_SECRET_KEY: ${{ inputs.import_as_draft && secrets.SUPABASE_SECRET_KEY || '' }}
         run: npm run generate:fiche
 
-      - name: Conserver le JSON généré temporairement
+      - name: Conserver temporairement la fiche et ses métadonnées
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
