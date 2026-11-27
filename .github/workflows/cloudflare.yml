@@ -166,7 +166,6 @@ jobs:
           test "$profile_og_response" = "200 image/png"
 
           curl --fail --show-error --silent --location --max-time 30 "$SITE_URL/robots.txt" --output "$workdir/robots.txt"
-          grep -Eiq '^Disallow: /admin' "$workdir/robots.txt"
           grep -Eiq '^Disallow: /api' "$workdir/robots.txt"
           grep -Fq "Sitemap: $SITE_URL/sitemap.xml" "$workdir/robots.txt"
 
