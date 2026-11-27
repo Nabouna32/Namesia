@@ -273,11 +273,13 @@ export async function genererFiche({
   if (!groqApiKey) throw new Error("Le secret GitHub GROQ_API_KEY n’est pas configuré.");
 
   let supabaseUrl = null;
+  let supabaseSecretKey = "";
   if (importAsDraft) {
-    if (!env.SUPABASE_URL || !env.SUPABASE_SECRET_KEY) {
+    supabaseSecretKey = typeof env.SUPABASE_SECRET_KEY === "string" ? env.SUPABASE_SECRET_KEY.trim() : "";
+    if (!env.SUPABASE_URL || !supabaseSecretKey) {
       throw new Error("L’import exige SUPABASE_URL et le secret SUPABASE_SECRET_KEY.");
     }
-    if (!env.SUPABASE_SECRET_KEY.startsWith("sb_secret_")) {
+    if (!supabaseSecretKey.startsWith("sb_secret_")) {
       throw new Error("SUPABASE_SECRET_KEY doit être une clé secrète Supabase moderne (sb_secret_).");
     }
     supabaseUrl = normaliserSupabaseUrl(env.SUPABASE_URL);
@@ -306,6 +308,10 @@ export async function genererFiche({
   const generationMetadata = {
     provider: GROQ_PROVIDER,
     model: groq.result.model || GROQ_MODEL,
+    displayName: fiche.identity.display_name,
+    slug,
+    gender: fiche.identity.gender,
+    ficheSchemaVersion: fiche.schema_version,
     promptVersion,
     promptSha256,
     schemaVersion: GENERATION_SCHEMA_VERSION,
@@ -328,7 +334,7 @@ export async function genererFiche({
   if (importAsDraft) {
     imported = await importerDansSupabase({
       supabaseUrl,
-      secretKey: env.SUPABASE_SECRET_KEY,
+      secretKey: supabaseSecretKey,
       fiche,
       metadata: {
         provider: GROQ_PROVIDER,
