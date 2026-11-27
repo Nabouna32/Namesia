@@ -12,5 +12,5 @@ test("un import partiel utilise un avertissement et non un succès", () => {
 test("un nouvel import efface le retour de copie lié à l'ancienne sélection", () => {
   assert.match(favoris, /async function importerFavoris\([^]*?if \(!fichier\) return;\s*effacerFeedbackCopie\(\);/);
   assert.match(favoris, /const resultat = await ajouterPlusieurs\(slugsImportes\)/);
-  assert.match(favoris, /async function migrerFavorisLocaux/);
+  assert.doesNotMatch(favoris, /migrerFavorisLocaux|localStorage/);
 });
