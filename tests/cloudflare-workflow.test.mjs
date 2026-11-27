@@ -16,7 +16,7 @@ test("les déploiements Cloudflare distants sont réservés à main", () => {
 
 test("le diagnostic Playwright déclenché par label utilise un Worker local", () => {
   assert.match(workflow, /github\.event\.action == 'labeled' && github\.event\.label\.name == 'diagnostic-playwright'/);
-  assert.match(workflow, /wrangler dev (local par défaut, sans --remote) --ip 127\.0\.0\.1 --port 8787/);
+  assert.match(workflow, /wrangler dev (mode local par défaut ; ne pas utiliser --remote) --ip 127\.0\.0\.1 --port 8787/);
   assert.match(workflow, /PLAYWRIGHT_BASE_URL: \$\{\{ steps\.local_worker\.outputs\.test_url \}\}/);
   assert.match(workflow, /diagnostics-playwright-pr-/);
   assert.match(workflow, /retention-days: 1/);
