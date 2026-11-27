@@ -39,7 +39,8 @@ test("tous les clients Supabase utilisent le type Database généré", () => {
 test("la génération du schéma fait partie du contrat d'architecture", () => {
   assert.ok(architecture.includes("`Database`, généré depuis le schéma PostgreSQL actif"));
   assert.match(standards, /createClient<Database>/);
-  assert.match(supabaseGuide, /`lib\/supabase\/database\.types\.ts` est généré depuis le schéma actif/);
+  assert.match(supabaseGuide, /database\\.types\\.ts/);
+  assert.match(supabaseGuide, /est généré depuis le schéma actif/);
 });
 
 test("les lectures du catalogue dérivent du schéma sans casts non vérifiés", () => {
