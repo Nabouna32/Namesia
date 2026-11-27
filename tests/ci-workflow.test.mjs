@@ -9,8 +9,8 @@ test("les actions GitHub sont épinglées sur des commits immuables", () => {
   const references = [...workflow.matchAll(/^\s*uses:\s*([^@\s]+)@([^\s#]+)(?:\s+#\s*(v[\w.-]+))?\s*$/gm)];
   assert.ok(references.length > 0, "Le workflow doit déclarer ses actions explicitement");
   for (const [, action, sha, version] of references) {
-    assert.match(sha, /^[a-f0-9]{40}$/, `Référence mutable pour ${action}`);
-    assert.match(version ?? "", /^v\d+(?:\.\d+(?:\.\d+)?)?$/, `Version amont absente pour ${action}`);
+    assert.match(sha, /^[a-f0-9]{40}$/, "Référence mutable pour " + action);
+    assert.match(version ?? "", /^v\d+(?:\.\d+(?:\.\d+)?)?$/, "Version amont absente pour " + action);
   }
   assert.match(agents, /Toutes les actions GitHub.*SHA de commit complet à 40 caractères/);
   assert.match(workflow, /persist-credentials: false/);
@@ -32,12 +32,14 @@ test("la CI bloque sur un audit de production rouge et expose l'audit complet en
 test("la CI restaure le cache Next.js avec une action épinglée", () => {
   assert.ok(workflow.includes("actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0"));
   assert.ok(workflow.includes("path: .next/cache"));
-  assert.ok(workflow.includes("key: ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}-${{ github.sha }}"));
+  assert.ok(workflow.includes("key: \${{ runner.os }}-nextjs-\${{ hashFiles('package-lock.json') }}-\${{ github.sha }}"));
   assert.ok(workflow.includes("restore-keys:"));
 });
 
-test("la charte impose d'attendre la fin de la CI avant toute fusion", () => {
-  assert.match(agents, /attendre la fin de tous les contrôles requis avant de fusionner/);
-  assert.match(agents, /Ne jamais fusionner tant qu'un contrôle est en cours ou en attente/);
-  assert.match(agents, /Si un contrôle échoue[\s\S]*corriger la cause puis attendre une nouvelle exécution complète/);
+test("la charte distingue les échecs CI des contrôles encore en cours", () => {
+  assert.match(agents, /Consulter une fois l'état de la CI GitHub Actions pour chaque PR/);
+  assert.match(agents, /Si un contrôle a échoué, lire ses jobs et ses logs, corriger la cause, puis vérifier la nouvelle exécution/);
+  assert.match(agents, /Si les contrôles sont encore en cours, ne pas attendre leur fin : tenter la fusion autorisée/);
+  assert.match(agents, /Si GitHub bloque la fusion en raison d'une règle de protection, ne pas contourner cette protection/);
+  assert.doesNotMatch(agents, /attendre la fin de tous les contrôles requis avant de fusionner/);
 });
