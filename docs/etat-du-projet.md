@@ -1,8 +1,8 @@
 # État du projet — Namesia
 
 - **Statut :** PRÉ-LANCEMENT / DÉVELOPPEMENT
-- **Version :** 1.1
-- **Mis à jour le :** 2026-11-27 14:43:35 (Europe/Paris)
+- **Version :** 1.2
+- **Mis à jour le :** 2026-11-27 14:56:28 (Europe/Paris)
 
 Ce document résume l'état opérationnel et les arbitrages actifs. Les détails d'architecture, de sécurité et de données restent dans les ADR et documents spécialisés.
 
@@ -40,7 +40,9 @@ Ce document résume l'état opérationnel et les arbitrages actifs. Les détails
 ## Travaux en cours
 
 - **PR #403 —** [Comptes Namesia et favoris liés au compte](https://github.com/Nabouna32/Namesia/pull/403), en brouillon sur `feat/comptes-utilisateurs-mot-de-passe`.
-- La PR inclut l'authentification partagée, les favoris synchronisés, la migration locale explicite et la suspension de l'historique en attente de décision.
+- La PR inclut l'authentification partagée, les favoris synchronisés, la migration locale explicite, la suspension de l'historique en attente de décision et la correction de la référence Open Graph des fiches.
+- Derniers contrôles GitHub Actions : tests, TypeScript, build, audit des workflows, Preview Cloudflare et parcours Playwright réussis.
+- Le dernier contrôle post-déploiement Cloudflare de `main` avait échoué sur la présence de la référence Open Graph dans le HTML. La correction est vérifiée sur la Preview de la PR ; `main` reste inchangée tant que la PR n'est pas fusionnée.
 - Les migrations des favoris ont été appliquées au projet Supabase et sont présentes dans la branche de travail. Aucun favori de test n'a été conservé.
 - Le code n'est pas fusionné dans `main` et aucun déploiement de production n'a été effectué.
 - L'issue [#404](https://github.com/Nabouna32/Namesia/issues/404) reste ouverte pour l'historique, l'accès/suppression des données et la suppression du compte.
