@@ -71,6 +71,7 @@ test("le slug est déterministe et normalise les accents", () => {
   assert.equal(slugifierPrenom("Ælina"), "aelina");
   assert.equal(slugifierPrenom("Đorđe"), "dorde");
   assert.equal(slugifierPrenom("Þór"), "thor");
+  assert.equal(slugifierPrenom("ẞara"), "ssara");
   assert.equal(normaliserNom("  Élodie  "), "Élodie");
   assert.equal(normaliserNom("E\u0301lodie"), "Élodie");
   assert.throws(() => slugifierPrenom("Иван"), /translittération latine/);
@@ -210,6 +211,8 @@ test("l’import SQL réserve les métadonnées au service_role et protège l’
   assert.match(migration, /current_user = 'service_role'/);
   assert.match(migration, /service_role/);
   assert.match(migration, /request_id text not null unique/);
+  assert.match(migration, /status, schema_version/);
+  assert.match(migration, /values \(v_name_id, v_version, 'draft', p_schema_version/);
   assert.match(migration, /content_sha256 text not null/);
   assert.match(migration, /v_existing_content_sha256 is distinct from p_generation_content_sha256/);
   assert.match(migration, /revoke all on table private\.name_profile_generation_metadata from public, anon, authenticated/);
