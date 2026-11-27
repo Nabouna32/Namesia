@@ -2,7 +2,7 @@
 
 - **Statut :** remplacée par ADR-0053 et suspendue dans l'attente de l'arbitrage #405
 - **Version :** 1.1
-- **Mis à jour le :** 2026-11-27 14:34:10 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 15:13:01 (Europe/Paris)
 - **Date :** 2026-11-25
 - **Portée :** historique de navigation du site public
 
