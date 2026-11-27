@@ -12,7 +12,9 @@ test("les favoris courants sont chargés depuis Supabase et jamais depuis le sto
   assert.match(provider, /\.from\("user_favorites"\)/);
   assert.match(provider, /\.eq\("user_id", targetUserId\)/);
   assert.match(provider, /\.insert\(\{ user_id: userId, name_id: name\.id \}\)/);
-  assert.match(provider, /localStorage\.removeItem\("namesia:favoris:v1"\)/);\n  assert.match(provider, /sessionStorage\.removeItem\("namesia:historique-session:v1"\)/);\n  assert.doesNotMatch(provider, /(?:localStorage|sessionStorage)\.(?:getItem|setItem)/);
+  assert.match(provider, /localStorage\.removeItem\("namesia:favoris:v1"\)/);
+  assert.match(provider, /sessionStorage\.removeItem\("namesia:historique-session:v1"\)/);
+  assert.doesNotMatch(provider, /(?:localStorage|sessionStorage)\.(?:getItem|setItem)/);
 });
 
 test("une fiche reste consultable sans compte et propose une connexion pour ajouter un favori", () => {
