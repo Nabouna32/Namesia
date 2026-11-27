@@ -34,3 +34,28 @@ export const NAME_POPULARITY_2025: readonly NamePopularity2025[] = [
 export function getNamePopularity2025(slug: string): NamePopularity2025 | undefined {
   return NAME_POPULARITY_2025.find((entry) => entry.slug === slug);
 }
+
+export type NameRegionalLeader2025 = {
+  slug: string;
+  name: string;
+  gender: "Féminin" | "Masculin";
+  regions: readonly string[];
+  distinction?: string;
+};
+
+export const NAME_REGIONAL_LEADERS_2025: readonly NameRegionalLeader2025[] = [
+  { slug: "louise", name: "Louise", gender: "Féminin", regions: ["Nouvelle-Aquitaine", "Bourgogne-Franche-Comté", "Bretagne", "Occitanie"] },
+  { slug: "jade", name: "Jade", gender: "Féminin", regions: ["Auvergne-Rhône-Alpes", "Normandie", "Grand Est"] },
+  { slug: "ambre", name: "Ambre", gender: "Féminin", regions: ["Hauts-de-France", "Centre-Val de Loire"] },
+  { slug: "alba", name: "Alba", gender: "Féminin", regions: ["Provence-Alpes-Côte d’Azur", "Corse"] },
+  { slug: "adele", name: "Adèle", gender: "Féminin", regions: ["Pays de la Loire"] },
+  { slug: "alma", name: "Alma", gender: "Féminin", regions: ["Île-de-France"] },
+  { slug: "inaya", name: "Inaya", gender: "Féminin", regions: ["Martinique", "Guyane", "La Réunion", "Mayotte"] },
+  { slug: "luna", name: "Luna", gender: "Féminin", regions: ["Guadeloupe"] },
+  { slug: "gabriel", name: "Gabriel", gender: "Masculin", regions: [], distinction: "12 régions sur 18" },
+  { slug: "malo", name: "Malo", gender: "Masculin", regions: ["Bretagne"] },
+  { slug: "jayden", name: "Jayden", gender: "Masculin", regions: ["Guyane"] },
+  { slug: "kais", name: "Kaïs", gender: "Masculin", regions: ["La Réunion"] },
+  { slug: "rayane", name: "Rayane", gender: "Masculin", regions: ["Mayotte"] },
+  { slug: "noah", name: "Noah", gender: "Masculin", regions: ["Guadeloupe", "Martinique"] }
+];
