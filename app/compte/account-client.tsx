@@ -118,7 +118,7 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
           setFeedback({ text: "Adresse e-mail ou mot de passe incorrect.", type: "error" });
         } else {
           setPassword("");
-          if (redirectTo === "/admin") router.replace("/admin");
+          if (redirectTo !== "/") router.replace(redirectTo);
           else setFeedback({ text: "Vous êtes connecté à votre compte Namesia.", type: "success" });
         }
         return;
