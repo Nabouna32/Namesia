@@ -23,7 +23,7 @@ test("le diagnostic Playwright déclenché par label utilise un Worker local", (
   assert.match(workflow, /retention-days: 1/);
 });
 
-test("les anciennes previews sont seulement supprimées à la fermeture d’une PR", () => {
+test("les anciennes Previews ne peuvent être nettoyées qu'à la fermeture d'une PR", () => {
   assert.match(workflow, /cleanup:\s*\n\s*name: Nettoyer une ancienne Preview Cloudflare/);
   assert.match(workflow, /github\.event\.action == 'closed'/);
   assert.match(workflow, /wrangler preview delete/);
