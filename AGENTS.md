@@ -1,7 +1,7 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.6
-- **Mis à jour le :** 2026-11-27 01:56:00 (Europe/Paris)
+- **Version :** 1.7
+- **Mis à jour le :** 2026-11-27 02:04:28 (Europe/Paris)
 
 Cette charte s'applique à tout le dépôt, aux contributions humaines et aux agents IA.
 
@@ -98,7 +98,7 @@ Pour un arbitrage significatif, expliciter le constat, le challenge, les options
 
 - Le dépôt Git est la mémoire durable du projet.
 - Utiliser les outils, intégrations et connecteurs disponibles lorsqu'ils apportent une valeur réelle ; rechercher et recommander des intégrations complémentaires si elles sont utiles. Toute installation ou connexion exige l'action explicite du propriétaire.
-- `docs/etat-du-projet.md` décrit l'état courant ; `docs/gouvernance.md`, `docs/operations.md`, `docs/qualite-editoriale.md` et `docs/mesure-et-croissance.md` portent les règles thématiques. Les deux fichiers `docs/instructions-chatgpt/` sont des résumés à copier manuellement dans les projets correspondants ; chacun reste sous 8 000 caractères, espaces compris.
+- `docs/etat-du-projet.md` décrit l'état courant ; `docs/gouvernance.md`, `docs/operations.md`, `docs/qualite-editoriale.md` et `docs/mesure-et-croissance.md` portent les règles thématiques. Les fichiers `mode-autonome.txt` et `mode-discussion.txt` dans `docs/instructions-chatgpt/` sont les textes bruts à copier dans les projets ChatGPT. Leur organisation et leur entretien sont expliqués dans `organisation.txt` ; les détails de référence restent dans les documents canoniques.
 - Toute PR qui change un comportement, un contrat, une architecture ou une décision met à jour les documents concernés dans la même PR.
 - Éviter les doublons et désigner un emplacement canonique par information structurante.
 - Distinguer les faits, hypothèses, propositions, décisions acceptées et décisions obsolètes.
