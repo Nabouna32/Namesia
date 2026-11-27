@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 const workflow = await readFile(new URL("../.github/workflows/ci.yml", import.meta.url), "utf8");
-const agents = await readFile(new URL("../AGENTS.md", import.meta.url), "utf8");\nconst actionsGuide = await readFile(new URL("../docs/platform/GITHUB-ACTIONS.md", import.meta.url), "utf8");
+const agents = await readFile(new URL("../AGENTS.md", import.meta.url), "utf8");
+const actionsGuide = await readFile(new URL("../docs/platform/GITHUB-ACTIONS.md", import.meta.url), "utf8");
 
 test("les actions GitHub sont épinglées sur des commits immuables", () => {
   const references = [...workflow.matchAll(/^\s*uses:\s*([^@\s]+)@([^\s#]+)(?:\s+#\s*(v[\w.-]+))?\s*$/gm)];
@@ -39,5 +40,5 @@ test("la CI restaure le cache Next.js avec une action épinglée", () => {
 test("la charte impose d'attendre la fin de la CI avant toute fusion", () => {
   assert.match(agents, /attendre la fin de tous les contrôles requis avant de fusionner/);
   assert.match(agents, /Ne jamais fusionner tant qu'un contrôle requis est en cours, en attente ou en échec/);
-  assert.match(agents, /Si un contrôle échoue[\s\S]*corriger la cause puis attendre une nouvelle exécution complète/);
+  assert.match(actionsGuide, /Corriger la cause et attendre un run complet sur le nouveau SHA/);
 });
