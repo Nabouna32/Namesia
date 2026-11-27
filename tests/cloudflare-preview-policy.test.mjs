@@ -46,5 +46,8 @@ test("la production vérifie SSR, catalogue, SEO, Open Graph et refuse l'adminis
   assert.match(workflow, /node scripts\/verify-open-graph\.mjs/);
   assert.match(workflow, /profile_og_response/);
   assert.match(workflow, /200 image\/png/);
-  assert.match(workflow, /test "\$status" = "401"/);
+  assert.match(workflow, /test "\$get_status" = "401"/);
+  assert.match(workflow, /test "\$post_without_origin_status" = "403"/);
+  assert.match(workflow, /Origin: \\$SITE_URL/);
+  assert.match(workflow, /test "\$post_with_origin_status" = "401"/);
 });
