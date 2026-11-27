@@ -1,8 +1,8 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 4.09
-- **Mis à jour le :** 2026-11-27 14:34:10 (Europe/Paris)
+- **Version :** 4.10
+- **Mis à jour le :** 2026-11-27 14:43:35 (Europe/Paris)
 
 ## Structure de la page
 
@@ -58,7 +58,7 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Les fonctions sont SECURITY INVOKER ; elles ne contournent pas RLS.
 - Aucune clé privilégiée Supabase dans le navigateur.
 - Les visiteurs disposent uniquement de la lecture des identités ayant une version publiée et de ces versions publiées.
-- `public.user_favorites` conserve les favoris personnels dans une table exposée avec RLS activée. Les politiques `SELECT`, `INSERT` et `DELETE` vérifient `auth.uid() = user_id` ; l'insertion exige également que le prénom possède une version publiée. La clé primaire `(user_id, name_id)` empêche les doublons. Les suppressions de compte et de prénom déclenchent les cascades correspondantes.
+- `public.user_favorites` conserve les favoris personnels dans une table exposée avec RLS activée. Les policies `SELECT`, `INSERT` et `DELETE` vérifient `auth.uid() = user_id` ; l'insertion exige également que le prénom possède une version publiée. Le privilège SQL `INSERT` est limité aux colonnes `user_id` et `name_id`, tandis que `created_at` est fourni par PostgreSQL. La clé primaire `(user_id, name_id)` empêche les doublons. Les suppressions de compte et de prénom déclenchent les cascades correspondantes.
 
 ### Site public
 - Rendu serveur Next.js, dynamique pour ne pas dépendre de la disponibilité ou du schéma Supabase pendant le build.
