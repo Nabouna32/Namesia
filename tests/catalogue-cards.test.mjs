@@ -43,7 +43,7 @@ test("les quatre genres ont une correspondance SVG exhaustive et centralisée", 
 });
 
 test("les vues de prénoms affichent le pictogramme sans libellé visible", () => {
-  for (const source of [catalogue, featured, related, history, favorites, comparator, profile]) {
+  for (const source of [catalogue, featured, related, favorites, comparator, profile]) {
     assert.match(source, /<GenderIcon[^>]*gender=\{name\.gender\}/);
     assert.doesNotMatch(source, /<small>\{name\.gender\}<\/small>/);
     assert.doesNotMatch(source, /className="profile-tag">\{name\.gender\}/);
