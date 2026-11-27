@@ -1,8 +1,8 @@
 # Modèle de données — Namesia
 
 - **Statut :** modèle cible retenu pour la V1
-- **Version :** 2.8
-- **Mis à jour le :** 2026-11-27 01:34:00 (Europe/Paris)
+- **Version :** 2.9
+- **Mis à jour le :** 2026-11-27 01:42:00 (Europe/Paris)
 
 ## 1. Principes
 
@@ -89,6 +89,7 @@ Une ligne de provenance technique privée par version importée par le pipeline 
 | content_sha256 | Empreinte SHA-256 du contenu normalisé, pour vérifier l’idempotence |
 | response_schema_version | Version du schéma strict de génération |
 | request_id, workflow_run_id | Identifiant Groq unique et identifiant stable de l’exécution GitHub, clés d’idempotence |
+| editorial_warning_count | Nombre d’alertes éditoriales heuristiques détectées avant import |
 | editorial_warning_count | Nombre d’alertes éditoriales heuristiques détectées avant import |
 | input_tokens, output_tokens | Usage retourné par le fournisseur, nullable |
 | temperature, max_completion_tokens | Paramètres effectifs de génération |
