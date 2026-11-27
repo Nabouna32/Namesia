@@ -1,13 +1,13 @@
 # AGENTS.md — Charte de travail de Namesia
 
-- **Version :** 1.3
-- **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
+- **Version :** 1.4
+- **Mis à jour le :** 2026-11-27 (Europe/Paris)
 
 Cette charte s'applique à tout le dépôt, aux contributions humaines et aux agents IA.
 
 ## 1. Langue et traçabilité
 
-- Toute communication durable dans le dépôt est en français : documentation, issues, PR, commentaires, revues, ADR et suivi.
+- Toute communication durable dans le dépôt et sur GitHub est en français : documentation, demandes de fusion (PR), issues, commentaires, revues, décisions d’architecture et suivi. Les commentaires de code et les textes de tests sont également en français. Seuls les noms officiels des technologies, bibliothèques, interfaces de programmation et outils peuvent conserver leur appellation d’origine.
 - Les identifiants, noms de fichiers, modules, types, variables, fonctions et exports créés ou modifiés sont en anglais ; les commentaires de code, textes de tests, documentation, issues, PR et échanges GitHub restent en français. Les primitives d'interface ne doivent pas être recréées dans les features ni masquées derrière des wrappers Namesia. Lorsqu'aucune implémentation Web officielle, stable, maintenue et suffisamment complète n'existe, un port React/HTML local du contrat AndroidX est admis : il doit porter le nom M3 officiel, rester unique, utiliser la sémantique native et être vérifié contre une source AndroidX immuable. Ne jamais prétendre qu'un port Web est un composant AndroidX exécuté dans le navigateur. Le legacy se migre progressivement lorsqu'il est touché, sans refactor global hors sujet.
 - Les segments de routes, paramètres de requête et chemins d'API publics peuvent rester en français pour préserver le SEO et les contrats existants ; ne pas les renommer sans migration explicite des URL canoniques, du sitemap, des redirections et des liens entrants.
 - La conversation est éphémère : toute décision utile doit être inscrite dans le dépôt.
