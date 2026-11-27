@@ -25,7 +25,7 @@ const favoritesPrivilegeMigration = await readFile(
   new URL("../supabase/migrations/20261127134241_limit_user_favorites_insert_columns.sql", import.meta.url),
   "utf8"
 );
-const architecture = await readFile(new URL("../docs/architecture.md", import.meta.url), "utf8");
+const architecture = await readFile(new URL("../docs/ARCHITECTURE.md", import.meta.url), "utf8");
 
 test("les migrations locales restent alignées sur les versions Supabase appliquées", () => {
   assert.ok(migrationFiles.includes("20261122002440_finaliser_nettoyage_modele.sql"));
