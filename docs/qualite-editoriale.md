@@ -1,8 +1,8 @@
 # Gouvernance éditoriale et génération des fiches — Namesia
 
 - **Statut :** référence canonique
-- **Version :** 1.3
-- **Mis à jour le :** 2026-11-27 01:42:00 (Europe/Paris)
+- **Version :** 1.4
+- **Mis à jour le :** 2026-11-27 (Europe/Paris)
 
 ## Source et limites du contenu
 
@@ -18,22 +18,13 @@ Distinguer les faits documentés, hypothèses étymologiques concurrentes, varia
 
 La validation structurelle et les règles déterministes peuvent être automatisées. La cohérence éditoriale, la plausibilité étymologique et la qualité culturelle nécessitent des contrôles adaptés et, pour les cas ambigus, une revue humaine. Les scores ou classifications automatiques ne sont ni des preuves ni des garanties. Les limites de chaque contrôle doivent être documentées.
 
-## Pipeline de génération en place
+## Production et import des fiches
 
-La génération est exécutée en amont par le workflow GitHub Actions manuel via Groq, limité à main et à un prénom par exécution. Le modèle configuré est `openai/gpt-oss-20b`, choisi pour son support des Structured Outputs stricts. Le workflow utilise un schéma de réponse dédié, normalise les champs facultatifs, puis valide le contrat d’import Namesia avec le parseur partagé. Le dry-run est le comportement par défaut ; un import explicite crée uniquement un brouillon. Aucun endpoint public, traitement massif, planification automatique ou publication par IA n’existe.
+Les fiches sont préparées en amont de l'application, notamment dans une conversation avec un assistant, puis importées dans l'administration via le contrat JSON Namesia. L'administration valide la structure, prévisualise le contenu et crée un brouillon ; la publication reste une action distincte.
 
-Le workflow n’effectue aucune recherche documentaire : le modèle n’est pas une source et sa sortie ne prouve pas la vérité. Il doit rester sur le niveau gratuit Groq ; si l’accès au modèle ou les quotas nécessitent une offre payante, le processus s’arrête et aucun upgrade ou moyen de paiement n’est ajouté sans arbitrage préalable.
+Le workflow GitHub Actions Groq décrit par l'ancienne ADR-0056 n'est plus le parcours retenu et ne doit pas être activé. Une page privée de génération Groq, où un administrateur saisit un prénom, reste une piste éventuelle et non prioritaire. Elle devra être comparée au bénéfice de la génération directe par un assistant et à l'import JSON existant avant d'être planifiée. Voir [Pipeline de génération et import](pipeline-generation-ia.md) et [ADR-0057](decisions/ADR-0057-generation-externe-import.md).
 
-Le processus sépare explicitement :
-
-1. **Génération :** prompt versionné, modèle identifié, paramètres utiles, schéma de sortie strict et entrées documentées.
-2. **Validation structurelle :** syntaxe JSON, schéma, types, champs requis, longueurs, valeurs autorisées, slug et associations. Cette étape ne vérifie pas la vérité des affirmations.
-3. **Alertes heuristiques :** détection indicative des URL, marqueurs de citation, références à des études, statistiques, années précises et phrases répétées. Le compteur est persisté avec la provenance ; le détail reste dans l’artefact temporaire. Ces alertes ne bloquent pas l’import et ne constituent pas un détecteur général d’hallucinations.
-4. **Prévisualisation et revue humaine :** lecture du contenu, des alertes et de ses limites avant toute publication ; vérification de la cohérence, de la plausibilité étymologique, des variantes et de la qualité rédactionnelle.
-5. **Import :** transformation contrôlée vers les colonnes dédiées, transaction, import idempotent et création d’un brouillon uniquement.
-6. **Publication :** action explicite de l’administrateur ; le modèle et le validateur ne choisissent jamais le statut public.
-
-Une sortie invalide ne doit jamais écraser une fiche valide. Les erreurs sont explicites ; les reprises sont maîtrisées et ne doivent pas dupliquer ou publier partiellement les données.
+La conformité JSON ne vérifie pas la vérité des affirmations. Aucune source, citation, statistique ou validation ne doit être inventée. Une fiche incertaine doit être nuancée, documentée lorsqu'une source réelle est disponible, ou omise.
 
 ## Provenance et cycle de vie des fiches
 

@@ -1,8 +1,8 @@
 # État du projet — Namesia
 
 - **Statut :** source de vérité de l’état courant
-- **Version :** 1.6
-- **Mis à jour le :** 2026-11-27 01:44:00 (Europe/Paris)
+- **Version :** 1.7
+- **Mis à jour le :** 2026-11-27 (Europe/Paris)
 
 ## Phase
 
@@ -25,7 +25,7 @@ L’accès public aux fiches ne doit pas dépendre d’un compte. Le compte visi
 
 ## Contenu et génération IA
 
-La génération reste externe au runtime public. Le workflow GitHub Actions manuel via Groq est disponible sur main : une fiche par exécution, schéma de réponse strict, validation par le parseur Namesia, alertes éditoriales heuristiques, dry-run par défaut et import facultatif en brouillon. Il ne publie jamais et n’effectue aucune recherche documentaire ni vérification factuelle. Les métadonnées des imports sont conservées dans une table relationnelle privée. Les migrations de provenance et de privilèges sont appliquées sur l’instance Supabase active et `lib/supabase/database.types.ts` a été régénéré. L’activation opérationnelle attend les secrets GitHub Actions décrits dans l’issue [Action Humaine #354](https://github.com/Nabouna32/Namesia/issues/354). Seules quelques fiches d’exemple sont nécessaires en pré-lancement.
+Les fiches sont préparées en amont, notamment dans une conversation avec un assistant, puis importées en JSON dans l'administration privée où elles sont validées et prévisualisées avant publication explicite. Le workflow GitHub Actions Groq issu de l'ancienne ADR-0056 n'est plus le parcours retenu et ne doit pas être activé ; l'ajout des secrets GitHub correspondants n'est donc plus requis. Une page d'administration permettant de saisir un prénom et d'appeler Groq côté serveur reste une piste non prioritaire, à comparer avec la génération directe par un assistant. Les scripts et tables de provenance issus de l'expérimentation Groq restent à réévaluer avant réutilisation ou suppression. Aucune génération ne réalise de vérification factuelle automatique.
 
 ## Décisions structurantes
 
@@ -38,7 +38,7 @@ La génération reste externe au runtime public. Le workflow GitHub Actions manu
 ## Chantiers et limites connus
 
 - Issue #331 clôturée par la [PR #352](https://github.com/Nabouna32/Namesia/pull/352) : OpenNext 1.20.19 intègre le correctif amont pour glob/minimatch ; aucun override hors plage n’a été ajouté.
-- Les retours visiteurs et le compte visiteur facultatif restent à concevoir ou implémenter. Le pipeline Groq est implémenté ; seule son activation attend les secrets GitHub Actions de l’issue #354.
+- Les retours visiteurs et le compte visiteur facultatif restent à concevoir ou implémenter. L'expérimentation Groq via GitHub Actions est abandonnée comme parcours produit ; l'issue #353 est clôturée comme non planifiée et l'issue #354 n'est plus nécessaire.
 - Les critères précis de transition entre les phases du produit restent soumis à confirmation du propriétaire via [l’issue Action Humaine #350](https://github.com/Nabouna32/Namesia/issues/350) ; aucune transition automatique n’est permise.
 
 ## Sources canoniques

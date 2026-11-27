@@ -1,8 +1,8 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 4.06
-- **Mis à jour le :** 2026-11-27 01:56:00 (Europe/Paris)
+- **Version :** 4.07
+- **Mis à jour le :** 2026-11-27 (Europe/Paris)
 
 ## Structure de la page
 
@@ -10,7 +10,7 @@ Le layout racine utilise une colonne flex de hauteur minimale égale à la fenê
 
 ## 1. Besoin réel
 
-Namesia publie un catalogue de fiches de prénoms. Le contenu est généré en dehors de l'application, soit par une API de modèle, soit dans une conversation avec un assistant. Il est ensuite fourni à Namesia sous la forme d'un JSON conforme au contrat du projet.
+Namesia publie un catalogue de fiches de prénoms. Le contenu est préparé en amont, notamment dans une conversation avec un assistant, puis fourni à Namesia sous la forme d'un JSON conforme au contrat du projet.
 
 Namesia n'intègre pas actuellement de moteur de génération, de collecte documentaire ni de vérification factuelle. L'application importe, conserve, prévisualise et publie le contenu. La génération par IA ne constitue pas une validation de l'exactitude. Les orientations de qualité éditoriale, de provenance, de cycle de vie et de pipeline futur sont décrites dans [Gouvernance éditoriale et génération](qualite-editoriale.md).
 
@@ -18,7 +18,7 @@ Namesia n'intègre pas actuellement de moteur de génération, de collecte docum
 
 ```mermaid
 flowchart TD
-  A["Conversation avec un assistant ou API IA externe"] --> B["JSON conforme au schéma Namesia"]
+  A["Conversation avec un assistant"] --> B["JSON conforme au schéma Namesia"]
   B --> C["Administration privée /admin"]
   C --> D["Validation du contrat et prévisualisation"]
   D --> E["API Next.js protégée"]
@@ -29,14 +29,14 @@ flowchart TD
   I --> J["Site public Next.js"]
 ```
 
-Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe pas de raison actuelle d'ajouter un adaptateur multi-fournisseurs, un orchestrateur de génération ou une file de traitements.
+La génération reste hors du runtime public et n'est pas nécessaire à l'administration actuelle. Une page privée appelant Groq depuis le serveur est une piste différée, à comparer avec la génération directe par un assistant et l'import JSON existant. Aucun orchestrateur, adaptateur multi-fournisseurs ou file de traitements n'est justifié à ce stade.
 
 ## 3. Responsabilités
 
 ### Production du contenu
-- Génération réalisée en amont : conversation ou workflow GitHub Actions manuel via l’API Groq, limité à main et à un prénom par exécution.
-- Le workflow utilise un schéma de réponse strict distinct, normalise puis valide le contrat d’import Namesia 2.0.0 avec le parseur partagé.
-- Le dry-run est le comportement par défaut ; l’import explicite crée un brouillon et stocke sa provenance dans une table relationnelle privée. Un contrôle heuristique signale les URL, citations, statistiques, années et répétitions ; seul le nombre d’alertes est persisté. Les artefacts de fiche et de métadonnées sont conservés sept jours.
+- Génération réalisée en amont, notamment dans une conversation avec un assistant ; import JSON dans l'administration privée.
+- Le contrat est validé par le parseur partagé avant toute écriture ; l'import crée un brouillon et la publication reste une action humaine distincte.
+- L'ancien workflow GitHub Actions Groq n'est plus le parcours retenu et ne doit pas être activé. Une interface privée Groq reste une piste différée, non prioritaire, décrite dans [le pipeline](pipeline-generation-ia.md).
 - Aucun moteur de génération ni secret Groq/Supabase privilégié n’est présent dans le runtime public.
 - Le modèle ne choisit jamais le statut de publication ; aucune publication automatique.
 - Aucun champ de source, référence, preuve ou vérification n'appartient au contrat, car aucune recherche documentaire n’est effectuée.
@@ -57,8 +57,8 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Routes Next.js côté serveur pour les opérations administratives.
 - Vérification du jeton Supabase et de l'autorisation par RPC sur chaque requête.
 - Fonctions SQL transactionnelles pour créer une version et publier une version.
-- La fonction d’import accepte soit un administrateur authentifié sans métadonnées de génération, soit le rôle `service_role` avec une provenance Groq complète ; les reprises et relances sont idempotentes par identifiants de requête Groq et d’exécution GitHub, identité et empreinte du contenu.
-- Les métadonnées sont conservées dans `private.name_profile_generation_metadata`, inaccessible à anon et authenticated ; seul le rôle `service_role` peut les lire et les insérer. Le nombre d’alertes éditoriales heuristiques y est conservé, sans les détails qui restent dans l’artefact temporaire.
+- Le parcours d'import administrateur authentifié ne dépend pas d'une provenance Groq.
+- La table privée `private.name_profile_generation_metadata` et les extensions d'import service_role sont des éléments hérités de l'expérimentation Groq ; ils ne sont pas nécessaires au parcours courant et seront réévalués avant toute réutilisation.
 - Les fonctions sont SECURITY INVOKER ; elles ne contournent pas RLS.
 - Aucune clé privilégiée Supabase dans le navigateur.
 - Les visiteurs disposent uniquement de la lecture des identités ayant une version publiée et de ces versions publiées.
