@@ -215,7 +215,7 @@ test("l’import SQL réserve les métadonnées au service_role et protège l’
   assert.match(migration, /request_id text not null unique/);
   assert.match(migration, /workflow_run_id bigint not null unique/);
   assert.match(migration, /where m\.workflow_run_id = p_generation_workflow_run_id/);
-  assert.match(migration, /status, schema_version/);
+  assert.match(migration, /name_id, version, schema_version, introduction/);
   assert.match(migration, /v_version,\s*p_schema_version,[\s\S]*'brouillon'/);
   assert.match(migration, /content_sha256 text not null/);
   assert.match(migration, /v_existing_content_sha256 is distinct from p_generation_content_sha256/);
