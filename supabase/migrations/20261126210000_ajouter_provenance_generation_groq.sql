@@ -256,3 +256,7 @@ grant execute on function public.import_name_profile(
   text, text, text, jsonb, text, text, text, text, text, text, text, text,
   integer, integer, numeric, integer, timestamptz
 ) to authenticated, service_role;
+
+
+-- Recharger le cache de schéma PostgREST après le changement de signature RPC.
+notify pgrst, 'reload schema';
