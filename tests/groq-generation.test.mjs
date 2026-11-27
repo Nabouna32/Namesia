@@ -213,6 +213,7 @@ test("le workflow est manuel, limité à main et ne s’exécute pas sur les PR"
 
 test("l’import SQL réserve les métadonnées au service_role et protège l’idempotence", async () => {
   const migration = await readFile(new URL("../supabase/migrations/20261126210000_ajouter_provenance_generation_groq.sql", import.meta.url), "utf8");
+  const privilegeMigration = await readFile(new URL("../supabase/migrations/20261127014048_ameliorer_import_groq_et_verrouillage.sql", import.meta.url), "utf8");
   assert.match(migration, /current_user = 'service_role'/);
   assert.match(migration, /service_role/);
   assert.match(migration, /request_id text not null unique/);
@@ -235,11 +236,11 @@ test("l’import SQL réserve les métadonnées au service_role et protège l’
   assert.match(migration, /bigint, integer, integer, integer, numeric, integer, timestamptz/);
   assert.match(migration, /grant usage on schema private to service_role/);
   assert.match(migration, /grant select, insert on table private\.name_profile_generation_metadata to service_role/);
-  assert.match(migration, /grant select, insert on table public\.names to service_role/);
-  assert.match(migration, /grant select, insert on table public\.name_profiles to service_role/);
-  assert.match(migration, /grant insert on table public\.name_profile_associations to service_role/);
-  assert.match(migration, /pg_advisory_xact_lock\(hashtextextended/);
-  assert.doesNotMatch(migration, /for update/i);
+  assert.match(privilegeMigration, /grant select, insert on table public\.names to service_role/);
+  assert.match(privilegeMigration, /grant select, insert on table public\.name_profiles to service_role/);
+  assert.match(privilegeMigration, /grant insert on table public\.name_profile_associations to service_role/);
+  assert.match(privilegeMigration, /pg_advisory_xact_lock\(hashtextextended/);
+  assert.doesNotMatch(privilegeMigration, /for update/i);
   assert.match(migration, /security invoker/i);
   assert.doesNotMatch(migration, /security definer/i);
 });
