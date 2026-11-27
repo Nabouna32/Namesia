@@ -1,7 +1,7 @@
 # Fondations visuelles — Namesia
 
 - **Version :** 1.0
-- **Mis à jour le :** 2026-11-27 20:01:15 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 20:07:03 (Europe/Paris)
 
 
 Consulter aussi le [système de design](../DESIGN-SYSTEM.md) et la [vérification Material 3](../MATERIAL-3-VERIFICATION.md).
