@@ -49,11 +49,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: name.name,
       description: name.introduction,
       url: `/prenoms/${name.slug}`,
-      images: ["/opengraph-image"]
+      images: [{ url: imageUrl, width: 1200, height: 630, alt: "Namesia — Le sens derrière chaque prénom" }]
     },
     twitter: {
       card: "summary_large_image",
-      images: ["/opengraph-image"]
+      images: [imageUrl]
     }
   } : {};
 }
