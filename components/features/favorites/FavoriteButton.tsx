@@ -18,7 +18,7 @@ export function FavoriteButton({ slug, name }: Props) {
   const [ajoutAnnulable, setAjoutAnnulable] = useState(false);
   const [busy, setBusy] = useState(false);
   const selected = slugs.includes(slug);
-  const action = selected ? "Retirer des favoris" : "Ajouter aux favoris";
+  const action = selected ? "Retirer des favoris" : "Ajouter aux favoris";\n  const label = `${action} : ${name}`;
 
   async function basculerFavori() {
     setBusy(true);
@@ -58,7 +58,7 @@ export function FavoriteButton({ slug, name }: Props) {
     <div className={styles.container}>
       <Button
         variant="outlined"
-        aria-label={`${action} : ${name}`}
+        aria-label={label}
         aria-pressed={selected}
         disabled={!ready || busy}
         onClick={() => void basculerFavori()}
