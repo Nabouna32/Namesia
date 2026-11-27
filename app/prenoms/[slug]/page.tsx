@@ -38,6 +38,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const name = await getNameBySlug(slug);
+  const imageUrl = new URL("/opengraph-image", siteUrl).toString();
   return name ? {
     title: name.name,
     description: name.introduction,
