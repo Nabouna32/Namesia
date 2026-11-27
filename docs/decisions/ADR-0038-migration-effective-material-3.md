@@ -2,6 +2,8 @@
 
 - **Statut :** acceptée
 - **Date :** 2026-11-24
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-27 20:10:47 (Europe/Paris)
 - **Référence :** AndroidX Compose Material 3 1.5.0 stable, commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c`
 - **Complète :** ADR-0037
 
@@ -29,7 +31,7 @@ Cette ADR conserve la décision de migration initiale ; elle ne remplace pas l'i
 
 - Le shell a été migré en `TopAppBar`, `NavigationBar` et `NavigationRail` par [ADR-0039](ADR-0039-shell-material-3.md).
 - La nomenclature des compositions métier et des hooks a été finalisée par [ADR-0040](ADR-0040-nomenclature-composants.md).
-- Les noms intermédiaires `StatusMessage` et `ComparisonButton` cités dans le périmètre initial ne sont pas des primitives de présentation à réintroduire. Le registre actuel et les usages autorisés sont définis dans [Bibliothèque Material 3](../composants.md).
+- Les noms intermédiaires `StatusMessage` et `ComparisonButton` cités dans le périmètre initial ne sont pas des primitives de présentation à réintroduire. Le registre actuel et les usages autorisés sont définis dans [Bibliothèque Material 3](../design/COMPONENTS.md).
 - Les ports React/HTML restent des implémentations Web des contrats AndroidX ; ils ne sont pas des composants Compose importés dans Next.js.
 
 ## Validation
