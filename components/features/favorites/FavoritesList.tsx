@@ -206,6 +206,9 @@ export function FavoritesList({
       if (resultat.nombreIgnoreLimite > 0) {
         messages.push(`${resultat.nombreIgnoreLimite} ${resultat.nombreIgnoreLimite > 1 ? "favoris ignorés" : "favori ignoré"} : la limite de ${LIMITE_FAVORIS.toLocaleString("fr-FR")} favoris est atteinte.`);
       }
+      if (resultat.nombreIgnoreIndisponible > 0) {
+        messages.push(`${resultat.nombreIgnoreIndisponible} ${resultat.nombreIgnoreIndisponible > 1 ? "identifiants ignorés" : "identifiant ignoré"} : le prénom n’est plus publié ou n’existe plus dans le catalogue.`);
+      }
       setMessageImport(messages.join(" "));
     } catch (cause) {
       setImportPartiel(false);
@@ -244,13 +247,13 @@ export function FavoritesList({
       const partial = result.nombreIgnoreLimite > 0 || result.nombreIgnoreIndisponible > 0;
       setImportPartiel(partial);
       if (partial) {
-        setMessageImport(\`${result.nombreAjoute} favoris transférés. \${result.nombreIgnoreLimite + result.nombreIgnoreIndisponible} éléments n’ont pas été transférés ; la copie locale est conservée pour éviter toute perte.\`);
+        setMessageImport(`${result.nombreAjoute} favoris transférés. ${result.nombreIgnoreLimite + result.nombreIgnoreIndisponible} éléments n’ont pas été transférés ; la copie locale est conservée pour éviter toute perte.`);
         return;
       }
 
       window.localStorage.removeItem(CLE_FAVORIS_LEGACY);
       setMessageImport(result.nombreAjoute > 0
-        ? \`${result.nombreAjoute} favoris transférés vers votre compte. La copie locale a été effacée.\`
+        ? `${result.nombreAjoute} favoris transférés vers votre compte. La copie locale a été effacée.`
         : "Ces favoris étaient déjà présents dans votre compte. La copie locale a été effacée.");
     } catch {
       setErreurImport("Le transfert a échoué. Les anciens favoris locaux ont été conservés.");
