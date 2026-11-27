@@ -278,12 +278,9 @@ export function AdminClient() {
 
   if (!session) {
     return <section className={styles.panel}>
-      <h2>Connexion administrateur</h2>
-      <p>Recevez un lien de connexion par e-mail. Seuls les comptes autorisés dans Namesia peuvent administrer le catalogue.</p>
-      <form className={styles.form} onSubmit={connecter}>
-        <TextField id="admin-email" label="Adresse e-mail" variant="outlined" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
-        <Button type="submit" disabled={busy}>{busy ? "Envoi…" : "Recevoir un lien de connexion"}</Button>
-      </form>
+      <h2>Connexion à l'administration</h2>
+      <p>Utilisez votre compte Namesia habituel. Les droits d'administration sont attribués séparément et ne sont pas accordés à la création du compte.</p>
+      <Button href="/compte?redirect=%2Fadmin">Se connecter avec mon compte</Button>
       {message && <Snackbar severity={message.type}>{message.text}</Snackbar>}
     </section>;
   }
