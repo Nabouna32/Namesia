@@ -2,7 +2,7 @@
 
 - **Statut :** PRÉ-LANCEMENT / DÉVELOPPEMENT
 - **Version :** 1.3
-- **Mis à jour le :** 2026-11-27 14:56:28 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 15:13:01 (Europe/Paris)
 
 Ce document résume l'état opérationnel et les arbitrages actifs. Les détails d'architecture, de sécurité et de données restent dans les ADR et documents spécialisés.
 
