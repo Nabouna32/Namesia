@@ -1,7 +1,7 @@
 # Sécurité du navigateur et des sessions — Namesia
 
 - **Version :** 1.0
-- **Mis à jour le :** 2026-11-27 20:07:03 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 20:08:09 (Europe/Paris)
 - **Portée :** en-têtes HTTP, protections navigateur et état de session administrateur
 
 Ce document décrit les protections applicatives côté navigateur. Les politiques Auth, RLS et données sont détaillées dans [Supabase](SUPABASE.md) ; l'architecture globale est décrite dans [ARCHITECTURE.md](../ARCHITECTURE.md).
