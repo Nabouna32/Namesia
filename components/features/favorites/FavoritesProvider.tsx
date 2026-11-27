@@ -53,25 +53,31 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    const { data, error: queryError } = await supabase
-      .from("user_favorites")
-      .select("name_id, created_at, names(slug)")
-      .eq("user_id", targetUserId)
-      .order("created_at", { ascending: true });
+    try {
+      const { data, error: queryError } = await supabase
+        .from("user_favorites")
+        .select("name_id, created_at, names(slug)")
+        .eq("user_id", targetUserId)
+        .order("created_at", { ascending: true });
 
-    if (queryError || !data) {
+      if (queryError || !data) {
+        setLoadedUserId(targetUserId);
+        setError(true);
+        setReady(true);
+        return;
+      }
+
+      setRecords(data.map((row) => ({
+        nameId: row.name_id,
+        slug: row.names?.slug ?? null
+      })));
+      setLoadedUserId(targetUserId);
+      setReady(true);
+    } catch {
       setLoadedUserId(targetUserId);
       setError(true);
       setReady(true);
-      return;
     }
-
-    setRecords(data.map((row) => ({
-      nameId: row.name_id,
-      slug: row.names?.slug ?? null
-    })));
-    setLoadedUserId(targetUserId);
-    setReady(true);
   }, [userId]);
 
   useEffect(() => {
@@ -94,135 +100,153 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   ): Promise<"ajoute" | "retire" | "limite" | "erreur" | "auth"> => {
     if (!userId) return "auth";
 
-    const existing = records.find((record) => record.slug === slug);
-    if (existing) {
-      const { error: deleteError } = await supabase
-        .from("user_favorites")
-        .delete()
-        .eq("user_id", userId)
-        .eq("name_id", existing.nameId);
-      if (deleteError) {
+    try {
+      const existing = records.find((record) => record.slug === slug);
+      if (existing) {
+        const { error: deleteError } = await supabase
+          .from("user_favorites")
+          .delete()
+          .eq("user_id", userId)
+          .eq("name_id", existing.nameId);
+        if (deleteError) {
+          setError(true);
+          return "erreur";
+        }
+        await refresh(userId);
+        return "retire";
+      }
+
+      if (records.length >= LIMITE_FAVORIS) return "limite";
+
+      const { data: name, error: nameError } = await supabase
+        .from("names")
+        .select("id")
+        .eq("slug", slug)
+        .maybeSingle();
+
+      if (nameError || !name) {
         setError(true);
         return "erreur";
       }
+
+      const { error: insertError } = await supabase
+        .from("user_favorites")
+        .insert({ user_id: userId, name_id: name.id });
+
+      if (insertError) {
+        setError(true);
+        return "erreur";
+      }
+
       await refresh(userId);
-      return "retire";
-    }
-
-    if (records.length >= LIMITE_FAVORIS) return "limite";
-
-    const { data: name, error: nameError } = await supabase
-      .from("names")
-      .select("id")
-      .eq("slug", slug)
-      .maybeSingle();
-
-    if (nameError || !name) {
+      return "ajoute";
+    } catch {
       setError(true);
       return "erreur";
     }
-
-    const { error: insertError } = await supabase
-      .from("user_favorites")
-      .insert({ user_id: userId, name_id: name.id });
-
-    if (insertError) {
-      setError(true);
-      return "erreur";
-    }
-
-    await refresh(userId);
-    return "ajoute";
   }, [records, refresh, userId]);
 
   const retirerPlusieurs = useCallback(async (slugsToRemove: string[]) => {
     if (!userId || slugsToRemove.length === 0) return;
-    const ids = records
-      .filter((record) => record.slug !== null && slugsToRemove.includes(record.slug))
-      .map((record) => record.nameId);
-    if (ids.length === 0) return;
+    try {
+      const ids = records
+        .filter((record) => record.slug !== null && slugsToRemove.includes(record.slug))
+        .map((record) => record.nameId);
+      if (ids.length === 0) return;
 
-    const { error: deleteError } = await supabase
-      .from("user_favorites")
-      .delete()
-      .eq("user_id", userId)
-      .in("name_id", ids);
+      const { error: deleteError } = await supabase
+        .from("user_favorites")
+        .delete()
+        .eq("user_id", userId)
+        .in("name_id", ids);
 
-    if (deleteError) {
+      if (deleteError) {
+        setError(true);
+        return;
+      }
+      await refresh(userId);
+    } catch {
       setError(true);
-      return;
     }
-    await refresh(userId);
   }, [records, refresh, userId]);
 
   const retirerIndisponibles = useCallback(async () => {
     if (!userId) return;
-    const ids = records.filter((record) => record.slug === null).map((record) => record.nameId);
-    if (ids.length === 0) return;
+    try {
+      const ids = records.filter((record) => record.slug === null).map((record) => record.nameId);
+      if (ids.length === 0) return;
 
-    const { error: deleteError } = await supabase
-      .from("user_favorites")
-      .delete()
-      .eq("user_id", userId)
-      .in("name_id", ids);
+      const { error: deleteError } = await supabase
+        .from("user_favorites")
+        .delete()
+        .eq("user_id", userId)
+        .in("name_id", ids);
 
-    if (deleteError) {
+      if (deleteError) {
+        setError(true);
+        return;
+      }
+      await refresh(userId);
+    } catch {
       setError(true);
-      return;
     }
-    await refresh(userId);
   }, [records, refresh, userId]);
 
   const ajouterPlusieurs = useCallback(async (
     slugsToAdd: string[]
   ): Promise<FavoriteImportResult | null> => {
     if (!userId) return null;
-    const normalized = normaliserSlugsFavoris(slugsToAdd);
-    if (!normalized) {
-      setError(true);
-      return null;
-    }
-    if (normalized.length === 0) {
-      return { nombreAjoute: 0, nombreIgnoreLimite: 0, nombreIgnoreIndisponible: 0 };
-    }
-
-    const { data: names, error: namesError } = await supabase
-      .from("names")
-      .select("id, slug")
-      .in("slug", normalized);
-
-    if (namesError || !names) {
-      setError(true);
-      return null;
-    }
-
-    const known = new Set(names.map((name) => name.slug));
-    const existingIds = new Set(records.map((record) => record.nameId));
-    const candidates = names.filter((name) => !existingIds.has(name.id));
-    const availableSlots = Math.max(0, LIMITE_FAVORIS - records.length);
-    const accepted = candidates.slice(0, availableSlots);
-    const ignoredUnavailable = normalized.filter((slug) => !known.has(slug)).length;
-
-    if (accepted.length > 0) {
-      const { error: insertError } = await supabase
-        .from("user_favorites")
-        .upsert(
-          accepted.map((name) => ({ user_id: userId, name_id: name.id })),
-          { onConflict: "user_id,name_id", ignoreDuplicates: true }
-        );
-
-      if (insertError) {
+    try {
+      const normalized = normaliserSlugsFavoris(slugsToAdd);
+      if (!normalized) {
         setError(true);
         return null;
       }
-    }
+      if (normalized.length === 0) {
+        return { nombreAjoute: 0, nombreIgnoreLimite: 0, nombreIgnoreIndisponible: 0 };
+      }
 
-    await refresh(userId);
-    return {
-      nombreAjoute: accepted.length,
-      nombreIgnoreLimite: candidates.length - accepted.length,
-      nombreIgnoreIndisponible: ignoredUnavailable
-    };
+      const { data: names, error: namesError } = await supabase
+        .from("names")
+        .select("id, slug")
+        .in("slug", normalized);
+
+      if (namesError || !names) {
+        setError(true);
+        return null;
+      }
+
+      const known = new Set(names.map((name) => name.slug));
+      const existingIds = new Set(records.map((record) => record.nameId));
+      const candidates = names.filter((name) => !existingIds.has(name.id));
+      const availableSlots = Math.max(0, LIMITE_FAVORIS - records.length);
+      const accepted = candidates.slice(0, availableSlots);
+      const ignoredUnavailable = normalized.filter((slug) => !known.has(slug)).length;
+
+      if (accepted.length > 0) {
+        const { error: insertError } = await supabase
+          .from("user_favorites")
+          .upsert(
+            accepted.map((name) => ({ user_id: userId, name_id: name.id })),
+            { onConflict: "user_id,name_id", ignoreDuplicates: true }
+          );
+
+        if (insertError) {
+          setError(true);
+          return null;
+        }
+      }
+
+      await refresh(userId);
+      return {
+        nombreAjoute: accepted.length,
+        nombreIgnoreLimite: candidates.length - accepted.length,
+        nombreIgnoreIndisponible: ignoredUnavailable
+      };
+    } catch {
+      setError(true);
+      return null;
+    }
   }, [records, refresh, userId]);
 
   const slugs = useMemo(
