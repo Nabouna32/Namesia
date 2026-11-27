@@ -18,7 +18,8 @@ export function FavoriteButton({ slug, name }: Props) {
   const [ajoutAnnulable, setAjoutAnnulable] = useState(false);
   const [busy, setBusy] = useState(false);
   const selected = slugs.includes(slug);
-  const action = selected ? "Retirer des favoris" : "Ajouter aux favoris";\n  const label = `${action} : ${name}`;
+  const action = selected ? "Retirer des favoris" : "Ajouter aux favoris";
+  const label = `${action} : ${name}`;
 
   async function basculerFavori() {
     setBusy(true);
