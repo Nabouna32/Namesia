@@ -6,17 +6,15 @@ const provider = await readFile(new URL("../components/features/history/HistoryP
 const component = await readFile(new URL("../components/features/history/RecentNames.tsx", import.meta.url), "utf8");
 const recordVisit = await readFile(new URL("../components/features/history/RecordVisit.tsx", import.meta.url), "utf8");
 
-test("aucun historique n'est persisté localement avant la décision produit", () => {
+test("aucun historique local n'est lu, écrit ou supprimé", () => {
   for (const source of [provider, component, recordVisit]) {
-    assert.doesNotMatch(source, /localStorage|sessionStorage\.(?:getItem|setItem)/);
+    assert.doesNotMatch(source, /localStorage|sessionStorage/);
   }
-  assert.match(provider, /sessionStorage\.removeItem\(LEGACY_HISTORY_KEY\)/);
-  assert.match(recordVisit, /return null/);
-  assert.match(component, /return null/);
 });
 
 test("l'historique reste inactif tant que son activation liée au compte n'est pas arbitrée", () => {
   assert.match(provider, /slugs: \[\]/);
   assert.match(provider, /recordVisit: \(\) => undefined/);
   assert.match(component, /arbitrage #405/);
+  assert.match(recordVisit, /return null/);
 });
