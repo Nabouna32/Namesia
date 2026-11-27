@@ -21,6 +21,7 @@ type FavoriteImportResult = {
 
 type FavoritesContextValue = {
   slugs: string[];
+  unavailableCount: number;
   authenticated: boolean;
   ready: boolean;
   error: boolean;
@@ -234,6 +235,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(() => ({
     slugs,
+    unavailableCount: records.filter((record) => record.slug === null).length,
     authenticated: Boolean(userId),
     ready: initialized && ready,
     error,
@@ -242,7 +244,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     retirerIndisponibles,
     ajouterPlusieurs
   }), [
-    slugs, userId, initialized, ready, error,
+    slugs, records, userId, initialized, ready, error,
     basculer, retirerPlusieurs, retirerIndisponibles, ajouterPlusieurs
   ]);
 
