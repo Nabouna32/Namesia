@@ -35,6 +35,7 @@ test("l'administration réutilise le compte Namesia sans créer une connexion di
   const accountPage = await readFile(new URL("../app/compte/page.tsx", import.meta.url), "utf8");
   const adminAuth = await readFile(new URL("../lib/admin-auth.ts", import.meta.url), "utf8");
   const sessionClient = await readFile(new URL("../lib/supabase/session.ts", import.meta.url), "utf8");
+  const proxy = await readFile(new URL("../proxy.ts", import.meta.url), "utf8");
   assert.match(adminClient, /createSupabaseBrowserClient\(\)/);
   assert.match(adminClient, /\/compte\?redirect=%2Fadmin/);
   assert.doesNotMatch(adminClient, /signInWithOtp/);
@@ -50,6 +51,9 @@ test("l'administration réutilise le compte Namesia sans créer une connexion di
   assert.match(sessionClient, /setAll\(cookiesToSet\)/);
   assert.match(sessionClient, /sameSite: "lax"/);
   assert.match(sessionClient, /secure: process\.env\.NODE_ENV === "production"/);
+  assert.match(proxy, /supabase\.auth\.getUser\(\)/);
+  assert.match(proxy, /Cache-Control/);
+  assert.match(proxy, /\/api\/admin\/:path\*/);
   assert.match(accountPage, /NAMESIA_DEPLOYMENT_ENVIRONMENT === "preview"/);
   assert.match(accountPage, /firstParam\(params\.redirect\) === "\/admin" \? "\/admin" : "\/"/);
 });
