@@ -1,7 +1,7 @@
 # Tests et validation — Namesia
 
 - **Version :** 1.0
-- **Mis à jour le :** 2026-11-27 20:06:05 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 20:07:03 (Europe/Paris)
 - **Portée :** stratégie de tests, vérification des comportements et diagnostics
 
 Ce guide définit quels comportements protéger et comment valider les changements. Les workflows exécutés et les résultats CI sont décrits dans [GitHub Actions](platform/GITHUB-ACTIONS.md). Les diagnostics visuels s'exécutent sur les Previews Cloudflare décrites dans [Cloudflare Workers](platform/CLOUDFLARE-WORKERS.md).
