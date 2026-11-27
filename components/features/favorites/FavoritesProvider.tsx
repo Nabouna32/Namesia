@@ -1,6 +1,7 @@
 "use client";
 
-import { fusionnerFavoris, modifierFavori, normaliserSlugsFavoris, type ResultatFusionFavoris } from "@/lib/sauvegarde-favoris";
+import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+import { LIMITE_FAVORIS, normaliserSlugsFavoris } from "@/lib/sauvegarde-favoris";
 import {
   createContext,
   useCallback,
@@ -11,113 +12,249 @@ import {
   type ReactNode
 } from "react";
 
-const CLE_FAVORIS = "namesia:favoris:v1";
-
-type ContexteFavoris = {
-  slugs: string[];
-  pret: boolean;
-  erreur: boolean;
-  basculer: (slug: string) => "ajoute" | "retire" | "limite" | "erreur";
-  retirerPlusieurs: (slugs: string[]) => void;
-  ajouterPlusieurs: (slugs: string[]) => Omit<ResultatFusionFavoris, "slugs"> | null;
+type FavoriteRecord = { nameId: string; slug: string | null };
+type FavoriteImportResult = {
+  nombreAjoute: number;
+  nombreIgnoreLimite: number;
+  nombreIgnoreIndisponible: number;
 };
 
-const FavorisContext = createContext<ContexteFavoris | null>(null);
+type FavoritesContextValue = {
+  slugs: string[];
+  authenticated: boolean;
+  ready: boolean;
+  error: boolean;
+  basculer: (slug: string) => Promise<"ajoute" | "retire" | "limite" | "erreur" | "auth">;
+  retirerPlusieurs: (slugs: string[]) => Promise<void>;
+  retirerIndisponibles: () => Promise<void>;
+  ajouterPlusieurs: (slugs: string[]) => Promise<FavoriteImportResult | null>;
+};
 
-function lireFavoris(value: string | null): string[] {
-  if (!value) return [];
-  const parsed: unknown = JSON.parse(value);
-  const slugs = normaliserSlugsFavoris(parsed);
-  if (!slugs) throw new TypeError("Le contenu des favoris est invalide.");
-  return slugs;
-}
+const FavoritesContext = createContext<FavoritesContextValue | null>(null);
+const supabase = createSupabaseBrowserClient();
 
 export function FavoritesProvider({ children }: { children: ReactNode }) {
-  const [slugs, setSlugs] = useState<string[]>([]);
-  const [pret, setPret] = useState(false);
-  const [erreur, setErreur] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [initialized, setInitialized] = useState(false);
+  const [records, setRecords] = useState<FavoriteRecord[]>([]);
+  const [ready, setReady] = useState(false);
+  const [error, setError] = useState(false);
+
+  const refresh = useCallback(async (targetUserId: string | null = userId) => {
+    if (!targetUserId) {
+      setRecords([]);
+      setReady(true);
+      setError(false);
+      return;
+    }
+
+    setReady(false);
+    const { data, error: queryError } = await supabase
+      .from("user_favorites")
+      .select("name_id, created_at, names(slug)")
+      .eq("user_id", targetUserId)
+      .order("created_at", { ascending: true });
+
+    if (queryError || !data) {
+      setError(true);
+      setReady(true);
+      return;
+    }
+
+    setRecords(data.map((row) => ({
+      nameId: row.name_id,
+      slug: row.names?.slug ?? null
+    })));
+    setError(false);
+    setReady(true);
+  }, [userId]);
 
   useEffect(() => {
-    try {
-      setSlugs(lireFavoris(window.localStorage.getItem(CLE_FAVORIS)));
-    } catch {
-      setErreur(true);
-    }
-    setPret(true);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      const nextUserId = session?.user.id ?? null;
+      setUserId((current) => current === nextUserId ? current : nextUserId);
+      setInitialized(true);
+      if (!nextUserId) {
+        setRecords([]);
+        setReady(true);
+        setError(false);
+      } else {
+        setReady(false);
+      }
+    });
 
-    function synchroniser(event: StorageEvent) {
-      if (event.key !== CLE_FAVORIS && event.key !== null) return;
-      try {
-        setSlugs(lireFavoris(event.newValue));
-        setErreur(false);
-      } catch {
-        setErreur(true);
+    return () => subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (!initialized) return;
+    void refresh(userId);
+  }, [initialized, userId, refresh]);
+
+  const basculer = useCallback(async (
+    slug: string
+  ): Promise<"ajoute" | "retire" | "limite" | "erreur" | "auth"> => {
+    if (!userId) return "auth";
+
+    const existing = records.find((record) => record.slug === slug);
+    if (existing) {
+      const { error: deleteError } = await supabase
+        .from("user_favorites")
+        .delete()
+        .eq("user_id", userId)
+        .eq("name_id", existing.nameId);
+      if (deleteError) {
+        setError(true);
+        return "erreur";
+      }
+      await refresh(userId);
+      return "retire";
+    }
+
+    if (records.length >= LIMITE_FAVORIS) return "limite";
+
+    const { data: name, error: nameError } = await supabase
+      .from("names")
+      .select("id")
+      .eq("slug", slug)
+      .maybeSingle();
+
+    if (nameError || !name) {
+      setError(true);
+      return "erreur";
+    }
+
+    const { error: insertError } = await supabase
+      .from("user_favorites")
+      .insert({ user_id: userId, name_id: name.id });
+
+    if (insertError) {
+      setError(true);
+      return "erreur";
+    }
+
+    await refresh(userId);
+    return "ajoute";
+  }, [records, refresh, userId]);
+
+  const retirerPlusieurs = useCallback(async (slugsToRemove: string[]) => {
+    if (!userId || slugsToRemove.length === 0) return;
+    const ids = records
+      .filter((record) => record.slug !== null && slugsToRemove.includes(record.slug))
+      .map((record) => record.nameId);
+    if (ids.length === 0) return;
+
+    const { error: deleteError } = await supabase
+      .from("user_favorites")
+      .delete()
+      .eq("user_id", userId)
+      .in("name_id", ids);
+
+    if (deleteError) {
+      setError(true);
+      return;
+    }
+    await refresh(userId);
+  }, [records, refresh, userId]);
+
+  const retirerIndisponibles = useCallback(async () => {
+    if (!userId) return;
+    const ids = records.filter((record) => record.slug === null).map((record) => record.nameId);
+    if (ids.length === 0) return;
+
+    const { error: deleteError } = await supabase
+      .from("user_favorites")
+      .delete()
+      .eq("user_id", userId)
+      .in("name_id", ids);
+
+    if (deleteError) {
+      setError(true);
+      return;
+    }
+    await refresh(userId);
+  }, [records, refresh, userId]);
+
+  const ajouterPlusieurs = useCallback(async (
+    slugsToAdd: string[]
+  ): Promise<FavoriteImportResult | null> => {
+    if (!userId) return null;
+    const normalized = normaliserSlugsFavoris(slugsToAdd);
+    if (!normalized) {
+      setError(true);
+      return null;
+    }
+    if (normalized.length === 0) {
+      return { nombreAjoute: 0, nombreIgnoreLimite: 0, nombreIgnoreIndisponible: 0 };
+    }
+
+    const { data: names, error: namesError } = await supabase
+      .from("names")
+      .select("id, slug")
+      .in("slug", normalized);
+
+    if (namesError || !names) {
+      setError(true);
+      return null;
+    }
+
+    const known = new Set(names.map((name) => name.slug));
+    const existingIds = new Set(records.map((record) => record.nameId));
+    const candidates = names.filter((name) => !existingIds.has(name.id));
+    const availableSlots = Math.max(0, LIMITE_FAVORIS - records.length);
+    const accepted = candidates.slice(0, availableSlots);
+    const ignoredUnavailable = normalized.filter((slug) => !known.has(slug)).length;
+
+    if (accepted.length > 0) {
+      const { error: insertError } = await supabase
+        .from("user_favorites")
+        .upsert(
+          accepted.map((name) => ({ user_id: userId, name_id: name.id })),
+          { onConflict: "user_id,name_id", ignoreDuplicates: true }
+        );
+
+      if (insertError) {
+        setError(true);
+        return null;
       }
     }
 
-    window.addEventListener("storage", synchroniser);
-    return () => window.removeEventListener("storage", synchroniser);
-  }, []);
+    await refresh(userId);
+    return {
+      nombreAjoute: accepted.length,
+      nombreIgnoreLimite: candidates.length - accepted.length,
+      nombreIgnoreIndisponible: ignoredUnavailable
+    };
+  }, [records, refresh, userId]);
 
-  const basculer = useCallback((slug: string): "ajoute" | "retire" | "limite" | "erreur" => {
-    try {
-      const modification = modifierFavori(slugs, slug);
-      if (modification.action === "limite") return "limite";
-
-      window.localStorage.setItem(CLE_FAVORIS, JSON.stringify(modification.slugs));
-      setSlugs(modification.slugs);
-      setErreur(false);
-      return modification.action;
-    } catch {
-      setErreur(true);
-      return "erreur";
-    }
-  }, [slugs]);
-
-  const retirerPlusieurs = useCallback((slugsARetirer: string[]) => {
-    const exclus = new Set(slugsARetirer);
-    const prochainsSlugs = slugs.filter((slug) => !exclus.has(slug));
-    if (prochainsSlugs.length === slugs.length) return;
-
-    try {
-      window.localStorage.setItem(CLE_FAVORIS, JSON.stringify(prochainsSlugs));
-      setSlugs(prochainsSlugs);
-      setErreur(false);
-    } catch {
-      setErreur(true);
-    }
-  }, [slugs]);
-
-  const ajouterPlusieurs = useCallback((slugsImportes: string[]): Omit<ResultatFusionFavoris, "slugs"> | null => {
-    try {
-      const fusion = fusionnerFavoris(slugs, slugsImportes);
-      window.localStorage.setItem(CLE_FAVORIS, JSON.stringify(fusion.slugs));
-      setSlugs(fusion.slugs);
-      setErreur(false);
-      return {
-        nombreAjoute: fusion.nombreAjoute,
-        nombreIgnoreLimite: fusion.nombreIgnoreLimite
-      };
-    } catch {
-      setErreur(true);
-      return null;
-    }
-  }, [slugs]);
-
-  const valeur = useMemo(
-    () => ({ slugs, pret, erreur, basculer, retirerPlusieurs, ajouterPlusieurs }),
-    [slugs, pret, erreur, basculer, retirerPlusieurs, ajouterPlusieurs]
+  const slugs = useMemo(
+    () => records.flatMap((record) => record.slug ? [record.slug] : []),
+    [records]
   );
 
+  const value = useMemo(() => ({
+    slugs,
+    authenticated: Boolean(userId),
+    ready: initialized && ready,
+    error,
+    basculer,
+    retirerPlusieurs,
+    retirerIndisponibles,
+    ajouterPlusieurs
+  }), [
+    slugs, userId, initialized, ready, error,
+    basculer, retirerPlusieurs, retirerIndisponibles, ajouterPlusieurs
+  ]);
+
   return (
-    <FavorisContext.Provider value={valeur}>
+    <FavoritesContext.Provider value={value}>
       {children}
-    </FavorisContext.Provider>
+    </FavoritesContext.Provider>
   );
 }
 
-export function useFavorites(): ContexteFavoris {
-  const contexte = useContext(FavorisContext);
-  if (!contexte) throw new Error("useFavorites doit être utilisé dans FavoritesProvider.");
-  return contexte;
+export function useFavorites(): FavoritesContextValue {
+  const context = useContext(FavoritesContext);
+  if (!context) throw new Error("useFavorites must be used within FavoritesProvider.");
+  return context;
 }
