@@ -1,5 +1,5 @@
 Instructions ChatGPT — mode discussion Namesia
-Version : 1.3
+Version : 1.4
 Mis à jour le : 2026-11-27
 Caractères : 7176 (espaces compris ; limite stricte : 8 000).
 
