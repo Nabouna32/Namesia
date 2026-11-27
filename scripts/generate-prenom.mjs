@@ -14,7 +14,7 @@ export const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const PROMPT_URL = new URL("../prompts/fiche-prenom-v1.md", import.meta.url);
 const SCHEMA_URL = new URL("../schemas/fiche-prenom.groq.schema.json", import.meta.url);
 
-export function normaliserNom(displayName) {
+export function normalizeName(displayName) {
   if (typeof displayName !== "string") throw new Error("Le prénom doit être une chaîne.");
   if (/[\r\n\t]/u.test(displayName)) throw new Error("Le prénom ne peut pas contenir de retour à la ligne ou de tabulation.");
   const normalizedName = displayName.trim().replace(/ {2,}/g, " ").normalize("NFC");
@@ -24,7 +24,7 @@ export function normaliserNom(displayName) {
   return normalizedName;
 }
 
-export function normaliserSupabaseUrl(value) {
+export function normalizeSupabaseUrl(value) {
   if (typeof value !== "string" || !value.trim()) {
     throw new Error("L’URL Supabase est absente ou invalide.");
   }
@@ -49,8 +49,8 @@ export function normaliserSupabaseUrl(value) {
   return parsed.origin;
 }
 
-export function slugifierPrenom(displayName) {
-  const normalizedName = normaliserNom(displayName);
+export function slugifyFirstName(displayName) {
+  const normalizedName = normalizeName(displayName);
   const slug = normalizedName
     .replace(/[œŒ]/g, "oe")
     .replace(/[æÆ]/g, "ae")
@@ -71,13 +71,13 @@ export function slugifierPrenom(displayName) {
   return slug;
 }
 
-export function lireVersionPrompt(prompt) {
+export function readPromptVersion(prompt) {
   const match = prompt.match(/^Version du prompt : ([0-9]+\.[0-9]+\.[0-9]+)$/m);
   if (!match) throw new Error("La version du prompt est absente ou invalide.");
   return match[1];
 }
 
-export function normaliserContenuGroq(value) {
+export function normalizeGroqContent(value) {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     throw new Error("La réponse Groq doit être un objet JSON.");
   }
@@ -106,20 +106,20 @@ export function normaliserContenuGroq(value) {
   };
 }
 
-export function construireFicheImport(displayName, gender, generatedContent) {
-  const normalizedName = normaliserNom(displayName);
+export function buildImportProfile(displayName, gender, generatedContent) {
+  const normalizedName = normalizeName(displayName);
   return parseFichePrenom({
     schema_version: FICHE_SCHEMA_VERSION,
     identity: {
-      slug: slugifierPrenom(normalizedName),
+      slug: slugifyFirstName(normalizedName),
       display_name: normalizedName,
       gender
     },
-    content: normaliserContenuGroq(generatedContent)
+    content: normalizeGroqContent(generatedContent)
   });
 }
 
-export function construireRequeteGroq({ displayName, gender, prompt, schema }) {
+export function buildGroqRequest({ displayName, gender, prompt, schema }) {
   return {
     model: GROQ_MODEL,
     temperature: GENERATION_TEMPERATURE,
@@ -142,11 +142,11 @@ export function construireRequeteGroq({ displayName, gender, prompt, schema }) {
   };
 }
 
-function attendre(milliseconds) {
+function wait(milliseconds) {
   return new Promise((resolvePromise) => setTimeout(resolvePromise, milliseconds));
 }
 
-async function appelerGroq(apiKey, requestBody, fetchImpl) {
+async function callGroq(apiKey, requestBody, fetchImpl) {
   let response;
   for (let attempt = 0; attempt < 3; attempt += 1) {
     try {
@@ -161,7 +161,7 @@ async function appelerGroq(apiKey, requestBody, fetchImpl) {
       });
     } catch {
       if (attempt < 2) {
-        await attendre(1000 * (attempt + 1));
+        await wait(1000 * (attempt + 1));
         continue;
       }
       throw new Error("La connexion à Groq a échoué après plusieurs tentatives.");
@@ -176,7 +176,7 @@ async function appelerGroq(apiKey, requestBody, fetchImpl) {
     const delay = Number.isFinite(retryAfter) && retryAfter > 0
       ? Math.min(retryAfter * 1000, 15000)
       : 1000 * (attempt + 1);
-    await attendre(delay);
+    await wait(delay);
   }
 
   const result = await response.json();
@@ -203,7 +203,7 @@ async function appelerGroq(apiKey, requestBody, fetchImpl) {
   return { result, generatedContent };
 }
 
-async function importerDansSupabase({ supabaseUrl, secretKey, fiche, metadata, fetchImpl }) {
+async function importIntoSupabase({ supabaseUrl, secretKey, fiche, metadata, fetchImpl }) {
   const endpoint = supabaseUrl.replace(/\/+$/, "") + "/rest/v1/rpc/import_name_profile";
   const body = {
     p_slug: fiche.identity.slug,
@@ -256,7 +256,7 @@ async function importerDansSupabase({ supabaseUrl, secretKey, fiche, metadata, f
   return { profileId: rows[0].profile_id, version: rows[0].version };
 }
 
-export async function genererFiche({
+export async function generateProfile({
   displayName,
   gender,
   importAsDraft = false,
@@ -264,11 +264,11 @@ export async function genererFiche({
   fetchImpl = fetch,
   outputDirectory = resolve("artifacts")
 }) {
-  const normalizedName = normaliserNom(displayName);
+  const normalizedName = normalizeName(displayName);
   if (!["feminin", "masculin", "mixte", "inconnu"].includes(gender)) {
     throw new Error("Le genre fourni n’est pas pris en charge.");
   }
-  slugifierPrenom(normalizedName);
+  slugifyFirstName(normalizedName);
 
   const groqApiKey = typeof env.GROQ_API_KEY === "string" ? env.GROQ_API_KEY.trim() : "";
   if (!groqApiKey) throw new Error("Le secret GitHub GROQ_API_KEY n’est pas configuré.");
@@ -287,24 +287,24 @@ export async function genererFiche({
     if (!Number.isSafeInteger(workflowRunId) || workflowRunId <= 0) {
       throw new Error("L’identifiant du workflow GitHub est absent ou invalide.");
     }
-    supabaseUrl = normaliserSupabaseUrl(env.SUPABASE_URL);
+    supabaseUrl = normalizeSupabaseUrl(env.SUPABASE_URL);
   }
 
   const [prompt, schemaText] = await Promise.all([
     readFile(PROMPT_URL, "utf8"),
     readFile(SCHEMA_URL, "utf8")
   ]);
-  const promptVersion = lireVersionPrompt(prompt);
+  const promptVersion = readPromptVersion(prompt);
   const promptSha256 = createHash("sha256").update(prompt).digest("hex");
   const schema = JSON.parse(schemaText);
-  const requestBody = construireRequeteGroq({
+  const requestBody = buildGroqRequest({
     displayName: normalizedName,
     gender,
     prompt,
     schema
   });
-  const groq = await appelerGroq(groqApiKey, requestBody, fetchImpl);
-  const fiche = construireFicheImport(normalizedName, gender, groq.generatedContent);
+  const groq = await callGroq(groqApiKey, requestBody, fetchImpl);
+  const fiche = buildImportProfile(normalizedName, gender, groq.generatedContent);
   const generatedAt = new Date().toISOString();
   const slug = fiche.identity.slug;
   const contentSha256 = createHash("sha256").update(JSON.stringify(fiche.content)).digest("hex");
@@ -338,7 +338,7 @@ export async function genererFiche({
 
   let imported = null;
   if (importAsDraft) {
-    imported = await importerDansSupabase({
+    imported = await importIntoSupabase({
       supabaseUrl,
       secretKey: supabaseSecretKey,
       fiche,
@@ -386,7 +386,7 @@ export async function genererFiche({
 
 async function main() {
   const importAsDraft = process.env.IMPORT_AS_DRAFT === "true";
-  const result = await genererFiche({
+  const result = await generateProfile({
     displayName: process.env.DISPLAY_NAME,
     gender: process.env.GENDER,
     importAsDraft
