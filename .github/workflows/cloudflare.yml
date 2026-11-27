@@ -181,10 +181,20 @@ jobs:
             --output "$workdir/auth-settings.json"
           jq -e '.external.email == true' "$workdir/auth-settings.json"
 
-          for method in GET POST; do
-            status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' --request "$method" "$SITE_URL/api/admin/prenoms")"
-            test "$status" = "401"
-          done
+          echo "Vérifier GET admin sans session"
+          get_status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' --max-time 30 --request GET "$SITE_URL/api/admin/prenoms")"
+          echo "GET sans session : $get_status (attendu 401)"
+          test "$get_status" = "401"
+
+          echo "Vérifier POST admin sans Origin"
+          post_without_origin_status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' --max-time 30 --request POST "$SITE_URL/api/admin/prenoms")"
+          echo "POST sans Origin : $post_without_origin_status (attendu 403)"
+          test "$post_without_origin_status" = "403"
+
+          echo "Vérifier POST admin avec Origin mais sans session"
+          post_with_origin_status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' --max-time 30 --request POST --header "Origin: $SITE_URL" "$SITE_URL/api/admin/prenoms")"
+          echo "POST avec Origin sans session : $post_with_origin_status (attendu 401)"
+          test "$post_with_origin_status" = "401"
   comment-preview:
     name: Publier l'URL de Preview
     needs: build
