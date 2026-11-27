@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import { createClient, type Session } from "@supabase/supabase-js";
+import { type Session } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/database.types";
-import { getSupabasePublicConfig } from "@/lib/supabase/config";
+import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { FICHE_SCHEMA_VERSION, parseFichePrenom, type FichePrenomImport } from "@/lib/fiche-prenom";
 import styles from "./admin.module.css";
 import { AlertDialog } from "@/components/material3/AlertDialog";
@@ -13,8 +13,7 @@ import { Snackbar, type SnackbarSeverity } from "@/components/material3/Snackbar
 import { parseAdminCatalog, type AdminName, type AdminProfile } from "@/lib/admin-catalog";
 import { verifyAdminAccess } from "@/lib/admin-auth";
 
-const { url, key } = getSupabasePublicConfig();
-const supabase = createClient<Database>(url, key);
+const supabase = createSupabaseBrowserClient();
 
 type ImportResult = { profileId: string; version: number };
 type ProfileRow = AdminProfile;
@@ -30,7 +29,6 @@ export function AdminClient() {
   const [session, setSession] = useState<Session | null>(null);
   const [checking, setChecking] = useState(true);
   const [authorized, setAuthorized] = useState(false);
-  const [email, setEmail] = useState("");
   const [json, setJson] = useState("");
   const [preview, setPreview] = useState<FichePrenomImport | null>(null);
   const [message, setMessage] = useState<{ text: string; type: SnackbarSeverity } | null>(null);
@@ -149,23 +147,6 @@ export function AdminClient() {
       active = false;
     };
   }, [session?.access_token, authorized, refreshKey, catalogOffset]);
-
-  async function connecter(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setBusy(true);
-    setMessage(null);
-    try {
-      const { error } = await supabase.auth.signInWithOtp({
-        email: email.trim(),
-        options: { emailRedirectTo: `${window.location.origin}/admin`, shouldCreateUser: false }
-      });
-      afficherMessage(error ? "Le lien de connexion n'a pas pu être envoyé." : "Un lien de connexion vient d'être envoyé si cette adresse existe et est autorisée.", error ? "error" : "info");
-    } catch {
-      afficherMessage("Le service de connexion est momentanément indisponible.", "error");
-    } finally {
-      setBusy(false);
-    }
-  }
 
   function previsualiser() {
     try {
