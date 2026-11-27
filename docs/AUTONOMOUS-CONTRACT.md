@@ -1,7 +1,7 @@
 # Contrat de travail — Mode autonome
 
-- **Version :** 1.1
-- **Mis à jour le :** 2026-11-27 20:07:03 (Europe/Paris)
+- **Version :** 1.2
+- **Mis à jour le :** 2026-11-27 20:09:27 (Europe/Paris)
 
 ## Finalité
 
@@ -38,7 +38,11 @@ L'autonomie ne vaut pas autorisation illimitée. Un accord explicite reste oblig
 
 Pour ces sujets, créer ou mettre à jour une issue **[Action Humaine]**. Continuer les travaux indépendants sans anticiper la décision.
 
-## Cadence de conception\n\nUne passe sur trois est prioritairement consacrée au design avant toute nouvelle fonctionnalité. Elle vérifie la cohérence avec le [système de design](DESIGN-SYSTEM.md), le rendu mobile, la lisibilité, les contrastes, le clavier et les états des composants. Cette passe n'introduit pas de nouvelle fonctionnalité produit.\n\n## Principes de proportionnalité
+## Cadence de conception
+
+Une passe sur trois est prioritairement consacrée au design avant toute nouvelle fonctionnalité. Elle vérifie la cohérence avec le [système de design](DESIGN-SYSTEM.md), le rendu mobile, la lisibilité, les contrastes, le clavier et les états des composants. Cette passe n'introduit pas de nouvelle fonctionnalité produit.
+
+## Principes de proportionnalité
 
 - Optimiser pour les besoins, le temps, le budget et le confort de travail du propriétaire.
 - Ne pas inventer de besoins d'équipe, de processus d'entreprise ou de montée en charge humaine hypothétique.
