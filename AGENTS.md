@@ -47,7 +47,8 @@ Un accord exploratoire ne vaut pas automatiquement ordre de lancer un chantier d
 
 - GitHub Actions est l'unique mécanisme de test, build, contrôle et déploiement. Ne pas exécuter de test, build ou contrôle localement.
 - Consulter les runs associés au SHA exact. Lire les jobs et logs en cas d'échec ; corriger les causes puis attendre un nouveau run complet.
-- Attendre la fin de tous les contrôles requis avant de fusionner.\n- Ne jamais fusionner tant qu'un contrôle requis est en cours, en attente ou en échec. Ne jamais annoncer une réussite sans confirmation GitHub Actions.
+- Attendre la fin de tous les contrôles requis avant de fusionner.
+- Ne jamais fusionner tant qu'un contrôle requis est en cours, en attente ou en échec. Ne jamais annoncer une réussite sans confirmation GitHub Actions.
 - Si la CI de `main` est rouge, la corriger avant tout nouveau chantier.
 - Seule la branche `main`, après fusion, déploie la production Cloudflare. Les previews de PR ne sont pas la production.
 - Ne jamais exposer les secrets Cloudflare aux forks ou aux PR Dependabot. Les previews ne contiennent pas de données privées ni de sessions de production.
