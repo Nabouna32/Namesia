@@ -1,19 +1,18 @@
 # Registre des décisions d'architecture
 
-- **Version :** 1.6
-- **Mis à jour le :** 2026-11-27 10:38:00 (Europe/Paris)
+- **Version :** 1.7
+- **Mis à jour le :** 2026-11-27 11:05:11 (Europe/Paris)
 
-Les ADR conservent le contexte, les options examinées, les décisions et leurs conséquences. Elles constituent l'historique des arbitrages structurants ; elles ne remplacent pas les documents canoniques qui décrivent l'état actuel.
-
-Une ADR indiquée comme **remplacée** reste conservée pour comprendre l'historique, mais ne fait plus autorité sur le périmètre remplacé. Une ADR **partiellement remplacée** reste applicable uniquement sur les points qui n'ont pas été explicitement remplacés.
+Ce registre référence les décisions structurantes encore utiles à comprendre les règles et contraintes actuelles. Une décision remplacée sans portée résiduelle peut être supprimée ; son ancien contenu reste consultable dans l'historique Git si nécessaire.
 
 ## Documents canoniques actuels
 
-- [Documentation de Namesia](../README.md) — index et hiérarchie des sources.
+- [Documentation de Namesia](../README.md)
 - [État du projet](../etat-du-projet.md)
 - [Gouvernance et autonomie](../gouvernance.md)
 - [Vision produit](../vision-produit.md)
-- [Architecture](../architecture.md)
+- [Fonctionnalités actuelles](../fonctionnalites.md)
+- [Architecture technique](../architecture.md)
 - [Modèle de données](../modele-donnees.md)
 - [Exploitation, sécurité et qualité](../operations.md)
 - [Standards techniques](../standards-techniques.md)
@@ -82,7 +81,7 @@ Une ADR indiquée comme **remplacée** reste conservée pour comprendre l'histor
 
 ### Données, exploitation, gouvernance et production éditoriale
 
-- [ADR-0047 — Le stockage de session est la source de vérité de l'historique](ADR-0047-historique-stockage-session.md)
+- [ADR-0047 — L'historique de session comme source de vérité](ADR-0047-historique-stockage-session.md)
 - [ADR-0048 — Publier un instantané annuel du classement Insee](ADR-0048-classement-insee-2025.md)
 - [ADR-0049 — Authentification administrateur passwordless](ADR-0049-authentification-admin-passwordless.md)
 - [ADR-0050 — Hébergement Next.js sur Cloudflare Workers](ADR-0050-hebergement-cloudflare-workers.md)
@@ -91,9 +90,8 @@ Une ADR indiquée comme **remplacée** reste conservée pour comprendre l'histor
 - [ADR-0053 — Compte utilisateur facultatif](ADR-0053-compte-utilisateur-facultatif.md)
 - [ADR-0054 — Métadonnées et fraîcheur documentaire](ADR-0054-metadonnees-fraicheur-documentaire.md)
 - [ADR-0055 — Gouvernance et autonomie de Namesia](ADR-0055-gouvernance-autonomie.md)
-- [ADR-0056 — Génération contrôlée des fiches via Groq](ADR-0056-generation-groq.md) — remplacée par ADR-0057
 - [ADR-0057 — Génération externe et import éditorial](ADR-0057-generation-externe-import.md)
 
 ## Contrat du registre
 
-Le test `tests/adr-registry.test.mjs` vérifie l'unicité des identifiants, la cohérence entre nom de fichier et titre, les liens internes entre ADR et la présence de chaque ADR dans le présent registre. Toute nouvelle ADR doit être ajoutée à cet index dans la même demande de fusion ; une ADR remplacée n'est pas supprimée.
+Le test `tests/adr-registry.test.mjs` vérifie l'unicité des identifiants, la cohérence entre nom de fichier et titre, les liens internes entre ADR et la présence de chaque ADR dans le présent registre. Toute nouvelle ADR doit être ajoutée à cet index dans la même demande de fusion.
