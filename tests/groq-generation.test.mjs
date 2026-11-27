@@ -208,17 +208,11 @@ test("l’import exige les secrets Supabase avant tout appel Groq", async () => 
   assert.equal(calls, 0);
 });
 
-test("le workflow est manuel, limité à main et ne s’exécute pas sur les PR", async () => {
-  const workflow = await readFile(new URL("../.github/workflows/generer-fiche-groq.yml", import.meta.url), "utf8");
-  assert.match(workflow, /workflow_dispatch:/);
-  assert.match(workflow, /github\.ref == 'refs\/heads\/main'/);
-  assert.doesNotMatch(workflow, /^  pull_request:/m);
-  assert.match(workflow, /secrets\.GROQ_API_KEY/);
-  assert.match(workflow, /secrets\.SUPABASE_SECRET_KEY/);
-  assert.match(workflow, /retention-days: 7/);
-  assert.doesNotMatch(workflow, /source \.env\.example/);
-  assert.match(workflow, /awk -F=/);
-  assert.match(workflow, /NAMESIA_WORKFLOW_RUN_ID: \$\{\{ github\.run_id \}\}/);
+test("aucun workflow GitHub Actions Groq n'est activé comme parcours de génération", async () => {
+  await assert.rejects(
+    readFile(new URL("../.github/workflows/generer-fiche-groq.yml", import.meta.url), "utf8"),
+    { code: "ENOENT" }
+  );
 });
 
 test("l’import SQL réserve les métadonnées au service_role et protège l’idempotence", async () => {
