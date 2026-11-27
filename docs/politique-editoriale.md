@@ -1,8 +1,8 @@
 # Principes éditoriaux — Namesia
 
 - **Statut :** document canonique
-- **Version :** 2.3
-- **Mis à jour le :** 2026-11-27 01:42:00 (Europe/Paris)
+- **Version :** 2.4
+- **Mis à jour le :** 2026-11-27 10:40:53 (Europe/Paris)
 
 ## 1. Nature des contenus
 
@@ -47,7 +47,7 @@ Les associations symboliques sont des contenus éditoriaux ou culturels. Elles n
 
 ## 5. Provenance et retours
 
-Une fiche générée doit pouvoir être reliée à son fournisseur, son modèle, sa version de prompt, son empreinte de prompt, son schéma de sortie et sa requête de génération. Ces métadonnées techniques sont stockées dans une table relationnelle privée, séparée du contenu éditorial. Leur présence ne constitue pas une validation factuelle.
+Les métadonnées techniques d'un fournisseur ou d'un prompt ne font pas partie du contrat JSON des fiches. Le parcours courant, fondé sur une génération assistée en amont puis un import manuel, ne les collecte pas automatiquement : ne jamais les inventer ou les déduire après coup. L'ancien script Groq expérimental conserve un fichier de métadonnées local et peut transmettre certaines valeurs à une table privée ; ce mécanisme n'est pas utilisé par le parcours courant. Lorsqu'elles existent réellement, ces métadonnées décrivent le processus de génération, pas l'exactitude du contenu. Voir [Modèle de données](modele-donnees.md) et [Pipeline de génération](pipeline-generation-ia.md).
 
 Les visiteurs pourront signaler une erreur ou proposer une correction. Ces retours restent privés par défaut, sont contextualisés et vérifiés avant toute modification ; aucune contribution n’est publiée automatiquement. Le traitement et le cycle de vie des fiches sont décrits dans docs/qualite-editoriale.md.
 
