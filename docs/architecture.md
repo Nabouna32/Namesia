@@ -1,8 +1,8 @@
 # Architecture — Namesia
 
 - **Statut :** architecture cible retenue pour la V1
-- **Version :** 4.01
-- **Mis à jour le :** 2026-11-26 20:41:00 (Europe/Paris)
+- **Version :** 4.02
+- **Mis à jour le :** 2026-11-27 13:20:36 (Europe/Paris)
 
 ## Structure de la page
 
@@ -39,17 +39,17 @@ Le fournisseur IA est volontairement hors du périmètre applicatif. Il n'existe
 - Le modèle ne choisit jamais le statut de publication.
 - Aucun champ de source, référence, preuve ou vérification n'appartient au contrat.
 
-### Administration
-- Connexion via Supabase Auth par lien e-mail.
-- L'administration utilise exclusivement les liens OTP e-mail ; aucun flux de connexion ou de modification par mot de passe n'est exposé ([ADR-0049](decisions/ADR-0049-authentification-admin-passwordless.md)). L'alerte Supabase `auth_leaked_password_protection` reste visible dans l'Advisor mais ne couvre pas le parcours OTP actuel ; elle doit être réexaminée avant toute introduction d'un flux mot de passe.
-- Les clients serveur, navigateur et administrateur sont typés avec `Database`, généré depuis le schéma PostgreSQL actif dans `lib/supabase/database.types.ts`. Les relations, colonnes et RPC sont donc contrôlées à la compilation ; les lectures du catalogue utilisent les types inférés, sans cast non vérifié.
-- `lib/supabase/config.ts` est l'unique frontière de configuration publique : elle exige l'URL et la clé, valide l'origine et impose HTTPS en production et réserve HTTP aux hôtes loopback en développement. Les clients serveur, navigateur et administrateur partagent ce contrat, sans assertion non nulle ni fallback.
-- Autorisation fondée sur la présence de l'identifiant Auth dans private.admin_users.
-- Import d'un fichier JSON ou d'un contenu collé.
-- Validation du contrat avant envoi.
-- Prévisualisation du contenu avant publication.
-- Import enregistré comme brouillon ; publication par une action distincte.
-- Auto-inscription désactivée ; le premier compte Auth est créé/invité depuis Supabase puis autorisé manuellement.
+### Comptes et administration
+- Un seul système Supabase Auth par adresse e-mail et mot de passe sert les visiteurs et les administrateurs. Le parcours public est disponible sur `/compte` ; la connexion, l'inscription, la confirmation d'adresse et la récupération de mot de passe utilisent le même client navigateur partagé.
+- Les mots de passe ont un minimum applicatif de 15 caractères, sans règle de composition. Les phrases de passe et les espaces sont acceptés. Supabase Auth impose une limite technique de 72 octets UTF-8 liée à son stockage bcrypt.
+- La vérification HIBP n'est pas activée et n'est pas un prérequis ; Namesia n'impose pas de passage à Supabase Pro. Cette décision est un compromis explicite et ne vaut pas déclaration de conformité complète au NIST.
+- Les réponses de connexion et de récupération restent génériques pour limiter l'énumération des comptes. Supabase Auth fournit les limites de débit des endpoints d'authentification ; les paramètres de production doivent être vérifiés.
+- Les sessions navigateur sont persistées par Supabase Auth avec le flux PKCE. Les routes API vérifient le jeton via `auth.getUser()` et réévaluent les droits administrateur côté serveur ; le navigateur ne décide jamais du rôle.
+- Les comptes ordinaires n'ont aucun droit d'administration. L'attribution du droit administrateur reste une opération privée explicite dans `private.admin_users`, séparée de l'identité Auth et inaccessible aux métadonnées modifiables par l'utilisateur.
+- Les comptes administrateurs existants conservent leur identifiant Auth et leur autorisation ; ils doivent définir leur premier mot de passe via le parcours « Mot de passe oublié ».
+- Les clients serveur, navigateur et administrateur sont typés avec `Database`, généré depuis le schéma PostgreSQL actif dans `lib/supabase/database.types.ts`. Les relations, colonnes et RPC sont contrôlées à la compilation.
+- `lib/supabase/config.ts` est l'unique frontière de configuration publique : elle exige l'URL et la clé, valide l'origine et impose HTTPS en production et réserve HTTP aux hôtes loopback en développement.
+- Import d'un fichier JSON ou d'un contenu collé, validation du contrat, prévisualisation et publication explicite en opérations distinctes.
 
 ### API et base de données
 - Routes Next.js côté serveur pour les opérations administratives.
