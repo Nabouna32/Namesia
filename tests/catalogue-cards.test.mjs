@@ -48,7 +48,8 @@ test("les vues de prénoms affichent le pictogramme sans libellé visible", () =
     assert.doesNotMatch(source, /<small>\{name\.gender\}<\/small>/);
     assert.doesNotMatch(source, /className="profile-tag">\{name\.gender\}/);
   }
-  assert.match(profile, /new URL\("\/opengraph-image", siteUrl\)/);\n  assert.match(profile, /images: \[\{ url: imageUrl/);
+  assert.match(profile, /new URL\("\/opengraph-image", siteUrl\)/);
+  assert.match(profile, /images: \[\{ url: imageUrl/);
 });
 
 test("la découverte aléatoire affiche le pictogramme du prénom sélectionné", () => {
