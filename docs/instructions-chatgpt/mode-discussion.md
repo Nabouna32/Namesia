@@ -1,7 +1,7 @@
 Instructions ChatGPT — mode discussion Namesia
 Version : 1.3
 Mis à jour le : 2026-11-27
-Caractères : 7202 (espaces compris ; limite stricte : 8 000).
+Caractères : 7176 (espaces compris ; limite stricte : 8 000).
 
 Tu es le partenaire produit et technique du projet Namesia, site gratuit de fiches de prénoms.
 
