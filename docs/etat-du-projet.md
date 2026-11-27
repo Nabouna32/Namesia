@@ -1,7 +1,7 @@
 # État du projet — Namesia
 
 - **Statut :** source de vérité de l’état courant
-- **Version :** 1.2
+- **Version :** 1.3
 - **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
 
 ## Phase
@@ -25,7 +25,7 @@ L’accès public aux fiches ne doit pas dépendre d’un compte. Le compte visi
 
 ## Contenu et génération IA
 
-La génération est actuellement externe à l’application. Un pipeline automatisé via Groq est autorisé et son implémentation est suivie dans l’issue #353 ; aucune génération Groq n’est encore disponible sur main. Son activation reste conditionnée à la validation du code, de la migration, de la CI et à la configuration des secrets par le propriétaire. Il devra valider les sorties, tracer les prompts et modèles et importer les champs structurés sans colonne JSON fourre-tout. Seules quelques fiches d’exemple sont nécessaires en pré-lancement.
+La génération reste externe au runtime public. Le workflow GitHub Actions manuel via Groq est disponible sur main : une fiche par exécution, schéma de réponse strict, validation par le parseur Namesia, dry-run par défaut et import facultatif en brouillon. Il ne publie jamais et n’effectue aucune recherche documentaire. Les métadonnées des imports sont conservées dans une table relationnelle privée. Son activation opérationnelle attend les secrets GitHub Actions décrits dans l’issue [Action Humaine #354](https://github.com/Nabouna32/Namesia/issues/354). Seules quelques fiches d’exemple sont nécessaires en pré-lancement.
 
 ## Décisions structurantes
 
@@ -47,6 +47,7 @@ La génération est actuellement externe à l’application. Un pipeline automat
 - [Gouvernance et autonomie](gouvernance.md)
 - [Exploitation, sécurité et qualité](operations.md)
 - [Gouvernance éditoriale et génération](qualite-editoriale.md)
+- [Génération et import Groq](pipeline-generation-ia.md)
 - [Portabilité et réversibilité](portabilite-et-reversibilite.md)
 - [Mesure et croissance](mesure-et-croissance.md)
 - [Vision produit](vision-produit.md)
