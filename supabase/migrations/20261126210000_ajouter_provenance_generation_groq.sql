@@ -147,27 +147,7 @@ begin
   end if;
 
   if v_is_service_role then
-    -- Une relance du même workflow ne crée jamais une seconde version.
-    select m.profile_id, p.version, m.content_sha256, m.workflow_run_id, n.slug, n.display_name, n.gender
-    into v_profile_id, v_version, v_existing_content_sha256, v_existing_workflow_run_id, v_existing_slug, v_existing_display_name, v_existing_gender
-    from private.name_profile_generation_metadata m
-    join public.name_profiles p on p.id = m.profile_id
-    join public.names n on n.id = p.name_id
-    where m.workflow_run_id = p_generation_workflow_run_id;
-
-    if found then
-      if v_existing_content_sha256 is distinct from p_generation_content_sha256
-        or v_existing_slug is distinct from p_slug
-        or v_existing_display_name is distinct from p_display_name
-        or v_existing_gender is distinct from p_gender
-      then
-        raise exception 'Cette exécution GitHub a déjà importé une autre fiche.' using errcode = '22023';
-      end if;
-      return query select v_profile_id, v_version;
-      return;
-    end if;
-
-    -- Une reprise réseau avec le même identifiant Groq reste également idempotente.
+    -- Une reprise réseau avec le même identifiant Groq reste idempotente.
     select m.profile_id, p.version, m.content_sha256, m.workflow_run_id, n.slug, n.display_name, n.gender
     into v_profile_id, v_version, v_existing_content_sha256, v_existing_workflow_run_id, v_existing_slug, v_existing_display_name, v_existing_gender
     from private.name_profile_generation_metadata m
@@ -183,6 +163,26 @@ begin
         or v_existing_gender is distinct from p_gender
       then
         raise exception 'Identifiant de requête Groq déjà associé à une autre exécution ou fiche.' using errcode = '22023';
+      end if;
+      return query select v_profile_id, v_version;
+      return;
+    end if;
+
+    -- Une relance du même workflow ne crée jamais une seconde version.
+    select m.profile_id, p.version, m.content_sha256, m.workflow_run_id, n.slug, n.display_name, n.gender
+    into v_profile_id, v_version, v_existing_content_sha256, v_existing_workflow_run_id, v_existing_slug, v_existing_display_name, v_existing_gender
+    from private.name_profile_generation_metadata m
+    join public.name_profiles p on p.id = m.profile_id
+    join public.names n on n.id = p.name_id
+    where m.workflow_run_id = p_generation_workflow_run_id;
+
+    if found then
+      if v_existing_content_sha256 is distinct from p_generation_content_sha256
+        or v_existing_slug is distinct from p_slug
+        or v_existing_display_name is distinct from p_display_name
+        or v_existing_gender is distinct from p_gender
+      then
+        raise exception 'Cette exécution GitHub a déjà importé une autre fiche.' using errcode = '22023';
       end if;
       return query select v_profile_id, v_version;
       return;
