@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 const siteUrl = await readFile(new URL("../lib/site-url.ts", import.meta.url), "utf8");
-const readme = await readFile(new URL("../README.md", import.meta.url), "utf8");
+const environments = await readFile(new URL("../docs/platform/ENVIRONMENTS-AND-SECRETS.md", import.meta.url), "utf8");
 const envExample = await readFile(new URL("../.env.example", import.meta.url), "utf8");
 const workflow = await readFile(new URL("../.github/workflows/ci.yml", import.meta.url), "utf8");
 
