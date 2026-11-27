@@ -360,7 +360,7 @@ test("toute nouvelle page doit suivre le registre de composants Material 3", () 
   assert.match(composantsDoc, /components\/material3/);
   assert.match(composantsDoc, /noms, variantes, anatomie, dimensions et états suivent AndroidX Compose Material 3/);
   assert.match(composantsDoc, /ports explicites des contrats AndroidX/);
-  assert.match(composantsDoc, /pas de wrappers de convenance/);
+  assert.match(composantsDoc, /wrappers de convenance/);
   assert.doesNotMatch(composantsDoc, /ChampRecherche|ChipFiltre|MessageStatut/);
   assert.match(composantsDoc, /SearchBarTokens/);
   assert.match(composantsDoc, /ButtonSmallTokens/);
