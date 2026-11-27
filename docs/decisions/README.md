@@ -1,7 +1,7 @@
 # Registre des décisions d'architecture
 
-- **Version :** 1.2
-- **Mis à jour le :** 2026-11-27 13:20:36 (Europe/Paris)
+- **Version :** 1.3
+- **Mis à jour le :** 2026-11-27 20:04:01 (Europe/Paris)
 
 Les ADR conservent les décisions structurelles, y compris celles qui ont été remplacées. Une ADR marquée « remplacée » est une trace historique et ne décrit pas l'état courant du produit.
 
