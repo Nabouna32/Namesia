@@ -1,8 +1,8 @@
 # Bibliothèque Material 3 — Namesia
 
 - **Statut :** référence canonique des composants d'interface
-- **Version :** 1.1
-- **Mis à jour le :** 2026-11-27 15:13:01 (Europe/Paris)
+- **Version :** 1.2
+- **Mis à jour le :** 2026-11-27 15:17:05 (Europe/Paris)
 
 Ce document est le point d'entrée unique pour composer l'interface. Les ports Web des contrats Material 3 sont centralisés dans `components/material3/` ; les fonctions propres au produit sont isolées dans `components/features/`. Il n'existe pas de seconde bibliothèque de primitives ni de wrappers de convenance. Les ports locaux sont nécessaires parce qu'AndroidX Compose cible Android/Kotlin et que Material Web ne couvre pas le besoin stable complet ; ils ne sont pas présentés comme des composants AndroidX exécutés dans le navigateur. La décision, les alternatives et les limites sont détaillées dans [ADR-0037](decisions/ADR-0037-architecture-composants-material3.md).
 
@@ -40,10 +40,6 @@ components/
     Snackbar.module.css
     index.ts
   features/                  # Composition métier, jamais une seconde bibliothèque UI
-    history/
-      HistoryProvider.tsx
-      RecentNames.tsx
-      RecordVisit.tsx
     catalog/
       NameSearch.tsx
       FeaturedNames.tsx
@@ -107,9 +103,6 @@ Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques 
 |---|---|---|
 | `FavoritesProvider` | `features/favorites/FavoritesProvider.tsx` | Chargement et mutations des favoris liés au compte via Supabase et RLS. |
 | `FavoritesList` | `features/favorites/FavoritesList.tsx` | Recherche, FilterChip icon-only pour le genre, tri natif, import/export JSON des favoris du compte et liste des favoris ; aucune migration locale. |
-| `HistoryProvider` | `features/history/HistoryProvider.tsx` | Fournisseur inactif : aucune visite n'est stockée avant l'arbitrage #405 ; aucun stockage local n'est consulté. |
-| `RecentNames` | `features/history/RecentNames.tsx` | Emplacement temporairement inactif en attendant l'historique lié au compte. |
-| `RecordVisit` | `features/history/RecordVisit.tsx` | Aucun enregistrement tant que l'historique lié au compte n'est pas activé. |
 | `NameSearch` | `features/catalog/NameSearch.tsx` | Recherche, filtres et pagination du catalogue. |
 | `GenderIcon` | `features/names/GenderIcon.tsx` | Pictogramme SVG exhaustif des quatre genres, avec nom accessible ; la correspondance est centralisée dans `lib/gender-icons.ts`. |
 | `FeaturedNames` | `features/catalog/FeaturedNames.tsx` | Présentation des prénoms mis en avant. |
@@ -158,4 +151,4 @@ Avant toute création, vérifier le nom officiel, l'anatomie, les tokens, les va
 
 ## Contrats des props
 
-Les compositions de catalogue utilisent des props anglaises : `names`, `initialSearch`, `initialGender`, `initialLetter`, `initialVisibleCount` et `syncUrl` pour `NameSearch` ; `names` pour `FeaturedNames`, `RelatedNames`, `RecentNames` et `RandomDiscovery`. `FavoritesList` reçoit `names`, `initialSearch`, `initialGender`, `initialSort` et `initialVisibleCount`. `NameComparator` reçoit `names` et `initialSelection`. `RelatedNames` reçoit également `returnContext`. Les noms des routes, paramètres d'URL et clés de réponse API restent français lorsqu'ils font partie d'un contrat public.
+Les compositions de catalogue utilisent des props anglaises : `names`, `initialSearch`, `initialGender`, `initialLetter`, `initialVisibleCount` et `syncUrl` pour `NameSearch` ; `names` pour `FeaturedNames`, `RelatedNames` et `RandomDiscovery`. `FavoritesList` reçoit `names`, `initialSearch`, `initialGender`, `initialSort` et `initialVisibleCount`. `NameComparator` reçoit `names` et `initialSelection`. `RelatedNames` reçoit également `returnContext`. Les noms des routes, paramètres d'URL et clés de réponse API restent français lorsqu'ils font partie d'un contrat public.
