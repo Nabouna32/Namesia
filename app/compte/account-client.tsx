@@ -31,7 +31,7 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
   const [confirmation, setConfirmation] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [feedback, setFeedback] = useState<Feedback | null>(
-    emailConfirmed ? { text: "Adresse e-mail confirmée. Vous pouvez maintenant vous connecter.", type: "success" } : null
+    emailConfirmed ? { text: "Adresse e-mail confirmée.", type: "success" } : null
   );
   const [busy, setBusy] = useState(false);
 
