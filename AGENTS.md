@@ -1,7 +1,7 @@
 # AGENTS.md — Charte de travail de Namesia
 
 - **Version :** 1.5
-- **Mis à jour le :** 2026-11-27 01:08:00 (Europe/Paris)
+- **Mis à jour le :** 2026-11-27 01:34:00 (Europe/Paris)
 
 Cette charte s'applique à tout le dépôt, aux contributions humaines et aux agents IA.
 
