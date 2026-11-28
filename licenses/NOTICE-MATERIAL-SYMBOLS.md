@@ -1,9 +1,9 @@
 # Attribution — Google Material Symbols
 
-- **Version :** 1.3
-- **Mis à jour le :** 2026-11-28 11:14:52 (Europe/Paris)
+- **Version :** 1.4
+- **Mis à jour le :** 2026-11-28 11:21:17 (Europe/Paris)
 
-Les pictogrammes fonctionnels de Namesia appartiennent à la famille **Google Material Symbols**, style **Rounded**, poids **400**. Les SVG déjà intégrés proviennent de la distribution communautaire `@material-symbols/svg-400` 0.49.0 publiée par `marella` ; cette distribution n'est pas maintenue ni vérifiée par Google. Les sources amont et le statut des distributions sont décrits dans le [dépôt officiel Google](https://github.com/google/material-design-icons).
+Le registre `components/material3/Icon.tsx` contient exclusivement les glyphes fonctionnels officiels **Google Material Symbols Rounded**, poids **400**, extraits des SVG Google au commit immuable `10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7`. Le script CI `scripts/verify-design-sources.mjs` télécharge ces sources épinglées et compare chaque tracé au registre local. Les pictogrammes de genre Namesia sont des formes métier spécifiques, pas des Material Symbols ; ils sont séparés dans `components/features/names/GenderIcon.tsx` et `lib/gender-icons.ts`.
 
 ## Chevron de navigation
 
@@ -44,7 +44,8 @@ Les liens internes de navigation hiérarchique utilisent `chevron_right` ; ce gl
 
 ## Ressources et licence
 
-- Source amont officielle : [google/material-design-icons](https://github.com/google/material-design-icons).
-- Distribution SVG communautaire utilisée pour les ressources historiques : [marella/material-symbols](https://github.com/marella/material-symbols), paquet `@material-symbols/svg-400` 0.49.0.
+- Dépôt source officiel : [google/material-design-icons](https://github.com/google/material-design-icons), commit immuable `10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7`.
+- Fichiers vérifiés par la CI : `home_24px.svg`, `home_fill1_24px.svg`, `favorite_24px.svg`, `favorite_fill1_24px.svg`, `search_24px.svg`, `shuffle_24px.svg`, `compare_arrows_24px.svg`, `check_24px.svg`, `close_24px.svg`, `chevron_left_24px.svg`, `chevron_right_24px.svg` et `arrow_outward_24px.svg`, tous dans `symbols/web/<nom>/materialsymbolsrounded/`.
+- Variante : format 24 px, axes par défaut, poids 400. La viewBox officielle `0 -960 960 960` est conservée.
 - Licence des Material Symbols : Apache License 2.0 ; la copie applicable est conservée dans `Apache-2.0-Material-Symbols.txt`.
 - Les glyphes sont embarqués localement ; aucune ressource distante ni dépendance d'icônes n'est chargée à l'exécution.
