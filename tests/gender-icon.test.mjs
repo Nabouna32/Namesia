@@ -27,5 +27,5 @@ test("le pictogramme masculin sépare son anneau et sa flèche", () => {
 test("GenderIcon expose un nom accessible ou devient décoratif dans un filtre", () => {
   assert.match(genderIcon, /role=\{decorative \? undefined : "img"\}/);
   assert.match(genderIcon, /aria-label=\{decorative \? undefined : gender\}/);
-  assert.match(genderIcon, /aria-hidden=\{decorative \? true : undefined\}/);
+  assert.match(genderIcon, /<svg[\s\S]*?aria-hidden="true"/);
 });
