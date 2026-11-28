@@ -254,7 +254,7 @@ export function FavoritesList({
 
       {favoris.length === 0 ? (
         <Card as="section" variant="outlined" interactive={false} className={styles.empty}>
-          <h2 className={styles.emptyTitle}>Votre sélection est encore vide</h2>
+          <h2 className={styles.emptyTitle}>{error ? "Vos favoris sont indisponibles" : unavailableCount > 0 ? "Aucun favori disponible" : "Votre sélection est encore vide"}</h2>
           <p className={error ? styles.error : undefined} role={error ? "alert" : undefined}>{error
             ? "Vos favoris ne peuvent pas être lus pour le moment."
             : unavailableCount > 0
