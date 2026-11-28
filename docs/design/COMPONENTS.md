@@ -1,8 +1,8 @@
 # Bibliothèque Material 3 — Namesia
 
 - **Statut :** référence canonique des composants d'interface
-- **Version :** 1.7
-- **Mis à jour le :** 2026-11-28 11:21:17 (Europe/Paris)
+- **Version :** 1.8
+- **Mis à jour le :** 2026-11-28 11:32:02 (Europe/Paris)
 
 Ce document est le point d'entrée unique pour composer l'interface. Les ports Web des contrats Material 3 sont centralisés dans `components/material3/` ; les fonctions propres au produit sont isolées dans `components/features/`. Il n'existe pas de seconde bibliothèque de primitives ni de wrappers de convenance. Les ports locaux sont nécessaires parce qu'AndroidX Compose cible Android/Kotlin et que Material Web ne couvre pas le besoin stable complet ; ils ne sont pas présentés comme des composants AndroidX exécutés dans le navigateur. La décision, les alternatives et les limites sont détaillées dans [ADR-0037](../decisions/ADR-0037-MATERIAL-3-COMPONENT-ARCHITECTURE.md).
 
@@ -102,7 +102,7 @@ Les titres, paragraphes et libellés utilisent les éléments HTML sémantiques 
 | Composant | Fichier | Responsabilité |
 |---|---|---|
 | `FavoritesProvider` | `features/favorites/FavoritesProvider.tsx` | Chargement et mutations des favoris liés au compte via Supabase et RLS. |
-| `FavoritesList` | `features/favorites/FavoritesList.tsx` | Recherche, FilterChip icon-only pour le genre, tri natif, import/export JSON des favoris du compte et liste des favoris ; aucune migration locale. |
+| `FavoritesList` | `features/favorites/FavoritesList.tsx` | Recherche, FilterChip icon-only pour le genre, tri natif, import/export JSON des favoris du compte, cartes navigables et états vides composés avec `Card` outlined ; aucune migration locale. |
 | `NameSearch` | `features/catalog/NameSearch.tsx` | Recherche, filtres et pagination du catalogue. |
 | `GenderIcon` | `features/names/GenderIcon.tsx` | Pictogramme Namesia propre aux données de genre, distinct de Material Symbols. Les quatre formes vectorielles sont centralisées dans `lib/gender-icons.ts` ; le composant porte le nom accessible dans les fiches/cartes et devient décoratif dans les FilterChip dont le libellé porte déjà le nom du genre. |
 | `FeaturedNames` | `features/catalog/FeaturedNames.tsx` | Présentation des prénoms mis en avant. |
