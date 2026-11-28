@@ -1,17 +1,33 @@
 import type { NameGender } from "@/lib/names";
-import { GENDER_ICONS } from "@/lib/gender-icons";
-import { Icon } from "@/components/material3/Icon";
+import { GENDER_ICON_PATHS } from "@/lib/gender-icons";
 import styles from "./GenderIcon.module.css";
 
 type Props = {
   gender: NameGender;
   className?: string;
+  decorative?: boolean;
 };
 
-export function GenderIcon({ gender, className }: Props) {
+export function GenderIcon({ gender, className, decorative = false }: Props) {
+  const definition = GENDER_ICON_PATHS[gender];
   return (
-    <span className={className ? `${styles.icon} ${className}` : styles.icon} role="img" aria-label={gender}>
-      <Icon name={GENDER_ICONS[gender]} size={20} />
+    <span
+      className={className ? `${styles.icon} ${className}` : styles.icon}
+      role={decorative ? undefined : "img"}
+      aria-label={decorative ? undefined : gender}
+      aria-hidden={decorative ? true : undefined}
+    >
+      <svg
+        aria-hidden="true"
+        width={20}
+        height={20}
+        viewBox="0 -960 960 960"
+        fill="currentColor"
+        focusable="false"
+      >
+        <path d={definition.path} fillRule={definition.fillRule} />
+        {definition.secondaryPath && <path d={definition.secondaryPath} />}
+      </svg>
     </span>
   );
 }
