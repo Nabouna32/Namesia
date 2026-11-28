@@ -3,7 +3,7 @@
 - **Statut :** active
 - **Décision prise le :** 2026-11-24 (heure non consignée)
 - **Version :** 1.0
-- **Mis à jour le :** 2026-11-28 06:05:17 (Europe/Paris)
+- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
 - **Remplacement partiel :** seul le choix de couleur source est remplacé par ADR-0045 ; les autres décisions de cette ADR restent applicables.
 - **Remplace :** les choix de couleur source et de génération des ADR-0006, ADR-0015 et ADR-0027
 
