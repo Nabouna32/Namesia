@@ -1,7 +1,9 @@
 # ADR-0040 — Nomenclature anglaise des composants
 
-- **Statut :** acceptée
-- **Date :** 2026-11-24
+- **Statut :** active
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-28 06:05:17 (Europe/Paris)
+- **Décision prise le :** 2026-11-24 (heure non consignée)
 - **Complète :** ADR-0037, ADR-0038 et ADR-0039
 
 ## Contexte

@@ -1,7 +1,9 @@
 # ADR-0039 — Séparer les composants du shell Material 3
 
-- **Statut :** acceptée
-- **Date :** 2026-11-24
+- **Statut :** active
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-28 06:05:17 (Europe/Paris)
+- **Décision prise le :** 2026-11-24 (heure non consignée)
 - **Référence :** AndroidX Compose Material 3 1.5.0 stable, commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c`
 - **Complète :** ADR-0038
 
