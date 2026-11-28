@@ -273,7 +273,7 @@ test("l'approche typographique utilise exclusivement les tokens de rôle Materia
 test("les textes utilisent les interlignes de leur rôle Material 3", () => {
   const ratios = [...allCss.matchAll(/line-height:\s*(\d+(?:\.\d+)?);/g)].map((match) => match[1]);
   assert.deepEqual(ratios, ["0.95"], "Seul le monogramme de la fiche peut conserver un ratio local");
-  assert.match(featuredCss, /\.letter\s*\{[^}]*line-height:\s*0\.95;/s);
+  assert.match(featuredCss, /\.letter\s*\{[^}]*line-height:\s*var\(--md-sys-typescale-headline-small-line-height\)/s);
   assert.match(globalCss, /\.profile-monogram\s*\{[^}]*line-height:\s*0\.95;/s);
   for (const role of ["body-large", "body-medium", "body-small", "headline-large"]) {
     assert.match(allCss, new RegExp("line-height:\\s*var\\(--md-sys-typescale-" + role + "-line-height\\)"));
