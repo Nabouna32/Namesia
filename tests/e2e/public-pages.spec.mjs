@@ -72,7 +72,7 @@ test("l’accueil reste utilisable sur mobile et tablette", async ({ page }, tes
 });
 
 
-test("les fiches restent consultables sans compte et les favoris renvoient vers la connexion sur mobile", async ({ page }) => {
+test("les fiches restent consultables sans compte et les favoris renvoient vers la connexion sur mobile", async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 });
   const response = await page.goto("/prenoms/alice", {
     waitUntil: "domcontentloaded",
@@ -81,6 +81,14 @@ test("les fiches restent consultables sans compte et les favoris renvoient vers 
 
   expect(response?.status(), "HTTP fiche Alice").toBeLessThan(400);
   await expect(page.locator("main h1").first()).toBeVisible();
+  const relatedChevron = page.locator(".profile-discovery .card-arrow svg").first();
+  await expect(relatedChevron).toBeVisible();
+  if (process.env.PLAYWRIGHT_DIAGNOSTICS === "true") {
+    await page.screenshot({
+      path: testInfo.outputPath("fiche-alice-mobile.png"),
+      fullPage: true
+    });
+  }
 
   const favoriteLink = page.getByRole("link", { name: "Se connecter pour enregistrer" });
   await expect(favoriteLink).toBeVisible();
