@@ -574,3 +574,14 @@ test("les liens de la fiche utilisent les chevrons partagés pour avancer et rev
   assert.match(icones, /"chevron-left": "m432-480 156 156/);
   assert.match(iconNotice, /symbols\/web\/chevron_left\/materialsymbolsrounded\/chevron_left_24px\.svg/);
 });
+
+
+test("les états vides des favoris composent Card outlined sans surface CSS parallèle", async () => {
+  const favoritesPage = await readFile(new URL("../app/favoris/page.tsx", import.meta.url), "utf8");
+  assert.equal((favorites.match(/<Card as="section" variant="outlined" interactive=\{false\} className=\{styles\.empty\}>/g) ?? []).length, 3);
+  assert.match(favoritesStyles, /\.empty \{[^}]*display: grid;[^}]*gap: 16px;[^}]*padding: 24px;/s);
+  assert.match(favoritesStyles, /\.emptyTitle \{\s*margin: 0;/);
+  assert.doesNotMatch(favoritesStyles, /\.empty \{[^}]*border:|\.empty \{[^}]*background:|\.empty \{[^}]*border-radius:/s);
+  assert.match(favoritesPage, /Retrouvez ici les prénoms que vous avez enregistrés\./);
+  assert.doesNotMatch(favoritesPage, /Votre sélection reste privée et vous suit sur vos appareils/);
+});
