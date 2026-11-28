@@ -284,7 +284,7 @@ export function FavoritesList({
                     <FilterChip
                       key={genre}
                       label={genre}
-                      leadingIcon={<GenderIcon gender={genre} decorative />}
+                      leadingIcon={<GenderIcon gender={genre} size={18} decorative />}
                       iconOnly
                       selected={genreActifValide === genre}
                       onClick={() => changerGenre(genre)}
