@@ -1,9 +1,24 @@
 import type { NameGender } from "@/lib/names";
-import type { IconName } from "@/components/material3/Icon";
 
-export const GENDER_ICONS: Record<NameGender, IconName> = {
-  "Féminin": "gender-female",
-  "Masculin": "gender-male",
-  "Mixte": "gender-mixed",
-  "Genre non renseigné": "gender-unknown"
+type GenderIconDefinition = {
+  path: string;
+  fillRule?: "evenodd";
+  secondaryPath?: string;
+};
+
+export const GENDER_ICON_PATHS: Record<NameGender, GenderIconDefinition> = {
+  "Féminin": {
+    path: "M480-800q-91 0-155.5 64.5T260-580q0 83 57 145.5T460-362v102h-90q-13 0-21.5 8.5T340-230q0 13 8.5 21.5T370-200h90v90q0 13 8.5 21.5T490-80q13 0 21.5-8.5T520-110v-90h90q13 0 21.5-8.5T640-230q0-13-8.5-21.5T610-260h-90v-102q86-10 143-72.5T720-580q0-91-64.5-155.5T500-800Zm0 380q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Z"
+  },
+  "Masculin": {
+    path: "M360-660a260 260 0 1 0 0 520a260 260 0 1 0 0-520ZM360-590a190 190 0 1 1 0 380a190 190 0 1 1 0-380Z",
+    fillRule: "evenodd",
+    secondaryPath: "M505-550 690-735h-100v-70h240v240h-70v-100L555-480Z"
+  },
+  "Mixte": {
+    path: "M360-520q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm0-60q41 0 70-29t29-71q0-41-29-70t-70-29q-41 0-70 29t-29 70q0 42 29 71t70 29Zm240 60q-25 0-48-8t-42-22q14-20 23-43t11-48q13 30 43 45t63 15q41 0 70-29t29-71q0-41-29-70t-70-29q-28 0-51 14t-36 38q-6-28-20-51t-35-40q27-17 60-23t67-6q66 0 113 47t47 113q0 66-47 113t-113 47Zm-300 80h120q54 0 92 38t38 92v110H160v-110q0-54 38-92t102-38Zm0 60q-29 0-49 20t-20 50v50h260v-50q0-30-20-50t-49-20H300Zm300-60h60q54 0 92 38t38 92v50h-60v-50q0-30-20-50t-50-20h-60v-60Z"
+  },
+  "Genre non renseigné": {
+    path: "M480-880q-83 0-156 31.5T197-763q-54 54-85.5 127T80-480q0 83 31.5 156t85.5 127q54 54 127 85.5T480-80q83 0 156-31.5T763-197q54-54 85.5-127T880-480q0-83-31.5-156T763-763q-54-54-127-85.5T480-880Zm0 60q142 0 241 99t99 241q0 142-99 241t-241 99q-142 0-241-99t-99-241q0-142 99-241t241-99Zm-4 500q-14 0-24-10t-10-24q0-14 10-24t24-10q14 0 24 10t10 24q0 14-10 24t-24 10Zm-30-100q0-40 10-63t40-48q27-22 37-37t10-35q0-28-18-45t-48-17q-30 0-49 18t-24 48l-58-8q8-54 44-84t89-30q56 0 90 31t34 83q0 34-14 57t-49 53q-25 21-32 37t-7 40h-55Z"
+  }
 };
