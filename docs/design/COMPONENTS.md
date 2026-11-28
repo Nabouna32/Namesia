@@ -1,8 +1,8 @@
 # Bibliothèque Material 3 — Namesia
 
 - **Statut :** référence canonique des composants d'interface
-- **Version :** 1.9
-- **Mis à jour le :** 2026-11-28 11:41:28 (Europe/Paris)
+- **Version :** 2.0
+- **Mis à jour le :** 2026-11-28 11:45:00 (Europe/Paris)
 
 Ce document est le point d'entrée unique pour composer l'interface. Les ports Web des contrats Material 3 sont centralisés dans `components/material3/` ; les fonctions propres au produit sont isolées dans `components/features/`. Il n'existe pas de seconde bibliothèque de primitives ni de wrappers de convenance. Les ports locaux sont nécessaires parce qu'AndroidX Compose cible Android/Kotlin et que Material Web ne couvre pas le besoin stable complet ; ils ne sont pas présentés comme des composants AndroidX exécutés dans le navigateur. La décision, les alternatives et les limites sont détaillées dans [ADR-0037](../decisions/ADR-0037-MATERIAL-3-COMPONENT-ARCHITECTURE.md).
 
@@ -142,7 +142,8 @@ Toute nouvelle page doit composer le shell partagé, les primitives officielles 
 | Catalogue | Shell, SearchBar, FilterChip icon-only pour le genre et cartes de résultats navigables |
 | Fiche | Shell, titres et corps typographiques M3, GenderIcon, FavoriteButton, Button de comparaison, partage et cartes éditoriales sémantiques |
 | Comparateur | Shell, SearchBar, Checkbox, ComparisonSelection, Button et cartes de comparaison |
-| Favoris | Shell, SearchBar, FilterChip icon-only pour le genre, `select` natif pour le tri, Snackbar et cartes navigables |
+| Favoris | Shell, SearchBar, FilterChip icon-only pour le genre, `select` natif pour le tri, Snackbar, états vides Card outlined et cartes navigables |
+| Compte | Shell, Card outlined pour chaque état, TextField, Button et Snackbar |
 | Administration | Shell, champs natifs, Button, Snackbar et cartes de prévisualisation |
 
 ## Ajouter un composant
