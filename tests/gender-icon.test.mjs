@@ -22,6 +22,8 @@ test("le pictogramme masculin sépare son anneau et sa flèche", () => {
   assert.match(genderIcon, /<path d=\{definition\.path\} fillRule=\{definition\.fillRule\} \/>/);
   assert.match(genderIcon, /definition\.secondaryPath && <path d=\{definition\.secondaryPath\}/);
   assert.match(genderIcon, /viewBox="0 -960 960 960"/);
+  assert.match(genderIcon, /size = 20/);
+  assert.match(genderIcon, /width=\{size\}[\s\S]*?height=\{size\}/);
 });
 
 test("GenderIcon expose un nom accessible ou devient décoratif dans un filtre", () => {
