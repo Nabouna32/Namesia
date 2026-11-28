@@ -73,6 +73,15 @@ test("l’accueil reste utilisable sur les classes de fenêtre Material et en ha
         path: testInfo.outputPath(`accueil-${viewport.name}.png`),
         fullPage: true
       });
+      if (viewport.name === "mobile") {
+        await page.screenshot({
+          path: testInfo.outputPath("accueil-mobile-premier-ecran.png")
+        });
+        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+        await page.screenshot({
+          path: testInfo.outputPath("accueil-mobile-bas-de-page.png")
+        });
+      }
     }
   }
 });
@@ -96,11 +105,22 @@ test("les fiches restent consultables sans compte et les favoris renvoient vers 
     await expect(page.locator("main h1").first()).toBeVisible();
     const relatedChevron = page.locator(".profile-discovery .card-arrow svg").first();
     await expect(relatedChevron).toBeVisible();
+    const readingColumnWidth = await page.locator(".profile-sections").evaluate((element) => element.getBoundingClientRect().width);
+    expect(readingColumnWidth, `Largeur de lecture en ${viewport.name}`).toBeGreaterThan(300);
     if (process.env.PLAYWRIGHT_DIAGNOSTICS === "true") {
       await page.screenshot({
         path: testInfo.outputPath(`fiche-alice-${viewport.name}-clair.png`),
         fullPage: true
       });
+      if (viewport.name === "mobile") {
+        await page.screenshot({
+          path: testInfo.outputPath("fiche-alice-mobile-premier-ecran.png")
+        });
+        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+        await page.screenshot({
+          path: testInfo.outputPath("fiche-alice-mobile-bas-de-page.png")
+        });
+      }
     }
   }
 
@@ -147,6 +167,9 @@ test("les parcours secondaires disposent de captures diagnostiques pleine page",
         });
         expect(response?.status(), `HTTP ${route.path} en ${viewport.name} / ${theme}`).toBeLessThan(400);
         await expect(page.locator("main h1").first()).toBeVisible();
+        if (route.name === "favoris") {
+          await expect(page.getByRole("link", { name: "Se connecter" })).toBeVisible();
+        }
         await page.screenshot({
           path: testInfo.outputPath(`${route.name}-${viewport.name}-${theme}.png`),
           fullPage: true
