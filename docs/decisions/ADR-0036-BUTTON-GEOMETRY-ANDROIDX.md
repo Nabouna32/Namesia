@@ -1,8 +1,8 @@
 # ADR-0036 — Géométrie et états des boutons AndroidX
 
 - **Statut :** active
-- **Version :** 1.0
-- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
+- **Version :** 1.1
+- **Mis à jour le :** 2026-11-28 06:24:20 (Europe/Paris)
 - **Évolution de structure :** le composant est désormais `Button` dans `components/material3/`. Les dimensions et états AndroidX décrits ici restent la référence ; la nomenclature et l'architecture sont définies par ADR-0037.
 - **Décision prise le :** 2026-11-24 (heure non consignée)
 - **Référence :** Compose Material 3 1.5.0 stable, commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c`
@@ -43,4 +43,4 @@ Les boutons iconiques gardent une cible de 48 px et dessinent un conteneur de 40
 
 ## Vérification
 
-Les assertions CI contrôlent les dimensions, les espacements, les couleurs, les opacités, les couches d'état et la présence des tokens dans la documentation. Les sources sont épinglées dans `docs/material-3-verification.md`. Une revue visuelle reste nécessaire en clair/sombre et sur mobile, tablette et grand écran.
+Les assertions CI contrôlent les dimensions, les espacements, les couleurs, les opacités, les couches d'état et la présence des tokens dans la documentation. Les sources sont épinglées dans `docs/MATERIAL-3-VERIFICATION.md`. Une revue visuelle reste nécessaire en clair/sombre et sur mobile, tablette et grand écran.
