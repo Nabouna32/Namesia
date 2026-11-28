@@ -1,7 +1,7 @@
 # GitHub Actions — CI et automatisation
 
-- **Version :** 1.8
-- **Mis à jour le :** 2026-11-28 11:12:41 (Europe/Paris)
+- **Version :** 1.9
+- **Mis à jour le :** 2026-11-28 11:15:18 (Europe/Paris)
 
 ## Sources de vérité
 
@@ -41,7 +41,7 @@ Le contrôle de `robots.txt` vérifie l'interdiction d'explorer `/api` et la ré
 - La fermeture d'une PR déclenche le nettoyage de sa Preview.
 - Seul un push sur `main` ou un lancement manuel ciblant `main`, avec le déploiement activé, peut déployer la production.
 
-Les captures, vidéos et traces Playwright ne sont pas publiées systématiquement. Le diagnostic visuel ponctuel utilise le label `diagnostic-playwright` et un artefact temporaire à rétention d'un jour. Pour l'accueil, ce mode enregistre la page complète à 320, 390, 600, 768, 840 et 1280 px, ainsi qu'en fenêtre de hauteur compacte (768 × 420 px), et produit une capture mobile en thème sombre. La fiche Alice est capturée en pleine page à 390, 600 et 840 px en thème clair, ainsi qu'en mobile sombre ; le seuil medium de 600 px permet notamment de contrôler la largeur de lecture face au rail de navigation. Le catalogue, le comparateur, les favoris et le compte sont également capturés en pleine page sur mobile et expanded, en thèmes clair et sombre. Pour vérifier les navigations fixes sans confondre leur position avec l'assemblage d'une capture longue, l'accueil et la fiche possèdent aussi des captures viewport séparées au premier écran et en bas de page. Le parcours Favoris attend l'état non connecté avant de produire son image, afin de ne pas archiver l'état transitoire de chargement. Ces captures permettent une revue visuelle des parcours et du shell sur Preview ; elles ne constituent pas des snapshots de référence permanents.
+Les captures, vidéos et traces Playwright ne sont pas publiées systématiquement. Le diagnostic visuel ponctuel utilise le label `diagnostic-playwright` et un artefact temporaire à rétention d'un jour. Pour l'accueil, ce mode enregistre la page complète à 320, 390, 600, 768, 840 et 1280 px, ainsi qu'en fenêtre de hauteur compacte (768 × 420 px), et produit une capture mobile en thème sombre. La fiche Alice est capturée en pleine page à 390, 600 et 840 px en thème clair, ainsi qu'en mobile sombre ; le seuil medium de 600 px permet notamment de contrôler la largeur de lecture face au rail de navigation. Le catalogue, les tendances, le comparateur, les favoris et le compte sont également capturés en pleine page sur mobile et expanded, en thèmes clair et sombre. Pour vérifier les navigations fixes sans confondre leur position avec l'assemblage d'une capture longue, l'accueil et la fiche possèdent aussi des captures viewport séparées au premier écran et en bas de page. Le parcours Favoris attend l'état non connecté avant de produire son image, afin de ne pas archiver l'état transitoire de chargement. Ces captures permettent une revue visuelle des parcours et du shell sur Preview ; elles ne constituent pas des snapshots de référence permanents.
 
 ### Sécurité des workflows — `workflow-security.yml`
 
