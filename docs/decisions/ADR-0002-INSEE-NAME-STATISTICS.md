@@ -1,8 +1,11 @@
 # ADR-0002 — Statistiques de prénoms issues de l'Insee
 
-- **Statut :** partiellement remplacée par [ADR-0048](ADR-0048-classement-insee-2025.md)
+- **Statut :** active
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-28 06:05:17 (Europe/Paris)
+- **Remplacement partiel :** le snapshot annuel limité est couvert par ADR-0048 ; la décision de ne pas intégrer un historique statistique complet reste active.
 - **Décision initiale :** 2026-11-21
-- **Réexamen :** 2026-11-25
+- **Réexamen le :** 2026-11-25 (heure non consignée)
 
 ## Contexte initial
 

@@ -1,7 +1,10 @@
 # ADR-0001 — Séparer génération IA et publication
 
-- **Statut :** accepté, révisé le 22 novembre 2026
-- **Date initiale :** 2026-11-21
+- **Statut :** active
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-28 06:05:17 (Europe/Paris)
+- **Réexamen le :** 2026-11-22 (heure non consignée)
+- **Décision initiale prise le :** 2026-11-21 (heure non consignée)
 
 ## Contexte
 
