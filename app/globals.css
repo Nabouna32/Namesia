@@ -1177,11 +1177,7 @@ gap: 16px;
 }
 
 .profile-note {
-padding: 20px;
-  border: 1px solid var(--md-sys-color-outline-variant);
-  border-radius: var(--md-sys-shape-corner-large);
-  background: var(--md-sys-color-surface-container);
-  color: var(--md-sys-color-on-surface);
+  padding: 20px;
 }
 
 .profile-note-mark {
@@ -1212,11 +1208,8 @@ margin: 0;
 
 
 .profile-discovery {
-margin-top: 44px;
-padding: clamp(20px, 3vw, 32px);
-  border: 1px solid var(--md-sys-color-outline-variant);
-  border-radius: var(--md-sys-shape-corner-extra-large);
-  background: var(--md-sys-color-surface-container-low);
+  margin-top: 44px;
+  padding: clamp(20px, 3vw, 32px);
 }
 
 .profile-discovery .profile-section-heading {
