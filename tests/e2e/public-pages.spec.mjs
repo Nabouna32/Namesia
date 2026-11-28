@@ -147,6 +147,7 @@ test("les parcours secondaires disposent de captures diagnostiques pleine page",
 
   const routesToCapture = [
     { name: "catalogue", path: "/prenoms" },
+    { name: "tendances", path: "/tendances" },
     { name: "comparateur", path: "/comparer" },
     { name: "favoris", path: "/favoris" },
     { name: "compte", path: "/compte" }
