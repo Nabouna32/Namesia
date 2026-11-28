@@ -303,8 +303,8 @@ test("les données de fiche et les libellés de genre invalides échouent explic
 
 test("les cartes de prénoms acceptent les noms longs sans déborder ni couper leur contenu", () => {
   assert.match(globalCss, /\.name-card strong\s*\{[^}]*overflow-wrap:\s*anywhere/s);
-  assert.match(globalCss, /\.featured-name\s*\{[^}]*min-width:\s*0/s);
-  assert.match(globalCss, /\.featured-bottom strong\s*\{[^}]*overflow-wrap:\s*anywhere/s);
+  assert.match(featuredCss, /\.name\s*\{[^}]*min-width:\s*0/s);
+  assert.match(featuredCss, /\.name strong\s*\{[^}]*overflow-wrap:\s*anywhere/s);
   assert.match(featuredCss, /\.card\s*\{[^}]*min-height:\s*184px/s);
   assert.match(featuredCss, /@media \(max-width: 599px\) \{[^}]*\.card\s*\{[^}]*min-height:\s*136px/s);
   assert.doesNotMatch(featuredCss, /\.card\s*\{[^}]*\n\s*height:/s);
