@@ -402,7 +402,7 @@ test("le hero d'accueil sépare le récit et les outils dans une composition Fid
   assert.match(globalCss, /\.hero-tools\s*\{[^}]*background:\s*var\(--md-sys-color-surface-container-lowest\)/s);
   assert.match(globalCss, /\.hero-copy\s*\{[^}]*color:\s*var\(--md-sys-color-on-surface-variant\)/s);
   assert.match(globalCss, /@media \(min-width:\s*840px\)[\s\S]*?\.hero-content\s*\{[^}]*grid-template-columns:/);
-  assert.match(globalCss, /@media \(min-width:\s*600px\) and \(max-width:\s*839px\)[\s\S]*?\.featured-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2/);
+  assert.match(featuredCss, /@media \(max-width:\s*839px\) \{[^}]*\.grid\s*\{[^}]*grid-template-columns:\s*repeat\(2/s);
   assert.doesNotMatch(globalCss, /@media \(min-width:\s*900px\)/);
 });
 
