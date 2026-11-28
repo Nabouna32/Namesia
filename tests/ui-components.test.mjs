@@ -12,6 +12,7 @@ const featured = await readFile(new URL("../components/features/catalog/Featured
 const notFound = await readFile(new URL("../app/not-found.tsx", import.meta.url), "utf8");
 const errorBoundary = await readFile(new URL("../app/error.tsx", import.meta.url), "utf8");
 const globalStyles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+const featuredStyles = await readFile(new URL("../components/features/catalog/FeaturedNames.module.css", import.meta.url), "utf8");
 const materialTokens = await readFile(new URL("../styles/material3/tokens.css", import.meta.url), "utf8");
 const styles = buttonStyles;
 const icones = await readFile(new URL("../components/material3/Icon.tsx", import.meta.url), "utf8");
@@ -87,8 +88,13 @@ test("la vitrine n'attribue aucune couleur selon l'index du prénom", () => {
   assert.doesNotMatch(featured, /featured-\$\{index/);
   assert.doesNotMatch(featured, /featured-\d/);
   assert.doesNotMatch(globalStyles, /\.featured-[123]\b/);
-  assert.match(globalStyles, /\.featured-card\s*\{[^}]*min-height:\s*210px/s);
-  assert.match(globalStyles, /\.featured-bottom strong\s*\{[^}]*on-surface/s);
+  assert.match(featured, /styles\.grid/);
+  assert.match(featured, /styles\.card/);
+  assert.match(featured, /styles\.letter/);
+  assert.match(featuredStyles, /\.card\s*\{[^}]*min-height:\s*184px/s);
+  assert.match(featuredStyles, /\.letter\s*\{[^}]*pointer-events:\s*none/s);
+  assert.match(featuredStyles, /@media \(max-width: 599px\)/);
+  assert.doesNotMatch(globalStyles, /\.featured-(?:grid|card|letter|bottom|name|action)\b/);
 });
 
 const searchBar = await readFile(new URL("../components/material3/SearchBar.tsx", import.meta.url), "utf8");
