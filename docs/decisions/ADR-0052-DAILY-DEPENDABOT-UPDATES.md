@@ -1,7 +1,9 @@
 # ADR-0052 — Propositions Dependabot quotidiennes et revue humaine
 
-- **Statut :** accepté
-- **Date :** 2026-11-25
+- **Statut :** active
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-28 06:05:17 (Europe/Paris)
+- **Décision prise le :** 2026-11-25 (heure non consignée)
 
 ## Contexte
 
