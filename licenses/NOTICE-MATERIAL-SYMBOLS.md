@@ -18,6 +18,18 @@ Le glyphe `chevron_right` utilisé par les cartes de découverte a été vérifi
 
 Le chemin du glyphe est centralisé dans `components/material3/Icon.tsx`. Les composants métier ne contiennent ni SVG ni chemin d'icône. La page utilise uniquement le nom typé `chevron-right` du registre partagé.
 
+## Ouverture d’une ressource externe
+
+Le glyphe `arrow_outward` est utilisé uniquement pour signaler l'ouverture d'une ressource externe (par exemple l'étude de l'Insee). Il a été vérifié directement dans le dépôt officiel Google :
+
+- Fichier source : [arrow_outward_24px.svg](https://github.com/google/material-design-icons/blob/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/symbols/web/arrow_outward/materialsymbolsrounded/arrow_outward_24px.svg)
+- Commit source immuable : `10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7`.
+- Variante : `materialsymbolsrounded`, format 24 px, axes par défaut, poids 400.
+- Tracé original : `M640-624 284-268q-11 11-28 11t-28-11q-11-11-11-28t11-28l356-356H280q-17 0-28.5-11.5T240-720q0-17 11.5-28.5T280-760h400q17 0 28.5 11.5T720-720v400q0 17-11.5 28.5T680-280q-17 0-28.5-11.5T640-320v-304Z`.
+- Licence : Apache License 2.0, conservée dans `Apache-2.0-Material-Symbols.txt`.
+
+Les liens internes de navigation hiérarchique utilisent `chevron_right` ; ce glyphe diagonal est réservé aux sorties vers une autre origine.
+
 ## Ressources et licence
 
 - Source amont officielle : [google/material-design-icons](https://github.com/google/material-design-icons).
