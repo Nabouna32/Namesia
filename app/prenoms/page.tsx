@@ -83,7 +83,7 @@ export default async function NamesPage({ searchParams }: Props) {
         <span className="eyebrow">Le catalogue</span>
         <h1>Trouvez le prénom<br /><em>qui vous parle.</em></h1>
         <p className="page-intro">Des prénoms d'ici et d'ailleurs, leurs origines, leurs histoires et les traditions qui les accompagnent.</p>
-        <p><Link className="text-link" href="/tendances">Voir les tendances 2025 <Icon name="arrow-up-right" size={18} /></Link></p>
+        <p><Link className="text-link" href="/tendances">Voir les tendances 2025 <Icon name="chevron-right" size={18} /></Link></p>
         <NameSearch
           names={names}
           syncUrl

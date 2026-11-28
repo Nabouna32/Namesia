@@ -1,14 +1,14 @@
 # Navigation, responsive et accessibilité — Namesia
 
-- **Version :** 1.0
-- **Mis à jour le :** 2026-11-27 20:07:03 (Europe/Paris)
+- **Version :** 1.3
+- **Mis à jour le :** 2026-11-28 11:17:31 (Europe/Paris)
 
 
 Ce guide complète les [fondations visuelles](FOUNDATIONS.md), les [composants](COMPONENTS.md) et le [système de design](../DESIGN-SYSTEM.md).
 
 ## 4. Navigation adaptative
 
-Les destinations de premier niveau sont Accueil, Explorer, Comparer et Favoris. Elles restent identiques sur toutes les tailles d'écran.
+Les destinations de premier niveau sont Accueil, Explorer, Comparer et Favoris. La page Tendances (`/tendances`) appartient au parcours Explorer et conserve son indicateur actif, même si sa route publique est distincte de `/prenoms`. Elles restent identiques sur toutes les tailles d'écran.
 
 - **Compact, moins de 600 px :** navigation bar fixe en bas de 80 dp (variante haute utilisée par `NavigationBar()`), quatre destinations avec icône et libellé `label-medium` (12/16 px, graisse 500, approche 0,5 px), hauteur augmentée uniquement par `safe-area-inset-bottom`.
 - **Medium et plus, à partir de 600 px :** navigation rail fixe sur le bord de départ, largeur de 80 px, icône et libellé `label-medium` (12/16 px, graisse 500, approche 0,5 px) empilés. Le rail reste à 80 px : le modèle Android du rail est conservé, sans tiroir latéral propriétaire qui réduirait inutilement l’espace de lecture.
@@ -17,7 +17,7 @@ Les destinations de premier niveau sont Accueil, Explorer, Comparer et Favoris. 
 - Le composable AndroidX `NavigationBar()` utilise `TallContainerHeight` (80 dp), et non le token `ContainerHeight` (64 dp) non retenu par son implémentation par défaut. Namesia reproduit ces 80 dp par 64 dp de zone de destinations et 8 dp de padding vertical, sans bordure ajoutée. La zone sûre basse est réservée séparément et le contenu de page reçoit le même dégagement. La destination courante utilise l'indicateur tonal en pilule et `aria-current="page"`.
 - La navigation est une navigation de pages, pas un tablist ARIA : les liens natifs conservent l'historique, les ouvertures dans un nouvel onglet et les usages clavier du navigateur. Les destinations restent dans une liste HTML (`ul`/`li`) ; le conteneur ne doit pas utiliser `display: contents`, qui peut retirer la liste de l'arbre d'accessibilité de certains navigateurs.
 
-Les seuils de largeur suivent les window size classes AndroidX : compact sous 600 dp, medium de 600 à 839 dp, expanded de 840 à 1199 dp, large de 1200 à 1599 dp et extra-large à partir de 1600 dp. La composition du hero et la grille vedette basculent à l'entrée en expanded ; le rail remplace la barre dès medium. La barre reste prioritaire lorsque la hauteur disponible est compacte (moins de 480 dp), même si la largeur est medium ou supérieure. La référence et la date de vérification de ces seuils figurent dans [Vérification Material 3](../MATERIAL-3-VERIFICATION.md). Les adaptations sont pilotées par l'espace disponible, pas par la détection d'une marque d'appareil. Le rail ne possède pas de bouton d'extension artificiel : une navigation de premier niveau reste stable et prévisible.
+Les seuils de largeur suivent les window size classes AndroidX : compact sous 600 dp, medium de 600 à 839 dp, expanded de 840 à 1199 dp, large de 1200 à 1599 dp et extra-large à partir de 1600 dp. Sur les fenêtres medium, la fiche prénom conserve une seule colonne éditoriale et place l'encadré de prudence après le contenu, avec une largeur maximale de 460 px. La colonne latérale fixe de 270 px ne s'active qu'à partir de 840 px : le rail de 80 px ne doit pas réduire le texte principal à une largeur résiduelle sur les fenêtres de 600 à 839 px. Les associations symboliques utilisent une grille auto-adaptative avec une largeur minimale de 320 px par carte ; une carte isolée occupe toute la largeur disponible au lieu de rester artificiellement cantonnée à une demi-colonne. La composition du hero et la grille vedette basculent à l'entrée en expanded ; le rail remplace la barre dès medium. La barre reste prioritaire lorsque la hauteur disponible est compacte (moins de 480 dp), même si la largeur est medium ou supérieure. La référence et la date de vérification de ces seuils figurent dans [Vérification Material 3](../MATERIAL-3-VERIFICATION.md). Les adaptations sont pilotées par l'espace disponible, pas par la détection d'une marque d'appareil. Le rail ne possède pas de bouton d'extension artificiel : une navigation de premier niveau reste stable et prévisible.
 
 ## 7. Responsive, accessibilité et navigateur
 

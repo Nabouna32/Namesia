@@ -4,7 +4,6 @@ import { useRef, useState, type ChangeEvent } from "react";
 import Link from "next/link";
 import type { NameGender, NameIndexEntry } from "@/lib/names";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
-import { GENDER_ICONS } from "@/lib/gender-icons";
 import { LIMITE_FAVORIS, creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
 import { normalizeSearchTerm, suggestSimilarNames } from "@/lib/name-search";
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
@@ -54,11 +53,12 @@ export function FavoritesList({
   if (!ready) return <p role="status" className="empty-state">Chargement de vos favoris…</p>;
   if (!authenticated) {
     return (
-      <div className={styles.empty}>
-        <p>Vos favoris sont désormais conservés dans votre compte et synchronisés entre vos appareils. Vous pouvez continuer à explorer toutes les fiches sans vous connecter.</p>
+      <Card as="section" variant="outlined" interactive={false} className={styles.empty}>
+        <h2 className={styles.emptyTitle}>Retrouvez vos favoris partout</h2>
+        <p>Connectez-vous pour retrouver votre sélection sur tous vos appareils, ou créez un compte pour commencer. Vous pouvez continuer à explorer toutes les fiches sans vous connecter.</p>
         <Button href="/compte?redirect=%2Ffavoris">Se connecter</Button>
         <Button variant="text" href="/compte?mode=register&redirect=%2Ffavoris">Créer un compte</Button>
-      </div>
+      </Card>
     );
   }
 
@@ -253,14 +253,15 @@ export function FavoritesList({
       )}
 
       {favoris.length === 0 ? (
-        <div className={styles.empty}>
+        <Card as="section" variant="outlined" interactive={false} className={styles.empty}>
+          <h2 className={styles.emptyTitle}>{error ? "Vos favoris sont indisponibles" : unavailableCount > 0 ? "Aucun favori disponible" : "Votre sélection est encore vide"}</h2>
           <p className={error ? styles.error : undefined} role={error ? "alert" : undefined}>{error
             ? "Vos favoris ne peuvent pas être lus pour le moment."
             : unavailableCount > 0
               ? "Aucun de vos favoris n’est actuellement publié."
-              : "Vous n’avez pas encore enregistré de prénom."}</p>
+              : "Ajoutez vos prénoms préférés depuis leur fiche."}</p>
           <Button href="/prenoms">Explorer les prénoms</Button>
-        </div>
+        </Card>
       ) : (
         <>
           <div className={styles.filters}>
@@ -285,7 +286,7 @@ export function FavoritesList({
                     <FilterChip
                       key={genre}
                       label={genre}
-                      leadingIcon={<Icon name={GENDER_ICONS[genre]} size={18} />}
+                      leadingIcon={<GenderIcon gender={genre} size={18} decorative />}
                       iconOnly
                       selected={genreActifValide === genre}
                       onClick={() => changerGenre(genre)}
@@ -311,7 +312,8 @@ export function FavoritesList({
                 : nombreAffiche + " " + (nombreAffiche === 1 ? "favori affiché" : "favoris affichés") + " sur " + favoris.length + (favoris.length === 1 ? " favori enregistré" : " favoris enregistrés")}
           </p>
           {favorisFiltres.length === 0 && favorisProches.length === 0 ? (
-            <div className={styles.empty}>
+            <Card as="section" variant="outlined" interactive={false} className={styles.empty}>
+              <h2 className={styles.emptyTitle}>Aucun résultat</h2>
               <p>Aucun favori ne correspond à ces critères.</p>
               <Button variant="text"
                 className="filter-action"
@@ -326,7 +328,7 @@ export function FavoritesList({
               >
                 Effacer les filtres
               </Button>
-            </div>
+            </Card>
           ) : (
             <>
               {favorisProches.length > 0 && (

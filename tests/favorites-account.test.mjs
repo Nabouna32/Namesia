@@ -21,7 +21,7 @@ test("une fiche reste consultable sans compte et propose une connexion pour ajou
   assert.match(button, /Se connecter pour enregistrer/);
   assert.match(button, /\/compte\?redirect=/);
   assert.match(list, /if \(!authenticated\)/);
-  assert.match(list, /Vous pouvez continuer à explorer toutes les fiches sans vous connecter/);
+  assert.match(list, /Connectez-vous pour retrouver votre sélection sur tous vos appareils, ou créez un compte pour commencer/);
 });
 
 test("aucune migration des anciens favoris locaux n’est proposée", () => {

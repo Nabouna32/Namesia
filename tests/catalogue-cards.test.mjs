@@ -18,27 +18,21 @@ const comparator = await read("../components/features/comparison/NameComparator.
 const profile = await read("../app/prenoms/[slug]/page.tsx");
 const favoriteButton = await read("../components/features/favorites/FavoriteButton.tsx");
 
-test("les quatre genres ont une correspondance SVG exhaustive et centralisée", () => {
-  for (const [label, name] of [
-    ["Féminin", "gender-female"],
-    ["Masculin", "gender-male"],
-    ["Mixte", "gender-mixed"],
-    ["Genre non renseigné", "gender-unknown"]
+test("les quatre genres ont une correspondance SVG exhaustive dans leur composant métier", () => {
+  for (const [label, marker] of [
+    ["Féminin", "M480-800q-91"],
+    ["Masculin", "M360-660a260"],
+    ["Mixte", "M360-520q-66"],
+    ["Genre non renseigné", "M480-880q-83"]
   ]) {
-    assert.match(genderMap, new RegExp(`"${label}": "${name}"`));
-    if (name === "gender-male") {
-      assert.match(icon, /type IconPathName = Exclude<IconName, "gender-male">/);
-      assert.match(icon, /name === "gender-male"/);
-      assert.match(icon, /const maleRing/);
-      assert.match(icon, /const maleArrow/);
-    } else {
-      assert.match(icon, new RegExp(`"${name}":`));
-    }
+    assert.match(genderMap, new RegExp(`"${label}": \\{[\\s\\S]*?path: "${marker}`));
   }
-  assert.match(genderMap, /Record<NameGender, IconName>/);
-  assert.match(genderIcon, /role="img" aria-label=\{gender\}/);
+  assert.match(genderMap, /Record<NameGender, GenderIconDefinition>/);
+  assert.match(genderIcon, /GENDER_ICON_PATHS\[gender\]/);
+  assert.match(genderIcon, /role=\{decorative \? undefined : "img"\}/);
   assert.match(genderStyles, /width: 24px/);
-  assert.match(icon, /viewBox="0 -960 960 960"/);
+  assert.match(genderIcon, /viewBox="0 -960 960 960"/);
+  assert.doesNotMatch(icon, /gender-(female|male|mixed|unknown)/);
 });
 
 test("les vues de prénoms affichent le pictogramme sans libellé visible", () => {
@@ -56,11 +50,12 @@ test("la découverte aléatoire affiche le pictogramme du prénom sélectionné"
   assert.match(discoveryStyles, /\.resultLine \{[^}]*display: inline-flex;[^}]*align-items: center;[^}]*flex-wrap: wrap;[^}]*gap: 8px 12px;/s);
 });
 
-test("les filtres de genre utilisent les pictogrammes et conservent un nom accessible", () => {
+test("les filtres de genre utilisent le pictogramme métier en mode décoratif", () => {
   for (const source of [catalogue, favorites]) {
-    assert.match(source, /leadingIcon=\{<Icon name=\{GENDER_ICONS\[genre\]\}/);
+    assert.match(source, /leadingIcon=\{<GenderIcon gender=\{genre\} size=\{18\} decorative \/>/);
     assert.match(source, /iconOnly/);
   }
+  assert.match(genderIcon, /<svg[\s\S]*?aria-hidden="true"/);
   assert.match(filterChip, /aria-label=\{iconOnly \? label : undefined\}/);
   assert.match(filterChip, /title=\{iconOnly \? label : undefined\}/);
 });

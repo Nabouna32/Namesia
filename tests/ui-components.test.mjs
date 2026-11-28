@@ -186,7 +186,7 @@ test("FilterChip suit la géométrie et les états AndroidX", () => {
 });
 
 test("les filtres de genre des favoris sont icon-only et le tri reste natif", () => {
-  assert.match(favorites, /leadingIcon=\{<Icon name=\{GENDER_ICONS\[genre\]\}/);
+  assert.match(favorites, /leadingIcon=\{<GenderIcon gender=\{genre\} size=\{18\} decorative \/>/);
   assert.match(favorites, /iconOnly/);
   assert.match(favorites, /<FilterChip label="Tous"/);
   assert.match(favorites, /<label htmlFor="tri-favoris">/);
@@ -277,7 +277,7 @@ test("les quatre destinations de navigation utilisent les SVG Material Symbols a
   assert.match(icones, /fill="currentColor"/);
   assert.doesNotMatch(icones, /search-filled|compare-arrows-filled/);
   assert.match(navigation, /icon: "home", activeIcon: "home-filled"/);
-  assert.match(navigation, /icon: "search" \}/);
+  assert.match(navigation, /icon: "search", activePaths: \["\/tendances"\] \}/);
   assert.match(navigation, /icon: "compare-arrows" \}/);
   assert.match(navigation, /icon: "favorite", activeIcon: "favorite-filled"/);
   assert.match(navigation, /const icon = active && "activeIcon" in destination/);
@@ -417,7 +417,7 @@ test("les surfaces du catalogue et du comparateur ne dépendent plus de la couch
   assert.doesNotMatch(globalStyles, /\.name-card\s*\{[^}]*background:/s);
   assert.match(globalStyles, /\.compare-option\s*\{[^}]*surface-container-low/s);
   assert.doesNotMatch(globalStyles, /\.compare-card\s*\{[^}]*background:/s);
-  assert.match(globalStyles, /\.profile-note\s*\{[^}]*surface-container/s);
+  assert.doesNotMatch(globalStyles, /\.profile-note\s*\{[^}]*surface-container/s);
   assert.doesNotMatch(globalStyles, /Couche Material 3 Fidelity/);
   assert.doesNotMatch(globalStyles, /linear-gradient\(135deg, var\(--color-surface/);
 });
@@ -538,4 +538,74 @@ test("AlertDialog reprend le contrat AndroidX et sécurise la publication publiq
   assert.match(alertAdminClient, /setPublicationDialogOpen\(true\)/);
   assert.match(alertAdminClient, /Publier cette fiche \?/);
   assert.doesNotMatch(alertAdminClient, /onClick=\{publier\}/);
+});
+
+
+test("les flèches expriment la hiérarchie de navigation ou la sortie externe", async () => {
+  const homePage = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+  const cataloguePage = await readFile(new URL("../app/prenoms/page.tsx", import.meta.url), "utf8");
+  const trendsPage = await readFile(new URL("../app/tendances/page.tsx", import.meta.url), "utf8");
+  assert.match(homePage, /href="\/tendances"[\s\S]*?<Icon name="chevron-right"/);
+  assert.match(homePage, /href="\/prenoms"[\s\S]*?<Icon name="chevron-right"/);
+  assert.match(cataloguePage, /href="\/tendances"[\s\S]*?<Icon name="chevron-right"/);
+  assert.match(nameSearch, /Voir tous les résultats dans le catalogue <Icon name="chevron-right"/);
+  assert.match(trendsPage, /target="_blank"[\s\S]*?<Icon name="arrow-outward"/);
+  assert.doesNotMatch([homePage, cataloguePage, nameSearch, trendsPage, icones].join("\\n"), /arrow-up-right/);
+  assert.match(icones, /"arrow-outward": "M640-624 284-268/);
+  assert.match(iconNotice, /symbols\/web\/arrow_outward\/materialsymbolsrounded\/arrow_outward_24px\.svg/);
+});
+
+
+test("la fiche préserve sa largeur de lecture sur les fenêtres medium", () => {
+  assert.match(globalStyles, /@media \(min-width: 600px\) and \(max-width: 839px\) \{[\s\S]*?\.profile-layout \{\s*grid-template-columns: minmax\(0, 1fr\);[\s\S]*?\.profile-aside \{\s*max-width: 460px;/);
+});
+
+
+test("les cartes symboliques occupent la largeur disponible sans colonne vide forcée", () => {
+  assert.match(globalStyles, /\.symbolic-grid \{\s*display: grid;\s*grid-template-columns: repeat\(auto-fit, minmax\(min\(100%, 320px\), 1fr\)\);/);
+});
+
+
+test("les liens de la fiche utilisent les chevrons partagés pour avancer et revenir", async () => {
+  const profilePage = await readFile(new URL("../app/prenoms/[slug]/page.tsx", import.meta.url), "utf8");
+  assert.match(profilePage, /Explorer tout le catalogue <Icon name="chevron-right"/);
+  assert.match(profilePage, /<Icon name="chevron-left" size=\{18\} \/> \{texteRetour\}/);
+  assert.doesNotMatch(profilePage, /[↗←]/);
+  assert.match(icones, /"chevron-left": "m432-480 156 156/);
+  assert.match(iconNotice, /symbols\/web\/chevron_left\/materialsymbolsrounded\/chevron_left_24px\.svg/);
+});
+
+
+test("les états vides des favoris composent Card outlined sans surface CSS parallèle", async () => {
+  const favoritesPage = await readFile(new URL("../app/favoris/page.tsx", import.meta.url), "utf8");
+  assert.equal((favorites.match(/<Card as="section" variant="outlined" interactive=\{false\} className=\{styles\.empty\}>/g) ?? []).length, 3);
+  assert.match(favoritesStyles, /\.empty \{[^}]*display: grid;[^}]*gap: 16px;[^}]*padding: 24px;/s);
+  assert.match(favoritesStyles, /\.emptyTitle \{\s*margin: 0;/);
+  assert.match(favoritesStyles, /max-width: 560px;[\s\S]*?margin-inline: auto;/);
+  assert.match(favorites, /error \? "Vos favoris sont indisponibles" : unavailableCount > 0 \? "Aucun favori disponible"/);
+  assert.doesNotMatch(favoritesStyles, /\.empty \{[^}]*border:|\.empty \{[^}]*background:|\.empty \{[^}]*border-radius:/s);
+  assert.match(favoritesPage, /Retrouvez ici les prénoms que vous avez enregistrés\./);
+  assert.doesNotMatch(favoritesPage, /Votre sélection reste privée et vous suit sur vos appareils/);
+});
+
+
+test("les surfaces de fiche utilisent Card outlined et le glyphe info officiel", async () => {
+  const profilePage = await readFile(new URL("../app/prenoms/[slug]/page.tsx", import.meta.url), "utf8");
+  assert.match(profilePage, /<Card as="div" variant="outlined" interactive=\{false\} className="profile-note">/);
+  assert.match(profilePage, /<Card as="section" variant="outlined" interactive=\{false\} className="profile-discovery"/);
+  assert.match(profilePage, /<Icon name="info" size=\{24\} \/>/);
+  assert.doesNotMatch(profilePage, /✳/);
+  assert.match(globalStyles, /\.profile-note-heading \{[^}]*display: flex;[^}]*align-items: center;[^}]*gap: 12px;/s);
+  assert.doesNotMatch(globalStyles, /\.profile-note \{[^}]*border:|\.profile-note \{[^}]*background:|\.profile-note \{[^}]*border-radius:/s);
+  assert.doesNotMatch(globalStyles, /\.profile-discovery \{[^}]*border:|\.profile-discovery \{[^}]*background:|\.profile-discovery \{[^}]*border-radius:/s);
+});
+
+
+test("les états du compte utilisent Card outlined sans surface CSS parallèle", async () => {
+  const accountClient = await readFile(new URL("../app/compte/account-client.tsx", import.meta.url), "utf8");
+  const accountStyles = await readFile(new URL("../app/compte/account.module.css", import.meta.url), "utf8");
+  assert.equal((accountClient.match(/<Card as="section" variant="outlined" interactive=\{false\} className=\{styles\.panel\}>/g) ?? []).length, 5);
+  assert.match(accountClient, /<Card as="div" variant="outlined" interactive=\{false\} className=\{styles\.panel\}>/);
+  assert.doesNotMatch(accountClient, /<section className=\{styles\.panel\}>/);
+  assert.doesNotMatch(accountStyles, /\.panel \{[^}]*border:|\.panel \{[^}]*background:|\.panel \{[^}]*border-radius:/s);
 });

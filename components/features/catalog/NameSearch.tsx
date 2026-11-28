@@ -4,7 +4,6 @@ import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { NameIndexEntry } from "@/lib/names";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
-import { GENDER_ICONS } from "@/lib/gender-icons";
 import styles from "./NameSearch.module.css";
 import { compareRelevance, normalizeSearchTerm, suggestSimilarNames } from "@/lib/name-search";
 import { creerUrlCatalogueDepuisRecherche, creerUrlFicheDepuisCatalogue } from "@/lib/navigation-prenoms";
@@ -191,7 +190,7 @@ export function NameSearch({
                   <FilterChip
                     key={genre}
                     label={genre}
-                    leadingIcon={<Icon name={GENDER_ICONS[genre]} size={18} />}
+                    leadingIcon={<GenderIcon gender={genre} size={18} decorative />}
                     iconOnly
                     selected={genreActif === genre}
                     onClick={() => changerGenre(genre)}
@@ -272,7 +271,7 @@ export function NameSearch({
               </div>
             {compact && resultats.length > nombreVisible && (
               <Link className="text-link" href={creerUrlCatalogueDepuisRecherche(recherche)}>
-                Voir tous les résultats dans le catalogue <Icon name="arrow-up-right" size={18} />
+                Voir tous les résultats dans le catalogue <Icon name="chevron-right" size={18} />
               </Link>
             )}
             {!compact && resultats.length > nombreVisible && (

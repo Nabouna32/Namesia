@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/features/favorites/FavoriteButton";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
 import { Button } from "@/components/material3/Button";
+import { Card } from "@/components/material3/Card";
 import { Icon } from "@/components/material3/Icon";
 import { categoryTone } from "@/lib/category-color";
 import { RelatedNames } from "@/components/features/catalog/RelatedNames";
@@ -73,8 +74,8 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
     ? "Favoris"
     : returnContext?.vue === "comparateur" ? "Comparateur" : "Prénoms";
   const texteRetour = returnContext?.vue === "favoris"
-    ? "← Retour aux favoris"
-    : returnContext?.vue === "comparateur" ? "← Retour au comparateur" : "← Retour au catalogue";
+    ? "Retour aux favoris"
+    : returnContext?.vue === "comparateur" ? "Retour au comparateur" : "Retour au catalogue";
   const genderPlural: Record<NameGender, string> = {
     "Féminin": "féminins",
     "Masculin": "masculins",
@@ -205,27 +206,29 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
             </div>
 
             <aside className="profile-aside">
-              <div className="profile-note">
-                <span className="profile-note-mark" aria-hidden="true">✳</span>
-                <h2>À lire avec curiosité</h2>
+              <Card as="div" variant="outlined" interactive={false} className="profile-note">
+                <div className="profile-note-heading">
+                  <Icon name="info" size={24} />
+                  <h2>À lire avec curiosité</h2>
+                </div>
                 <p>Les textes de cette fiche sont générés par intelligence artificielle. Ils peuvent comporter des erreurs : prenez-les comme un point de départ pour votre découverte, pas comme une source de référence.</p>
-              </div>
+              </Card>
             </aside>
           </div>
 
           {relatedNames.length > 0 && (
-            <section className="profile-discovery" aria-labelledby="profile-discovery-title">
+            <Card as="section" variant="outlined" interactive={false} className="profile-discovery" aria-labelledby="profile-discovery-title">
               <div className="profile-section-heading">
                 <span className="profile-section-kicker">Pour prolonger la découverte</span>
                 <h2 id="profile-discovery-title">D'autres prénoms {genderPlural[name.gender]}</h2>
               </div>
               <RelatedNames names={relatedNames} returnContext={returnContext} />
-              <Link className="text-link" href="/prenoms">Explorer tout le catalogue <span aria-hidden="true">↗</span></Link>
-            </section>
+              <Link className="text-link" href="/prenoms">Explorer tout le catalogue <Icon name="chevron-right" size={18} /></Link>
+            </Card>
           )}
 
           <footer className="profile-footer">
-            <Link href={urlRetour}>{texteRetour}</Link>
+            <Link href={urlRetour}><Icon name="chevron-left" size={18} /> {texteRetour}</Link>
           </footer>
         </article>
       </div>

@@ -43,7 +43,9 @@ test("les références de code du contrat M3 pointent vers des révisions immuab
 test("le registre M3 et ses sources de référence restent complets et lisibles", () => {
   assert.equal(components.includes("\\n|"), false);
   assert.equal(verification.includes("\\n|"), false);
-  assert.match(sourceVerifier, /const verifiedSources = \[\.\.\.sources, \.\.\.additionalAndroidxSources\]/);
+  assert.match(sourceVerifier, /const verifiedSources = \[\.\.\.sources, \.\.\.googleIconSources, \.\.\.additionalAndroidxSources\]/);
+  assert.match(sourceVerifier, /assert\.equal\(googleIconSources\.length, 13/);
+  assert.match(sourceVerifier, /iconRegistry\.includes/);
   assert.match(sourceVerifier, /maybeFallbackSpecVersion/);
   assert.doesNotMatch(verification, new RegExp("2025/2026"));
   assert.match(sourceVerifier, /filter\(\(\{ name \}\) => name\.startsWith\("AndroidX "\)\)/);
