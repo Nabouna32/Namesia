@@ -25,7 +25,7 @@ test("le pictogramme masculin sépare son anneau et sa flèche", () => {
   assert.match(genderIcon, /viewBox="0 -960 960 960"/);
   assert.match(genderIcon, /size = 20/);
   assert.match(genderIcon, /width=\{size\}[\s\S]*?height=\{size\}/);
-  assert.match(genderIcon, /size === 18 \? styles\.compact : styles\.icon/);
+  assert.match(genderIcon, /size === 18 \? `\$\{styles\.icon\} \$\{styles\.compact\}` : styles\.icon/);
   assert.match(genderStyles, /\.compact \{[\s\S]*?width: 18px;[\s\S]*?height: 18px;[\s\S]*?flex-basis: 18px;/);
 });
 
