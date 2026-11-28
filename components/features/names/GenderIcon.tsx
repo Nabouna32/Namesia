@@ -15,7 +15,6 @@ export function GenderIcon({ gender, className, decorative = false }: Props) {
       className={className ? `${styles.icon} ${className}` : styles.icon}
       role={decorative ? undefined : "img"}
       aria-label={decorative ? undefined : gender}
-      aria-hidden={decorative ? true : undefined}
     >
       <svg
         aria-hidden="true"
