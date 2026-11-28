@@ -272,7 +272,7 @@ export function NameSearch({
               </div>
             {compact && resultats.length > nombreVisible && (
               <Link className="text-link" href={creerUrlCatalogueDepuisRecherche(recherche)}>
-                Voir tous les résultats dans le catalogue <Icon name="arrow-up-right" size={18} />
+                Voir tous les résultats dans le catalogue <Icon name="chevron-right" size={18} />
               </Link>
             )}
             {!compact && resultats.length > nombreVisible && (
