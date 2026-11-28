@@ -120,3 +120,38 @@ test("les fiches restent consultables sans compte et les favoris renvoient vers 
   await expect(favoriteLink).toHaveAttribute("href", "/compte?redirect=%2Fprenoms%2Falice");
   await expect(page.getByText("Les favoris sont conservés dans votre compte et synchronisés entre vos appareils.")).toBeVisible();
 });
+
+
+test("les parcours secondaires disposent de captures diagnostiques pleine page", async ({ page }, testInfo) => {
+  test.skip(process.env.PLAYWRIGHT_DIAGNOSTICS !== "true", "Captures temporaires réservées à la revue visuelle.");
+
+  const routesToCapture = [
+    { name: "catalogue", path: "/prenoms" },
+    { name: "comparateur", path: "/comparer" },
+    { name: "favoris", path: "/favoris" },
+    { name: "compte", path: "/compte" }
+  ];
+  const viewports = [
+    { name: "mobile", width: 390, height: 844 },
+    { name: "expanded", width: 1280, height: 900 }
+  ];
+
+  for (const theme of ["light", "dark"]) {
+    await page.emulateMedia({ colorScheme: theme });
+    for (const viewport of viewports) {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+      for (const route of routesToCapture) {
+        const response = await page.goto(route.path, {
+          waitUntil: "domcontentloaded",
+          timeout: 30_000
+        });
+        expect(response?.status(), `HTTP ${route.path} en ${viewport.name} / ${theme}`).toBeLessThan(400);
+        await expect(page.locator("main h1").first()).toBeVisible();
+        await page.screenshot({
+          path: testInfo.outputPath(`${route.name}-${viewport.name}-${theme}.png`),
+          fullPage: true
+        });
+      }
+    }
+  }
+});
