@@ -1,8 +1,8 @@
 # État du projet — Namesia
 
 - **Statut :** PRÉ-LANCEMENT / DÉVELOPPEMENT
-- **Version :** 2.4
-- **Mis à jour le :** 2026-11-27 20:52:00 (Europe/Paris)
+- **Version :** 2.5
+- **Mis à jour le :** 2026-11-28 06:30:04 (Europe/Paris)
 
 Ce document résume l'état opérationnel et les arbitrages actifs. Les détails d'architecture, de sécurité et de données restent dans les ADR et documents spécialisés.
 
@@ -45,6 +45,7 @@ Ce document résume l'état opérationnel et les arbitrages actifs. Les détails
 - **PR #403 —** [Comptes Namesia et favoris liés au compte](https://github.com/Nabouna32/Namesia/pull/403) fusionnée dans `main` le 27 novembre 2026.
 - **PR #407 —** [Refonte et structuration de la documentation](https://github.com/Nabouna32/Namesia/pull/407) fusionnée dans `main`. Le README racine sert d'index, AGENTS.md contient le socle commun et les procédures détaillées sont réparties par domaine.
 - Les PR #409, #410, #412 et #414 ont fiabilisé les contrôles post-déploiement Open Graph, robots.txt et CSRF ; la dernière exécution de production est entièrement verte.
+- **PR #417 —** [Refondre la gouvernance et le registre des ADR](https://github.com/Nabouna32/Namesia/pull/417) : refonte documentaire en cours ; les contrôles CI automatisés des métadonnées, du nommage et des références restent à intégrer.
 - Les issues #406, #408, #411 et #413 sont clôturées.
 - L'issue [#402](https://github.com/Nabouna32/Namesia/issues/402) reste ouverte pour la configuration du SMTP transactionnel après acquisition d'un domaine.
 - L'issue [#404](https://github.com/Nabouna32/Namesia/issues/404) reste ouverte pour la suppression du compte et la gestion complète des données personnelles.
