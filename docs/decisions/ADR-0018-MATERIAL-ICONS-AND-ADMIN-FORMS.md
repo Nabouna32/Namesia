@@ -2,7 +2,7 @@
 
 - **Statut :** active
 - **Version :** 1.0
-- **Mis à jour le :** 2026-11-28 06:05:17 (Europe/Paris)
+- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
 - **Remplacement partiel :** la convention des icônes est remplacée par ADR-0020 ; les règles relatives aux formulaires restent applicables.
 - **Décision prise le :** 2026-11-23 (heure non consignée)
 
