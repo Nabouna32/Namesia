@@ -4,6 +4,7 @@ import { expect, test } from "@playwright/test";
 const routes = [
   { name: "accueil", path: "/" },
   { name: "catalogue", path: "/prenoms" },
+  { name: "tendances", path: "/tendances" },
   { name: "fiche-alice", path: "/prenoms/alice" }
 ];
 
@@ -29,6 +30,9 @@ test("les trois parcours publics essentiels sont disponibles sur bureau", async 
 
     expect(response?.status(), `HTTP ${route.path}`).toBeLessThan(400);
     await expect(page.locator("main h1").first()).toBeVisible();
+    if (route.path === "/tendances") {
+      await expect(page.getByRole("link", { name: "Explorer" })).toHaveAttribute("aria-current", "page");
+    }
 
     const accessibility = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
