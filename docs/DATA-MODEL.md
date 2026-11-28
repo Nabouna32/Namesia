@@ -1,8 +1,8 @@
 # Modèle de données — Namesia
 
 - **Statut :** modèle cible retenu pour la V1
-- **Version :** 2.8
-- **Mis à jour le :** 2026-11-27 20:05:03 (Europe/Paris)
+- **Version :** 2.9
+- **Mis à jour le :** 2026-11-28 06:24:20 (Europe/Paris)
 
 ## 1. Principes
 
@@ -98,7 +98,7 @@ Contraintes et sécurité :
 - aucun accès n'est accordé au rôle `anon` ;
 - l'index sur `name_id` sert aux recherches inverses et aux suppressions en cascade d'un prénom.
 
-Les favoris sont lus et modifiés depuis le client Supabase public, dont les requêtes restent soumises à RLS. Aucune clé privilégiée n'est utilisée. Les anciens favoris `localStorage` ne sont envoyés qu'après une action explicite de migration ; la clé locale n'est effacée qu'après confirmation du transfert complet.
+Les favoris sont lus et modifiés depuis le client Supabase public, dont les requêtes restent soumises à RLS. Aucune clé privilégiée n'est utilisée. Les anciennes données locales de favoris et d'historique ne sont pas migrées : l'ancien stockage local est supprimé et les sélections antérieures sont abandonnées, Namesia étant encore en phase de développement. L'import/export JSON reste disponible pour sauvegarder explicitement les favoris associés au compte.
 
 L'historique de consultation n'a pas encore de table. Son activation, sa rétention et sa limite sont soumises à l'arbitrage humain #405 ; aucune visite n'est actuellement enregistrée.
 

@@ -1,7 +1,7 @@
 # Système de design — Namesia
 
-- **Version :** 1.0
-- **Mis à jour le :** 2026-11-27 20:01:15 (Europe/Paris)
+- **Version :** 1.1
+- **Mis à jour le :** 2026-11-28 06:24:20 (Europe/Paris)
 
 ## Rôle
 
@@ -14,7 +14,7 @@ Ce document est le point d'entrée de la conception visuelle et interactionnelle
 - [Bibliothèque de composants](design/COMPONENTS.md) : inventaire, API, recettes et conventions d'implémentation.
 - [Navigation et responsive](design/NAVIGATION-AND-RESPONSIVE.md) : navigation adaptative, petits et grands écrans, accessibilité et navigateur.
 - [Vérification Material 3](MATERIAL-3-VERIFICATION.md) : sources, vérification et limites de fidélité.
-- [ADR-0037 — Architecture des composants Material 3](decisions/ADR-0037-architecture-composants-material3.md) : décision structurante.
+- [ADR-0037 — Architecture des composants Material 3](decisions/ADR-0037-MATERIAL-3-COMPONENT-ARCHITECTURE.md) : décision structurante.
 
 ## Règle de lecture
 

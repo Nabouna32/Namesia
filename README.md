@@ -1,7 +1,7 @@
 # Namesia
 
-- **Version :** 2.3
-- **Mis à jour le :** 2026-11-27 23:09:42 (Europe/Paris)
+- **Version :** 2.4
+- **Mis à jour le :** 2026-11-28 06:24:20 (Europe/Paris)
 
 Namesia est un catalogue de fiches de prénoms. Le dépôt contient l'application web, les contrats de données, les règles éditoriales, les décisions d'architecture et les procédures d'exploitation.
 
@@ -52,7 +52,7 @@ Ce README est le portail de navigation du dépôt. Les documents détaillés son
 | [Implémentation du design](docs/design/IMPLEMENTATION-STANDARDS.md) | CSS, tokens, responsive, lisibilité et accessibilité visuelle |
 | [Navigation et responsive](docs/design/NAVIGATION-AND-RESPONSIVE.md) | Navigation adaptative, écrans et comportement navigateur |
 | [Vérification Material 3](docs/MATERIAL-3-VERIFICATION.md) | Sources AndroidX/Material, contrôles et limites Web |
-| [ADR des composants Material 3](docs/decisions/ADR-0037-architecture-composants-material3.md) | Décision structurante de la bibliothèque |
+| [ADR des composants Material 3](docs/decisions/ADR-0037-MATERIAL-3-COMPONENT-ARCHITECTURE.md) | Décision structurante de la bibliothèque |
 
 ### Plateforme et exploitation
 
