@@ -599,3 +599,13 @@ test("les surfaces de fiche utilisent Card outlined et le glyphe info officiel",
   assert.doesNotMatch(globalStyles, /\.profile-note \{[^}]*border:|\.profile-note \{[^}]*background:|\.profile-note \{[^}]*border-radius:/s);
   assert.doesNotMatch(globalStyles, /\.profile-discovery \{[^}]*border:|\.profile-discovery \{[^}]*background:|\.profile-discovery \{[^}]*border-radius:/s);
 });
+
+
+test("les états du compte utilisent Card outlined sans surface CSS parallèle", async () => {
+  const accountClient = await readFile(new URL("../app/compte/account-client.tsx", import.meta.url), "utf8");
+  const accountStyles = await readFile(new URL("../app/compte/account.module.css", import.meta.url), "utf8");
+  assert.equal((accountClient.match(/<Card as="section" variant="outlined" interactive=\{false\} className=\{styles\.panel\}>/g) ?? []).length, 5);
+  assert.match(accountClient, /<Card as="div" variant="outlined" interactive=\{false\} className=\{styles\.panel\}>/);
+  assert.doesNotMatch(accountClient, /<section className=\{styles\.panel\}>/);
+  assert.doesNotMatch(accountStyles, /\.panel \{[^}]*border:|\.panel \{[^}]*background:|\.panel \{[^}]*border-radius:/s);
+});
