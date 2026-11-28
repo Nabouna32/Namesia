@@ -207,8 +207,10 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
 
             <aside className="profile-aside">
               <Card as="div" variant="outlined" interactive={false} className="profile-note">
-                <span className="profile-note-mark" aria-hidden="true"><Icon name="info" size={20} /></span>
-                <h2>À lire avec curiosité</h2>
+                <div className="profile-note-heading">
+                  <Icon name="info" size={24} />
+                  <h2>À lire avec curiosité</h2>
+                </div>
                 <p>Les textes de cette fiche sont générés par intelligence artificielle. Ils peuvent comporter des erreurs : prenez-les comme un point de départ pour votre découverte, pas comme une source de référence.</p>
               </Card>
             </aside>
