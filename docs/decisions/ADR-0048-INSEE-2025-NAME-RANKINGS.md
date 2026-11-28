@@ -2,10 +2,10 @@
 
 - **Statut :** active
 - **Version :** 1.0
-- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
+- **Mis à jour le :** 2026-11-28 06:27:57 (Europe/Paris)
 - **Décision prise le :** 2026-11-25 (heure non consignée)
 - **Portée :** classement de popularité des prénoms en France
-- **Remplace partiellement :** [ADR-0002](ADR-0002-statistiques-insee.md)
+- **Remplace partiellement :** [ADR-0002](ADR-0002-INSEE-NAME-STATISTICS.md)
 
 ## Contexte
 
