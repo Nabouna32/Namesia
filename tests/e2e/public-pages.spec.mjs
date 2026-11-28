@@ -18,7 +18,7 @@ const responsiveViewports = [
   { name: "bureau-large", width: 1280, height: 900 }
 ];
 
-test("les trois parcours publics essentiels sont disponibles sur bureau", async ({ page }) => {
+test("les quatre parcours publics essentiels sont disponibles sur bureau", async ({ page }) => {
   const pageErrors = [];
   page.on("pageerror", (error) => pageErrors.push(error.message));
 
@@ -31,7 +31,7 @@ test("les trois parcours publics essentiels sont disponibles sur bureau", async 
     expect(response?.status(), `HTTP ${route.path}`).toBeLessThan(400);
     await expect(page.locator("main h1").first()).toBeVisible();
     if (route.path === "/tendances") {
-      await expect(page.getByRole("link", { name: "Explorer" })).toHaveAttribute("aria-current", "page");
+      await expect(page.getByRole("link", { name: "Explorer", exact: true })).toHaveAttribute("aria-current", "page");
     }
 
     const accessibility = await new AxeBuilder({ page })
