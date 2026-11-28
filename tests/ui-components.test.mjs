@@ -559,3 +559,8 @@ test("les flèches expriment la hiérarchie de navigation ou la sortie externe",
 test("la fiche préserve sa largeur de lecture sur les fenêtres medium", () => {
   assert.match(globalStyles, /@media \(min-width: 600px\) and \(max-width: 839px\) \{[\s\S]*?\.profile-layout \{\s*grid-template-columns: minmax\(0, 1fr\);[\s\S]*?\.profile-aside \{\s*max-width: 460px;/);
 });
+
+
+test("les cartes symboliques occupent la largeur disponible sans colonne vide forcée", () => {
+  assert.match(globalStyles, /\.symbolic-grid \{\s*display: grid;\s*grid-template-columns: repeat\(auto-fit, minmax\(min\(100%, 320px\), 1fr\)\);/);
+});
