@@ -2,7 +2,7 @@
 
 - **Statut :** active
 - **Version :** 1.0
-- **Mis à jour le :** 2026-11-28 06:05:17 (Europe/Paris)
+- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
 - **Décision prise le :** 2026-11-22 (heure non consignée)
 - **Décideur :** propriétaire de Namesia
 
