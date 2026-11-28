@@ -194,6 +194,12 @@ const googleIconSources = [
     markers: [`d="M504-480 348-636q-11-11-11-28t11-28q11-11 28-11t28 11l184 184q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L404-268q-11 11-28 11t-28-11q-11-11-11-28t11-28l156-156Z"`],
   },
   {
+    name: "Google Material Symbol info",
+    registryName: "info",
+    url: `https://raw.githubusercontent.com/google/material-design-icons/${googleIconCommit}/symbols/web/info/materialsymbolsrounded/info_24px.svg`,
+    markers: [`d="M480-280q17 0 28.5-11.5T520-320v-160q0-17-11.5-28.5T480-520q-17 0-28.5 11.5T440-480v160q0 17 11.5 28.5T480-280Zm0-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"`],
+  },
+  {
     name: "Google Material Symbol arrow_outward",
     registryName: "arrow-outward",
     url: `https://raw.githubusercontent.com/google/material-design-icons/${googleIconCommit}/symbols/web/arrow_outward/materialsymbolsrounded/arrow_outward_24px.svg`,
@@ -281,7 +287,7 @@ async function verifySourcesWithLimit(items, concurrency) {
 const verifiedSources = [...sources, ...googleIconSources, ...additionalAndroidxSources];
 const androidxSourceCount = verifiedSources.filter(({ name }) => name.startsWith("AndroidX ")).length;
 assert.equal(androidxSourceCount, 39, "Le registre doit vérifier exactement les 39 fichiers AndroidX documentés");
-assert.equal(googleIconSources.length, 12, "Le registre doit vérifier les 12 glyphes Material Symbols utilisés");
+assert.equal(googleIconSources.length, 13, "Le registre doit vérifier les 13 glyphes Material Symbols utilisés");
 
 await verifySourcesWithLimit(verifiedSources, 4);
 
