@@ -2,9 +2,9 @@
 
 - **Statut :** active
 - **État opérationnel :** production Cloudflare active ; migration d'hébergement terminée
-- **Version :** 1.2
+- **Version :** 1.3
 - **Décision prise le :** 2026-11-25 (heure non consignée)
-- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
+- **Mis à jour le :** 2026-11-28 06:20:42 (Europe/Paris)
 - **Portée :** hébergement, builds, déploiements et previews de Namesia
 
 ## Contexte
@@ -46,7 +46,7 @@ La production publique utilise désormais l'URL `workers.dev`. Les vérification
 - le rendu SSR du catalogue et d'une fiche, l'API de comparaison et les Route Handlers ;
 - les réponses `401` des routes d'administration sans jeton ;
 - robots.txt, sitemap et l'image Open Graph statique commune, référencée par les fiches dont le titre et la description restent spécifiques ;
-- l'activation du fournisseur e-mail Supabase (contrôle automatique). L'envoi et le clic réels d'un OTP, l'URL de redirection et la session restent à valider manuellement ;
+- l'activation du fournisseur e-mail Supabase (contrôle automatique). La délivrance effective des e-mails de confirmation et de récupération, les URL de redirection et la session restent à valider manuellement ;
 - la taille compressée du Worker et le CPU consommé sur les parcours représentatifs.
 
 Les environnements de test ne doivent contenir aucun secret privilégié. L'administration reste protégée par Supabase Auth et RLS en production et est entièrement désactivée dans les Previews.
@@ -59,7 +59,7 @@ Aucune clé Supabase privilégiée n'est ajoutée au Worker ou à GitHub Actions
 - Les PR internes éligibles disposent d'une URL stable de Preview et d'une URL de déploiement propre à chaque mise à jour. Les PR Dependabot conservent les vérifications de build et de qualité, sans Preview faute de secrets disponibles.
 - Les previews ouvertes peuvent être consultées publiquement ; leur suppression automatique évite de conserver les environnements de PR fermées.
 - Les quotas Cloudflare d'exécution, de requêtes, de taille de Worker et d'observabilité restent applicables.
-- Le transfert d'hébergement est terminé et le contrôle HTTP post-déploiement couvre les parcours publics. La validation manuelle de l'OTP, de la redirection et de la session reste une limite connue ; elle ne remet pas en cause l'hébergement Cloudflare.
+- Le transfert d'hébergement est terminé et le contrôle HTTP post-déploiement couvre les parcours publics. La validation manuelle de la confirmation d'adresse, des liens de récupération, de la redirection et de la session reste une limite connue ; elle ne remet pas en cause l'hébergement Cloudflare.
 - Vercel n'est plus un mécanisme de retour arrière. Les versions et déploiements Worker Cloudflare constituent le mécanisme opérationnel de retour arrière.
 - Réexaminer OpenNext au regard de vinext après la première validation de production, sans changer d'adaptateur dans cette migration initiale.
 
