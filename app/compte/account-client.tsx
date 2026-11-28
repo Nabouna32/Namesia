@@ -4,6 +4,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/material3/Button";
+import { Card } from "@/components/material3/Card";
 import { TextField } from "@/components/material3/TextField";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { validatePassword } from "@/lib/auth-password";
@@ -207,11 +208,11 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
     router.refresh();
   }
 
-  if (checking) return <section className={styles.panel}><p role="status">Vérification de votre session…</p></section>;
+  if (checking) return <Card as="div" variant="outlined" interactive={false} className={styles.panel}><p role="status">Vérification de votre session…</p></Card>;
 
   if (session && mode === "change") {
     return (
-      <section className={styles.panel}>
+      <Card as="section" variant="outlined" interactive={false} className={styles.panel}>
         <h2>Modifier le mot de passe</h2>
         <p className={styles.accountEmail}>{session.user.email}</p>
         <form className={styles.form} onSubmit={changePassword}>
@@ -222,13 +223,13 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
           <Button variant="text" type="button" disabled={busy} onClick={() => setMode("login")}>Annuler</Button>
         </form>
         {feedback && <p className={feedback.type === "error" ? `${styles.feedback} ${styles.error}` : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
-      </section>
+      </Card>
     );
   }
 
   if (session && mode !== "recovery") {
     return (
-      <section className={styles.panel}>
+      <Card as="section" variant="outlined" interactive={false} className={styles.panel}>
         <h2>Vous êtes connecté</h2>
         <p className={styles.accountEmail}>{session.user.email}</p>
         <div className={styles.actions}>
@@ -242,24 +243,24 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
           <Button variant="text" type="button" disabled={busy} onClick={() => void signOut()}>Se déconnecter</Button>
         </div>
         {feedback && <p className={feedback.type === "error" ? `${styles.feedback} ${styles.error}` : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
-      </section>
+      </Card>
     );
   }
 
   if (mode === "recovery") {
     if (!session) {
       return (
-        <section className={styles.panel}>
+        <Card as="section" variant="outlined" interactive={false} className={styles.panel}>
           <h2>Réinitialiser le mot de passe</h2>
           <p>Ouvrez le lien reçu par e-mail pour accéder à cette étape. Si le formulaire ne s'active pas, demandez un nouveau lien de récupération.</p>
           {feedback && <p className={feedback.type === "error" ? `${styles.feedback} ${styles.error}` : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
           <Button variant="outlined" href="/compte?mode=forgot">Demander un nouveau lien</Button>
-        </section>
+        </Card>
       );
     }
 
     return (
-      <section className={styles.panel}>
+      <Card as="section" variant="outlined" interactive={false} className={styles.panel}>
         <h2>Choisir un nouveau mot de passe</h2>
         <form className={styles.form} onSubmit={submit}>
           <TextField id="account-recovery-password" label="Nouveau mot de passe" variant="outlined" type="password" autoComplete="new-password" required value={password} onChange={(event) => setPassword(event.target.value)} supportingText="8 caractères minimum, avec au moins une majuscule et un chiffre." />
@@ -267,7 +268,7 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
           <Button type="submit" disabled={busy}>{busy ? "Enregistrement…" : "Réinitialiser le mot de passe"}</Button>
         </form>
         {feedback && <p className={feedback.type === "error" ? `${styles.feedback} ${styles.error}` : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
-      </section>
+      </Card>
     );
   }
 
@@ -275,7 +276,7 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
   const submitLabel = mode === "register" ? "Créer mon compte" : mode === "forgot" ? "Envoyer le lien" : "Se connecter";
 
   return (
-    <section className={styles.panel}>
+    <Card as="section" variant="outlined" interactive={false} className={styles.panel}>
       <h2>{title}</h2>
       <form className={styles.form} onSubmit={submit}>
         <TextField id="account-email" label="Adresse e-mail" variant="outlined" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
@@ -306,6 +307,6 @@ export function AccountClient({ redirectTo, initialMode, emailConfirmed }: Props
         </>}
       </div>
       {feedback && <p className={feedback.type === "error" ? `${styles.feedback} ${styles.error}` : styles.feedback} role={feedback.type === "error" ? "alert" : "status"}>{feedback.text}</p>}
-    </section>
+    </Card>
   );
 }
