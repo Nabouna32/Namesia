@@ -1,7 +1,7 @@
 # GitHub Actions — CI et automatisation
 
 - **Version :** 1.5
-- **Mis à jour le :** 2026-11-28 09:22:21 (Europe/Paris)
+- **Mis à jour le :** 2026-11-28 09:24:00 (Europe/Paris)
 
 ## Sources de vérité
 
