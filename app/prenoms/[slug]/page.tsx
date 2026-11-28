@@ -73,8 +73,8 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
     ? "Favoris"
     : returnContext?.vue === "comparateur" ? "Comparateur" : "Prénoms";
   const texteRetour = returnContext?.vue === "favoris"
-    ? "← Retour aux favoris"
-    : returnContext?.vue === "comparateur" ? "← Retour au comparateur" : "← Retour au catalogue";
+    ? "Retour aux favoris"
+    : returnContext?.vue === "comparateur" ? "Retour au comparateur" : "Retour au catalogue";
   const genderPlural: Record<NameGender, string> = {
     "Féminin": "féminins",
     "Masculin": "masculins",
@@ -220,12 +220,12 @@ export default async function NameProfilePage({ params, searchParams }: Props) {
                 <h2 id="profile-discovery-title">D'autres prénoms {genderPlural[name.gender]}</h2>
               </div>
               <RelatedNames names={relatedNames} returnContext={returnContext} />
-              <Link className="text-link" href="/prenoms">Explorer tout le catalogue <span aria-hidden="true">↗</span></Link>
+              <Link className="text-link" href="/prenoms">Explorer tout le catalogue <Icon name="chevron-right" size={18} /></Link>
             </section>
           )}
 
           <footer className="profile-footer">
-            <Link href={urlRetour}>{texteRetour}</Link>
+            <Link href={urlRetour}><Icon name="chevron-left" size={18} /> {texteRetour}</Link>
           </footer>
         </article>
       </div>
