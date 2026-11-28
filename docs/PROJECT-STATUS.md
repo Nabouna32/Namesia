@@ -1,8 +1,8 @@
 # État du projet — Namesia
 
 - **Statut :** PRÉ-LANCEMENT / DÉVELOPPEMENT
-- **Version :** 2.7
-- **Mis à jour le :** 2026-11-28 06:38:09 (Europe/Paris)
+- **Version :** 2.8
+- **Mis à jour le :** 2026-11-28 06:40:43 (Europe/Paris)
 
 Ce document résume l'état opérationnel et les arbitrages actifs. Les détails d'architecture, de sécurité et de données restent dans les ADR et documents spécialisés.
 
