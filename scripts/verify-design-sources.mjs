@@ -132,67 +132,67 @@ const googleIconSources = [
     registryName: "home",
     url: `https://raw.githubusercontent.com/google/material-design-icons/${googleIconCommit}/symbols/web/home/materialsymbolsrounded/home_24px.svg`,
     markers: [`d="M240-200h120v-200q0-17 11.5-28.5T400-440h160q17 0 28.5 11.5T600-400v200h120v-360L480-740 240-560v360Zm-80 0v-360q0-19 8.5-36t23.5-28l240-180q21-16 48-16t48 16l240 180q15 11 23.5 28t8.5 36v360q0 33-23.5 56.5T720-120H560q-17 0-28.5-11.5T520-160v-200h-80v200q0 17-11.5 28.5T400-120H240q-33 0-56.5-23.5T160-200Zm320-270Z"`],
-  }
+  },
   {
     name: "Google Material Symbol home_fill1",
     registryName: "home-filled",
     url: `https://raw.githubusercontent.com/google/material-design-icons/${googleIconCommit}/symbols/web/home/materialsymbolsrounded/home_fill1_24px.svg`,
     markers: [`d="M160-200v-360q0-19 8.5-36t23.5-28l240-180q21-16 48-16t48 16l240 180q15 11 23.5 28t8.5 36v360q0 33-23.5 56.5T720-120H600q-17 0-28.5-11.5T560-160v-200q0-17-11.5-28.5T520-400h-80q-17 0-28.5 11.5T400-360v200q0 17-11.5 28.5T360-120H240q-33 0-56.5-23.5T160-200Z"`],
-  }
+  },
   {
     name: "Google Material Symbol favorite",
     registryName: "favorite",
     url: `https://raw.githubusercontent.com/google/material-design-icons/${googleIconCommit}/symbols/web/favorite/materialsymbolsrounded/favorite_24px.svg`,
     markers: [`d="M480-147q-14 0-28.5-5T426-168l-69-63q-106-97-191.5-192.5T80-634q0-94 63-157t157-63q53 0 100 22.5t80 61.5q33-39 80-61.5T660-854q94 0 157 63t63 157q0 115-85 211T602-230l-68 62q-11 11-25.5 16t-28.5 5Zm-38-543q-29-41-62-62.5T300-774q-60 0-100 40t-40 100q0 52 37 110.5T285.5-410q51.5 55 106 103t88.5 79q34-31 88.5-79t106-103Q726-465 763-523.5T800-634q0-60-40-100t-100-40q-47 0-80 21.5T518-690q-7 10-17 15t-21 5q-11 0-21-5t-17-15Zm38 189Z"`],
-  }
+  },
   {
     name: "Google Material Symbol favorite_fill1",
     registryName: "favorite-filled",
     url: `https://raw.githubusercontent.com/google/material-design-icons/${googleIconCommit}/symbols/web/favorite/materialsymbolsrounded/favorite_fill1_24px.svg`,
     markers: [`d="M480-147q-14 0-28.5-5T426-168l-69-63q-106-97-191.5-192.5T80-634q0-94 63-157t157-63q53 0 100 22.5t80 61.5q33-39 80-61.5T660-854q94 0 157 63t63 157q0 115-85 211T602-230l-68 62q-11 11-25.5 16t-28.5 5Z"`],
-  }
+  },
   {
     name: "Google Material Symbol search",
     registryName: "search",
     url: `https://raw.githubusercontent.com/google/material-design-icons/${googleIconCommit}/symbols/web/search/materialsymbolsrounded/search_24px.svg`,
     markers: [`d="M380-320q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l224 224q11 11 11 28t-11 28q-11 11-28 11t-28-11L532-372q-30 24-69 38t-83 14Zm0-80q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"`],
-  }
+  },
   {
     name: "Google Material Symbol shuffle",
     registryName: "shuffle",
     url: `https://raw.githubusercontent.com/google/material-design-icons/${googleIconCommit}/symbols/web/shuffle/materialsymbolsrounded/shuffle_24px.svg`,
     markers: [`d="M600-160q-17 0-28.5-11.5T560-200q0-17 11.5-28.5T600-240h64l-99-99q-12-12-11.5-28.5T566-396q12-12 28.5-12t28.5 12l97 98v-62q0-17 11.5-28.5T760-400q17 0 28.5 11.5T800-360v160q0 17-11.5 28.5T760-160H600Zm-428-12q-11-11-11-28t11-28l492-492h-64q-17 0-28.5-11.5T560-760q0-17 11.5-28.5T600-800h160q17 0 28.5 11.5T800-760v160q0 17-11.5 28.5T760-560q-17 0-28.5-11.5T720-600v-64L228-172q-11 11-28 11t-28-11Zm-1-560q-11-11-11-28t11-28q11-11 27.5-11t28.5 11l168 167q11 11 11.5 27.5T395-565q-11 11-28 11t-28-11L171-732Z"`],
-  }
+  },
   {
     name: "Google Material Symbol compare_arrows",
     registryName: "compare-arrows",
     url: `https://raw.githubusercontent.com/google/material-design-icons/${googleIconCommit}/symbols/web/compare_arrows/materialsymbolsrounded/compare_arrows_24px.svg`,
     markers: [`d="M367-320H120q-17 0-28.5-11.5T80-360q0-17 11.5-28.5T120-400h247l-75-75q-11-11-11-27.5t11-28.5q12-12 28.5-12t28.5 12l143 143q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L348-188q-12 12-28 11.5T292-189q-11-12-11.5-28t11.5-28l75-75Zm226-240 75 75q11 11 11 27.5T668-429q-12 12-28.5 12T611-429L468-572q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l144-144q12-12 28-11.5t28 12.5q11 12 11.5 28T668-715l-75 75h247q17 0 28.5 11.5T880-600q0 17-11.5 28.5T840-560H593Z"`],
-  }
+  },
   {
     name: "Google Material Symbol check",
     registryName: "check",
     url: `https://raw.githubusercontent.com/google/material-design-icons/${googleIconCommit}/symbols/web/check/materialsymbolsrounded/check_24px.svg`,
     markers: [`d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"`],
-  }
+  },
   {
     name: "Google Material Symbol close",
     registryName: "close",
     url: `https://raw.githubusercontent.com/google/material-design-icons/${googleIconCommit}/symbols/web/close/materialsymbolsrounded/close_24px.svg`,
     markers: [`d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"`],
-  }
+  },
   {
     name: "Google Material Symbol chevron_left",
     registryName: "chevron-left",
     url: `https://raw.githubusercontent.com/google/material-design-icons/${googleIconCommit}/symbols/web/chevron_left/materialsymbolsrounded/chevron_left_24px.svg`,
     markers: [`d="m432-480 156 156q11 11 11 28t-11 28q-11 11-28 11t-28-11L348-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 28-11t28 11q11 11 11 28t-11 28L432-480Z"`],
-  }
+  },
   {
     name: "Google Material Symbol chevron_right",
     registryName: "chevron-right",
     url: `https://raw.githubusercontent.com/google/material-design-icons/${googleIconCommit}/symbols/web/chevron_right/materialsymbolsrounded/chevron_right_24px.svg`,
     markers: [`d="M504-480 348-636q-11-11-11-28t11-28q11-11 28-11t28 11l184 184q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L404-268q-11 11-28 11t-28-11q-11-11-11-28t11-28l156-156Z"`],
-  }
+  },
   {
     name: "Google Material Symbol arrow_outward",
     registryName: "arrow-outward",
