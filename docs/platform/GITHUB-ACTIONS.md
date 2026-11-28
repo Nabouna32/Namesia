@@ -1,7 +1,7 @@
 # GitHub Actions — CI et automatisation
 
-- **Version :** 1.4
-- **Mis à jour le :** 2026-11-28 06:35:20 (Europe/Paris)
+- **Version :** 1.6
+- **Mis à jour le :** 2026-11-28 09:24:00 (Europe/Paris)
 
 ## Sources de vérité
 
@@ -41,7 +41,7 @@ Le contrôle de `robots.txt` vérifie l'interdiction d'explorer `/api` et la ré
 - La fermeture d'une PR déclenche le nettoyage de sa Preview.
 - Seul un push sur `main` ou un lancement manuel ciblant `main`, avec le déploiement activé, peut déployer la production.
 
-Les captures, vidéos et traces Playwright ne sont pas publiées systématiquement. Le diagnostic visuel ponctuel utilise le label `diagnostic-playwright` et un artefact temporaire à rétention d'un jour.
+Les captures, vidéos et traces Playwright ne sont pas publiées systématiquement. Le diagnostic visuel ponctuel utilise le label `diagnostic-playwright` et un artefact temporaire à rétention d'un jour. Pour l'accueil, ce mode enregistre la page complète aux largeurs mobile (390 px) et tablette (768 px) après vérification des parcours responsive. Il capture aussi la fiche Alice en mobile (390 px), notamment les cartes de prénoms liés et leur chevron de navigation. Ces captures permettent une revue visuelle de la Preview ; elles ne constituent pas des snapshots de référence permanents.
 
 ### Sécurité des workflows — `workflow-security.yml`
 

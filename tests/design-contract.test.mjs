@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const globalCss = await readFile(join(root, "app/globals.css"), "utf8");
+const featuredCss = await readFile(join(root, "components/features/catalog/FeaturedNames.module.css"), "utf8");
 const layoutSource = await readFile(join(root, "app/layout.tsx"), "utf8");
 const tokensCss = await readFile(join(root, "styles/material3/tokens.css"), "utf8");
 const theme = await readFile(join(root, "lib/material-theme.ts"), "utf8");
@@ -271,8 +272,8 @@ test("l'approche typographique utilise exclusivement les tokens de rôle Materia
 
 test("les textes utilisent les interlignes de leur rôle Material 3", () => {
   const ratios = [...allCss.matchAll(/line-height:\s*(\d+(?:\.\d+)?);/g)].map((match) => match[1]);
-  assert.deepEqual(ratios, ["0.95", "0.95"], "Seuls les deux glyphes décoratifs surdimensionnés peuvent conserver un ratio local");
-  assert.match(globalCss, /\.featured-letter\s*\{[^}]*line-height:\s*0\.95;/s);
+  assert.deepEqual(ratios, ["0.95"], "Seul le monogramme de la fiche peut conserver un ratio local");
+  assert.match(featuredCss, /\.letter\s*\{[^}]*line-height:\s*var\(--md-sys-typescale-headline-small-line-height\)/s);
   assert.match(globalCss, /\.profile-monogram\s*\{[^}]*line-height:\s*0\.95;/s);
   for (const role of ["body-large", "body-medium", "body-small", "headline-large"]) {
     assert.match(allCss, new RegExp("line-height:\\s*var\\(--md-sys-typescale-" + role + "-line-height\\)"));
@@ -302,10 +303,12 @@ test("les données de fiche et les libellés de genre invalides échouent explic
 
 test("les cartes de prénoms acceptent les noms longs sans déborder ni couper leur contenu", () => {
   assert.match(globalCss, /\.name-card strong\s*\{[^}]*overflow-wrap:\s*anywhere/s);
-  assert.match(globalCss, /\.featured-name\s*\{[^}]*min-width:\s*0/s);
-  assert.match(globalCss, /\.featured-bottom strong\s*\{[^}]*overflow-wrap:\s*anywhere/s);
-  assert.match(globalCss, /\.featured-card\s*\{[^}]*min-height:\s*210px/s);
-  assert.doesNotMatch(globalCss, /\.featured-card\s*\{[^}]*\n\s*height:\s*210px/s);
+  assert.match(featuredCss, /\.name\s*\{[^}]*min-width:\s*0/s);
+  assert.match(featuredCss, /\.name strong\s*\{[^}]*overflow-wrap:\s*anywhere/s);
+  assert.match(featuredCss, /\.card\s*\{[^}]*min-height:\s*160px/s);
+  assert.match(featuredCss, /@media \(max-width: 599px\)[\s\S]*?\.card\s*\{[^}]*min-height:\s*120px/s);
+  assert.doesNotMatch(featuredCss, /\.card\s*\{[^}]*\n\s*height:/s);
+  assert.doesNotMatch(globalCss, /\.featured-(?:grid|card|letter|bottom|name|action)\b/);
 });
 
 test("les catégories Rainbow utilisent des rôles explicites sans couleur de repli", () => {
@@ -399,7 +402,7 @@ test("le hero d'accueil sépare le récit et les outils dans une composition Fid
   assert.match(globalCss, /\.hero-tools\s*\{[^}]*background:\s*var\(--md-sys-color-surface-container-lowest\)/s);
   assert.match(globalCss, /\.hero-copy\s*\{[^}]*color:\s*var\(--md-sys-color-on-surface-variant\)/s);
   assert.match(globalCss, /@media \(min-width:\s*840px\)[\s\S]*?\.hero-content\s*\{[^}]*grid-template-columns:/);
-  assert.match(globalCss, /@media \(min-width:\s*600px\) and \(max-width:\s*839px\)[\s\S]*?\.featured-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2/);
+  assert.match(featuredCss, /@media \(max-width:\s*839px\) \{[^}]*\.grid\s*\{[^}]*grid-template-columns:\s*repeat\(2/s);
   assert.doesNotMatch(globalCss, /@media \(min-width:\s*900px\)/);
 });
 

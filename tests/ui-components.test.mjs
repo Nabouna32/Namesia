@@ -9,12 +9,17 @@ const iconButtonStyles = await readFile(new URL("../components/material3/IconBut
 const favoriteButton = await readFile(new URL("../components/features/favorites/FavoriteButton.tsx", import.meta.url), "utf8");
 const discovery = await readFile(new URL("../components/features/discovery/RandomDiscovery.tsx", import.meta.url), "utf8");
 const featured = await readFile(new URL("../components/features/catalog/FeaturedNames.tsx", import.meta.url), "utf8");
+const relatedNames = await readFile(new URL("../components/features/catalog/RelatedNames.tsx", import.meta.url), "utf8");
+const nameSearch = await readFile(new URL("../components/features/catalog/NameSearch.tsx", import.meta.url), "utf8");
+const favoritesList = await readFile(new URL("../components/features/favorites/FavoritesList.tsx", import.meta.url), "utf8");
 const notFound = await readFile(new URL("../app/not-found.tsx", import.meta.url), "utf8");
 const errorBoundary = await readFile(new URL("../app/error.tsx", import.meta.url), "utf8");
 const globalStyles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+const featuredStyles = await readFile(new URL("../components/features/catalog/FeaturedNames.module.css", import.meta.url), "utf8");
 const materialTokens = await readFile(new URL("../styles/material3/tokens.css", import.meta.url), "utf8");
 const styles = buttonStyles;
 const icones = await readFile(new URL("../components/material3/Icon.tsx", import.meta.url), "utf8");
+const iconNotice = await readFile(new URL("../licenses/NOTICE-MATERIAL-SYMBOLS.md", import.meta.url), "utf8");
 const favoritesStyles = await readFile(new URL("../components/features/favorites/FavoritesList.module.css", import.meta.url), "utf8");
 
 test("Button suit l’anatomie AndroidX et conserve les éléments HTML natifs", () => {
@@ -72,6 +77,10 @@ test("les fonctions métier composent les composants Material 3 sans réimpléme
   assert.match(discovery, /<Button/);
   assert.doesNotMatch(featured, /<FavoriteButton/);
   assert.match(featured, /<GenderIcon/);
+  assert.match(featured, /<strong>\{name\.name\}<\/strong>[\s\S]*?<GenderIcon/);
+  assert.doesNotMatch(featured, /Découvrir/);
+  assert.match(featured, /Icon name="chevron-right" size=\{24\}/);
+  assert.doesNotMatch(icones, /arrow-forward/);
   assert.match(notFound, /<Button href=/);
   assert.doesNotMatch(discovery, /<button/);
 });
@@ -87,8 +96,13 @@ test("la vitrine n'attribue aucune couleur selon l'index du prénom", () => {
   assert.doesNotMatch(featured, /featured-\$\{index/);
   assert.doesNotMatch(featured, /featured-\d/);
   assert.doesNotMatch(globalStyles, /\.featured-[123]\b/);
-  assert.match(globalStyles, /\.featured-card\s*\{[^}]*min-height:\s*210px/s);
-  assert.match(globalStyles, /\.featured-bottom strong\s*\{[^}]*on-surface/s);
+  assert.match(featured, /styles\.grid/);
+  assert.match(featured, /styles\.card/);
+  assert.match(featured, /styles\.letter/);
+  assert.match(featuredStyles, /\.card\s*\{[^}]*min-height:\s*160px/s);
+  assert.match(featuredStyles, /\.letter\s*\{[^}]*pointer-events:\s*none/s);
+  assert.match(featuredStyles, /@media \(max-width: 599px\)/);
+  assert.doesNotMatch(globalStyles, /\.featured-(?:grid|card|letter|bottom|name|action)\b/);
 });
 
 const searchBar = await readFile(new URL("../components/material3/SearchBar.tsx", import.meta.url), "utf8");
@@ -268,6 +282,23 @@ test("les quatre destinations de navigation utilisent les SVG Material Symbols a
   assert.match(navigation, /icon: "favorite", activeIcon: "favorite-filled"/);
   assert.match(navigation, /const icon = active && "activeIcon" in destination/);
   assert.match(navigation, /name=\{icon\}/);
+});
+
+test("la flèche de découverte utilise le glyphe Material Symbols Rounded officiel", () => {
+  assert.match(featured, /Icon name="chevron-right" size=\{24\}/);
+  assert.match(featured, /<span className=\{styles\.action\} aria-hidden="true">/);
+  assert.doesNotMatch(featured, /<IconButton/);
+  for (const cardSource of [relatedNames, nameSearch, favoritesList]) {
+    assert.match(cardSource, /className="card-arrow" aria-hidden="true"><Icon name="chevron-right" size=\{24\} \/>/);
+    assert.doesNotMatch(cardSource, /className="card-arrow"[^>]*><Icon name="arrow-up-right"/);
+  }
+  assert.match(globalStyles, /\.card-arrow \{[\s\S]*?width: 24px;[\s\S]*?height: 24px;[\s\S]*?color: var\(--md-sys-color-on-surface-variant\);/);
+  assert.doesNotMatch(globalStyles.slice(globalStyles.indexOf(".card-arrow {"), globalStyles.indexOf(".card-arrow .material-icon {")), /background:|border-radius:/);
+  assert.match(icones, /"chevron-right": "M504-480 348-636/);
+  assert.match(icones, /viewBox="0 -960 960 960"/);
+  assert.doesNotMatch(icones, /viewBox=\{name === "chevron-right"/);
+  assert.match(iconNotice, /google\/material-design-icons\/blob\/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7\/symbols\/web\/chevron_right\/materialsymbolsrounded\/chevron_right_24px\.svg/);
+  assert.match(iconNotice, /Apache License 2\.0/);
 });
 
 test("les formulaires administratifs utilisent les surfaces, formes et dimensions Fidelity", () => {

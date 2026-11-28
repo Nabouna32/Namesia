@@ -9,17 +9,17 @@ type Props = { names: NameIndexEntry[] };
 
 export function FeaturedNames({ names }: Props) {
   return (
-    <div className="featured-grid">
+    <div className={styles.grid}>
       {names.map((name) => (
         <article className={styles.item} key={name.slug}>
-          <Card as={Link} variant="elevated" interactive className="featured-card" href={`/prenoms/${name.slug}`}>
-            <span className="featured-letter" aria-hidden="true">{name.initial}</span>
-            <span className="featured-bottom">
-              <span className="featured-name">
+          <Card as={Link} variant="elevated" interactive className={styles.card} href={`/prenoms/${name.slug}`}>
+            <span className={styles.letter} aria-hidden="true">{name.initial}</span>
+            <span className={styles.bottom}>
+              <span className={styles.name}>
                 <strong>{name.name}</strong>
                 <GenderIcon className={styles.gender} gender={name.gender} />
               </span>
-              <span className="featured-action">Découvrir <b><Icon name="arrow-up-right" size={18} /></b></span>
+              <span className={styles.action} aria-hidden="true"><Icon name="chevron-right" size={24} /></span>
             </span>
           </Card>
         </article>

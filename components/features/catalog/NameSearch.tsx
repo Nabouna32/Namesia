@@ -264,7 +264,7 @@ export function NameSearch({
                         <strong>{name.name}</strong>
                         <GenderIcon gender={name.gender} />
                       </span>
-                      <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
+                      <span className="card-arrow" aria-hidden="true"><Icon name="chevron-right" size={24} /></span>
                     </Card>
 
                   </article>
@@ -299,7 +299,7 @@ export function NameSearch({
                         <strong>{name.name}</strong>
                         <GenderIcon gender={name.gender} />
                       </span>
-                      <span className="card-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span>
+                      <span className="card-arrow" aria-hidden="true"><Icon name="chevron-right" size={24} /></span>
                     </Card>
 
                   </article>
