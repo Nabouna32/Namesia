@@ -4,7 +4,7 @@
 - **État opérationnel :** production Cloudflare active ; migration d'hébergement terminée
 - **Version :** 1.2
 - **Décision prise le :** 2026-11-25 (heure non consignée)
-- **Mis à jour le :** 2026-11-28 06:09:09 (Europe/Paris)
+- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
 - **Portée :** hébergement, builds, déploiements et previews de Namesia
 
 ## Contexte
