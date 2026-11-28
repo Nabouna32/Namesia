@@ -3,7 +3,7 @@
 - **Statut :** active
 - **Version :** 1.7
 - **Décision prise le :** 2026-11-27 13:20:36 (Europe/Paris)
-- **Mis à jour le :** 2026-11-28 06:07:57 (Europe/Paris)
+- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
 - **Décideur :** propriétaire de Namesia
 - **Portée :** comptes visiteurs, sessions et autorisations administrateur
 

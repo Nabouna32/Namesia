@@ -3,7 +3,7 @@
 - **Statut :** active
 - **Version :** 1.3
 - **Décision prise le :** 2026-11-25 (heure non consignée)
-- **Mis à jour le :** 2026-11-28 06:05:17 (Europe/Paris)
+- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
 - **Décideur :** propriétaire de Namesia
 
 ## Contexte
