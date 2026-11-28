@@ -1,7 +1,9 @@
 # ADR-0048 — Publier un instantané annuel du classement Insee
 
-- **Statut :** acceptée
-- **Date :** 2026-11-25
+- **Statut :** active
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-28 06:05:17 (Europe/Paris)
+- **Décision prise le :** 2026-11-25 (heure non consignée)
 - **Portée :** classement de popularité des prénoms en France
 - **Remplace partiellement :** [ADR-0002](ADR-0002-statistiques-insee.md)
 
