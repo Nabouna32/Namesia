@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const globalCss = await readFile(join(root, "app/globals.css"), "utf8");
+const featuredCss = await readFile(join(root, "components/features/catalog/FeaturedNames.module.css"), "utf8");
 const layoutSource = await readFile(join(root, "app/layout.tsx"), "utf8");
 const tokensCss = await readFile(join(root, "styles/material3/tokens.css"), "utf8");
 const theme = await readFile(join(root, "lib/material-theme.ts"), "utf8");
@@ -272,7 +273,7 @@ test("l'approche typographique utilise exclusivement les tokens de rôle Materia
 test("les textes utilisent les interlignes de leur rôle Material 3", () => {
   const ratios = [...allCss.matchAll(/line-height:\s*(\d+(?:\.\d+)?);/g)].map((match) => match[1]);
   assert.deepEqual(ratios, ["0.95", "0.95"], "Seuls les deux glyphes décoratifs surdimensionnés peuvent conserver un ratio local");
-  assert.match(globalCss, /\.featured-letter\s*\{[^}]*line-height:\s*0\.95;/s);
+  assert.match(featuredCss, /\.letter\s*\{[^}]*line-height:\s*0\.95;/s);
   assert.match(globalCss, /\.profile-monogram\s*\{[^}]*line-height:\s*0\.95;/s);
   for (const role of ["body-large", "body-medium", "body-small", "headline-large"]) {
     assert.match(allCss, new RegExp("line-height:\\s*var\\(--md-sys-typescale-" + role + "-line-height\\)"));
@@ -304,8 +305,10 @@ test("les cartes de prénoms acceptent les noms longs sans déborder ni couper l
   assert.match(globalCss, /\.name-card strong\s*\{[^}]*overflow-wrap:\s*anywhere/s);
   assert.match(globalCss, /\.featured-name\s*\{[^}]*min-width:\s*0/s);
   assert.match(globalCss, /\.featured-bottom strong\s*\{[^}]*overflow-wrap:\s*anywhere/s);
-  assert.match(globalCss, /\.featured-card\s*\{[^}]*min-height:\s*210px/s);
-  assert.doesNotMatch(globalCss, /\.featured-card\s*\{[^}]*\n\s*height:\s*210px/s);
+  assert.match(featuredCss, /\.card\s*\{[^}]*min-height:\s*184px/s);
+  assert.match(featuredCss, /@media \(max-width: 599px\) \{[^}]*\.card\s*\{[^}]*min-height:\s*136px/s);
+  assert.doesNotMatch(featuredCss, /\.card\s*\{[^}]*\n\s*height:/s);
+  assert.doesNotMatch(globalCss, /\.featured-(?:grid|card|letter|bottom|name|action)\b/);
 });
 
 test("les catégories Rainbow utilisent des rôles explicites sans couleur de repli", () => {
