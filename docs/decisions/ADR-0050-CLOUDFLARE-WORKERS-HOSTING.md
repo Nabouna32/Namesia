@@ -1,10 +1,10 @@
 # ADR-0050 — Hébergement Next.js sur Cloudflare Workers
 
 - **Statut :** active
-- **État opérationnel :** production Cloudflare active ; migration d'hébergement terminée ; validation manuelle OTP encore en attente
-- **Version :** 1.1
+- **État opérationnel :** production Cloudflare active ; migration d'hébergement terminée
+- **Version :** 1.2
 - **Décision prise le :** 2026-11-25 (heure non consignée)
-- **Mis à jour le :** 2026-11-28 06:05:17 (Europe/Paris)
+- **Mis à jour le :** 2026-11-28 06:09:09 (Europe/Paris)
 - **Portée :** hébergement, builds, déploiements et previews de Namesia
 
 ## Contexte
