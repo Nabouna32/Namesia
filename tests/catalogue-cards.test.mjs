@@ -55,7 +55,7 @@ test("les filtres de genre utilisent le pictogramme métier en mode décoratif",
     assert.match(source, /leadingIcon=\{<GenderIcon gender=\{genre\} decorative \/>/);
     assert.match(source, /iconOnly/);
   }
-  assert.match(genderIcon, /aria-hidden=\{decorative \? true : undefined\}/);
+  assert.match(genderIcon, /<svg[\s\S]*?aria-hidden="true"/);
   assert.match(filterChip, /aria-label=\{iconOnly \? label : undefined\}/);
   assert.match(filterChip, /title=\{iconOnly \? label : undefined\}/);
 });
