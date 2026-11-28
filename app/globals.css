@@ -1406,6 +1406,13 @@ a:focus-visible, button:focus-visible, input:not([type="search"]):focus-visible,
 }
 
 @media (min-width: 600px) and (max-width: 839px) {
+  .profile-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .profile-aside {
+    max-width: 460px;
+  }
 }
 
 @media (min-width: 600px) {
