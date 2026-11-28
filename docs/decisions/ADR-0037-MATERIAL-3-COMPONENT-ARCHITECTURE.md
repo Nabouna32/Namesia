@@ -2,7 +2,7 @@
 
 - **Statut :** active
 - **Version :** 1.0
-- **Mis à jour le :** 2026-11-28 06:05:17 (Europe/Paris)
+- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
 - **Décision prise le :** 2026-11-24 (heure non consignée)
 - **Référence Android :** Compose Material 3 1.5.0 stable, commit `919e948eaa351c590e7e6fc89d4014fad7a6e78c`
 - **Référence Web évaluée :** Material Web 2.5.0, publié le 14 juillet 2026 au commit `b4de401eb665ec63474f39319a4ba8f2145974cc` ; état du dépôt revérifié le 24 novembre 2026 au commit `d4f63c567f73b16717f4c04b57fa6390d0b2312d`
