@@ -76,6 +76,7 @@ test("les fonctions métier composent les composants Material 3 sans réimpléme
   assert.match(featured, /<strong>\{name\.name\}<\/strong>[\s\S]*?<GenderIcon/);
   assert.doesNotMatch(featured, /Découvrir/);
   assert.match(featured, /Icon name="chevron-right" size=\{24\}/);
+  assert.doesNotMatch(icones, /arrow-forward/);
   assert.match(notFound, /<Button href=/);
   assert.doesNotMatch(discovery, /<button/);
 });
