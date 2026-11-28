@@ -186,7 +186,7 @@ test("FilterChip suit la géométrie et les états AndroidX", () => {
 });
 
 test("les filtres de genre des favoris sont icon-only et le tri reste natif", () => {
-  assert.match(favorites, /leadingIcon=\{<Icon name=\{GENDER_ICONS\[genre\]\}/);
+  assert.match(favorites, /leadingIcon=\{<GenderIcon gender=\{genre\} decorative \/>/);
   assert.match(favorites, /iconOnly/);
   assert.match(favorites, /<FilterChip label="Tous"/);
   assert.match(favorites, /<label htmlFor="tri-favoris">/);
