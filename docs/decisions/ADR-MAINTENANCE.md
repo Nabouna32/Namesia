@@ -144,7 +144,7 @@ Les noms descriptifs Markdown sont en anglais, en majuscules et en `UPPERCASE-KE
 
 Les noms imposés par l'écosystème, notamment `README.md` et `AGENTS.md`, sont conservés.
 
-La CI vérifie les métadonnées, les identifiants, les statuts, le nommage et les références locales. Elle ne prétend pas vérifier la véracité historique d'une date.
+La CI doit vérifier les métadonnées, les identifiants, les statuts, le nommage et les références locales. Elle ne prétend pas vérifier la véracité historique d'une date.
 
 ## 9. Registre
 
