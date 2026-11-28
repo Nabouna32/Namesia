@@ -1,7 +1,7 @@
 # GitHub Actions — CI et automatisation
 
-- **Version :** 1.3
-- **Mis à jour le :** 2026-11-27 20:40:12 (Europe/Paris)
+- **Version :** 1.4
+- **Mis à jour le :** 2026-11-28 06:35:20 (Europe/Paris)
 
 ## Sources de vérité
 
@@ -19,8 +19,10 @@ Le job `quality` :
 3. exécute l'audit bloquant des dépendances de production (`npm audit --omit=dev --audit-level=high`) ;
 4. exécute un audit complet du graphe à titre diagnostique non bloquant ;
 5. vérifie les sources Material 3 épinglées ;
-6. exécute les tests, le contrôle TypeScript et le build ;
+6. exécute les tests, dont les contrats de gouvernance documentaire, le contrôle TypeScript et le build ;
 7. publie une synthèse distincte des résultats.
+
+Les contrats documentaires bloquent notamment les métadonnées absentes ou invalides, les noms descriptifs non conformes, les ADR dupliquées ou non indexées, les statuts incohérents, les liens locaux cassés et les documents canoniques absents du README racine. Ils contrôlent la cohérence formelle, pas la véracité des dates historiques ni le sens des décisions.
 
 Les tests, types et build sont exécutés même si l'un des contrôles précédents échoue afin de diagnostiquer les causes indépendantes. La synthèse échoue si l'audit de production, les tests, les types ou le build échouent. Un diagnostic de dépendances de développement seul ne bloque pas le job.
 

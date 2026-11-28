@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 
 const config = await readFile(new URL("../.github/dependabot.yml", import.meta.url), "utf8");
 const standards = await readFile(new URL("../docs/platform/DEPENDABOT.md", import.meta.url), "utf8");
-const adr = await readFile(new URL("../docs/decisions/ADR-0052-dependabot-quotidien.md", import.meta.url), "utf8");
+const adr = await readFile(new URL("../docs/decisions/ADR-0052-DAILY-DEPENDABOT-UPDATES.md", import.meta.url), "utf8");
 
 function ecosystemConfig(name) {
   const start = config.indexOf(`- package-ecosystem: ${name}`);
