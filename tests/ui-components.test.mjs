@@ -593,8 +593,9 @@ test("les surfaces de fiche utilisent Card outlined et le glyphe info officiel",
   const profilePage = await readFile(new URL("../app/prenoms/[slug]/page.tsx", import.meta.url), "utf8");
   assert.match(profilePage, /<Card as="div" variant="outlined" interactive=\{false\} className="profile-note">/);
   assert.match(profilePage, /<Card as="section" variant="outlined" interactive=\{false\} className="profile-discovery"/);
-  assert.match(profilePage, /<Icon name="info" size=\{20\} \/>/);
+  assert.match(profilePage, /<Icon name="info" size=\{24\} \/>/);
   assert.doesNotMatch(profilePage, /✳/);
+  assert.match(globalStyles, /\.profile-note-heading \{[^}]*display: flex;[^}]*align-items: center;[^}]*gap: 12px;/s);
   assert.doesNotMatch(globalStyles, /\.profile-note \{[^}]*border:|\.profile-note \{[^}]*background:|\.profile-note \{[^}]*border-radius:/s);
   assert.doesNotMatch(globalStyles, /\.profile-discovery \{[^}]*border:|\.profile-discovery \{[^}]*background:|\.profile-discovery \{[^}]*border-radius:/s);
 });
