@@ -6,19 +6,26 @@ const icon = await readFile(new URL("../components/material3/Icon.tsx", import.m
 const genderIcon = await readFile(new URL("../components/features/names/GenderIcon.tsx", import.meta.url), "utf8");
 const genderMap = await readFile(new URL("../lib/gender-icons.ts", import.meta.url), "utf8");
 
-test("le pictogramme masculin sépare son anneau et sa flèche pour rester lisible à petite taille", () => {
-  assert.match(icon, /type IconPathName = Exclude<IconName, "gender-male">/);
-  assert.doesNotMatch(icon, /"gender-male": ""/);
-  assert.match(icon, /const maleRing = "M360-660a260 260/);
-  assert.match(icon, /const maleArrow = "M505-550 690-735/);
-  assert.match(icon, /name === "gender-male"/);
-  assert.match(icon, /<path d=\{maleRing\} fillRule="evenodd" \/>/);
-  assert.match(icon, /<path d=\{maleArrow\} \/>/);
-  assert.match(icon, /viewBox="0 -960 960 960"/);
+test("les pictogrammes de genre restent hors du registre Material Symbols", () => {
+  assert.doesNotMatch(icon, /gender-(female|male|mixed|unknown)/);
+  assert.match(genderMap, /Record<NameGender, GenderIconDefinition>/);
+  assert.match(genderMap, /"Féminin": \{/);
+  assert.match(genderMap, /"Masculin": \{/);
+  assert.match(genderMap, /"Mixte": \{/);
+  assert.match(genderMap, /"Genre non renseigné": \{/);
 });
 
-test("le pictogramme masculin conserve le même contrat accessible que les autres genres", () => {
-  assert.match(genderIcon, /aria-label=\{gender\}/);
-  assert.match(genderIcon, /GENDER_ICONS\[gender\]/);
-  assert.match(genderMap, /"Masculin": "gender-male"/);
+test("le pictogramme masculin sépare son anneau et sa flèche", () => {
+  assert.match(genderMap, /path: "M360-660a260 260/);
+  assert.match(genderMap, /fillRule: "evenodd"/);
+  assert.match(genderMap, /secondaryPath: "M505-550 690-735/);
+  assert.match(genderIcon, /<path d=\{definition\.path\} fillRule=\{definition\.fillRule\} \/>/);
+  assert.match(genderIcon, /definition\.secondaryPath && <path d=\{definition\.secondaryPath\}/);
+  assert.match(genderIcon, /viewBox="0 -960 960 960"/);
+});
+
+test("GenderIcon expose un nom accessible ou devient décoratif dans un filtre", () => {
+  assert.match(genderIcon, /role=\{decorative \? undefined : "img"\}/);
+  assert.match(genderIcon, /aria-label=\{decorative \? undefined : gender\}/);
+  assert.match(genderIcon, /aria-hidden=\{decorative \? true : undefined\}/);
 });
