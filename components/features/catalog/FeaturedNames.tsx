@@ -19,7 +19,7 @@ export function FeaturedNames({ names }: Props) {
                 <strong>{name.name}</strong>
                 <GenderIcon className={styles.gender} gender={name.gender} />
               </span>
-              <span className={styles.action} aria-hidden="true"><Icon name="arrow-forward" size={24} /></span>
+              <span className={styles.action} aria-hidden="true"><Icon name="chevron-right" size={24} /></span>
             </span>
           </Card>
         </article>
