@@ -1,9 +1,9 @@
 # ADR-0029 — Typographie des destinations de navigation Material 3
 
-- **Statut :** acceptée
-- **Date :** 2026-11-24
+- **Statut :** active
+- **Décision prise le :** 2026-11-24 (heure non consignée)
 - **Version :** 1.0
-- **Mis à jour le :** 2026-11-27 20:10:47 (Europe/Paris)
+- **Mis à jour le :** 2026-11-28 06:05:17 (Europe/Paris)
 
 ## Contexte
 
