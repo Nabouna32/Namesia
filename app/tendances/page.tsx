@@ -129,7 +129,7 @@ export default async function NameTrendsPage() {
           Les effectifs sont arrondis au multiple de cinq. Les fiches Namesia disponibles sont accessibles depuis leur ligne.
           {" "}
           <a href={NAME_POPULARITY_2025_SOURCE_URL} target="_blank" rel="noreferrer">
-            Consulter l’étude de l’Insee <Icon name="arrow-up-right" size={16} />
+            Consulter l’étude de l’Insee <Icon name="arrow-outward" size={16} />
           </a>
         </p>
         <p className={styles.backLink}>
