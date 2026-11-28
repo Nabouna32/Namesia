@@ -96,7 +96,8 @@ test("les fiches restent consultables sans compte et les favoris renvoient vers 
   for (const viewport of [
     { name: "mobile", width: 390, height: 844 },
     { name: "medium-minimum", width: 600, height: 900 },
-    { name: "expanded", width: 840, height: 900 }
+    { name: "expanded", width: 840, height: 900 },
+    { name: "bureau-large", width: 1280, height: 900 }
   ]) {
     await page.emulateMedia({ colorScheme: "light" });
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
