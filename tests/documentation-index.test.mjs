@@ -21,12 +21,12 @@ async function collectMarkdown(directory) {
   return files;
 }
 
-const documentationFiles = (await collectMarkdown(join(root, "docs")))
-  .map((path) => relative(root, path))
+const maintainedFiles = ["README.md", "AGENTS.md", ...await collectMarkdown(join(root, "docs")), ...await collectMarkdown(join(root, "licenses"))]
+  .map((path) => typeof path === "string" && path.startsWith(root) ? relative(root, path) : path)
   .sort();
-const maintainedFiles = ["README.md", "AGENTS.md", ...documentationFiles];
-const canonicalFiles = documentationFiles.filter((path) => !/^docs\/decisions\/ADR-\d{4}-/.test(path));
-const adrFiles = documentationFiles.filter((path) => /^docs\/decisions\/ADR-\d{4}-/.test(path));
+const canonicalFiles = maintainedFiles.filter((path) => path.startsWith("docs/") || path.startsWith("licenses/"))
+  .filter((path) => !/^docs\/decisions\/ADR-\d{4}-/.test(path));
+const adrFiles = maintainedFiles.filter((path) => /^docs\/decisions\/ADR-\d{4}-/.test(path));
 
 test("tous les documents Markdown maintenus portent une version et une date de mise à jour valides", async () => {
   for (const source of maintainedFiles) {
@@ -41,7 +41,8 @@ test("tous les documents Markdown maintenus portent une version et une date de m
 });
 
 test("les noms descriptifs Markdown sont en majuscules et en kebab-case", () => {
-  for (const source of documentationFiles) {
+  for (const source of maintainedFiles) {
+    if (source === "README.md" || source === "AGENTS.md") continue;
     const filename = source.slice(source.lastIndexOf("/") + 1);
     if (filename === "README.md") continue;
     assert.match(filename, /^[A-Z0-9]+(?:-[A-Z0-9]+)*\.md$/, "Nom de document non conforme : " + source);

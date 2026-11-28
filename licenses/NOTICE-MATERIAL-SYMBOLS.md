@@ -1,5 +1,8 @@
 # Attribution — Google Material Symbols
 
+- **Version :** 1.0
+- **Mis à jour le :** 2026-11-28 06:38:09 (Europe/Paris)
+
 Les pictogrammes fonctionnels de Namesia proviennent de **Google Material Symbols**, style **Rounded**, poids **400**, au format SVG.
 
 - Source des SVG : [marella/material-symbols](https://github.com/marella/material-symbols)

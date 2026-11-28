@@ -1,7 +1,7 @@
 # Namesia
 
-- **Version :** 2.4
-- **Mis à jour le :** 2026-11-28 06:24:20 (Europe/Paris)
+- **Version :** 2.5
+- **Mis à jour le :** 2026-11-28 06:38:09 (Europe/Paris)
 
 Namesia est un catalogue de fiches de prénoms. Le dépôt contient l'application web, les contrats de données, les règles éditoriales, les décisions d'architecture et les procédures d'exploitation.
 
@@ -76,6 +76,7 @@ Ce README est le portail de navigation du dépôt. Les documents détaillés son
 | [`schemas/`](schemas/) | Contrats JSON |
 | [`tests/`](tests/) | Tests de contrats et comportements |
 | [`scripts/`](scripts/) | Scripts de vérification et maintenance |
+| [Attribution Material Symbols](licenses/NOTICE-MATERIAL-SYMBOLS.md) | Source et attribution des pictogrammes fonctionnels embarqués |
 
 ## Navigation rapide
 

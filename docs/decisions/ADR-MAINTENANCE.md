@@ -1,7 +1,7 @@
 # Politique de maintenance des ADR
 
-- **Version :** 1.3
-- **Mis à jour le :** 2026-11-28 06:35:20 (Europe/Paris)
+- **Version :** 1.4
+- **Mis à jour le :** 2026-11-28 06:38:09 (Europe/Paris)
 
 Ce document définit le cycle de vie des décisions d'architecture de Namesia. Il s'applique à toute contribution humaine ou assistée par IA, indépendamment de l'historique des conversations.
 
@@ -121,7 +121,7 @@ Une date ancienne ne suffit jamais à rendre une ADR obsolète.
 
 ## 8. Métadonnées et nommage
 
-Tous les documents Markdown maintenus portent :
+Tous les documents Markdown maintenus dans `README.md`, `AGENTS.md`, `docs/` et `licenses/` portent :
 - un numéro de version ;
 - une date et heure de dernière mise à jour au format `AAAA-MM-JJ HH:mm:ss (Europe/Paris)`.
 
