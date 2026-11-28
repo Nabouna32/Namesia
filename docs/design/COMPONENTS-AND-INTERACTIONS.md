@@ -1,7 +1,7 @@
 # Composants et interactions — Namesia
 
-- **Version :** 1.2
-- **Mis à jour le :** 2026-11-28 06:38:09 (Europe/Paris)
+- **Version :** 1.3
+- **Mis à jour le :** 2026-11-28 09:25:51 (Europe/Paris)
 
 
 Pour les API et recettes d'implémentation, consulter la [bibliothèque de composants](COMPONENTS.md). La source des contrats M3 est détaillée dans la [vérification Material 3](../MATERIAL-3-VERIFICATION.md).
@@ -29,7 +29,7 @@ Les surfaces de l'accueil, des cartes vedettes, des fiches, du catalogue, du com
 
 Les interactions utilisent les tokens M3 `--md-sys-motion-easing-*` et `--md-sys-motion-duration-*` ; les valeurs utilisées sont `short3`, `medium1` et `medium4`. Les couches d'état utilisent `--md-sys-state-hover-state-layer-opacity`, `--md-sys-state-focus-state-layer-opacity` et `--md-sys-state-pressed-state-layer-opacity`, selon l'état réel. Les valeurs M3 unitaires 0,08/0,12/0,16 sont exprimées en pourcentages CSS équivalents pour `color-mix`. Aucun pourcentage d'état n'est recopié dans les règles. Le lien d'évitement suit les mêmes tokens : aucune durée ni courbe n'est codée localement. La couche utilise la couleur de premier plan du composant, y compris sur l'indicateur sélectionné. Les cartes réagissent par une surface tonale plus élevée et un état pressé, sans déplacement ni ombre artificielle. Le mouvement doit rendre l'action compréhensible : indicateur qui s'étend, surface qui réagit à la pression, changement d'état animé. Les animations décoratives restent secondaires. `prefers-reduced-motion: reduce` supprime les mouvements non essentiels.
 
-Les icônes fonctionnelles utilisent les tracés officiels Google Material Symbols Rounded, poids 400, embarqués localement et affichés sur une grille de 24 × 24 avec `currentColor`. Les variantes pleines ne sont utilisées que lorsqu'elles ont une forme réellement distincte : Accueil et Favoris changent de glyphe à l'état actif ; Recherche et Comparer conservent leur dessin officiel, et leur sélection est portée par l'indicateur tonal et le libellé. Les pictogrammes restent décoratifs pour les technologies d'assistance, le nom étant porté par le lien ou le bouton. Les cibles interactives restent d'au moins 48 × 48 px ; le SVG ne porte pas lui-même la cible. Les SVG de marque peuvent être colorés. Source et licence : `licenses/NOTICE-MATERIAL-SYMBOLS.md` et `licenses/Apache-2.0-Material-Symbols.txt`.
+Les icônes fonctionnelles utilisent les tracés officiels Google Material Symbols Rounded, poids 400, embarqués localement et affichés sur une grille de 24 × 24 avec `currentColor`. Les variantes pleines ne sont utilisées que lorsqu'elles ont une forme réellement distincte : Accueil et Favoris changent de glyphe à l'état actif ; Recherche et Comparer conservent leur dessin officiel, et leur sélection est portée par l'indicateur tonal et le libellé. Les pictogrammes restent décoratifs pour les technologies d'assistance, le nom étant porté par le lien ou le bouton. Sur les cartes de découverte, la carte entière est l'unique lien `Card` ; le chevron `chevron_right` est rendu par le composant partagé `Icon`, décoratif (`aria-hidden`), sans `IconButton` imbriqué ni seconde action. Les cibles interactives restent d'au moins 48 × 48 px ; le SVG ne porte pas lui-même la cible. Les SVG de marque peuvent être colorés. Source et licence : `licenses/NOTICE-MATERIAL-SYMBOLS.md` et `licenses/Apache-2.0-Material-Symbols.txt`.
 
 ### Focus clavier
 
