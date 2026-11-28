@@ -1,6 +1,6 @@
 # ADR-0028 — Baseline Material 3, couleurs sémantiques et référence AndroidX
 
-- **Statut :** acceptée, partiellement remplacée par [ADR-0045](ADR-0045-source-google-blue-material-3.md) pour la couleur source uniquement
+- **Statut :** acceptée, partiellement remplacée par [ADR-0045](ADR-0045-GOOGLE-BLUE-MATERIAL-3-SOURCE.md) pour la couleur source uniquement
 - **Date :** 2026-11-24
 - **Version :** 1.0
 - **Mis à jour le :** 2026-11-27 20:10:47 (Europe/Paris)
@@ -26,7 +26,7 @@ Les décisions précédentes ont introduit une couleur source `#005AC1` qualifi�
 
 ## Décision
 
-- Documenter `#6750A4` comme couleur source de la baseline AndroidX Material 3 par défaut. Ce n'est plus la source de génération de Namesia : [ADR-0045](ADR-0045-source-google-blue-material-3.md) lui substitue `#0B57D0` pour Fidelity/Rainbow. Les composants continuent à consommer les rôles calculés, pas le code source brut.
+- Documenter `#6750A4` comme couleur source de la baseline AndroidX Material 3 par défaut. Ce n'est plus la source de génération de Namesia : [ADR-0045](ADR-0045-GOOGLE-BLUE-MATERIAL-3-SOURCE.md) lui substitue `#0B57D0` pour Fidelity/Rainbow. Les composants continuent à consommer les rôles calculés, pas le code source brut.
 - Conserver `Variant.FIDELITY` pour l'interface et `Variant.RAINBOW` pour les catégories éditoriales seulement.
 - Fixer `specVersion: "2021"` explicitement. Il s'agit de la version ColorSpec de Material Color Utilities, pas de la version de Material Design 3. La bibliothèque redirige actuellement Fidelity/Rainbow vers cette version lorsque 2025 ou 2026 est demandé.
 - Déclarer `platform: "phone"` explicitement pour la génération MCU.
