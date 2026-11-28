@@ -539,3 +539,18 @@ test("AlertDialog reprend le contrat AndroidX et sécurise la publication publiq
   assert.match(alertAdminClient, /Publier cette fiche \?/);
   assert.doesNotMatch(alertAdminClient, /onClick=\{publier\}/);
 });
+
+
+test("les flèches expriment la hiérarchie de navigation ou la sortie externe", async () => {
+  const homePage = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+  const cataloguePage = await readFile(new URL("../app/prenoms/page.tsx", import.meta.url), "utf8");
+  const trendsPage = await readFile(new URL("../app/tendances/page.tsx", import.meta.url), "utf8");
+  assert.match(homePage, /href="\/tendances"[\s\S]*?<Icon name="chevron-right"/);
+  assert.match(homePage, /href="\/prenoms"[\s\S]*?<Icon name="chevron-right"/);
+  assert.match(cataloguePage, /href="\/tendances"[\s\S]*?<Icon name="chevron-right"/);
+  assert.match(nameSearch, /Voir tous les résultats dans le catalogue <Icon name="chevron-right"/);
+  assert.match(trendsPage, /target="_blank"[\s\S]*?<Icon name="arrow-outward"/);
+  assert.doesNotMatch([homePage, cataloguePage, nameSearch, trendsPage, icones].join("\\n"), /arrow-up-right/);
+  assert.match(icones, /"arrow-outward": "M640-624 284-268/);
+  assert.match(iconNotice, /symbols\/web\/arrow_outward\/materialsymbolsrounded\/arrow_outward_24px\.svg/);
+});
