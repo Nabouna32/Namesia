@@ -55,7 +55,7 @@ export function FavoritesList({
     return (
       <Card as="section" variant="outlined" interactive={false} className={styles.empty}>
         <h2 className={styles.emptyTitle}>Retrouvez vos favoris partout</h2>
-        <p>Connectez-vous pour retrouver votre sélection sur tous vos appareils, ou créez un compte pour commencer.</p>
+        <p>Connectez-vous pour retrouver votre sélection sur tous vos appareils, ou créez un compte pour commencer. Vous pouvez continuer à explorer toutes les fiches sans vous connecter.</p>
         <Button href="/compte?redirect=%2Ffavoris">Se connecter</Button>
         <Button variant="text" href="/compte?mode=register&redirect=%2Ffavoris">Créer un compte</Button>
       </Card>
