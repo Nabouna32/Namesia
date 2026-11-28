@@ -582,6 +582,7 @@ test("les états vides des favoris composent Card outlined sans surface CSS para
   assert.match(favoritesStyles, /\.empty \{[^}]*display: grid;[^}]*gap: 16px;[^}]*padding: 24px;/s);
   assert.match(favoritesStyles, /\.emptyTitle \{\s*margin: 0;/);
   assert.match(favoritesStyles, /max-width: 560px;[\s\S]*?margin-inline: auto;/);
+  assert.match(favorites, /error \? "Vos favoris sont indisponibles" : unavailableCount > 0 \? "Aucun favori disponible"/);
   assert.doesNotMatch(favoritesStyles, /\.empty \{[^}]*border:|\.empty \{[^}]*background:|\.empty \{[^}]*border-radius:/s);
   assert.match(favoritesPage, /Retrouvez ici les prénoms que vous avez enregistrés\./);
   assert.doesNotMatch(favoritesPage, /Votre sélection reste privée et vous suit sur vos appareils/);
