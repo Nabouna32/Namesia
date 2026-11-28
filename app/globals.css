@@ -1251,8 +1251,8 @@ margin-top: 0;
 
 .symbolic-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 12px;
 }
 
 .symbolic-card[data-category-tone="1"],
