@@ -28,7 +28,7 @@ test("les quatre genres ont une correspondance SVG exhaustive dans leur composan
     assert.match(genderMap, new RegExp(`"${label}": \\{[\\s\\S]*?path: "${marker}`));
   }
   assert.match(genderMap, /Record<NameGender, GenderIconDefinition>/);
-  assert.match(genderIcon, /GENDER_ICON_PATHS\\[gender\\]/);
+  assert.match(genderIcon, /GENDER_ICON_PATHS\[gender\]/);
   assert.match(genderIcon, /role=\\{decorative \\? undefined : "img"\\}/);
   assert.match(genderStyles, /width: 24px/);
   assert.match(genderIcon, /viewBox="0 -960 960 960"/);
