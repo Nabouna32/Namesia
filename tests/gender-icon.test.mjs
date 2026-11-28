@@ -5,6 +5,7 @@ import { readFile } from "node:fs/promises";
 const icon = await readFile(new URL("../components/material3/Icon.tsx", import.meta.url), "utf8");
 const genderIcon = await readFile(new URL("../components/features/names/GenderIcon.tsx", import.meta.url), "utf8");
 const genderMap = await readFile(new URL("../lib/gender-icons.ts", import.meta.url), "utf8");
+const genderStyles = await readFile(new URL("../components/features/names/GenderIcon.module.css", import.meta.url), "utf8");
 
 test("les pictogrammes de genre restent hors du registre Material Symbols", () => {
   assert.doesNotMatch(icon, /gender-(female|male|mixed|unknown)/);
@@ -24,6 +25,8 @@ test("le pictogramme masculin sépare son anneau et sa flèche", () => {
   assert.match(genderIcon, /viewBox="0 -960 960 960"/);
   assert.match(genderIcon, /size = 20/);
   assert.match(genderIcon, /width=\{size\}[\s\S]*?height=\{size\}/);
+  assert.match(genderIcon, /size === 18 \? styles\.compact : styles\.icon/);
+  assert.match(genderStyles, /\.compact \{[\s\S]*?width: 18px;[\s\S]*?height: 18px;[\s\S]*?flex-basis: 18px;/);
 });
 
 test("GenderIcon expose un nom accessible ou devient décoratif dans un filtre", () => {
