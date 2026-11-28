@@ -293,7 +293,7 @@ test("la flèche de découverte utilise le glyphe Material Symbols Rounded offic
     assert.doesNotMatch(cardSource, /className="card-arrow"[^>]*><Icon name="arrow-up-right"/);
   }
   assert.match(globalStyles, /\.card-arrow \{[\s\S]*?width: 24px;[\s\S]*?height: 24px;[\s\S]*?color: var\(--md-sys-color-on-surface-variant\);/);
-  assert.doesNotMatch(globalStyles.slice(globalStyles.indexOf(".card-arrow {"), globalStyles.indexOf(".empty-state {")), /background:|border-radius:/);
+  assert.doesNotMatch(globalStyles.slice(globalStyles.indexOf(".card-arrow {"), globalStyles.indexOf(".card-arrow .material-icon {")), /background:|border-radius:/);
   assert.match(icones, /"chevron-right": "M504-480 348-636/);
   assert.match(icones, /viewBox="0 -960 960 960"/);
   assert.doesNotMatch(icones, /viewBox=\{name === "chevron-right"/);
