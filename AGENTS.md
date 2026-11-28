@@ -1,7 +1,7 @@
 # AGENTS.md — Règles communes de Namesia
 
-- **Version :** 2.2
-- **Mis à jour le :** 2026-11-27 23:09:42 (Europe/Paris)
+- **Version :** 2.3
+- **Mis à jour le :** 2026-11-28 06:07:57 (Europe/Paris)
 
 Ce document est le socle impératif de toute contribution humaine ou assistée par IA. Il définit les règles communes ; les contrats et guides spécialisés détaillent leur application.
 
@@ -83,7 +83,7 @@ Les références produit et éditoriales sont dans [PRODUCT-VISION.md](docs/PROD
 - Une information structurante possède une seule source canonique ; les autres documents renvoient vers elle.
 - Toute PR qui modifie un comportement, un contrat, une architecture ou une décision met à jour les documents concernés dans la même PR.
 - Les documents Markdown maintenus portent un numéro de version et une date/heure de mise à jour au format `AAAA-MM-JJ HH:mm:ss (Europe/Paris)`. Incrémenter la version lors d'une évolution substantielle ; une correction purement typographique actualise seulement la date.
-- Les ADR portent aussi le statut, la version et la date/heure exacte de décision. Ne jamais inventer ou antidater une date de décision.
+- Les ADR portent aussi un statut normalisé, une version, une date/heure de mise à jour et la date de décision. Si l'heure historique n'est pas connue, l'indiquer explicitement ; ne jamais inventer ou antidater une date de décision. Pour une ADR sans date de mise à jour, renseigner la date et l'heure réelles de sa normalisation documentaire.
 - Le cycle de vie des ADR, leur audit et leurs règles de suppression sont définis dans [ADR-MAINTENANCE.md](docs/decisions/ADR-MAINTENANCE.md). Toute création, modification, remplacement, retrait ou suppression doit respecter cette politique.
 - Si l'heure historique d'une décision n'a pas été consignée, l'indiquer explicitement sans la reconstituer artificiellement.
 - La documentation courante décrit l'état présent et les règles applicables ; les ADR conservent le contexte et la justification historique.

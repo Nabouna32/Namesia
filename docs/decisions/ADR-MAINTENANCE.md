@@ -1,7 +1,7 @@
 # Politique de maintenance des ADR
 
-- **Version :** 1.0
-- **Mis à jour le :** 2026-11-27 23:09:42 (Europe/Paris)
+- **Version :** 1.1
+- **Mis à jour le :** 2026-11-28 06:07:57 (Europe/Paris)
 
 Ce document définit le cycle de vie des décisions d'architecture de Namesia. Il s'applique à toute contribution humaine ou assistée par IA, indépendamment de l'historique des conversations.
 
@@ -58,7 +58,7 @@ Les statuts normalisés sont :
 - **retirée** : décision explicitement abandonnée sans remplacement ;
 - **obsolète** : décision devenue sans objet ou inapplicable.
 
-Une décision partiellement remplacée reste active. Sa portée encore applicable et sa portée remplacée doivent être distinguées explicitement.
+Une décision partiellement remplacée reste au statut `active`. Ajouter le champ `Remplacement partiel` pour distinguer la portée encore applicable de celle remplacée.
 
 Une ADR remplacée, retirée ou obsolète n'a pas vocation à être conservée automatiquement.
 
@@ -125,10 +125,11 @@ Tous les documents Markdown maintenus portent :
 - un numéro de version ;
 - une date et heure de dernière mise à jour au format `AAAA-MM-JJ HH:mm:ss (Europe/Paris)`.
 
-Chaque ADR porte également :
-- son identifiant ;
-- son statut normalisé ;
-- sa date de décision.
+Chaque ADR porte également, avec ces libellés normalisés :
+- `Statut` : exactement `active`, `remplacée`, `retirée` ou `obsolète` ;
+- `Version` : numéro de version documentaire ;
+- `Décision prise le` : date et heure exactes lorsqu'elles sont connues ; sinon la date connue suivie de `(heure non consignée)` ;
+- `Mis à jour le` : date et heure de la dernière mise à jour documentaire.
 
 Si la date historique est connue mais que l'heure n'a pas été consignée, utiliser explicitement `AAAA-MM-JJ (heure non consignée)`. Ne jamais inventer une heure ou antidater une décision.
 
