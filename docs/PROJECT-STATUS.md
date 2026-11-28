@@ -1,8 +1,8 @@
 # État du projet — Namesia
 
 - **Statut :** PRÉ-LANCEMENT / DÉVELOPPEMENT
-- **Version :** 2.8
-- **Mis à jour le :** 2026-11-28 06:40:43 (Europe/Paris)
+- **Version :** 2.9
+- **Mis à jour le :** 2026-11-28 11:42:00 (Europe/Paris)
 
 Ce document résume l'état opérationnel et les arbitrages actifs. Les détails d'architecture, de sécurité et de données restent dans les ADR et documents spécialisés.
 
@@ -37,7 +37,7 @@ Ce document résume l'état opérationnel et les arbitrages actifs. Les détails
 - Aucun SMTP transactionnel externe n'est configuré tant que le domaine d'envoi n'est pas disponible : [#402](https://github.com/Nabouna32/Namesia/issues/402).
 - Aucun fournisseur payant ni changement de plan n'est autorisé sans accord explicite.
 - Seule la branche `main` déploie la production.
-- Le déploiement du commit `d9901bd26f23e5639fb893f60449a69a5d67dd3a` est validé. La CI de vérification, l'audit des workflows, le build Cloudflare et le contrôle post-déploiement ont tous réussi (run [#46059472795](https://github.com/Nabouna32/Namesia/actions/runs/46059472795)).
+- Le déploiement de production du commit `364a57b7eafa98bebb849dc64eb48440f84d3732` est validé. La CI de vérification a réussi (run [#46126709274](https://github.com/Nabouna32/Namesia/actions/runs/46126709274)) et le déploiement Cloudflare avec contrôles post-déploiement a réussi (run [#46126709298](https://github.com/Nabouna32/Namesia/actions/runs/46126709298)).
 - Le contrôle post-déploiement vérifie désormais la balise `og:image` réellement annoncée (HTTP 200, `image/png`), robots.txt et le sitemap, l'API publique, la configuration Auth et les statuts attendus de la frontière administrateur.
 
 ## Travaux en cours
@@ -45,7 +45,9 @@ Ce document résume l'état opérationnel et les arbitrages actifs. Les détails
 - **PR #403 —** [Comptes Namesia et favoris liés au compte](https://github.com/Nabouna32/Namesia/pull/403) fusionnée dans `main` le 27 novembre 2026.
 - **PR #407 —** [Refonte et structuration de la documentation](https://github.com/Nabouna32/Namesia/pull/407) fusionnée dans `main`. Le README racine sert d'index, AGENTS.md contient le socle commun et les procédures détaillées sont réparties par domaine.
 - Les PR #409, #410, #412 et #414 ont fiabilisé les contrôles post-déploiement Open Graph, robots.txt et CSRF ; la dernière exécution de production est entièrement verte.
-- **PR #417 —** [Refondre la gouvernance et le registre des ADR](https://github.com/Nabouna32/Namesia/pull/417) : refonte documentaire en cours ; les contrôles CI automatisés des métadonnées, du nommage, du registre, de l'index et des références locales sont en cours d'intégration dans cette PR ; le périmètre couvre aussi la notice d'attribution des Material Symbols dans `licenses/`. Leur activation ne sera confirmée qu'après réussite de la CI sur le nouveau SHA.
+- **PR #417 —** [Refondre la gouvernance et le registre des ADR](https://github.com/Nabouna32/Namesia/pull/417) fusionnée dans `main` le 28 novembre 2026 ; les contrôles CI documentaires, la politique de maintenance des ADR et l'indexation sont désormais actifs.
+- **PR #419 —** [Corriger les cartes et uniformiser les flèches M3](https://github.com/Nabouna32/Namesia/pull/419) fusionnée dans `main` le 28 novembre 2026 ; les cartes d'accueil, de suggestions, de recherche et de favoris utilisent le chevron partagé.
+- **PR #420 —** [Audit transversal de l'expérience Material 3](https://github.com/Nabouna32/Namesia/pull/420) en cours, en lien avec l'issue [#418](https://github.com/Nabouna32/Namesia/issues/418) : audit des parcours publics, hiérarchie de navigation, conformité des glyphes, composition des surfaces et captures visuelles multi-largeurs. La PR reste en brouillon pendant les vérifications CI et la revue Preview.
 - Les issues #406, #408, #411 et #413 sont clôturées.
 - L'issue [#402](https://github.com/Nabouna32/Namesia/issues/402) reste ouverte pour la configuration du SMTP transactionnel après acquisition d'un domaine.
 - L'issue [#404](https://github.com/Nabouna32/Namesia/issues/404) reste ouverte pour la suppression du compte et la gestion complète des données personnelles.
