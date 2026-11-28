@@ -587,3 +587,14 @@ test("les états vides des favoris composent Card outlined sans surface CSS para
   assert.match(favoritesPage, /Retrouvez ici les prénoms que vous avez enregistrés\./);
   assert.doesNotMatch(favoritesPage, /Votre sélection reste privée et vous suit sur vos appareils/);
 });
+
+
+test("les surfaces de fiche utilisent Card outlined et le glyphe info officiel", async () => {
+  const profilePage = await readFile(new URL("../app/prenoms/[slug]/page.tsx", import.meta.url), "utf8");
+  assert.match(profilePage, /<Card as="div" variant="outlined" interactive=\{false\} className="profile-note">/);
+  assert.match(profilePage, /<Card as="section" variant="outlined" interactive=\{false\} className="profile-discovery"/);
+  assert.match(profilePage, /<Icon name="info" size=\{20\} \/>/);
+  assert.doesNotMatch(profilePage, /✳/);
+  assert.doesNotMatch(globalStyles, /\.profile-note \{[^}]*border:|\.profile-note \{[^}]*background:|\.profile-note \{[^}]*border-radius:/s);
+  assert.doesNotMatch(globalStyles, /\.profile-discovery \{[^}]*border:|\.profile-discovery \{[^}]*background:|\.profile-discovery \{[^}]*border-radius:/s);
+});
