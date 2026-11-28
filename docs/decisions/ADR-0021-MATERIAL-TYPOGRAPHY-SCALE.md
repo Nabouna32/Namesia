@@ -1,8 +1,8 @@
 # ADR-0021 — Consolider l'échelle typographique Material 3
 
 - **Statut :** active
-- **Version :** 1.0
-- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
+- **Version :** 1.1
+- **Mis à jour le :** 2026-11-28 06:24:20 (Europe/Paris)
 - **Décision prise le :** 2026-11-23 (heure non consignée)
 
 ## Contexte
@@ -27,7 +27,7 @@ Les titres de l'accueil, du catalogue, des fiches et du comparateur avaient des 
 
 ## Rectification de la décision typographique
 
-La première rédaction de cette ADR introduisait Google Sans pour les titres « si installée », puis Roboto en repli. Ce choix était erroné : il contredisait la direction Roboto de l’ADR-0015 et la typographie standard Material 3 documentée par Android. Il est remplacé par Roboto pour l’ensemble des rôles.
+La première rédaction de cette ADR introduisait Google Sans pour les titres « si installée », puis Roboto en repli. Ce choix était erroné : il contredisait la typographie standard Material 3 documentée par Android. Il est remplacé par Roboto pour l’ensemble des rôles.
 
 Référence : [Typographie Material 3 pour Jetpack Compose](https://developer.android.com/develop/ui/compose/designsystems/material3), dont l’échelle associe explicitement Roboto à chaque rôle display, headline, title, body et label.
 

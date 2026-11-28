@@ -2,13 +2,12 @@
 
 - **Statut :** active
 - **Décision prise le :** 2026-11-24 (heure non consignée)
-- **Version :** 1.0
-- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
-- **Remplace :** [ADR-0030 — Géométrie du conteneur NavigationBar](ADR-0030-geometrie-navigation-bar.md)
+- **Version :** 1.1
+- **Mis à jour le :** 2026-11-28 06:24:20 (Europe/Paris)
 
 ## Contexte
 
-L'ADR-0030 a réduit la barre à 64 dp en s'appuyant sur le token NavigationBarTokens.ContainerHeight. Cette lecture était incomplète : dans la version stable de référence, le composable public NavigationBar() ne lit pas ce token pour sa hauteur par défaut.
+Une première interprétation avait réduit la barre à 64 dp en s'appuyant sur le token NavigationBarTokens.ContainerHeight. Cette lecture était incomplète : dans la version stable de référence, le composable public NavigationBar() ne lit pas ce token pour sa hauteur par défaut.
 
 ## Vérification de la source
 
