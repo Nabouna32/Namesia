@@ -46,7 +46,7 @@ test("les trois parcours publics essentiels sont disponibles sur bureau", async 
   expect(pageErrors, "Erreurs JavaScript sur les parcours publics").toEqual([]);
 });
 
-test("l’accueil reste utilisable sur mobile et tablette", async ({ page }) => {
+test("l’accueil reste utilisable sur mobile et tablette", async ({ page }, testInfo) => {
   for (const viewport of responsiveViewports) {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
     const response = await page.goto("/", {
@@ -61,6 +61,13 @@ test("l’accueil reste utilisable sur mobile et tablette", async ({ page }) => 
       () => document.documentElement.scrollWidth > document.documentElement.clientWidth
     );
     expect(hasHorizontalOverflow, `Débordement horizontal en ${viewport.name}`).toBe(false);
+
+    if (process.env.PLAYWRIGHT_DIAGNOSTICS === "true") {
+      await page.screenshot({
+        path: testInfo.outputPath(`accueil-${viewport.name}.png`),
+        fullPage: true
+      });
+    }
   }
 });
 
