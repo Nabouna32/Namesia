@@ -190,7 +190,7 @@ export function NameSearch({
                   <FilterChip
                     key={genre}
                     label={genre}
-                    leadingIcon={<GenderIcon gender={genre} decorative />}
+                    leadingIcon={<GenderIcon gender={genre} size={18} decorative />}
                     iconOnly
                     selected={genreActif === genre}
                     onClick={() => changerGenre(genre)}
