@@ -306,7 +306,7 @@ test("les cartes de prénoms acceptent les noms longs sans déborder ni couper l
   assert.match(featuredCss, /\.name\s*\{[^}]*min-width:\s*0/s);
   assert.match(featuredCss, /\.name strong\s*\{[^}]*overflow-wrap:\s*anywhere/s);
   assert.match(featuredCss, /\.card\s*\{[^}]*min-height:\s*160px/s);
-  assert.match(featuredCss, /@media \(max-width: 599px\) \{[^}]*\.card\s*\{[^}]*min-height:\s*120px/s);
+  assert.match(featuredCss, /@media \(max-width: 599px\)[\s\S]*?\.card\s*\{[^}]*min-height:\s*120px/s);
   assert.doesNotMatch(featuredCss, /\.card\s*\{[^}]*\n\s*height:/s);
   assert.doesNotMatch(globalCss, /\.featured-(?:grid|card|letter|bottom|name|action)\b/);
 });

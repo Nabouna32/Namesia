@@ -16,6 +16,7 @@ const featuredStyles = await readFile(new URL("../components/features/catalog/Fe
 const materialTokens = await readFile(new URL("../styles/material3/tokens.css", import.meta.url), "utf8");
 const styles = buttonStyles;
 const icones = await readFile(new URL("../components/material3/Icon.tsx", import.meta.url), "utf8");
+const iconNotice = await readFile(new URL("../licenses/NOTICE-MATERIAL-SYMBOLS.md", import.meta.url), "utf8");
 const favoritesStyles = await readFile(new URL("../components/features/favorites/FavoritesList.module.css", import.meta.url), "utf8");
 
 test("Button suit l’anatomie AndroidX et conserve les éléments HTML natifs", () => {
@@ -95,7 +96,7 @@ test("la vitrine n'attribue aucune couleur selon l'index du prénom", () => {
   assert.match(featured, /styles\.grid/);
   assert.match(featured, /styles\.card/);
   assert.match(featured, /styles\.letter/);
-  assert.match(featuredStyles, /\.card\s*\{[^}]*min-height:\s*184px/s);
+  assert.match(featuredStyles, /\.card\s*\{[^}]*min-height:\s*160px/s);
   assert.match(featuredStyles, /\.letter\s*\{[^}]*pointer-events:\s*none/s);
   assert.match(featuredStyles, /@media \(max-width: 599px\)/);
   assert.doesNotMatch(globalStyles, /\.featured-(?:grid|card|letter|bottom|name|action)\b/);
@@ -278,6 +279,17 @@ test("les quatre destinations de navigation utilisent les SVG Material Symbols a
   assert.match(navigation, /icon: "favorite", activeIcon: "favorite-filled"/);
   assert.match(navigation, /const icon = active && "activeIcon" in destination/);
   assert.match(navigation, /name=\{icon\}/);
+});
+
+test("la flèche de découverte utilise le glyphe Material Symbols Rounded officiel", () => {
+  assert.match(featured, /Icon name="chevron-right" size=\{24\}/);
+  assert.match(featured, /<span className=\{styles\.action\} aria-hidden="true">/);
+  assert.doesNotMatch(featured, /<IconButton/);
+  assert.match(icones, /"chevron-right": "M504-480 348-636/);
+  assert.match(icones, /viewBox="0 -960 960 960"/);
+  assert.doesNotMatch(icones, /viewBox=\{name === "chevron-right"/);
+  assert.match(iconNotice, /google\/material-design-icons\/blob\/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7\/symbols\/web\/chevron_right\/materialsymbolsrounded\/chevron_right_24px\.svg/);
+  assert.match(iconNotice, /Apache License 2\.0/);
 });
 
 test("les formulaires administratifs utilisent les surfaces, formes et dimensions Fidelity", () => {

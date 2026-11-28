@@ -27,7 +27,7 @@
   font-family: var(--md-sys-typescale-display-large-font);
   font-size: var(--md-sys-typescale-display-large-size);
   font-weight: var(--md-sys-typescale-display-large-weight);
-  line-height: var(--md-sys-typescale-display-large-line-height);
+  line-height: var(--md-sys-typescale-headline-small-line-height);
   letter-spacing: var(--md-sys-typescale-display-large-tracking);
   transform: translateY(-50%) rotate(-12deg);
   pointer-events: none;
@@ -54,9 +54,11 @@
 .name strong {
   overflow-wrap: anywhere;
   color: var(--md-sys-color-on-surface);
-  font-family: var(--md-sys-typescale-headline-large-font);
+  font-family: var(--md-sys-typescale-title-large-font);
   font-size: var(--md-sys-typescale-title-large-size);
-  font-weight: 500;
+  font-weight: var(--md-sys-typescale-title-large-weight);
+  line-height: var(--md-sys-typescale-title-large-line-height);
+  letter-spacing: var(--md-sys-typescale-title-large-tracking);
 }
 
 .gender {

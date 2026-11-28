@@ -1,8 +1,8 @@
 # Bibliothèque Material 3 — Namesia
 
 - **Statut :** référence canonique des composants d'interface
-- **Version :** 1.2
-- **Mis à jour le :** 2026-11-28 06:27:23 (Europe/Paris)
+- **Version :** 1.3
+- **Mis à jour le :** 2026-11-28 09:22:21 (Europe/Paris)
 
 Ce document est le point d'entrée unique pour composer l'interface. Les ports Web des contrats Material 3 sont centralisés dans `components/material3/` ; les fonctions propres au produit sont isolées dans `components/features/`. Il n'existe pas de seconde bibliothèque de primitives ni de wrappers de convenance. Les ports locaux sont nécessaires parce qu'AndroidX Compose cible Android/Kotlin et que Material Web ne couvre pas le besoin stable complet ; ils ne sont pas présentés comme des composants AndroidX exécutés dans le navigateur. La décision, les alternatives et les limites sont détaillées dans [ADR-0037](../decisions/ADR-0037-MATERIAL-3-COMPONENT-ARCHITECTURE.md).
 
@@ -87,7 +87,7 @@ Les primitives de présentation sont implémentées une seule fois dans `compone
 | `TopAppBar` | `material3/TopAppBar.tsx` | Barre supérieure du shell, marque et titre secondaire ; dimensions et couleurs centralisées dans le système M3. |
 | `NavigationBar` | `material3/NavigationBar.tsx` | Navigation de premier niveau compacte, `NavigationBarTokens.TallContainerHeight = 80.dp`, destinations, indicateur et libellés `label-medium`. |
 | `NavigationRail` | `material3/NavigationRail.tsx` | Même navigation de premier niveau sur fenêtres medium/expanded, `NavigationRail` de 80 dp et libellés `label-medium`. |
-| `Icon` | `components/material3/Icon.tsx` | Registre local des tracés Google Material Symbols Rounded 400 ; le pictogramme masculin utilise un cercle et une flèche équilibrés sur la même grille ; les contrôles interactifs restent portés par Button ou IconButton. |
+| `Icon` | `components/material3/Icon.tsx` | Registre partagé des glyphes Google Material Symbols Rounded 400. Chaque tracé est centralisé ici et conserve le repère commun `0 -960 960 960` ; le chevron de navigation `chevron_right` est repris de la source Google épinglée et documenté avec sa licence dans [`licenses/NOTICE-MATERIAL-SYMBOLS.md`](../../licenses/NOTICE-MATERIAL-SYMBOLS.md). Le pictogramme masculin utilise un cercle et une flèche sur la même grille. `Icon` est décoratif ; les contrôles interactifs restent portés par `Button` ou `IconButton`. |
 
 ### Contrôles Web natifs
 
