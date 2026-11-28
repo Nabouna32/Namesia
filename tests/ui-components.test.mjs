@@ -564,3 +564,13 @@ test("la fiche préserve sa largeur de lecture sur les fenêtres medium", () => 
 test("les cartes symboliques occupent la largeur disponible sans colonne vide forcée", () => {
   assert.match(globalStyles, /\.symbolic-grid \{\s*display: grid;\s*grid-template-columns: repeat\(auto-fit, minmax\(min\(100%, 320px\), 1fr\)\);/);
 });
+
+
+test("les liens de la fiche utilisent les chevrons partagés pour avancer et revenir", async () => {
+  const profilePage = await readFile(new URL("../app/prenoms/[slug]/page.tsx", import.meta.url), "utf8");
+  assert.match(profilePage, /Explorer tout le catalogue <Icon name="chevron-right"/);
+  assert.match(profilePage, /<Icon name="chevron-left" size=\{18\} \/> \{texteRetour\}/);
+  assert.doesNotMatch(profilePage, /[↗←]/);
+  assert.match(icones, /"chevron-left": "m432-480 156 156/);
+  assert.match(iconNotice, /symbols\/web\/chevron_left\/materialsymbolsrounded\/chevron_left_24px\.svg/);
+});
