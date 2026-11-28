@@ -9,6 +9,9 @@ const iconButtonStyles = await readFile(new URL("../components/material3/IconBut
 const favoriteButton = await readFile(new URL("../components/features/favorites/FavoriteButton.tsx", import.meta.url), "utf8");
 const discovery = await readFile(new URL("../components/features/discovery/RandomDiscovery.tsx", import.meta.url), "utf8");
 const featured = await readFile(new URL("../components/features/catalog/FeaturedNames.tsx", import.meta.url), "utf8");
+const relatedNames = await readFile(new URL("../components/features/catalog/RelatedNames.tsx", import.meta.url), "utf8");
+const nameSearch = await readFile(new URL("../components/features/catalog/NameSearch.tsx", import.meta.url), "utf8");
+const favoritesList = await readFile(new URL("../components/features/favorites/FavoritesList.tsx", import.meta.url), "utf8");
 const notFound = await readFile(new URL("../app/not-found.tsx", import.meta.url), "utf8");
 const errorBoundary = await readFile(new URL("../app/error.tsx", import.meta.url), "utf8");
 const globalStyles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
@@ -285,6 +288,12 @@ test("la flèche de découverte utilise le glyphe Material Symbols Rounded offic
   assert.match(featured, /Icon name="chevron-right" size=\{24\}/);
   assert.match(featured, /<span className=\{styles\.action\} aria-hidden="true">/);
   assert.doesNotMatch(featured, /<IconButton/);
+  for (const cardSource of [relatedNames, nameSearch, favoritesList]) {
+    assert.match(cardSource, /className="card-arrow" aria-hidden="true"><Icon name="chevron-right" size=\{24\} \/>/);
+    assert.doesNotMatch(cardSource, /className="card-arrow"[^>]*><Icon name="arrow-up-right"/);
+  }
+  assert.match(globalStyles, /\.card-arrow \{[\s\S]*?width: 24px;[\s\S]*?height: 24px;[\s\S]*?color: var\(--md-sys-color-on-surface-variant\);/);
+  assert.doesNotMatch(globalStyles.slice(globalStyles.indexOf(".card-arrow {"), globalStyles.indexOf(".empty-state {")), /background:|border-radius:/);
   assert.match(icones, /"chevron-right": "M504-480 348-636/);
   assert.match(icones, /viewBox="0 -960 960 960"/);
   assert.doesNotMatch(icones, /viewBox=\{name === "chevron-right"/);
