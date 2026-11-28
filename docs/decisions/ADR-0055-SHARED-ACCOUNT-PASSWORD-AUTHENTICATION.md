@@ -1,9 +1,9 @@
 # ADR-0055 — Authentification des comptes Namesia par mot de passe
 
 - **Statut :** active
-- **Version :** 1.7
+- **Version :** 1.8
 - **Décision prise le :** 2026-11-27 13:20:36 (Europe/Paris)
-- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
+- **Mis à jour le :** 2026-11-28 06:24:20 (Europe/Paris)
 - **Décideur :** propriétaire de Namesia
 - **Portée :** comptes visiteurs, sessions et autorisations administrateur
 
@@ -11,7 +11,7 @@
 
 Namesia doit proposer des comptes classiques, sans imposer de connexion pour consulter le catalogue ou les fiches publiques. Le propriétaire refuse un parcours exclusivement passwordless et souhaite que les administrateurs soient des comptes ordinaires auxquels des droits supplémentaires sont attribués.
 
-L'ancienne ADR-0049 imposait la protection HIBP de Supabase avant toute introduction de mot de passe. Cette contrainte conduisait à rendre un abonnement Supabase Pro obligatoire pour un contrôle que le propriétaire ne souhaite pas activer.
+L'ancienne orientation passwordless conditionnait l'adoption d'un mot de passe à la protection HIBP de Supabase. Cette contrainte aurait rendu un abonnement Supabase Pro obligatoire pour un contrôle que le propriétaire ne souhaite pas activer.
 
 ## Challenge
 
@@ -65,9 +65,9 @@ L'ancienne ADR-0049 imposait la protection HIBP de Supabase avant toute introduc
 
 - Les comptes visiteurs et administrateurs partagent la même identité et les mêmes parcours.
 - La table privée `private.admin_users` ne stocke que l'attribution du droit administrateur ; elle n'est pas un système d'authentification distinct.
-- L'ancienne ADR-0049 est remplacée.
+- L'orientation antérieure sans mot de passe est abandonnée au profit du parcours e-mail/mot de passe décrit ici.
 - Les e-mails de confirmation et de récupération nécessitent un SMTP transactionnel personnalisé pour délivrer les messages à des adresses externes à l'équipe Supabase. Le service SMTP par défaut est réservé aux membres de l'équipe et limité à deux messages par heure : cela suffit aux essais internes de développement, mais pas à l'inscription publique. La configuration d'un SMTP transactionnel reste un prérequis avant l'ouverture publique et est suivie dans l'issue #402.
-- Les favoris et l'historique doivent être liés au compte et synchronisés côté serveur ; ils ne doivent pas rester des fonctions persistantes locales. Leur mise en œuvre, la migration éventuelle des favoris déjà stockés dans le navigateur, la rétention de l'historique et la suppression complète des données sont suivies dans l'issue #404. Le compte reste facultatif pour explorer le catalogue et consulter les fiches.
+- Les favoris et l'historique sont des fonctions personnelles liées au compte, pas des données persistantes locales. Les favoris sont stockés côté serveur et isolés par RLS ; l'historique reste suspendu jusqu'à l'arbitrage #405. Les anciennes données locales de favoris et d'historique ne sont pas migrées : l'ancien stockage local est supprimé et les anciennes sélections abandonnées, Namesia étant encore en phase de développement. L'import/export JSON reste disponible pour sauvegarder explicitement les favoris associés au compte. La gestion complète des données et la suppression du compte sont suivies dans l'issue #404. Le compte reste facultatif pour explorer le catalogue et consulter les fiches.
 
 ## Validation
 
