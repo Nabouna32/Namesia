@@ -2,7 +2,7 @@
 
 - **Statut :** active
 - **Version :** 1.0
-- **Mis à jour le :** 2026-11-28 06:05:17 (Europe/Paris)
+- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
 - **Décision prise le :** 2026-11-24 (heure non consignée)
 - **Remplace :** uniquement le choix de couleur source de l'[ADR-0028](ADR-0028-baseline-material-3-androidx-et-couleurs-semantiques.md) ; ses autres décisions (Fidelity/Rainbow, ColorSpec, rôles sémantiques et référence AndroidX) restent applicables.
 
