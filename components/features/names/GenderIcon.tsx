@@ -11,9 +11,10 @@ type Props = {
 
 export function GenderIcon({ gender, className, decorative = false, size = 20 }: Props) {
   const definition = GENDER_ICON_PATHS[gender];
+  const sizeClass = size === 18 ? styles.compact : styles.icon;
   return (
     <span
-      className={className ? `${styles.icon} ${className}` : styles.icon}
+      className={className ? `${sizeClass} ${className}` : sizeClass}
       role={decorative ? undefined : "img"}
       aria-label={decorative ? undefined : gender}
     >
