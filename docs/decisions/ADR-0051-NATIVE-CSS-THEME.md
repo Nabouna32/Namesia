@@ -2,9 +2,9 @@
 
 - **Statut :** active
 - **Version :** 1.0
-- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
+- **Mis à jour le :** 2026-11-28 06:27:23 (Europe/Paris)
 - **Décision prise le :** 2026-11-25 (heure non consignée)
-- **Complète :** [ADR-0037 — Architecture directe des composants Material 3](ADR-0037-architecture-composants-material3.md)
+- **Complète :** [ADR-0037 — Architecture directe des composants Material 3](ADR-0037-MATERIAL-3-COMPONENT-ARCHITECTURE.md)
 
 ## Contexte
 
