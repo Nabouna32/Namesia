@@ -417,7 +417,7 @@ test("les surfaces du catalogue et du comparateur ne dépendent plus de la couch
   assert.doesNotMatch(globalStyles, /\.name-card\s*\{[^}]*background:/s);
   assert.match(globalStyles, /\.compare-option\s*\{[^}]*surface-container-low/s);
   assert.doesNotMatch(globalStyles, /\.compare-card\s*\{[^}]*background:/s);
-  assert.match(globalStyles, /\.profile-note\s*\{[^}]*surface-container/s);
+  assert.doesNotMatch(globalStyles, /\.profile-note\s*\{[^}]*surface-container/s);
   assert.doesNotMatch(globalStyles, /Couche Material 3 Fidelity/);
   assert.doesNotMatch(globalStyles, /linear-gradient\(135deg, var\(--color-surface/);
 });
