@@ -8,8 +8,13 @@ const routes = [
 ];
 
 const responsiveViewports = [
+  { name: "mobile-etroit", width: 320, height: 740 },
   { name: "mobile", width: 390, height: 844 },
-  { name: "tablette", width: 768, height: 1024 }
+  { name: "medium-minimum", width: 600, height: 900 },
+  { name: "tablette", width: 768, height: 1024 },
+  { name: "hauteur-compacte", width: 768, height: 420 },
+  { name: "expanded", width: 840, height: 900 },
+  { name: "bureau-large", width: 1280, height: 900 }
 ];
 
 test("les trois parcours publics essentiels sont disponibles sur bureau", async ({ page }) => {
@@ -46,7 +51,8 @@ test("les trois parcours publics essentiels sont disponibles sur bureau", async 
   expect(pageErrors, "Erreurs JavaScript sur les parcours publics").toEqual([]);
 });
 
-test("l’accueil reste utilisable sur mobile et tablette", async ({ page }, testInfo) => {
+test("l’accueil reste utilisable sur les classes de fenêtre Material et en hauteur compacte", async ({ page }, testInfo) => {
+  await page.emulateMedia({ colorScheme: "light" });
   for (const viewport of responsiveViewports) {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
     const response = await page.goto("/", {
@@ -74,18 +80,36 @@ test("l’accueil reste utilisable sur mobile et tablette", async ({ page }, tes
 
 test("les fiches restent consultables sans compte et les favoris renvoient vers la connexion sur mobile", async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  const response = await page.goto("/prenoms/alice", {
-    waitUntil: "domcontentloaded",
-    timeout: 30_000
-  });
+  for (const viewport of [
+    { name: "mobile", width: 390, height: 844 },
+    { name: "medium-minimum", width: 600, height: 900 },
+    { name: "expanded", width: 840, height: 900 }
+  ]) {
+    await page.emulateMedia({ colorScheme: "light" });
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    const response = await page.goto("/prenoms/alice", {
+      waitUntil: "domcontentloaded",
+      timeout: 30_000
+    });
 
-  expect(response?.status(), "HTTP fiche Alice").toBeLessThan(400);
-  await expect(page.locator("main h1").first()).toBeVisible();
-  const relatedChevron = page.locator(".profile-discovery .card-arrow svg").first();
-  await expect(relatedChevron).toBeVisible();
+    expect(response?.status(), `HTTP fiche Alice en ${viewport.name}`).toBeLessThan(400);
+    await expect(page.locator("main h1").first()).toBeVisible();
+    const relatedChevron = page.locator(".profile-discovery .card-arrow svg").first();
+    await expect(relatedChevron).toBeVisible();
+    if (process.env.PLAYWRIGHT_DIAGNOSTICS === "true") {
+      await page.screenshot({
+        path: testInfo.outputPath(`fiche-alice-${viewport.name}-clair.png`),
+        fullPage: true
+      });
+    }
+  }
+
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/prenoms/alice", { waitUntil: "domcontentloaded", timeout: 30_000 });
   if (process.env.PLAYWRIGHT_DIAGNOSTICS === "true") {
     await page.screenshot({
-      path: testInfo.outputPath("fiche-alice-mobile.png"),
+      path: testInfo.outputPath("fiche-alice-mobile-sombre.png"),
       fullPage: true
     });
   }
