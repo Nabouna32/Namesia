@@ -1,9 +1,10 @@
 # ADR-0028 — Baseline Material 3, couleurs sémantiques et référence AndroidX
 
-- **Statut :** acceptée, partiellement remplacée par [ADR-0045](ADR-0045-GOOGLE-BLUE-MATERIAL-3-SOURCE.md) pour la couleur source uniquement
-- **Date :** 2026-11-24
+- **Statut :** active
+- **Décision prise le :** 2026-11-24 (heure non consignée)
 - **Version :** 1.0
-- **Mis à jour le :** 2026-11-27 20:10:47 (Europe/Paris)
+- **Mis à jour le :** 2026-11-28 06:05:17 (Europe/Paris)
+- **Remplacement partiel :** seul le choix de couleur source est remplacé par ADR-0045 ; les autres décisions de cette ADR restent applicables.
 - **Remplace :** les choix de couleur source et de génération des ADR-0006, ADR-0015 et ADR-0027
 
 ## Contexte
