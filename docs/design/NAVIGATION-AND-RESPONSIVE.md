@@ -1,14 +1,14 @@
 # Navigation, responsive et accessibilité — Namesia
 
-- **Version :** 1.2
-- **Mis à jour le :** 2026-11-28 11:12:41 (Europe/Paris)
+- **Version :** 1.3
+- **Mis à jour le :** 2026-11-28 11:17:31 (Europe/Paris)
 
 
 Ce guide complète les [fondations visuelles](FOUNDATIONS.md), les [composants](COMPONENTS.md) et le [système de design](../DESIGN-SYSTEM.md).
 
 ## 4. Navigation adaptative
 
-Les destinations de premier niveau sont Accueil, Explorer, Comparer et Favoris. Elles restent identiques sur toutes les tailles d'écran.
+Les destinations de premier niveau sont Accueil, Explorer, Comparer et Favoris. La page Tendances (`/tendances`) appartient au parcours Explorer et conserve son indicateur actif, même si sa route publique est distincte de `/prenoms`. Elles restent identiques sur toutes les tailles d'écran.
 
 - **Compact, moins de 600 px :** navigation bar fixe en bas de 80 dp (variante haute utilisée par `NavigationBar()`), quatre destinations avec icône et libellé `label-medium` (12/16 px, graisse 500, approche 0,5 px), hauteur augmentée uniquement par `safe-area-inset-bottom`.
 - **Medium et plus, à partir de 600 px :** navigation rail fixe sur le bord de départ, largeur de 80 px, icône et libellé `label-medium` (12/16 px, graisse 500, approche 0,5 px) empilés. Le rail reste à 80 px : le modèle Android du rail est conservé, sans tiroir latéral propriétaire qui réduirait inutilement l’espace de lecture.
