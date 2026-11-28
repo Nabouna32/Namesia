@@ -6,9 +6,10 @@ type Props = {
   gender: NameGender;
   className?: string;
   decorative?: boolean;
+  size?: number;
 };
 
-export function GenderIcon({ gender, className, decorative = false }: Props) {
+export function GenderIcon({ gender, className, decorative = false, size = 20 }: Props) {
   const definition = GENDER_ICON_PATHS[gender];
   return (
     <span
@@ -18,8 +19,8 @@ export function GenderIcon({ gender, className, decorative = false }: Props) {
     >
       <svg
         aria-hidden="true"
-        width={20}
-        height={20}
+        width={size}
+        height={size}
         viewBox="0 -960 960 960"
         fill="currentColor"
         focusable="false"
