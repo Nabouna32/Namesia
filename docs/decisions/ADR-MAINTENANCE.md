@@ -131,7 +131,9 @@ Chaque ADR porte également, avec ces libellés normalisés :
 - `Décision prise le` : date et heure exactes lorsqu'elles sont connues ; sinon la date connue suivie de `(heure non consignée)` ;
 - `Mis à jour le` : date et heure de la dernière mise à jour documentaire.
 
-Si la date historique est connue mais que l'heure n'a pas été consignée, utiliser explicitement `AAAA-MM-JJ (heure non consignée)`. Ne jamais inventer une heure ou antidater une décision.\n\nLorsqu'une ADR ne possède pas de champ `Mis à jour le`, le renseigner avec la date et l'heure réelles de la normalisation documentaire. Cet horodatage indique quand la fiche a été normalisée ; il ne remplace jamais et ne doit jamais être interprété comme la date de décision.
+Si la date historique est connue mais que l'heure n'a pas été consignée, utiliser explicitement `AAAA-MM-JJ (heure non consignée)`. Ne jamais inventer une heure ou antidater une décision.
+
+Lorsqu'une ADR ne possède pas de champ `Mis à jour le`, le renseigner avec la date et l'heure réelles de la normalisation documentaire. Cet horodatage indique quand la fiche a été normalisée ; il ne remplace jamais et ne doit jamais être interprété comme la date de décision.
 
 Les évolutions substantielles incrémentent la version. Les corrections purement typographiques actualisent uniquement la date.
 
