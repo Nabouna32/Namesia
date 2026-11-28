@@ -1,7 +1,7 @@
 # Registre des décisions d'architecture
 
-- **Version :** 1.7
-- **Mis à jour le :** 2026-11-28 06:07:57 (Europe/Paris)
+- **Version :** 1.8
+- **Mis à jour le :** 2026-11-28 06:35:20 (Europe/Paris)
 
 Ce registre indexe les décisions d'architecture encore applicables et les décisions historiques dont le contexte conserve une valeur utile.
 
@@ -11,7 +11,7 @@ Les documents canoniques décrivant l'état courant sont accessibles depuis le [
 
 La politique complète de création, de révision, d'audit et de suppression est définie dans [ADR-MAINTENANCE.md](ADR-MAINTENANCE.md).
 
-Chaque ADR possède un identifiant unique et un statut normalisé. Les 37 décisions conservées sont actuellement actives ; les remplacements partiels sont explicités dans les ADR concernées. Le test `tests/adr-registry.test.mjs` vérifie l'unicité des identifiants, la cohérence entre nom de fichier et titre, ainsi que l'existence des liens internes vers d'autres ADR.
+Chaque ADR possède un identifiant unique et un statut normalisé. Les 37 décisions conservées sont actuellement actives ; les remplacements partiels sont explicités dans les ADR concernées. Les tests `tests/adr-registry.test.mjs` et `tests/documentation-index.test.mjs` vérifient le nommage, l'unicité des identifiants, les métadonnées et statuts, la correspondance exacte entre les ADR et le registre, l'indexation documentaire et les liens Markdown locaux.
 
 ## Décisions
 

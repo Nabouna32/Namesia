@@ -1,7 +1,7 @@
 # Tests et validation — Namesia
 
-- **Version :** 1.0
-- **Mis à jour le :** 2026-11-27 20:07:03 (Europe/Paris)
+- **Version :** 1.1
+- **Mis à jour le :** 2026-11-28 06:35:20 (Europe/Paris)
 - **Portée :** stratégie de tests, vérification des comportements et diagnostics
 
 Ce guide définit quels comportements protéger et comment valider les changements. Les workflows exécutés et les résultats CI sont décrits dans [GitHub Actions](platform/GITHUB-ACTIONS.md). Les diagnostics visuels s'exécutent sur les Previews Cloudflare décrites dans [Cloudflare Workers](platform/CLOUDFLARE-WORKERS.md).
@@ -22,6 +22,7 @@ Chaque changement est validé au niveau adapté à son risque :
 - Les tests sont choisis selon le risque : métier et parcours critiques d'abord. Éviter les assertions sur les textes éditoriaux, les détails CSS transitoires et les implémentations internes susceptibles d'évoluer. Retirer les tests devenus sans objet au lieu d'accumuler des contrats historiques.
 - Les tests E2E n'ouvrent aucune route d'administration et n'utilisent aucune session ni donnée privée. Les PR issues de forks ne reçoivent pas de Preview Cloudflare ni de secrets.
 - Vérifications statiques et build dans la CI GitHub Actions.
+- Les tests de gouvernance documentaire vérifient les métadonnées de tous les Markdown maintenus, le nommage descriptif, l'unicité et les métadonnées des ADR, la cohérence exacte du registre, l'indexation des documents canoniques et l'existence des cibles des liens Markdown locaux.
 - Les outils de build Cloudflare et de test navigateur (`@opennextjs/cloudflare`, `wrangler`, `@playwright/test`, `@axe-core/playwright`) sont des dépendances de développement exactes, verrouillées dans `package-lock.json`. Chaque job utilise `npm ci`. La CI exécute deux périmètres distincts : `npm audit --omit=dev --audit-level=high` bloque sur les vulnérabilités hautes ou critiques du graphe de production ; `npm audit --audit-level=high` audite aussi les dépendances de développement à titre diagnostique non bloquant. Ce second résultat apparaît dans les logs et le résumé du job pour suivre les vulnérabilités de l’outillage sans confondre leur présence avec une exposition du Worker. Il ne constitue pas une acceptation définitive : les avis restent à corriger et à réévaluer, notamment pour Wrangler/Miniflare.
 - Les audits de configuration CI et les contrôles Dependabot sont décrits dans les guides [GitHub Actions](platform/GITHUB-ACTIONS.md) et [Dependabot](platform/DEPENDABOT.md).
 - Contrôles manuels ciblés lorsque l'accessibilité, le responsive ou le rendu visuel ne sont pas couverts par l'automatisation.

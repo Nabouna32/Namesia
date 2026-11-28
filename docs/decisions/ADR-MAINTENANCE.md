@@ -1,7 +1,7 @@
 # Politique de maintenance des ADR
 
-- **Version :** 1.2
-- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
+- **Version :** 1.3
+- **Mis à jour le :** 2026-11-28 06:35:20 (Europe/Paris)
 
 Ce document définit le cycle de vie des décisions d'architecture de Namesia. Il s'applique à toute contribution humaine ou assistée par IA, indépendamment de l'historique des conversations.
 
@@ -144,7 +144,16 @@ Les noms descriptifs Markdown sont en anglais, en majuscules et en `UPPERCASE-KE
 
 Les noms imposés par l'écosystème, notamment `README.md` et `AGENTS.md`, sont conservés.
 
-La CI doit vérifier les métadonnées, les identifiants, les statuts, le nommage et les références locales. Elle ne prétend pas vérifier la véracité historique d'une date.
+La CI vérifie automatiquement :
+- la présence d'une version et d'une date de mise à jour valide sur chaque document Markdown maintenu ;
+- la convention de nommage des documents descriptifs et le format strict des noms ADR ;
+- l'unicité des identifiants ADR, leur présence dans le titre et leurs métadonnées obligatoires ;
+- la validité des statuts et leur cohérence avec le registre ;
+- la correspondance exacte entre les ADR présentes et les entrées du registre ;
+- l'indexation des documents canoniques dans le README racine et les liens vers la présente politique ;
+- l'existence des cibles de tous les liens Markdown locaux.
+
+Ces contrôles vérifient la forme et la cohérence mécanique des documents ; ils ne prétendent pas établir la véracité historique d'une date ni la pertinence sémantique d'une décision.
 
 ## 9. Registre
 
