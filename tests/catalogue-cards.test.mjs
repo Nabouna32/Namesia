@@ -52,7 +52,7 @@ test("la découverte aléatoire affiche le pictogramme du prénom sélectionné"
 
 test("les filtres de genre utilisent le pictogramme métier en mode décoratif", () => {
   for (const source of [catalogue, favorites]) {
-    assert.match(source, /leadingIcon=\{<GenderIcon gender=\{genre\} decorative \/>/);
+    assert.match(source, /leadingIcon=\{<GenderIcon gender=\{genre\} size=\{18\} decorative \/>/);
     assert.match(source, /iconOnly/);
   }
   assert.match(genderIcon, /<svg[\s\S]*?aria-hidden="true"/);
