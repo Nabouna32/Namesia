@@ -1,7 +1,7 @@
 # Attribution — Google Material Symbols
 
-- **Version :** 1.2
-- **Mis à jour le :** 2026-11-28 11:12:41 (Europe/Paris)
+- **Version :** 1.3
+- **Mis à jour le :** 2026-11-28 11:14:52 (Europe/Paris)
 
 Les pictogrammes fonctionnels de Namesia appartiennent à la famille **Google Material Symbols**, style **Rounded**, poids **400**. Les SVG déjà intégrés proviennent de la distribution communautaire `@material-symbols/svg-400` 0.49.0 publiée par `marella` ; cette distribution n'est pas maintenue ni vérifiée par Google. Les sources amont et le statut des distributions sont décrits dans le [dépôt officiel Google](https://github.com/google/material-design-icons).
 
