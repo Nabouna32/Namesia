@@ -1180,19 +1180,14 @@ gap: 16px;
   padding: 20px;
 }
 
-.profile-note-mark {
-  display: grid;
-  width: 34px;
-  height: 34px;
-  place-items: center;
-  border-radius: var(--md-sys-shape-corner-full);
-  background: var(--md-sys-color-secondary-container);
-  color: var(--md-sys-color-on-secondary-container);
-  font-size: var(--md-sys-typescale-title-large-size);
+.profile-note-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.profile-note h2 {
-margin: 16px 0 8px;
+.profile-note-heading h2 {
+  margin: 0;
   color: var(--md-sys-color-on-surface);
   font-family: var(--md-sys-typescale-headline-large-font);
   font-size: var(--md-sys-typescale-title-large-size);
