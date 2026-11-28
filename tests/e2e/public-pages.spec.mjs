@@ -155,3 +155,17 @@ test("les parcours secondaires disposent de captures diagnostiques pleine page",
     }
   }
 });
+
+
+test("l’accueil dispose d’une capture pleine page en thème sombre", async ({ page }, testInfo) => {
+  test.skip(process.env.PLAYWRIGHT_DIAGNOSTICS !== "true", "Capture temporaire réservée à la revue visuelle.");
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.setViewportSize({ width: 390, height: 844 });
+  const response = await page.goto("/", { waitUntil: "domcontentloaded", timeout: 30_000 });
+  expect(response?.status(), "HTTP accueil sombre").toBeLessThan(400);
+  await expect(page.locator("main h1").first()).toBeVisible();
+  await page.screenshot({
+    path: testInfo.outputPath("accueil-mobile-sombre.png"),
+    fullPage: true
+  });
+});
