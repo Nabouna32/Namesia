@@ -4,7 +4,6 @@ import { useRef, useState, type ChangeEvent } from "react";
 import Link from "next/link";
 import type { NameGender, NameIndexEntry } from "@/lib/names";
 import { GenderIcon } from "@/components/features/names/GenderIcon";
-import { GENDER_ICONS } from "@/lib/gender-icons";
 import { LIMITE_FAVORIS, creerSauvegardeFavoris, lireSauvegardeFavoris } from "@/lib/sauvegarde-favoris";
 import { normalizeSearchTerm, suggestSimilarNames } from "@/lib/name-search";
 import { creerUrlFicheDepuisFavoris, type TriFavoris } from "@/lib/navigation-prenoms";
@@ -285,7 +284,7 @@ export function FavoritesList({
                     <FilterChip
                       key={genre}
                       label={genre}
-                      leadingIcon={<Icon name={GENDER_ICONS[genre]} size={18} />}
+                      leadingIcon={<GenderIcon gender={genre} decorative />}
                       iconOnly
                       selected={genreActifValide === genre}
                       onClick={() => changerGenre(genre)}
