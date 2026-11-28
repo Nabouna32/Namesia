@@ -109,6 +109,9 @@ margin: 4px 0 0;
   display: grid;
   justify-items: start;
   gap: 16px;
+  width: 100%;
+  max-width: 560px;
+  margin-inline: auto;
   padding: 24px;
 }
 
