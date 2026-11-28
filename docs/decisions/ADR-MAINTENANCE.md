@@ -1,7 +1,7 @@
 # Politique de maintenance des ADR
 
-- **Version :** 1.1
-- **Mis à jour le :** 2026-11-28 06:07:57 (Europe/Paris)
+- **Version :** 1.2
+- **Mis à jour le :** 2026-11-28 06:18:09 (Europe/Paris)
 
 Ce document définit le cycle de vie des décisions d'architecture de Namesia. Il s'applique à toute contribution humaine ou assistée par IA, indépendamment de l'historique des conversations.
 
@@ -131,7 +131,7 @@ Chaque ADR porte également, avec ces libellés normalisés :
 - `Décision prise le` : date et heure exactes lorsqu'elles sont connues ; sinon la date connue suivie de `(heure non consignée)` ;
 - `Mis à jour le` : date et heure de la dernière mise à jour documentaire.
 
-Si la date historique est connue mais que l'heure n'a pas été consignée, utiliser explicitement `AAAA-MM-JJ (heure non consignée)`. Ne jamais inventer une heure ou antidater une décision.
+Si la date historique est connue mais que l'heure n'a pas été consignée, utiliser explicitement `AAAA-MM-JJ (heure non consignée)`. Ne jamais inventer une heure ou antidater une décision.\n\nLorsqu'une ADR ne possède pas de champ `Mis à jour le`, le renseigner avec la date et l'heure réelles de la normalisation documentaire. Cet horodatage indique quand la fiche a été normalisée ; il ne remplace jamais et ne doit jamais être interprété comme la date de décision.
 
 Les évolutions substantielles incrémentent la version. Les corrections purement typographiques actualisent uniquement la date.
 
