@@ -289,8 +289,11 @@ const iconRegistry = await readFile(new URL("../components/material3/Icon.tsx", 
 for (const source of googleIconSources) {
   const marker = source.markers[0];
   const path = marker.slice(3, -1);
+  const registryKey = /^[a-z][a-zA-Z0-9]*$/.test(source.registryName)
+    ? source.registryName
+    : `"${source.registryName}"`;
   assert.ok(
-    iconRegistry.includes(`${source.registryName}: "${path}"`),
+    iconRegistry.includes(`${registryKey}: "${path}"`),
     `Icon ${source.registryName}: le tracé ne correspond pas au SVG Google épinglé.`
   );
   process.stdout.write(`Tracé du registre vérifié : ${source.registryName}\\n`);
