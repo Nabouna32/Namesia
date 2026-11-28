@@ -277,7 +277,7 @@ test("les quatre destinations de navigation utilisent les SVG Material Symbols a
   assert.match(icones, /fill="currentColor"/);
   assert.doesNotMatch(icones, /search-filled|compare-arrows-filled/);
   assert.match(navigation, /icon: "home", activeIcon: "home-filled"/);
-  assert.match(navigation, /icon: "search" \}/);
+  assert.match(navigation, /icon: "search", activePaths: \["\/tendances"\] \}/);
   assert.match(navigation, /icon: "compare-arrows" \}/);
   assert.match(navigation, /icon: "favorite", activeIcon: "favorite-filled"/);
   assert.match(navigation, /const icon = active && "activeIcon" in destination/);
