@@ -37,7 +37,7 @@ export default async function FavoritesPage({ searchParams }: Props) {
       <div className="container catalogue">
         <span className="eyebrow">Votre sélection</span>
         <h1>Vos prénoms<br /><em>préférés.</em></h1>
-        <p className="page-intro">Retrouvez les prénoms enregistrés dans votre compte Namesia. Votre sélection reste privée et vous suit sur vos appareils.</p>
+        <p className="page-intro">Retrouvez ici les prénoms que vous avez enregistrés.</p>
         <FavoritesList
           names={names}
           initialSearch={getFirstParam(params.q)}
